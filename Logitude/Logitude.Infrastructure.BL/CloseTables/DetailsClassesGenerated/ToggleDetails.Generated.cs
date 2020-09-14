@@ -131,6 +131,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "OceanInsightsV2",
                 SearchFields = "OI2,OceanInsightsV2",
             });
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Shipment Warning Checkbox", 
+                Code = "SWC", 
+                SearchFields = "SWC,Shipment Warning Checkbox", 
+			});
+			
             return all;
        }
 

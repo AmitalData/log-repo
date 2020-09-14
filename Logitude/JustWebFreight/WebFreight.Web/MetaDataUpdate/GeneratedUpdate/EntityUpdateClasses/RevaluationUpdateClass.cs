@@ -1254,30 +1254,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen RevaluationRevaluationDetailsScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Revaluation.RevaluationDetailsScreen", Name = "RevaluationDetailsScreen", ObjectTableId = RevaluationObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationEnabled", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.ChartOfAccountsId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationEnabled", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.ChartOfAccountsId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen RevaluationHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Revaluation.HeaderScreen", Name = "HeaderScreen", ObjectTableId = RevaluationObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField RevaluationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RevaluationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField RevaluationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RevaluationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    RevaluationObjectTable.HeaderScreenId = RevaluationHeaderScreenScreen1.Id;
 		    RevaluationObjectTable.HeaderScreenCode = RevaluationHeaderScreenScreen1.Code;
 

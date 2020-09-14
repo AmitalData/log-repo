@@ -27,8 +27,10 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
      [Key]
         [Column("Id")]
 	    public int Id { get; set; }
-        [Column("SecurityKey")]
-	    public string SecurityKey { get; set; }
+        [Column("ShipmentId")]
+	    public string ShipmentId { get; set; }
+        [Column("IsPublic")]
+	    public bool? IsPublic { get; set; }
     }
 }
 	 

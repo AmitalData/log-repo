@@ -430,12 +430,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen Category1HeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Category1.HeaderScreen", Name = "HeaderScreen", ObjectTableId = Category1ObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField Category1Category1HeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField Category1Category1HeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField Category1Category1HeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField Category1Category1HeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField Category1Category1HeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField Category1Category1HeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = Category1HeaderScreenScreen0.Id,ScreenCode = Category1HeaderScreenScreen0.Code, ObjectFieldCode = "Category1.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    Category1ObjectTable.HeaderScreenId = Category1HeaderScreenScreen0.Id;
 		    Category1ObjectTable.HeaderScreenCode = Category1HeaderScreenScreen0.Code;
 
@@ -444,12 +444,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen Category1GeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Category1.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = Category1ObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField Category1Category1GeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField Category1Category1GeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField Category1Category1GeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField Category1Category1GeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField Category1Category1GeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField Category1Category1GeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = Category1GeneralTabScreenScreen1.Id,ScreenCode = Category1GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category1.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

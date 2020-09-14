@@ -127,6 +127,11 @@ export class InterestReportLinesByDatePM {
     public set TotalInterest(newValue: number) { if (this.totalInterest != newValue) { this.totalInterest = newValue; this.MarkAsDirty("TotalInterest"); } }
        
 	 
+    private isOpenBalanceLine: boolean;
+    public get IsOpenBalanceLine() { return this.isOpenBalanceLine; }
+    public set IsOpenBalanceLine(newValue: boolean) { if (this.isOpenBalanceLine != newValue) { this.isOpenBalanceLine = newValue; this.MarkAsDirty("IsOpenBalanceLine"); } }
+       
+	 
 
     public OldEntityPM: InterestReportLinesByDatePM;
 	

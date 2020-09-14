@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportLinesByDateUpdateClass
    {  		
-		public const string HashString = "b6029e2cd0cced01a6ca18f127afbaa6";
+		public const string HashString = "6c526c79a8c868614c664582b9246fb5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestReportLinesByDate",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestReportLinesByDates",
-			      				    OldDBTableName =  "InterestReportLinesByDates",
 			      				    ObjectTableSingular =  "InterestReportLinesByDate",
 			      				    ObjectTablePlural =  "InterestReportLinesByDates",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Lines By Date",
-			      				    Code =  "00a5",
+			      				    Code =  "01e0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportId",
-					  						OldFieldName =  "InterestReportId",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -202,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromDate",
-					  						OldFieldName =  "FromDate",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -260,7 +257,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToDate",
-					  						OldFieldName =  "ToDate",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -318,7 +314,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalInterestDays",
-					  						OldFieldName =  "TotalInterestDays",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -376,7 +371,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalAmount",
-					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -436,7 +430,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccumulatedAmount",
-					  						OldFieldName =  "AccumulatedAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -496,7 +489,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StandardInterestPercentage",
-					  						OldFieldName =  "StandardInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -556,7 +548,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExceptionalInterestPercentage",
-					  						OldFieldName =  "ExceptionalInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -616,7 +607,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreditInterestPercentage",
-					  						OldFieldName =  "CreditInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -676,7 +666,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StandardInterestAmount",
-					  						OldFieldName =  "StandardInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -736,7 +725,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExceptionalInterestAmount",
-					  						OldFieldName =  "ExceptionalInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -796,7 +784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreditInterestAmount",
-					  						OldFieldName =  "CreditInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -856,7 +843,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedStandInterestAmount",
-					  						OldFieldName =  "CalculatedStandInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -916,7 +902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedExcepInterestAmount",
-					  						OldFieldName =  "CalculatedExcepInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -976,7 +961,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedCreditInterestAmount",
-					  						OldFieldName =  "CalculatedCreditInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1036,7 +1020,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculationDetails",
-					  						OldFieldName =  "CalculationDetails",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1094,7 +1077,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
-					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1152,7 +1134,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalInterest",
-					  						OldFieldName =  "TotalInterest",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1193,6 +1174,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "TotalInterest",
 					  						DefaultText =  "Total Interest",
 					  						FullLocalDefaultText =  "ריבית לחיוב",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsOpenBalanceLine",
+					  						ObjectTableName =  "InterestReportLinesByDate",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsOpenBalanceLine",
+					  						ListPropertyPath =  "IsOpenBalanceLine",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsOpenBalanceLine",
+					  						DefaultText =  "IsOpenBalanceLine",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

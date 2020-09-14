@@ -23,6 +23,8 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     private myService: CreditLimitSettingPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsPartnersRestrictionsTabVisible: boolean = false;
+    public IsShipmentCreationWarningHasFeatureToggle: boolean = false;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new CreditLimitSettingPMService();
@@ -30,6 +32,8 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "PartnersRestrictions")) {
             this.IsPartnersRestrictionsTabVisible = true;
         }
+
+        this.CheckShipmentCreationWarningFeatureToggle();
     }
 
     ngOnInit() {
@@ -52,6 +56,14 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
                 }
             });
         });
+    }
+
+    private CheckShipmentCreationWarningFeatureToggle() {
+        this.IsShipmentCreationWarningHasFeatureToggle = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SWC" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (featureToggle) {
+            this.IsShipmentCreationWarningHasFeatureToggle = true;
+        }
     }
 
     SetUIProperties() {

@@ -27,6 +27,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string KPIDocumentFields = "KPI";
         public const string OceanInsightsV2 = "OI2";
         public const string ChargesDWH = "CWH";
+       public const string ShipmentWarningCheckbox = "SWC";  
     }
 }
 

@@ -131,8 +131,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 TableName = "Shipments",
                 FieldsDBName = "Id,Tenant,ShipmentNumber,SecurityKey,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate,House,ShipmentLevelCode",
                 KeyName = "Id",
-                ConditionKey = "SecurityKey",
-                CT_FieldsDBName = "Tenant,SecurityKey,SearchFields,ShipmentDate",
+                ConditionKey = "ShipmentId",
+                CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate,IsPublic",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
                 Main_CT_TableName = "CargoTrackingShipmentSearches",
@@ -838,9 +838,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "CREATE TABLE[dbo].["+ TableName + "]("+
                             "[Tenant] INT NOT NULL,"+
                             "[SearchFields] NVARCHAR(100) NULL,"+
-                            "[SecurityKey] VARCHAR(40)   NULL," +
+                            "[ShipmentId] VARCHAR(15)   NULL," +
                             "[ShipmentDate] DATETIME NOT NULL,"+
-                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
+                            "[IsPublic] BIT DEFAULT(0) NULL," +
+                            "[Id] INT IDENTITY(1,1) NOT NULL," +
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")" +
                             " ";

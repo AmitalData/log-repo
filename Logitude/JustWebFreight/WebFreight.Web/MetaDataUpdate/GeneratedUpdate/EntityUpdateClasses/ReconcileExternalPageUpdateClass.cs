@@ -1376,10 +1376,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReconcileExternalPage.ReconcileExternalPageHeaderScreen", Name = "ReconcileExternalPageHeaderScreen", ObjectTableId = ReconcileExternalPageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = "ReconcileExternalPage.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = "ReconcileExternalPage.PageNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = "ReconcileExternalPage.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = "ReconcileExternalPage.PageNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ReconcileExternalPageObjectTable.HeaderScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id;
 		    ReconcileExternalPageObjectTable.HeaderScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code;
 

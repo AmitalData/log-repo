@@ -42,7 +42,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     DataRow TableRow1 = dataTable.NewRow();
                     TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
                     TableRow1.SetField("SearchFields", SearchArr[i]);
-                    TableRow1.SetField("Id", TableRow["Id"] + "_" + (i + 1));
                     dataTable.Rows.Add(TableRow1);
          
 

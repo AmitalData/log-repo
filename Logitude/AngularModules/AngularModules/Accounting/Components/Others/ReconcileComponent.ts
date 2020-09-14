@@ -970,7 +970,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     OnSortInvoked(event){
-        this.SelectedLines = new ObservableCollection([]);
+        // this.SelectedLines = new ObservableCollection([]);
     }
 
     PushLine(row, RowIndex) {
