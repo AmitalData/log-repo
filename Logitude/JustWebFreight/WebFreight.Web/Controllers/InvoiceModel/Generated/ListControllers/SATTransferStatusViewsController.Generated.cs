@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 SATTransferStatusRepository  sATTransferStatusRepository = new SATTransferStatusRepository(MyContext);
                 IQueryable<SATTransferStatus> entityPocos = sATTransferStatusRepository.GetSATTransferStatus();
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<SATTransferStatusList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(SATTransferStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -292,11 +294,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
