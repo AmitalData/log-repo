@@ -60,6 +60,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CalculationDetails { get; set; }
         [Column("LineNumber")]
 	    public int LineNumber { get; set; }
+        [Column("IsOpenBalanceLine")]
+	    public bool? IsOpenBalanceLine { get; set; }
     }
 }
 	 

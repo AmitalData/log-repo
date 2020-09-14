@@ -219,5 +219,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.Tenants.Any(a => a.Id == id);
         }
+
+        public string GetLocalCurrencyFromTenant(int id)
+        {
+            return (from a in context.Tenants where a.Id == id select a.CurrencyId).FirstOrDefault();
+        }
     }
 }

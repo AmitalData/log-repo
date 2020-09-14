@@ -1825,5 +1825,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             string countryCode = tenant.Address != null ? (tenant.Address.Country != null ? tenant.Address.Country.Code : null) : null;
             return countryCode;
         }
+
+        public string GetLocalCurrencyFromTenant(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            return tenantRepository.GetLocalCurrencyFromTenant(tenant);
+        }
     }
 }

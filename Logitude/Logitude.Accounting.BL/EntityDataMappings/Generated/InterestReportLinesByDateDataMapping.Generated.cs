@@ -40,7 +40,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedExcepInterestAmount, 
 	         CalculatedCreditInterestAmount, 
 	         CalculationDetails, 
-	         LineNumber,
+	         LineNumber, 
+	         IsOpenBalanceLine,
 	      }
 
 
@@ -66,7 +67,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedCreditInterestAmount, 
 	         CalculationDetails, 
 	         LineNumber, 
-	         TotalInterest,
+	         TotalInterest, 
+	         IsOpenBalanceLine,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -163,6 +165,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
             {
 				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOpenBalanceLine))
+            {
+				entityPOCO.IsOpenBalanceLine = entityPM.IsOpenBalanceLine;
 			}
 			}
 
@@ -264,6 +271,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.LineNumber = entityPOCO.LineNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsOpenBalanceLine))
+            {
+					entityPM.IsOpenBalanceLine = entityPOCO.IsOpenBalanceLine;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportLinesByDatePM entityPM, InterestReportLinesByDatePM oldEntityPM)
@@ -358,6 +370,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
             {
                 oldEntityPM.LineNumber = entityPM.LineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOpenBalanceLine))
+            {
+                oldEntityPM.IsOpenBalanceLine = entityPM.IsOpenBalanceLine;
             }
 			
 		}
