@@ -21,7 +21,7 @@
    declare @Incoterm as int
    declare @TotalGrossWeightInKG as float
    declare @TotalChargeableWeightInKG as float
-   declare @TotalVolumeInCBM as float
+   declare @TotalVolumeInCBM as float 
    declare @NumberOfPackages as int
    declare @DangerousGoods as bit
    declare @NumberOfContainers as int
