@@ -124,13 +124,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
     IsLoadShipmentShipmentComputedFieldsResource: boolean = false;
     IsLoadShipmentShipmentPayableResource: boolean = false;
     IsLoadShipmentChargesTypeResource: boolean = false;
-
+    KPIFeatureToggle: any;
 
     constructor(private CD: ChangeDetectorRef) {
         super();
 
         this.InitializeService();
         this.LoadEntityResources();
+        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI" && d.TenantNumber == SessionLocator.Tenant)[0];
     }
 
 
@@ -193,7 +194,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                                     }
                                     var MyInnerList = [];
                                     view.FieldsList.forEach((field) => {
-                                        if (field.DisplayInQueryBuilder == true) {
+                                        if (this.DisplayFieldInQueryBuilder(field)) {
                                             var MyItem = new DWObjectFieldsDetails(field, this);
                                             MyItem.ParentDataTypeCode = field.DataTypeCode;
                                             MyItem.Category1 = field.Category1;
@@ -215,7 +216,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                                     }
                                     var MyInnerList1 = [];
                                     view1.FieldsList.forEach((field) => {
-                                        if (field.DisplayInQueryBuilder == true) {
+                                        if (this.DisplayFieldInQueryBuilder(field)) {
                                             var MyItem = new DWObjectFieldsDetails(field, this);
                                             MyItem.ParentDataTypeCode = field.DataTypeCode;
                                             MyItem.Category1 = field.Category1;
@@ -261,6 +262,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 }
             });
         });
+    }
+
+    DisplayFieldInQueryBuilder(field) {
+        var displayField: boolean = field.DisplayInQueryBuilder == true;
+
+        var fieldsNeedKPIFeature: Array<string> = ["[Booking Confirmation Sent]", "[Pre Alert Sent]", "[Delivery Notice Sent]", "[Expected Arrival Notice Sent]", "[Arrival Notice Sent]", "[T1 Received]"];
+        if (fieldsNeedKPIFeature.find(f => f == field.Code)) {
+            if (!this.KPIFeatureToggle)
+                displayField = false;
+        }
+        
+        return displayField;
     }
 
     FillGroupChargesValues(myResult: any) {
