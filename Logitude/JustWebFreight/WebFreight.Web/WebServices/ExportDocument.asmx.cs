@@ -89,12 +89,15 @@ namespace WebFreight.Web.WebServices
         }
 
 
+
+
         [WebMethod]
-        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs )
+        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs)
         {
             BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
             buildDocsOutService.BuildDocumentOut(new BuildDocsOutArgs() { EntityId = buildDocsOutArgs.EntityId, DocumentTypeId = buildDocsOutArgs.DocumentTypeId, LoggedUserId = buildDocsOutArgs.LoggedUserId, ObjectTableId = buildDocsOutArgs.ObjectTableId, Tenant = buildDocsOutArgs.Tenant });
         }
+
 
     }
 }
