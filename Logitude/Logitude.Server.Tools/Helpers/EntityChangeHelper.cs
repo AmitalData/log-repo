@@ -851,6 +851,10 @@ namespace Logitude.Server.Tools.Helpers
             {
                 Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
                 if (field != null) result = field.Value;
+                if ((item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date") && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value))
+                {
+                    result = ConvertToDate(field.Value);
+                }
             }
 
             else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
