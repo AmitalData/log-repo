@@ -60,6 +60,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.CalculationDetails).HasColumnName("CalculationDetails").HasMaxLength(256).IsUnicode(true);
 
             this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired();
+
+            this.Property(t => t.IsOpenBalanceLine).HasColumnName("IsOpenBalanceLine");
         }
     }
 }

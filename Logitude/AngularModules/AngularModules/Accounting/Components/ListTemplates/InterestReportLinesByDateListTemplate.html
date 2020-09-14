@@ -48,5 +48,16 @@
             {{'InterestReport.O.ShowDetails' | TextCodeTranslationPipe}}
         </button>
     </div>
+ 
+    
+    <div [style.text-align]="'center'" class="TextTrimming" *ngIf="fieldName == 'IsOpenBalanceLine' && rowData[fieldName] == true">
+   
+
+       <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info2'" float-start [direction]="isRTL?'bottomleft':'bottomright'" >                         
+        {{'InterestReport.O.LineWasCreatedByTheSystem' | TextCodeTranslationPipe}}
+      </LogToolTip>
+    
+ 
+    </div>
 
 </div>
