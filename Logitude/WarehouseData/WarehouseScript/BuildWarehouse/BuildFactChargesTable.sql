@@ -80,11 +80,6 @@
 
 	        declare @ComputedStatus as int
 
-		declare @ShipmentStatus as int
-		declare @ShipmentStatusWeight as int
-
-		declare @MasterStatus as int
-		declare @MasterStatusWeight as int
 
 
 
@@ -145,7 +140,7 @@
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
 	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency , ShipmentPayablesReceivables.PayableId,ShipmentPayablesReceivables.ReceivableId
 	,ShipmentPayablesReceivables.BillTo ,ShipmentPayablesReceivables.Vendor , ShipmentPayablesReceivables.InvoiceId, dw_Shipments.OperationalCloseDate, dw_Shipments.AccountingCloseDate, dw_Shipments.RegistryDate, dw_Shipments.ProjectNumber,shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, NewDIM_Incoterms.Id_Number
-	,NewDIM_ShipmentStatuses.Id_Number, NewDIM_ShipmentStatuses.[Status Weight] , masterShipmentStatuses.Id_Number , masterShipmentStatuses.[Status Weight] 
+	,NewDIM_ShipmentStatuses.Id_Number
 
 	 
 	
@@ -169,8 +164,7 @@
 	inner JOIN NewDIM_Incoterms  ON dw_Shipments.IncotermId = NewDIM_Incoterms.Id
 	inner JOIN NewDIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
 	inner JOIN NewDIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
-	inner JOIN NewDIM_ShipmentStatuses  ON dw_Shipments.StatusId = NewDIM_ShipmentStatuses.Id
-	inner JOIN NewDIM_ShipmentStatuses masterShipmentStatuses  ON dw_ShipmentMasterDatas.StatusId = masterShipmentStatuses.Id
+	inner JOIN NewDIM_ShipmentStatuses  ON dw_Shipments.ComputedStatusId = NewDIM_ShipmentStatuses.Id
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
     inner JOIN NewDIM_Ports fromPort  ON dw_Shipments.FromPortId = FromPort.Id
 	inner JOIN NewDIM_Ports toPort  ON dw_Shipments.ToPortId = toPort.Id
@@ -194,7 +188,7 @@
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency,	@PayableId ,@ReceivableId ,@BillTo ,@Vendor , @InvoiceId, @OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm
-	,@ShipmentStatus , @ShipmentStatusWeight  , @MasterStatus , @MasterStatusWeight 
+	,@ComputedStatus 
 
 	
 
@@ -206,8 +200,7 @@
 
 
 	
-	    set @ComputedStatus =@ShipmentStatus;
-		if(@MasterStatusWeight  > @ShipmentStatusWeight) begin  set @ComputedStatus = @MasterStatus;  end
+
 
 
     declare @OpenReceivablesinLocal as float =0
@@ -325,7 +318,7 @@ END CATCH
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency,	@PayableId ,@ReceivableId,@BillTo ,@Vendor , @InvoiceId
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm
-		,@ShipmentStatus , @ShipmentStatusWeight  , @MasterStatus , @MasterStatusWeight 
+     ,@ComputedStatus
 
 		End
 	CLOSE ShipmentsChargesCursor
