@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.Validators
                                                 entityPM.CustomerId, entityPM.Tenant, entityPM.InterestCalculationDate);
             if (interestReportPM != null)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CannotCreateReportWithCalculationDateLess", entityPM.Tenant, showLocals) + " " + interestReportPM.ReportNumber + " " + TextCodesTranslator.TranslateText("InterestReport.O.on", entityPM.Tenant, showLocals) + " " + entityPM.InterestCalculationDate.ToString("dd/MM/yyyy") + TextCodesTranslator.TranslateText("InterestReport.O.AlreadyExists", entityPM.Tenant, showLocals));
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CannotCreateReportWithCalculationDateLess", entityPM.Tenant, showLocals) + " " + interestReportPM.ReportNumber + " " + TextCodesTranslator.TranslateText("InterestReport.O.on", entityPM.Tenant, showLocals) + " " + interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + TextCodesTranslator.TranslateText("InterestReport.O.AlreadyExists", entityPM.Tenant, showLocals));
             }
 
         }
