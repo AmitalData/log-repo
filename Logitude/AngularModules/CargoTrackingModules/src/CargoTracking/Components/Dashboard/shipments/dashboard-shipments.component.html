@@ -1,6 +1,7 @@
 <h1>Shipments</h1>
 
 <div class="toolbar">
+
     <div class="search-bar">
         <form [formGroup]="searchForm" (ngSubmit)="Search()">
 
@@ -19,11 +20,43 @@
 
             </div>
 
-            <button class="search-button hide-mobile" type="submit" (onsubmit)="Search()">Search</button>
+            <button class="search-button hide-mobile" type="submit" (onsubmit)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
         </form>
     </div>
+
+    <div class="filters">
+        <ul class="toolbar-filters">
+            <li *ngFor="let filter of SearchFilters" (click)="SelectFilter(filter)">{{filter.Name}} ({{filter.Count}})</li>
+            <li class="toggle-menu">
+                Company
+                <ul class="menu-drawer">
+                    <li>Company 1</li>
+                    <li>Company 2</li>
+                </ul> 
+            </li>
+        </ul>
+    </div>
+
+    <div class="actions-buttons">
+        <div><img src="./assets/images/icons/filter.png" alt=" " /></div>
+        <div><img src="./assets/images/icons/ascending-sort.png" alt=" " /></div>
+    </div>
+
 </div>
 
+<div class="selected-filters" *ngIf="SelectedFilters.length > 0">
+    <ul>
+        <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
+            {{filter.Name}}
+            <span style=" font-size: 24px;
+                        font-weight: 400;
+                        position: absolute;
+                        padding-left: 9px; ">×</span>
+        </li>
+
+        <li class="clear" (click)="ClearFilters()">Clear</li>
+    </ul>
+</div>
 
 <!-- No Result -->
 <div class="no-result-div" *ngIf="noResult">
@@ -37,6 +70,9 @@
 
 
 
+<div class="row-count" *ngIf="Shipments.length>0">
+    {{Shipments.length}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
+</div>
 
 <div *ngIf="Shipments.length>0" class="scrollable-table">
 

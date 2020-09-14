@@ -22,7 +22,7 @@ export class DashboardShipmentsComponent
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
     tenant;
-    isLoading = false;
+    isLoading: boolean  = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -121,7 +121,7 @@ export class DashboardShipmentsComponent
         this.references = reference != null ? reference.split(',') : null;
 
     }
-
+ 
     GetModeIcon(mode: string)
     {
         var iconPath = "";
@@ -145,5 +145,53 @@ export class DashboardShipmentsComponent
         return iconPath;
     }
 
+    SearchFilters: SearchFilter[] = [
+        new SearchFilter('Import'),
+        new SearchFilter('Export'),
+        new SearchFilter('Air'),
+        new SearchFilter('Land'),
+        new SearchFilter('Sea'),
+    ];
 
+    SelectedFilters: SearchFilter[] = [];
+    SelectFilter(filter:SearchFilter ){
+        var item = this.SelectedFilters.find(d=>d.Name == filter.Name);
+        if(!item)
+            this.SelectedFilters.push(filter);
+    }
+    DeselectFilter(filter:SearchFilter ){
+        var index = this.SelectedFilters.findIndex(d=>d.Name == filter.Name);
+        this.SelectedFilters.splice(index,1);
+    }
+    ClearFilters(){
+        this.SelectedFilters = [];
+    }
+
+}
+
+export class SearchFilter {
+    constructor(name: string) {
+        this.Name = name;
+    }
+    
+
+    private _Name : string;
+    public get Name() : string {
+        return this._Name;
+    }
+    public set Name(v : string) {
+        this._Name = v;
+    }
+
+
+    
+    private _Count : number = 0;
+    public get Count() : number {
+        return this._Count;
+    }
+    public set Count(v : number) {
+        this._Count = v;
+    }
+    
+    
 }

@@ -1,12 +1,15 @@
 
 body{
-  background: #FAFBFC;
+  background: #FAFBFC !important;
+}
+h1{
+  margin: 0;
 }
 .sidebar {
     margin: 0;
     padding: 0;
     width: 170px;
-    background-color: #002664;
+    background-color: var(--MainColor);
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -22,6 +25,10 @@ body{
     text-decoration: none;
     cursor: pointer;
     font-weight: 100;
+    text-align: left;
+    /* text-indent: 24px; */
+    padding-left: 40px;
+    border-left: 6px solid var(--MainColor);
   }
    
     .sidebar a.active {
@@ -32,13 +39,15 @@ body{
     }
     
     .sidebar a:hover:not(.active) {
-        background-color: #555;
+        opacity: .8;
         color: white;
     }
     
   div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
+    margin-left: 170px;
+    min-height: 100vh;
+    background: #FAFBFC;
+    padding: 0 46px;
   }
 
   .sidebar .avatar > img{
@@ -64,7 +73,7 @@ body{
   }
 
   .sidebar .logo > img{
-    width: 80px;
+    width: 120px;
   }
 
   
