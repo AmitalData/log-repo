@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportLinesByDatePM.CalculatedStandInterestAmount = standardInterestCalculationDetails.Value;
             interestReportLinesByDatePM.CalculatedExcepInterestAmount = exceptionalInterestCalculationDetails.Value;
             interestReportLinesByDatePM.CalculatedCreditInterestAmount = creditInterestCalculationDetails.Value;
+
+            interestReportLinesByDatePM.IsOpenBalanceLine= interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.IsOpenBalanceLine;
 
             List<InterestCalculationDetails> interestCalculationDetails = new List<InterestCalculationDetails>();
             interestCalculationDetails.Add(standardInterestCalculationDetails);
@@ -290,6 +293,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                                                                           {
                                                                                               GroupInterestValueDate = groupByDate.Key,
                                                                                               TotalLocalAmount = groupByDate.Sum(d => d.LocalAmount),
+                                                                                              IsOpenBalanceLine = groupByDate.Any(d => d.InterestEntityTypeCode == InterestEntities.OpenBalance)
 
                                                                                           }).OrderBy(d => d.GroupInterestValueDate).ToList();
             return interestTransactionsGroupedByDates;

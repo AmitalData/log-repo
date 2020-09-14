@@ -10,5 +10,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     {
         public DateTime GroupInterestValueDate { get; set; }
         public decimal TotalLocalAmount { get; set; }
+        public bool IsOpenBalanceLine { get; set; }
     }
 }

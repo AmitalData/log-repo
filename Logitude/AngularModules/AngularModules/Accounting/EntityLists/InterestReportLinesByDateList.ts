@@ -27,6 +27,6 @@ export class InterestReportLinesByDateList {
 	CalculatedCreditInterestAmount: number;
 	CalculationDetails: string;
 	LineNumber: number;
-	
+	IsOpenBalanceLine: boolean;
 }
  
