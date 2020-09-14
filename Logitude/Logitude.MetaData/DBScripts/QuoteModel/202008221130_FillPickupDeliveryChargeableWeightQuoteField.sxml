@@ -1,6 +1,6 @@
 ﻿
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
-  <Sql Version="5">
+  <Sql Version="6">
     <![CDATA[
 					If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
 				Begin
