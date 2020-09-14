@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;00e2&quot;"
+  Code="&quot;feaa&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -383,6 +383,10 @@
       Code="&quot;OI2&quot;"
       Name="&quot;OceanInsightsV2&quot;"
       SearchFields="&quot;OI2,OceanInsightsV2&quot;" />
+    <Record
+      Name="&quot;Shipment Warning Checkbox&quot;"
+      Code="&quot;SWC&quot;"
+      SearchFields="&quot;SWC,Shipment Warning Checkbox&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
