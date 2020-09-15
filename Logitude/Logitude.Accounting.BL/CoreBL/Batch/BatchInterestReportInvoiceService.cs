@@ -77,21 +77,28 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             InterestReportArgs args = new InterestReportArgs();
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
+            args.InvoiceDate = interestReportArguments.InvoiceDate;
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-
+                List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReports.Select(s=>s.Id).ToList()).ToList();
+             
                 foreach (InterestReportPM report in interestReports)
                 {
 
+                    report.InterestReportLinesByDates = LinesByDatesForSelectedReports.Where(s=>s.InterestReportId == report.Id).ToList();
                     CreateInvoiceForReportPM(args, interestReportArguments, report);
                 }
             }
             else
             {
+                List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReportArguments.SelectedIds).ToList();
+
                 foreach (string ReportId in interestReportArguments.SelectedIds)
                 {
-                    InterestReportPM interestReport = interestReportQueryService.GetSingle(ReportId, false, true);
+
+                    InterestReportPM  interestReport = interestReportQueryService.GetSingle(ReportId, false,true);
+                    interestReport.InterestReportLinesByDates = LinesByDatesForSelectedReports.Where(s=>s.InterestReportId== ReportId).ToList();
                     CreateInvoiceForReportPM(args, interestReportArguments, interestReport);
                 }
             }
@@ -113,7 +120,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         {
             try
             {
+                List<InterestReportLinesByDatePM> LinesByDatesForSelectedReport = interestReport.InterestReportLinesByDates;
                 interestReport = interestReportQueryService.GetSingle(interestReportArgs.InterestReportId, false, true);
+                interestReport.InterestReportLinesByDates = LinesByDatesForSelectedReport;
                 CreateInvoiceForInterestReport(interestReportArgs, interestReport);
             }
 
