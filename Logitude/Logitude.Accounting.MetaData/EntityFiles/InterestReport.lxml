@@ -2979,6 +2979,13 @@
         IndexOrder="2"
         LocalDefaultText="&quot;סגירה ללא חשבונית&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;RecalculateReport&quot;"
+        DefaultText="&quot;Recalculate Report&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="3"
+        LocalDefaultText="&quot;חישוב מחדש של הדוח&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
