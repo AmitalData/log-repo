@@ -74,8 +74,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         //        }
         //    });
         let ul = new UserList();
-        ul.Id = SessionLocator.LoggedUserPM.Id;
-        ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
+        ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id ;
+        ul.LocalName = SessionLocator.LoggedUserPM.LocalName; 
         if (AppTool.IsNullOrEmpty(ul.LocalName)) {
             ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
         }
