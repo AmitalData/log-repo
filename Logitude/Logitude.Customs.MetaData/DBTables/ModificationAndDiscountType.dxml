@@ -39,4 +39,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsRelevantGoodsItem"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsRelevantInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

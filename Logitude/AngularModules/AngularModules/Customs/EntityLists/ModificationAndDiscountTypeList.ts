@@ -13,6 +13,8 @@ export class ModificationAndDiscountTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	IsRelevantGoodsItem: boolean;
+	IsRelevantInvoice: boolean;
 	
 }
  

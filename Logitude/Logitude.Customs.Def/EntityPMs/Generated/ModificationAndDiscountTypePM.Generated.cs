@@ -135,6 +135,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isRelevantGoodsItem ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRelevantGoodsItem  
+	   {
+	    
+	     get
+		{
+		   return isRelevantGoodsItem;
+		 }
+		 set
+		 {
+		   if(isRelevantGoodsItem != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelevantGoodsItem",OldValue=isRelevantGoodsItem,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRelevantGoodsItem=value;
+		   }
+			
+		 }
+	   }
+	  private bool isRelevantInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRelevantInvoice  
+	   {
+	    
+	     get
+		{
+		   return isRelevantInvoice;
+		 }
+		 set
+		 {
+		   if(isRelevantInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelevantInvoice",OldValue=isRelevantInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRelevantInvoice=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
