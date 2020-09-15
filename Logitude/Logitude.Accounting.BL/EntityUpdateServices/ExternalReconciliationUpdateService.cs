@@ -75,7 +75,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
-                        if (aRPaymentCheque != null)
+                        if (aRPaymentCheque != null && (aRPaymentCheque.StatusCode =="2" || aRPaymentCheque.StatusCode == "3"))
                         {
                             UpdateARPaymentCheque(aRPaymentCheque, "6");
                         }
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(transactionPM.SourceId, entityPM.Tenant);
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference2).FirstOrDefault();
-                        if (aRPaymentCheque != null)
+                        if (aRPaymentCheque != null && (aRPaymentCheque.StatusCode == "2" || aRPaymentCheque.StatusCode == "3"))
                         {
                            
                             UpdateARPaymentCheque(aRPaymentCheque, "6");
