@@ -20,7 +20,7 @@ namespace WebFreight.Web.Helpers
             DocumentOutPM documentOutPM = GetDocumentOutPM(buildDocsOutArgs);
             if (documentOutPM == null) documentOutPM = CreateDcoumentOutPM(buildDocsOutArgs);
 
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery();
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(buildDocsOutArgs.Tenant);
             var documentTypePM = documentTypeQuery.GetSinglePM(buildDocsOutArgs.DocumentTypeId, documentOutPM.Id, buildDocsOutArgs.Tenant);
             if (documentTypePM != null)
             {
