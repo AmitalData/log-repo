@@ -740,6 +740,7 @@ namespace Logitude.Server.Tools.Helpers
         public void ApplySetValueAutomation(Object entityPM, List<Automation> automationsList, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
         {
             int tenant = entityChange.Tenant;
+            ObjectTableRepository objecttableRepository = new ObjectTableRepository(tenant);
 
             foreach (Automation automation in automationsList)
             {
@@ -751,8 +752,8 @@ namespace Logitude.Server.Tools.Helpers
                 string lastUpdate = GetLastUpdateDate(lastupdateautomation, otherLastupdateautomation, automation);
 
                 ValidateAutomationResultClass validateResult = ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
-
-                if (validateResult.Type == "Delayed")
+                var isShipmentSetFieldDelayed = (validateResult.IsAutomationValid && automation.ResultCode == "FIELDSET" && validateResult.Type == "Delayed") ? objecttableRepository.IsObjectTableShipment(automation.ObjectTableId) : false;
+                if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                 {
                     IsDelayAutomation = true;
                 }
@@ -761,7 +762,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (validateResult.IsAutomationValid)
                 {
-                    if (validateResult.Type == "Delayed")
+                    if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                     {
                         AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityId);
                     }

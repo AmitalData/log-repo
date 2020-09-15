@@ -903,6 +903,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.CountDocumentSelection = "no documents selected";
             this.FollowUpNote = "";
         }
+
+
+        if (value.Code == "FIELDSET" && this.ObjectTableName == "Shipment") {
+            this.AutomatedBackupClass.Type = "Immeduiatly";
+            this.IsSelectedImmediatly = true;
+            this.IsSelectedDelayed = false;
+            this.DelayTime = 0;
+        }
     }
     
     get TypeWidth() {
@@ -926,6 +934,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
+            this.DelayTime = 0;
+            this.IsChangeAutomation = true;
         }
 
         else {
