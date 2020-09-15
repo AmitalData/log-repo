@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceTypeUpdateClass
    {  		
-		public const string HashString = "27413134111ac543257826d0b52391e7";
+		public const string HashString = "5c8129d7aefffc5f3b610513703f26b4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,10 +89,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "ARInvoiceType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ARInvoiceTypes",
-			      				    OldDBTableName =  "ARInvoiceTypes",
 			      				    ObjectTableSingular =  "A/R Invoice Type",
 			      				    ObjectTablePlural =  "A/R Invoice Types",
-			      				    HasCustomFilter =  false,
+			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -121,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/R Invoice Type",
-			      				    Code =  "57aa",
+			      				    Code =  "4add",
 			      				    Name =  "ARInvoiceType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -148,7 +147,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "ARInvoiceType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "ARInvoiceType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -270,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ARInvoiceType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
