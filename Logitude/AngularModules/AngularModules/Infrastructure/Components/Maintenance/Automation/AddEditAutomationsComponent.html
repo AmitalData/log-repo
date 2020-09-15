@@ -552,22 +552,28 @@
 
                                                                                                                                 <td style="vertical-align:top" *ngIf="IsLoadAutomationResultEmailRecipient">
                                                                                                                                     <EmailSearchTextBox [IsDisabled]="IsAutomationResultEmailAllActiveUsers" [DontInCludeInactive]="true" [EmailsText]="UserIds" [SelectedValuePath]="'Id'" [IsUsersList]="true" (EmailsTextChanged)="UserIds = $event"></EmailSearchTextBox>
-                                                                                                                               
 
-                                                                                                                                 </td>
+
+                                                                                                                                </td>
                                                                                                                                 <td style="width:10px"><div></div></td>
                                                                                                                                 <td style="width:110px;vertical-align:top;margin-top:2px">
-                                                                                                                                   <div style="vertical-align:central;margin-top:2px">
-                                                                                                                                       <CheckBox [IsChecked]="IsAutomationResultEmailAllActiveUsers" [Text]="'All Active Users'" (Checked)="IsAutomationResultEmailAllActiveUsers = $event;IsChangeAutomation=true" [IsEnabled]="!UserIds"></CheckBox>
+                                                                                                                                    <div style="vertical-align:central;margin-top:2px">
+                                                                                                                                        <CheckBox [IsChecked]="IsAutomationResultEmailAllActiveUsers" [Text]="'All Active Users'" (Checked)="IsAutomationResultEmailAllActiveUsers = $event;IsChangeAutomation=true" [IsEnabled]="!UserIds"></CheckBox>
 
-                                                                                                                                   </div>
-                                                                                                                                  
+                                                                                                                                    </div>
+
                                                                                                                                 </td>
 
                                                                                                                                 <td style="width:10px">
                                                                                                                                     <div style="width:10px"></div>
                                                                                                                                 </td>
                                                                                                                             </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td>
+                                                                                                                                    <div style="height:3px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
                                                                                                                         </table>
 
                                                                                                                     </div>
@@ -578,6 +584,8 @@
 
 
                                                                                                         </tr>
+
+
                                                                                                         <tr style="height:5px">
                                                                                                             <td></td>
                                                                                                         </tr>
@@ -589,8 +597,86 @@
 
 
                                                                                         </tr>
+
+                                                                                        <tr style="height:5px">
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                        </tr>
+
+                                                                                        <tr style="height:40px" *ngIf="SelectedNotRequiredFields.length > 0">
+
+                                                                                            <td colspan="3">
+
+                                                                                                <div style="height:40px;border:2px solid #E4E3E1;border-radius:3px;margin-left:5px;margin-right:5px">
+                                                                                                    <table>
+
+                                                                                                        <tr style="height:10px">
+                                                                                                            <td></td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+
+
+                                                                                                            <td style="vertical-align:top">
+                                                                                                                <div style="vertical-align:top">
+                                                                                                                    <div style="vertical-align:top">
+
+                                                                                                                        <table>
+                                                                                                                            <tr>
+                                                                                                                                <td style="width:20px;vertical-align:top;">
+                                                                                                                                    <div style="width:20px;margin-left:15px;font-size:13px;color:#606058;font-weight:bold;margin-top:0px">Notify Back</div>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:5px">
+                                                                                                                                    <div style="width:5px"></div>
+                                                                                                                                </td>
+
+                                                                                                                                <td style="width:150px;">
+                                                                                                                                    <ComboBox [ItemsSource]="NotifyBackValuesList" [SelectedItem]="NotifyBackSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="NotifyBackSelectedItem = $event"></ComboBox>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:3px"><div></div></td>
+                                                                                                                                <td style="width:30px;" *ngIf="IsChooseUsersVisible">
+                                                                                                                                    <div style="width:60px"><Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink></div>
+                                                                                                                                    
+                                                                                                                                </td>
+                                                                                                                                <td style="width:30px" *ngIf="!IsChooseUsersVisible">
+                                                                                                                                    <div style="width:60px"></div>
+                                                                                                                                </td>
+                                                                                                                                <td style="width:30px">
+                                                                                                                                    <div style="width:60px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td>
+                                                                                                                                    <div style="height:3px"></div>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
+                                                                                                                        </table>
+
+                                                                                                                    </div>
+                                                                                                                </div>
+
+
+                                                                                                            </td>
+
+
+                                                                                                        </tr>
+
+
+                                                                                                        <tr style="height:5px">
+                                                                                                            <td></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
                                                                                         <tr>
-                                                                                            <td colspan="3"></td>
+                                                                                            <td colspan="2"></td>
                                                                                         </tr>
 
                                                                                     </table>

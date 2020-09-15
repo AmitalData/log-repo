@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.RecipientType = entityPM.RecipientType;
             entityPOCO.RecipientValue = entityPM.RecipientValue;
             entityPOCO.PartnerObjectFieldCode = entityPM.PartnerObjectFieldCode;
-
+            entityPOCO.IsNotifyBack = entityPM.IsNotifyBack;
 
 
         }

@@ -16,7 +16,21 @@ export class ResultEmailRecipientViewModel extends BaseComponent implements OnIn
     FullName: string;
     Key: string;
     Tenant: number;
-    IsChecked: boolean;
+    private isChecked: boolean;
+    get IsChecked() { return this.isChecked; }
+    set IsChecked(newValue: boolean) {
+        if (this.isChecked != newValue) {
+            this.isChecked = newValue;
+
+            if (this.isChecked && !this.ObjectFieldPM.IsRequiered) this.AddEditAutomationsComponent.SelectedNotRequiredFields.push(this.ObjectFieldPM);
+            else if (!this.isChecked && !this.ObjectFieldPM.IsRequiered) {
+                var index = this.AddEditAutomationsComponent.SelectedNotRequiredFields.indexOf(this.ObjectFieldPM);
+                if (index !== -1) {
+                    this.AddEditAutomationsComponent.SelectedNotRequiredFields.splice(index, 1);
+                }  
+            }
+        }
+    }
     ObjectFieldPM: ObjectFieldPM;
     EntityContactVariable: string[];
     AddEditAutomationsComponent: AddEditAutomationsComponent;
