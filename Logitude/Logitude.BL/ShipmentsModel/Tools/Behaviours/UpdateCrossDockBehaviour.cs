@@ -33,6 +33,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private IQueryable<WarehouseRelease> warehouseRelases;
         private StorageCalculationManager storageCalculationManager;
         private int tenant;
+
+        public bool ReceivablePricingUpdated { get; set; }
         public UpdateCrossDockBehaviour(ShipmentPM shipmentPM)
         {
             this.shipmentPM = shipmentPM;
@@ -103,6 +105,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     if (shipmentPM.IsBondedWarehouse)
                     {
                         storageCalculationManager.CheckStorageProperties();
+                        ReceivablePricingUpdated = true;
                     }
                 }
             }
@@ -143,6 +146,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     if (shipmentPM.IsBondedWarehouse)
                     {
                         storageCalculationManager.CheckStorageProperties();
+                        ReceivablePricingUpdated = true;
                     }
                 }
             }

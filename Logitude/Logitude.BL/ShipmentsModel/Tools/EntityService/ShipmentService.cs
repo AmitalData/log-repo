@@ -531,9 +531,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
 
-                    // the following two lines added since receivables and pricing modified where cross docs dates updated
-                    this.UpdateShipmentReceivablesCollection();
-                    this.UpdateShipmentStoragePricingsCollection();
+                    if(shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
+                    {
+                        ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
+                        if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                        {
+                            this.CreateShipmentReceivable(storageReceivable);
+                        }
+
+                        else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
+                        {
+                            this.UpdateShipmentReceivable(storageReceivable);
+                        }
+
+                        else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
+                        {
+                            this.DeleteShipmentReceivable(storageReceivable);
+                        }
+
+                        this.UpdateShipmentStoragePricingsCollection();
+                    }
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
