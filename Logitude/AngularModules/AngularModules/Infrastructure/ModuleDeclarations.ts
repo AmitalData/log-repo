@@ -116,6 +116,7 @@ import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsC
 import {MainMenuAutomationComponent} from './Components/Maintenance/Automation/MainMenuAutomationComponent';
 import {AutomationsSettingsComponent} from './Components/Maintenance/Automation/AutomationsSettingsComponent';
 import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/AddEditAutomationsComponent';
+import { ChooseSpecificUserComponent } from './Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
 import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
@@ -306,6 +307,7 @@ export const Components =
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
         AddEditAutomationsComponent,
+        ChooseSpecificUserComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
 
@@ -389,6 +391,7 @@ export class ModuleDeclarations {
             case 'MainMenuAutomationComponent': { myResult = MainMenuAutomationComponent; break; }
             case 'AutomationsSettingsComponent': { myResult = AutomationsSettingsComponent; break; }
             case 'AddEditAutomationsComponent': { myResult = AddEditAutomationsComponent; break; }
+            case 'ChooseSpecificUserComponent': { myResult = ChooseSpecificUserComponent; break; }
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
 
