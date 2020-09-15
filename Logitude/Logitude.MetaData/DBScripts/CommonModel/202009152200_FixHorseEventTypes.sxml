@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+    
+    declare @ObjectTableId as varchar(15)
+    set @ObjectTableId = (select Id from ObjectTables where Name = 'Horse')
+    
+    update EventTypes set ObjectTableId = @ObjectTableId where Code = 'HRIN'
+    update EventTypes set ObjectTableId = @ObjectTableId where Code = 'HRRC'
+   
+      
+    ]]>
+  </Sql>
+</Script>
+

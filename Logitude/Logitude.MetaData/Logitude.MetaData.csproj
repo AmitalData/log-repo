@@ -359,6 +359,7 @@
     <None Include="DBScripts\CommonModel\202008261425_SetToggleCodeForHorsesFeature.sxml" />
     <None Include="DBScripts\CommonModel\202008300915_AddHorsesEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202009151233_UpdateWarehouseReleaseEventTypeStatus.sxml" />
+    <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\CommonModel\BuildSearchKeywordFunction.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
