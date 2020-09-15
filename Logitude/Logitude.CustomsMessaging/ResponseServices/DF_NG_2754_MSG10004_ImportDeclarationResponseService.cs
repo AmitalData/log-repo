@@ -755,7 +755,46 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if (_MyDeclarationPM.IsCourierDeclaration)
+
+            if (customResponse.Response.Error != null)
+            {
+                foreach (var errorItem in customResponse.Response.Error)
+                {
+
+                    if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "13931")
+                    {
+
+
+                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        {
+                            Tenant = _MyDeclarationPM.Tenant,
+                            objectTableName = "Customs.Declaration",
+                            EventCode = "SCH",
+                            notes = null,
+                            CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                            EntityId = _MyDeclarationPM.Id,
+                            UserId = requestParams.LoggingUserId,
+
+                            CommunicationSubject = "FU Status SCH from logitude ",
+                            MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                            {
+                                entname = "CFIFILEM",
+                                primary_number = _MyDeclarationPM.CustomFileNo,
+                                status = "new",
+                                xml_status = "new",
+                                status_id = "SCH",
+                                status_DateTime = DateTime.Now,
+                                comments = null,
+                            }
+                        };
+
+                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+
+                    }
+                }
+            }
+                    if (_MyDeclarationPM.IsCourierDeclaration)
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = new DeclarationCourierStatusPM();
@@ -775,7 +814,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         foreach (var errorItem in customResponse.Response.Error)
                         {
-                            if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
+
+                         
+
+                                if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
                             {
                                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                                 CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("901", false, false);
