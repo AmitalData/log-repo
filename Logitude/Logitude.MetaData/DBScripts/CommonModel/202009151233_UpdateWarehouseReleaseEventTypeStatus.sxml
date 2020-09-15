@@ -1,0 +1,31 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+        
+    declare @Tenant as int
+    declare @EntityStatusId as varchar(15)
+
+    BEGIN 
+    DECLARE TenantsCursor CURSOR READ_ONLY
+    FOR
+    SELECT Id
+    FROM Tenants
+    OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant        
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+
+         set @EntityStatusId = NULL
+         set @EntityStatusId = (select Id from EntityStatus where Code = 'SRIM' and Tenant = @Tenant)
+
+         update EventTypes set EntityStatusId = @EntityStatusId where Tenant = @Tenant and Code = 'WHRD'
+
+    FETCH NEXT FROM TenantsCursor INTO @Tenant      
+    END
+    CLOSE TenantsCursor
+    DEALLOCATE TenantsCursor
+    END
+
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EventType')
+    ]]>
+  </Sql>
+</Script>
