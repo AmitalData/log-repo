@@ -442,7 +442,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? FirstPickupETA { get; set; }
         public string MasterPreCarriageCarrierNumber { get; set; }
         public string MasterPreCarriageVesselName { get; set; }
-        
+
         public string TrailerNumber { get; set; }
         public DateTime? MainCarriageATADateTime { get; set; }
         public string OriginCountryName { get; set; }
@@ -463,5 +463,12 @@ namespace WebFreight.Web.DataProviders
         public int? StorageFreeDays { get; set; }
         public string MasterPreCarriageFromPortName { get; set; }
         public string MasterProjectNumber { get; set; }
+        public string ConsigneeNotImporter { get; set; }
+
+        public string Transshipment1ETA_String { get; set; }
+        public string Transshipment1ETD_String { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
     }
 }

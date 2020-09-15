@@ -410,17 +410,19 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
-
                 myDataProvider.TrailerNumber = shipment.TrailerNumber;
-                myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
-                myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
                 myDataProvider.OriginCountryName = shipment.FromCountryId;
-
                 myDataProvider.MasterPreCarriageCarrierNumber = shipment.MasterPreCarriageCarrierNumber;
                 myDataProvider.MasterPreCarriageVesselName = shipment.MasterPreCarriageVesselName;
                 myDataProvider.MasterPreCarriageFromPortName = shipment.MasterPreCarriageFromPortName;
                 myDataProvider.MasterProjectNumber = shipment.MasterProjectNumber;
                 myDataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+
+                myDataProvider.Transshipment1ETA_String = shipment.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETA) : "";
+                myDataProvider.Transshipment1ETD_String = shipment.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETD) : "";
+                myDataProvider.Transshipment1ETD = shipment.Transshipment1ETD;
+                myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
+                myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -1600,6 +1602,21 @@ namespace WebFreight.Web.WebServices
                                 myDataProvider.PreCarriageCarrierAddress = myDataProvider.PreCarriageCarrierAddress + Environment.NewLine + (preCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + preCarriageCarrierAddress.PhoneNumber + " " : "") + (preCarriageCarrierAddress.FaxNumber != null ? "Fax: " + preCarriageCarrierAddress.FaxNumber + " " : "");
                             }
                         }
+                    }
+                }
+                #endregion
+
+                #region ConsigneeNotImporter
+
+                if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterId))
+                {
+                    Card myCard = (from a in commonContext.Cards
+                                          where a.Id == shipment.ConsigneeNotImporterId
+                                   select a).FirstOrDefault();
+
+                    if(myCard != null)
+                    {
+
                     }
                 }
                 #endregion
