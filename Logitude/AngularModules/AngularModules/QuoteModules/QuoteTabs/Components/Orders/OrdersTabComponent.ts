@@ -11,6 +11,8 @@ import { QuoteSettingPM } from '../../../../Quote/EntityPMs/QuoteSettingPM';
 import { QuoteDomainService } from '../../../../Quote/Services/QuoteDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
+import { RulesValidator } from 'Infrastructure/Validators/RulesValidator';
+import { ServiceLocator } from 'Infrastructure/Locators/ServiceLocator';
 
 @Component({
   selector: 'OrdersTabComponent',
@@ -166,6 +168,8 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
     this.EntityPM.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
     this.EntityPM.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
     this.EntityPM.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
+
+    ServiceLocator.RulesValidator.ApplyAllConditionalBlockFieldRules(this.EntityPM,this.ObjectTableName);
   }
   private SetUIProperties_AutomaticallyClosed() {
     this.EntityPM.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
