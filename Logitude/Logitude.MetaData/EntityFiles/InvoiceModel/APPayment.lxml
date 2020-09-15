@@ -6342,7 +6342,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;DontIncludeInDeductionReport&quot;"
     DefaultText="&quot;Dont Include In Deduction Report&quot;"
-    FullLocalDefaultText="&quot;האם לדווח ביטול לניכוי במקור&quot;"
+    FullLocalDefaultText="&quot;לא לכלול בדוח ניכוי במקור&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

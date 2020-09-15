@@ -54,6 +54,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public int LineNumber  { get; set; }
        [DataMember]
        public decimal TotalInterest  { get; set; }
+       [DataMember]
+       public bool? IsOpenBalanceLine  { get; set; }
    }
 
 }

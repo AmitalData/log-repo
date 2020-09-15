@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "8ca3097658ea26f10a83d506f8414c61";
+		public const string HashString = "7272ffe7dd9ae98807b3ee11f6377d94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6677,6 +6677,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentOOriginalInvoiceAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.OriginalInvoiceAmount", DefaultText = "Original Invoice Amount",LocalDefaultText = @"סכום חשבונית מקורי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentOReconcileData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReconcileData", DefaultText = "Reconcile Data",LocalDefaultText = @"תאריך התאמה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOMultiPaymentZeroDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.MultiPaymentZeroDifference", DefaultText = "When reconciling multiple payments, the difference must be 0",LocalDefaultText = @"בביצוע התאמה שמכילה יותר מקבלה אחת ההפרש חייב להיות אפס", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

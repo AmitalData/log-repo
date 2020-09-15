@@ -92,11 +92,6 @@
 
    	        declare @ComputedStatus as int
 
-		declare @ShipmentStatus as int
-		declare @ShipmentStatusWeight as int
-
-		declare @MasterStatus as int
-		declare @MasterStatusWeight as int
 
 	DECLARE ShipmentsChargesCursor CURSOR READ_ONLY
 	FOR
@@ -171,7 +166,7 @@
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
 	 ,ShipmentPayablesReceivables.ReceivablesTotalAmount,  ShipmentPayablesReceivables.ReceivablesTotalAmountLocal,  ShipmentPayablesReceivables.InvoiceLineId , ShipmentPayablesReceivables.AmountInInvoiceCurrency,ShipmentPayablesReceivables.PayableId,ShipmentPayablesReceivables.ReceivableId
 	,ShipmentPayablesReceivables.BillTo,  ShipmentPayablesReceivables.Vendor ,ShipmentPayablesReceivables.InvoiceId, dw_Shipments.OperationalCloseDate, dw_Shipments.AccountingCloseDate, dw_Shipments.RegistryDate, dw_Shipments.ProjectNumber,shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Incoterms.Id_Number
-	,DIM_ShipmentStatuses.Id_Number, DIM_ShipmentStatuses.[Status Weight] , masterShipmentStatuses.Id_Number , masterShipmentStatuses.[Status Weight] 
+	,DIM_ShipmentStatuses.Id_Number
 
 	
 	From dw_Shipments
@@ -194,7 +189,6 @@
 	inner JOIN DIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
 	inner JOIN DIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
 	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.StatusId = DIM_ShipmentStatuses.Id
-	inner JOIN DIM_ShipmentStatuses masterShipmentStatuses  ON dw_ShipmentMasterDatas.StatusId = masterShipmentStatuses.Id
 
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
     inner JOIN DIM_Ports fromPort  ON dw_Shipments.FromPortId = FromPort.Id
@@ -216,7 +210,7 @@
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency, @PayableId,@ReceivableId,@BillTo , @Vendor,@InvoiceId, @OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm
-		,@ShipmentStatus , @ShipmentStatusWeight  , @MasterStatus , @MasterStatusWeight 
+		,@ComputedStatus
 
 	
 
@@ -232,8 +226,6 @@
    declare @IsOpenReceivable as bit = 0
    declare @IsOpenPayable as bit = 0
 
-    set @ComputedStatus =@ShipmentStatus;
-		if(@MasterStatusWeight  > @ShipmentStatusWeight) begin  set @ComputedStatus = @MasterStatus;  end
 
 
 
@@ -341,8 +333,7 @@ END CATCH
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency, @PayableId,@ReceivableId,@BillTo , @Vendor ,@InvoiceId
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm
-		,@ShipmentStatus , @ShipmentStatusWeight  , @MasterStatus , @MasterStatusWeight 
-
+,@ComputedStatus
 		End
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor

@@ -249,15 +249,9 @@
  declare @ArrivalNoticeSent as datetime
 
  declare @ContainersNumbersAndTypesArray as nvarchar(1000)
- 
+
         declare @ComputedStatus as int
 	    declare @ComputedStatusDate as DateTime
-	 	declare @ShipmentStatusDate as datetime
-		declare @ShipmentStatus as int
-		declare @ShipmentStatusWeight as int
-		declare @MasterStatusDate as datetime
-		declare @MasterStatus as int
-		declare @MasterStatusWeight as int
 
 
 
@@ -285,7 +279,7 @@
          ShipmentPayableStatuses.Name, ShipmentReceivableStatuses.Name, dw_Shipments.CarrierLastStatusDate, dw_Shipments.AWBPrint, dw_Shipments.ExceptionDescription, dw_Shipments.HasException, dw_Shipments.ExceptionResolvedDescription, dw_Shipments.LastExceptionDescription, dw_Shipments.RegistryDate, dw_Shipments.GrossWeightPerTon, dw_Shipments.NextETA, dw_Shipments.NextETD,
          dw_ShipmentComputedFields.Commodity, dw_ShipmentMasterDatas.TrailerNumber, dw_ShipmentMasterDatas.MainCarriageFromAddressId, dw_ShipmentMasterDatas.MainCarriageToAddressId,
 			fisrtPickupTruckerPartners.Id_Number,dw_ShipmentComputedFields.PickupTruckerNumber,dw_ShipmentComputedFields.PickupDriver,dw_ShipmentComputedFields.PickupTrailerNumber,dw_ShipmentComputedFields.PickupNotes,finalDeliveryTruckerIdPartners.Id_Number, dw_ShipmentComputedFields.DeliveryTruckerNumber,dw_ShipmentComputedFields.DeliveryDriver,dw_ShipmentComputedFields.DeliveryTrailerNumber,dw_ShipmentComputedFields.DeliveryNotes ,dw_ShipmentMasterDatas.DocumentsClosingDate,dw_ShipmentComputedFields.DeliveryDate,dw_ShipmentComputedFields.OnHandDate,dw_ShipmentComputedFields.PODDate,dw_Shipments.WarehouseLegActualEntryDate, dw_ShipmentComputedFields.BookingConfirmationSent, dw_ShipmentComputedFields.PreAlertSent, dw_ShipmentComputedFields.DeliveryNoticeSent, dw_ShipmentComputedFields.ExpectedArrivalNoticeSent, dw_ShipmentComputedFields.T1Received, dw_ShipmentComputedFields.ArrivalNoticeSent, dw_ShipmentComputedFields.ContainersNumbersAndTypesArray
-			,DIM_ShipmentStatuses.Id_Number, DIM_ShipmentStatuses.[Status Weight] ,dw_Shipments.StatusDate, masterShipmentStatuses.Id_Number , masterShipmentStatuses.[Status Weight] , dw_ShipmentMasterDatas.StatusDate
+	,DIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate
 
 
 	From dw_Shipments
@@ -313,7 +307,6 @@
 	
 	inner JOIN DIM_Currencies ProfitCurrency ON dw_Shipments.ProfitCurrencyId = ProfitCurrency.Id
 	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.StatusId = DIM_ShipmentStatuses.Id
-    inner JOIN DIM_ShipmentStatuses masterShipmentStatuses  ON dw_ShipmentMasterDatas.StatusId = masterShipmentStatuses.Id
 	inner JOIN DIM_OBLTypes ON dw_ShipmentMasterDatas.OBLTypeCode = DIM_OBLTypes.Code
 
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
@@ -381,7 +374,7 @@
 	@ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
     @PayableStatus, @ReceivableStatus, @CarrierLastStatusDate, @AWBPrint, @ExceptionDescription, @HasException, @ExceptionResolvedDescription, @LastExceptionDescription, @RegistryDate, @GrossWeightPerTon, @NextETA, @NextETD,
     @Commodity, @TrailerNumber, @FromLocation, @ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate, @BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ShipmentStatus , @ShipmentStatusWeight , @ShipmentStatusDate , @MasterStatus , @MasterStatusWeight , @MasterStatusDate
+	,@ComputedStatus , @ComputedStatusDate
 
 
 
@@ -389,10 +382,6 @@
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-	    set @ComputedStatus = @ShipmentStatus;
-		set @ComputedStatusDate = @ShipmentStatusDate;
-		if(@MasterStatusWeight  > @ShipmentStatusWeight )
-		begin  set @ComputedStatus = @MasterStatus;  set @ComputedStatusDate = @MasterStatusDate; end
 
 
 			   declare @percentage as   float=1000
@@ -554,7 +543,7 @@ END CATCH
 	    @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
         @PayableStatus,@ReceivableStatus,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,@RegistryDate,@GrossWeightPerTon,@NextETA,@NextETD,
     @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent,@PreAlertSent,@DeliveryNoticeSent,@ExpectedArrivalNoticeSent,@T1Received,@ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ShipmentStatus , @ShipmentStatusWeight , @ShipmentStatusDate , @MasterStatus , @MasterStatusWeight , @MasterStatusDate
+	,@ComputedStatus , @ComputedStatusDate
 
 
 

@@ -637,7 +637,7 @@ class JournalLineModel extends BaseComponent {
     public CreditAccountFilterItems: ApiQueryFilters;
     public DebitAccountFilterItems: ApiQueryFilters;
     accountingDayMustBeInRange: string = TextCodeTranslator.Translate("Journal.O.TheAccountingDayMustBeInRange");
-
+    public IsCurrencyEnabled :boolean =true;
     public isValid: boolean = true;
 
     public __UserCanSetRateManually: boolean = false; // user can set rate manually by insert forign amount with local amount empty (see WI 24999)
@@ -661,8 +661,8 @@ class JournalLineModel extends BaseComponent {
             var date = new Date(this.AccountingDate.toString());
             this.accDay = date.getDate();
         }
-
-
+        
+        if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
         this.ratesTableExtendedListService = new RatesTableExtendedListService();
         this._GLAccountExtendedListService = new GLAccountExtendedListService();
 
@@ -810,6 +810,7 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.parent.currency))
             {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
+                    this.IsCurrencyEnabled= true;
                     this.ratesTableExtendedListService.getClosestRate(this.parent.currency.Id, value).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse != null) {
                             if (!myResponse.HasError) {
@@ -846,7 +847,7 @@ class JournalLineModel extends BaseComponent {
                     // Local Currency
                     this.isRateManualy = false;
                     this.currencyRate = 1;
-
+                   this.IsCurrencyEnabled= false;
                     if (this.LocalAmount) {
                         this.isRateCoverted = true;
                         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
@@ -881,7 +882,9 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.LocalAmount = value;
             this.parent.CalculateTotals();
-
+            if(this.Currency){
+                if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
+            }
             // convert amount
             // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
             //     this.isForeignEntered = true;
@@ -1248,7 +1251,13 @@ class JournalLineModel extends BaseComponent {
             this.currency = value;
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.CurrencyCode = value.Code;
-            } else {
+                 if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId) {
+                   this.IsCurrencyEnabled= false;
+                    this.ForeignAmount = this.LocalAmount;
+                    }
+                    else this.IsCurrencyEnabled =true;
+                  
+                } else {
                 this.CurrencyCode = null;
             }
 
