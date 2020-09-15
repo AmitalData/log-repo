@@ -315,9 +315,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
-        if (AppTool.IsNullOrEmpty(this.ShipmentSubTypeId)) {
-            this.SetDefaultSubType();
-        }
+        this.SetDefaultSubType();
     }
     private SetDefaultSubType() {
         var subTypeCode: string = null;
