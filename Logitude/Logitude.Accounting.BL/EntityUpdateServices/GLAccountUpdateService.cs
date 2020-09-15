@@ -454,7 +454,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
                             {
                                 IsNotDeletde = true;
+                                var item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate).FirstOrDefault();
+                                if (item == null)
+                                {
+                                    
+                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals)+ " " + entityPM.InterestCalculationStartDate.Value.Date);
+
+                                }
                             }
+                           
 
                         }
                         if (!IsNotDeletde)
