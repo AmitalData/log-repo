@@ -464,11 +464,21 @@ namespace WebFreight.Web.DataProviders
         public string MasterPreCarriageFromPortName { get; set; }
         public string MasterProjectNumber { get; set; }
         public string ConsigneeNotImporter { get; set; }
-
         public string Transshipment1ETA_String { get; set; }
         public string Transshipment1ETD_String { get; set; }
         public DateTime? Transshipment1ETD { get; set; }
         public DateTime? Transshipment1ATD { get; set; }
         public DateTime? Transshipment1ATA { get; set; }
+
+        //To show the first pickup address
+        //If no pickup, show pickup/delivery address of the shipper
+        //If no pickup/delivery address, show the chosen address on the shipper
+        public string PickUpAddress_New { get; set; }       
+
+        //To show the last delivery address
+        //If no delivery, show pickup/delivery address of the consignee
+        //If no pickup/delivery address, show the chosen address on the consignee
+        public string DeliveryAddress_New { get; set; }
+        
     }
 }

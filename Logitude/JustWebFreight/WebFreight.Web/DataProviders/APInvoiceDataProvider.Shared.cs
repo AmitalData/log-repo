@@ -102,6 +102,8 @@ namespace WebFreight.Web.DataProviders
         public string LastDeliveryTrucker{ get; set; }
         public string PackageTypes { get; set; }
 
+        public string PickUpAddress_New { get; set; }
+        public string DeliveryAddress_New { get; set; }
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }
