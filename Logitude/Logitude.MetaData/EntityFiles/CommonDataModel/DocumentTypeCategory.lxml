@@ -242,7 +242,12 @@
       Code="&quot;P&quot;"
       SearchFields="&quot;P,Operational Documents&quot;"
       Name="&quot;Operational Documents&quot;" />
+	     <Record
+      Code="&quot;E&quot;"
+      Name="&quot;Export&quot;"
+      SearchFields="&quot;E,Export&quot;" />
   </Records>
+
   <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

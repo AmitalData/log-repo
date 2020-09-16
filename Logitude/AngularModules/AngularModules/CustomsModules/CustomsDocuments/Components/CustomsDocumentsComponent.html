@@ -228,12 +228,12 @@
 
                             <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem" style="width:50px"
                                 [class.SelectedFilter]="DocumentFilterSelectedValue === 'forwarding'">
-                                שילוח
+                                {{forwarding}}
                             </li>
 
                             <li id="customs" (click)="DocumentFilterItemClicked('customs')" class="FilterItem" style="width:50px"
                                 [class.SelectedFilter]="DocumentFilterSelectedValue === 'customs'">
-                                עמילות
+                                {{customs}}
                             </li>
 
                         </ul>

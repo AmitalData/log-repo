@@ -79,8 +79,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
-                                                debugger;
-                                                this.EntityPM = this.entityArgs.EntityPM;
+                                                 this.EntityPM = this.entityArgs.EntityPM;
                                                  this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
                                                 this.BuildRecipientsList();
@@ -149,8 +148,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             item.Tenant = this.EntityPM.Tenant;
             item.LineNumber = lineNumber;
            
-            debugger;
-            if (!this.EntityPM.DeclarationExportRecipients.includes(item)) {
+             if (!this.EntityPM.DeclarationExportRecipients.includes(item)) {
                 //this.EntityPM.ConsignmentInternalTransitions.push(item);
                 this.EntityPM.AddDeclarationExportRecipient(item);
             }

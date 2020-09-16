@@ -27,6 +27,7 @@ export class RelatedDocumentViewModel {
         }
     }
     public DocumentTypeName: string;
+
     //get DocumentTypeName() { return this.documentsFilingPM.CustomsDocumentTypeName; }
     //set DocumentTypeName(value: string) {
 
