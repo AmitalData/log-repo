@@ -367,4 +367,5 @@
     ReferencedTable="CargoTrackingMilestones"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint Columns="EntityType,EntityId,Tenant" />
 </Table>

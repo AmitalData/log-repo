@@ -356,7 +356,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (cargoTrackingDataBaseArgs.buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.buildCargoArgs.Table.CurrentCondition==1)
             {
                 fieldName= " C." + fieldName.Replace(",", " ,C.");
-                cmd = "SELECT " + fieldName + ", P.Id as ForwardingIdForCustom,com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD ,  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id  Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = P.Id ";
+                cmd = "SELECT " + fieldName + ", Min(P.Id) as ForwardingIdForCustom,com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD ,  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = C.Id ";
                       
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
                 {
@@ -369,7 +369,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                 }
 
-                cmd += " group by " + fieldName + ",P.Id,com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
+                cmd += " group by " + fieldName + ",com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
             }
             else if (cargoTrackingDataBaseArgs.buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.buildCargoArgs.Table.CurrentCondition == 2)
             {
