@@ -42,6 +42,10 @@ export class SpecialActivityCustomsDocumentsController implements ICustomsDocume
 
     }
 
+    CheckIfDuplicateTicket() {
+        return true;
+    }
+
     public GetGeneratedCustomTicketAndPointer(relatedEntityParams: RelatedEntityParams, documentTypeCode: string) {
         var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
         newTicket.DocumentTypeCode = documentTypeCode;
