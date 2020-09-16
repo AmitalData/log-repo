@@ -68,8 +68,6 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         this.originalCustomsDocumentTicketViewModel = [];
         this.GeneratedCustomsDocumentTicketViewModel = [];
 
-        debugger;
-
         if (this.declarationPM.Direction == 'E') {
 
             var custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
@@ -131,7 +129,6 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             return supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id).pipe(
                 map((resp: ServiceResponse) => {
         
-                        debugger;
                         this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
 
                         var count: number = resp.Result.Count;

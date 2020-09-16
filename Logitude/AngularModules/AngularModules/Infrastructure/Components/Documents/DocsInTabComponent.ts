@@ -401,8 +401,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 else objecttableid = this.ObjectTableId;
        
             this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
-            debugger;
-            if (!AppTool.IsNullOrEmpty(this.CategoryCode)) {
+             if (!AppTool.IsNullOrEmpty(this.CategoryCode)) {
 
                 this.DocumentTypes = this.DocumentTypes.filter(a => a.DocumentTypeCategoryCode == this.CategoryCode);
 
