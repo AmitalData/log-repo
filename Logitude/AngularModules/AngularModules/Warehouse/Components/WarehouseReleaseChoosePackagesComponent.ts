@@ -43,6 +43,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     DimensionsLabel: string;
     PackageType: string;
     IsFromFullWarehouseReleaseComponent: boolean = false;
+    IsBondedWarehouse : boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     OldCustomerId: string;
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
@@ -74,7 +75,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
         this.WarehouseEntryId = args.WarehouseEntryId;
-       
+        this.IsBondedWarehouse = args.IsBondedWarehouse;
+
         if (this.warehouseReleasePM) {
             this.OldCustomerId = this.warehouseReleasePM.CustomerId;
         }
