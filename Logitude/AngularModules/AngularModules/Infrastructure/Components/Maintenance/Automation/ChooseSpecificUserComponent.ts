@@ -69,13 +69,13 @@ export class ChooseSpecificUserComponent {
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (!AppTool.IsNullOrEmpty(this.MyChoosenSpecificUsers)) {
+        //if (!AppTool.IsNullOrEmpty(this.MyChoosenSpecificUsers)) {
             this.CurrentSession.CloseCurrentWindowEmit(this.MyChoosenSpecificUsers);
-        }
+        //}
 
-        else {
-            this.ValidationErrorsList.push("Please choose at least one user");
-        }
+        //else {
+        //    this.ValidationErrorsList.push("Please choose at least one user");
+        //}
     }
 }
 
