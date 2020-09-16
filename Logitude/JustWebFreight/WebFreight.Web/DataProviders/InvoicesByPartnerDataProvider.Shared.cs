@@ -47,6 +47,7 @@ namespace WebFreight.Web.DataProviders
             public double? AmountInProfitCurrency { get; set; }
             public string YourRefrence { get; set; }
             public string BillToName { get; set; }
+            public string ShipmentNumber { get; set; }
         }
     }
 }
