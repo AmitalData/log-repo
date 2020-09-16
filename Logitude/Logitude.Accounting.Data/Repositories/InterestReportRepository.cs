@@ -85,6 +85,17 @@ namespace Logitude.Accounting.Data.Repositories
             return interestReport;
         }
 
+        public InterestReport GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(string customerId, int tenant, DateTime CalculationDate)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant 
+                                             && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4")
+                                             && a.CustomerId == customerId
+                                             && a.InterestCalculationDate >= CalculationDate
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
         public string GetInterestReportStatusCode(string InterestReportId, int tenant)
         {
             string InterestReportStatus = (from a in context.InterestReports
