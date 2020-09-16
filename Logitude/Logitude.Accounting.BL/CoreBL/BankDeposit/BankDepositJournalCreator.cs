@@ -77,16 +77,39 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             }
             else
             {
+                List<JournalLinePM> _journalLines = new List<JournalLinePM>();
+
                 foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
                 {
                     ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
                     JournalLinePM chequeDebitLine = CreateDebitLineForChequeDeposit(ref lineNumber, depositLine, cheque);
-                    journal.JournalLines.Add(chequeDebitLine);
+                    _journalLines.Add(chequeDebitLine);
+                    // journal.JournalLines.Add(chequeDebitLine);
                 }
+                AddSumOfDebitLinesForJournalLines(_journalLines);
             }
         }
 
+        private void AddSumOfDebitLinesForJournalLines(List<JournalLinePM> _journalLines)
+        {
+            JournalLinePM Sum_Line = _journalLines.FirstOrDefault();
+            Sum_Line.DueDate = journal.AccountingDate;
+            Sum_Line.ForeignAmount = _journalLines.Sum(s => s.ForeignAmount);
+            Sum_Line.LocalAmount = _journalLines.Sum(s => s.LocalAmount);
+            Sum_Line.ExternalOpenAmount = _journalLines.Sum(s => s.ExternalOpenAmount);
+            Sum_Line.Reference1 = DepositPM.DepositNumber.ToString();
+            Sum_Line.Reference2 = _journalLines.FirstOrDefault().Reference2;
+            foreach (JournalLinePM line in _journalLines)
+            {
+                if (line.Reference2 != Sum_Line.Reference2)
+                {
+                    Sum_Line.Reference2 = null;
+                    break;
+                }
 
+            }
+            journal.JournalLines.Add(Sum_Line);
+        }
         private JournalLinePM CreateDebitLineForChequeDeposit(ref int LineNumber, BankDepositLinePM item, ARPaymentChequePM cheque)
         {
             JournalLinePM chequeDebitLine = new JournalLinePM
