@@ -88,6 +88,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                     report.InterestReportLinesByDates = LinesByDatesForSelectedReports.Where(s=>s.InterestReportId == report.Id).ToList();
                     CreateInvoiceForReportPM(args, interestReportArguments, report);
+
                 }
             }
             else
@@ -271,10 +272,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 else
                 {
                     chargesType = chargesTypes.Where(s => s.InActive == false).FirstOrDefault();
+
                 }
+
             }
             return chargesType;
         }
+
+ 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)
