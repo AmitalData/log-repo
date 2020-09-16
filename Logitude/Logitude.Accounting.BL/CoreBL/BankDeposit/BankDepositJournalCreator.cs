@@ -84,9 +84,17 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                     ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
                     JournalLinePM chequeDebitLine = CreateDebitLineForChequeDeposit(ref lineNumber, depositLine, cheque);
                     _journalLines.Add(chequeDebitLine);
-                    // journal.JournalLines.Add(chequeDebitLine);
+                    if (_journalLines.FirstOrDefault().DueDate > TenantServerConfigration.GetCurrentDateTime(Tenant))
+                    {
+                        journal.JournalLines.Add(chequeDebitLine);
+                    }
+
                 }
-                AddSumOfDebitLinesForJournalLines(_journalLines);
+                if (_journalLines.FirstOrDefault().DueDate <= TenantServerConfigration.GetCurrentDateTime(Tenant))
+                {
+                    AddSumOfDebitLinesForJournalLines(_journalLines);
+                }
+                
             }
         }
 
