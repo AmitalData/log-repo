@@ -101,7 +101,7 @@ export class BusyIndicator implements OnInit {
     
     constructor() {
         this.IsAmitalVer = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
-        this.IsAmitalVer = true;//TEST !!
+        ///this.IsAmitalVer = true;//TEST !!
         this._Guid=Guid.newGuid();
 
         
