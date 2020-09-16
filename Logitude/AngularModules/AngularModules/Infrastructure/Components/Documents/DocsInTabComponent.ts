@@ -35,7 +35,7 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
     
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
-    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],
+    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference','CategoryCode'],
     providers: [DocumentTypeListExtendedService, DocumentsFilingExtendedPMService, DocumentsFilingPMService, ServiceArgs, ImageLibraryService, DocumentTypeListService],
 })
 
@@ -48,6 +48,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public ChildEntityId: string = "";
     public ObjectTableId: string = "";
     public ChildObjectTableId: string = "";
+    public CategoryCode: string = "";
+
     public TransportModeId: string = "";
     public ShipmentlevelCode: string = "";
     public ChildEntityReference: string = "";
@@ -398,7 +400,14 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
                 else objecttableid = this.ObjectTableId;
        
-                this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
+            this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
+            debugger;
+            if (!AppTool.IsNullOrEmpty(this.CategoryCode)) {
+
+                this.DocumentTypes = this.DocumentTypes.filter(a => a.DocumentTypeCategoryCode == this.CategoryCode);
+
+
+            }
                 if (!AppTool.IsNullOrEmpty(this.TransportModeId)) {
                 switch (this.TransportModeId) {
                     case "A":

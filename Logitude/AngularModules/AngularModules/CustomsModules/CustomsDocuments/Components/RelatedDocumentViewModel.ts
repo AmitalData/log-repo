@@ -27,6 +27,8 @@ export class RelatedDocumentViewModel {
         }
     }
     public DocumentTypeName: string;
+    public DocumentTypeCode: string;
+
     //get DocumentTypeName() { return this.documentsFilingPM.CustomsDocumentTypeName; }
     //set DocumentTypeName(value: string) {
 
@@ -132,6 +134,7 @@ export class RelatedDocumentViewModel {
 
                 this.customDocumentTypeMetaDataLists = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode === this.documentsFilingPM.CustomsDocumentTypeCode);
                 this.DocumentTypeName = this.documentsFilingPM.Description;
+                this.DocumentTypeCode = this.documentsFilingPM.CustomsDocumentTypeCode;
                 if (this.customsDocumentMetaDataValuePMs && this.customDocumentTypeMetaDataLists) {
                     var leading: CustomDocumentTypeMetaDataList = this.customDocumentTypeMetaDataLists.filter(d => d.IsLeading && d.DocumentTypeCode == this.documentsFilingPM.CustomsDocumentTypeCode)[0];
                     if (leading) {

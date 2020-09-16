@@ -446,7 +446,15 @@ export class CustomsDocumentTicketViewModel {
                                 var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
                                 customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
                                 customsDocumentPM.Tenant = SessionLocator.Tenant;
-                                customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                                if (this.EntityPM.Direction == 'E') {
+ 
+                                   customsDocumentPM.DocumentTypeCode = relatedDocumentViewModel.DocumentTypeCode;
+
+                                }
+                                else {
+                                    customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+
+                                }
                                 customsDocumentPM.DeclarationId = this.EntityPM.Id;
                                 customsDocumentPM.IsPartOfDeclaration = true;
                                 relatedDocumentViewModel.CustomDocument = customsDocumentPM;
