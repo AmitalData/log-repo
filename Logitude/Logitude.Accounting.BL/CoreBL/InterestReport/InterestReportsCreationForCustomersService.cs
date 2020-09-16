@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 catch (Exception ex)
                 {
                     string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
-                    log = GetErrorInReportForCustomer(eligibleCustomers[i], interestReportPM, errorMessage);
+                    log += GetErrorInReportForCustomer(eligibleCustomers[i], interestReportPM, errorMessage);
 
                 }
             }

@@ -244,6 +244,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
  
 
         }
+
         private ChargesTypePM GetChargesType(List<ChargesTypePM> chargesTypes, InterestReportArgs interestReportArgs)
         {
             ChargesTypePM chargesType = null;
@@ -277,6 +278,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
           
             return chargesType;
         }
+
  
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
