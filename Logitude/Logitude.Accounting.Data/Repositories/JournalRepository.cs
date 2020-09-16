@@ -504,7 +504,7 @@ namespace Logitude.Accounting.Data.Repositories
 
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
             List<string> invoiceIds = (from a in invoicecontext.ARInvoices
-                                        where a.InvoiceDate <= date && a.TotalAmountForTaxReport != null && a.Tenant == tenant 
+                                        where a.InvoiceDate <= date && (a.TotalAmountForTaxReport != null && a.TotalAmountForTaxReport != 0)   && a.Tenant == tenant 
                                         select a.Id).ToList();
            
             List< Journal> journals=(from a in context.Journals
