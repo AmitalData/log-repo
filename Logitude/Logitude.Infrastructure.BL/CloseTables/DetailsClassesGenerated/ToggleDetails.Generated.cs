@@ -125,17 +125,26 @@ namespace Logitude.Infrastructure.BL
                 Name = "KPI Document Fields", 
                 SearchFields = "KPI,KPI Document Fields", 
 			});
+			 
             all.Add(new ToggleDetails()
-            {
-                Code = "OI2",
-                Name = "OceanInsightsV2",
-                SearchFields = "OI2,OceanInsightsV2",
-            });
+            {    
+                Code = "OI2", 
+                Name = "OceanInsightsV2", 
+                SearchFields = "OI2,OceanInsightsV2", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Shipment Warning Checkbox", 
                 Code = "SWC", 
                 SearchFields = "SWC,Shipment Warning Checkbox", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AMS", 
+                Name = "AMS in Export", 
+                SearchFields = "AMS,AMS in Export", 
 			});
 			
             return all;
