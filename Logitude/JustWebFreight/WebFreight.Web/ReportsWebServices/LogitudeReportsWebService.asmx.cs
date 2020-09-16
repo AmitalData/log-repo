@@ -1200,6 +1200,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (shipment != null)
                 {
+                    invoicesRecored.ShipmentNumber = shipment.ShipmentNumber;
                     switch (shipment.DirectionId)
                     {
                         case "E":
