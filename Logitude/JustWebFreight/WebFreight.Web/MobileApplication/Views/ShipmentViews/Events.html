@@ -219,6 +219,7 @@
                       if (result.length > 0) {
                           document.getElementById('endlineEvent').style.display ="block";
 
+                          $("#EventListBox").html("");
                           $("#EventListBox").kendoListView(
                           {
                               dataSource: { data: BuildEventList(result) },

@@ -320,6 +320,7 @@
                 });
             });
 
+            $("#ServicesListBox").html("");
             $("#ServicesListBox").kendoListView(
             {
                 dataSource: { data: DataList },
@@ -351,6 +352,7 @@
                 });
             });
 
+            $("#CompetitorsListBox").html("");
             $("#CompetitorsListBox").kendoListView(
             {
                 dataSource: { data: DataList },
@@ -473,6 +475,7 @@
                         });
                     });
 
+                    $("#OpportunitiesListBox").html("");
                     $("#OpportunitiesListBox").kendoListView(
                     {
                         dataSource: { data: DataList },
@@ -544,6 +547,7 @@
                         });
                     });
 
+                    $("#ActivitiesListBox").html("");
                     $("#ActivitiesListBox").kendoListView(
                     {
                         dataSource: { data: DataList },
@@ -666,6 +670,7 @@
 
                     });
 
+                    $("#QuotesListBox").html("");
                     $("#QuotesListBox").kendoListView(
                     {
                         dataSource: { data: DataList },
@@ -1258,6 +1263,7 @@
                     });
                 });
 
+                $("#AddressesListBox").html("");
                 $("#AddressesListBox").kendoListView(
                 {
                     dataSource: { data: DataList },
@@ -1302,6 +1308,7 @@
                         });
                     });
 
+                    $("#ContactsListBox").html("");
                     $("#ContactsListBox").kendoListView(
                     {
                         dataSource: { data: DataList },

@@ -197,6 +197,7 @@
 
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Partners Display", $.CurrentTenant, $.CurrentCardId);
 
+                $("#PartnersListBox").html("");
                 $("#PartnersListBox").kendoListView(
                 {
                     dataSource: { data: result },
@@ -352,12 +353,6 @@
                 if (result.length > 0) {
 
                     ko.applyBindings(BuildDocumentsTabPageViewModel(result, "../", false), document.getElementById("DocumentsTabPageControl"));
-
-                    //$("#DocumentsListBox").kendoListView(
-                    //{
-                    //    dataSource: { data: result },
-                    //    template: kendo.template($("#DocumentListBoxItemDataTemplate").html())
-                    //});
                 }
 
                 else {
@@ -405,6 +400,8 @@
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Events Display", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length > 0) {
+
+                    $("#EventsListBox").html("");
                     $("#EventsListBox").kendoListView(
                     {
                         dataSource: { data: BuildEventList(result, $.TenantDateTimeFormat) },
