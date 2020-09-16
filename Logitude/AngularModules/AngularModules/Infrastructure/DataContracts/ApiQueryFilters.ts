@@ -12,6 +12,9 @@ export class ApiQueryFilters {
     public Tenant: number;
     public AdditionalFilters: FilterItem[] = [];
     public ForceCacheRefresh: boolean = false;
+    public DontApplyVirtualization: boolean = false;
+
+    
 
     addAdditionalFilter(
         FieldName: string,
