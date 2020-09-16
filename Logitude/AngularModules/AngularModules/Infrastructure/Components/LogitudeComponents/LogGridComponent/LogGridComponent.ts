@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp', 'DontApplyVirtualization', 'ConstantPageSize',  'ChangeCheckBoxesState'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp',   'ChangeCheckBoxesState'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -141,8 +141,6 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private addedItems: any[] = [];
     public ChangeCheckBoxesState: EventEmitter<any>;
 
-    DontApplyVirtualization: boolean =false;
-    ConstantPageSize: number = 0;
     constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef) {
         //setTimeout(() => this.cd.markForCheck(), 10);
         if (this.CurrentSession == null) {
@@ -2074,8 +2072,6 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     scrolltimer = null;
     onScroll() {
 
-
-        if (!this.DontApplyVirtualization) {
             this.SearchFieldChanged = false;
             var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
@@ -2103,7 +2099,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 clearTimeout(this.timer);
             }
             this.timer = setTimeout(() => this.DoScroll(), 200);
-        }
+        
     };
     HScrollPosition: number = -1;
     HorizantalScrollValue: string = "0px";
@@ -2200,7 +2196,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
     GetviewportSize(viewHeight: number, rowHeight:number ) {
 
-        return this.DontApplyVirtualization ? this.ConstantPageSize : (Math.round(viewHeight / rowHeight));
+        return Math.round(viewHeight / rowHeight);
 
     }
 
@@ -2427,7 +2423,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         if (reload == true) {
             this.controller.ClearCache();
         }
-        this.controller.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged, this.DontApplyVirtualization);
+        this.controller.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged);
 
     }
 
