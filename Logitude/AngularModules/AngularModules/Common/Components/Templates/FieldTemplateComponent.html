@@ -4,7 +4,7 @@
     <tr>
         <td>
             <div class="MediaFill">
-       
+
                 <div *ngIf="ObjectTableName == 'CustomsShipper' && FieldName == 'ValidityEndDate'">
                     <span style="font-weight: bold;" [ngStyle]="{color: CustomsShipperValidityEndDateBackgroudColor}"> {{FieldValue | DateTimeToDatePipe}}</span>
                 </div>
@@ -120,6 +120,7 @@
                 <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'Extension'">
                     <img style="width:22px;height:25px;margin-left:5px;cursor:pointer;" *ngIf="FieldValue" src="{{FieldValue | AttatchmentIconPipe}}" />
                 </div>
+
                 <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'IsDigitallySigned'">
                     <img *ngIf="Entity['IsDigitallySigned']" src="./Images/DigitallySigned.png" />
                     <img *ngIf="!Entity['IsDigitallySigned']" src="./Images/DigitallySignedG.png" />
@@ -153,6 +154,11 @@
 
                     </div>
                 </div>
+
+                <div *ngIf="ObjectTableName == 'Horse' && FieldName == 'YearOfBirth'">
+                    <span>{{FieldValue}}</span>
+                </div>
+
             </div>
         </td>
     </tr>
