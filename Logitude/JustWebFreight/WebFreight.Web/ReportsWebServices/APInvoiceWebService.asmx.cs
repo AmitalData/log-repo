@@ -26,6 +26,8 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -51,6 +53,7 @@ namespace WebFreight.Web.ReportsWebServices
         ShipmentPayableRepository payableRepository;
         CardRepository cardRepository;
         APInvoiceQuery invoiceQuery;
+        CountryRepository countryRepository;
         int currentTenant;
 
         [WebMethod]
@@ -88,7 +91,7 @@ namespace WebFreight.Web.ReportsWebServices
             addressRepository = new AddressRepository(commonContext);
             cardRepository = new CardRepository(commonContext);
             invoiceQuery = new APInvoiceQuery(invoiceRepository);
-
+            countryRepository = new CountryRepository(commonContext);
             APInvoicePM myAPInvoice = invoiceQuery.GetSinglePM(invoiceId, tenant);
 
             if (myAPInvoice != null)
@@ -522,6 +525,8 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.CarrierNumber;
                     }
                     #endregion 
+
+                    this.FillPickUpDeliveryAddresses(myFirstPickup, myLastDelivery, shipment, invoiceDataProvider);
                 }
                 #endregion
 
@@ -616,6 +621,276 @@ namespace WebFreight.Web.ReportsWebServices
             return invoiceDataProvider;
         }
 
+        private void FillPickUpDeliveryAddresses(ShipmentPickUpDelivery myFirstPickup, ShipmentPickUpDelivery myLastDelivery, ShipmentPM shipment, APInvoiceDataProvider myDataProvider)
+        {
+            #region PickUp Address
+            if (myFirstPickup != null)
+            {
+                switch (myFirstPickup.PickUpDeliveryFromTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
+                            {
+                                Card myPartner = CardRepository.GetSingleCard(myFirstPickup.FromPartnerCardId, currentTenant, true);
+                                if (myPartner != null)
+                                {
+                                    myDataProvider.PickUpAddress_New = myPartner.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, currentTenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null)
+                                    {
+                                        myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + "Tel: " + myPartnerAddress.PhoneNumber;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(myFirstPickup.FromPortId))
+                            {
+                                PortPM myPort = PortQuery.GetSinglePort(currentTenant, myFirstPickup.FromPortId, true);
+                                if (myPort != null)
+                                {
+                                    myDataProvider.PickUpAddress_New = myPort.EnglishName + ", " + myPort.CountryName;
+
+                                    if (!string.IsNullOrEmpty(myPort.StateId))
+                                    {
+                                        StateRepository stateRepository = new StateRepository(currentTenant);
+                                        State myState = stateRepository.GetSingleState(myPort.StateId, currentTenant);
+
+                                        if (myState != null)
+                                        {
+                                            myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + ", State: " + myState.EnglishName;
+                                        }
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressCountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(myFirstPickup.FromAddressCountryId, currentTenant);
+                                if (country != null)
+                                {
+                                    myDataProvider.PickUpAddress_New = country.EnglishName + ", " + myFirstPickup.FromAddressCity;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressZipCode))
+                            {
+                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + ", " + myFirstPickup.FromAddressZipCode;
+                            }
+
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                {
+                    Address myPickUpDeliveryAddress = addressRepository.GetPickupDeliveryAddressByCardId(shipment.ShipperId, currentTenant);
+
+                    if (myPickUpDeliveryAddress != null)
+                    {
+                        if (myPickUpDeliveryAddress != null)
+                        {
+                            myDataProvider.PickUpAddress_New = DataProviders.General.GetAddress(myPickUpDeliveryAddress);
+
+                            if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
+                            {
+                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (myPickUpDeliveryAddress.FaxNumber != null ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        Card myShipper = (from a in commonContext.Cards
+                                          where a.Id == shipment.ShipperId
+                                          select a).FirstOrDefault();
+
+
+                        if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                        {
+                            Address myShipperAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, currentTenant);
+
+                            if (myShipperAddress != null)
+                            {
+                                myDataProvider.PickUpAddress_New = myShipper != null ? myShipper.EnglishName : "";
+
+                                if (myShipperAddress.IsLocalLanguage)
+                                {
+                                    if (myShipper != null && !string.IsNullOrEmpty(myShipper.LocalName))
+                                    {
+                                        myDataProvider.PickUpAddress_New = myShipper.LocalName;
+                                    }
+                                }
+
+                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + DataProviders.General.GetAddress(myShipperAddress);
+
+                                if (myShipperAddress.PhoneNumber != null || myShipperAddress.FaxNumber != null)
+                                {
+                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myShipperAddress.PhoneNumber != null ? "Tel: " + myShipperAddress.PhoneNumber + " " : "") + (myShipperAddress.FaxNumber != null ? "Fax: " + myShipperAddress.FaxNumber + " " : "");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region Delivery Address
+            if (myLastDelivery != null)
+            {
+                switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                            {
+                                Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, currentTenant, true);
+                                if (myPartner != null)
+                                {
+                                    myDataProvider.DeliveryAddress_New = myPartner.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, currentTenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null)
+                                    {
+                                        myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + "Tel: " + myPartnerAddress.PhoneNumber;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                            {
+                                PortPM myPort = PortQuery.GetSinglePort(currentTenant, myLastDelivery.ToPortId, true);
+                                if (myPort != null)
+                                {
+                                    myDataProvider.DeliveryAddress_New = myPort.EnglishName + ", " + myPort.CountryName;
+
+                                    if (!string.IsNullOrEmpty(myPort.StateId))
+                                    {
+                                        StateRepository stateRepository = new StateRepository(currentTenant);
+                                        State myState = stateRepository.GetSingleState(myPort.StateId, currentTenant);
+
+                                        if (myState != null)
+                                        {
+                                            myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + ", State: " + myState.EnglishName;
+                                        }
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(myLastDelivery.ToAddressCountryId, currentTenant);
+                                if (country != null)
+                                {
+                                    myDataProvider.DeliveryAddress_New = country.EnglishName + ", " + myLastDelivery.ToAddressCity;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressZipCode))
+                            {
+                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + ", " + myLastDelivery.ToAddressZipCode;
+                            }
+
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                {
+                    Address myPickUpDeliveryAddress = addressRepository.GetPickupDeliveryAddressByCardId(shipment.ConsigneeId, currentTenant);
+
+                    if (myPickUpDeliveryAddress != null)
+                    {
+                        if (myPickUpDeliveryAddress != null)
+                        {
+                            myDataProvider.DeliveryAddress_New = DataProviders.General.GetAddress(myPickUpDeliveryAddress);
+
+                            if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
+                            {
+                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (myPickUpDeliveryAddress.FaxNumber != null ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        Card myConsignee = (from a in commonContext.Cards
+                                            where a.Id == shipment.ConsigneeId
+                                            select a).FirstOrDefault();
+
+
+                        if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
+                        {
+                            Address myConsigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, currentTenant);
+
+                            if (myConsigneeAddress != null)
+                            {
+                                myDataProvider.DeliveryAddress_New = myConsignee != null ? myConsignee.EnglishName : "";
+
+                                if (myConsigneeAddress.IsLocalLanguage)
+                                {
+                                    if (myConsignee != null && !string.IsNullOrEmpty(myConsignee.LocalName))
+                                    {
+                                        myDataProvider.DeliveryAddress_New = myConsignee.LocalName;
+                                    }
+                                }
+
+                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + DataProviders.General.GetAddress(myConsigneeAddress);
+
+                                if (myConsigneeAddress.PhoneNumber != null || myConsigneeAddress.FaxNumber != null)
+                                {
+                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myConsigneeAddress.PhoneNumber != null ? "Tel: " + myConsigneeAddress.PhoneNumber + " " : "") + (myConsigneeAddress.FaxNumber != null ? "Fax: " + myConsigneeAddress.FaxNumber + " " : "");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
         private string FillShipmentPackageTypes(int tenant, List<ShipmentPackage> shipmentPackagesList)
         {
             var myGroup = (from a in shipmentPackagesList
