@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviour;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
@@ -26,6 +27,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             updateShipmentComputedFields.Handle();
             updateCrossDocks.Handle();
+        }
+
+        public void Trace(ShipmentTracing shipmentTracing)
+        {
+            updateCrossDocks.Trace(shipmentTracing);
         }
 
 
