@@ -970,6 +970,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 if (myCustomer != null)
                 {
                     customerRecord.CustomerName = myCustomer.EnglishName;
+                    customerRecord.CardCode = myCustomer.Code;
                 }
 
                 Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);

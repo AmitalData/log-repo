@@ -38,6 +38,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
+        public string CardCode { get; set; }
         public List<AccountingLedger> AccountingLedgerList { get; set; }
     }
 

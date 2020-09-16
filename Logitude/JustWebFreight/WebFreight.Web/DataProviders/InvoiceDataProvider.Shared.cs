@@ -465,6 +465,7 @@ namespace WebFreight.Web.DataProviders
             public double? GrandTotalInLocalCurrency { get; set; }
             public double? ExpenseChargesInLocalCurrency { get; set; }
             public string UUID { get; set; }
+            public string BillToCode { get; set; }
         }
 
         public class InvoiceTotals
