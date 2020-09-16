@@ -1194,6 +1194,7 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
         });
     }
 
+    $("#RoutingsListBox").html("");
     $("#RoutingsListBox").kendoListView(
     {
         dataSource: { data: RoutingLegs },

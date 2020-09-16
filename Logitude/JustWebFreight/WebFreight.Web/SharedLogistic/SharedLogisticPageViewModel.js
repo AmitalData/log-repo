@@ -171,6 +171,7 @@
                     $("#InvoicesQueryCount").html("(" + result.length + ")");
                 }
 
+                $("#InvoicesListBox").html("");
                 $("#InvoicesListBox").kendoListView(
 		        {
 		            dataSource: { data: BuildInvoicesList(result, $.TenantDateTimeFormat) },
@@ -238,12 +239,12 @@
                     $("#ShipmentsQueryCount").html("(" + result.length + ")");
                 }
 
+                $("#ShipmentsListBox").html("");
                 $("#ShipmentsListBox").kendoListView(
-		        {
-                        scrollable: true,
+                    {
                         dataSource: { data: BuildShipmentsList(result, $.TenantDateTimeFormat, $.IsAgentShared, $.IsShipperShared, $.IsConsigneeShared) },
-		            template: kendo.template($("#ShipmentListBoxItemDataTemplate").html())
-		        });
+                        template: kendo.template($("#ShipmentListBoxItemDataTemplate").html())
+                    });
 
                 $("#ShipmentsBusyIndicator").hide();
             },

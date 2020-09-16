@@ -177,6 +177,7 @@
                         });
                     });
 
+                    $("#CustomersListBox").html("");
                     $("#CustomersListBox").kendoListView(
                     {
                         scrollable: true,
@@ -257,6 +258,7 @@
                     });
                 });
 
+                $("#OpportunitiesListBox").html("");
                 $("#OpportunitiesListBox").kendoListView(
 		        {
 		            scrollable: true,
@@ -337,6 +339,7 @@
                     });
                 });
 
+                $("#ActivitiesListBox").html("");
                 $("#ActivitiesListBox").kendoListView(
 		        {
 		            scrollable: true,
