@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.InvoiceLines.Add(aRInvoiceLinePM);
 
             return aRInvoicePM;
-
+ 
 
         }
         private ChargesTypePM GetChargesType(List<ChargesTypePM> chargesTypes, InterestReportArgs interestReportArgs)
@@ -278,7 +278,6 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             return chargesType;
         }
-
  
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

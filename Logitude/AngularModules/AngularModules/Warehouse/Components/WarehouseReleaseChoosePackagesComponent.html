@@ -275,7 +275,7 @@
                                                                                 <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px;vertical-align:central">
 
                                                                                     <div style="width:85px">
-                                                                                        <input type="number" (blur)="item.ReleaseQTYLostFocusMethod($event)" [(ngModel)]="item.ReleaseQTY" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline">
+                                                                                        <input [attr.disabled]="IsBondedWarehouse ? '' : null" type="number" (blur)="item.ReleaseQTYLostFocusMethod($event)" [(ngModel)]="item.ReleaseQTY" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline">
                                                                                     </div>
 
 
