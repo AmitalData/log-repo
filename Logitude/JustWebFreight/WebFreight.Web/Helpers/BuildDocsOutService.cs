@@ -15,7 +15,7 @@ namespace WebFreight.Web.Helpers
     public class BuildDocsOutService
     {
 
-        public void BuildDocumentOut(BuildDocsOutArgs buildDocsOutArgs)
+        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs)
         {
             DocumentOutPM documentOutPM = GetDocumentOutPM(buildDocsOutArgs);
             if (documentOutPM == null) documentOutPM = CreateDcoumentOutPM(buildDocsOutArgs);
