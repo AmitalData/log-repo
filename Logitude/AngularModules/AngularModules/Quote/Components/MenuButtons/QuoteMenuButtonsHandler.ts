@@ -914,6 +914,7 @@ export class QuoteMenuButtonsHandler {
             messageWindow.Width = 400;
             messageWindow.Height = 150;
             messageWindow.Title = "Message";
+            messageWindow.ShowErrorIcon = true;
             messageWindow.Show(this.UpdateQuantitiesMessage);
             messageWindow.WindowClosed.subscribe(s => {
                 this.isButtonClicked = false;
