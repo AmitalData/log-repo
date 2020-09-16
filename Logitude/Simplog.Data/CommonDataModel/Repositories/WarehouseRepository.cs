@@ -49,13 +49,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetWarehouseTypeById(string warehouseId, int tenant)
         {
-            string warehouseTypeName = "";
+            string warehouseTypeCode = "";
             WarehouseType warehouseType = (from a in context.Warehouses.Include("Card")
                    where a.Tenant == tenant && a.Id == warehouseId
                    select a.WarehouseType).FirstOrDefault();
-            if (warehouseType != null) warehouseTypeName = warehouseType.Name;
+            if (warehouseTypeCode != null) warehouseTypeCode = warehouseType.Code;
 
-            return warehouseTypeName;
+            return warehouseTypeCode;
         }
 
 

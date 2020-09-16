@@ -43,7 +43,7 @@ export class WarehouseHelper {
     SetIsBondedWarehouseProperities(shipmentPM: ShipmentPM, WarehouseLegWarehouseId) {
         this.warehouseExtendedListService.GetWarehouseTypeById(WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
             var warehouseType = serviceResponse.Result;
-            if (warehouseType == "Bonded") {
+            if (warehouseType == "BO") {
                 shipmentPM.IsBondedWarehouse = true;
             }
             shipmentPM.IsBondedWarehouseChanged = true;
