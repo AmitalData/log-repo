@@ -17,7 +17,7 @@ namespace WarehouseDataViews.Service
         {
             this.connectionString = connectionString;
             DataWarehouseViewLists = new List<WarehouseView>();
-            DwObjectFieldLists = GetDwObjectFieldLists();
+            DwObjectFieldLists = GetDwObjectFieldLists(connectionString);
 
             BuildDataWarehouseViewLists();
         }
@@ -89,7 +89,7 @@ namespace WarehouseDataViews.Service
                     else fieldDisplayName = ConvertStringToCamelCase(GetFieldNameFromCode(dwObjectFieldDB.FieldCode)).Replace("(", "In").Replace(")", "");
                     warehouseView.SqlString += (fieldDisplayName +  ",");
 
-                    warehouseView.Fields.Add(new DWObjectFieldItem() {DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldDisplayName });
+                    warehouseView.Fields.Add(new DWObjectFieldItem() {DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldDisplayName, FieldCode = dwObjectFieldDB.FieldCode });
 
                 }
                 warehouseView.SqlString  = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
@@ -127,7 +127,7 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
-        private List<DWObjectFieldItem> GetDwObjectFieldLists()
+        public List<DWObjectFieldItem> GetDwObjectFieldLists(string connectionString)
         {
             var result = new List<DWObjectFieldItem>();
             DataTable dWObjectFieldsMetaData = GetDataTableFromSql(connectionString, "SELECT  Code,IsCustom, IsPrimaryKey, DWObjectTableCode,ViewFieldDisplayName,DimensionDataViewName, DataTypeCode ,DimensionTableCode,RecordType from DWObjectFields where DontDisplayInView =0 and IsCustom=0");
