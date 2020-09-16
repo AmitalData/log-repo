@@ -90,7 +90,7 @@
         color: #4494c1;
     }
 
- 
+
 
     .toolbar-menu {
         list-style: none;
@@ -302,12 +302,12 @@
 
                                     <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem" style="width:50px"
                                         [class.SelectedFilter]="DocumentFilterSelectedValue === 'forwarding'">
-                                        {{forwarding}}
+                                        שילוח
                                     </li>
 
                                     <li id="customs" (click)="DocumentFilterItemClicked('customs')" class="FilterItem" style="width:50px"
                                         [class.SelectedFilter]="DocumentFilterSelectedValue === 'customs'">
-                                        {{customs}}
+                                        עמילות
                                     </li>
 
                                 </ul>
@@ -318,11 +318,11 @@
                     <!-- List -->
                     <tr>
                         <td style="vertical-align: top;">
-                            
+
                             <ul style="width: 100%; height: 100%; overflow: auto;">
 
                                 <!-- Ticket Item -->
-                                <li *ngFor="let relatedDoc of RelatedDocuments" style="width: 100%; padding: 10px;padding-bottom: 0px;" >
+                                <li *ngFor="let relatedDoc of RelatedDocuments" style="width: 100%; padding: 10px;padding-bottom: 0px;">
                                     <div class="RelatedDocItem">
                                         <table>
 
