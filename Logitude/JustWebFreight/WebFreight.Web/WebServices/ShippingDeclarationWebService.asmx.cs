@@ -1617,7 +1617,27 @@ namespace WebFreight.Web.WebServices
 
                     if(myCard != null)
                     {
+                        myDataProvider.ConsigneeNotImporter = myCard.EnglishName != null ? myCard.EnglishName + Environment.NewLine : "";
+                        
+                        if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterAddressId))
+                        {
+                            Address myPartnerAddress = addressRepository.GetSingleAddress(shipment.ConsigneeNotImporterAddressId, tenant);
 
+                            if (myPartnerAddress != null)
+                            {
+                                if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    myDataProvider.ConsigneeNotImporter = myCard.LocalName + Environment.NewLine;
+                                }
+
+                                myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                {
+                                    myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                }
+                            }
+                        }
                     }
                 }
                 #endregion
