@@ -93,7 +93,8 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
 
                 //// Abdullah
                 var h = this.getScreenHeight()
-                if (itemRect.bottom + this.ComponentHight > h) {
+                let componentScreenHight=this.GetComponentScreenHight(itemRect);
+                if (componentScreenHight > h) {
                     this.PaintTop = true;
                 }
                 if (itemRect.left + this.PopupWidth > this.getScreenWidth()) {
@@ -142,7 +143,8 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
 
                 //// Abdullah
                 var h = this.getScreenHeight()
-                if (itemRect.bottom + this.ComponentHight > h) {
+                let componentScreenHight=this.GetComponentScreenHight(itemRect);
+                if (componentScreenHight > h) {
                     this.PaintTop = true;
                 }
                 //if (itemRect.left + this.PopupWidth > this.getScreenWidth()) {
@@ -178,5 +180,9 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
 
             }
         }
+    }
+
+    GetComponentScreenHight(itemRect:ClientRect){
+        return itemRect.bottom + this.ComponentHight+10;
     }
 }
