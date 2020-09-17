@@ -127,7 +127,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { declarationOrg.Id }, tenant).FirstOrDefault();
                     }
 
-                    if (declarationOrg.IsAmendment == true  )
+                    if (declarationOrg.IsAmendment == true  && declarationOrg.AmendmentDontDisplayInList==true)
                     {
                         isFromAmendment = true;
                     }
