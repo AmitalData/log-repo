@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { DateTool } from '../../Infrastructure/Tools';
+import { Guid } from '../../Infrastructure/Utilities/Guid';
 
 @Component({
     selector: 'BusyIndicator',
@@ -94,10 +96,13 @@ export class BusyIndicator implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     IsAmitalVer: boolean = false;
+    _StartBusyAt: Date;
+    _Guid: string;
+    
     constructor() {
         this.IsAmitalVer = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
-        //this.IsAmitalVer = false;
-
+        ///this.IsAmitalVer = true;//TEST !!
+        this._Guid=Guid.newGuid();
 
         
     }
@@ -128,7 +133,8 @@ export class BusyIndicator implements OnInit {
             return;
         }
         if (this.isBusy) {
-            
+
+            this._StartBusyAt = new Date(Date.now());
             this._TimerToken =
                 setTimeout(() => {
                     this.AnimateIt();
@@ -147,15 +153,31 @@ export class BusyIndicator implements OnInit {
         //} else if (this.progressValue < 1) {
         //    this._Delta = 10;
         //}
+        clearTimeout(this._TimerToken);
         if (this.progressValue > 100) {
             this.progressValue= 0;
-        } 
+        }
+
         this.progressValue = this.progressValue + this._Delta;
         if (this.isBusy) {
+            let now = new Date(Date.now());
+            let timeSpan = this._TimeSpan;
+
+            let plusMin = new Date(this._StartBusyAt);
+            plusMin=DateTool.AddMinute(plusMin, 1)
+            if (plusMin.valueOf() < now.valueOf()) {
+                timeSpan = 10000;//10sec
+            }
+
+            let plus5Min = new Date(this._StartBusyAt);
+            plus5Min=DateTool.AddMinute(plus5Min, 5)
+            if (plus5Min.valueOf() < now.valueOf()) {
+                return;//stop progress;
+            }
             this._TimerToken =
                 setTimeout(() => {
                     this.AnimateIt();
-            }, this._TimeSpan);
+                }, timeSpan /*this._TimeSpan*/);
         }
     }
 
