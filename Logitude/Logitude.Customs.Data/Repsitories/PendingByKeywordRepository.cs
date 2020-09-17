@@ -40,11 +40,19 @@ namespace Logitude.Customs.Data.Repsitories
             foreach (string word in keyWordsList2)
             {
                 string wordtemp = "," + word + ",";
-                PendingByKeyword pendingByKeyword = (from a in context.PendingByKeywords
-                                                     where a.Tenant == tenant && a.KeywordsList.ToLower().Contains(wordtemp)
-                                                     where a.SearchByFieldCode== SearchByFieldCode
-                                                     select a).FirstOrDefault();
-                if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
+                var /*PendingByKeyword*/ pendingByKeyword = (from a in context.PendingByKeywords
+                                                             where a.Tenant == tenant && a.KeywordsList.ToLower().Contains(wordtemp)
+                                                             where a.SearchByFieldCode == SearchByFieldCode
+                                                             select a).ToList();//.FirstOrDefault();
+                //if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
+                var courierPendingReasonCodes= pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
+                if (courierPendingReasonCodes.Count > 0)
+                {
+                    pendingReasonCodeList.AddRange(courierPendingReasonCodes);
+                }
+
+
+
             }
             return pendingReasonCodeList;
         }
