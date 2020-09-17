@@ -1,7 +1,11 @@
 ﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
+      declare @WrongObjectTableId as varchar(15)
+      set @WrongObjectTableId = (select Id from ObjectTables where Name = 'QuoteClosingReason')
+      delete from EventTypes where Code in ('HRIN', 'HRRC') and Tenant = 0 and ObjectTableId = @WrongObjectTableId
+ 
     declare @ObjectTableId as varchar(15)
     set @ObjectTableId = (select Id from ObjectTables where Name = 'Horse')
     
