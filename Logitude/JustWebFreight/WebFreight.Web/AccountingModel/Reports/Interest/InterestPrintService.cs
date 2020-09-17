@@ -73,7 +73,7 @@ using WebFreight.Web.Helpers;
             InterestReportDP.InterestCalculationDate = InteerstReportPM.InterestCalculationDate;
             InterestReportDP.InvoiceNumber = InteerstReportPM.ARInvoiceNumber;
             InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
-
+            InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
             return InterestReportDP;
         }
     }
