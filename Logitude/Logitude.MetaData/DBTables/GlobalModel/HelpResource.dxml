@@ -100,4 +100,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

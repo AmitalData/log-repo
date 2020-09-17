@@ -30,6 +30,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             poco.FileName = entityPM.FileName;
             poco.IsNew = entityPM.IsNew;
             poco.FeatureCode = entityPM.FeatureCode;
+            poco.Inactive = entityPM.Inactive;
+
             BuildSearchFields(entityPM, poco);
         }
         private static void BuildSearchFields(HelpResourcePM entityPM, HelpResource entityPOCO)

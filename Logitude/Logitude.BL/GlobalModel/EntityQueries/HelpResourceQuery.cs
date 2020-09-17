@@ -45,6 +45,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           IsNew = a.IsNew,
                           Language = a.Language,
                           VideoURL = a.VideoURL,
+                          Inactive = a.Inactive,
                       }).FirstOrDefault();
 
             return entity;
@@ -69,6 +70,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                       IsNew = a.IsNew,
                                                       Language = a.Language,
                                                       VideoURL = a.VideoURL,
+                                                      Inactive = a.Inactive,
                                                   };
 
             List<HelpResourceList> result_List = result.ToList();

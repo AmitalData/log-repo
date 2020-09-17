@@ -307,26 +307,35 @@ namespace Simplog.Server.Infrastructure.Azure
             switch (location)
             {
                 case "quotetemplatesectionfiles":
-                    blobName = "quotetemplatesectionfiles/" + blobname;
-                    break;
+                    {
+                        blobName = "quotetemplatesectionfiles/" + blobname;
+                        break;
+                    }
+
                 case "docsin":
-                    blobName = "docsin/" + blobname;
-                    break;
+                    {
+                        blobName = "docsin/" + blobname;
+                        break;
+                    }
 
                 case "docsout":
-                    blobName = "docsout/" + blobname;
-                    break;
-
+                    {
+                        blobName = "docsout/" + blobname;
+                        break;
+                    }
 
                 case "logos":
-                    blobName = "logos/" + blobname;
-                    break;
-
+                    {
+                        blobName = "logos/" + blobname;
+                        break;
+                    }
 
                 case "dlls":
-                    blobName = "dlls/" + blobname;
-                    break;
-                    
+                    {
+                        blobName = "dlls/" + blobname;
+                        break;
+                    }
+
                 case "tenantbackup":
                     {
                         blobName = "tenantbackup/" + blobname;
@@ -334,19 +343,34 @@ namespace Simplog.Server.Infrastructure.Azure
                     }
 
                 case "images":
-                    blobName = "images/" + blobname;
-                    break;
+                    {
+                        blobName = "images/" + blobname;
+                        break;
+                    }
+
                 case "champ":
-                    blobName = "champ/" + blobname;
-                    break;
+                    {
+                        blobName = "champ/" + blobname;
+                        break;
+                    }
 
                 case "reports":
-                    blobName = "reports/" + blobname;
-                    break;
+                    {
+                        blobName = "reports/" + blobname;
+                        break;
+                    }
 
                 case "charts":
-                    blobName = "charts/" + blobname;
-                    break;
+                    {
+                        blobName = "charts/" + blobname;
+                        break;
+                    }
+
+                case "how-to":
+                    {
+                        blobName = blobname;
+                        break;
+                    }
 
                 case "others":
                 default:

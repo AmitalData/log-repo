@@ -25,5 +25,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsNew { get; set; }
         public string FeatureCode { get; set; }
         public int Tenant { get; set; }
+
+        public bool Inactive { get; set; }
     }
 }

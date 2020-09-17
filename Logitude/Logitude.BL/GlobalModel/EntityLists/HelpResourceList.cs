@@ -24,8 +24,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsNew { get; set; }
         public string FeatureCode { get; set; }
         public int Tenant { get; set; }
-
         public string TypeName { get; set; }
         public string CategoryName { get; set; }
+        public bool Inactive { get; set; }
     }
 }
