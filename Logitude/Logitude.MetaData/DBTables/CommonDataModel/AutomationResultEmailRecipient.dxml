@@ -48,6 +48,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsNotifyBack"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AutomationsId"
     ReferencedTable="Automations"

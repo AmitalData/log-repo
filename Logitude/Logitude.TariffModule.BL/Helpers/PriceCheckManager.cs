@@ -865,11 +865,11 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.SellerId = result.SellerId;
                     tariffsSummary.MinPrice = minprice;
 
-                    byte[] filedata = DownloadFile(documentId, "jpg", "images");
+                    byte[] filedata = DownloadFile(documentId, "images");
                     string resultImage = "";
                     if (filedata != null)
                     {
-                        resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                        resultImage = "data:image/" + ImageExtension + ";base64," + Convert.ToBase64String(filedata);
                     }
 
                     tariffsSummary.ImageId = resultImage;
@@ -1006,11 +1006,11 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.UnitOfMesurmentCode = usedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = trariff.SellerId;
 
-                    byte[] filedata = this.DownloadFile(documentId, "jpg", "images");
+                    byte[] filedata = this.DownloadFile(documentId, "images");
                     string resultImage = "";
                     if (filedata != null)
                     {
-                        resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                        resultImage = "data:image/" + ImageExtension + ";base64," + Convert.ToBase64String(filedata);
                     }
 
                     tariffsSummary.ImageId = resultImage;
@@ -1622,21 +1622,34 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return myResult;
         }
-        private byte[] DownloadFile(string documentId, string type, string fileLocation)
-        {
-            string fileName = documentId + ".jpg";
-            string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "fileLocation");
 
+        private string ImageExtension = "";
+        private byte[] DownloadFile(string documentId, string fileLocation)
+        {
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            ImageExtension = "jpg";
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = documentId,
                 FolderName = fileLocation,
-                Extension = "jpg",
+                Extension = ImageExtension,
                 Tenant = tenant,
             };
 
             byte[] datainByte = storageservice.Read(fileInfo);
+
+            if(datainByte == null)
+            {
+                ImageExtension = "png";
+                fileInfo = new BlobFileInfo()
+                {
+                    FileName = documentId,
+                    FolderName = fileLocation,
+                    Extension = ImageExtension,
+                    Tenant = tenant,
+                };
+                datainByte = storageservice.Read(fileInfo);
+            }
             return datainByte;
         }
     }

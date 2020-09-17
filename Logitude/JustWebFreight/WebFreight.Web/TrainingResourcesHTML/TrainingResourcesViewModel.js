@@ -71,33 +71,37 @@
             }
         });
 
+        $("#OperationalHelpersListBox").html("");
         $("#OperationalHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: OPEHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: OPEHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#AccountingHelpersListBox").html("");
         $("#AccountingHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: ACCHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: ACCHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#CRMHelpersListBox").html("");
         $("#CRMHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: CRMHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: CRMHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#AWBHelpersListBox").html("");
         $("#AWBHelpersListBox").kendoListView(
-         {
-             scrollable: true,
-             dataSource: AWBHelpersList,
-             template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-         });
+            {
+                scrollable: false,
+                dataSource: AWBHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
     });
 
     jQuery.BuildTypeHelpersList = (function (helpers) {
@@ -162,37 +166,41 @@
             }
         });
 
+        $("#VideosHelpersListBox").html("");
         $("#VideosHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: VIDHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: VIDHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#TutorialsHelpersListBox").html("");
         $("#TutorialsHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: TUTHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: TUTHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#HowToHelpersListBox").html("");
         $("#HowToHelpersListBox").kendoListView(
-        {
-            scrollable: true,
-            dataSource: HOWHelpersList,
-            template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-        });
+            {
+                scrollable: false,
+                dataSource: HOWHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
 
+        $("#ReleaseNotesHelpersListBox").html("");
         $("#ReleaseNotesHelpersListBox").kendoListView(
-         {
-             scrollable: true,
-             dataSource: RELHelpersList,
-             template: kendo.template($("#HelperListBoxItemDataTemplate").html())
-         });
+            {
+                scrollable: false,
+                dataSource: RELHelpersList,
+                template: kendo.template($("#HelperListBoxItemDataTemplate").html())
+            });
     });
 
     jQuery.LoadData = (function () {
-        
+
         function TrainingResourcesFilters() {
 
             this.FilterId = ($.trim($.SelectedFilter) == "") ? null : $.SelectedFilter;
@@ -216,20 +224,21 @@
             contentType: 'application/json',
 
             success: function (result) {
-                
+
                 $.DataResult = result;
 
                 switch ($.SelectedFilter) {
 
                     case "All": {
 
+                        $("#ListHelpersListBox").html("");
                         $("#ListHelpersListBox").kendoListView(
-                        {
-                            scrollable: true,
-                            dataSource: { data: BuildHelpersList(result) },
-                            template: kendo.template($("#ListBoxItemDataTemplate").html()),
-                        });
-                        
+                            {
+                                scrollable: false,
+                                dataSource: { data: BuildHelpersList(result) },
+                                template: kendo.template($("#ListBoxItemDataTemplate").html()),
+                            });
+
                         break;
                     }
 
@@ -244,7 +253,7 @@
 
                         break;
                     }
-                } 
+                }
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -254,13 +263,13 @@
     });
 
     jQuery.SearchTextChanged = (function () {
-        
+
         if ($("#SearchBox").val().length == 0 || $("#SearchBox").val() == $.watermark) {
             $('#SearchDeleteButton').hide();
         }
 
         else {
-             $('#SearchDeleteButton').show();
+            $('#SearchDeleteButton').show();
         }
 
         $.SearchText = $("#SearchBox").val();
@@ -302,7 +311,7 @@
         $('#SearchBox').val($.watermark).addClass('watermark');
         $.SearchTextChanged("SearchBox");
     });
-    
+
     jQuery.SelectPage = (function () {
         $(".Page").hide();
 
@@ -321,23 +330,23 @@
                 $("#TypeGrid").show();
                 break;
             }
-        }        
+        }
     });
 
     $(".HelpFilterListItem").mouseenter(function () {
-        
-        var filterId = $(this).attr('id');       
-        
+
+        var filterId = $(this).attr('id');
+
         if ($.SelectedFilter != filterId) {
             var targetId = "#" + filterId;
             var sourceURL = $(targetId).css("background-image");
             var targetURL = sourceURL.replace("N.png", "O.png");
             $(targetId).css("background", targetURL);
-        }                
+        }
     });
     $(".HelpFilterListItem").mouseleave(function () {
-        
-        var filterId = $(this).attr('id');        
+
+        var filterId = $(this).attr('id');
 
         if ($.SelectedFilter != filterId) {
             var targetId = "#" + filterId;
@@ -437,7 +446,7 @@
                 suggest: true,
                 index: 3,
                 select: function (e) {
-          
+
                 },
 
                 change: function (e) {

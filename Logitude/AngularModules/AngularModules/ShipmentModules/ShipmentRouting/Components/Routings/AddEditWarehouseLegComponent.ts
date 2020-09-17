@@ -171,7 +171,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (!this.EntityPM.IsBondedWarehouseChanged)
             this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
                 var warehouseType = serviceResponse.Result;
-                if (warehouseType == "Bonded") {
+                if (warehouseType == "BO") {
                     this.IsBondedWarehouse = true;
                     this.SetNewWarehouseEntryButtonProperty();
                 }

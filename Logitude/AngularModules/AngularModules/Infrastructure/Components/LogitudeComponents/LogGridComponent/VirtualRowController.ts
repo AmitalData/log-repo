@@ -58,7 +58,7 @@ export class VirtualRowController implements OnInit, OnChanges {
     ReloadData: boolean;
     RecievedDataCount: number = 0;
     MyCallTime: Date;
-    getRow(rowIndex: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields: string, returnCached: boolean, Filters: ApiQueryFilters, reload: boolean = false, IgnorerowsRequestedPage: boolean = false, PSize: number = this.pageSize, SearchFieldChanged: boolean = false, dontApplyVirtualization: boolean = false) {
+    getRow(rowIndex: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields: string, returnCached: boolean, Filters: ApiQueryFilters, reload: boolean = false, IgnorerowsRequestedPage: boolean = false, PSize: number = this.pageSize, SearchFieldChanged: boolean = false) {
         this.ReloadData = reload;
         if (searchfields != undefined && searchfields != null) {
             if (this.oldSearchFields != searchfields) {
@@ -114,10 +114,9 @@ export class VirtualRowController implements OnInit, OnChanges {
                                     this.requestedRowsReady.emit(result);
                                 }
                                 else {
-                                    var dataCount = viewResponse.Count;
-                                    if (dataCount > PSize) dataCount = PSize;
+                           
                                    
-                                    this.requestedRowCount.emit(dontApplyVirtualization ? dataCount: viewResponse.Count);
+                                    this.requestedRowCount.emit(viewResponse.Count);
                                 }
                             }
                         }

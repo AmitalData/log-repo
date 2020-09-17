@@ -64,15 +64,15 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                             interestReportPM.RecalculateData = true;
                         }
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
-                        CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
 
                     }
+                    CalculateDataForInterestReport(interestReportPM);
                 }
                 catch (Exception ex)
                 {
                     string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
-                    log = GetErrorInReportForCustomer(eligibleCustomers[i], interestReportPM, errorMessage);
+                    log += GetErrorInReportForCustomer(eligibleCustomers[i], interestReportPM, errorMessage);
 
                 }
             }

@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
                 taxDeductionReportline.AmountInLocalCurrency = cancelled ?  payment.AmountInLocalCurrency*-1 : payment.AmountInLocalCurrency;
                 taxDeductionReportline.TaxDeductionLocalAmount =cancelled ? payment.TaxDeductionLocalAmount*-1 : payment.TaxDeductionLocalAmount;
-                taxDeductionReportline.TaxDeductionPercentage = payment.TaxDeductionLocalAmount == 0 ? 0 : (int?) Math.Round((double)(( payment.TaxDeductionLocalAmount / (payment.TaxDeductionLocalAmount + (decimal)payment.AmountInLocalCurrency)))*100,MidpointRounding.AwayFromZero);
+                taxDeductionReportline.TaxDeductionPercentage = payment.TaxDeductionLocalAmount == 0 ? 0 : (int?) Math.Round((double)(( payment.TaxDeductionLocalAmount /  (decimal)payment.AmountInLocalCurrency))*100,MidpointRounding.AwayFromZero);
                 if (payment.VendorCard != null)
                 {
                     GLAccountList glaccount = gLAccounts.Where(d => d.Id == payment.VendorCard.GLAccountId).FirstOrDefault();

@@ -318,6 +318,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
+                    
+                    if (filters.DontApplyVirtualization)
+                    {
+                        if (response.Count > filters.PageSize) response.Count = filters.PageSize;
+                    }
+				
 			  }
 			  	if(!queryOperations.GetAll)
 				 {

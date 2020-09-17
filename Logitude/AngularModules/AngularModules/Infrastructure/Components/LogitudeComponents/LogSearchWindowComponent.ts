@@ -94,7 +94,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     PseventRowSelectEventSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
     DontApplyVirtualization: boolean = false;
-    ConstantPageSize: number = 0;
+    ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
 
 
@@ -154,7 +154,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
         if (this.IsUseCardSearchMechanism()) {
             this.DontApplyVirtualization = true;
-            this.ConstantPageSize = 100;
         }
 
 
@@ -343,11 +342,19 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.Tenant = this.TenantPM.Id;
+
+   
         if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CompactSearchField").length > 0) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CompactSearchField");
 
         }
+
+        if (this.IsUseCardSearchMechanism()) {
+            filters.DontApplyVirtualization = this.DontApplyVirtualization;
+            filters.PageSize = this.ConstantPageSize;
+        }
+
 
 
 

@@ -36,7 +36,10 @@ export class RulesValidator {
         this.Initizialize();
     }
 
-    public Initizialize() {
+    public Initizialize(entity:any = null) {
+
+        this.SetIsNewEntity(entity);
+
         if (window.ObjectTableRules != null && window.ObjectTableRules != undefined) {
 
             this._tenantRules = window.ObjectTableRules;
@@ -108,10 +111,8 @@ export class RulesValidator {
         //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
         //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detach();
         //}
-        if (entity) {
-            this.IsNewEntity = (entity.OldEntityPM === null || entity.OldEntityPM === undefined);
-        }
-        this.Initizialize();
+         
+        this.Initizialize(entity);
         this.ApplyRequiredFieldRules(propertyName, entity, objectTableName);
         this.ApplyConditionalBlockFieldRules(propertyName, entity, objectTableName, true);
 
@@ -120,6 +121,12 @@ export class RulesValidator {
         //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
         //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detectChanges();
         //}
+    }
+
+    private SetIsNewEntity(entity: any) {
+        if (entity) {
+            this.IsNewEntity = (entity.OldEntityPM === null || entity.OldEntityPM === undefined) && (entity.Id === null || entity.Id === undefined);
+        }
     }
 
     //***********************************************************************************************
@@ -710,6 +717,28 @@ export class RulesValidator {
         }
     }
 
+    public ApplyAllConditionalBlockFieldRules(entity: any, objectTableName: string): void {
+        
+        this.Initizialize(entity);
+        var propertyValue: Object = null;
+        var table: ObjectTablePM = this._objectTables.filter(t => t.Name == objectTableName && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
+        if (table == null || table == undefined) {
+            return;
+        }
+         
+        var advancedConditionalTableBlockRules: Array<ObjectTableRulePM> = this._blockRules.filter(r => (r.Condition != null) && r.AdvancedCondition == true && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
+        var conditionalTableBlockRules: Array<ObjectTableRulePM> = this._blockRules.filter(r => r.AdvancedCondition == false && r.RuleConditionFields.length > 0 && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
+        for (var k in conditionalTableBlockRules) {
+            var rule = conditionalTableBlockRules[k];
+            var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
+            var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
+            
+            this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, null);
+        };
+        
+       
+    }
+
     public ApplyConditionalBlockFieldRules(propertyName: string, entity: any, objectTableName: string, onPropertyChange: boolean, uiPoperty: UIProperty = null): void {
         //if (TenantContext.Current.CurrentSession == null) {
         //    return
@@ -727,7 +756,7 @@ export class RulesValidator {
         for (var k in conditionalTableBlockRules) {
             var rule = conditionalTableBlockRules[k];
             var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
-            //if (rule.RuleConditionFields.some(f => f.ObjectFieldName == propertyName) || ruleFields.some(f => f.ObjectFieldName == propertyName)) {
+            if (rule.RuleConditionFields.some(f => f.ObjectFieldName == propertyName) || ruleFields.some(f => f.ObjectFieldName == propertyName)) {
             //var canRun: boolean = CanRunRule(rule, table.Id, entity);
             //if (canRun) {
             var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
@@ -738,7 +767,7 @@ export class RulesValidator {
                 this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, uiPoperty);
             }
             //}
-            //}
+        }
         };
         //type1 = entity.GetType();
         //propertyInf = _type1.GetProperty(propertyName);

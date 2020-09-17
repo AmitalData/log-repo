@@ -20,8 +20,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Breed).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Discipline).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.TravelBehavior).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.MicochipNumber).IsRequired().HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.PassportNumber).IsRequired().HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.MicochipNumber).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.PassportNumber).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CountryOfBirthId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CurrentStable).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Owner).HasMaxLength(100).IsUnicode(false);

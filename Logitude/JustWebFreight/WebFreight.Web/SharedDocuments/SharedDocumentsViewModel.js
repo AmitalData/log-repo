@@ -127,12 +127,6 @@
                 if (result.length > 0) {
 
                     ko.applyBindings(BuildDocumentsTabPageViewModel(result, "", true), document.getElementById("DocumentsTabPageControl"));
-
-                    //$("#DocumentsListBox").kendoListView(
-                    //{
-                    //    dataSource: { data: result },
-                    //    template: kendo.template($("#DocumentListBoxItemDataTemplate").html())
-                    //});
                 }
 
                 else {

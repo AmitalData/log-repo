@@ -238,7 +238,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         windowArgs.ViewModelTrigger = this;
         windowArgs.WarehouseEntryId = this.WarehouseEntryId;
         windowArgs.UsingFilterPorts = this.ViewModelTrigger.IsHaveShipmentPM ? false : true;
-        
+        windowArgs.IsBondedWarehouse = this.ShipmentPM.IsBondedWarehouse;
 
         windowArgs.PackageType = packageType;
         var logWindow = new LogitudeWindow();

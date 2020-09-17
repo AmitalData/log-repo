@@ -86,8 +86,8 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 18px;vertical-align:central;">
-                                        <HelpIcon style="width: 18px;height:18px;" [HideHeader]="true" [Text]="'Bonded means one entry and one release'"></HelpIcon>
+                                    <td style="width: 18px;vertical-align:central;" *ngIf="TypeCode == 'BO'">
+                                        <HelpIcon style="width: 18px;height:18px;" [HideHeader]="true" [Text]="'CFS means one entry and one release'"></HelpIcon>
                                     </td>
 
                                     <td style="width: 2px;">

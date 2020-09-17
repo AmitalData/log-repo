@@ -602,6 +602,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 #endregion
 
                 Currency SelectedCurrency = allCurrencies.Where(d => d.Code == this.SelectedCurrencyCode).FirstOrDefault();
+
                 if (SelectedCurrency != null)
                 {
                     this.SelectedCurrencyId = SelectedCurrency.Id;
@@ -609,14 +610,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
-
-
-
                     Branch myBranch = null;
+
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
                     {
                         myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
                     }
+
                     #region
 
                     string longMaster = this.GetLongMaster(myShipment);
@@ -645,6 +645,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Direction = myShipment.DirectionName;
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
 
                                     myRecord.OpenPayables = myRecord.Payables;
 
@@ -728,6 +729,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Direction = myShipment.DirectionName;
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
 
                                     myRecord.OpenReceivables = myRecord.Receivables;
 
@@ -810,6 +812,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                 myRecord.Salesman = myShipment.SalesmanUserName;
                                 myRecord.Direction = myShipment.DirectionName;
+                                myRecord.AccountManagerName = myShipment.AccountManagerUserName;
 
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
@@ -944,6 +947,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.Direction = myShipment.DirectionName;
+                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
 
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.InvoiceNumber = invoice.InvoiceNumber;

@@ -151,6 +151,8 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)interestReport.TotalAmount;
             }
             aRInvoiceLinePM.Quantity = 1;
+            //aRInvoiceLinePM.Description = "Interest For Date " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            //aRInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
             aRInvoiceLinePM.Description = "Interest between " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " and " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
             aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;

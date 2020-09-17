@@ -207,7 +207,7 @@
             <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" (scroll)="onScroll()" [itemSize]="rowHeight" [minBufferPx]="viewportSize * (2/3) * rowHeight" [maxBufferPx]="viewportSize * (2/3) * rowHeight">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
                 <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
-                <div [ngStyle]="headerStyle" *ngIf="rowCount > 0 &&  HasPermition == true">
+                <div [ngStyle]="headerStyle" *ngIf="HasPermition == true">
                     <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
                         <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
                              [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"

@@ -17,14 +17,15 @@ import { WarehouseReleasePMExtendedService } from '../../Warehouse/Services/Exte
 import {EventTypeClass, EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+import { WarehouseExtendedListService } from '../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
     public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
+    private warehouseExtendedListService: WarehouseExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-      
-        
+        this.warehouseExtendedListService = new WarehouseExtendedListService();
     }
 
     SetShipmentWarehouseLeg(shipmentPM: ShipmentPM, warehouseEntity: any, type: string) {
@@ -33,10 +34,23 @@ export class WarehouseHelper {
             if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId)) {
                 if (shipmentPM.DirectionId != "C" && (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "H")) {
                     shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
-                    shipmentPM.IsUpdateWarehouseLegData = true;
+                    this.SetIsBondedWarehouseProperities(shipmentPM, warehouseEntity.WarehouseId);
                 }
             }
         }
+    }
+
+    SetIsBondedWarehouseProperities(shipmentPM: ShipmentPM, WarehouseLegWarehouseId) {
+        this.warehouseExtendedListService.GetWarehouseTypeById(WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseType = serviceResponse.Result;
+            if (warehouseType == "BO") {
+                shipmentPM.IsBondedWarehouse = true;
+            }
+            shipmentPM.IsBondedWarehouseChanged = true;
+            shipmentPM.IsUpdateWarehouseLegData = true;
+            this.SaveChanges();
+            this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+        });
     }
 
     SaveChanges() {
@@ -219,11 +233,11 @@ export class WarehouseHelper {
                                     this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Entry");
                                 }
 
-                                if (viewModel.IsFromShipment && viewModel.ShipmentPM) {
-                                    var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
-                                    this.SaveChanges();
-                                    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
-                                }
+                                //if (viewModel.IsFromShipment && viewModel.ShipmentPM) {
+                                //    var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
+                                //    this.SaveChanges();
+                                //    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                //}
 
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CurrentWindow.Close("Refresh");

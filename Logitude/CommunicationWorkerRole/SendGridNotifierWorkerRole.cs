@@ -94,8 +94,21 @@ namespace CommunicationWorkerRole
 
             string body = BuildAlertEmailHTML(emailDeliveryError, contactName);
             byte[] bytearray = enc.GetBytes(body);
+           
+            
+            string fromemail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2") ? "logbox.co.il" : "LogitudeWorld.com");
 
-            string fromemail = "no-reply@LogitudeWorld.com";
+            CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
+            if (emailCommunication != null)
+            {
+                if (!string.IsNullOrEmpty(emailCommunication.From))
+                {
+                    if (emailCommunication.From.Contains("no-reply@")) fromemail = emailCommunication.From;
+                }
+            }
+
+
+           
             string subject = "Email Delivery Failure : " + EmailSubject;
 
             Document document = new Document()
@@ -131,7 +144,7 @@ namespace CommunicationWorkerRole
 
             communicationLogRepository.Add(commLog);
 
-            CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
+
             if (emailCommunication != null)
             {
                 CommunicationAttachment attachment = new CommunicationAttachment()

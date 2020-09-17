@@ -41,6 +41,8 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.CustomFilters;
+		  
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 { 
 
@@ -174,7 +176,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +213,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceTypeRepository  aRInvoiceTypeRepository = new ARInvoiceTypeRepository(MyContext);
                 IQueryable<ARInvoiceType> entityPocos = aRInvoiceTypeRepository.GetARInvoiceTypes();
@@ -221,14 +224,18 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				
+				                
+				ARInvoiceTypeCustomFilter customfilters = new ARInvoiceTypeCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	
                 entityPocos = genericFilter.GetFilteredQuery<ARInvoiceType>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ARInvoiceTypeList> entityLists = aRInvoiceTypeQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ARInvoiceTypeList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(ARInvoiceTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -292,11 +299,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			

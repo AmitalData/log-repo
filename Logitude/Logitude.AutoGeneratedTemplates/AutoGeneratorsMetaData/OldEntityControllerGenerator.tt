@@ -1330,7 +1330,23 @@ else
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    <#+ 
+if(tableName == "Card")
+{
+	#>
+                
+                    if (filters.DontApplyVirtualization)
+                    {
+                        if (response.Count > filters.PageSize) response.Count = filters.PageSize;
+                    }
+				
+	<#+
+}
+else
+{
+} 
+   #>
+		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

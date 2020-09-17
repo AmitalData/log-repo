@@ -1194,6 +1194,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
@@ -1356,6 +1357,7 @@
     <Content Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.html" />

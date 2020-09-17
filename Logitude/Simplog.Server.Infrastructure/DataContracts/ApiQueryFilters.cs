@@ -57,8 +57,9 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public string Filter10Operator { get; set; }
 
         public string AdditionalFilters { get; set; }
+        public bool DontApplyVirtualization { get; set; }
 
-         
+        
         public bool GetAll { get; set; }
     }
 }

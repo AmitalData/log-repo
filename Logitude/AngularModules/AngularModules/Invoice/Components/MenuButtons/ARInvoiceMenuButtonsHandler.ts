@@ -1041,6 +1041,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.IsInvoiceNumberFromStock = this.EntityPM.IsInvoiceNumberFromStock;
         AutoCreditInvoice.IsInvoiceNumberManuallySet = this.EntityPM.IsInvoiceNumberManuallySet;
         AutoCreditInvoice.AutoCreditedByInvoiceTypeCode=this.EntityPM.ARInvoiceTypeCode ;
+        AutoCreditInvoice.HasInterestFeature= this.EntityPM.ARInvoiceTypeCode == 'IT'?true:false;
         this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
         return AutoCreditInvoice;
     }

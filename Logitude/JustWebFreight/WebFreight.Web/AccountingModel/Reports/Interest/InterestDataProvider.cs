@@ -16,6 +16,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string CustomerName { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime? InterestCalculationDate { get; set; }
+        public decimal? TotalAmount { get; set; }
         public List<InterestReportLinesByDateProvider> InterestReportLinesByDateList { get; set; }
     }
 

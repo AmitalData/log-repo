@@ -20,6 +20,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {ARInvoiceTypeList} from '../../EntityLists/ARInvoiceTypeList';
+import {ARInvoiceTypeCustomFilter} from '../../CustomFilters/ARInvoiceTypeCustomFilter';
 
 @Injectable()
 
@@ -257,6 +258,9 @@ export class ARInvoiceTypeListService {
 					}
 
 					else {
+					if (addtionalFiltersValues) {
+							_mappedListsArray = ARInvoiceTypeCustomFilter.GetFilteredQuery(addtionalFiltersValues, _mappedListsArray);
+					}
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 

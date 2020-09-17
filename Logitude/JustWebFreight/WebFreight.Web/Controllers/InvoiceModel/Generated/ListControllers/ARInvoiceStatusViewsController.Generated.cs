@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceStatusRepository  aRInvoiceStatusRepository = new ARInvoiceStatusRepository(MyContext);
                 IQueryable<ARInvoiceStatus> entityPocos = aRInvoiceStatusRepository.GetARInvoiceStatus();
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<ARInvoiceStatusList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(ARInvoiceStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -292,11 +294,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			

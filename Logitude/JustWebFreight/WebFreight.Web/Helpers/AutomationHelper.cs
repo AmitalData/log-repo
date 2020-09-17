@@ -91,7 +91,10 @@ namespace WebFreight.Web.Helpers
                         #region  Automation Email Recipient
 
                         List<string> contactIds = new List<string>();
+                        List<string> notifyBackContactIds = new List<string>();
+                        List<string> notifyBackPartners = new List<string>();
                         string Emails = "";
+                        string NotifyBackEmails = "";
 
                         if (allActiveUsers)
                         {
@@ -102,7 +105,18 @@ namespace WebFreight.Web.Helpers
 
                         foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
                         {
-                            if (automationResultEmail.RecipientType == "Fixed")
+                            if (automationResultEmail.IsNotifyBack)
+                            {
+                                if (automationResultEmail.RecipientType == "Fixed") {
+                                    if (!notifyBackContactIds.Contains(automationResultEmail.RecipientValue)) notifyBackContactIds.Add(automationResultEmail.RecipientValue);
+                                }
+                                else
+                                {
+                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
+                                    if (!notifyBackContactIds.Contains(entityContactVariable.Value)) notifyBackContactIds.Add(entityContactVariable.Value);
+                                }
+                            }
+                            else if (automationResultEmail.RecipientType == "Fixed")
                             {
                                 if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
                             }
@@ -120,6 +134,11 @@ namespace WebFreight.Web.Helpers
                                         else
                                         {
                                             if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
+                                            if (string.IsNullOrEmpty(entityContactVariable.Value))
+                                            {
+                                                if (!notifyBackPartners.Contains(entityContactVariable.PropertyName))
+                                                    notifyBackPartners.Add(entityContactVariable.PropertyName);
+                                            }
                                         }
                                     }
                                 }
@@ -142,12 +161,33 @@ namespace WebFreight.Web.Helpers
 
                         }
 
+                        if (notifyBackContactIds.Count > 0 && notifyBackPartners.Count > 0)
+                        {
+                            ContactQuery contactQuery = new ContactQuery(automation.Tenant);
+                            List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
+                            foreach (string contactEmail in notifyBackContactEmailLists)
+                            {
+                                if (!string.IsNullOrEmpty(contactEmail))
+                                {
+                                    if (!NotifyBackEmails.Split(';').Contains(contactEmail)) NotifyBackEmails += contactEmail + ";";
+                                }
+
+                            }
+
+                        }
+
                         #endregion
 
                         if (!string.IsNullOrEmpty(Emails) && htmldata != null)
                         {
                             string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc,bcc, subject);
                             entityChangesAutomation.ComunicationLogId = communicationLog;
+                        }
+
+                        if (!string.IsNullOrEmpty(NotifyBackEmails))
+                        {
+                            EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
+                            Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
                         }
                     }
 
@@ -162,6 +202,48 @@ namespace WebFreight.Web.Helpers
             }
 
             //  #endregion
+        }
+
+        private EmailCommunicationParams BuildNotifyBackEmailCommunications(Automation automation, List<string> notifyBackPartners, string NotifyBackEmails)
+        {
+            string objectTableeName = GetObjectTableName(automation);
+            string emailBody = GetAutomationNotifyBackEmailBody(automation.Name, objectTableeName, notifyBackPartners);
+            StringBuilder HtmlTemplate = new StringBuilder();
+            HtmlTemplate.Append("<div style='text-align:left;'>");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append(emailBody);
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("<br /><br />");
+
+            string emailbody = HtmlTemplate.ToString();
+            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            {
+                From = "no-replay@LogitudeWorld.com",
+                To = NotifyBackEmails,
+                CC = "",
+                BCC = "",
+                Subject = "Automation " + automation.Name + "Failed",
+                EmailBody = emailbody,
+                Tenant = automation.Tenant,
+            };
+            return emailParams;
+        }
+
+        private string GetObjectTableName(Automation automation)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(automation.Tenant);
+            ObjectTable objectTable = objectTableRepository.GetObjectTableById(automation.ObjectTableId, automation.Tenant);
+            string objectTableeName = objectTable == null ? "" : objectTable.Name;
+            return objectTableeName;
+        }
+
+        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableeName, List<string> notifyBackPartners)
+        {
+            string emailString = "";
+            emailString += "Automation " + automationName + " failed to be sent to the following ";
+            emailString += "partner" + (notifyBackPartners.Count > 1 ? "s " : " ") + string.Join(",", notifyBackPartners.ToArray());
+            emailString += " since they are not defined in " + objectTableeName + " level ";
+            return emailString;
         }
 
         public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc, string bcc, string subject, string objectTableName = null)

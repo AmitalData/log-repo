@@ -178,7 +178,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -215,6 +215,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 BankAccountLiteRepository  bankAccountLiteRepository = new BankAccountLiteRepository(MyContext);
                 IQueryable<BankAccountLite> entityPocos = bankAccountLiteRepository.GetBankAccountLites(tenant);
@@ -232,7 +233,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<BankAccountLiteList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(BankAccountLiteList).GetProperty(queryOperations.SortByColumnName);
@@ -296,11 +298,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.EnglishName);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -99,6 +100,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                     }).ToList();
 
+
+        }
+
+
+        public IQueryable<InterestReportLinesByDatePM> GetFirstAndLastInterestReportLineByDatesForInterestReports(List<string>  ReportIds)
+        {
+
+            IQueryable<InterestReportLinesByDatePM> LinesByDates = (from a in context.InterestReportLinesByDates
+                                                                    join itself in context.InterestReportLinesByDates
+                                                                    on a.InterestReportId equals itself.InterestReportId
+                                                                    where (ReportIds.Contains(a.InterestReportId))
+                                                                    select new { a = a, itself = itself }).
+                                                                    OrderBy(s => s.a.FromDate).ThenByDescending(s => s.itself.ToDate).
+                                                                    GroupBy(x => x.a.InterestReportId).
+                                                                    Select(x => new InterestReportLinesByDatePM()
+                                                                    {
+                                                                      InterestReportId = x.FirstOrDefault().a.InterestReportId,
+                                                                      FromDate = x.OrderBy(s=>s.a.FromDate).FirstOrDefault().a.FromDate,
+                                                                      ToDate = x.OrderByDescending(s=>s.itself.ToDate).FirstOrDefault().itself.ToDate,
+                                                                    });
+          
+
+            return LinesByDates;
 
         }
 

@@ -18,6 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string RecipientValue{ get; set; }
 
         public string PartnerObjectFieldCode { get; set; }
+        public bool IsNotifyBack { get; set; }
 
 
 

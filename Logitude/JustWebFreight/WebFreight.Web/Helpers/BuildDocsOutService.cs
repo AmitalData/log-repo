@@ -15,12 +15,12 @@ namespace WebFreight.Web.Helpers
     public class BuildDocsOutService
     {
 
-        public void BuildDocumentOut(BuildDocsOutArgs buildDocsOutArgs)
+        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs)
         {
             DocumentOutPM documentOutPM = GetDocumentOutPM(buildDocsOutArgs);
             if (documentOutPM == null) documentOutPM = CreateDcoumentOutPM(buildDocsOutArgs);
 
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery();
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(buildDocsOutArgs.Tenant);
             var documentTypePM = documentTypeQuery.GetSinglePM(buildDocsOutArgs.DocumentTypeId, documentOutPM.Id, buildDocsOutArgs.Tenant);
             if (documentTypePM != null)
             {

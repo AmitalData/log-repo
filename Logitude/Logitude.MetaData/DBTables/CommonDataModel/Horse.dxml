@@ -104,14 +104,14 @@
     Type="varchar"
     Size="50">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="PassportNumber"
     Type="varchar"
     Size="50">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CountryOfBirthId"

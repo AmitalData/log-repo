@@ -227,19 +227,16 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             
 
             this.uiProperty.UIPropertyChanged.subscribe(value => {
-                if (value instanceof UIPropertyArgs) {
-                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-
-                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                        if (uiPropertyArgs.property == "IsEnabled") {
-                            var isEnabled = uiPropertyArgs.newValue;
-                            this.IsDisabled = !isEnabled;
-                            this.uiProperty.IsEnabled = isEnabled;
-                        }
-                    }
-                }
+                this.HandleUIPropertyChanged(value);
             });
+
+            if(this.DataContext.EntityPM){
+                const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
+                pmuiProperty?.UIPropertyChanged.subscribe((value) => {
+                    this.HandleUIPropertyChanged(value);
+                    //this.DetectChanges();
+                });
+            }
         }
 
 
@@ -261,6 +258,21 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
         
     }
 
+
+    private HandleUIPropertyChanged(value: any) {
+        if (value instanceof UIPropertyArgs) {
+            var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+            var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+
+            if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                if (uiPropertyArgs.property == "IsEnabled") {
+                    var isEnabled = uiPropertyArgs.newValue;
+                    this.IsDisabled = !isEnabled;
+                    this.uiProperty.IsEnabled = isEnabled;
+                }
+            }
+        }
+    }
 
     onFocus() {
 

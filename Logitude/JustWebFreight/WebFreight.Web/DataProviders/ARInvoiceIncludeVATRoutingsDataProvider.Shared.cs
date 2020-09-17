@@ -41,7 +41,7 @@ namespace WebFreight.Web.DataProviders
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public string InvoiceNumber { get; set; }
-        public string BillToName { get; set; }        
+        public string BillToName { get; set; }
         public string OurReference { get; set; }
         public string CustomerReference { get; set; }
         public string Routing { get; set; }
@@ -50,14 +50,13 @@ namespace WebFreight.Web.DataProviders
         public double? VAT { get; set; }
         public double? GrandTotal { get; set; }
         public string Currency { get; set; }
-
         public double? VAT1Amount { get; set; }
         public double? VAT2Amount { get; set; }
         public double? VAT3Amount { get; set; }
         public double? VAT4Amount { get; set; }
-
         public double? ProfitInLocalCurrency { get; set; }
         public double? ProfitInProfitCurrency { get; set; }
+        public string BillToCode { get; set; }
     }
 
     public class InvoiceVATRoutingTotals

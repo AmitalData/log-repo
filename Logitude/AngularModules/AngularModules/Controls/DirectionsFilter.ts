@@ -254,7 +254,7 @@ export class DirectionsFilter {
     }
 
     SetVisibilityImportShipments() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTSHIPMETNS") && !this.HideCustomsImport) {
+        if (FeatureLocator.HasFeaturePermession("General", "IMPORTSHIPMETNS") && !this.HideCustomsImport) {
             this.itmImportShipments = true;
             this.DirectionWidth = 168;
         }

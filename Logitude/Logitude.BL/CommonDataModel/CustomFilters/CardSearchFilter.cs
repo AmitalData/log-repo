@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -30,13 +31,16 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 if (inactiveFilter != null && inactiveFilter.FieldValue != null && !string.IsNullOrEmpty(inactiveFilter.FieldValue.ToString())) inactive = bool.Parse(inactiveFilter.FieldValue.ToString());
 
                 ICommonDataContext commonDataContext = CommonDataContext.GetContext(cardSearchFilterArgs.Tenant);
-                List<string> cardIds = (from a in commonDataContext.CardSearches
-                                              where a.Tenant == cardSearchFilterArgs.Tenant && partnerTypeCodeLists.Contains(a.PartnerTypeId) && a.InActive == inactive && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
-                                              select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
 
+                IQueryable<CardSearch> cardSearches = (from a in commonDataContext.CardSearches where a.Tenant == cardSearchFilterArgs.Tenant && a.InActive == inactive select a);
+                if (partnerTypeCodeLists.Count > 0) cardSearches = cardSearches.Where(d => partnerTypeCodeLists.Contains(d.PartnerTypeId));
+
+                var cardIds = (from a in cardSearches
+                               where a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
+                               select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
 
                 entityLists = entityLists.Where(d => cardIds.Contains(d.Id));
-                if (cardSearchFilterArgs.SortList) entityLists = SortDataLists(cardSearchFilterArgs , entityLists);
+                if (cardSearchFilterArgs.SortList) entityLists = SortDataLists(cardSearchFilterArgs, entityLists);
                 return entityLists;
 
             }

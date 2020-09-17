@@ -111,14 +111,14 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
             this.ValidationWarningsList = [];
             this.PageChild_WEPD.WarehouseEntryPackagesLists.forEach(entryPackage => {
                 if (entryPackage.OverManifest > 0)
-                    this.ValidationWarningsList.push(this.GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.OldQuantity));
+                    this.ValidationWarningsList.push(this.GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity));
             });
         }
     }
 
-    GetOverManifestWarningMessage(overManifest: number, oldQuantity: number) {
+    GetOverManifestWarningMessage(overManifest: number, quantity: number) {
         var isOrAre: string = overManifest == 1 ? "is" : "are";
-        var warningMessage: string = overManifest + " out of " + oldQuantity + " packages " + isOrAre + " over manifest";
+        var warningMessage: string = overManifest + " out of " + quantity + " packages " + isOrAre + " over manifest";
         return warningMessage;
     }
 
@@ -249,7 +249,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseEntryPackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                     .then(cmpRef => {
-                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this };
+                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsBondedWarehouse: this.ShipmentPM.IsBondedWarehouse };
                         this.PageChild_WEPD = cmpRef.instance;
                         cmpRef.instance.SetWindowArgs(windowArgs);
                   

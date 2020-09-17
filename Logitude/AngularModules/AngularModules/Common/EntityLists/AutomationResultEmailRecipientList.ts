@@ -13,5 +13,6 @@ export class AutomationResultEmailRecipientList {
 		RecipientValue: string;
 		RecipientType: string;
 		PartnerObjectFieldCode: string;
+		IsNotifyBack: boolean;
 	
 }

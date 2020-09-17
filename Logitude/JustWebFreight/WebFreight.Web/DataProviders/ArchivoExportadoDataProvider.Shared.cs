@@ -136,5 +136,6 @@ namespace WebFreight.Web.DataProviders
         public string IncotermName { get; set; }
         public string House { get; set; }
         public string ContainersNumbers { get; set; }
+        public string AccountManagerName { get; set; }
     }
 }

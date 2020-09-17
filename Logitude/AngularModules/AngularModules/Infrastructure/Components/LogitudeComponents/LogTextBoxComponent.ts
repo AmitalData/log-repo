@@ -301,34 +301,18 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
 
         this.uiProperty.UIPropertyChanged.subscribe((value) => {
-            if (value instanceof UIPropertyArgs) {
-                var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-
-                if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                    if (uiPropertyArgs.property == "IsEnabled") {
-                        var isEnabled = uiPropertyArgs.newValue;
-                        this.IsDisabled = !isEnabled;
-                        this.uiProperty.IsEnabled = isEnabled;
-                        if (this.IsDisabled) {
-                            this.SetDisabled();
-                        }
-                        else {
-                            this.SetEnabled();
-                        }
-                    }
-                    else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
-                        if (!this.isFirstTime) {
-                            this.ValidateField(false);
-                        }
-                        else {
-                            this.isFirstTime = false;
-                        }
-                    }
-                }
-            }
+            this.HandleUIPropertyChanged(value);
             //this.DetectChanges();
         });
+
+        // if(this.DataContext.EntityPM){
+        //     const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
+        //     pmuiProperty?.UIPropertyChanged.subscribe((value) => {
+        //         this.HandleUIPropertyChanged(value);
+        //         //this.DetectChanges();
+        //     });
+        // }
+         
         //if there is an objectfield in the metadata:
         if (objectFieldAvailable) {
 
@@ -391,6 +375,35 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
 
 
+    }
+
+    private HandleUIPropertyChanged(value: any) {
+        if (value instanceof UIPropertyArgs) {
+            var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+            var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+
+            if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                if (uiPropertyArgs.property == "IsEnabled") {
+                    var isEnabled = uiPropertyArgs.newValue;
+                    this.IsDisabled = !isEnabled;
+                    this.uiProperty.IsEnabled = isEnabled;
+                    if (this.IsDisabled) {
+                        this.SetDisabled();
+                    }
+                    else {
+                        this.SetEnabled();
+                    }
+                }
+                else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
+                    if (!this.isFirstTime) {
+                        this.ValidateField(false);
+                    }
+                    else {
+                        this.isFirstTime = false;
+                    }
+                }
+            }
+        }
     }
 
     RunComponent() {
