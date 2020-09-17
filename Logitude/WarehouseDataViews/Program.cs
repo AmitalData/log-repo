@@ -16,7 +16,7 @@ namespace WarehouseDataViews
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CompareViewForm());
+            Application.Run(new MainViewForm());
         }
     }
 }

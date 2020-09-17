@@ -22,44 +22,33 @@ namespace WarehouseDataViews.Service
 
         }
 
-        private List<WarehouseView> GetOldWarehouseView(string connectionString)
-        {
-          var privateDBConnectionString =  GetPrivateDBConnectionString(connectionString);
-
-            var result = new List<WarehouseView>();
-            if (!string.IsNullOrEmpty(privateDBConnectionString))
-            {
-                var oldViews = GetDataTableFromSql(privateDBConnectionString, "select v.name as view_name,   m.definition from sys.views v join sys.sql_modules m  on m.object_id = v.object_id");
-                foreach (DataRow row in oldViews.AsEnumerable())
-                {
-                    string viewName = row["view_name"] != null ? row["view_name"].ToString() : "";
-                    string viewScript = row["definition"] != null ? row["definition"].ToString() : "";
-                    if (!viewName.Contains("c_"))
-                    {
-                        var view = new WarehouseView() { ViewName = viewName, SqlString = viewScript };
-                        result.Add(view);
-                    }
-                }
-            }
-            return result;
-        }
 
        
 
         public string Compare()
         {
-            //Phase1 Compare View Name
-            StringBuilder results = new StringBuilder("_________Removed or Rename Views ______________ \n\r");
+            StringBuilder results = new StringBuilder();
+            results.Append(CompareViewName());
+            results.Append(CompareFieldsName());
+            results.Append(CompareDataTypeFields());
+            return results.ToString();
+
+        }
+
+        private string CompareViewName()
+        {
+            var result = new StringBuilder("_________Removed or Rename Views ______________ \n\r");
             foreach (WarehouseView view in oldWarehouseView)
             {
-                if (!ChecKIfViewAvailable(view.ViewName)) results.Append(view.ViewName + " is removed \n\r");
+                if (!ChecKIfViewAvailable(view.ViewName)) result.Append(view.ViewName + " was removed \n\r");
             }
-            results.Append("______________________________ \n\r");
+            result.Append("______________________________ \n\r");
+            return result.ToString();
+        }
 
-
-            //Phase2 Compare Fields Name
-
-            results.Append("_________Removed or Rename Fields___________ \n\r");
+        private string CompareFieldsName()
+        {
+            var result = new StringBuilder("_________Removed or Rename Fields___________ \n\r");
 
             foreach (WarehouseView view in oldWarehouseView)
             {
@@ -69,30 +58,37 @@ namespace WarehouseDataViews.Service
                     {
                         if (!item.Contains("CONVERT"))
                         {
-                            var fieldName = item.Split(new string[] { "FROM" }, StringSplitOptions.None)[0].Split(new string[] { " as " }, StringSplitOptions.None)[1];
-                            fieldName = fieldName.Replace(" ", "");
+                            var fieldName  = GetFieldName(item);
                             if (!fieldName.Contains("c_"))
                             {
                                 if (!string.IsNullOrEmpty(fieldName) && !ChecKIfFieldAvailable(view.ViewName, fieldName))
                                 {
-                                    results.Append(fieldName + " field was removed from " + view.ViewName + "\n\r");
-
+                                    result.Append(fieldName + " field was rename or removed from " + view.ViewName + "\n\r");
                                 }
                             }
                         }
 
                     }
                 }
-                
+
             }
 
-            results.Append("______________________________ \n\r");
+            result.Append("______________________________ \n\r");
+            return result.ToString();
+        }
 
+        private  string GetFieldName(string item)
+        {
+            string result = string.Empty;
+            var x = item.Split(new string[] { "FROM" }, StringSplitOptions.None)[0];
+            if (x.Contains(" as ")) result = x.Split(new string[] { " as " }, StringSplitOptions.None)[1];
+            else if (x.Contains("]as ")) result = x.Split(new string[] { "]as" }, StringSplitOptions.None)[1];
+            return result.Replace(" ", "").Replace("[","").Replace("]","").Replace("\r\n","").Replace("\t","");
+        }
 
-            //Phase3 Compare Data Type Fields 
-
-            results.Append("_________Data Type Fields___________ \n\r");
-
+        private string CompareDataTypeFields()
+        {
+            var result = new StringBuilder("_________Data Type Fields___________ \n\r");
             foreach (WarehouseView view in oldWarehouseView)
             {
                 if (ChecKIfViewAvailable(view.ViewName))
@@ -101,13 +97,12 @@ namespace WarehouseDataViews.Service
                     {
                         if (!item.Contains("CONVERT"))
                         {
-                            var fieldName = item.Split(new string[] { "FROM" }, StringSplitOptions.None)[0].Split(new string[] { " as " }, StringSplitOptions.None)[1];
-                            fieldName = fieldName.Replace(" ", "");
+                            var fieldName = GetFieldName(item);
                             if (!fieldName.Contains("c_"))
                             {
                                 if (!string.IsNullOrEmpty(fieldName) && ChecKIfFieldAvailable(view.ViewName, fieldName) && ChecKIfFieldDataTypeChange(view.ViewName, fieldName))
                                 {
-                                    results.Append("Data type changed for "+fieldName + " field in " + view.ViewName + "\n\r");
+                                    result.Append("Data type changed for " + fieldName + " field in " + view.ViewName + "\n\r");
 
                                 }
                             }
@@ -118,11 +113,10 @@ namespace WarehouseDataViews.Service
 
             }
 
-            results.Append("______________________________ \n\r");
-
-            return results.ToString();
-
+            result.Append("______________________________ \n\r");
+            return result.ToString();
         }
+
 
         private bool ChecKIfFieldDataTypeChange(string viewName, string fieldName)
         {
@@ -130,22 +124,40 @@ namespace WarehouseDataViews.Service
             var warehouseView = DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault();
             if (warehouseView != null && warehouseView.Fields != null)
             {
-                var field = warehouseView.Fields.Where(d => d.FieldName == fieldName).FirstOrDefault();
-                if (field != null)
+                var dwObjectfield = warehouseView.Fields.Where(d => d.FieldName == fieldName).FirstOrDefault();
+                if (dwObjectfield != null)
                 {
-                    var x = oldDwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DWObjectTableCode && d.FieldCode == field.FieldCode).FirstOrDefault();
-                    if (x != null)
+                    var oldDwObjectfield = oldDwObjectFieldLists.Where(d => d.DWObjectTableCode == dwObjectfield.DWObjectTableCode && d.FieldCode == dwObjectfield.FieldCode).FirstOrDefault();
+                    if (oldDwObjectfield != null)
                     {
-                        if(x.DataTypeCode != field.DataTypeCode)
-                        {
-                            result = true;
-                        }
+                        if(oldDwObjectfield.DataTypeCode != dwObjectfield.DataTypeCode) result = true;
                     }
                 }
 
             }
             return result;
         }
+
+        private bool ChecKIfViewAvailable(string viewName)
+        {
+            return DataWarehouseViewLists.Where(d => d.ViewName == viewName).Any();
+        }
+
+        private bool ChecKIfFieldAvailable(string viewName , string fieldName)
+        {
+            bool result = false;
+            var warehouseView = DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault();
+            if (warehouseView != null && warehouseView.Fields!=null)
+            {
+                result = warehouseView.Fields.Where(d => d.FieldName == fieldName).Any();
+
+            }
+           
+         
+
+            return result;
+        }
+
 
         private string GetPrivateDBConnectionString(string connectionString)
         {
@@ -165,24 +177,25 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
-
-        private bool ChecKIfViewAvailable(string viewName)
+        private List<WarehouseView> GetOldWarehouseView(string connectionString)
         {
-            return DataWarehouseViewLists.Where(d => d.ViewName == viewName).Any();
-        }
+            var privateDBConnectionString = GetPrivateDBConnectionString(connectionString);
 
-        private bool ChecKIfFieldAvailable(string viewName , string fieldName)
-        {
-            bool result = false;
-            var warehouseView = DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault();
-            if (warehouseView != null && warehouseView.Fields!=null)
+            var result = new List<WarehouseView>();
+            if (!string.IsNullOrEmpty(privateDBConnectionString))
             {
-                result = warehouseView.Fields.Where(d => d.FieldName == fieldName).Any();
-
+                var oldViews = GetDataTableFromSql(privateDBConnectionString, "select v.name as view_name,   m.definition from sys.views v join sys.sql_modules m  on m.object_id = v.object_id where v.name !='database_firewall_rules'");
+                foreach (DataRow row in oldViews.AsEnumerable())
+                {
+                    string viewName = row["view_name"] != null ? row["view_name"].ToString() : "";
+                    string viewScript = row["definition"] != null ? row["definition"].ToString() : "";
+                    if (!viewName.Contains("c_"))
+                    {
+                        var view = new WarehouseView() { ViewName = viewName, SqlString = viewScript };
+                        result.Add(view);
+                    }
+                }
             }
-           
-         
-
             return result;
         }
 

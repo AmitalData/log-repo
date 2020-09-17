@@ -16,7 +16,7 @@ namespace WarehouseDataViews
 
 
         string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        string dbDestinationConnection = "2020R4_Global,sa,Saas256,.";
+        string dbDestinationConnection = "LogitudeGlobal,logitudemanager,!LO852456,ebup282itq.database.windows.net";
 
 
 
@@ -53,6 +53,7 @@ namespace WarehouseDataViews
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
         }
 
