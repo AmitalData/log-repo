@@ -169,9 +169,9 @@ export class BusyIndicator implements OnInit {
                 timeSpan = 10000;//10sec
             }
 
-            let plus5Min = new Date(this._StartBusyAt);
-            plus5Min=DateTool.AddMinute(plus5Min, 5)
-            if (plus5Min.valueOf() < now.valueOf()) {
+            let plus3Min = new Date(this._StartBusyAt);
+            plus3Min=DateTool.AddMinute(plus3Min, 3)
+            if (plus3Min.valueOf() < now.valueOf()) {
                 return;//stop progress;
             }
             this._TimerToken =
