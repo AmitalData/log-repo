@@ -534,19 +534,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if(shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                     {
                         ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
-                        if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                        if (storageReceivable != null)
                         {
-                            this.CreateShipmentReceivable(storageReceivable);
-                        }
+                            if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                            {
+                                this.CreateShipmentReceivable(storageReceivable);
+                            }
 
-                        else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
-                        {
-                            this.UpdateShipmentReceivable(storageReceivable);
-                        }
+                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
+                            {
+                                this.UpdateShipmentReceivable(storageReceivable);
+                            }
 
-                        else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
-                        {
-                            this.DeleteShipmentReceivable(storageReceivable);
+                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
+                            {
+                                this.DeleteShipmentReceivable(storageReceivable);
+                            }
                         }
 
                         this.UpdateShipmentStoragePricingsCollection();
