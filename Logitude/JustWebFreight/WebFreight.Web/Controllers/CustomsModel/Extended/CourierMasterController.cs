@@ -39,7 +39,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     {
 
 
-        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId,int tenant)
+        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(customContext);
-                string error =  courierMasterQueryService.CheckIfAllowToCancelCourierMaster( tenant , CourierMasterId);
+                string error = courierMasterQueryService.CheckIfAllowToCancelCourierMaster(tenant, CourierMasterId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, error);
             }
@@ -272,7 +272,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage PostSendPayReadyLow2755(SendPayReadyLowRequestParams requestParamsData) 
+        public HttpResponseMessage PostSendPayReadyLow2755(SendPayReadyLowRequestParams requestParamsData)
         {
             try
             {
@@ -358,7 +358,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                
+
                 var messagingService = new DCAInUCBCTML_MsgMessagingService();
                 var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
 
@@ -394,7 +394,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId,string testerSendOption)
+        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption)
         {
             try
             {
@@ -519,7 +519,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
                     }
                     DeclarationRepository declarationRep = new DeclarationRepository(tenant);
-                    var  declarationsAll = declarationRep.GetNotConnectedDeclarations(tenant);
+                    var declarationsAll = declarationRep.GetNotConnectedDeclarations(tenant);
                     if (!string.IsNullOrWhiteSpace(CourierSearchField))
                     {
                         declarationsAll = declarationsAll.Where(r => r.CourierSearchFields.Contains(CourierSearchField));
@@ -593,7 +593,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                CustomsRequiredFieldErrors errors = CustomsRequiredFieldsValidator.GetRequiredFieldsForCourierMaster(courierMasterId, tenant,true);
+                CustomsRequiredFieldErrors errors = CustomsRequiredFieldsValidator.GetRequiredFieldsForCourierMaster(courierMasterId, tenant, true);
                 return Request.CreateResponse(HttpStatusCode.OK, errors);
             }
             catch (Exception ex)
@@ -768,6 +768,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 CourierMasterListQueryService courierMasterListQueryService = new CourierMasterListQueryService(MyContext);
                 List<CourierMasterList> entityLists = courierMasterListQueryService.GetList(queryOperations, tenant);
+
+
+                entityLists = courierMasterListQueryService.AddCalcFields(entityLists);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
