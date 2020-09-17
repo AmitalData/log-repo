@@ -10763,6 +10763,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CustomsClearanceDate = view.CustomsClearanceDate,
                         IncludesCustoms = view.IncludesCustoms,
                         DeclarationDate = view.DeclarationDate,
+                        IsDangerous = view.IsDangerous,
+                        DangerousUnNumber = view.DangerousUnNumber,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -11356,6 +11358,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          To = s.To,
                                                          Origin = s.Origin,
                                                          LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
+                                                         IsDangerous = s.IsDangerous,
+                                                         DangerousUnNumber = s.DangerousUnNumber,
                                                      };
 
             return shipmentsList;
@@ -11903,6 +11907,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
                                ImportManifest = f.ImportManifest,
+                               IsDangerous = f.IsDangerous,
+                               DangerousUnNumber = f.DangerousUnNumber,
                            };
             return myResult;
         }
@@ -12257,6 +12263,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentSubTypeId = f.ShipmentSubTypeId,
                     ShipmentSubTypeName = f.ShipmentSubTypeName,
                     ImportManifest = f.ImportManifest,
+                    IsDangerous =f.IsDangerous,
+                    DangerousUnNumber = f.DangerousUnNumber,                   
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12514,6 +12522,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notes = f.Notes,
                     EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
+                    IsDangerous = f.IsDangerous,
+                    DangerousUnNumber = f.DangerousUnNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
