@@ -1402,7 +1402,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
         };
         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-        logWindow.ShowCloseButton = true;
+        //logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
             //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'

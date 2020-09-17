@@ -21086,6 +21086,12 @@
       LocalDefaultText="&quot;שגיאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declarations.O.UnSavedRemarks&quot;"
+      DefaultText="&quot;Remarks wont be saved&quot;"
+      LocalDefaultText="&quot;ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

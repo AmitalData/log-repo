@@ -237,9 +237,10 @@
 </style>
 
 <div class="class-response-content" *ngIf="declaration">
-
     <div style="float:left;width:115px; bottom:15px; left:3% " class="dropdown">
-
+        <div class="WindowButton" (mousedown)="CloseClicked()">
+            <img src="./Images/WindowIcons/WindowClose.png" class="CenterCenter" style=" bottom:15px; right: 150px;" />
+        </div>
         <div tabindex="-1" class="ToggleButton" style="width:115px;height: 1px; border:unset; ">
             <!--background:white; -->
             <div>
@@ -253,7 +254,7 @@
                         <td class="RightCenter" style="width: 10px;">
                             <img src="./Images/Icons/Dropdown-Arrow.png" />
                         </td>
-                    </tr>
+                    </tr>   
                 </table>
             </div>
 
@@ -517,7 +518,7 @@
                     <br />
                     <br />
 
-                    <div class="GeneratedGridContainer" style="width: 100% ; height :50%">
+                    <div class="GeneratedGridContainer" style="width: 100% ; height :50%;overflow-x:hidden;">
 
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" [GridHeight]="10" [ItemSource]="StatusList">
@@ -604,7 +605,7 @@
                     <br />
                     <br />
 
-                    <div class="GeneratedGridContainer" style="width: 100% ; height : 35%">
+                    <div class="GeneratedGridContainer" style="width: 100% ; height : 35%; overflow-x:hidden;">
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="IntegratedInvoiceList">
 
@@ -665,7 +666,12 @@
 
         </tr>
         <tr style="height:190px;">
-            <td style="width: 55%;"> </td>
+            <td style="width: 55%; top:50px;">
+                <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> הערות לחשבוניות </span>
+                <br />
+                <br />
+                <textarea [(ngModel)]="Remarks" id="remarks" name="remarks" rows="2" cols="50" style="height:100px;"></textarea>
+            </td>
             <td style="width: 5%;"></td>
             <td style="width: 40%;">
                 <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> רשימת חשבוניות </span>
@@ -673,7 +679,7 @@
                 <br />
                 <br />
 
-                <div class="GeneratedGridContainer" style="width: 100% ; height : 60%">
+                <div class="GeneratedGridContainer" style="width: 100% ; height : 60%; overflow-x:hidden;">
 
                     <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="InvoiceListList">
 

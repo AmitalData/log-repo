@@ -15,6 +15,8 @@ import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -41,7 +43,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-             //this.GetData();
+                //this.GetData();
             });
         });
     }
@@ -149,8 +151,34 @@ export class InvoiceQueueComponent
         return value;
     }
 
-    ShowDisbursement() {
+    private _Remarks: string;
+    public get Remarks() { return this._Remarks; }
+    public set Remarks(newValue: string) {
+        this._Remarks = newValue;
+    }
 
+    CloseClicked() {
+
+        if (this._Remarks != null && this._Remarks != "") {
+            var confirm = new ConfirmWindow();
+            confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
+            confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
+            // confirm.Show(TextCodeTranslator.Translate("Customs.Declarations.O.UnSavedRemark"));
+            confirm.Show("ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך")
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    confirm.Close();
+                    SessionLocator.SelectedSession.CurrentWindow.Close("1");
+                } else {
+                    confirm.Close();
+                }
+            });
+        } else {
+            SessionLocator.SelectedSession.CurrentWindow.Close("1");
+        }
+    }
+    ShowDisbursement() {
+     
         let myDeclaration: DeclarationPM = this.declaration;
         let myViewModelName = "InvoiceQueueComponent.ts-ShowDisbursement";
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -233,7 +261,7 @@ export class InvoiceQueueComponent
             alert("ShowPayments");
         }
     }
-
+   
     ShowCustomFileOPCFromDeclaration() {
 
         let myDeclaration: DeclarationPM = this.declaration;
