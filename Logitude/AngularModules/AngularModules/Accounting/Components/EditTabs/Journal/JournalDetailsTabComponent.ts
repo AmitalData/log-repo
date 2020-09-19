@@ -296,7 +296,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
-            this.CurrencyId =value? value.Id: null;
+            this.CurrencyId =this.EntityPM.IsNew ? value? value.Id: null:this.EntityPM.CurrencyId;
         }
     }
 

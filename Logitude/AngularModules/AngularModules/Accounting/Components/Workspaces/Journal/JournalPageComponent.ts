@@ -344,6 +344,7 @@ export class JournalPageComponent implements AfterViewInit {
 
 
         var entityPM: JournalPM = new JournalPM();
+        entityPM.IsNew=true;
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
