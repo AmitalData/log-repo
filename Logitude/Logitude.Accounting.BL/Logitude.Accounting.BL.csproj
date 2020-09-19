@@ -707,6 +707,7 @@
     <Compile Include="InterestEntityQueryServices\IInterestEntityQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestEntityResult\InterestEntityResult.cs" />
     <Compile Include="InterestEntityQueryServices\InterestFactory\InterestQueryFactory.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestInterestReportQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
