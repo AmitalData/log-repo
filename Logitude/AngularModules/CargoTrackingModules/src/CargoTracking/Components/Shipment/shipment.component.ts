@@ -69,7 +69,7 @@ export class ShipmentComponent implements OnInit
 
     goBack(): void {
         // this.location.back();
-        this.router.navigate(['search']);
+        this.router.navigate([this._Tenant,'search']);
     }
     GetModeIcon()
     {
