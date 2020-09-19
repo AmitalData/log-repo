@@ -926,7 +926,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     MustIgnoreItems: any[] = [];
     onDataLoaded() {
-
+    
         //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
         this.MarkIsChecked.emit({SelectedLines:this.SelectedLines});
     }
@@ -1098,7 +1098,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.SelectedLines.Clear();
-                    let emittedArray = result.map((res:LedgerTransactionPM)=>({rowData: res, IsChecked: false, RowIndex: -1, ById: true}));//result.map(res=>(new LineModel(res,this,-1)));//[];
+                    let emittedArray = result.map((res:LedgerTransactionPM)=>({rowData: res, IsChecked: true, RowIndex: -1, ById: true}));//result.map(res=>(new LineModel(res,this,-1)));//[];
                     let selectedLines= result.map(res=>(new LineModel(res,this,-1)));//[];
                     // for (var i = 0; i < result.length; i++) {
                     //     var line1 = new LineModel(result[i], this,-1);
