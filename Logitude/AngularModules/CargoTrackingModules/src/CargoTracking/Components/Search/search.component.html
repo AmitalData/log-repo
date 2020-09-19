@@ -39,7 +39,11 @@
 
 
 
-            <div class="result-count dark-gray" *ngIf="Shipments.length>0">{{Shipments.length}} results</div>
+            <div class="result-count dark-gray" *ngIf="Shipments.length>0">
+                {{Shipments.length}} 
+                <span *ngIf="Shipments.length==1">result</span>
+                <span *ngIf="Shipments.length>1">results</span>       
+            </div>
 
 
 

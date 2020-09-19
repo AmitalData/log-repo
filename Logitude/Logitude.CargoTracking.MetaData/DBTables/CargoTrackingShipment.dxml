@@ -367,4 +367,6 @@
     ReferencedTable="CargoTrackingMilestones"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+  Columns="Tenant,IsMainRecord,EntityId" />
 </Table>
