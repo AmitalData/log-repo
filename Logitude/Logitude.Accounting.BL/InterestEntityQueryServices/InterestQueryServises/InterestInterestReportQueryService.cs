@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.JournalNumber = null;
                 result.AccountCode = "11";
                 result.EntityCode = "4";
-                result.EntityType = "InterestReport";
+                result.EntityType = "Interest Report";
                 result.EntityTypeCode = "IR";
             }
            
