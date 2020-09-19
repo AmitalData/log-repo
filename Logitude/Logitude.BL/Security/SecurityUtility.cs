@@ -140,14 +140,7 @@ namespace Logitude.BL.Security
         {
             bool exists = false;
 
-            if (objectTableName.Contains("Customs."))
-            {
-
-            }
-            //if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-            //{
-
-            //}
+   
 
             string email = null;
             if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -171,13 +164,7 @@ namespace Logitude.BL.Security
 
             if (contactinfo != null)
             {
-                if (contactinfo.IsLogitudeAdmin)
-                {
-                    exists = true;
-                }
-
-                else
-                {
+                
                     ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
                     if (objectTable != null)
                     {
@@ -194,7 +181,7 @@ namespace Logitude.BL.Security
                             }
                         }
                     }
-                }
+                
             }
             //}
 
