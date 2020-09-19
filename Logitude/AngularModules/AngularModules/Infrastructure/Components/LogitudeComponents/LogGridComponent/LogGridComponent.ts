@@ -1188,7 +1188,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
              this.cd.detectChanges();
         } 
         
-        var  ExcludedItems = res.ExcludedLines.Collection;
+        var  ExcludedItems = res?.ExcludedLines?.Collection;
+        if(ExcludedItems){
         for(let i =0 ; i < ExcludedItems.length ; i++){
             var NRow =  (this.AllCheckedRecords.filter(a => a.rowData)[0] ?this.AllCheckedRecords.filter(a => a.rowData.Id ===  ExcludedItems[i])[0]: false );
             if (NRow) {
@@ -1201,6 +1202,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
              this.cd.detectChanges();
         } 
  
+    }
         // var Row = this.rows.filter(a => a.rowData.Id === res.MyRecord.Id)[0];
             // if (Row) {
             //    Row.rowData.IsChecked = true;
