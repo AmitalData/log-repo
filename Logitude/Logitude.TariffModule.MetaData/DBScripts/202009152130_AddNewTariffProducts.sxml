@@ -1,0 +1,162 @@
+﻿<Script DBType="Main" Module="Tariff">
+  <Sql Version="1">
+    <![CDATA[
+     
+
+declare @Tenant as int
+declare @Code as varchar(10)
+declare @Name as varchar(100)
+declare @NewId as varchar(15)
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id
+       FROM Tenants
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Tenant
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+              set @Code = 'EXP'
+              set @Name = 'Express'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end    
+
+			  set @Code = 'DOM'
+              set @Name = 'Domestic'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'LAN'
+              set @Name = 'Live Animals'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'PER'
+              set @Name = 'Perishables'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'TEP'
+              set @Name = 'Temperature Control'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'HUM'
+              set @Name = 'Human Remains'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'PRS'
+              set @Name = 'Personal Effects'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'AUT'
+              set @Name = 'Automotive Vehicles'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'VAL'
+              set @Name = 'Valuable Goods'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'ULD'
+              set @Name = 'ULD'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'PAR'
+              set @Name = 'Pharma'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'VUL'
+              set @Name = 'Vulnerable '
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'DIP'
+              set @Name = 'Diplomatic'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'AER'
+              set @Name = 'Aerospace '
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+
+              set @Code = 'SML'
+              set @Name = 'Small Packages'
+              if not exists (select * from TariffProducts where Code = @Code and Tenant = @Tenant)
+              begin                     
+                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'TariffProduct'
+                     insert into TariffProducts(Id, Tenant, Code, Name, LocalName, Inactive, SearchFields)
+                     values ( @NewId,@Tenant, @Code, @Name, @Name, 0, @Code + ',' + @Name)
+              end
+   
+       FETCH NEXT FROM DataCursor INTO @Tenant
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'TariffProduct')
+    ]]>
+  </Sql>
+</Script>

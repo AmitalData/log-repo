@@ -80,6 +80,7 @@
     <None Include="App.config" />
     <None Include="DBScripts\202005262050_FillFreightChargeTypeIdOfTariffTable.sxml" />
     <None Include="DBScripts\202006211023_SetTariffSettingDefaultCurrency.sxml" />
+    <None Include="DBScripts\202009152130_AddNewTariffProducts.sxml" />
     <None Include="DBTables\Tariff.dxml" />
     <None Include="DBTables\TariffLine.dxml" />
     <None Include="DBTables\TariffLinesContainersPrice.dxml" />
