@@ -161,7 +161,7 @@
   <Column
     Name="ShipperName"
     Type="varchar"
-    Size="70">
+    Size="71">
     <Constraints
       Nullable="true" />
   </Column>
