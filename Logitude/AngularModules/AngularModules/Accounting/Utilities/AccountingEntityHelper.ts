@@ -144,6 +144,12 @@ export class AccountingEntityHelper {
 
                 break;
             }
+            // 10-InterestReport
+            case "11": {
+                tableName = "InterestReport";
+
+                break;
+            }
 
         }
         return tableName;
