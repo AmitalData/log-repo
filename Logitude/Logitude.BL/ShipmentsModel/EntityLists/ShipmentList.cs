@@ -537,5 +537,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool CreatedFromDigital { get; set; }
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+
+        public bool IsDangerous { get; set; }
+        public string DangerousUnNumber { get; set; }
+
     }
 }
