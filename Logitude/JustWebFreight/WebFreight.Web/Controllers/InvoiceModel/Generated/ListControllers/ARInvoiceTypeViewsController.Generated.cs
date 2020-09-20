@@ -41,6 +41,8 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.CustomFilters;
+		  
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 { 
 
@@ -222,7 +224,10 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				
+				                
+				ARInvoiceTypeCustomFilter customfilters = new ARInvoiceTypeCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	
                 entityPocos = genericFilter.GetFilteredQuery<ARInvoiceType>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ARInvoiceTypeList> entityLists = aRInvoiceTypeQuery.GetIQueryableEntityList(entityPocos);
