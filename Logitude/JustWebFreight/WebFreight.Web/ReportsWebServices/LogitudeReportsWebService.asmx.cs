@@ -1745,7 +1745,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.VATInLocalCurrency = myTotalVats.Sum(d => d.LocalVATAmount);
                 invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotalInLocalCurrency + invoicesRecored.VATInLocalCurrency;
                 invoicesRecored.ExpenseChargesInLocalCurrency = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
-                
+                invoicesRecored.BillToCode = a.BillToCode;
 
                 if (localCurrency)
                 {
@@ -1772,6 +1772,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
                     invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
                 }
+
                 if (a.SATXML != null)
                 {
                     Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
@@ -3408,6 +3409,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceStatus = a.StatusName;
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
                 invoicesRecored.CreateDate = a.CreateDate;
+                invoicesRecored.BillToCode = a.VendorCode;
 
                 if (localCurrency)
                 {
@@ -8700,6 +8702,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.BillToName = invoice.BillToName;
                     record.OurReference = invoice.MainEntityReference;
                     record.CustomerReference = invoice.CustomerRef;
+                    record.BillToCode = invoice.BillToCode;
 
                     if (shipment != null)
                     {
