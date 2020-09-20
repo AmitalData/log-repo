@@ -141,9 +141,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public  InterestReportPM  GetSinglePMForInterest(string Id, int Tenant)
+        {
+            return (from a in context.InterestReports
+                    where
+                     a.Tenant == Tenant &&  a.Id == Id
 
+                    select new InterestReportPM()
+                    {
 
-            public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
+                        Id = a.Id,
+                        ReportNumber=a.ReportNumber,
+
+                    }).FirstOrDefault();
+
+        }
+
+        public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
         {
             return (from a in context.InterestReports
                     where
