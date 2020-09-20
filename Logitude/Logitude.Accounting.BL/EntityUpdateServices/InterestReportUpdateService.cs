@@ -161,6 +161,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 transaction.InterestReportId = null;
                 transaction.IsClosed = false;
                 transaction.ChangeSetOp = ChangeSetOperation.Update;
+                if (transaction.InterestEntityTypeCode == "4")
+                {
+                    transaction.IsCancelled = true;
+                }
                 InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
                 interestTransactionUpdateService.Update(transaction, true);
             }
