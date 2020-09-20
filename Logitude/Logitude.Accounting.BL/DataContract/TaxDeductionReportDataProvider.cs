@@ -135,21 +135,19 @@ namespace Logitude.Accounting.BL.DataContract
                     && j.ExternalSystem != null && a.LocalAmountDebit == 0
                    select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
-            journalLines = GetJournalLinesByJournalds();
+            journalLines = GetJournalLinesByJournalds(journalIds);
             List<string> accountsIds = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList(); 
             transactionsVendors = GetVendorsByAccountsIds(accountsIds);          
             oppositeAccountTransactions = GetOppositeTransactions(transactions);
 
             return transactions;
         }
-        private List<JournalLine> GetJournalLinesByJournalds( )
+        private List<JournalLine> GetJournalLinesByJournalds(List<string> journalIds )
         {
-            List<JournalLine> journalLines = (from a in accountingContext.JournalLines
-                                              join j in accountingContext.Journals
-                                                   on a.JournalId equals j.Id
+            List<JournalLine> journalLines = (from a in accountingContext.JournalLines                                       
                                                     where 
                                                      a.Tenant == Tenant && (a.DocumentDate >= startDate && a.DocumentDate <= endDate)
-                                                    && j.ExternalSystem != null 
+                                                    && a.ActionCode == "2" && journalIds.Contains(a.JournalId)
                                                     select a).ToList();
             return journalLines;
         }
@@ -357,7 +355,7 @@ namespace Logitude.Accounting.BL.DataContract
             }
             if (vendor == null)
             {
-                List<JournalLine> selectedJournalLines = journalLines.Where(d => d.JournalId == transaction.JournalId && d.ActionCode == "2" && d.Reference1 == transaction.Reference1).ToList();
+                List<JournalLine> selectedJournalLines = journalLines.Where(d => d.JournalId == transaction.JournalId &&  d.Reference1 == transaction.Reference1).ToList();
                 List<string> debitAccountIds = selectedJournalLines.Select(d => d.DebitAccountId).ToList();
                 GLAccountList gLAccount = transactionsGLAccounts.Where(d => d.ChartOfAccountsTypeCode != "5" && debitAccountIds.Contains(d.Id) && d.Id != setting.TaxWithholdingGLAccountId && !d.ExcludeFromDeductionReport).FirstOrDefault();
                 if (gLAccount != null)
