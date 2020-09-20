@@ -161,7 +161,7 @@
   <Column
     Name="ShipperName"
     Type="varchar"
-    Size="70">
+    Size="71">
     <Constraints
       Nullable="true" />
   </Column>
@@ -367,6 +367,8 @@
     ReferencedTable="CargoTrackingMilestones"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="EntityType,EntityId,Tenant" />
   <Index
   Columns="Tenant,IsMainRecord,EntityId" />
 </Table>

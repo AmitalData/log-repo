@@ -22,22 +22,22 @@ namespace Logitude.CargoTracking.Data.Repositories
         }
 
         public IQueryable<CargoTrackingShipment> GetByShipmentIds(List<string> ShipmentIds, int tenant)
-        { 
-            //IQueryable<CargoTrackingShipment> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
-            //                                                        where
-            //                                                           ShipmentIds.Contains(shipment.EntityId)
-            //                                                           && shipment.Tenant == tenant
-            //                                                           && shipment.IsMainRecord ==false
-            //                                                        select shipment);
+        {
+            IQueryable<CargoTrackingShipment> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
+                                                                    where
+                                                                       ShipmentIds.Contains(shipment.EntityId)
+                                                                       && shipment.Tenant == tenant
+                                                                       && shipment.IsMainRecord == false
+                                                                    select shipment);
 
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
-                                                                     (
+                                                                     ((
                                                                         shipment.Tenant == tenant 
                                                                         && shipment.IsMainRecord ==true 
                                                                         && ShipmentIds.Contains(shipment.EntityId)
                                                                       )
-                                                                   //  || shipmentsIsNotMain.Select(s => s.CustomsShipmentHeaderId).Contains(shipment.EntityId))
+                                                                     || shipmentsIsNotMain.Select(s => s.CustomsShipmentHeaderId).Contains(shipment.EntityId))
                                                            select shipment);
 
             return shipments;
