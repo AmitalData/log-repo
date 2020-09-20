@@ -458,7 +458,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 if (item == null)
                                 {
                                     
-                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals)+ " " + entityPM.InterestCalculationStartDate.Value.Date);
+                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals)+ " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date)+")");
 
                                 }
                             }

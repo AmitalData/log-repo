@@ -288,8 +288,10 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
         {
             var datebigger = DateTool.IsDateBigger(newValue, this.GLAccountPM.InterestCalculationStartDate);
             this.EntityPM.PeriodStartDate = newValue;
+
+            var item = this.GLAccountPM.GLAccountInterestPeriods.filter(d => !DateTool.IsDateBigger(d.PeriodStartDate, this.GLAccountPM.InterestCalculationStartDate) )[0];
            
-            if (datebigger) {
+            if (datebigger && item == null) {
                 this.UIProperties.SetValidity("PeriodStartDate", "GLAccountInterestPeriod", false, TextCodeTranslator.Translate("GLAccount.O.InterestCalculationStartDateValidation") + " " + DateTimeToDatePipe.Pipe(this.GLAccountPM.InterestCalculationStartDate)  );// "It is mandatory to enter interest data for (DD.MM.YY)  as defined in the 'Interest Calculation Start Date ' field");
             }
             else { this.UIProperties.SetValidity("PeriodStartDate", "GLAccountInterestPeriod", true,null);}
