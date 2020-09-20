@@ -106,16 +106,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             Sum_Line.LocalAmount = _journalLines.Sum(s => s.LocalAmount);
             Sum_Line.ExternalOpenAmount = _journalLines.Sum(s => s.ExternalOpenAmount);
             Sum_Line.Reference1 = DepositPM.DepositNumber.ToString();
-            Sum_Line.Reference2 = _journalLines.FirstOrDefault().Reference2;
-            foreach (JournalLinePM line in _journalLines)
-            {
-                if (line.Reference2 != Sum_Line.Reference2)
-                {
-                    Sum_Line.Reference2 = null;
-                    break;
-                }
-
-            }
+            Sum_Line.Reference2 = DepositPM!= null? DepositPM.BankDepositLines.Count==1? DepositPM.BankDepositLines.FirstOrDefault().ChequeNumber:null:null;
             journal.JournalLines.Add(Sum_Line);
         }
         private JournalLinePM CreateDebitLineForChequeDeposit(ref int LineNumber, BankDepositLinePM item, ARPaymentChequePM cheque)
