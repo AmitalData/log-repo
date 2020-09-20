@@ -259,13 +259,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     {
                         Contracts.Add(queryParameters["contractId"]);
                     }
+
                     if (queryParameters.ContainsKey("invoiceAmountUSD"))
                     {
-                        totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
+                        if(queryParameters["invoiceAmountUSD"] != null)
+                        {
+                            double result = 0;
+                            Double.TryParse(queryParameters["invoiceAmountUSD"], out result);
+                            totalPayments += result;
+                        }
                     }
+
                     if (queryParameters.ContainsKey("taxAmountUSD"))
                     {
-                        totalPayments -= Double.Parse(queryParameters["taxAmountUSD"]);
+                        if (queryParameters["taxAmountUSD"] != null)
+                        {
+                            double result = 0;
+                            Double.TryParse(queryParameters["taxAmountUSD"], out result);
+                            totalPayments += result;
+                        }
                     }
                 }
             }
