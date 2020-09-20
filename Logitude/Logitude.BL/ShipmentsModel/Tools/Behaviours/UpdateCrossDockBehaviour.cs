@@ -100,19 +100,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (leastWarehouseEntry != null)
                 {
                     shipmentPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
-                    shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
-
-                    if (shipmentPM.IsBondedWarehouse)
-                    {
-                        storageCalculationManager.CheckStorageProperties();
-                        ReceivablePricingUpdated = true;
-                    }
+                    shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;                   
                 }
             }
             else if (warehouseEntries.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualEntryDate = null;
                 shipmentPM.WarehouseLegExpectedEntryDate = null;
+            }
+
+            if (shipmentPM.IsBondedWarehouse)
+            {
+                storageCalculationManager.CheckStorageProperties();
+                ReceivablePricingUpdated = true;
             }
         }
         private void UpdateActualExpectedWarehouseReleasesDates()
@@ -141,19 +141,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (greatestWarehouseRelease != null)
                 {
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
-                    shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
-
-                    if (shipmentPM.IsBondedWarehouse)
-                    {
-                        storageCalculationManager.CheckStorageProperties();
-                        ReceivablePricingUpdated = true;
-                    }
+                    shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;                    
                 }
             }
             else if (warehouseRelases.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
+            }
+
+            if (shipmentPM.IsBondedWarehouse)
+            {
+                storageCalculationManager.CheckStorageProperties();
+                ReceivablePricingUpdated = true;
             }
         }
         private void UpdateDeliveryDepartureDates()
