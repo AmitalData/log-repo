@@ -359,6 +359,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                         this.CanTransferToFTP = SessionLocator.AccountingSystemPM.CanTransferToFTP;
 
                         this.SetUIProperties();
+                        this.BuildExternalTransmissionList();   
                     }
                 });
             }

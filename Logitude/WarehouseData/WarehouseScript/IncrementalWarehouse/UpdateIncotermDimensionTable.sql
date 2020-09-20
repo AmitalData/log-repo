@@ -22,7 +22,7 @@
 
 	DECLARE IncotermsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Incoterms.Id, dw_Incoterms.Name , dw_Incoterms.LocalName ,dw_Incoterms.Code, dw_Incoterms.Tenant,dw_DWHSettings.ParentTenant, dw_Incoterms.AutomaticLastUpdateDate
+	SELECT dw_Incoterms.Id, dw_Incoterms.Name , dw_Incoterms.LocalName ,dw_Incoterms.Code, dw_Incoterms.Tenant,dw_DWHSettings.ParentTenant, dw_Incoterms.AutomaticLastUpdateDate, dw_Incoterms.InActive
 	From dw_Incoterms
 	inner JOIN dw_DWHSettings ON dw_Incoterms.Tenant = dw_DWHSettings.Tenant
 	where dw_Incoterms.AutomaticLastUpdateDate > @LastUpdateDate	

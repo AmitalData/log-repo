@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef}  from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef, AfterViewInit}  from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
 @Component({
@@ -6,7 +6,7 @@ import {SessionLocator} from '../../Utilities/SessionLocator';
     templateUrl: './EditTabComponent.html',
 })
 
-export class EditTabComponent {
+export class EditTabComponent implements AfterViewInit {
     public TabCode: string;
   public ComponentPath: string;
   public ComponentRef: any;
@@ -19,38 +19,26 @@ export class EditTabComponent {
     Run(tabCode: string, componentPath: string) {
         this.TabCode = tabCode;
         this.ComponentPath = componentPath;
-        this.RunComponent();
+        this.LoadComponent();
     }
 
-    private isLoaderReady: boolean = false;
-    public CurrentlySelected: boolean = false;
-    RunComponent() {
+    private isViewEnitied: boolean = false;
+    ngAfterViewInit() {
+        this.isViewEnitied = true;
+        this.LoadComponent();
+    }
 
-        if (this.ViewContainerRef) {
+    
+    public CurrentlySelected: boolean = false;
+    LoadComponent() {
+        if (this.ComponentPath && this.isViewEnitied) {
+
             SessionLocator.DynamicLoader.Load(this.ComponentPath, this.ViewContainerRef)
                 .then(cmpRef => {
-                  this.Selected = true;
-                  this.ComponentInst = cmpRef.instance;
-                  this.ComponentRef = cmpRef;
+                    this.Selected = true;
+                    this.ComponentInst = cmpRef.instance;
+                    this.ComponentRef = cmpRef;
                 });
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 
