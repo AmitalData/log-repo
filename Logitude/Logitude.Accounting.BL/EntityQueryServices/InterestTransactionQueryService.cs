@@ -36,8 +36,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             InterestTransaction interestTransaction = (from a in context.InterestTransactions
                                                        where a.InterestReportId == interestReportId && a.Tenant == tenant && a.InterestEntityTypeCode == "4"
                                                        select a).FirstOrDefault();
-            InterestTransactionPM interestTransactionPMs = this.GetEntityPM(interestTransaction);
-            return interestTransactionPMs;
+
+            InterestTransactionPM interestTransactionPM = null;
+            if (interestTransaction != null)
+            {
+              interestTransactionPM = this.GetEntityPM(interestTransaction);
+            }
+            
+            return interestTransactionPM;
 
         }
         private List<InterestTransactionPM> MapInterestTransactionsPocosToPMs(IQueryable<InterestTransaction> interestTransactions)
