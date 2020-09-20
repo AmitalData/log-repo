@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -104,6 +105,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         }
 
+    public void Trace(ShipmentTracing shipmentTracing)
+        {
+
+        }
+    
     public void Save()
         {
             if (isNewEntity)

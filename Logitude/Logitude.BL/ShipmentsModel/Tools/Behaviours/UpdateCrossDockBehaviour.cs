@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -44,6 +45,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             UpdateCrossDockReleaseStatus();
             UpdateWareHouseEntryPartners();
             ConnectWarehouseReleaseToShipment();
+        }
+        public void Trace(ShipmentTracing shipmentTracing)
+        {
+            shipmentTracing.TraceTerminalData();
         }
         private void UpdateShipmentWarehouseLegData() 
         {

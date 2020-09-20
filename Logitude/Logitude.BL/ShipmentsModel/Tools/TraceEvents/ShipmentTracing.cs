@@ -192,7 +192,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceMasterData();
                 this.TraceRoutingData();
                 this.TraceCustomsData();
-                this.TraceTerminalData();
+                //this.TraceTerminalData();
             }
         }
 
@@ -1767,7 +1767,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             }
         }
-        private void TraceTerminalData()
+        public void TraceTerminalData()
         {
             if (this.entityPM.DirectionId == "I")
             {
