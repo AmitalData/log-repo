@@ -1911,6 +1911,28 @@ namespace WebFreight.Web.WebServices
                             insidePackage.Weight = insideItem.Weight;
                             insidePackage.Description = insideItem.Description;
 
+                            if (insideItem.IsMultiHarmonize)
+                            {
+                                List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.InsidePackageId == insideItem.Id && d.Tenant == tenant).ToList();
+                                foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                                {
+                                    if (string.IsNullOrEmpty(insidePackage.HSCode))
+                                    {
+                                        insidePackage.HSCode = itemHarmonize.Harmonize;
+                                    }
+
+                                    else
+                                    {
+                                        insidePackage.HSCode += "," + itemHarmonize.Harmonize;
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                insidePackage.HSCode = insideItem.Harmonize;
+                            }
+
                             #region Car Details
                             insidePackage.Make = insideItem.Make;
                             insidePackage.Model = insideItem.Model;
