@@ -41,10 +41,20 @@ export class AppComponent
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
+        document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
+
 
         this.listenToRouterEvents();
     });
  }
+
+
+//  get MainColor(){
+//      return CargoTrackingBrandingData.MainColor;
+//  }
+//  set MainColor(val:string){
+//     CargoTrackingBrandingData.MainColor=val;
+// }
     private GetDataFromURL(){
  
         this.router.events.subscribe((event: any) => {

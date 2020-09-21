@@ -1,14 +1,15 @@
 import {Component} from '@angular/core';
+import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 
 @Component({
     selector: 'BusyIndicator',
-    inputs: ['Text', 'IsBusy', 'Width', 'Height', 'ImageWidth', 'ImageHeight'],
+    inputs: ['Text', 'IsBusy','MainColor' ,'Width', 'Height', 'ImageWidth', 'ImageHeight'],
 
     template:
     `
-    <div   [hidden]="!IsBusy" class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
+    <div   [hidden]="!IsBusy"  class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
     <div   [hidden]="!IsBusy" class="BusyIndicatorControl">
-        <div class="BusyIndicatorControlOuter" [style.width.px]="Width" [style.height.px]="Height">
+        <div class="BusyIndicatorControlOuter" [style.margin-top.px]="innerHeight" [style.width.px]="Width" [style.height.px]="Height">
             <div class="BusyIndicatorControlInner" [style.width.px]="Width" [style.height.px]="Height">
                 <div style="margin: auto; margin-top: 20px;" [style.width.px]="ImageWidth" [style.height.px]="ImageHeight">
                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -16,7 +17,7 @@ import {Component} from '@angular/core';
                 </div>
 
                 <div style="margin-top: 0px; height: 20px; width: 100%; text-align: center;">
-                    <label style="font-weight: bold; color: #222; font-size: 13px;">{{Text}}</label>
+                    <label class="TextStyle">{{Text}}</label>
                 </div>
             </div>
         </div>
@@ -76,6 +77,11 @@ import {Component} from '@angular/core';
         margin: auto;
         background: none;
     }
+    .TextStyle {
+        font-weight: bold;
+        font-size: 13px;
+        color: var(--busyIndicatorColor);
+      }
     .lds-ring {
         display: inline-block;
         position: relative;
@@ -92,7 +98,7 @@ import {Component} from '@angular/core';
         border: 8px solid #fff;
         border-radius: 50%;
         animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #fff transparent transparent transparent;
+        border-color: var(--busyIndicatorColor) transparent transparent transparent;
       }
       .lds-ring div:nth-child(1) {
         animation-delay: -0.45s;
@@ -120,6 +126,9 @@ export class BusyIndicator {
     public Height: number = 80;
     public ImageWidth: number = 80;
     public ImageHeight: number = 80;
+    public MainColor:string =CargoTrackingBrandingData.MainColor;
+    public innerHeight = window.innerHeight/2;
+
     constructor() {
 
     }
