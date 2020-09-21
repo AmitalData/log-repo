@@ -59,7 +59,8 @@ export class AppComponent
             }
 
                 if (Number.isNaN(this._Tenant) || !this._Tenant || this._Tenant==null){
-                    this._Tenant=1;  
+                    this._Tenant=1;
+                    this.back();  
                 }
                 // else{
                 //     this._Tenant=1; 
@@ -109,7 +110,7 @@ export class AppComponent
     back()
     {
         // this._location.back();
-        this.router.navigate(['search']);
+        this.router.navigate([this._Tenant,'search']);
     }
 
 }
