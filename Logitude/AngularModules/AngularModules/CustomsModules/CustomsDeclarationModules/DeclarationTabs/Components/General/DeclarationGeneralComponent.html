@@ -340,18 +340,16 @@
                                 <tr style="height: 28px;">
                                     <!-- GovernmentProcedureType -->
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'DeclarationTypeCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
+                                        <LogLov [ObjectFieldName]="'DeclarationTypeCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.GovernmentProcedureType'"
-                                                [ManipulateData]="true"
-                                                [QueryFilterItems]="PreceduralFilterItems"
-                                                [SelectedValue]="ProcedureCurrentCode">
+                                                [LookUpTableName]="'Customs.LeadDocumentType'"
+                                                [SelectedValue]="DeclarationTypeCode">
                                         </LogLov>
                                     </td>
                                     <td><div></div></td>

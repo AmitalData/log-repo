@@ -663,7 +663,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
     }
 
-
+    public get DeclarationTypeCode() { return this.EntityPM.DeclarationTypeCode }
+    public set DeclarationTypeCode(newValue: string) {
+        this.EntityPM.DeclarationTypeCode = newValue;
+    }
 
     public get IsExporterConfirmation() { return this.EntityPM.IsExporterConfirmation; }
     public set IsExporterConfirmation(newValue: boolean) {
