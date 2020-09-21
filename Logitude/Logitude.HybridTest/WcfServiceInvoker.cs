@@ -45,6 +45,9 @@ namespace Logitude.HybridTest
             }
             catch (Exception ex)
             {
+                if (serviceOutcome.Response == null) {
+                    serviceOutcome.Response = new Response();
+                }
                 serviceOutcome.Response.HasError = true;
                 serviceOutcome.Response.ErrorMessage = ex.Message;
                 return serviceOutcome;
