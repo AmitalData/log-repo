@@ -901,7 +901,7 @@ export class RulesValidator {
             fieldCurrentValue = entity[condfield.ObjectFieldName];
 
 
-            if (fieldPM.DataTypeCode === "Integer" || fieldPM.DataTypeCode === "Double" || fieldPM.DataTypeCode === "Decimal") {
+            if (fieldPM && (fieldPM.DataTypeCode === "Integer" || fieldPM.DataTypeCode === "Double" || fieldPM.DataTypeCode === "Decimal")) {
                 conditionValue = FieldValueResolver.GetFieldDataValue(fieldPM, condfield.Value);
                 fieldCurrentValue = entity[condfield.ObjectFieldName];
             }
