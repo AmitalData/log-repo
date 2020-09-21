@@ -969,6 +969,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
+        if (this.IsNewLeg && this.EntityPM.ShipmentStoragePricings.length > 0) {
+            this.EntityPM.ShipmentStoragePricings = [];
+
+            //this.EntityPM.ShipmentStoragePricings.forEach(item => {
+            //    this.EntityPM.RemoveShipmentStoragePricing(item);
+            //});
+        }
+
         this.myCloner.RejectChanges();
     }
 
