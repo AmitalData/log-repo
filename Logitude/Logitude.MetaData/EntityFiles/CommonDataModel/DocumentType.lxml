@@ -4189,6 +4189,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AddedManually&quot;"
     ListPropertyPath="&quot;AddedManually&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4473,6 +4474,19 @@
     FeatureCode="&quot;EVENTS&quot;"
     FeatureTextCodeCode="&quot;DocumentType.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Document Type Customs Data&quot;"
+    TabLocalName="&quot;קשר סוג מסמך לשער עולמי&quot;"
+    ObjectTableName="&quot;DocumentType&quot;"
+    Code="&quot;DTCT&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DocumentTypeCustomsDataControl&quot;"
+    TextCode="&quot;DocumentType.TH.DocumentTypeCustomsData&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent&quot;"
+    HtmlComponentName="&quot;DocumentTypeCustomsDataComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
