@@ -177,12 +177,10 @@ namespace WebFreight.Web.DataProviders
         public double? VolumetricWeight { get; set; }
         public double? Weight { get; set; }
         public string Description { get; set; }
-
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string CommodityNumber { get; set; }
-
         public string Make { get; set; }
         public string Model { get; set; }
         public string Year { get; set; }
@@ -190,6 +188,7 @@ namespace WebFreight.Web.DataProviders
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
+        public string HSCode { get; set; }
     }
 
     public class InsidePackageGroup

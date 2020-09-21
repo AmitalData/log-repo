@@ -1808,13 +1808,22 @@ namespace WebFreight.Web.WebServices
                                 ", UN-N: " + (package.UnNumber != null ? package.UnNumber : "") +
                                 ", PACKING GROUP " + (package.PackagingGroup != null ? package.PackagingGroup : "");
                         }
+
                         if (!string.IsNullOrEmpty(package.Harmonize))
                         {
                             if (!string.IsNullOrEmpty(packageline.PackageDescriptionOfGoods))
                             {
                                 packageline.PackageDescriptionOfGoods += Environment.NewLine;
                             }
-                            packageline.PackageDescriptionOfGoods += "HS Code: " + package.Harmonize;
+
+                            if (package.IsMultiHarmonize)
+                            {
+                                packageline.PackageDescriptionOfGoods += this.GetMultiHarmonizeHSCode(packageline.PackageDescriptionOfGoods, package);
+                            }
+                            else
+                            {
+                                packageline.PackageDescriptionOfGoods += "HS Code: " + package.Harmonize;
+                            }
                         }
 
                         packageline.PackageGrossWeight = package.Weight != null ? String.Format("{0:N2}", package.Weight) + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "") : "";
@@ -1901,6 +1910,28 @@ namespace WebFreight.Web.WebServices
                             insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
                             insidePackage.Weight = insideItem.Weight;
                             insidePackage.Description = insideItem.Description;
+
+                            if (insideItem.IsMultiHarmonize)
+                            {
+                                List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.InsidePackageId == insideItem.Id && d.Tenant == tenant).ToList();
+                                foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                                {
+                                    if (string.IsNullOrEmpty(insidePackage.HSCode))
+                                    {
+                                        insidePackage.HSCode = itemHarmonize.Harmonize;
+                                    }
+
+                                    else
+                                    {
+                                        insidePackage.HSCode += "," + itemHarmonize.Harmonize;
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                insidePackage.HSCode = insideItem.Harmonize;
+                            }
 
                             #region Car Details
                             insidePackage.Make = insideItem.Make;
@@ -2091,6 +2122,24 @@ namespace WebFreight.Web.WebServices
             #endregion
 
             return myDataProvider;
+        }
+
+        private string GetMultiHarmonizeHSCode(string packageDescriptionOfGoods, ShipmentPackage package)
+        {
+            var hsCodeString = "";
+            List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+            foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+            {
+                if (string.IsNullOrEmpty(packageDescriptionOfGoods))
+                {
+                    hsCodeString += "HS Code: " + itemHarmonize.Harmonize;
+                }
+                else
+                {
+                    hsCodeString += "," + itemHarmonize.Harmonize;
+                }
+            }
+            return hsCodeString;
         }
 
         private void GetCustomAgentVariable(string customAgentImportId, string customAgentExportId)
