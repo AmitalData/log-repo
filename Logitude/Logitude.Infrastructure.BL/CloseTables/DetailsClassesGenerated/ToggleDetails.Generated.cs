@@ -140,14 +140,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SWC,Shipment Warning Checkbox", 
 			});
  
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "KPI", 
-                Name = "KPI Document Fields", 
-                SearchFields = "KPI,KPI Document Fields", 
-			}); 
-			
+						
             return all;
        }
 
