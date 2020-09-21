@@ -615,11 +615,17 @@
                     <tr>
                         <td colspan="5" style="height: 100%; padding-bottom: 87px;">
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                                    [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                                    [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                                    [IsCustomTemplate]="true">
+                                <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                                               [IsCustomTemplate]="true">
                                 </logitude-grid>
+                                <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                                               [IsCustomTemplate]="true">
+                                </logitude-grid-v2>
+
                             </div>
                         </td>
                     </tr>
