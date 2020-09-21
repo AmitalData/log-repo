@@ -25,16 +25,18 @@ namespace Logitude.CargoTracking.Data.Repositories
         {
             IQueryable<CargoTrackingShipment> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
                                                                     where
-                                                                       ShipmentIds.Contains(shipment.EntityId)
-                                                                       && shipment.Tenant == tenant
+
+                                                                       shipment.Tenant == tenant
                                                                        && shipment.IsMainRecord == false
+                                                                       && ShipmentIds.Contains(shipment.EntityId)
+                                                                       
                                                                     select shipment);
 
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
                                                                      ((
                                                                         shipment.Tenant == tenant 
-                                                                        && shipment.IsMainRecord ==true 
+                                                                        && shipment.IsMainRecord == true 
                                                                         && ShipmentIds.Contains(shipment.EntityId)
                                                                       )
                                                                      || shipmentsIsNotMain.Select(s => s.CustomsShipmentHeaderId).Contains(shipment.EntityId))

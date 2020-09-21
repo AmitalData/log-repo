@@ -161,7 +161,7 @@
   <Column
     Name="ShipperName"
     Type="varchar"
-    Size="71">
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>
@@ -371,4 +371,6 @@
     Columns="EntityType,EntityId,Tenant" />
   <Index
   Columns="Tenant,IsMainRecord,EntityId" />
+  <Index
+  Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />
 </Table>
