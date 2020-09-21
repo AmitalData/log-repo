@@ -2034,14 +2034,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             myDataProvider.HandlingInformationOnly = shipmentPM.AWBHandlingInformation;
-            if (shipmentPM.ShipmentLevelCode == "H")
-            {
-                myDataProvider.ReferenceNumber = shipmentPM.NumberOfHouses ==  1 ? shipmentPM.House :  "";
-            }
-            else
-            {
-                myDataProvider.ReferenceNumber = string.IsNullOrEmpty(shipmentPM.ReferenceNumber) ? "" : shipmentPM.ReferenceNumber;
-            }
+            myDataProvider.ReferenceNumber = string.IsNullOrEmpty(shipmentPM.ReferenceNumber) ? "" : shipmentPM.ReferenceNumber;
             myDataProvider.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
             myDataProvider.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
             myDataProvider.HouseReferenceNumber = string.IsNullOrEmpty(shipmentPM.MasterShipmentNumber) ? "" : shipmentPM.MasterShipmentNumber;
