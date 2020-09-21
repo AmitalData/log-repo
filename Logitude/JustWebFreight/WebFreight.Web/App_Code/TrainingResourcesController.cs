@@ -24,7 +24,7 @@ namespace WebFreight.Web.App_Code
             GenericFilter filter = new GenericFilter();
             QueryOperations queryOperations = new QueryOperations();
 
-            IQueryable<HelpResource> helpers = rep.GetAllHelpResources();
+            IQueryable<HelpResource> helpers = rep.GetAllActiveHelpResources();
 
             queryOperations.SetFilter("Language", filters.Language, false, "equals", null, true);
             queryOperations.SetFilter("Category", filters.Category, false, "equals", null, true);

@@ -199,7 +199,15 @@ namespace Logitude.Server.Tools.StorageService
                 }
                 else
                 {
-                    blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
+                    if (fileInfo.FolderName == "how-to")
+                    {
+                        blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.FolderName);
+                    }
+
+                    else
+                    {
+                        blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
+                    }
                 }
             }
         }
