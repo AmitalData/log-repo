@@ -5,6 +5,7 @@ import { CargoTrackingBrandingDataExtendedService } from '../CargoTracking/Servi
 import { ServiceResponse } from '../CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingData } from '../CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -22,6 +23,8 @@ export class AppComponent
     _Tenant:number ;
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
+
+        RootContext.AppComponent = this;
         
         this.GetDataFromURL();
     }
@@ -76,6 +79,8 @@ export class AppComponent
         return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
 
     }
+
+
     private listenToRouterEvents()
     {
         this.router.events.subscribe((event: Event) =>
@@ -112,5 +117,16 @@ export class AppComponent
         // this._location.back();
         this.router.navigate([this._Tenant,'search']);
     }
+
+    public BusyIndicatorText: string = null;
+
+    private showBusyIndicator: boolean = false;
+    get ShowBusyIndicator() { return this.showBusyIndicator; }
+    set ShowBusyIndicator(newValue: boolean) {
+      if (this.showBusyIndicator != newValue) {
+        this.showBusyIndicator = newValue;
+      }
+    }
+
 
 }
