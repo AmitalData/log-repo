@@ -93,6 +93,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateActualExpectedWarehouseEntriesDates()
         {
+            bool isUpdated = false;
+
             IQueryable<WarehouseEntry> activeWarehouseEntries = warehouseEntries.Where(e => e.StatusCode != "CAEA");
             if (activeWarehouseEntries.Count() != 0)
             {
@@ -100,16 +102,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (leastWarehouseEntry != null)
                 {
                     shipmentPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
-                    shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;                   
+                    shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
+                    isUpdated = true;
                 }
             }
             else if (warehouseEntries.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualEntryDate = null;
                 shipmentPM.WarehouseLegExpectedEntryDate = null;
+                isUpdated = true;
             }
 
-            if (shipmentPM.IsBondedWarehouse)
+            if (isUpdated && shipmentPM.IsBondedWarehouse)
             {
                 storageCalculationManager.CheckStorageProperties();
                 ReceivablePricingUpdated = true;
@@ -134,6 +138,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateActualExpectedShipmentWarehouseLegDates()
         {
+            bool isUpdated = false;
+
             IQueryable<WarehouseRelease> activeWarehouseRelases = warehouseRelases.Where(e => e.StatusCode != "CARE");
             if (activeWarehouseRelases.Count() != 0)
             {
@@ -141,16 +147,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (greatestWarehouseRelease != null)
                 {
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
-                    shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;                    
+                    shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
+                    isUpdated = true;
                 }
             }
             else if (warehouseRelases.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
+                isUpdated = true;
             }
 
-            if (shipmentPM.IsBondedWarehouse)
+            if (isUpdated && shipmentPM.IsBondedWarehouse)
             {
                 storageCalculationManager.CheckStorageProperties();
                 ReceivablePricingUpdated = true;
