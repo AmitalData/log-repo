@@ -599,9 +599,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                             }
 
                             if (this.EntityPM.ShipmentStoragePricings.length > 0) {
-                                this.EntityPM.ShipmentStoragePricings.forEach(item => {
-                                    this.EntityPM.RemoveShipmentStoragePricing(item);
-                                });
+                                this.EntityPM.ShipmentStoragePricings = [];
+                                //this.EntityPM.ShipmentStoragePricings.forEach(item => {
+                                //    this.EntityPM.RemoveShipmentStoragePricing(item);
+                                //});
                             }
 
                             var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
