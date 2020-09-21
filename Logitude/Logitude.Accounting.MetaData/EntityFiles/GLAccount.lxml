@@ -13740,6 +13740,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
 
+
     <TextCode
       Code="&quot;GLAccount.O.Connected10Cards&quot;"
       DefaultText="&quot;The GLAccount is connected to 10 or more operational cards.&quot;"
@@ -13759,6 +13760,14 @@
       Code="&quot;GLAccount.O.SmallCashbookAndReportingValidation&quot;"
       DefaultText="&quot;It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document&quot;"
       LocalDefaultText="&quot;לא ניתן להגדיר את אותו כרטיס גם כ&quot;קופה קטנה&quot; וגם לדיווח כ &quot;תשומות מסמך אחר&quot;&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
+
+    <TextCode
+      Code="&quot;GLAccount.O.InterestCalculationStartDateValidation&quot;"
+      DefaultText="&quot;There needs to be at least one interest period that covers the Interest Calculation Start Date&quot;"
+      LocalDefaultText="&quot;חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
 
