@@ -2,8 +2,11 @@
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -46,10 +49,10 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 Tenant = 0
             };
 
-            entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            entityPM.CreateDate = DateTime.Now;
+            entityPM.UpdateDate = DateTime.Now;
 
-            if(entityPM.File != null && entityPM.FileExtension != null)
+            if (entityPM.File != null && entityPM.FileExtension != null)
             {
                 this.UploadFile();
             }
@@ -65,7 +68,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = entity;
             this.entityPoco = entityRepository.GetSingleHelpResource(entityPM.Code, entityPM.Tenant);
-            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            entityPM.UpdateDate = DateTime.Now;
 
             if (entityPM.File != null && entityPM.FileExtension != null)
             {
@@ -148,6 +151,8 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                     Tenant = tenant,
                     FileSize = fileSize,
                 };
+
+                //fileInfo.ContainerName = null;
 
                 storageservice.WriteBlock(buffer, sentSize, blockIdlist, 0, fileInfo);
                 scope.Complete();
