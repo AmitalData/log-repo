@@ -13,6 +13,7 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string AccountingDocuments = "A";  
        public const string Others = "O";  
        public const string OperationalDocuments = "P";  
+       public const string Export = "E";  
     }
 }
 

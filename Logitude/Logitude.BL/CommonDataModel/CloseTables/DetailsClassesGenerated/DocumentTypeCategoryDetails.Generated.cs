@@ -41,6 +41,13 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "P,Operational Documents", 
                 Name = "Operational Documents", 
 			});
+			 
+            all.Add(new DocumentTypeCategoryDetails()
+            {    
+                Code = "E", 
+                Name = "Export", 
+                SearchFields = "E,Export", 
+			});
 			
             return all;
        }
