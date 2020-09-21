@@ -17604,14 +17604,12 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
-    DefaultSortName="&quot;TaxationDateTime&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;MAWBCourierMaster&quot;"
+        ObjectFieldName="&quot;MAWB&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
