@@ -33,9 +33,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public InterestTransactionPM GetOpenBalanceInterestTransactionsByInterestReportId(string interestReportId, int tenant)
         {
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
-            InterestTransaction interestTransaction = (from a in context.InterestTransactions
-                                                       where a.InterestReportId == interestReportId && a.Tenant == tenant && a.InterestEntityTypeCode == "4"
-                                                       select a).FirstOrDefault();
+            InterestTransaction interestTransaction = (from a in context.InterestReportLines
+                                                       where a.Tenant == tenant && a.InterestReportId == interestReportId && a.InterestTransaction.InterestEntityTypeCode == "4"
+                                                       select a.InterestTransaction).FirstOrDefault();
 
             InterestTransactionPM interestTransactionPM = null;
             if (interestTransaction != null)
