@@ -2037,6 +2037,7 @@ namespace WebFreight.Web.ReportsWebServices
             myDataProvider.ReferenceNumber = string.IsNullOrEmpty(shipmentPM.ReferenceNumber) ? "" : shipmentPM.ReferenceNumber;
             myDataProvider.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
             myDataProvider.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
+            myDataProvider.HouseReferenceNumber = string.IsNullOrEmpty(shipmentPM.MasterShipmentNumber) ? "" : shipmentPM.MasterShipmentNumber;
         }
 
         private List<string> GetSpecialHandlingCodes(ShipmentPM entityPM)
