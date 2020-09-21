@@ -159,6 +159,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             InterestTransactionPM interestTransaction = interestTransactionQueryService.GetOpenBalanceInterestTransactionsByInterestReportId(interestReport.Id, interestReport.Tenant);
             if (interestTransaction != null)
             {
+                interestTransaction.ChangeSetOp = ChangeSetOperation.Update;
                 interestTransaction.IsCancelled = true;
                 InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
                 interestTransactionUpdateService.Update(interestTransaction, true);
