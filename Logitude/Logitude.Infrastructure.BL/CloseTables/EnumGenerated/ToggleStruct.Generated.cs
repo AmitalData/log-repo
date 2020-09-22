@@ -31,6 +31,5 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string ShipmentWarningCheckbox = "SWC";  
        public const string AMSinExport = "AMS";  
     }
-    }
 }
 
