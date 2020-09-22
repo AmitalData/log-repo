@@ -75,7 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public bool IsCopiedAtSignup { get; set; }
         public bool IsEnabledForCustomers { get; set; }
-
+        [DataMember]
         public string DocumentTypeCategoryCode { get; set; }
         public string DocumentTypeCategoryName { get; set; }
         public string FileName { get; set; }

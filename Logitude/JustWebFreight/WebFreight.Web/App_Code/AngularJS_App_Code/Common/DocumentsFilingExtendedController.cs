@@ -138,7 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant)
+        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant, string test="")
         {
 
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
