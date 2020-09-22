@@ -35,7 +35,7 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
     
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
-    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference','CategoryCode'],
+    inputs: ['EntityPM', 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'CategoryCode', 'EntityNumber', '', 'ExternalEntityReference', 'ExternalEntityName'],
     providers: [DocumentTypeListExtendedService, DocumentsFilingExtendedPMService, DocumentsFilingPMService, ServiceArgs, ImageLibraryService, DocumentTypeListService],
 })
 
@@ -49,7 +49,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public ObjectTableId: string = "";
     public ChildObjectTableId: string = "";
     public CategoryCode: string = "";
-
+    public EntityNumber: string="";
+    public ExternalEntityReference: string="";
+    public ExternalEntityName: string="";
     public TransportModeId: string = "";
     public ShipmentlevelCode: string = "";
     public ChildEntityReference: string = "";
@@ -308,7 +310,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.DocumentTypes.forEach((docType) => {
                 var exists = this.StaticDocumentsList.filter(d => d.Id == docType.Id)[0];
                 if (!exists) {
-                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                     this.StaticDocumentsList.push(docVeiwModel);
                 }
 
@@ -328,7 +330,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     }
                   
                     if (!exists) {
-                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                         docVeiwModel.HasFollowUp = true;
                         this.StaticDocumentsList.push(docVeiwModel);
                     }
@@ -717,7 +719,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     if (this.AllDocumentTypeList != null) {
                         var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId && d.InActive == false)[0];
                         if (docType) {
-                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId);
+                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                             this.StaticDocumentsList.push(docVeiwModel);
                         }
                     }

@@ -61,7 +61,9 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     Tenant: number;
     RequsetPageName: string;
     ProgressBarId: string = Guid.newGuid();
-
+    EntityNumber: string;
+    ExternalEntityReference: string;
+    ExternalEntityName: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor( public _imageLibraryService: ImageLibraryService, fb: FormBuilder, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
@@ -91,6 +93,9 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
         this.Tenant = SessionLocator.Tenant;
         this.RequsetPageName = args.RequsetPageName;
         this.TiggerViewModel = args.TiggerViewModel;
+        this.EntityNumber = args.EntityNumber;
+        this.ExternalEntityName = args.ExternalEntityName;
+        this.ExternalEntityReference = args.ExternalEntityReference;
         this.Entity = args.Entity;
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
   
@@ -143,7 +148,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                 this.CurrentDocument = this.externalDocs.filter(d=> d.DocumentTypeId == this.DocumentTypeId)[0];
                 if (this.CurrentDocument == null) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant).subscribe((res:any) => {
+                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant, this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res: any) => {
 
                         var pmResponse: ServiceResponse = res;
 

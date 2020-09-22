@@ -115,7 +115,9 @@ export class CustomsDocumentsComponent
 
         if (this.EntityPM.Direction == 'E') {
             this.customs = "תיק מכס";
-            this.forwarding = "תיק יצום";
+            this.forwarding = "תיק יצוא";
+
+            this.DocumentFilterSelectedValue = "all";
         }
         this.ObjectTableName = objectTableName;
         if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {

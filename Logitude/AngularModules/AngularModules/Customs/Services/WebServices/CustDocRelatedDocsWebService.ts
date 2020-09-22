@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -19,11 +19,12 @@ export class CustDocRelatedDocsWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustDocRelatedDocsWebService';
     }
 
-    GetDocumentsFilingsForRelatedDocuments(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, referenceNumber:string, filterVlaue:string ){
+    GetDocumentsFilingsForRelatedDocuments(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, referenceNumber: string, filterVlaue: string, declarationType: string = null) {
+    
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDocumentsFilingsForRelatedDocuments?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&referenceNumber=' + referenceNumber + '&filterVlaue=' + filterVlaue, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDocumentsFilingsForRelatedDocuments?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&referenceNumber=' + referenceNumber + '&filterVlaue=' + filterVlaue + '&declarationType='+ declarationType , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 

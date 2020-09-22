@@ -16,7 +16,9 @@ export class DeclarationDocsInTabComponent implements OnInit {
     public DataContext: this;
     public ObjectTableId: string;
     public EntityId: string;
-
+  public EntityNumber: string;
+  public ExternalEntityReference: string;
+  public ExternalEntityName: string;
     constructor(private entityArgs: EntityArgs) {
 
     }
@@ -27,6 +29,17 @@ export class DeclarationDocsInTabComponent implements OnInit {
             var table = window.ObjectTables.filter(d => d.Name == this.ObjectTableName)[0];
             if (table) this.ObjectTableId = table.Id;
             this.EntityId = this.EntityPM.Id;
+            if (this.EntityPM.Direction == 'E') {
+
+                this.ExternalEntityReference = this.EntityPM.ExportFile;
+                if (this.EntityPM.TransferImporterId == 'O')
+                    this.ExternalEntityName = 'MFIFILEM';
+                else
+                    this.ExternalEntityName = 'EFIFILEM';
+
+                this.EntityNumber = this.EntityPM.CustomFileNo;
+            }
+          
         }
     }
 }

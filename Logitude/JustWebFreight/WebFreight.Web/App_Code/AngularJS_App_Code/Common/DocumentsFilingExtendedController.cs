@@ -138,7 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant, string test="")
+        public HttpResponseMessage GetCreateDocumentsFiling(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, string directionCode, int tenant, string externalEntityName =null, string externalEntityReference =null, string entityNumber=null)
         {
 
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
@@ -165,6 +165,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             newDocument.UpdatedByUserId = loggedUser.Id;
             newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            newDocument.ExternalEntityName = externalEntityName;
+            newDocument.ExternalEntityReference = externalEntityReference;
+            newDocument.EntityNumber = entityNumber;
             // documentsFilingRepository.Add(newDocument);
             //documentsFilingRepository.SubmitChanges();
 

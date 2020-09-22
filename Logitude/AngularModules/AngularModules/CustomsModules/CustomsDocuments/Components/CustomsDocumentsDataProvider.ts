@@ -82,7 +82,14 @@ export class CustomsDocumentsDataProvider {
     GetCustomsDocumentsRelatedDocuments(filterValue:string) {
         switch (this.objectTableName) {
             case 'Customs.Declaration': {
-                return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.CustomFileNo, filterValue);
+                if (this.entityPM.Direction == "E" && filterValue != "customs" ) {
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.ExportFile, filterValue, this.entityPM.Direction);
+
+                }
+                else {
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.CustomFileNo, filterValue, this.entityPM.Direction);
+
+                }
                 
             }
             case 'Customs.Claim': {
