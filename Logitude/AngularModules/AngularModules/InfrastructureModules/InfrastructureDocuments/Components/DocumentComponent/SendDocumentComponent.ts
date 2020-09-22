@@ -349,6 +349,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 this.IsShowBccBox = true;
             }
 
+            if (!this.IsSendEditMode) {
+                froalaheight -= 22;
+            }
 
             this.IsHideBccCcLinkArea = true;
             this.froalaEditorSetting.IsDisableEdit = true;
@@ -540,6 +543,55 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         attachmentlog.Id = documentId;
         attachmentlog.DocumentTypeCopyNameWithDocumentTypeName = name;
         return attachmentlog;
+    }
+
+    public pasteTextToClipboard() {
+        navigator.clipboard.readText().then(clipText => {
+            if (!AppTool.IsNullOrEmpty(clipText)) {
+                this.froalaEditorSetting.froalaEditorComponent.InSertHtml(clipText);
+                this.ReloadFroalaEditor();
+            }
+        });
+    }
+
+    public copyTextToClipboard() {
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = this.GetTextAreaValue();
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        document.body.removeChild(textArea);
+    }
+
+    GetTextAreaValue() {
+        var textAreaValue = "";
+        var documentElement = document.getElementById(this.froalaEditorSetting.froalaEditorComponent.Id);
+        if (documentElement) {
+            var iframeElement: HTMLIFrameElement = <HTMLIFrameElement>documentElement.getElementsByClassName('fr-iframe')[0];
+            if (iframeElement && iframeElement.contentWindow && iframeElement.contentWindow.document) {
+                var viewElement = iframeElement.contentWindow.document.getElementsByClassName('fr-view')[0];
+                if (viewElement) {
+                    textAreaValue = viewElement.innerHTML;
+                }
+            }
+        }
+        return textAreaValue;
     }
 
     LoadHtmlTemplateData(templateId: string) {
