@@ -41,7 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocRelatedDocsWebServiceController : ApiController
     {
-        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue)
+        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType)
         {
             try
             {
@@ -79,17 +79,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
                         }
                     }
-                    else if (filterVlaue == "forwarding")
+                    else if (filterVlaue == "forwarding" || (declarationType == "E" && filterVlaue == "all"))
                     {
-                        List<string> externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                    List<string> externalEntityReferences;
+                    if (declarationType=="E")
+                    {
+                        externalEntityReferences = new List<string> { referenceNumber };
 
-                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
+                    }
+                    else
+                    {
+                      externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+
+                    }
+
+                    documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
 
                     }
 
                     else if (filterVlaue == "all")
                     {
-                        List<string> externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                    List<string> externalEntityReferences;
+                  
+                        externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                  
 
                         if (referenceNumber != null)
                         {

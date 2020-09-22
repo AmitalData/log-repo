@@ -23,6 +23,9 @@ export class DocsInDataViewModel extends BaseComponent{
     public EntityId: string;
     public ChildEntityId: string;
     public ChildReference: string;
+    public EntityNumber: string;
+    public ExternalEntityReference: string;
+    public ExternalEntityName: string;
     public ExternalDocuments: DocumentsFilingPM[];
     CurrentDocument: DocumentsFilingPM;
     public ObjectTableId: string;
@@ -250,7 +253,7 @@ export class DocsInDataViewModel extends BaseComponent{
    
     public HasFollowUp: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string) {
+    constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string, entityNumber: string, externalEntityName: string, externalEntityReference:string) {
         super();
         this.Key = Guid.newGuid();
         this.DocsInComponent = docsInTabComponent;
@@ -265,7 +268,9 @@ export class DocsInDataViewModel extends BaseComponent{
         this.DocumentTypeId = documentType.Id;
         this.DocumentTypeName = documentType.Name;
         this.CurrentDocument = currentDocument;
- 
+        this.EntityNumber = entityNumber;
+        this.ExternalEntityName = externalEntityName;
+        this.ExternalEntityReference = externalEntityReference;
         if (!this.CurrentDocument) {
 
             if (this.ExternalDocuments) {
@@ -339,7 +344,7 @@ export class DocsInDataViewModel extends BaseComponent{
     CreateDocument(propertyName: string, value: any) {
 
         if (this.CurrentDocument == null) {
-            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe((res:any) => {
+            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant,this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res:any) => {
 
 
                 var pmResponse: ServiceResponse = res;
@@ -641,7 +646,7 @@ export class DocsInDataViewModel extends BaseComponent{
     AdditionalButtonClicked() {
         //  Creating Document"
         this.CurrentSession.StartBusyIndicator("Creating Document");
-        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe((res:any) => {
+        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant, this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res:any) => {
 
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
