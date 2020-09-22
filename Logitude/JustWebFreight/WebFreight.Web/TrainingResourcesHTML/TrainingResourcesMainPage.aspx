@@ -271,7 +271,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -293,7 +293,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -329,7 +329,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -351,7 +351,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -392,7 +392,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -414,7 +414,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -450,7 +450,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -472,7 +472,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
