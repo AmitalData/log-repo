@@ -456,7 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if(customResponse.Response.Error!= null)
+                    if (customResponse.Response.Error != null && (!new string[]{ "3","6"}.Contains( _MyDeclarationPM.AmendmentStatus)))
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
 
