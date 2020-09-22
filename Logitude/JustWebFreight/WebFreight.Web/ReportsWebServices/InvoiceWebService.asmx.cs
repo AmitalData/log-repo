@@ -1174,6 +1174,7 @@ namespace WebFreight.Web.ReportsWebServices
                             newItem.Amount = pricing.Amount;
                             newItem.LineNumber = pricing.LineNumber;
                             newItem.WarehouseName = warehouseName;
+                            newItem.ChargeableDays = pricing.ChargeableDays;
 
                             invoicedataprovider.ShipmentStoragePricings.Add(newItem);
                         }
@@ -1802,7 +1803,11 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
                         reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
-                        reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
+
+                        if (invoiceline.Quantity != 0)
+                        {
+                            reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
+                        }
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
                         double? lineAmount_Invoice = invoiceline.InvoiceAmount;
@@ -1979,7 +1984,12 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-                        reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+
+                        if (invoiceline.Quantity != 0 && invoiceline.Quantity != null)
+                        {
+                            reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+                        }
+
                         reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? line_UnitPrice = invoiceline.UnitPrice;
@@ -2981,7 +2991,12 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-                        reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
+
+                        if (invoiceline.Quantity != 0)
+                        {
+                            reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
+                        }
+
                         reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
@@ -3133,7 +3148,12 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-                        reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+
+                        if (invoiceline.Quantity != 0 && invoiceline.Quantity != null)
+                        {
+                            reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
+                        }
+
                         reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
 
                         double? line_UnitPrice = invoiceline.UnitPrice;

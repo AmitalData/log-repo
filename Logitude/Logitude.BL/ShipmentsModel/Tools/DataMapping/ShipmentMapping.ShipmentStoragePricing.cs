@@ -26,6 +26,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.SalePrice = itemPM.SalePrice;
             itemPoco.Amount = itemPM.Amount;
             itemPoco.LineNumber = itemPM.LineNumber;
+            itemPoco.ChargeableDays = itemPM.ChargeableDays;
         }
     }
 }

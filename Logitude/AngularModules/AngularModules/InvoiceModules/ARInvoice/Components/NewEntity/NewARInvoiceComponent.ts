@@ -1190,7 +1190,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 case "CI":
                     {
                         if (!SessionLocator.AccountingSettingPM.AllowMinusInvoicelines) {
-                            filteredReceivables = filteredReceivables.filter(f => (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") || f.UnitPrice > 0);
+                            filteredReceivables = filteredReceivables.filter(f => f.UnitPrice > 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE" && f.TotalAmount > 0));
                         }
 
                         break;
@@ -1200,7 +1200,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 case "CC":
                     {
                     if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
-                        filteredReceivables = filteredReceivables.filter(f => (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") || f.UnitPrice < 0);
+                        filteredReceivables = filteredReceivables.filter(f => f.UnitPrice < 0 || (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR" && f.TotalAmount < 0));
                     }
 
                     break;

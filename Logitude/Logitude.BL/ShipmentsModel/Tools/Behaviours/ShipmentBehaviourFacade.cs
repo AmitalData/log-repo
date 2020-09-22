@@ -15,7 +15,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
     {
         private IShipmentBehaviour updateShipmentComputedFields;
         private IShipmentBehaviour updateCrossDocks;
-
+        public bool ReceivablePricingUpdated_CrossDoc = false;
 
         public ShipmentBehaviourFacade(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentComputedFields updatedShipmentComputedFields, bool isNewEntity)
         {
@@ -27,6 +27,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             updateShipmentComputedFields.Handle();
             updateCrossDocks.Handle();
+            ReceivablePricingUpdated_CrossDoc = updateCrossDocks.ReceivablePricingUpdated;
         }
 
         public void Trace(ShipmentTracing shipmentTracing)

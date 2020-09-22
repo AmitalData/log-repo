@@ -29,6 +29,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private AddressRepository addressRepository;
         private int tenant;
         private bool isNewEntity;
+
+        public bool ReceivablePricingUpdated { get; set; }
+
         public UpdateShipmentComputedFieldsBehaviour(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentComputedFields shipmentComputedFields, bool isNewEntity)
         {
             this.shipmentPM = shipmentPM;

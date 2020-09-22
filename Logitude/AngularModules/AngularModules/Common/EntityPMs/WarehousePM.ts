@@ -465,6 +465,11 @@ export class WarehousePM {
     public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
        
 	 
+    private storageFreeDays: number;
+    public get StorageFreeDays() { return this.storageFreeDays; }
+    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
+       
+	 
 
     public OldEntityPM: WarehousePM;
 		

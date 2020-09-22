@@ -24,11 +24,13 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string CardSearchsToggle = "CST";  
        public const string ShipmentSubType = "SUB";  
        public const string Horse = "HRS";
-       public const string ChargesDWH = "CWH";
+       public const string StoragePricing = "STR";  
+        public const string ChargesDWH = "CWH";
        public const string OceanInsightsV2 = "OI2";
        public const string KPIDocumentFields = "KPI"; 
        public const string ShipmentWarningCheckbox = "SWC";  
        public const string AMSinExport = "AMS";  
+    }
     }
 }
 

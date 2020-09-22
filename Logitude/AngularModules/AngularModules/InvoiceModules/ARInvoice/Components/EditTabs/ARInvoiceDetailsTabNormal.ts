@@ -1066,13 +1066,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                 if (this.EntityPM.ARInvoiceTypeCode == "CD") {
                     if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
-                        openReceivables = openReceivables.filter(f => f.UnitPrice < 0);
+                        openReceivables = openReceivables.filter(f => f.UnitPrice < 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE" && f.TotalAmount < 0));
                     }
                 }
 
                 else {
                     if (!SessionLocator.AccountingSettingPM.AllowMinusInvoicelines) {
-                        openReceivables = openReceivables.filter(f => f.UnitPrice > 0);
+                        openReceivables = openReceivables.filter(f => f.UnitPrice > 0 || f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE" && f.TotalAmount > 0);
                     }
                 }
 

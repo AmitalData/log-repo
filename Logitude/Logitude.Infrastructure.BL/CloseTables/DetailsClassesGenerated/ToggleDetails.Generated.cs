@@ -129,7 +129,14 @@ namespace Logitude.Infrastructure.BL
           
             all.Add(new ToggleDetails()
             {    
-                Code = "OI2", 
+                Code = "STR", 
+                SearchFields = "STR,Storage Pricing", 
+                Name = "Storage Pricing", 
+			});
+			
+            all.Add(new ToggleDetails()
+            {
+                Code = "OI2",
                 Name = "OceanInsightsV2", 
                 SearchFields = "OI2,OceanInsightsV2", 
 			});
