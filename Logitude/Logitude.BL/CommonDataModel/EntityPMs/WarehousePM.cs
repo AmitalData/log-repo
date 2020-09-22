@@ -333,5 +333,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string GLAccountNumber { get; set; }
+
+        [DataMember]
+        public int? StorageFreeDays { get; set; }
     }
 }

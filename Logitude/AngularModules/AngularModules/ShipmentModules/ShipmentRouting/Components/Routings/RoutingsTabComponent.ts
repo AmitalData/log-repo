@@ -580,21 +580,29 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                             this.EntityPM.TerminalAvailable = null;
                             this.EntityPM.WarehouseLegCutOffDate = null;
                             this.EntityPM.WarehouseLegRemarks = null;
-
                             this.EntityPM.WarehouseLegExpectedEntryDate = null;
                             this.EntityPM.WarehouseLegExpectedReleaseDate = null;
                             this.EntityPM.WarehouseLegActualEntryDate = null;
                             this.EntityPM.WarehouseLegActualReleaseDate = null;
                             this.EntityPM.WarehouseLegVGMCutOffDate = null;
-
                             this.EntityPM.WarehouseStorageFreeDays = null;
                             this.EntityPM.GrossWeightPerStorageDays = null;
+                            this.EntityPM.IsBondedWarehouse = false;
+                            this.EntityPM.IsBondedWarehouseChanged = false
+
                             ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
 
                             var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
                             if (storageReceivable) {
                                 this.EntityPM.RemoveReceivable(storageReceivable);
                                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
+                            }
+
+                            if (this.EntityPM.ShipmentStoragePricings.length > 0) {
+                                this.EntityPM.ShipmentStoragePricings = [];
+                                //this.EntityPM.ShipmentStoragePricings.forEach(item => {
+                                //    this.EntityPM.RemoveShipmentStoragePricing(item);
+                                //});
                             }
 
                             var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);

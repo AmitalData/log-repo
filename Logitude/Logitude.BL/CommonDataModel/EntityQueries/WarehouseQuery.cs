@@ -84,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                         StorageFreeDays = a.Card.StorageFreeDays,
 
                                          Card = new CardPM()
                                          {
@@ -176,6 +177,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          AirWeightRoundingCode = a.AirWeightRoundingCode,
                                          OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+                                         StorageFreeDays = a.Card.StorageFreeDays,
 
                                          Card = new CardPM()
                                          {
@@ -262,7 +264,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        AirWeightRoundingCode = a.AirWeightRoundingCode,
                        OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                        InlandWeightRoundingCode = a.InlandWeightRoundingCode,
-
+                       StorageFreeDays = a.Card.StorageFreeDays,
+                       
                        Card = new CardPM()
                        {
                            Id = a.Id,
@@ -322,6 +325,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                                     InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                    StorageFreeDays = a.Card.StorageFreeDays,
                                                 });
 
 
@@ -377,6 +381,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                AirWeightRoundingCode = a.AirWeightRoundingCode,
                                OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+                               StorageFreeDays = a.Card.StorageFreeDays,
 
                                Card = new CardPM()
                                {

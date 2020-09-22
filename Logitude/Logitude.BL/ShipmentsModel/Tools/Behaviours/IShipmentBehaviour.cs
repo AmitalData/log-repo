@@ -8,6 +8,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
     interface IShipmentBehaviour
     {
+        bool ReceivablePricingUpdated { get; set; }
         void Handle();
 
         void Save();
