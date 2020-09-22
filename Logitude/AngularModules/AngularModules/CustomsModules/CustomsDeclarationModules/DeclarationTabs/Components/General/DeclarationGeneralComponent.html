@@ -338,7 +338,6 @@
 
                                 </tr>
                                 <tr style="height: 28px;">
-                                    <!-- GovernmentProcedureType -->
                                     <td>
                                         <LogLabel [ObjectFieldName]="'DeclarationTypeCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
@@ -353,19 +352,19 @@
                                         </LogLov>
                                     </td>
                                     <td><div></div></td>
-
-                                    <!-- AutonomyRegionTypeCode -->
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'ExportAutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ExportAutonomyRegionTypeCode'"
+                                        <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.AutonomyRegionType'"
-                                                [SelectedValue]="ExportAutonomyRegionTypeCode">
+                                                [LookUpTableName]="'Customs.GovernmentProcedureType'"
+                                                [ManipulateData]="true"
+                                                [QueryFilterItems]="PreceduralFilterItems"
+                                                [SelectedValue]="ProcedureCurrentCode">
                                         </LogLov>
                                     </td>
                                     <td><div></div></td>
@@ -482,22 +481,36 @@
 
                                     </td>
                                     <td><div></div></td>
+                                    <!-- AutonomyRegionTypeCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ExportAutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'ExportAutonomyRegionTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.AutonomyRegionType'"
+                                                [SelectedValue]="ExportAutonomyRegionTypeCode">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                    <td><div></div></td>
 
                                     <!-- EntitleImporterCode -->
-                                    <td style="width: 150px;">
+                                    <td>
                                         <LogLabel [ObjectFieldName]="'IsExporterConfirmation'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-
                                     <!--(ValueChanged)="IsExporterConfirmationChecked($event)"-->
-                                    <td style="width: 160px;">
+                                    <td>
                                         <div style="float: right;">
                                             <LogCheckBox [ObjectFieldName]="'IsExporterConfirmation'"
                                                          [Checked]="DataContext.IsExporterConfirmation"
                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
 
                                         </div>
-
                                         <HelpIcon style="float: right;" [HideHeader]="true" [Text]="'Customs.Declaration.O.IsExporterConfirmation' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
 
                                     </td>
