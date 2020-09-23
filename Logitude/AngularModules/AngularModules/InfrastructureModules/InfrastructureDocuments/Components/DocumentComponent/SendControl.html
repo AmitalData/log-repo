@@ -346,8 +346,7 @@
 
                                                         <tr>
                                                             <td>
-                                                                <button *ngIf="!IsSendEditMode" style="width:25px;margin-left:7px;" class="Button" (click)="copyTextToClipboard();"><img class="CenterCenter" title="Copy All" src="./Images/Buttons/copy.report.png" /></button>
-                                                                <button *ngIf="IsSendEditMode" style="width:25px;margin-left:7px;" class="Button" (click)="pasteTextToClipboard();"><img class="CenterCenter" title="Paste" src="./Images/Buttons/copy.report.png" /></button>
+                                                                <button *ngIf="!IsSendEditMode" style="width:54px;margin-left:7px;" class="Button" (click)="ResendButtonClicked();">Resend</button>
                                                             </td>
                                                             <td [style.display]="IsSendEditMode == true?'':'none'" colspan="2">
 

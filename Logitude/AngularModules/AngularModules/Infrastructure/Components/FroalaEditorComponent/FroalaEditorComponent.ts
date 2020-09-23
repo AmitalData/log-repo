@@ -1,4 +1,4 @@
-﻿declare var jQuery, SetHtmlToFrame, GetHtmlFromFrame, getHTMLID: any, RegisterCustomFroalaEditorButtom: any;
+declare var jQuery, SetHtmlToFrame, GetHtmlFromFrame, getHTMLID: any, RegisterCustomFroalaEditorButtom: any;
 import {Component, ElementRef, OnInit, AfterViewInit, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
 import {FroalaEditorSetting} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -51,6 +51,13 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         //});     
 
         this.ShowEditor();
+    }
+
+    public RefreshMode() {
+        this.IsDisableMode = false;
+        if (this.EditorfroalaSetting.IsDisableEdit) {
+            this.IsDisableMode = true;
+        }
     }
 
     public ShowEditor(height: number = this.EditorfroalaSetting.Height) {

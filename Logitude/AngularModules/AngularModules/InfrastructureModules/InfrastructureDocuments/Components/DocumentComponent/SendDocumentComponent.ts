@@ -171,59 +171,55 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     }
 
-    ngOnInit(
-
-
-    ) {
-
-
-
+    ngOnInit() {
     }
 
-    ngAfterViewInit(
+    ngAfterViewInit() {
+        this.FetchAttachmentsLists();
+    }
 
-
-    ) {
-
+    FetchAttachmentsLists() {
         if (this.SelectedInternalDocument && this.IsSendEditMode && this.SelectedInternalDocument.TemplateType.toUpperCase() != "M") {
 
             var copy = this.SelectedInternalDocument.CurrentDocument.DocumentOutCopies.filter(d => d.Id == this.SelectedInternalDocument.documentOutCopyId)[0];
             if (copy) {
-                var attachment = new AttachmentsList();
-                attachment.Tenant = this.SelectedInternalDocument.CurrentDocument.Tenant;
-
-                var documentType: any = this.SelectedInternalDocument.DocumentType;
-
-                if (documentType) {
-                    var attachmentName = documentType.Name;
-                    if (attachmentName != copy.DocoumentTypeCopyName) {
-                        attachmentName = attachmentName + "-" + copy.DocoumentTypeCopyName;
-                    }
-                }
-
-
-                attachment.DocumentTypeCopyNameWithDocumentTypeName = attachmentName;
-                attachment.FileSize = this.SelectedInternalDocument.CurrentDocument.FileSize;
-                attachment.ShowRemoveLink = true;
-                attachment.Id = copy.Id;
-
-                var attachmentsList = new Array<AttachmentsList>();
-                attachmentsList.push(attachment);
-
-                this.AttachmentsLists = attachmentsList;
-                this.BliudAttachmentList(attachmentsList, false, false);
+                this.BuildDocumentCopy(copy);
             }
         }
 
         if (this.SelectedInternalDocument.AttachmentsLists) {
             this.BliudAttachmentList(this.SelectedInternalDocument.AttachmentsLists, false, false);
         }
-
     }
-
 
     ChildEntityId: string;
     ChildObjectTableId: string;
+    BuildDocumentCopy(copy: DocumentOutCopyPM) {
+        var attachment = new AttachmentsList();
+        attachment.Tenant = this.SelectedInternalDocument.CurrentDocument.Tenant;
+
+        var documentType: any = this.SelectedInternalDocument.DocumentType;
+
+        if (documentType) {
+            var attachmentName = documentType.Name;
+            if (attachmentName != copy.DocoumentTypeCopyName) {
+                attachmentName = attachmentName + "-" + copy.DocoumentTypeCopyName;
+            }
+        }
+
+
+        attachment.DocumentTypeCopyNameWithDocumentTypeName = attachmentName;
+        attachment.FileSize = this.SelectedInternalDocument.CurrentDocument.FileSize;
+        attachment.ShowRemoveLink = true;
+        attachment.Id = copy.Id;
+
+        var attachmentsList = new Array<AttachmentsList>();
+        attachmentsList.push(attachment);
+
+        this.AttachmentsLists = attachmentsList;
+        this.BliudAttachmentList(attachmentsList, false, false);
+    }
+
     SetDataContext(dataContext: DocsOutDataViewModel) {
         this.SelectedInternalDocument = dataContext;
         if (this.SelectedInternalDocument.ModeSendDocument == "preview") {
@@ -554,29 +550,41 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public copyTextToClipboard() {
-        var textArea = document.createElement("textarea");
-        textArea.style.position = 'fixed';
-        textArea.style.top = '0';
-        textArea.style.left = '0';
-        textArea.style.width = '2em';
-        textArea.style.height = '2em';
-        textArea.style.padding = '0';
-        textArea.style.border = 'none';
-        textArea.style.outline = 'none';
-        textArea.style.boxShadow = 'none';
-        textArea.style.background = 'transparent';
-        textArea.value = this.GetTextAreaValue();
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Copying text command was ' + msg);
-        } catch (err) {
-            console.log('Oops, unable to copy');
+    public ResendButtonClicked() {
+        //var textArea = document.createElement("textarea");
+        //textArea.style.position = 'fixed';
+        //textArea.style.top = '0';
+        //textArea.style.left = '0';
+        //textArea.style.width = '2em';
+        //textArea.style.height = '2em';
+        //textArea.style.padding = '0';
+        //textArea.style.border = 'none';
+        //textArea.style.outline = 'none';
+        //textArea.style.boxShadow = 'none';
+        //textArea.style.background = 'transparent';
+        //textArea.value = this.GetTextAreaValue();
+        //document.body.appendChild(textArea);
+        //textArea.select();
+        //try {
+        //    var successful = document.execCommand('copy');
+        //    var msg = successful ? 'successful' : 'unsuccessful';
+        //    console.log('Copying text command was ' + msg);
+        //} catch (err) {
+        //    console.log('Oops, unable to copy');
+        //}
+        //document.body.removeChild(textArea);
+        this.IsSendEditMode = true;
+        this.SelectedInternalDocument.ModeSendDocument = "Send";
+        this.SetDataContext(this.SelectedInternalDocument);
+        if (this.SelectedInternalDocument && this.IsSendEditMode && this.SelectedInternalDocument.TemplateType.toUpperCase() != "M") {
+            this.SelectedInternalDocument.CurrentDocument.DocumentOutCopies.forEach(copy => {
+                if (copy) {
+                    this.BuildDocumentCopy(copy);
+                }
+            });
         }
-        document.body.removeChild(textArea);
+        this.froalaEditorSetting.froalaEditorComponent.RefreshMode();
+        this.ReloadFroalaEditor();
     }
 
     GetTextAreaValue() {
