@@ -25,7 +25,7 @@ namespace Logitude.BL.Helpers
             Card card = cardRepository.GetSingleCard(glaacount.EntityId, glaacount.Tenant);
             if (card != null)
             {
-                GLAccountPM gLAccountEntity = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, glaacount.Tenant);
+                GLAccountPM gLAccountEntity = glAccountQuery.GetSingleGLAccountWithComposition(card.GLAccountId, glaacount.Tenant);
                 if (gLAccountEntity != null)
                 {
                     gLAccountEntity.EnglishName = glaacount.EnglishName;

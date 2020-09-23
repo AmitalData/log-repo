@@ -23,7 +23,11 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
             return query.GetSinglePM(id, tenant);
         }
-
+        public GLAccountPM GetSingleGLAccountWithComposition(string id, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            return query.GetSingle(id, true,false);
+        }
 
 
         public GLAccountPM GetGLAccountByDisplayNumber(string number, int tenant)
