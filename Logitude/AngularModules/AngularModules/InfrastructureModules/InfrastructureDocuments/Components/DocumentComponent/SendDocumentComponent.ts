@@ -143,6 +143,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     ReplyTo: string = "";
     IsShowLinkDocsSharedWithAgents: boolean = false;
     ShowImagesLibraryComponent: boolean = false;
+    IsResendEmail: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
@@ -573,6 +574,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         //    console.log('Oops, unable to copy');
         //}
         //document.body.removeChild(textArea);
+        this.IsResendEmail = true;
         this.IsSendEditMode = true;
         this.SelectedInternalDocument.ModeSendDocument = "Send";
         this.SetDataContext(this.SelectedInternalDocument);
@@ -713,7 +715,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     var selectId = this.SelectId ? this.SelectId : this.CurrentDocument.EmailTemplateId;
                     myResult.forEach((item) => {
 
-                        if (item.DocumentTypeId == this.DocumentTypeId && item.TemplateType == "M") {
+                        if (item.DocumentTypeId == this.DocumentTypeId && item.TemplateType == "M"  && !this.IsResendEmail) {
                             if (!item.InActive || item.IsDefault || item.Id == selectId) {
                                 this.ReportTemplates.push(new DocumentTypeTemplateViewModel(item));
                             }
