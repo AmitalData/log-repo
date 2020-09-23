@@ -1,0 +1,9 @@
+﻿<Script Pre="true"  DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+
+update GLAccounts set ActiveForInterest = 0 where ActiveForInterest is null
+update GLAccounts set ActiveForInterestCreditInvoice = 0 where ActiveForInterestCreditInvoice is null
+    ]]>       
+  </Sql>
+</Script>

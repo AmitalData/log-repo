@@ -173,11 +173,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("AllowEditChequePayToName")]
 	    public bool AllowEditChequePayToName { get; set; }
         [Column("ActiveForInterest")]
-	    public bool? ActiveForInterest { get; set; }
+	    public bool ActiveForInterest { get; set; }
         [Column("InterestCalculationStartDate")]
 	    public DateTime? InterestCalculationStartDate { get; set; }
         [Column("ActiveForInterestCreditInvoice")]
-	    public bool? ActiveForInterestCreditInvoice { get; set; }
+	    public bool ActiveForInterestCreditInvoice { get; set; }
         [Column("InterestCreditLimit")]
 	    public decimal? InterestCreditLimit { get; set; }
         [Column("NameForPrintingCheques")]
