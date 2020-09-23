@@ -1528,8 +1528,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ChargeStorageCurrencyId = shipment.ChargeStorageCurrencyId;
             shipmentPM.WeightMeasurementCode = shipment.WeightMeasurementCode;
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
-            shipmentPM.IsBondedWarehouse = shipment.IsBondedWarehouse;
-            shipmentPM.IsBondedWarehouseChanged = shipment.IsBondedWarehouseChanged;
+            shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
+            shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {

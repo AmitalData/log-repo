@@ -177,12 +177,12 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             }
             this.CurrentSession.StopBusyIndicator();
         });
-        if (this.EntityPM.IsBondedWarehouse && this.EntityPM.DirectionId == "I") {
-            this.SetIsBondedWarehouseProperities();
+        if (this.EntityPM.IsCFSWarehouse && this.EntityPM.DirectionId == "I") {
+            this.SetIsCFSWarehouseProperities();
         }
     }
 
-    SetIsBondedWarehouseProperities() {
+    SetIsCFSWarehouseProperities() {
         this.DisableNewWarehouseEntryButton = false;
         this.DisableNewWarehouseReleaseButton = false;
         this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {

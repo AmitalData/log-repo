@@ -56,7 +56,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     IsNewEntity: boolean = false;
     public ItemsSource: ObservableCollection;
     IsEditMode: boolean = false;
-    IsBondedWarehouse: boolean = false;
+    IsCFSWarehouse: boolean = false;
     IsFromFullWarehouseEntryComponent: boolean = false;
 
     myPackageTypeService: PackageTypeListService;
@@ -88,7 +88,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.IsEditMode = args.IsEditMode;
         this.ShowPackageSummary = args.ShowPackageSummary;
         this.ShowAddPackageButton = args.ShowAddPackageButton;
-        this.IsBondedWarehouse = args.IsBondedWarehouse;
+        this.IsCFSWarehouse = args.IsCFSWarehouse;
         if (!this.IsEditMode) {
             this.ShowAddPackageButton = true;
         }
