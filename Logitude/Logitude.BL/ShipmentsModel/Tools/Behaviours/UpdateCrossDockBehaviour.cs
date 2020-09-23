@@ -1,18 +1,26 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 {
@@ -24,7 +32,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private WarehouseReleaseRepository warehouseReleaseRepository;
         private IQueryable<WarehouseEntry> warehouseEntries;
         private IQueryable<WarehouseRelease> warehouseRelases;
+        private StorageCalculationManager storageCalculationManager;
         private int tenant;
+
+        public bool ReceivablePricingUpdated { get; set; }
         public UpdateCrossDockBehaviour(ShipmentPM shipmentPM)
         {
             this.shipmentPM = shipmentPM;
@@ -35,6 +46,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
             warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentPM.Id, tenant);
             warehouseRelases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentPM.Id, tenant);
+
+            storageCalculationManager = new StorageCalculationManager(this.shipmentPM);
         }
 
         public void Handle()
@@ -50,17 +63,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         {
             shipmentTracing.TraceTerminalData();
         }
-        private void UpdateShipmentWarehouseLegData() 
+        private void UpdateShipmentWarehouseLegData()
         {
             if (shipmentPM.IsUpdateWarehouseLegData)
             {
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 CardRepository cardRepository = new CardRepository(commonContext);
-                Card entityPoco = cardRepository.GetSingleCardByIdAndTenant(shipmentPM.WarehouseLegWarehouseId, tenant,true);
+                Card entityPoco = cardRepository.GetSingleCardByIdAndTenant(shipmentPM.WarehouseLegWarehouseId, tenant, true);
 
                 if (entityPoco != null)
                 {
-                    AddressRepository addressRepository = new AddressRepository(commonContext);              
+                    AddressRepository addressRepository = new AddressRepository(commonContext);
                     Address mainAddress = addressRepository.GetSingleAddressByCardIdAndTypeId(entityPoco.Id, "M", tenant);
                     shipmentPM.WarehouseLegAddressId = mainAddress == null ? null : mainAddress.Id;
                     shipmentPM.WarehouseLegTerminalName = entityPoco.EnglishName;
@@ -85,6 +98,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateActualExpectedWarehouseEntriesDates()
         {
+            bool isUpdated = false;
+
             IQueryable<WarehouseEntry> activeWarehouseEntries = warehouseEntries.Where(e => e.StatusCode != "CAEA");
             if (activeWarehouseEntries.Count() != 0)
             {
@@ -93,12 +108,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     shipmentPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
                     shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
+                    isUpdated = true;
                 }
             }
             else if (warehouseEntries.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualEntryDate = null;
                 shipmentPM.WarehouseLegExpectedEntryDate = null;
+                isUpdated = true;
+            }
+
+            if (isUpdated && shipmentPM.IsBondedWarehouse)
+            {
+                storageCalculationManager.CheckStorageProperties();
+                ReceivablePricingUpdated = true;
             }
         }
         private void UpdateActualExpectedWarehouseReleasesDates()
@@ -120,6 +143,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateActualExpectedShipmentWarehouseLegDates()
         {
+            bool isUpdated = false;
+
             IQueryable<WarehouseRelease> activeWarehouseRelases = warehouseRelases.Where(e => e.StatusCode != "CARE");
             if (activeWarehouseRelases.Count() != 0)
             {
@@ -128,12 +153,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
                     shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
+                    isUpdated = true;
                 }
             }
             else if (warehouseRelases.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
+                isUpdated = true;
+            }
+
+            if (isUpdated && shipmentPM.IsBondedWarehouse)
+            {
+                storageCalculationManager.CheckStorageProperties();
+                ReceivablePricingUpdated = true;
             }
         }
         private void UpdateDeliveryDepartureDates()
@@ -148,8 +181,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 if (deliveryWarehouseReleases.Count() == 1)
                 {
                     WarehouseRelease warehouseRelease = deliveryWarehouseReleases.FirstOrDefault();
-                    delivery.ATD = warehouseRelease!=null? warehouseRelease.ActualReleaseDate:null;
-                    delivery.ETD = warehouseRelease != null ? warehouseRelease.ExpectedReleaseDate:null;
+                    delivery.ATD = warehouseRelease != null ? warehouseRelease.ActualReleaseDate : null;
+                    delivery.ETD = warehouseRelease != null ? warehouseRelease.ExpectedReleaseDate : null;
                     shipmentPickUpDeliveryRepository.Update(delivery);
                 }
             });
@@ -160,7 +193,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private void UpdateCrossDockReleaseStatus()
         {
             if (shipmentPM.MainCarriageATD == null) ChangeCrossDockReleaseStatus("RELE", "CREA");
-            else 
+            else
             {
                 EntityStatus departedStatus = EntityStatusRepository.GetSingleEntityStatusByCode("SDEP", tenant, true);
                 if (departedStatus != null)
@@ -175,10 +208,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             List<WarehouseRelease> warehouseReleasesLists = warehouseRelases.Where(r => r.StatusCode == fromStatusCode).ToList();
             foreach (WarehouseRelease item in warehouseReleasesLists)
             {
-                if (IsUpdateWarehouseStatus(item, fromStatusCode)) 
+                if (IsUpdateWarehouseStatus(item, fromStatusCode))
                 {
                     item.StatusCode = toStatusCode;
-                    warehouseReleaseRepository.Update(item); 
+                    warehouseReleaseRepository.Update(item);
                 }
             }
         }
@@ -237,7 +270,361 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
             shipmentPM.WarehouseReleasesIds = null;
         }
+    }
 
-      
+    public class StorageCalculationManager
+    {
+        private ShipmentPM shipmentPM;
+        private int? storageDays;
+        public StorageCalculationManager(ShipmentPM shipmentPM)
+        {
+            this.shipmentPM = shipmentPM;
+        }
+
+        private void ComputeStorageDaye()
+        {
+            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null)
+            {
+                if (shipmentPM.WarehouseLegActualReleaseDate >= shipmentPM.WarehouseLegActualEntryDate)
+                {
+                    storageDays = (shipmentPM.WarehouseLegActualReleaseDate - shipmentPM.WarehouseLegActualEntryDate).Value.Days;
+                }
+            }
+        }
+        public void CheckStorageProperties()
+        {
+            ShipmentReceivablePM storageReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
+
+            this.ComputeStorageDaye();
+
+            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null && !string.IsNullOrEmpty(shipmentPM.ChargeStorageCurrencyId)
+                && shipmentPM.ChargeStorage && shipmentPM.ShipmentStoragePricings.Count > 0 && storageDays != null)
+            {
+                if (storageReceivable != null)
+                {
+                    this.UpdateStorageReceivable(storageReceivable);
+                }
+
+                else
+                {
+                    this.CreateReceivable();
+                }
+            }
+
+            else
+            {
+                if (storageReceivable != null)
+                {
+                    storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                }
+            }
+
+            //this.ComputeStorageFee();
+        }
+        private double? ComputeReceivableAmount()
+        {
+            double? amount = 0;
+            int? allChargeableDays = storageDays - shipmentPM.WarehouseStorageFreeDays;
+            double? weight = this.ComputeStorageWeight();
+
+            List<CalculatedPricingItem> myPricigs = new List<CalculatedPricingItem>();
+            if (weight != null && weight != 0)
+            {
+                foreach (ShipmentStoragePricingPM item in shipmentPM.ShipmentStoragePricings.OrderBy(d => d.LineNumber))
+                {
+                    CalculatedPricingItem newItem = new CalculatedPricingItem();
+                    newItem.LineNumber = item.LineNumber;
+                    newItem.Price = item.SalePrice;
+
+                    newItem.ChargeableDays = allChargeableDays - myPricigs.Sum(s => s.ChargeableDays);
+
+                    if (item.Days != null && item.Days != 0)
+                    {
+                        if (newItem.ChargeableDays > item.Days)
+                        {
+                            newItem.ChargeableDays = item.Days;
+                        }
+                    }
+
+                    newItem.Amount = MethodHelper.Round((item.SalePrice * Convert.ToDecimal(weight) * newItem.ChargeableDays), 2);
+                    myPricigs.Add(newItem);
+                }
+
+                this.UpdateShipmentStoragePricingLine(myPricigs);
+                amount = Convert.ToDouble(myPricigs.Sum(s => s.Amount));
+            }
+
+            double? myResult = amount;
+            ShipmentReceivablePM invoiceStorageReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
+            if (invoiceStorageReceivable != null)
+            {
+                myResult = amount - invoiceStorageReceivable.TotalAmount;
+            }
+
+            return myResult;
+        }
+        private void UpdateStorageReceivable(ShipmentReceivablePM storageReceivable)
+        {
+            double? amount = this.ComputeReceivableAmount();
+
+            storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            storageReceivable.TotalAmount = amount;
+            storageReceivable.TotalAmountLocal = MethodHelper.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+            if (storageReceivable.CurrencyId == shipmentPM.ProfitCurrencyId)
+            {
+                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+            }
+
+            else
+            {
+                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+            }
+        }
+        private void CreateReceivable()
+        {
+            double? amount = this.ComputeReceivableAmount();
+
+            if (amount != null && amount != 0)
+            {
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(shipmentPM.Tenant);
+                ChargesType chargesType = chargesTypeRepository.GetSingleChargesTypeByCode("ISTOR", shipmentPM.Tenant);
+
+                if (chargesType != null)
+                {
+                    string localCurrencyId = null;
+                    string loggedUserId = null;
+
+                    TenantRepository tenantRepository = new TenantRepository(shipmentPM.Tenant);
+                    Tenant myTenant = tenantRepository.GetSingleTenant(shipmentPM.Tenant);
+                    if (myTenant != null)
+                    {
+                        localCurrencyId = myTenant.CurrencyId;
+                    }
+
+                    string email = HttpContext.Current.User.Identity.Name;
+                    ContactRepository contactRepository = new ContactRepository(shipmentPM.Tenant);
+                    Contact loggedContact = contactRepository.GetSingleContactByEmail(email, shipmentPM.Tenant);
+                    if (loggedContact != null)
+                    {
+                        loggedUserId = loggedContact.Id;
+                    }
+
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(shipmentPM.Tenant);
+
+                    List<LastRate> allRates = this.GetAllRates(localCurrencyId, todayDate);
+
+                    ShipmentReceivablePM storageReceivable = new ShipmentReceivablePM();
+                    storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    storageReceivable.Tenant = shipmentPM.Tenant;
+                    storageReceivable.ShipmentId = shipmentPM.Id;
+                    storageReceivable.ChargesTypeId = chargesType.Id;
+                    storageReceivable.ChargesTypeCode = chargesType.Code;
+                    storageReceivable.ChargesTypeName = chargesType.EnglishName;
+                    storageReceivable.MeasurementId = chargesType.MeasurementId;
+                    storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
+                    storageReceivable.DueTypeCode = chargesType.DueTypeCode;
+                    storageReceivable.VatTypeId = chargesType.VatTypeId;
+                    storageReceivable.IATACodeId = chargesType.IATACodeId;
+                    storageReceivable.IsExpense = chargesType.IsExpense;
+                    storageReceivable.ShipmentNumber = shipmentPM.ShipmentNumber;
+                    storageReceivable.CreateDate = todayDate;
+                    storageReceivable.UpdateDate = todayDate;
+                    storageReceivable.CreatedByUserId = loggedUserId;
+                    storageReceivable.UpdateByUserId = loggedUserId;
+                    storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
+                    storageReceivable.CurrencyId = shipmentPM.ChargeStorageCurrencyId;
+
+                    if (localCurrencyId == storageReceivable.CurrencyId)
+                    {
+                        storageReceivable.Rate = 1;
+                    }
+                    else
+                    {
+                        LastRate lastRate = allRates.Where(d => d.ForeignCurrencyId == storageReceivable.CurrencyId).FirstOrDefault();
+                        if (lastRate != null)
+                        {
+                            storageReceivable.Rate = lastRate.Rate;
+                        }
+                    }
+
+                    if (shipmentPM.ProfitCurrencyId == localCurrencyId)
+                    {
+                        storageReceivable.ProfitCurrencyExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        LastRate myLastRate = allRates.Where(d => d.ForeignCurrencyId == shipmentPM.ProfitCurrencyId).FirstOrDefault();
+                        if (myLastRate != null)
+                        {
+                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                        }
+                    }
+
+                    if (chargesType.ChargesGroupCode == "FRT")
+                    {
+                        storageReceivable.PrepaidCollectId = shipmentPM.FreightPrepaidCollectId;
+                    }
+
+                    else
+                    {
+                        storageReceivable.PrepaidCollectId = shipmentPM.OtherPrepaidCollectId;
+                    }
+
+                    storageReceivable.TotalAmount = amount;
+                    storageReceivable.TotalAmountLocal = MethodHelper.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                    if (storageReceivable.CurrencyId == shipmentPM.ProfitCurrencyId)
+                    {
+                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                    }
+
+                    else
+                    {
+                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                    }
+
+                    shipmentPM.ShipmentReceivables.Add(storageReceivable);
+                }
+            }
+        }
+        private double? ComputeStorageWeight()
+        {
+            double? weightRounded = 0;
+            double? weight = 0;
+            double? rounding = 0;
+
+            if (shipmentPM.WeightMeasurementCode == "GRWT")
+            {
+                weight = shipmentPM.GrossWeight;
+            }
+
+            else
+            {
+                weight = shipmentPM.ChargeableWeight;
+            }
+
+            if (shipmentPM.WeightRoundingCode == "HAF")
+            {
+                rounding = 0.5;
+            }
+
+            else if (shipmentPM.WeightRoundingCode == "ONE")
+            {
+                rounding = 1;
+            }
+
+            if (weight != null && weight != 0 && rounding != null && rounding != 0)
+            {
+                string toString = weight.ToString();
+                string[] r = toString.Split('.');
+
+                if (r.Count() > 1)
+                {
+                    string strDigits = "0." + r[1];
+                    double digits = Convert.ToDouble(strDigits);
+                    int integer = Convert.ToInt32(r[0]);
+
+                    if (rounding == 0.5)
+                    {
+                        if (digits <= 0.5)
+                        {
+                            weightRounded = integer + 0.5;
+                        }
+
+                        else
+                        {
+                            weightRounded = integer + 1;
+                        }
+                    }
+
+                    else
+                    {
+                        weightRounded = integer + 1;
+                    }
+                }
+
+                else
+                {
+                    weightRounded = weight;
+                }
+            }
+
+            else
+            {
+                weightRounded = weight;
+            }
+
+            return weightRounded;
+        }
+        private void UpdateShipmentStoragePricingLine(List<CalculatedPricingItem> myPricigs)
+        {
+            foreach (CalculatedPricingItem item in myPricigs)
+            {
+                ShipmentStoragePricingPM shipmentPricing = shipmentPM.ShipmentStoragePricings.Where(d => d.LineNumber == item.LineNumber).FirstOrDefault();
+                if (shipmentPricing != null)
+                {
+                    shipmentPricing.Amount = item.Amount;
+                    shipmentPricing.ChargeableDays = item.ChargeableDays;
+                    shipmentPricing.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                }
+            }
+        }
+        public List<LastRate> GetAllRates(string baseCurrencyId, DateTime date)
+        {
+            List<LastRate> myResult = new List<LastRate>();
+
+            if (!string.IsNullOrEmpty(baseCurrencyId))
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(shipmentPM.Tenant);
+
+                RatesTableRepository myRepository = new RatesTableRepository(objectContext);
+                RatesTableQuery myQuery = new RatesTableQuery(myRepository);
+                CurrencyRepository currencyRepository = new CurrencyRepository(shipmentPM.Tenant);
+                Currency baseCurrency = currencyRepository.GetCurrencies(shipmentPM.Tenant).Where(r => r.Id == baseCurrencyId).FirstOrDefault();
+                List<Currency> foreignCurrencies = currencyRepository.GetCurrencies(shipmentPM.Tenant).Where(c => c.Id != baseCurrencyId).ToList();
+
+                foreach (Currency currency in foreignCurrencies)
+                {
+                    LastRate lastRate = myQuery.GetLastRecordByValueDate(shipmentPM.Tenant, currency.Id, baseCurrencyId, date);
+                    if (lastRate != null)
+                    {
+                        lastRate.BaseCurrencyId = baseCurrencyId;
+                        lastRate.BaseCurrencyCode = baseCurrency.Code;
+                        myResult.Add(lastRate);
+                    }
+
+                    else
+                    {
+                        LastRate newLastRate = new LastRate()
+                        {
+                            Id = IdCounter.GetNumber("LastRate", shipmentPM.Tenant).ToString(),
+                            Tenant = shipmentPM.Tenant,
+                            ForeignCurrencyId = currency.Id,
+                            ForeignCurrencyCode = currency.Code,
+                            ForeignCurrencyName = currency.EnglishName,
+                            BaseCurrencyId = baseCurrency.Id,
+                            BaseCurrencyCode = baseCurrency.Code,
+                            HistoryCount = 0,
+                            Rate = null,
+                        };
+
+                        myResult.Add(newLastRate);
+                    }
+                }
+            }
+
+            return myResult;
+        }
+    }
+
+    public class CalculatedPricingItem
+    {
+        public int? LineNumber { get; set; }
+        public int? To { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? Amount { get; set; }
+        public int? ChargeableDays { get; set; }
     }
 }

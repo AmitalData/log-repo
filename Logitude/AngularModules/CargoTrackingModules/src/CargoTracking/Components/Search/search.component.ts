@@ -7,6 +7,7 @@ import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/opera
 import { FormBuilder } from '@angular/forms';
 import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 
 
 @Component({
@@ -208,12 +209,15 @@ export class SearchComponent implements AfterViewInit
     LoadShipments()
     {
 
+     
+
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
             this.isLoading = true;
+            RootContext.StartBusyIndicatorLoading();
             this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {
+            {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
                 console.log("[getShipments]", result);
                 this.Shipments = result;

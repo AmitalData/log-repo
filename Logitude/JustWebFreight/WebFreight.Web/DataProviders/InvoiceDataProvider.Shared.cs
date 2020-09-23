@@ -707,5 +707,6 @@ namespace WebFreight.Web.DataProviders
         public decimal? SalePrice { get; set; }
         public decimal? Amount { get; set; }
         public int LineNumber { get; set; }
+        public int? ChargeableDays { get; set; }
     }
 }

@@ -532,6 +532,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
                     shipmentBehaviourFacade.Trace(shipmentTracing);
+
+                    if(shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
+                    {
+                        ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
+                        if (storageReceivable != null)
+                        {
+                            if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                            {
+                                this.CreateShipmentReceivable(storageReceivable);
+                            }
+
+                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
+                            {
+                                this.UpdateShipmentReceivable(storageReceivable);
+                            }
+
+                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
+                            {
+                                this.DeleteShipmentReceivable(storageReceivable);
+                            }
+                        }
+
+                        this.UpdateShipmentStoragePricingsCollection();
+                    }
+
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine

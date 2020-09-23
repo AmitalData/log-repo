@@ -117,6 +117,7 @@ export class EditComponent implements OnDestroy {
             this.SetNextPreviousButtonsEnablity();
         }
 
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
         if (this.EntityPM != null) {
             this.entityArgs.EntityPM = this.EntityPM;
             this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -161,6 +162,7 @@ export class EditComponent implements OnDestroy {
             this.IsSaveBtnVisible = false;
         }
         //
+    });
 
     }
 

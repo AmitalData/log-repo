@@ -62,13 +62,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
     isControlAccount: boolean = false;
-
+    public UsingLogGridV2:boolean= false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0]? true : false;
         this._entityListService = new EntityListService();
         this.EntityPM = entityArgs.EntityPM;
         this.CurrencyId = this.EntityPM.CurrencyId;

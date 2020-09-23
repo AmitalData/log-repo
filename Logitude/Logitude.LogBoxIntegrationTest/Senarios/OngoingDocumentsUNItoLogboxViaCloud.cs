@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -18,28 +20,39 @@ namespace Logitude.LogboxIntegrationTest.Senarios
     public class OngoingDocumentsUNItoLogboxViaCloud
     {
         [TestMethod]
-        public void Senario8_OpenShipmentInCloud_ShipmentOpenedInLogbox()
+        public void Senario10_OpenDocumentInCloud_QueueOpened()
         {
             RestAPIService restAPIService = new RestAPIService();
-            DocumentsFilingPM documentsFilingPM = new DocumentsFilingPM
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            ServiceOutcome serviceOutcome = UpsertShipmentInCloud(shipmentPM);
+            string queueMessagesId = GetQueueMessageId(serviceOutcome);
+            CheckStatusOfQueueMessage(restAPIService, queueMessagesId);
+            DocumentsFilingPM documentsFilingPM = GetDocumentFilingPM(shipmentPM.ShipmentNumber, serviceOutcome.Response.Result);
+            serviceOutcome = UpsertDocumentInCloud(documentsFilingPM);
+            queueMessagesId = GetQueueMessageId(serviceOutcome);
+            CheckStatusOfQueueMessage(restAPIService, queueMessagesId);
+        }
+
+        private static DocumentsFilingPM GetDocumentFilingPM(string shipmentNumber, string shipmentId)
+        {
+            return new DocumentsFilingPM
             {
-                Id="12323222",
-                EntityNumber = "1112233",
+                Id = "123456789123456789123456789123",
+                EntityNumber = shipmentNumber,
+                EntityId = shipmentId,
                 Code = "DFL",
                 CreatedByUserId = "WA",
                 UpdatedByUserId = "WA",
                 OwnerId = "WA",
-                DirectionCode = "O",
+                DirectionCode = "I",
                 DocumentTypeId = "WRR",
+                FileData = Encoding.ASCII.GetBytes("This is a test"),
+                FileExtension = "txt",
+                ObjectTableName = "Shipment",
+                IsSharedWithCustomer = true,
                 Tenant = EnvironmentParams.CloudTenant
             };
-            //ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            ServiceOutcome serviceOutcome = UpsertDocumentInCloud(documentsFilingPM);
-            string queueMessagesId = GetQueueMessageId(serviceOutcome);
-            CheckStatusOfQueueMessage(restAPIService, queueMessagesId);
-            //CheckIfShipmentOpenedInLogbox(restAPIService, shipmentPM);
         }
-
 
         private ServiceOutcome UpsertDocumentInCloud(DocumentsFilingPM documentsFilingPM)
         {
@@ -49,6 +62,19 @@ namespace Logitude.LogboxIntegrationTest.Senarios
                 Token = EnvironmentParams.CloudTenantToken
             };
             ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(documentsFilingPM, null, includedData);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            return serviceOutcome;
+        }
+
+        private ServiceOutcome UpsertShipmentInCloud(ShipmentPM shipmentPM)
+        {
+            AdditionalIncludedData includedData = new AdditionalIncludedData
+            {
+                URL = EnvironmentParams.CloudServerURL,
+                Token = EnvironmentParams.CloudTenantToken
+            };
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(shipmentPM, null, includedData);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             return serviceOutcome;
