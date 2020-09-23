@@ -246,24 +246,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 invoicedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
 
-                if (currentInvoice.IsAutoCredit)
-                {
-                    ARInvoice OriginalInvoice = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == currentInvoice.Id).FirstOrDefault();
-                    if (OriginalInvoice != null)
-                    {
-                        invoicedataprovider.OriginalInvoiceNumber = OriginalInvoice.InvoiceNumber;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(invoicedataprovider.OriginalInvoiceNumber))
-                {
-                    invoicedataprovider.OriginalInvoiceNumber_label = "Original Invoice Number";
-                }
-
-                else
-                {
-                    invoicedataprovider.OriginalInvoiceNumber_label = "";
-                }
+                this.SetOriginalInvoiceNumber(currentInvoice, invoiceCotnext, invoicedataprovider);
 
                 if (currentInvoice.StatusCode == "DR")
                 {
@@ -2761,20 +2744,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                if (entityPOCO.IsAutoCredit)
-                {
-                    invoiceDataProvider.OriginalInvoiceNumber = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == invoiceId).FirstOrDefault().InvoiceNumber;
-                }
-
-                if (!string.IsNullOrEmpty(invoiceDataProvider.OriginalInvoiceNumber))
-                {
-                    invoiceDataProvider.OriginalInvoiceNumber_label = "Original Invoice Number";
-                }
-
-                else
-                {
-                    invoiceDataProvider.OriginalInvoiceNumber_label = "";
-                }
+                this.SetOriginalInvoiceNumber(entityPOCO, invoiceCotnext, invoiceDataProvider);
 
                 if (entityPOCO.StatusCode == "DR")
                 {
@@ -4443,6 +4413,32 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return myResult;
+        }
+
+        private void SetOriginalInvoiceNumber(ARInvoice invoice, IInvoiceContext invoiceCotnext, InvoiceDataProvider dataProvider)
+        {
+            if (invoice.IsAutoCredit)
+            {
+                ARInvoice OriginalInvoice = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == invoice.Id).FirstOrDefault();
+
+                if (OriginalInvoice != null)
+                {
+                    dataProvider.OriginalInvoiceNumber = OriginalInvoice.InvoiceNumber;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(dataProvider.OriginalInvoiceNumber))
+            {
+                dataProvider.OriginalInvoiceNumber_label = "Original Invoice Number";
+            }
+
+            else
+            {
+                dataProvider.OriginalInvoiceNumber_label = "";
+            }
+
+            dataProvider.AutoCreditedInvoiceNumber = dataProvider.OriginalInvoiceNumber;
+            dataProvider.AutoCreditedInvoiceNumber_label = dataProvider.OriginalInvoiceNumber_label;
         }
     }
 
