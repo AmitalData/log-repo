@@ -158,7 +158,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
-            aRInvoiceLinePM.GLAccountId = interestReport.GLAccountId;
+            aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
             if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
             {
                 aRInvoiceLinePM.ForiegnExchangeRate = 0;
