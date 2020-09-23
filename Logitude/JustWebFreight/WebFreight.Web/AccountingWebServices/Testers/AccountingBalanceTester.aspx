@@ -1365,6 +1365,7 @@ div#two {
                         <asp:Button ID="_ButtonReverseGLBalance" runat="server" Text="ReverseGLBalance" OnClick="_ButtonReverseGLBalance_Click" />
                         <asp:Button ID="_ButtonReverseTotal0" runat="server" Text="Reverse from Total to Ledger" OnClick="_ButtonReverseTotal_Click" />
                         <asp:Button ID="_ButtonReverseTotalControl" runat="server" Text="***Control***Reverse from Total to Ledger" OnClick="_ButtonReverseTotalControl_Click" />
+                    <asp:Button ID="_ButtonReverseEngineerControlAccountAccumulateChild" runat="server" Text="*Control*TOT Sum Child" OnClick="_ButtonReverseEngineerControlAccountAccumulateChild_Click" />
                     </li>
                     <li>
                         SysCheck
