@@ -246,6 +246,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     ChargeableWeightUnitCode: string;
     GrossWeightUnitCode: string;
     IsDependencyFilter2Value: boolean;
+    IsBondedWarehouse: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
     public IsVehicleDetails: boolean = false;
 
@@ -260,7 +261,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
         this.IsDependencyFilter2Value = this.EntityPM.IsContainer;
         this.ReleasesNumber = this.EntityPM.ReleasesNumber;
-
+        this.IsBondedWarehouse = this.FatherComponent.IsBondedWarehouse;
 
         this.SetLabel();
         this.SetUIProperties();
@@ -268,15 +269,11 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.IsVehicleDetails = false;
     }
 
-
     SetLabel() {
         this.VolumeLabel = "Volume (" + this.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Weight (" + this.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dimensions(L-W-H) (" + this.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.ChargeableWeightUnitCode + ")";
-
-     
-
     }
 
 
@@ -337,6 +334,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, !this.IsBondedWarehouse);
         this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 

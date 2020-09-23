@@ -13068,6 +13068,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentShipmentLists;
         }
 
+        public bool CheckIsBondedShipmentById(string shipmentId, int tenant)
+        {
+            bool isBonded = (from a in repository.context.Shipments
+                             where a.Tenant == tenant && a.Id == shipmentId
+                             select a.IsBondedWarehouse).FirstOrDefault();
+
+            return isBonded;
+        }
 
     }
 
