@@ -75,7 +75,7 @@ namespace Logitude.Accounting.BL.Validators
         {
             GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPM.Tenant);
             GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);
-            if (gLAccount.ActiveForInterest == false)
+            if (gLAccount.ActiveForInterest ==null || gLAccount.ActiveForInterest == false)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
             }
