@@ -82,13 +82,14 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     private fetchedPages = new Set<number>();
     private dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
     private subscription = new Subscription();
+    mySub: any;
     //getCount: boolean = false;
     searchfields: string = "";
     Filters: ApiQueryFilters = new ApiQueryFilters();
 
     connect(collectionViewer: CollectionViewer): Observable<(any | undefined)[]> {
         this.myCollectionViewer = collectionViewer;
-        collectionViewer.viewChange.subscribe(range => {
+        this.mySub = collectionViewer.viewChange.subscribe(range => {
             if (this.timer) {
                 clearTimeout(this.timer);
             }
@@ -124,7 +125,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
 
     disconnect(): void {
         //this.dataStream.complete();
-        //this.subscription.unsubscribe();
+        this.mySub.unsubscribe();
         //this.fetchedPages = null;
         //this.cachedData = null;
     }
