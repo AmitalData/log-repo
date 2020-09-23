@@ -213,5 +213,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return dateValue;
         }
 
+        public decimal? GetCreditLimitFromGLAccount(string GLAccount, int tenant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

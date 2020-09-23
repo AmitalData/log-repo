@@ -35,6 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             try
             {
                 interestReportPM = interestReportPM !=null?interestReportPM: interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestReportPM.GLAccountInterestCreditLimit = interestReportCalculationPreparations.GetCreditLimitFromGLAccount(interestReportPM.GLAccountId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
                 glaccountIds.Add(interestReportPM.GLAccountId);
