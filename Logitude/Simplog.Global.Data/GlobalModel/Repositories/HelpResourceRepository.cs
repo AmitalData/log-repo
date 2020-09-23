@@ -32,6 +32,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return from a in context.HelpResources select a;
         }
 
+        public IQueryable<HelpResource> GetAllActiveHelpResources()
+        {
+            return from a in context.HelpResources where a.Inactive == false select a;
+        }
+
         public IQueryable<HelpResource> GetHelpResources(int tenant)
         {
             return from a in context.HelpResources select a;

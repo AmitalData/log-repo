@@ -465,6 +465,7 @@ namespace WebFreight.Web.DataProviders
             public double? GrandTotalInLocalCurrency { get; set; }
             public double? ExpenseChargesInLocalCurrency { get; set; }
             public string UUID { get; set; }
+            public string BillToCode { get; set; }
         }
 
         public class InvoiceTotals
@@ -706,5 +707,6 @@ namespace WebFreight.Web.DataProviders
         public decimal? SalePrice { get; set; }
         public decimal? Amount { get; set; }
         public int LineNumber { get; set; }
+        public int? ChargeableDays { get; set; }
     }
 }

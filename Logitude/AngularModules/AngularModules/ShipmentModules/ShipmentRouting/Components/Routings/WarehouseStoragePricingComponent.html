@@ -104,8 +104,12 @@
                         <td colspan="3">
                             <table>
                                 <tr>
-                                    <td>
+                                    <td style="width:10px;">
                                         <div></div>
+                                    </td>
+
+                                    <td class="Label" style="font-size:12px;">
+                                        {{WeightLabel}}
                                     </td>
 
                                     <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
@@ -124,8 +128,14 @@
                                     <log-column [header]="'Step From'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.StepFromText}}</span>
+                                                <div *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="text-align: right;">
+                                                                {{item.StepFrom}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
 
                                                 <div *ngIf="logcelltemplate.IsEditMode">
@@ -136,7 +146,7 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <log-column [header]="'Days'" [width]="'80'" [Alignment]="'left'">
+                                    <log-column [header]="'Number of Days'" [width]="'120'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
@@ -194,6 +204,22 @@
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SalePrice'" [DataContext]="item"
                                                                 [Text]="item.SalePrice" [ObjectTableName]="'ShipmentStoragePricing'" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Chargeable Days'" [width]="'120'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="false">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="text-align: right;">
+                                                                {{item.ChargeableDays}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

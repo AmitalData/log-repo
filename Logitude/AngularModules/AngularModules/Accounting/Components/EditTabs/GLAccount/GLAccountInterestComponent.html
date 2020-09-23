@@ -289,7 +289,7 @@
                                     (Ondblclick)="OnFocus()">
 
                     <!--PeriodStartDate-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">

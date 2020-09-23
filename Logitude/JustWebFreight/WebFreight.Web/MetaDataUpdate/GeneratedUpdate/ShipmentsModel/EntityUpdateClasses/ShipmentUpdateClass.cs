@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e834ba9d6ff9e6c877b3cef02c4a9f3b";
+		public const string HashString = "ca80754137a22350b9341ab5d4110262";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10899,7 +10899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -10930,6 +10930,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DangerousUnNumber",
 					  						DefaultText =  "Dangerous UN Number",
+					  						ListFieldLable =  "DangerousUnNumberListLable",
+					  						ListLableDefaultText =  "UN Number",
 					  						ShortFieldLable =  "DangerousUnNumber",
 					  						ShortFieldLableDefaultText =  "UN Number",
 					  						IsMaxLength =  false,
@@ -11680,7 +11682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -11711,6 +11713,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsDangerous",
 					  						DefaultText =  "Is Dangerous",
+					  						ListFieldLable =  "IsDangerousListLable",
+					  						ListLableDefaultText =  "Is Dangerous",
 					  						HelpTextCode =  "IsDangerous",
 					  						HelpTextDefaultText =  "Once it is checked, at least one of the handling codes will be required",
 					  						IsMaxLength =  false,

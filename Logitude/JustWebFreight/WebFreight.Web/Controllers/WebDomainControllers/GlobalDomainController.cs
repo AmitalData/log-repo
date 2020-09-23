@@ -257,7 +257,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 IGlobalContext context = new GlobalContext();
                 GlobalDomainService globalDomainService = new GlobalDomainService(context);
-                var result = globalDomainService.GetAllHelpResources(tenant);
+                IQueryable<HelpResource> result = globalDomainService.GetAllHelpResources(tenant);
+                result = result.Where(d => !d.Inactive);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 

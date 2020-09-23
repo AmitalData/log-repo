@@ -1961,83 +1961,42 @@ export class ShipmentTool {
     public static ComputeImportStorageReceivableAmount(storageDays: number, entityPM: ShipmentPM): number {
         var amount: number = 0;
         var weight: number = 0;
-        var days: number = storageDays - entityPM.WarehouseStorageFreeDays;
+        var allChargeableDays: number = storageDays - entityPM.WarehouseStorageFreeDays;
         var weight: number = this.ComputeStorageWeight(entityPM);
 
         var myPricigs: CalculatedPricingItem[] = [];
         if (!AppTool.IsNullOrZero(weight)) {
 
-            var maxLineNumber: number = ArrayTool.Max(entityPM.ShipmentStoragePricings, "LineNumber")
             entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-
-                var isLastStep: boolean = item.LineNumber == maxLineNumber ? true : false;
-
                 var newItem: CalculatedPricingItem = new CalculatedPricingItem();
                 newItem.LineNumber = item.LineNumber;
-                newItem.To = item.StepTo;
                 newItem.Price = item.SalePrice;
 
-                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.To == item.StepFrom)[0];
-                if (previousLine != null) {
-                    if (isLastStep) {
-                        if (ArrayTool.Sum(myPricigs, "Days") == days) {
-                            newItem.Days = 0;
-                        }
+                newItem.ChargeableDays = allChargeableDays - ArrayTool.Sum(myPricigs, "ChargeableDays");
 
-                        else {
-                            newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-
-                            if (!AppTool.IsNullOrZero(item.StepTo) && (newItem.Days > (item.StepTo - item.StepFrom))) {
-                                newItem.Days = item.StepTo - item.StepFrom;
-                            }
-                        }
-                    }
-
-                    else {
-                        if (!AppTool.IsNullOrZero(item.StepTo) && previousLine.Days > 0) {
-                            if (ArrayTool.Sum(myPricigs, "Days") != days) {
-                                if ((item.StepTo - item.StepFrom) <= (days - ArrayTool.Sum(myPricigs, "Days"))) {
-                                    newItem.Days = item.StepTo - item.StepFrom;
-                                }
-
-                                else {
-                                    newItem.Days = days - previousLine.Days;
-                                }
-                            }
-                        }
-
-                        else {
-                            newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-                        }
+                if (!AppTool.IsNullOrZero(item.Days)) {
+                    if (newItem.ChargeableDays > item.Days) {
+                        newItem.ChargeableDays = item.Days
                     }
                 }
 
-                else {
-                    newItem.Days = item.StepTo - item.StepFrom;
-
-                    if (newItem.Days > days) {
-                        newItem.Days = days;
-                    }
-                }
-
-                newItem.Amount = AppTool.Round((item.SalePrice * weight * newItem.Days), 2);
+                newItem.Amount = AppTool.Round((item.SalePrice * weight * newItem.ChargeableDays), 2);
                 myPricigs.push(newItem);
             });
 
-            this.UpdateShipmentStoragePricingAmount(myPricigs, entityPM);
+            this.UpdateShipmentStoragePricingLine(myPricigs, entityPM);
             amount = ArrayTool.Sum(myPricigs, "Amount");
         }
 
         var myResult: number = amount;
-
         var invoiceStorageReceivable: ShipmentReceivablePM = entityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
         if (invoiceStorageReceivable) {
             myResult = amount - invoiceStorageReceivable.TotalAmount;
         }
 
         return myResult;
-    }   
-    private static ComputeStorageWeight(entityPM: ShipmentPM): number {
+    } 
+    public static ComputeStorageWeight(entityPM: ShipmentPM): number {
         var weightRounded: number = 0;
         var weight: number = 0;
         var rounding: number = 0;
@@ -2093,11 +2052,12 @@ export class ShipmentTool {
 
         return weightRounded;
     }
-    private static UpdateShipmentStoragePricingAmount(myPricigs: CalculatedPricingItem[], entityPM: ShipmentPM) {
+    private static UpdateShipmentStoragePricingLine(myPricigs: CalculatedPricingItem[], entityPM: ShipmentPM) {
         myPricigs.forEach(item => {
             var shipmentPricing: ShipmentStoragePricingPM = entityPM.ShipmentStoragePricings.filter(d => d.LineNumber == item.LineNumber)[0];
             if (shipmentPricing) {
                 shipmentPricing.Amount = item.Amount;
+                shipmentPricing.ChargeableDays = item.ChargeableDays;
             }
         });
     }
@@ -6656,7 +6616,7 @@ export class RoutingHelper {
 export class CalculatedPricingItem {
     public LineNumber: number;
     public To: number;
-    public Days: number;
     public Price: number;
     public Amount: number;
+    public ChargeableDays: number;
 }

@@ -38,10 +38,16 @@ export class TimeOfficeHourDomainService {
         });
     }
 
-    UpdateOfficeHourList(entityPMList: any[]) {
+    UpdateOfficeHourList(entityPMList: TMOfficeHourPM[]) {
         return defer(() => {
 
-            return this._http.post(this._apiUrl, JSON.stringify(entityPMList), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            var mappedEntities: TMOfficeHourPM[] = [];
+            entityPMList.forEach((item) => {
+                var mappedEntity: TMOfficeHourPM = this.MapJsonToEntityPM(item);
+                mappedEntities.push(mappedEntity);
+            });
+
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntities), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var myResponse = new ServiceResponse();

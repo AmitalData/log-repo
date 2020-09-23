@@ -44,6 +44,8 @@ export class HelpResouceGeneralTabComponent extends BaseComponent implements OnI
     private SetUIProperties() {
         var videoPropertiesVisible: boolean = false;
 
+        this.UIProperties.SetEnabled("FileName", this.ObjectTableName, false);
+
         if (this.Type == "VID") {
             videoPropertiesVisible = true;
 
@@ -207,6 +209,13 @@ export class HelpResouceGeneralTabComponent extends BaseComponent implements OnI
     set IsNew(value: boolean) {
         if (this.EntityPM.IsNew != value) {
             this.EntityPM.IsNew = value;
+        }
+    }
+
+    get Inactive() { return this.EntityPM.Inactive; }
+    set Inactive(value: boolean) {
+        if (this.EntityPM.Inactive != value) {
+            this.EntityPM.Inactive = value;
         }
     }
 

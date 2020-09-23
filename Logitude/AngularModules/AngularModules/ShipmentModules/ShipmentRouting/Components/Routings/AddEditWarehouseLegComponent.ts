@@ -31,6 +31,7 @@ import { CurrencyRatesService, LastRate } from '../../../../Common/Services/Curr
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -54,7 +55,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public StoragePricingEnabled: boolean = false;
     public StoragePricingMessageVisible: boolean = false;
     public DisableNewWarehouseEntryButton: boolean = false;
-
+    private warehouseType: string;
+    public IsStoragePricingAreaVisible: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -86,14 +88,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    private myConsignee: CardPM;
     InitFreeDaysStorage() {
         this.cardService.get(this.EntityPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    var result = myResponse.Result;
-                    if (result) {
-                        if (result.IsCustomer)
-                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
+                    this.myConsignee = myResponse.Result;
+                    if (this.myConsignee) {
+                        if (this.IsNewLeg && this.myConsignee.IsCustomer) {
+                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;                            
+                        }
                     }
                 }
             }
@@ -115,18 +119,20 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 }
             }
 
+            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (FeatureToggle) {
+                this.IsStoragePricingAreaVisible = true;
+            }
+
             this.GetShipmentDirection();
             this.SetStorageDays();
             this.ComputeStorageFee();
-
-            if (this.IsBondedWarehouse && this.IsImportShipment) {
-                this.SetIsBondedWarehouseProperities();
-            }
 
             this.ObjectTableName = args['ObjectTableName'];
             this.FatherComponent = args['FatherComponent'];
             this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
             this.SetUIProperties();
+            this.InitFreeDaysStorage();
             this.Clone();
 
             if (this.IsNewLeg) {
@@ -139,50 +145,48 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         }
                     }
                 }
+
                 this.GetShipmentDirection();
-                this.InitFreeDaysStorage();
             }
 
-            if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-                this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse != null) {
-                        if (!myResponse.HasError) {
-                            var result: CardList = myResponse.Result;
-                            if (result) {
-                                if (result.WarehouseTypeCode == "BO") {
-                                    this.StoragePricingEnabled = true;
-                                    this.StoragePricingMessageVisible = false;
+            if (this.IsImportShipment) {
+                if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+                    this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse != null) {
+                            if (!myResponse.HasError) {
+                                var result: CardList = myResponse.Result;
+                                if (result) {
+                                    this.warehouseType = result.WarehouseTypeCode;                                    
+                                    this.SetNewWarehouseEntryButtonProperty();
+                                    this.SetChargeStorageProperies();
+                                    this.SetUIProperties_Storage();
                                 }
-                                else {
-                                    this.StoragePricingEnabled = false;
-                                    this.StoragePricingMessageVisible = true;
-                                }
-
-                                this.SetUIProperties_Storage();
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     }
 
     SetIsBondedWarehouseProperities() {
-        if (!this.EntityPM.IsBondedWarehouseChanged)
-            this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
-                var warehouseType = serviceResponse.Result;
-                if (warehouseType == "BO") {
-                    this.IsBondedWarehouse = true;
-                    this.SetNewWarehouseEntryButtonProperty();
-                }
-                else this.IsBondedWarehouse = false;
-                this.EntityPM.IsBondedWarehouseChanged = true;
-            });
+        if (!this.EntityPM.IsBondedWarehouseChanged) {
+            if (this.warehouseType == "BO") {
+                this.IsBondedWarehouse = true;
+                this.SetNewWarehouseEntryButtonProperty();
+            }
+
+            else {
+                this.IsBondedWarehouse = false;
+            }
+
+            this.EntityPM.IsBondedWarehouseChanged = true;
+        }
+
         else if (this.IsBondedWarehouse) {
             this.SetNewWarehouseEntryButtonProperty();
         }
     }
-
     SetNewWarehouseEntryButtonProperty() {
         if (this.IsBondedWarehouse) {
             this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
@@ -191,6 +195,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     this.DisableNewWarehouseEntryButton = true;
                 }
             });
+        }
+    }
+    SetChargeStorageProperies() {
+        if (this.warehouseType == "BO" && this.IsBondedWarehouse) {
+            this.StoragePricingEnabled = true;
+            this.StoragePricingMessageVisible = false;
+        }
+        else {
+            this.StoragePricingEnabled = false;
+            this.StoragePricingMessageVisible = true;
         }
     }
 
@@ -276,15 +290,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegWarehouseId(newValue: string) {
         if (this.EntityPM.WarehouseLegWarehouseId != newValue) {
             this.EntityPM.WarehouseLegWarehouseId = newValue;
+
             if (!AppTool.IsNullOrEmpty(newValue)) {
                 this.GetAddress();
             }
+
             else {
                 this.WarehouseLegAddressId = null;
                 this.FatherComponent.WarehouseLegTerminalName = "";
             }
-            this.EntityPM.IsBondedWarehouseChanged = false;
-            this.SetIsBondedWarehouseProperities();
 
             this.SetUIProperties();
         }         
@@ -301,20 +315,24 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         this.FatherComponent.EntityPM.WarehouseLegTerminalName = result.EnglishName;
                         this.WarehouseLegTerminalCode = result.FirmCode;
 
-                        if (result.WarehouseTypeCode == "BO") {
-                            this.StoragePricingEnabled = true;
-                            this.StoragePricingMessageVisible = false;
-
-                            this.LoadWarehouseStoragePricing(); 
+                        if (this.myConsignee != null && !AppTool.IsNullOrZero(this.myConsignee.StorageFreeDays)) {
+                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;
                         }
 
                         else {
-                            this.StoragePricingEnabled = false;
-                            this.StoragePricingMessageVisible = true;
+                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
                         }
 
+                        this.warehouseType = result.WarehouseTypeCode;
+                        this.EntityPM.IsBondedWarehouseChanged = false;
+                        this.SetIsBondedWarehouseProperities();
+                        this.SetChargeStorageProperies();
                         this.SetUIProperties_Storage();
-                        this.SetStorageDefaults(result);                                               
+                        this.SetStorageDefaults(result);
+
+                        if (result.WarehouseTypeCode == "BO" && this.IsBondedWarehouse) {
+                            this.LoadWarehouseStoragePricing();
+                        }
                     }
                 }
             }
@@ -553,6 +571,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.IsBondedWarehouse = value;
             if (this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
+                this.SetChargeStorageProperies();
+                this.SetUIProperties_Storage();
+                this.PricesChanged = true;
             }
         }
     }
@@ -582,7 +603,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s == "PricesChanged") {
                     this.PricesChanged = true;
-                    this.CheckStorageProperties();
+                    this.CheckStorageProperties();                    
                 }
             });
         });
@@ -639,6 +660,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
         if (storageReceivables.length > 0) {
             this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
+        }
+
+        else {
+            this.StorageFee = null;
         }
     }
     
@@ -705,7 +730,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            this.CheckStorageProperties();
+            this.CheckStorageProperties(); 
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -714,7 +739,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private CheckStorageProperties() {
         var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
 
-        if (this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+        if (this.IsBondedWarehouse && this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
             && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
             if (this.PricesChanged) {
@@ -908,6 +933,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('WarehouseLegCutOffDate');
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
         this.myCloner.AddField('WarehouseStorageFreeDays');
+        this.myCloner.AddField('IsBondedWarehouse');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
@@ -941,6 +967,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             });
 
             this.CurrentSession.FireEvent("FollowupsChanged");
+        }
+
+        if (this.IsNewLeg && this.EntityPM.ShipmentStoragePricings.length > 0) {
+            this.EntityPM.ShipmentStoragePricings = [];
+
+            //this.EntityPM.ShipmentStoragePricings.forEach(item => {
+            //    this.EntityPM.RemoveShipmentStoragePricing(item);
+            //});
         }
 
         this.myCloner.RejectChanges();
