@@ -78,6 +78,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -11980,8 +11981,8 @@ namespace WebFreight.Web.ReportsWebServices
                 var list = servce.Execute();
                 servce.Dispose();
 
-
-
+                List<CurrencyPM> currencies = GetCurrenciesByTenant(tenant);
+                List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
 
 
                 #region Fill Report Data
@@ -12010,7 +12011,11 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
+                            ChartofAccountCode = item.ChartOfAcountCode1,
+                            ChartofAccountLocalName = item.ChartOfAcountName1,
+                            ChartofAccountTypeCode = item.ChartOfAcountType,
+                            ChartofAccountTypeLocalName = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().LocalName : null,
+                            CurrencyCode = item.CurrencyId != null ? currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault().Code : "Multi",
 
 
 
@@ -12084,6 +12089,18 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             return totalData;
+        }
+        private List<CurrencyPM> GetCurrenciesByTenant(int tenant)
+        {
+            CurrencyQuery currencyQuery= new CurrencyQuery(tenant);
+            List<CurrencyPM> currencies = currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
+            return currencies;
+        }
+        private List<ChartOfAccountsTypePM> GetChartOfAccountTypes(int tenant)
+        {
+            ChartOfAccountsTypeQueryService chartOfAccountsTypeQueryService = new ChartOfAccountsTypeQueryService(tenant);
+            return chartOfAccountsTypeQueryService.GetAllChartOfAccounts();
+
         }
         private void RecalculateParentTotals(ResultList record,  RevenueExpenseDataProvider  totalData)
         {
