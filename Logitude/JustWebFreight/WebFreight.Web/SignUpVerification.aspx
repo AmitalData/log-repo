@@ -498,12 +498,18 @@
 
        function onChange() {
 
-            
+           var currentValue = $('#cmbCountries').data('kendoComboBox').dataItem();
+           if (currentValue) {
+               Country = currentValue.Code;
+           }
+
+
+
            //var combobox = $("#cmbCountries").data("kendoComboBox");
            //var selectedItem = combobox.dataSource.view()[combobox._current.index()];
            //selectedcompany = selectedItem;
-           var CurrentCountry = $('#cmbCountries').data('kendoComboBox').value();
-           Country = CurrentCountry;
+          // var CurrentCountry = $('#cmbCountries').data('kendoComboBox').value();
+           //Country = CurrentCountry;
 
            if (Country.trim()) { $("#circleCountryRead").hide(); }
            else { $("#circleCountryRead").show(); }
@@ -552,6 +558,6 @@
        });
 
 
-       </script>
+    </script>
 </body>
 </html>
