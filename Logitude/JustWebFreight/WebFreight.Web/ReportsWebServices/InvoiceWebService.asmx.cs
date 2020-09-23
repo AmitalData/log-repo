@@ -1199,7 +1199,7 @@ namespace WebFreight.Web.ReportsWebServices
                             newItem.Notes = pick.Notes;
                             newItem.TransportMode = pick.TransportModeName;
                             newItem.Weight = pick.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
-                            myServicHelper.GetPickUpFromAddress(pick, newItem, addressRepository, tenant);
+                            myServicHelper.GetPickUpAddresses(pick, newItem, addressRepository, tenant);
 
                             foreach (ShipmentPickUpDeliveryPackagePM package in pick.ShipmentPickUpDeliveryPackages)
                             {
