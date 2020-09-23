@@ -44,6 +44,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     where a.Tenant == tenant && ARInvoiceIds.Contains(a.ARinvoiceId)
                     select a.Id+","+a.ARinvoiceId).ToList();
         }
+
+        public decimal? GetCreditLimitFromGLAccount(String GLAccountId,int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && a.Id == GLAccountId
+                    select a.InterestCreditLimit).FirstOrDefault();
+        }
         public List<string> GetInterestReportNumbersByIds(List<string> InterestReportIds, int tenant)
         {
             var result = (from a in  context.InterestReports where a.Tenant == tenant   && InterestReportIds.Contains(a.Id) select a.ReportNumber).ToList();
