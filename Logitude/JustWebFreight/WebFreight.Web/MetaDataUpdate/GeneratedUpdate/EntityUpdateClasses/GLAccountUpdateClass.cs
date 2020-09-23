@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "4dda1093d99fff6d13cf960f06caf33a";
+		public const string HashString = "ec096095cfa5a5b44f22536d6a9dbda4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8073,30 +8073,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.DisplayNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SplitCurrencyAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GLAccountGLAccountHeaderScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CollectorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.DisplayNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+              
+             ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+              
+             ScreenField GLAccountGLAccountHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+              
+             ScreenField GLAccountGLAccountHeaderScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SplitCurrencyAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GLAccountGLAccountHeaderScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CollectorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    GLAccountObjectTable.HeaderScreenId = GLAccountHeaderScreenScreen0.Id;
 		    GLAccountObjectTable.HeaderScreenCode = GLAccountHeaderScreenScreen0.Code;
 
