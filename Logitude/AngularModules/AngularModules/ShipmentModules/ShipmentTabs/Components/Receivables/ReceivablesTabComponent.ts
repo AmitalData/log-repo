@@ -1484,13 +1484,24 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
 
             if (this.MeasurementCode != "STFE") {
-                isQuantityEnabled = true;
-                isExchangeRateFixedEnabled = true;
                 isCurrencyEnabled = true;
+                isExchangeRateFixedEnabled = true;
 
                 if (!this.EntityPM.IsChargeBySteps) {
                     isUnitPriceEnabled = true;
-                    isTotalAmountEnabled = true;
+                }
+
+                if (this.MeasurementCode == "FIXD") {
+                    isQuantityEnabled = false;
+
+                    if (!this.EntityPM.IsChargeBySteps) {
+                        isTotalAmountEnabled = true;
+                    }
+                }
+
+                else {
+                    isQuantityEnabled = true;
+                    isTotalAmountEnabled = false;
                 }
             }
         }
@@ -1768,6 +1779,8 @@ export class ShipmentReceivableItem extends BaseComponent {
                 this.Quantity = null;
                 this.EntityPM.MeasurementCode = null;
                 this.EntityPM.MeasurementShortName = null;
+
+                this.SetUIProperties();
                 this.UpdateInsideItemsSource_Measurement();
             }
 
@@ -1824,6 +1837,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                     break;
                                 }
                             }
+
                             this.SetUIProperties();
                             this.UpdateInsideItemsSource_Measurement();
                         }
