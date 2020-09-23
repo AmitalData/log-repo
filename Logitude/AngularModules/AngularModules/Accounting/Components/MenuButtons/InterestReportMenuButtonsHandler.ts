@@ -91,7 +91,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                 break;
                             }
                             case "RecalculateReport":{
-                                if(this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "6"){
+                                if(this.EntityPM.CanRecalculate){
                                     button.IsDisabled = false;
                                 }
                                 else{

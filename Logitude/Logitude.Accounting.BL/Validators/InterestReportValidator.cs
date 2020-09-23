@@ -33,8 +33,18 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
 
             }
+            ValidateCanUpdaeReport(entityPM, showLocals);
             ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
             return null;
+        }
+
+        
+        private static void ValidateCanUpdaeReport(InterestReportPM entityPM, bool showLocals)
+        {
+            if (entityPM.InterestReportStatusCode != "1" || entityPM.InterestReportStatusCode != "6")
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
+            }
         }
 
         private static void ValidateIfThereIsARecentInvoicedOrClosedReport(InterestReportPM entityPM, bool showLocals)
