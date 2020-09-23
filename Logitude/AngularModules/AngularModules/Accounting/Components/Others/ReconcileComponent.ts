@@ -926,14 +926,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     MustIgnoreItems: any[] = [];
     onDataLoaded() {
-    
         //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
         this.MarkIsChecked.emit({SelectedLines:this.SelectedLines});
     }
     DataSource = {
         pageSize: 30,
         rowCount: null,
-        //sortingCol: "CreateDateTime",
+        sortingCol: "",
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -1085,6 +1084,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
+        filters.SortBy = this.DataSource.sortingCol;
+        filters.SortDirection = this.DataSource.sortingDir;
+ 
         //#endregion
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
