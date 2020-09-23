@@ -253,6 +253,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.Tenant;
+
+        if ((!AppTool.IsNullOrEmpty(this.CategoryCode)) && this.CategoryCode == 'E') {
+            apiQueryFilters.ForceCacheRefresh = true;
+        }
+            
         this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
