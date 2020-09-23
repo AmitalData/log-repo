@@ -2179,9 +2179,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                             sub.unsubscribe();
                                             SessionLocator.SelectedSession.StopBusyIndicator();
                                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                                            ///SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                                             this.isEditControlOpened = false;
-                                            this.OnBackFromEdit(selectedEntityId, $event)
+                                            this.OnBackFromEdit(selectedEntityId, $event);
                                             //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
 
                                             //alert("reload");
@@ -2206,6 +2206,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else {
                             alert("ShowCustomFileOPCFromDeclaration");
+                            this.isEditControlOpened = false;
+                            this.OnBackFromEdit(selectedEntityId, $event);
                         }
 
                         /*
