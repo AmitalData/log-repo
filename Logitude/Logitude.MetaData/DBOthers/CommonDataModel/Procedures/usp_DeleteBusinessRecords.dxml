@@ -4,7 +4,8 @@
   Name="usp_DeleteBusinessRecords"
   Schema="dbo"
   Module="Common">
-  <SqlScript><![CDATA[
+  <SqlScript>
+  <![CDATA[
 Create PROCEDURE [dbo].usp_DeleteBusinessRecords
 (
 	@Tenant int
@@ -46,6 +47,7 @@ delete from MessagingStockUsageHistories where Tenant = @Tenant
 delete from ShipmentMasterDatas where Tenant = @Tenant
 delete from ShipmentComputedFields where Tenant = @Tenant
 delete from ShipmentAdditionalCloudDatas where Tenant = @Tenant
+delete from ShipmentStoragePricings where Tenant= @Tenant
 
 delete from WarehouseEntryPackagesReleases where Tenant = @Tenant
 delete from WarehouseEntryPackages where Tenant = @Tenant

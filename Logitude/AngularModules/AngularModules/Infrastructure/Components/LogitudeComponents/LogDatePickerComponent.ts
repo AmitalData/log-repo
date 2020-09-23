@@ -378,7 +378,7 @@ export class LogDatePickerComponent
                 this.HandleUIPropertyChanged(value);
             });
             
-            if(this.DataContext.EntityPM){
+            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties){
                 const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
                 pmuiProperty?.UIPropertyChanged.subscribe((value) => {
                     this.HandleUIPropertyChanged(value);

@@ -219,6 +219,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                entity.DenyReason = "";
                 this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
                     this.DimApproveButton = true;

@@ -302,11 +302,18 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     var ReverseEngineerGLAccountBalance = new ReverseEngineerGLAccountBalance(/*currentMonth, */accountingIntegrityInParam.Tenant);
                     ReverseEngineerGLAccountBalance.CheckDbIntegrity();
+
+                    
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult = myAccountingIntegrityResult.BalanceInLocalCurrencyResult ?? new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList);
                     badRows = ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList.Count();
                     myAccountingIntegrityResult.TotalOpenReconciliationResult = new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.TotalOpenReconciliation);
+
+                    var reverseEngineerControlAccountAccumulateChild = new ReverseEngineerControlAccountAccumulateChild(accountingIntegrityInParam.Tenant);
+                    reverseEngineerControlAccountAccumulateChild.CheckDbIntegrity();
+                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(reverseEngineerControlAccountAccumulateChild.CompareReport.TotalOpenReconciliation);
+
 
                 }
                 catch (Exception ee)

@@ -823,12 +823,17 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (oldValue.ToString().ToLower() != newValue.ToString().ToLower())
                     {
+                        if ((item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date") && item.OperatorCode == "SF" && string.IsNullOrEmpty(newValue.ToString()))
+                        {
+                            newValue = null;
+                        }
+
                         propInfo.SetValue(entityPM, newValue, null);
                         c fieldc = new c()
                         {
                             f = item.ObjectFieldCode,
                             o = oldValue.ToString(),
-                            n = newValue.ToString(),
+                            n = newValue == null ? null : newValue.ToString(),
                         };
 
                         fields.Add(fieldc);

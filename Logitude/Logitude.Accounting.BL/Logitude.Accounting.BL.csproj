@@ -306,6 +306,7 @@
     <Compile Include="CoreBL\Reports\TrailReportService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\AccountingIntegrityService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReconcileOpenAmountService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerControlAccountAccumulateChild.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerTotalByMonth_ControlAccountService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerGLAccountBalance.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerLedgerTransactionService.cs" />
