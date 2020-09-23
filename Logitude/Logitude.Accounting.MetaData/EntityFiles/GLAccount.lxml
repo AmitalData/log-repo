@@ -8113,7 +8113,7 @@
     ListFieldLable="&quot;ActiveForInterestListLable&quot;"
     ListLableDefaultText="&quot;Active for Interest&quot;"
     ListLocalDefaultText="&quot;פעיל לריבית&quot;"
-    IsNullable="true"
+    IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -8263,7 +8263,7 @@
     ListFieldLable="&quot;ActiveForInterestCreditInvoiceListLable&quot;"
     ListLableDefaultText="&quot;Active for Interest Credit invoice&quot;"
     ListLocalDefaultText="&quot;פעיל לחשבונית זיכוי&quot;"
-    IsNullable="true"
+    IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -13752,7 +13752,6 @@
       LocalDefaultText="&quot;לא ניתן להפיק את הדוח ללא בחירת איש מכירות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;GLAccount.O.Connected10Cards&quot;"
       DefaultText="&quot;The GLAccount is connected to 10 or more operational cards.&quot;"
@@ -13771,14 +13770,12 @@
       LocalDefaultText="&quot;לא ניתן להגדיר את אותו כרטיס גם כ&quot;קופה קטנה&quot; וגם לדיווח כ &quot;תשומות מסמך אחר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;GLAccount.O.InterestCalculationStartDateValidation&quot;"
       DefaultText="&quot;There needs to be at least one interest period that covers the Interest Calculation Start Date&quot;"
       LocalDefaultText="&quot;חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
