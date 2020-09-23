@@ -72,7 +72,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             foreach (var activityGroup in lastActivitiesGroup)
             {
 
-                EntityLastActivity activity = lastActivitiesQuery.Where(d => d.ActivityDate == activityGroup.ActivityDate && d.EntityId == activityGroup.EntityId && d.ObjectTableId == activityGroup.ObjectTableId && d.UserId == activityGroup.UserId).FirstOrDefault();
+                //EntityLastActivity activity = lastActivitiesQuery.Where(d => d.ActivityDate == activityGroup.ActivityDate && d.EntityId == activityGroup.EntityId && d.ObjectTableId == activityGroup.ObjectTableId && d.UserId == activityGroup.UserId).FirstOrDefault();
+
+                EntityLastActivity activity = lastActivitiesQuery.Where(d =>
+                    d.ActivityDate.Year == activityGroup.ActivityDate.Year
+                    && d.ActivityDate.Month == activityGroup.ActivityDate.Month
+                    && d.ActivityDate.Day == activityGroup.ActivityDate.Day
+                    && d.ActivityDate.Hour == activityGroup.ActivityDate.Hour
+                    && d.ActivityDate.Minute == activityGroup.ActivityDate.Minute
+                    && d.ActivityDate.Second == activityGroup.ActivityDate.Second
+                    && d.EntityId == activityGroup.EntityId
+                    && d.ObjectTableId == activityGroup.ObjectTableId
+                    && d.UserId == activityGroup.UserId)
+                        .FirstOrDefault();
+
                 EntityLastActivity existedActivity = (from a in lastActivities
                                                       where a.EntityId == activity.EntityId && a.ObjectTableId == activity.ObjectTableId
                                                       select a).FirstOrDefault();
