@@ -480,6 +480,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isOpenBalanceLine ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsOpenBalanceLine  
+	   {
+	    
+	     get
+		{
+		   return isOpenBalanceLine;
+		 }
+		 set
+		 {
+		   if(isOpenBalanceLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOpenBalanceLine",OldValue=isOpenBalanceLine,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isOpenBalanceLine=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

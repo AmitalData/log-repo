@@ -135,6 +135,65 @@ namespace Logitude.BL.Security
             return features;
         }
 
+
+        public static bool CheckFeature(string objectTableName, string featureCode, int tenant)
+        {
+            bool exists = false;
+
+   
+
+            string email = null;
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                /*string */
+                email = HttpContext.Current.User.Identity.Name;
+            }
+            else if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                email = AuthenticationUtil.AuthenticatedUserEmail;
+            }
+            else if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                email = AuthenticationUtil.AuthenticatedUserEmail;
+            }
+            else
+            {
+                email = AuthenticationUtil.ResolveLoggingUserId(tenant);
+            }
+              contactinfo = GetContactInfo(email, tenant);
+
+            if (contactinfo != null)
+            {
+                
+                    ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+                    if (objectTable != null)
+                    {
+                        foreach (string myRoleId in contactinfo.RolesIds)
+                        {
+                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+                            if (features.Keys.Contains(featureCode + objectTable.Id))
+                            {
+                                FeaturePM feature = features[featureCode + objectTable.Id];
+                                if (feature != null)
+                                {
+                                    exists = true;
+                                }
+                            }
+                        }
+                    }
+                
+            }
+            //}
+
+            if (!exists)
+            {
+                return false;
+            }
+            else return true;
+
+
+        }
+
         public static ContactInformation GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
         {
             int loggedTenant = tenant;

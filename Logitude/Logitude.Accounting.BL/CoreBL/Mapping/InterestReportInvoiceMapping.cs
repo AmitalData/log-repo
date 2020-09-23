@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.AmountInInvoiceCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.AmountInProfitCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.BranchId = userPM.BranchId;
-            aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
+            //aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.IssuedByUserId = userPM.Id;
@@ -51,7 +51,8 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.HasInterestFeature = true;
+            aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -150,8 +151,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)interestReport.TotalAmount;
             }
             aRInvoiceLinePM.Quantity = 1;
-            aRInvoiceLinePM.Description = "Interest For Date " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            //aRInvoiceLinePM.Description = "Interest For Date " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            //aRInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
+            aRInvoiceLinePM.Description = "Interest between " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " and " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
+            aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;

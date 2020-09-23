@@ -29,6 +29,11 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory
                         Entifty = new InterestJournalQueryService();
                         break;
                     }
+                case "4":
+                    {
+                        Entifty = new InterestInterestReportQueryService();
+                        break;
+                    }
             }
             return Entifty;
         }

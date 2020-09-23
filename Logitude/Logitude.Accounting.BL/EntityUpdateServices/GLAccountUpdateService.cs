@@ -449,12 +449,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else
                     {
                         bool IsNotDeletde = false;
-                        for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                        foreach (GLAccountInterestPeriodPM periodPM in entityPM.GLAccountInterestPeriods)
                         {
-                            if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                            if (periodPM.ChangeSetOp != ChangeSetOperation.Delete)
                             {
                                 IsNotDeletde = true;
+                                var item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate).FirstOrDefault();
+                                if (item == null)
+                                {
+
+                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
+
+                                }
                             }
+                            else
+                            {
+                                GLAccountInterestPeriodPM item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate && d.LineNumber != periodPM.LineNumber ).FirstOrDefault();                          
+                                if (item == null )
+                                {
+                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
+
+                                }
+                            }
+                           
 
                         }
                         if (!IsNotDeletde)

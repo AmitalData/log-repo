@@ -145,6 +145,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsOpenBalanceLine"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InterestReportId"
     ReferencedTable="InterestReports"

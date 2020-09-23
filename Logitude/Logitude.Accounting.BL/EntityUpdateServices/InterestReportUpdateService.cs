@@ -141,8 +141,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
  
         private void CancelInterestReport(InterestReport entityPoco, InterestReportPM entityPM)
         {
-          
-             if(entityPoco.InterestReportStatusCode == "4" || entityPoco.InterestReportStatusCode == "2") {
+              CancelOpenBalanceTransaction(entityPoco);
+
+             if (entityPoco.InterestReportStatusCode == "4" || entityPoco.InterestReportStatusCode == "2") {
                 GetAndUpdateRelatedInterestTransactions(entityPoco);
                
                 if (entityPoco.InterestReportStatusCode == "2")
@@ -150,6 +151,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CreateautoCreditInvoice(EntityPOCO);
                 }                
             }
+        }
+
+        private void CancelOpenBalanceTransaction(InterestReport interestReport)
+        {
+            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestReport.Tenant);
+            InterestTransactionPM interestTransaction = interestTransactionQueryService.GetOpenBalanceInterestTransactionsByInterestReportId(interestReport.Id, interestReport.Tenant);
+            if (interestTransaction != null)
+            {
+                interestTransaction.ChangeSetOp = ChangeSetOperation.Update;
+                interestTransaction.IsCancelled = true;
+                InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
+                interestTransactionUpdateService.Update(interestTransaction, true);
+            }
+
         }
         private void GetAndUpdateRelatedInterestTransactions(InterestReport interestReport)
         {
@@ -161,6 +176,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 transaction.InterestReportId = null;
                 transaction.IsClosed = false;
                 transaction.ChangeSetOp = ChangeSetOperation.Update;
+                if (transaction.InterestEntityTypeCode == "4")
+                {
+                    transaction.IsCancelled = true;
+                }
                 InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
                 interestTransactionUpdateService.Update(transaction, true);
             }

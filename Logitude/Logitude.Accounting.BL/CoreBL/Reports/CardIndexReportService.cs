@@ -53,6 +53,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void GetGLAccountPopulation()
         {
+            bool includeControlAccount = false;
 
             var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
             //                    var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
@@ -64,7 +65,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
-                    _Param.SalesmanId);
+                    _Param.SalesmanId,
+                    includeControlAccount);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
                 _allIdAccounts = new List<string>(hash);// hashsetallIdAccounts);
             }

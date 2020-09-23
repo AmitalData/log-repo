@@ -31,6 +31,7 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIsCardHasGLAccount(entityPM, showLocals);
                 ValidateIsAlreadyHasSameValue(entityPM, showLocals);
                 ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
+                ValidateIfPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(entityPM, showLocals);
 
             }
             ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
@@ -47,6 +48,17 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
+        private static void ValidateIfPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(InterestReportPM entityPM, bool showLocals)
+        {
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(entityPM.Tenant);
+            InterestReportPM interestReportPM = interestReportQueryService.GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(
+                                                entityPM.CustomerId, entityPM.Tenant, entityPM.InterestCalculationDate);
+            if (interestReportPM != null)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CannotCreateReportWithCalculationDateLess", entityPM.Tenant, showLocals) + " " + interestReportPM.ReportNumber + " " + TextCodesTranslator.TranslateText("InterestReport.O.on", entityPM.Tenant, showLocals) + " " + interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + TextCodesTranslator.TranslateText("InterestReport.O.AlreadyExists", entityPM.Tenant, showLocals));
+            }
+
+        }
         private static void ValidateIsCardHasGLAccount(InterestReportPM entityPM, bool showLocals)
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
@@ -96,7 +108,23 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
+        public static bool IsCreateInvoicedValid(InterestReportPM InterestReportPM, int tenant)
+        {
+            bool IsValid = true;
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+            string InterestReportStatusCode = interestReportQueryService.GetInterestReportStatusCode(InterestReportPM.Id, tenant);
+            if (InterestReportStatusCode != "1" && InterestReportStatusCode != "9")
+            {
+                IsValid = false;
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CreatingInvoicepermitted", tenant, showLocals));
+            }
 
+
+            return IsValid;
+
+        }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)

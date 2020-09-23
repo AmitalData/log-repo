@@ -53,6 +53,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return interestReportPM;
         }
 
+        public InterestReportPM GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(InterestReportCustomerPM interestReportCustomerPM, DateTime interestCalculationDate)
+        {
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+            InterestReportPM interestReportPM = interestReportQueryService.GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(
+                                                interestReportCustomerPM.CustomerId, tenant, interestCalculationDate);
+            return interestReportPM;
+        }
+
         public List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);

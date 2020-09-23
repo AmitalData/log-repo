@@ -64,6 +64,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          CalculationDetails = a.CalculationDetails,
 					
                                               TotalInterest = a.CalculatedCreditInterestAmount + a.CalculatedExcepInterestAmount + a.CalculatedStandInterestAmount,
+
+                                              IsOpenBalanceLine = a.IsOpenBalanceLine,
 		                    	            });
             return query;
 		}

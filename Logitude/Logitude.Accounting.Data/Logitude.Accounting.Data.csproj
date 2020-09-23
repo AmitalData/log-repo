@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="AccountingContext.cs" />
     <Compile Include="AccountingContext.SharedTable.cs" />
+    <Compile Include="DataContract\CloseBalanceInterestReportData.cs" />
     <Compile Include="DataContract\InterestReportCustomerData.cs" />
     <Compile Include="DataContract\TaxReportData.cs" />
     <Compile Include="EntitiesTypeEnums.CS" />
@@ -277,6 +278,7 @@
     <Compile Include="EntityPOCOs\TaxReportLineType.cs" />
     <Compile Include="EntityPOCOs\TaxReportStatus.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
+    <Compile Include="Enums\InterestReportStatusCodes.cs" />
     <Compile Include="Repositories\Generated\InterestLastBatchServiceRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportLineRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportLinesByDateRepository.Generated.cs" />

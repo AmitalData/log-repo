@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
@@ -105,14 +106,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetInterestReportStatusCode(string InterestReportId)
+        public HttpResponseMessage PutIsCreateInvoicedValid(InterestReportPM InterestReportPM)
         {
             try
             {
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
-                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-                string InterestReportStatus = interestReportQueryService.GetInterestReportStatusCode(InterestReportId, tenant);
+                bool InterestReportStatus = InterestReportValidator.IsCreateInvoicedValid(InterestReportPM, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, InterestReportStatus);
             }
             catch (Exception ex)

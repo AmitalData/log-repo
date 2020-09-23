@@ -624,13 +624,21 @@
                     <tr *ngIf="!IsAutoReconcile">
                         <td style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'LedgerTransaction'"
-                                    [dataSource]="TransactionDataSource" [FireCheckBoxChecked]="TransactionFireCheckBoxChecked"
-                                    [MenuHeaderchangeevent]="TransactionMenuHeaderchangeevent" [columns]="TransactionsColumns" [autoLoad]="true"
-                                    [QueryChangeEvent]="TransactiononQueryChangeEvent" [IsCustomTemplate]="true"
-                                    (CountReady)="onCountReadyTrans($event)" [PassAdditionalDataToTemplates]="true"
-                                    [ColumnsReady]="TransactionColumnsReady" [MarkIsChecked]="TransactionMarkIsChecked"
-                                    (DataLoaded)="TransactiononDataLoaded()" (SortInvoked)="OnSortInvoked($event)">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" 
+                                [ObjectTable]="'LedgerTransaction'"
+                                [dataSource]="TransactionDataSource" 
+                                [FireCheckBoxChecked]="TransactionFireCheckBoxChecked"
+                                [MenuHeaderchangeevent]="TransactionMenuHeaderchangeevent" 
+                                [columns]="TransactionsColumns" 
+                                [autoLoad]="true"
+                                [QueryChangeEvent]="TransactiononQueryChangeEvent" 
+                                [IsCustomTemplate]="true"
+                                (CountReady)="onCountReadyTrans($event)" 
+                                [PassAdditionalDataToTemplates]="true"
+                                [ColumnsReady]="TransactionColumnsReady" 
+                                [MarkIsChecked]="TransactionMarkIsChecked"
+                                (DataLoaded)="TransactiononDataLoaded()" 
+                                (SortInvoked)="OnSortInvoked($event)">
                                 </logitude-grid>
                             </div>
                         </td>

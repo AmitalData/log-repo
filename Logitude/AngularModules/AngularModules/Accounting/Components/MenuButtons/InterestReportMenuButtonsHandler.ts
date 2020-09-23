@@ -234,12 +234,12 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     
     private CheckInterestReportStatusCodeAndCreateInvoice(){
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.interestReportExtendedListService.GetInterestReportStatusCode(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+        this.interestReportExtendedListService.IsCreateInvoicedValid(this.EntityPM).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             var response: ServiceResponse = myResult;
             if (!response.HasError) {
-               var InterestReportStatusCode:string =response.Result;
-               if(InterestReportStatusCode=="1" || InterestReportStatusCode=="9"){
+               var IsValid:boolean =response.Result;
+               if(IsValid){
 
                 if ((!this.EntityPM.TotalAmount) ||
                    (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
@@ -255,15 +255,13 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                   }
                }
                else{
-
-                  this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate('InterestReport.O.CreatingInvoicepermitted'));
                   this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
                }
             }
             else {
-
                 this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                
             }
         });
     }
@@ -331,8 +329,9 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
         _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
             _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
-            _ARInvoiceLinePM.Description = "Interest For Date " + this.getDateString(this.EntityPM.InterestCalculationDate);
-            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + this.getDateString(this.EntityPM.InterestCalculationDate);
+            var length = this.EntityPM.InterestReportLinesByDates.length;
+            _ARInvoiceLinePM.Description = "Interest between " +this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " and " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
+            _ARInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " עד " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
          _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         //  if(this.cardList.VatTypeId){
         //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
@@ -359,9 +358,9 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
   }
  
   public  getDateString(DateTime: Date): string {
-        var month = new Date(DateTime).getMonth();
-        var year = new Date(DateTime).getFullYear();
-        var day = new Date(DateTime).getDay();
+        var month =DateTool.GetDateParts(DateTime).Month;
+        var year = DateTool.GetDateParts(DateTime).Year;
+        var day = DateTool.GetDateParts(DateTime).Day;
         return day + "/" + month + "/" + year
     }
 

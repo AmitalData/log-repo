@@ -21,6 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private System.Transactions.TransactionScope _TransactionScope;
         protected IAccountingContext _AccountingContext;
         private FullAccountingSettingPM _FullAccountingSetting;
+        protected string _AccountingCurrencyId ;
         protected IQueryable<AccountCOAM> QBaseAllCardsAndDetailsAccType;
         private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
 
@@ -78,6 +79,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 FullAccountingSettingQueryService
                 .Get(_TrailReportParam.Tenant);
 
+            _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
 
             GetGLAccountCardPopulationByParam();
 
@@ -232,7 +234,7 @@ into groupBy_currency
                   }
                   );
 
-            bool testIt = true;
+            bool testIt = false;
             if (testIt)
             {
                 var res = QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate.ToList();
@@ -443,6 +445,9 @@ into groupBy_currency
                     ParentId = a.ParentAccountId,
                     DisplayNumber = a.DisplayNumber,
                     LocalName = a.LocalName,
+                    CurrencyId = a.CurrencyId,
+                    IsMultiCurrency = a.IsMultiCurrency,
+
                 }
                 );
         }
@@ -734,5 +739,7 @@ trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
         public bool? IsControlAccount { get; set; }
         public string DisplayNumber { get; set; }
         public string ParentId { get; set; }
+        public string CurrencyId { get;  set; }
+        public bool? IsMultiCurrency { get;  set; }
     }
 }

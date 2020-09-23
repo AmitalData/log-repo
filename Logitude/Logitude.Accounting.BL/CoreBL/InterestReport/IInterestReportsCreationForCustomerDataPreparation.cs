@@ -11,6 +11,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     public interface IInterestReportsCreationForCustomerDataPreparation
     {
         InterestReportPM GetDraftInterestReportForCustomer(InterestReportCustomerPM interestReportCustomerPM);
+
+        InterestReportPM GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(InterestReportCustomerPM interestReportCustomerPM, DateTime interestCalculationDate);
+
         List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant);
 
         InterestReportPM CreateInterestReportForCustomerGlAccount(InterestReportCustomerPM interestReportCustomerPM);

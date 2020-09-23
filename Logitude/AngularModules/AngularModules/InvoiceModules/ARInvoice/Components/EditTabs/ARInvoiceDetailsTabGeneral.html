@@ -360,7 +360,7 @@
 
                                                             <!-- Description -->
                                                             <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="min-width: 250px;">
-                                                                {{item.Description}}
+                                                                {{ ShowLocal? item.LocalDescription: item.Description}}
                                                             </td>
 
                                                             <!-- MeasurementCode -->

@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -46,10 +48,31 @@ namespace Logitude.Accounting.Data.Repositories
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal? closedBalance = (from a in context.InterestReports
-                                     where a.Tenant == tenant && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4") && a.GLAccountId==glaccountId
+                                     where a.Tenant == tenant 
+                                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                                     || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice) 
+                                     && a.GLAccountId==glaccountId
                                      orderby a.InterestCalculationDate descending
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
+        }
+
+       public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
+        {
+            CloseBalanceInterestReportData result = (from a in context.InterestReports
+                          where a.Tenant == tenant && a.GLAccountId == glaccountId
+                           && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                           || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
+                          orderby a.InterestCalculationDate descending
+                          select new CloseBalanceInterestReportData()
+                          {
+                              Id = a.Id,
+                              CloseBalance = a.CloseBalance,
+                              InterestCalculationDate = a.InterestCalculationDate,
+                              InterestReportStatusCode = a.InterestReportStatusCode,
+                          }).FirstOrDefault();
+
+            return result;
         }
 
         public InterestReport GetDraftInterestReportForCustomer(string customerId,string glAccount, int tenant)
@@ -58,6 +81,17 @@ namespace Logitude.Accounting.Data.Repositories
                                              where a.Tenant == tenant && a.InterestReportStatusCode == "1"
                                              && a.CustomerId == customerId
                                              && a.GLAccountId == glAccount
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
+        public InterestReport GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(string customerId, int tenant, DateTime CalculationDate)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant 
+                                             && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4")
+                                             && a.CustomerId == customerId
+                                             && a.InterestCalculationDate >= CalculationDate
                                              select a).FirstOrDefault();
             return interestReport;
         }

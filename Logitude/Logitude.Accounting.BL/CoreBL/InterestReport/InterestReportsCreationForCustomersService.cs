@@ -41,6 +41,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestReportPM interestReportPM = null;
                 try
                 {
+                    interestReportPM = interestReportsCreationForCustomerDataPreparation.GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(eligibleCustomers[i], interestCalculationDate);
+                    if (interestReportPM!=null)
+                    {
+                        string LogMessage = "there is already a report with a calculation date less than or equal to the previously Invoiced/Closed report [Report "+ interestReportPM.ReportNumber + " on "+ interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + "].";
+                        interestReportPM = null;
+                        throw new Exception(LogMessage);
+                    }
                     interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
                     if (interestReportPM != null && interestReportPM.InterestReportStatusCode == "1")
                     {
@@ -57,24 +64,32 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                             interestReportPM.RecalculateData = true;
                         }
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
-                        CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
 
                     }
+                    CalculateDataForInterestReport(interestReportPM);
                 }
                 catch (Exception ex)
                 {
                     string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
-                    log = log + Environment.NewLine + "Error in report for customer: "
-                        + eligibleCustomers[i].EnglishName;
-                    if (interestReportPM != null)
-                    {
-                        log = log + " and report number: " + interestReportPM.ReportNumber;
-                    }
-                    log = log + Environment.NewLine + " Error: " + errorMessage;
+                    log += GetErrorInReportForCustomer(eligibleCustomers[i], interestReportPM, errorMessage);
 
                 }
             }
+            return log;
+        }
+
+        private string GetErrorInReportForCustomer(InterestReportCustomerPM  eligibleCustomer , InterestReportPM interestReportPM, string errorMessage)
+        {
+            string log = ""; 
+            log = log + Environment.NewLine + "Error in report for customer: "
+                        + eligibleCustomer.EnglishName;
+            if (interestReportPM != null)
+            {
+                log = log + " and report number: " + interestReportPM.ReportNumber;
+            }
+            log = log + Environment.NewLine + " Error: " + errorMessage;
+
             return log;
         }
         private void CalculateDataForInterestReport(InterestReportPM interestReportPM)

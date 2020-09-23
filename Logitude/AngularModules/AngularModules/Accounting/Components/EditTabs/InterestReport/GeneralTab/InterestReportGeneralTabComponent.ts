@@ -281,5 +281,16 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
+
+        this.columns.push({
+            FieldName: 'IsOpenBalanceLine',
+            DataTypeCode: '', 
+            Display: ' ',  
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
+            IsCustomTemplate: true
+        });
+
     }
 }

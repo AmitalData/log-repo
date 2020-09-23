@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -102,6 +103,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+
+        public IQueryable<InterestReportLinesByDatePM> GetFirstAndLastInterestReportLineByDatesForInterestReports(List<string>  ReportIds)
+        {
+
+            IQueryable<InterestReportLinesByDatePM> LinesByDates = (from a in context.InterestReportLinesByDates
+                                                                    join itself in context.InterestReportLinesByDates
+                                                                    on a.InterestReportId equals itself.InterestReportId
+                                                                    where (ReportIds.Contains(a.InterestReportId))
+                                                                    select new { a = a, itself = itself }).
+                                                                    OrderBy(s => s.a.FromDate).ThenByDescending(s => s.itself.ToDate).
+                                                                    GroupBy(x => x.a.InterestReportId).
+                                                                    Select(x => new InterestReportLinesByDatePM()
+                                                                    {
+                                                                      InterestReportId = x.FirstOrDefault().a.InterestReportId,
+                                                                      FromDate = x.OrderBy(s=>s.a.FromDate).FirstOrDefault().a.FromDate,
+                                                                      ToDate = x.OrderByDescending(s=>s.itself.ToDate).FirstOrDefault().itself.ToDate,
+                                                                    });
+          
+
+            return LinesByDates;
+
+        }
+
         public IQueryable<InterestReportPM> GetInterestReportsBySelectedIds(InterestReportArguments interestReportArgs)
         {
             return (from a in context.InterestReports
@@ -117,9 +141,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public  InterestReportPM  GetSinglePMForInterest(string Id, int Tenant)
+        {
+            return (from a in context.InterestReports
+                    where
+                     a.Tenant == Tenant &&  a.Id == Id
 
+                    select new InterestReportPM()
+                    {
 
-            public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
+                        Id = a.Id,
+                        ReportNumber=a.ReportNumber,
+
+                    }).FirstOrDefault();
+
+        }
+
+        public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
         {
             return (from a in context.InterestReports
                     where
@@ -190,12 +228,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportPM;
         }
 
+        public InterestReportPM GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(string customerId, int tenant, DateTime CalculationDate)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = interestReportRepository.GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(customerId, tenant, CalculationDate);
+            InterestReportPM interestReportPM = this.GetEntityPM(interestReport);
+
+            return interestReportPM;
+        }
+
         public string GetInterestReportStatusCode(string InterestReportId,   int tenant)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
             string InterestReportStatusCode = interestReportRepository.GetInterestReportStatusCode(InterestReportId, tenant);
             return InterestReportStatusCode;
 
+        }
+
+        public dynamic GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            return interestReportRepository.GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(tenant, glaccountId);
         }
     }
 }
