@@ -206,6 +206,10 @@ namespace WebFreight.Web.DataProviders
         public string FinalLocation_CountryName { get; set; }
         public string OriginalInvoiceNumber { get; set; }
         public string OriginalInvoiceNumber_label { get; set; }
+
+        public string AutoCreditedInvoiceNumber { get; set; }
+        public string AutoCreditedInvoiceNumber_label { get; set; }
+
         public string LocalCurrencyExchangeRates { get; set; }
         public string InvoiceCurrencyExchangeRates { get; set; }
         public string CustomerField1 { get; set; }
