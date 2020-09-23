@@ -200,11 +200,11 @@ export class SearchComponent implements AfterViewInit
     }
 
     ItemClicked(item)
-    {
-        var SecurityKey = item.SecurityKey;
-
-        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
-
+    {   var selection = window.getSelection();
+        if(selection.toString().length === 0) {
+            var SecurityKey = item.SecurityKey;
+            this.router.navigate([this._Tenant,'shipment', SecurityKey]);
+        }
     }
     LoadShipments()
     {

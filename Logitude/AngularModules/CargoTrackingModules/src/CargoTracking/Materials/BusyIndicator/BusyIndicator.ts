@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 
 @Component({
     selector: 'BusyIndicator',
-    inputs: ['Text', 'IsBusy','MainColor' ,'Width', 'Height', 'ImageWidth', 'ImageHeight'],
+    inputs: ['Text', 'IsBusy' ,'Width', 'Height', 'ImageWidth', 'ImageHeight'],
 
     template:
     `
@@ -126,7 +125,6 @@ export class BusyIndicator {
     public Height: number = 80;
     public ImageWidth: number = 80;
     public ImageHeight: number = 80;
-    public MainColor:string =CargoTrackingBrandingData.MainColor;
     public innerHeight = window.innerHeight/2;
 
     constructor() {
