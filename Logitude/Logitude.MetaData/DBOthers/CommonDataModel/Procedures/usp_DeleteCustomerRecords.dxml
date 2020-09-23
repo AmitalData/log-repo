@@ -4,7 +4,8 @@
   Name="usp_DeleteCustomerRecords"
   Schema="dbo"
   Module="Common">
-  <SqlScript><![CDATA[
+  <SqlScript>
+    <![CDATA[
 Create PROCEDURE [dbo].usp_DeleteCustomerRecords
 (
 	@Tenant int
@@ -51,6 +52,7 @@ BEGIN
 END
 
 delete from Addresses where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
+delete from CardSearches where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
 
 delete from CustomerProductLocations where Tenant = @Tenant
 delete from CustomerProducts where Tenant = @Tenant
