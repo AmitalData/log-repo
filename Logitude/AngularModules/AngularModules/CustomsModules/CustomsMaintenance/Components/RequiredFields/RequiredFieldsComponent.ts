@@ -43,7 +43,10 @@ export class RequiredFieldsComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this.GetCustomsObjectTables();
+        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+            this.GetCustomsObjectTables();
+
+        });
         //this.BuildTablesList();
     }
     GetCustomsObjectTables() {
@@ -68,7 +71,13 @@ export class RequiredFieldsComponent extends BaseComponent {
         //this.TablesList.push({ Name: "demo Bla Bla Bla"});
         //this.TablesList.push({ Name: "table number 7" });
         this.TablesList.forEach((el) => {
-            el["TranslatedName"] = TextCodeTranslator.TranslateTable(el.Name);
+            if (el.Name == "Customs.Declaration") {
+                el["TranslatedName"] =   TextCodeTranslator.Translate("Customs.Declaration.O.Declarations");
+}
+            else {
+                el["TranslatedName"] = TextCodeTranslator.TranslateTable(el.Name);
+
+            }
         });
         this.OriginalTablesList = this.TablesList;
     }
