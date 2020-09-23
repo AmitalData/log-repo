@@ -136,6 +136,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string TransactionNatureName  { get; set; }
        [DataMember]
        public string ClaimReasonName  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountForeign  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountNIS  { get; set; }
    }
 
 }

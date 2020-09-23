@@ -787,6 +787,10 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.DealValueWithFactor).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<Declaration>().Property(x => x.FOBValueNIS).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<Declaration>().Property(x => x.FOBValueDollar).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<DeclarationConsAcceptance>().Property(x => x.GrossWeight).HasPrecision(11, 3);
 				
 			modelBuilder.Entity<DeclarationCourierStatus>().Property(x => x.TotalInvoiceAmountInUSD).HasPrecision(16, 2);
@@ -884,6 +888,10 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrTop).HasPrecision(5, 0);
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrPageNumber).HasPrecision(3, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.ItemFOBAmountForeign).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.ItemFOBAmountNIS).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemModVehicle>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				

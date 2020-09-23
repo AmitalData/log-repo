@@ -296,6 +296,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ReplacingRepairRequest).HasColumnName("ReplacingRepairRequest").HasMaxLength(9).IsUnicode(false);
 
             this.Property(t => t.AmendmentErrorXml).HasColumnName("AmendmentErrorXml").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.FOBValueNIS).HasColumnName("FOBValueNIS").HasPrecision(16, 2);
+
+            this.Property(t => t.FOBValueDollar).HasColumnName("FOBValueDollar").HasPrecision(16, 2);
         }
     }
 }

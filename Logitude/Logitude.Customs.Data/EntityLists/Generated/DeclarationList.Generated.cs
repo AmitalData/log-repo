@@ -368,6 +368,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsClaimable  { get; set; }
        [DataMember]
        public string ReplacingRepairRequest  { get; set; }
+       [DataMember]
+       public decimal? FOBValueNIS  { get; set; }
+       [DataMember]
+       public decimal? FOBValueDollar  { get; set; }
    }
 
 }

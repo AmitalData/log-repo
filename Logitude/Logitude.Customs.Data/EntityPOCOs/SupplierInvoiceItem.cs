@@ -180,6 +180,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClaimReasonCode { get; set; }
 	      
         public virtual ClaimReasonType ClaimReasonType { get; set; }
+        [Column("ItemFOBAmountForeign")]
+	    public decimal? ItemFOBAmountForeign { get; set; }
+        [Column("ItemFOBAmountNIS")]
+	    public decimal? ItemFOBAmountNIS { get; set; }
     }
 }
 	 

@@ -76,7 +76,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrPageNumber, 
 	         ClassificationTypeCode, 
 	         TransactionNatureCode, 
-	         ClaimReasonCode,
+	         ClaimReasonCode, 
+	         ItemFOBAmountForeign, 
+	         ItemFOBAmountNIS,
 	      }
 
 
@@ -150,7 +152,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClaimReasonCode, 
 	         ClassificationTypeName, 
 	         TransactionNatureName, 
-	         ClaimReasonName,
+	         ClaimReasonName, 
+	         ItemFOBAmountForeign, 
+	         ItemFOBAmountNIS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -417,6 +421,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
             {
 				entityPOCO.ClaimReasonCode = entityPM.ClaimReasonCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountForeign))
+            {
+				entityPOCO.ItemFOBAmountForeign = entityPM.ItemFOBAmountForeign;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
+            {
+				entityPOCO.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -700,6 +714,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ClaimReasonCode = entityPOCO.ClaimReasonCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemFOBAmountForeign))
+            {
+					entityPM.ItemFOBAmountForeign = entityPOCO.ItemFOBAmountForeign;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemFOBAmountNIS))
+            {
+					entityPM.ItemFOBAmountNIS = entityPOCO.ItemFOBAmountNIS;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemPM entityPM, SupplierInvoiceItemPM oldEntityPM)
@@ -964,6 +988,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
             {
                 oldEntityPM.ClaimReasonCode = entityPM.ClaimReasonCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountForeign))
+            {
+                oldEntityPM.ItemFOBAmountForeign = entityPM.ItemFOBAmountForeign;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
+            {
+                oldEntityPM.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
             }
 			
 		}

@@ -158,7 +158,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestApproveDate, 
 	         IsClaimable, 
 	         ReplacingRepairRequest, 
-	         AmendmentErrorXml,
+	         AmendmentErrorXml, 
+	         FOBValueNIS, 
+	         FOBValueDollar,
 	      }
 
 
@@ -376,7 +378,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClaimable, 
 	         CancelRequestStatusName, 
 	         ReplacingRepairRequest, 
-	         AmendmentErrorXml,
+	         AmendmentErrorXml, 
+	         FOBValueNIS, 
+	         FOBValueDollar,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1063,6 +1067,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
             {
 				entityPOCO.AmendmentErrorXml = entityPM.AmendmentErrorXml;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueNIS))
+            {
+				entityPOCO.FOBValueNIS = entityPM.FOBValueNIS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
+            {
+				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1756,6 +1770,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmendmentErrorXml = entityPOCO.AmendmentErrorXml;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FOBValueNIS))
+            {
+					entityPM.FOBValueNIS = entityPOCO.FOBValueNIS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FOBValueDollar))
+            {
+					entityPM.FOBValueDollar = entityPOCO.FOBValueDollar;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2440,6 +2464,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
             {
                 oldEntityPM.AmendmentErrorXml = entityPM.AmendmentErrorXml;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueNIS))
+            {
+                oldEntityPM.FOBValueNIS = entityPM.FOBValueNIS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
+            {
+                oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
 		}

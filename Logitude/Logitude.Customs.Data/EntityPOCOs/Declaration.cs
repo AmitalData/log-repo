@@ -410,6 +410,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ReplacingRepairRequest { get; set; }
         [Column("AmendmentErrorXml")]
 	    public string AmendmentErrorXml { get; set; }
+        [Column("FOBValueNIS")]
+	    public decimal? FOBValueNIS { get; set; }
+        [Column("FOBValueDollar")]
+	    public decimal? FOBValueDollar { get; set; }
     }
 }
 	 

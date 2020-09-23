@@ -5170,6 +5170,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? fOBValueNIS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? FOBValueNIS  
+	   {
+	    
+	     get
+		{
+		   return fOBValueNIS;
+		 }
+		 set
+		 {
+		   if(fOBValueNIS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FOBValueNIS",OldValue=fOBValueNIS,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   fOBValueNIS=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? fOBValueDollar ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? FOBValueDollar  
+	   {
+	    
+	     get
+		{
+		   return fOBValueDollar;
+		 }
+		 set
+		 {
+		   if(fOBValueDollar != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FOBValueDollar",OldValue=fOBValueDollar,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   fOBValueDollar=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

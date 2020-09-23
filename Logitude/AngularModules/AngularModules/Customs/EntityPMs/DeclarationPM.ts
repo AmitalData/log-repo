@@ -1304,6 +1304,16 @@ export class DeclarationPM {
     public set AmendmentErrorXml(newValue: string) { if (this.amendmentErrorXml != newValue) { this.amendmentErrorXml = newValue; this.MarkAsDirty("AmendmentErrorXml"); } }
        
 	 
+    private fOBValueNIS: number;
+    public get FOBValueNIS() { return this.fOBValueNIS; }
+    public set FOBValueNIS(newValue: number) { if (this.fOBValueNIS != newValue) { this.fOBValueNIS = newValue; this.MarkAsDirty("FOBValueNIS"); } }
+       
+	 
+    private fOBValueDollar: number;
+    public get FOBValueDollar() { return this.fOBValueDollar; }
+    public set FOBValueDollar(newValue: number) { if (this.fOBValueDollar != newValue) { this.fOBValueDollar = newValue; this.MarkAsDirty("FOBValueDollar"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

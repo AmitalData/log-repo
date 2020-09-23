@@ -185,6 +185,8 @@ export class DeclarationList {
 	CancelRequestApproveDate: Date;
 	IsClaimable: boolean;
 	ReplacingRepairRequest: string;
+	FOBValueNIS: number;
+	FOBValueDollar: number;
 	
 }
  
