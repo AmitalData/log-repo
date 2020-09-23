@@ -1,12 +1,8 @@
-import {ViewContainerRef, Output, EventEmitter, ViewChild} from '@angular/core';
- 
+
 export class RootContext {
  
- 
   public static AppComponent: any;
- 
-   
- 
+
     public static StartBusyIndicator(myText: string) {
       RootContext.AppComponent.BusyIndicatorText = myText;
       RootContext.AppComponent.ShowBusyIndicator = true;
@@ -34,23 +30,4 @@ export class RootContext {
     }
 }
 
-export class SessionIdCounter {
-    public Name: string;
-    public Counter: number;
-    constructor(name: string) {
-        this.Name = name;
-        this.Counter = 0;
-    }
-}
-export class UnReadChat {
-  public SenderId: string;
-  public IsFocus: boolean;
-  public IsDeleted:boolean = false;
-  constructor(SenderId: string, IsFocus: boolean) {
-    this.SenderId = SenderId;
-    this.IsFocus = IsFocus;
-  }
-}
-
-
-
+ 
