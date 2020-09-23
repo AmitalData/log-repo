@@ -90,6 +90,14 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                     button.IsDisabled = false;
                                 break;
                             }
+                            case "RecalculateReport":{
+                                if(this.EntityPM.CanRecalculate){
+                                    button.IsDisabled = false;
+                                }
+                                else{
+                                    button.IsDisabled = true;
+                                }
+                            }
                     }
                 }
             }
@@ -122,12 +130,29 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                     this.CancelReport();
                     break;
                 }
+                case "RecalculateReport":{
+                    this.ConfirmRecalculatingReport();
+                }
             }
         }
         else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.entityArgs.EditComponent.ValidationErrorsList = errors;
         }
+    }
+    ConfirmRecalculatingReport() {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RecalculateData=true;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        });
+        confirmWindow.Show(TextCodeTranslator.Translate('InterestReport.O.ConfirmRecalculateReport'));
     }
 
     private PrintInterestReport() {

@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "03ff5166ca8eba39df77a4a23fe2cf2e";
+
+		public const string HashString = "7b2593375c9175d4716487fd885a21b5";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2282,6 +2284,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CanRecalculate",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CanRecalculate",
+					  						ListPropertyPath =  "CanRecalculate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CanRecalculate",
+					  						DefaultText =  "Can Recalculate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2583,6 +2641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
              			   Feature InterestReportFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IRCN", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
              			   Feature InterestReportFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CloseWithoutInvoice", NameTextCodeDefaultText = "Close Without Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
+             			   Feature InterestReportFeature_MB13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.RecalculateReport", NameTextCodeDefaultText = "Recalculate Report", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2682,6 +2741,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "סגירה ללא חשבונית",
 						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton InterestReportMenuButton13 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "RecalculateReport",
+						Index = 3, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestReport.B.RecalculateReport",
+						LabelTextCodeDefaultText = "Recalculate Report",
+						Tenant = 0,
+						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
+						ParentMenuButtonId = InterestReportMenuButton1.Id,
+						ObjectTableId = InterestReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  InterestReportFeature_MB13.Id,
+						Style = null,
+						LocalDefaultText = "חישוב מחדש של הדוח",
+						FeatureUniqeCode=  InterestReportFeature_MB13.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -2794,6 +2871,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOAttachReportWithEachInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AttachReportWithEachInvoice", DefaultText = "Attach Report with Each Invoice",LocalDefaultText = @"צרף פירוט ריבית להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOLineWasCreatedByTheSystem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.LineWasCreatedByTheSystem", DefaultText = "This line was created by the system in order to calculate the interest on the Open Balance",LocalDefaultText = @"ריבית מחושבת על יתרת חובה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOUpdatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.UpdatingInvoicepermitted", DefaultText = "Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

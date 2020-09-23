@@ -81,7 +81,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsCreatedFromBatch, 
 	         BatchReportUserEmail, 
 	         RecalculateData, 
-	         IsUpdatedFromBatch,
+	         IsUpdatedFromBatch, 
+	         CanRecalculate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

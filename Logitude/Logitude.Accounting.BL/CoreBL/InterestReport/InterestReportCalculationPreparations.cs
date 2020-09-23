@@ -26,6 +26,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestReportPM interestReportPM = interestReportQueryService.GetSingle(interestReportId, false, false);
             return interestReportPM;
         }
+        public virtual decimal? GetCreditLimitFromGLAccount(string GLAccountId, int tenant)
+        {
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+            decimal? CreditLimit = interestReportQueryService.GetCreditLimitFromGLAccount(GLAccountId, tenant);
+            return CreditLimit;
+        }
 
         public List<GLAccountInterestPeriodPM> GetGlaccountInterestPeriods(InterestReportPM interestReportPM)
         {
