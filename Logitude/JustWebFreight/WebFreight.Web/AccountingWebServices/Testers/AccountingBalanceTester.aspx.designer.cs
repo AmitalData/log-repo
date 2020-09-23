@@ -78,6 +78,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected global::System.Web.UI.WebControls.Button _ButtonReverseTotalControl;
 
         /// <summary>
+        /// _ButtonReverseEngineerControlAccountAccumulateChild control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonReverseEngineerControlAccountAccumulateChild;
+
+        /// <summary>
         /// _AccountingIntegrityService control.
         /// </summary>
         /// <remarks>
