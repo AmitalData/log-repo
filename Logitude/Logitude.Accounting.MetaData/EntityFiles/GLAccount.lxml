@@ -13770,6 +13770,12 @@
       LocalDefaultText="&quot;לא ניתן להגדיר את אותו כרטיס גם כ&quot;קופה קטנה&quot; וגם לדיווח כ &quot;תשומות מסמך אחר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.InterestCalculationStartDateValidation&quot;"
+      DefaultText="&quot;There needs to be at least one interest period that covers the Interest Calculation Start Date&quot;"
+      LocalDefaultText="&quot;חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

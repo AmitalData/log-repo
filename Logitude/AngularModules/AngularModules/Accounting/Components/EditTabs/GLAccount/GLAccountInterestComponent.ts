@@ -10,12 +10,14 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { GLAccountInterestPeriodPM } from '../../../EntityPMs/GLAccountInterestPeriodPM';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { GLAccountValidator } from '../../../Validators/GLAccountValidator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
+import { DateTimeToDatePipe } from '../../../../Controls/Pipes/DateTimeToDatePipe';
+import { DateTimeToShortDatePipe } from '../../../../Infrastructure/Pipes/DateTimeToShortDatePipe';
 
 @Component({
     
@@ -131,8 +133,16 @@ export class GLAccountInterestComponent extends BaseComponent {
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline") + " ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                if(line.EntityPM.UniqueKey==null){
-                this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
+                if (line.EntityPM.UniqueKey == null) {
+                var item=    this.EntityPM.GLAccountInterestPeriods.filter(d => d.LineNumber != line.LineNumber && d.PeriodStartDate <= this.EntityPM.InterestCalculationStartDate)[0];
+                    if (item == null) {
+                        this.UIProperties.SetValidity("PeriodStartDate", "GLAccountInterestPeriod", false, "It is mandatory to enter interest data for (DD.MM.YY)  as defined in the 'Interest Calculation Start Date ' field");
+
+                    }
+                    else {
+                        this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
+                    }
+               
                 }
                 
                line.EntityPM.ChangeSetOp = "Delete"; //Delete
@@ -274,8 +284,17 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
 
     get PeriodStartDate() { return this.EntityPM.PeriodStartDate; }
     set PeriodStartDate(newValue: Date) {
-        if (this.EntityPM.PeriodStartDate != newValue) {
+        if (this.EntityPM.PeriodStartDate != newValue)
+        {
+            var datebigger = DateTool.IsDateBigger(newValue, this.GLAccountPM.InterestCalculationStartDate);
             this.EntityPM.PeriodStartDate = newValue;
+
+            var item = this.GLAccountPM.GLAccountInterestPeriods.filter(d => !DateTool.IsDateBigger(d.PeriodStartDate, this.GLAccountPM.InterestCalculationStartDate) )[0];
+           
+            if (datebigger && item == null) {
+                this.UIProperties.SetValidity("PeriodStartDate", "GLAccountInterestPeriod", false, TextCodeTranslator.Translate("GLAccount.O.InterestCalculationStartDateValidation") + " " + DateTimeToDatePipe.Pipe(this.GLAccountPM.InterestCalculationStartDate)  );// "It is mandatory to enter interest data for (DD.MM.YY)  as defined in the 'Interest Calculation Start Date ' field");
+            }
+            else { this.UIProperties.SetValidity("PeriodStartDate", "GLAccountInterestPeriod", true,null);}
         }
     }
 

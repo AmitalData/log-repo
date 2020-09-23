@@ -77,16 +77,38 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             }
             else
             {
+                List<JournalLinePM> _journalLines = new List<JournalLinePM>();
+
                 foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
                 {
                     ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
                     JournalLinePM chequeDebitLine = CreateDebitLineForChequeDeposit(ref lineNumber, depositLine, cheque);
-                    journal.JournalLines.Add(chequeDebitLine);
+                    _journalLines.Add(chequeDebitLine);
+                    if (_journalLines.FirstOrDefault().DueDate > TenantServerConfigration.GetCurrentDateTime(Tenant))
+                    {
+                        journal.JournalLines.Add(chequeDebitLine);
+                    }
+
                 }
+                if (_journalLines.FirstOrDefault().DueDate <= TenantServerConfigration.GetCurrentDateTime(Tenant))
+                {
+                    AddSumOfDebitLinesForJournalLines(_journalLines);
+                }
+                
             }
         }
 
-
+        private void AddSumOfDebitLinesForJournalLines(List<JournalLinePM> _journalLines)
+        {
+            JournalLinePM Sum_Line = _journalLines.FirstOrDefault();
+            Sum_Line.DueDate = journal.AccountingDate;
+            Sum_Line.ForeignAmount = _journalLines.Sum(s => s.ForeignAmount);
+            Sum_Line.LocalAmount = _journalLines.Sum(s => s.LocalAmount);
+            Sum_Line.ExternalOpenAmount = _journalLines.Sum(s => s.ExternalOpenAmount);
+            Sum_Line.Reference1 = DepositPM.DepositNumber.ToString();
+            Sum_Line.Reference2 = DepositPM!= null? DepositPM.BankDepositLines.Count==1? DepositPM.BankDepositLines.FirstOrDefault().ChequeNumber:null:null;
+            journal.JournalLines.Add(Sum_Line);
+        }
         private JournalLinePM CreateDebitLineForChequeDeposit(ref int LineNumber, BankDepositLinePM item, ARPaymentChequePM cheque)
         {
             JournalLinePM chequeDebitLine = new JournalLinePM
