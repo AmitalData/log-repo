@@ -901,7 +901,7 @@ namespace WebFreight.Web.WebServices
             return myResult;
         }
 
-        public void GetPickUpFromAddress(ShipmentPickUpPM entity, DataProviders.PickUpDeliveryLine line, AddressRepository addressRepository, int tenant)
+        public void GetPickUpAddresses(ShipmentPickUpPM entity, DataProviders.PickUpDeliveryLine line, AddressRepository addressRepository, int tenant)
         {
             if (entity != null)
             {
@@ -971,6 +971,74 @@ namespace WebFreight.Web.WebServices
                             if (!string.IsNullOrEmpty(entity.FromAddressZipCode))
                             {
                                 line.FullAddress = line.FullAddress + ", " + entity.FromAddressZipCode;
+                            }
+
+                            break;
+                        }
+                }
+
+                switch (entity.PickUpDeliveryToTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(entity.ToPartnerCardId))
+                            {
+                                Card myPartner = CardRepository.GetSingleCard(entity.ToPartnerCardId, tenant, true);
+                                if (myPartner != null)
+                                {
+                                    line.ToAddress = myPartner.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(entity.ToAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(entity.ToAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    line.ToAddress = line.ToAddress + Environment.NewLine + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null)
+                                    {
+                                        line.ToAddress = line.ToAddress + Environment.NewLine + "Tel: " + myPartnerAddress.PhoneNumber;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(entity.ToPortId))
+                            {
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, entity.ToPortId, true);
+                                if (myPort != null)
+                                {
+                                    line.ToAddress = myPort.EnglishName + ", " + myPort.CountryName;
+
+                                    if (!string.IsNullOrEmpty(myPort.StateId))
+                                    {
+                                        StateRepository stateRepository = new StateRepository(tenant);
+                                        State myState = stateRepository.GetSingleState(myPort.StateId, tenant);
+
+                                        if (myState != null)
+                                        {
+                                            line.ToAddress = line.ToAddress + ", State: " + myState.EnglishName;
+                                        }
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            line.ToAddress = entity.ToAddressCountryName + ", " + entity.ToAddressCity;
+
+                            if (!string.IsNullOrEmpty(entity.ToAddressZipCode))
+                            {
+                                line.ToAddress = line.ToAddress + ", " + entity.ToAddressZipCode;
                             }
 
                             break;
