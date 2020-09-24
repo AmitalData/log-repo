@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.Validators
         
         private static void ValidateCanUpdaeReport(InterestReportPM entityPM, bool showLocals)
         {
-            if (entityPM.InterestReportStatusCode != "1" && entityPM.InterestReportStatusCode != "6" && entityPM.InterestReportStatusCode != "3")
+            if (entityPM.InterestReportStatusCode != "1" && entityPM.InterestReportStatusCode != "6" && entityPM.InterestReportStatusCode != "3" && entityPM.InterestReportStatusCode != null)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
             }

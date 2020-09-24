@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "77c4b2fe1b9f73b4babe87aaad3c63f8";
+
+		public const string HashString = "ac78576b8b3de3e46e5de752aaa62b86";
+
 
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
@@ -2870,10 +2872,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"נא לאשר סגירת דוחות ללא הפקת חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
+
  		   TextCode InterestReportTextCode_InterestReportOLineWasCreatedByTheSystem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.LineWasCreatedByTheSystem", DefaultText = "This line was created by the system in order to calculate the interest on the Open Balance",LocalDefaultText = @"ריבית מחושבת על יתרת חובה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
  		   TextCode InterestReportTextCode_InterestReportOUpdatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.UpdatingInvoicepermitted", DefaultText = "Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmRecalculateReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmRecalculateReport", DefaultText = "Confirm recalculating the report",LocalDefaultText = @"יש לאשר חישוב מחדש של הדוח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
 
 	    
