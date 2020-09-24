@@ -51,7 +51,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         string decIdOrg;
         bool isFromAmendment = false;
         SupplierInvoicePM _OrgSupplierInvoicePM;
-
+        bool _isUpdateAfterAccept = false;
         public override void OnRequestFail(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -100,7 +100,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false)
         {
             error = "";
             try
@@ -112,6 +112,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 DeclarationPM declarationOrg;
                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                _isUpdateAfterAccept = isUpdateAfterAccept;
 
                 if (isUpdate)
                 {
@@ -149,7 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 DeclarationPM declarationPM;
 
-                if (declarationOrg != null)
+                if (declarationOrg != null && !_isUpdateAfterAccept)
                 {
                     declarationPM = new DeclarationPM()
                 {
@@ -159,7 +161,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     IsConnectedToUnifreight = false,
                     AmendmentDontDisplayInList = true,
                     IsAmendment = true,
-                    Consignments = GetConsignments(declaration, tenant),
+                    Consignments = GetConsignments(declaration, tenant, null,context),
 
 
                 };
@@ -197,14 +199,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 else
                 {
-                    declarationPM= myQueryService.GetSingleDeclarationById(idOrg, tenant);
-
+                 
+                    declarationPM = myQueryService.GetSingle(idOrg, true,false);
+ 
                     declarationPM.DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID);
                     declarationPM.Tenant = tenant;
                     declarationPM.IsConnectedToUnifreight = false;
                     declarationPM.AmendmentDontDisplayInList = false;
                     declarationPM.IsAmendment = true;
-                    declarationPM.Consignments = GetConsignments(declaration, tenant);
+                    declarationPM.Consignments = GetConsignments(declaration, tenant,declarationPM, context);
                      declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
 
@@ -448,10 +451,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant)
+        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant , DeclarationPM declarationPM, ICustomContext context)
         {
             if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
             if (declaration.GoodsShipment[0].Consignment == null || declaration.GoodsShipment[0].Consignment.Count() == 0) return null;
+
+
+            if(declarationPM!=null && _isUpdateAfterAccept && declarationPM.Consignments!= null & declarationPM.Consignments.Count()>0)
+            {
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
+                declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
+
+            }
 
             List<ConsignmentPM> consignmentPMs = new List<ConsignmentPM>();
             foreach (var consignment in declaration.GoodsShipment[0].Consignment)
@@ -459,7 +470,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ConsignmentPM consignmentPM = new ConsignmentPM();
                 consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
                 consignmentPM.Tenant = tenant;
-                //    consignmentPM. DeclarationId = GetValueIDType(declaration.ID);
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
@@ -474,10 +484,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     consignmentPM.ThirdCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.ThirdCargoID);
 
 
-                    //if (consignmentPM.CargoTypeCode =="17")  ***************
-                    //{
-
-                    //}
                 }
 
                 if (consignment.UnloadingLocation != null)

@@ -103,7 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
-                  //  _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
+                    _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false,isUpdateAfterAccept:true);
 
                 }
                 else
@@ -305,63 +305,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                                                 List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                                                //if ((customResponse.Response.Declaration != null) && (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value)))
-                                                //{
-
+                                           
                                                     var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                                                         .SerializeObject(customResponse.Response);
 
                                                     var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
                                                         .DeSerializeObject(customResponseResponseXml);
-                                                    ////5117 5117 5117 5117 5117
+                                                
                                                     List<error> systemMessagesList = new List<error>();
                                                 
                                                     this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
-                                               // }
+                                            
 
                                                 break;
-
-                                            //case "5":
-                                            //    _MyDeclarationPM.AmendmentStatus = "5";
-
-
-                                            //    var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                            //    {
-                                            //        Tenant = _MyDeclarationPM.Tenant,
-                                            //        objectTableName = "Customs.Declaration",
-                                            //        EventCode = "DMC",
-                                            //        notes = "תיקון הצהרה בוטל - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                            //        CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                            //        EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                            //        UserId = loggingUserId,
-
-                                            //        CommunicationSubject = "FU Status DMC from logitude ",
-                                            //        MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                            //        {
-                                            //            entname = "CFIFILEM",
-                                            //            primary_number = _MyDeclarationPM.CustomFileNo,
-                                            //            status = "new",
-                                            //            xml_status = "new",
-                                            //            status_id = "DMC",
-                                            //            status_DateTime = DateTime.Now,
-                                            //            comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                            //        }
-                                            //    };
-
-                                            //    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
-                                            //    myUpdateEventContextTagModel = new EventContextTagModel()
-                                            //    {
-                                            //        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                            //        EventCode = "DMC",
-                                            //        EventRemarks = "Declaration Amendment Cancelled",
-                                            //        FUStatusRemarks = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                            //    };
-
-
-
-
-                                            //    break;
-
+  
 
 
                                             case "2":
