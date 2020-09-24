@@ -3337,6 +3337,7 @@
     <TextCode
       Code="&quot;InterestReport.O.UpdatingInvoicepermitted&quot;"
       DefaultText="&quot;Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;"
+      LocalDefaultText="&quot;ניתן לעדכן דוח רק כאשר הסטאטוס של הדוח &quot;הוא &quot;טיוטה&quot; או &quot;נכשל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
