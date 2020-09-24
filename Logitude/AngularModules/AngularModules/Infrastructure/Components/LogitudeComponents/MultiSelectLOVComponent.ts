@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ContentChild } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ContentChild, AfterContentChecked } from '@angular/core';
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
 
@@ -12,7 +12,7 @@ import { UserList } from '../../../Common/EntityLists/UserList';
     templateUrl: 'MultiSelectLOVComponent.html',
 })
 
-export class MultiSelectLOVComponent implements OnInit {
+export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
 
     @Input()
     public IsDisabled: boolean
@@ -137,6 +137,9 @@ export class MultiSelectLOVComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+    ngAfterContentChecked() {
+        this._CD.detectChanges();
     }
     public Invalidate(): any {
 

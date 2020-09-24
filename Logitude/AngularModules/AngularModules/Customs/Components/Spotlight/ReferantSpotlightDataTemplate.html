@@ -19,6 +19,7 @@
                                                 (Ondblclick)="OnFocus()"
                                                 [ItemSource]="ReferantExceptionItemsSource"
                                                 (SelectedItemChanged)="OnRowSelected($event)"
+                                                [IsReadOnly]="IsDisplayOnly"
                                                 [SelectedRow]="SelectedRow">
                                 <!-- ExceptionReasonsCode -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe"  [binding]="'ExceptionReasonsCode'" [width]="'130'" [Alignment]="'center'">

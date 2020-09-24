@@ -84,6 +84,7 @@ export class CustomsDocumentsComponent
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
     ParentEntityCode_args: string = "";
+
      //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -104,9 +105,7 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels = null;
     }
     Start(entityPM: any, objectTableName: string, _ParentEntityCode_args:string) {
- 
-
-        if (_ParentEntityCode_args != null) {
+         if (_ParentEntityCode_args != null) {
             this.ParentEntityCode_args = _ParentEntityCode_args;
         }
         this.EntityPM = entityPM;
@@ -122,10 +121,15 @@ export class CustomsDocumentsComponent
             this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response: any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response: any) => {
-                        if (this.ParentEntityCode_args == "DeclarationCancellation")
+                       var timeout = 0;
+                        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args))
+                        {
                             this.InsureCustomsDocumentsController(true);
+                            timeout = 50;
+                        }
                         else
                             this.InsureCustomsDocumentsController();
+
 
 
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
@@ -136,13 +140,18 @@ export class CustomsDocumentsComponent
                         //}
                         this.IsRelatedDocsVisible = this.iCustomsDocumentsController.IsRelatedDocumentsVisible();
                         this.DisplayOnlyCheck();
-                        this.InitiateComponent();
-                        this.Listen();
-                        this.BuildHeader = true;
-                        this.FilterSelectedValue = 'alltickets';
-                        this._ImageLibraryService = new ImageLibraryService();
-                        this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
-                        this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
+
+                        setTimeout(() => {
+                            this.InitiateComponent();
+                            this.Listen();
+                            this.BuildHeader = true;
+                            this.FilterSelectedValue = 'alltickets';
+                            this._ImageLibraryService = new ImageLibraryService();
+                            this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+                            this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
+                        }, timeout);
+
+                    
                     });
                 });
             });
@@ -210,6 +219,7 @@ export class CustomsDocumentsComponent
 
     }
     InitiateComponent(selectedDocId: string = null) {
+
         this.CurrentSession.StartBusyIndicatorLoading();
         this.CustomsDocumentsTickets = [];
         this.MetadataValues = [];
@@ -252,7 +262,7 @@ export class CustomsDocumentsComponent
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
-        if (!AppTool.IsNullOrEmpty( this.ParentEntityCode_args)) {
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
             this.CustomsDocumentsTicketViewModels = [];
             this.StaticCustomsDocumentsTicketViewModels = [];
 

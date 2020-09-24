@@ -103,11 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
-                if(customResponse.Response.Declaration!=null)
-                    {
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, null, true);
-
-                    }
+                  //  _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
 
                 }
                 else
@@ -460,7 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if(customResponse.Response.Error!= null)
+                    if (customResponse.Response.Error != null && (!new string[]{ "3","6"}.Contains( _MyDeclarationPM.AmendmentStatus)))
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
 

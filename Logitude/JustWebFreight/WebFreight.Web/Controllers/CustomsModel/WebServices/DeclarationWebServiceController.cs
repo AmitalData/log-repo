@@ -1869,6 +1869,37 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+
+
+        public HttpResponseMessage GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
+
+                //Get DeclarationCancellation Attachments
+                bool isAttachmentNumberIsMoreThenAllow = false;
+                List<CustomsDocumentPM> customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationId, ParentEntityCode = "DeclarationCancellation" }, tenant);
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+                {
+                    isAttachmentNumberIsMoreThenAllow = true;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, isAttachmentNumberIsMoreThenAllow);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParamsData)
         {
             try

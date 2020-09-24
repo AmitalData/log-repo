@@ -60,6 +60,7 @@ export class DeclarationReferantDataList {
 	CustomerCode: string;
 	ImporterFile: string;
 	AEOImporter: string;
+	FileOpenDate: Date;
 	
 }
  

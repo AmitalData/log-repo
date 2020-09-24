@@ -866,7 +866,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._DeclarationReferantDataPM.NewFile = true;
             }
             this._DeclarationReferantDataPM.ImporterFile = _AmitalCustomsFile.ImporterFile;
-            this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team); 
+            this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team);
+
+            this._DeclarationReferantDataPM.FileOpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.FileOpenDate, "AmitalCustomsFile.FileOpenDate");
 
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);

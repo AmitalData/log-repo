@@ -174,6 +174,8 @@ public partial class LogitudeCustomsFile
 
     private string teamField;
 
+    private string fileOpenDateField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -964,6 +966,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.teamField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FileOpenDate
+    {
+        get
+        {
+            return this.fileOpenDateField;
+        }
+        set
+        {
+            this.fileOpenDateField = value;
         }
     }
 }

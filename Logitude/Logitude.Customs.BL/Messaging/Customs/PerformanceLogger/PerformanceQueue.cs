@@ -44,7 +44,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
                
                
                 _MyQueuePerformanceM.Add(newQue);
-                if (DateTime.Now.Subtract(_LastTimeWriteCSV) > TimeSpan.FromMinutes(15))
+                if (DateTime.Now.Subtract(_LastTimeWriteCSV) > TimeSpan.FromMinutes(5))
                 {
                     _LastTimeWriteCSV = DateTime.Now;
                     WriteCSV();
@@ -65,8 +65,13 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
 
                 if (!string.IsNullOrWhiteSpace(PerformanceLoggerCSVPath))
                 {
+                    String lastDBResponseTime=string.Empty;
                     var res = _MyQueuePerformanceM.Select(r =>
                     {
+                        if (!String.IsNullOrWhiteSpace(r.DBResponseTime))
+                        {
+                            lastDBResponseTime = r.DBResponseTime;
+                        }
                         var line = new StringBuilder();
                         line
                         .Append(r.ServerName).Append("~")
@@ -74,15 +79,17 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
                         .Append(r.ThreadId).Append("~")
                         .Append(r.QueueDefinitionCode).Append("~")
                         .Append(r.InterfaceTypeCode).Append("~")
-                        .Append(r.RequestCreateDate).Append("~")
+                        //.Append(r.RequestCreateDate).Append("~")
                         .Append(r.RequestStartDate).Append("~")
                         .Append(r.RequestEndDate).Append("~")
+                        .Append(r.RequestDiff).Append("~")
                         .Append(r.QueueStartDate).Append("~")
                         .Append(r.QueueEndDate).Append("~")
+                        .Append(r.QueueDiff).Append("~")
                         .Append(r.ServerCPU).Append("~")
                         .Append(r.RequestSheetID).Append("~")
-                        .Append(r.DBResponseTime).Append("~")
-                        .Append(r.QueueReceiveDate).Append("~")
+                        .Append(lastDBResponseTime).Append("~")//.Append(r.DBResponseTime).Append("~")
+                        //.Append(r.QueueReceiveDate).Append("~")
                         .Append(r.QueueSuccessComplete).Append("~");
 
                         line.Replace('"', " "[0]);
@@ -104,15 +111,17 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
                        .Append("ThreadId").Append(",")
                        .Append("QueueDefinitionCode").Append(",")
                        .Append("InterfaceTypeCode").Append(",")
-                       .Append("RequestCreateDate").Append(",")
+                       //.Append("RequestCreateDate").Append(",")
                        .Append("RequestStartDate").Append(",")
                        .Append("RequestEndDate").Append(",")
+                       .Append("RequestDiff").Append(",")
                        .Append("QueueStartDate").Append(",")
                        .Append("QueueEndDate").Append(",")
+                       .Append("QueueDiff").Append(",")
                        .Append("ServerCPU").Append(",")
                        .Append("RequestSheetID").Append(",")
                        .Append("DBResponseTime").Append(",")
-                       .Append("QueueReceiveDate").Append(",")
+                       //.Append("QueueReceiveDate").Append(",")
                        .Append("QueueSuccessComplete").AppendLine();
 
 

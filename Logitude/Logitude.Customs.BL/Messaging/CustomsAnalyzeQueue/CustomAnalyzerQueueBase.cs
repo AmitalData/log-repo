@@ -147,7 +147,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
 
             _AnalyzeQueue.Status = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-            _AnalyzeQueue.ErrorMessage = _AnalyzeResultModel.ErrorMessage;
+            string mm = _AnalyzeResultModel.ErrorMessage ?? "";
+            mm = mm.Substring(0, 2000 - 1);
+            _AnalyzeQueue.ErrorMessage = mm;// _AnalyzeResultModel.ErrorMessage;
             analyzeQueueRepository.Update(_AnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }

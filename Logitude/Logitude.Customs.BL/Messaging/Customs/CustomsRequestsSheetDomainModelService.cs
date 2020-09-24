@@ -261,10 +261,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode) )
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
+                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId)
+
+                              &&
+                        // eitan: בקשת מכס אחת פר ישות בו זמנית -לא תתור במקביל 
+                        // itzik : CourierMaster מלבד בישות 
+                        // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
+                        "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name
+                            )
                         {
                             string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
                             var concurrentKiller = new ConcurrentKiller();

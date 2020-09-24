@@ -1068,11 +1068,14 @@
                                         <tr><td><div></div></td></tr>
                                     </table>
                                 </td>
+
                             </tr>
 
-
+                      
                             <!-- IsOtherActivity = 13 -->
                             <tr class="FormFieldRow" *ngIf="IsOtherActivity">
+                                
+
                                 <td colspan="12" style="width: 860px; height:200px">
                                     <table>
                                         <tr style="width: 860px; height: 30px">
@@ -1145,7 +1148,7 @@
                                     <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
                                 </td>
                                 <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'"[DataContext]="DataContext"> </LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
                                 </td>
 
                                 <td><div></div></td>
@@ -1154,8 +1157,46 @@
                     </td>
                 </tr>
                 <tr> <td><div></div></td> </tr>
+
+                <!--<tr class="FormFieldRow">
+                    <td colspan="2" style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td style="width:57px;">
+                                    <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
+
+                                </td>
+                                <td style="width:400px">
+                                    <div></div>
+                                </td>
+                                <td style="margin-left:5px">
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="10">
+                    </td>
+                </tr>-->
             </table>
         </div>
+        <div class="class-footer-content">
+            <table style="height: 22px; width:100%;" >
+                <tr>
+                    <td style="width:100%">
+                        <button class="Button" (click)="ViewDocumentsComponent()" style="width: 102px; margin-left: 60px;float: left;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
 
+                    </td>
+                    <td style="width:400px">
+                        <div></div>
+                    </td>
+                    <td style="margin-left:5px">
+                    </td>
+
+
+                </tr>
+            </table>
+        </div> 
     </custom-message-wrapper>
 </div>

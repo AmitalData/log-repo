@@ -132,27 +132,76 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
 
-        this._declarationPMService.update(this.EntityPM).subscribe(x => {
-       
 
-            if (customSendOptionsArgs.TestCase) {
 
-                let windowArgs = { "SincroScreen": "SincroSendDeclarationCancellation" };
+        this._DeclarationWebService.GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            this.ValidationErrorsList = [];
 
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 600;
-                logWindow.Height = 400;
-                logWindow.Title = "תרחשי הצהרה";
-                logWindow.ShowCloseButton = false;
-                logWindow.WindowArgs = windowArgs;
+            if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == false) {
+                //  SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrorsList.push("חובה לצרף מסמך אחד לפחות. ");
+            }
+                    this.FillErrors();
+                    if (this.ValidationErrorsList.length > 0) {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
 
-                logWindow.ComponentLoaded.subscribe(comp => {
-                    logWindow.WindowClosed.subscribe(res => {
-                        if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
-                            currRequestParams.TestCase = new TestCase();
-                            currRequestParams.TestCase.Code = comp._ScenarioCode;
-                            currRequestParams.TestCase.Param1 = comp.Param1;
-                            currRequestParams.TestCase.Param2 = comp.Param2;
+                        return;
+                    }
+                    this._declarationPMService.update(this.EntityPM).subscribe(x => {
+
+
+                        if (customSendOptionsArgs.TestCase) {
+
+                            let windowArgs = { "SincroScreen": "SincroSendDeclarationCancellation" };
+
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 600;
+                            logWindow.Height = 400;
+                            logWindow.Title = "תרחשי הצהרה";
+                            logWindow.ShowCloseButton = false;
+                            logWindow.WindowArgs = windowArgs;
+
+                            logWindow.ComponentLoaded.subscribe(comp => {
+                                logWindow.WindowClosed.subscribe(res => {
+                                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                                        currRequestParams.TestCase = new TestCase();
+                                        currRequestParams.TestCase.Code = comp._ScenarioCode;
+                                        currRequestParams.TestCase.Param1 = comp.Param1;
+                                        currRequestParams.TestCase.Param2 = comp.Param2;
+
+                                        CustomMessageProgressComponent
+                                            .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
+                                            .then((res) => {
+                                                //this.ResponseData = res;
+                                                //this.IsResponseMessageVisibility = true;
+                                                //this.OnMassageDisplayMethod();
+                                                //this.InitScreen(this.CargoSealIdentifierId);
+
+                                            }
+                                            ).catch((err) => {
+                                                //this.IsResponseMessageVisibility = true;
+                                                //this.ResponseMessage = err;
+                                                this.ValidationErrorsList.push(err);
+                                            });
+                                        this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
+                                            .subscribe((myServiceResponse: ServiceResponse) => {
+                                                this.InitScreen();
+
+                                            });
+
+                                    }
+                                });
+                            });
+
+                            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+                            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+
+                            return;
+                        }
+                        else {
+
+
 
                             CustomMessageProgressComponent
                                 .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
@@ -170,66 +219,34 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                                 });
                             this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                                 .subscribe((myServiceResponse: ServiceResponse) => {
-                                    this.InitScreen();
+                                    if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException != true) {
+                                        var messageWindow = new MessageWindow();
+                                        messageWindow.Width = 400;
+                                        messageWindow.Height = 200;
+                                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                        messageWindow.Show("בקשת ביטול נשלחה בהצלחה.");
+
+                                    }
+                                    SessionLocator.SelectedSession.CloseCurrentWindow();
+
 
                                 });
-
                         }
+
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     });
-                });
-
-                logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
-                ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                SessionLocator.SelectedSession.StopBusyIndicator();
-
-                return;
-            }
-            else {
-
-
-        this.FillErrors();
-                if (this.ValidationErrorsList.length > 0) {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-
-            return;
-        }
-                CustomMessageProgressComponent
-                    .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
-                    .then((res) => {
-                        //this.ResponseData = res;
-                        //this.IsResponseMessageVisibility = true;
-                        //this.OnMassageDisplayMethod();
-                        //this.InitScreen(this.CargoSealIdentifierId);
-
-                    }
-                    ).catch((err) => {
-                        //this.IsResponseMessageVisibility = true;
-                        //this.ResponseMessage = err;
-                        this.ValidationErrorsList.push(err);
-                    });
-                this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
-                    .subscribe((myServiceResponse: ServiceResponse) => {
-                        if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException!=true) {
-                          var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 200;
-                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                            messageWindow.Show("בקשת ביטול נשלחה בהצלחה.");
-
-                        }
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
-
-                      
-                    });
-            }
-       
-            SessionLocator.SelectedSession.StopBusyIndicator();
-        });
+               
+              
+            });
+         
+      
     }
 
     FillErrors() {
         var errors: string[] = [];
-        this.ValidationErrorsList = errors;
+       // this.ValidationErrorsList = errors;
+
+
 
         if (AppTool.IsNullOrEmpty(this.CancelRequestReasonCode)) {
             var msg = "קוד סיבת ביטול שדה חובה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
@@ -240,6 +257,8 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             var msg = "לא ניתן לבטל ביטול הצהרה להצהרה שלא נמצאת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
             this.ValidationErrorsList.push(msg);
         }
+
+
     }
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {

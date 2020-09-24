@@ -194,6 +194,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FileOpenDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

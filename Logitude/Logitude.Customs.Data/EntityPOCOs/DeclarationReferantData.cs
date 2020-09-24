@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual ReferantTeam ReferantTeam { get; set; }
         [Column("ImporterFile")]
 	    public string ImporterFile { get; set; }
+        [Column("FileOpenDate")]
+	    public DateTime? FileOpenDate { get; set; }
     }
 }
 	 

@@ -1162,6 +1162,22 @@ export class DeclarationWebService {
         });
     }
 
+    GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(declarationId: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow/?' + '&declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                var pm = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     // ---------------------------------------- MAPING --------------------------------------------------
     MapJsonToEntity(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationErrorView = null) {
 
