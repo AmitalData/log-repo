@@ -73,34 +73,34 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ReferentUserId = d.ReferentUserId,
                                                                  DepartmentId = d.DepartmentId,
                                                                  AvailabilityDate = d.AvailabilityDate,
- 
+
                                                                  NewFile = a.NewFile,
                                                                  Favorite = a.Favorite,
-                                                                  IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
+                                                                 IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
-                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName, 
+                                                                 ControllerUserName = a.ControllerUser.Contact.LocalName,
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 StorageSiteCode=d.StorageSiteCode,
-                                                                 HatraDate=d.HatraDate,
-                                                                 PaymentDate=d.PaymentDate,
-                                                                 TaxationDateTime=d.TaxationDateTime,
+                                                                 StorageSiteCode = d.StorageSiteCode,
+                                                                 HatraDate = d.HatraDate,
+                                                                 PaymentDate = d.PaymentDate,
+                                                                 TaxationDateTime = d.TaxationDateTime,
                                                                  CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
-                                                                 ImporterCode=d.ImporterCode,
-                                                                  ProcedureCurrentCode = d.ProcedureCurrentCode,
-                                                                 ImporterFile=a.ImporterFile,
-                                                                 AEOImporter=d.Importer.FacilitationTypeCode,
+                                                                 ImporterCode = d.ImporterCode,
+                                                                 ProcedureCurrentCode = d.ProcedureCurrentCode,
+                                                                 ImporterFile = a.ImporterFile,
+                                                                 AEOImporter = d.Importer.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
-                                                                 FileOpenDate=a.FileOpenDate,
+                                                                 FileOpenDate = a.FileOpenDate,
 
 
-                                                             }) ;
-                                                                
-                                              return query;
+                                                             });
+
+            return query;
 
         }
 

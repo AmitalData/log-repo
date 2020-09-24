@@ -14,13 +14,9 @@ import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefern
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
-
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonListService } from '../../Services/StandardLists/ExceptionReasonListService';
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
-
-import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -43,7 +39,7 @@ export class FieldTemplateComponent {
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService) {
+    constructor(private CD: ChangeDetectorRef) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -114,7 +110,7 @@ export class FieldTemplateComponent {
         return myFormats.DateString;
     }
     get ExceptionReasonText() {
-        var ToolTipValue: string = this.Entity.ExceptionReasonsList; 
+        var ToolTipValue: string = this.Entity.ExceptionReasonsList;
         var list = ToolTipValue.split(',').filter(Boolean);
         if (list.length > 1) {
             return list.toString();
@@ -174,31 +170,19 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 700;//400;
-        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
-
-            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response: any) => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-
-
-                        _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
-                            .subscribe((response: any) => {
-                                windowArgs.EntityPM = response.Result;
-                                windowArgs.length = response.Result.length;
-                                windowArgs.title = "  הערות מסווג  ";
-                                windowArgs.IsSivug = true;
-                                windowArgs.DeclarationId = this.Entity.DeclarationId;
-
-                                logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
-                                logitudeWindow.WindowArgs = windowArgs;
-                                logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
-                            });
-                    });
+            _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                .subscribe((response: any) => {
+                    windowArgs.EntityPM = response.Result;
+                    windowArgs.length = response.Result.length;
+                    windowArgs.title = "  הערות מסווג  ";
+                    logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
+                    logitudeWindow.WindowArgs = windowArgs;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
-            });
         }
     }
     OpenControllerRemarks() {
@@ -216,9 +200,6 @@ export class FieldTemplateComponent {
                     windowArgs.title = "  הערות מבקר  ";
                     let counter = response.Result.length;
                     logitudeWindow.Title = counter + "  הערות מבקר  ";
-                    windowArgs.IsSivug = false;
-                    windowArgs.DeclarationId = this.Entity.DeclarationId;
-
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
@@ -233,7 +214,7 @@ export class FieldTemplateComponent {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
-            confirmWindow.Show("הםם םתה בטוח שברצונך למחוק םת שורת המפתח?");
+            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את שורת המפתח?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
@@ -587,7 +568,7 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    this.OnBackFromEdit(this.Entity.DeclarationId, event)
                 });
             });
     }
