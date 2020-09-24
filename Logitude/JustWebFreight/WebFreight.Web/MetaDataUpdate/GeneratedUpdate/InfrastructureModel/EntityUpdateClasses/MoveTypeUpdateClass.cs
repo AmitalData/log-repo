@@ -844,12 +844,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen MoveTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MoveType.HeaderScreen", Name = "Header Screen", ObjectTableId = MoveTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.MoveTypeEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField MoveTypeMoveTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MoveTypeMoveTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.MoveTypeEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MoveTypeMoveTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    MoveTypeObjectTable.HeaderScreenId = MoveTypeHeaderScreenScreen0.Id;
 		    MoveTypeObjectTable.HeaderScreenCode = MoveTypeHeaderScreenScreen0.Code;
 

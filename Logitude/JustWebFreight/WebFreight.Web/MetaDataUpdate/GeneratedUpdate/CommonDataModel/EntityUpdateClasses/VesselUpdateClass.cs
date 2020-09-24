@@ -968,12 +968,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VesselHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vessel.HeaderScreen", Name = "Header Screen", ObjectTableId = VesselObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    VesselObjectTable.HeaderScreenId = VesselHeaderScreenScreen0.Id;
 		    VesselObjectTable.HeaderScreenCode = VesselHeaderScreenScreen0.Code;
 

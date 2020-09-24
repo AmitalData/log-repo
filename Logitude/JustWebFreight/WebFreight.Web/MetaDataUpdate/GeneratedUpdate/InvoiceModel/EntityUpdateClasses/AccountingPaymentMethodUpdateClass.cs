@@ -822,10 +822,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen AccountingPaymentMethodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPaymentMethod.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingPaymentMethodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPaymentMethodHeaderScreenScreen0.Id,ScreenCode = AccountingPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPaymentMethodHeaderScreenScreen0.Id,ScreenCode = AccountingPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPaymentMethodHeaderScreenScreen0.Id,ScreenCode = AccountingPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPaymentMethodHeaderScreenScreen0.Id,ScreenCode = AccountingPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AccountingPaymentMethodObjectTable.HeaderScreenId = AccountingPaymentMethodHeaderScreenScreen0.Id;
 		    AccountingPaymentMethodObjectTable.HeaderScreenCode = AccountingPaymentMethodHeaderScreenScreen0.Code;
 
@@ -834,16 +834,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen AccountingPaymentMethodGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPaymentMethod.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AccountingPaymentMethodObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.IsAR", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.IsAP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.IsAR", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPaymentMethodAccountingPaymentMethodGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = AccountingPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPaymentMethod.IsAP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

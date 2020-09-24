@@ -2694,14 +2694,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AirlineStatisticsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineStatistics.HeaderScreen", Name = "Header Screen", ObjectTableId = AirlineStatisticsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.SourceTenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.SourceTenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AirlineStatisticsObjectTable.HeaderScreenId = AirlineStatisticsHeaderScreenScreen0.Id;
 		    AirlineStatisticsObjectTable.HeaderScreenCode = AirlineStatisticsHeaderScreenScreen0.Code;
 
@@ -2710,26 +2710,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AirlineStatisticsGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineStatistics.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AirlineStatisticsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.MessageType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.LastSentDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.OriginCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.DestinationCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ShipperName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ConsigneeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.GrossWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ChargeableWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.NumberOfPackages", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.MessageType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.LastSentDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.OriginCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.DestinationCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ShipperName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ConsigneeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.GrossWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ChargeableWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.NumberOfPackages", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

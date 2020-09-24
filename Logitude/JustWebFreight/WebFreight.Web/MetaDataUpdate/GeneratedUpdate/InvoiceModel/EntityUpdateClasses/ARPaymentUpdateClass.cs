@@ -6056,14 +6056,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen ARPaymentHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPayment.FullACCHeaderScreen", Name = "HeaderScreen", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARPaymentHeaderScreenScreen0.Id,ScreenCode = ARPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "ARPayment.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ARPaymentObjectTable.HeaderScreenId = ARPaymentHeaderScreenScreen0.Id;
 		    ARPaymentObjectTable.HeaderScreenCode = ARPaymentHeaderScreenScreen0.Code;
 
@@ -6072,26 +6072,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen ARPaymentGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPayment.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ARPaymentARPaymentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.BankAccountLiteId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ARPaymentARPaymentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ARPaymentGeneralTabScreenScreen1.Id,ScreenCode = ARPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "ARPayment.BankAccountLiteId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen ARPaymentHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPayment.HeaderScreen", Name = "Header Screen", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ARPaymentARPaymentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARPaymentARPaymentHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.SATTransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ARPaymentARPaymentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARPaymentARPaymentHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = ARPaymentHeaderScreenScreen2.Id,ScreenCode = ARPaymentHeaderScreenScreen2.Code, ObjectFieldCode = "ARPayment.SATTransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ARPaymentObjectTable.HeaderScreenId = ARPaymentHeaderScreenScreen2.Id;
 		    ARPaymentObjectTable.HeaderScreenCode = ARPaymentHeaderScreenScreen2.Code;
 

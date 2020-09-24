@@ -586,12 +586,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen ExternalSystemsTablesCodeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExternalSystemsTablesCode.HeaderScreen", Name = "Header Screen", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ExternalSystemsTablesCodeObjectTable.HeaderScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id;
 		    ExternalSystemsTablesCodeObjectTable.HeaderScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code;
 
@@ -600,16 +600,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen ExternalSystemsTablesCodeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExternalSystemsTablesCode.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.LogitudeTable", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.UpdatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.LogitudeTable", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.UpdatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

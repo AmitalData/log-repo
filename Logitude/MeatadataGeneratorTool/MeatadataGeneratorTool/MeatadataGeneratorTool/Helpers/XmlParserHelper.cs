@@ -1062,6 +1062,14 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoDefaultFeatures = false;
                 }
+                if (entity.Attributes["IsBusinessUnitEnabled"] != null)
+                {
+                    objectTable.IsBusinessUnitEnabled = GetAttributeBoolValue(entity.Attributes["IsBusinessUnitEnabled"]);
+                }
+                else
+                {
+                    objectTable.IsBusinessUnitEnabled = false;
+                }
 
 
                 if (entity.Attributes["HasCompactSearch"] != null)

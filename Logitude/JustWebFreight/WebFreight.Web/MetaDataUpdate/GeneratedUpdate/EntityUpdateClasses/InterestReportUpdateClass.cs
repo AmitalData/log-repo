@@ -79,9 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-
-		public const string HashString = "7b2593375c9175d4716487fd885a21b5";
-
+		public const string HashString = "77c4b2fe1b9f73b4babe87aaad3c63f8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2411,18 +2409,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen InterestReportInterestReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReport.HeaderScreen", Name = "InterestReportHeaderScreen", ObjectTableId = InterestReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestCalculationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestReportStatusLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ARInvoiceNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.CreatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.UpdatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestCalculationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestReportStatusLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ARInvoiceNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.CreatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.UpdatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    InterestReportObjectTable.HeaderScreenId = InterestReportInterestReportHeaderScreenScreen0.Id;
 		    InterestReportObjectTable.HeaderScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code;
 

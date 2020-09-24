@@ -1785,6 +1785,13 @@ namespace MeatadataGeneratorTool
             set { isTabsHidden = value; FirePropertyChanged("IsTabsHidden"); }
         }
 
+        bool isBusinessUnitEnabled;
+        public bool IsBusinessUnitEnabled
+        {
+            get { return isBusinessUnitEnabled; }
+            set { isBusinessUnitEnabled = value; FirePropertyChanged("IsBusinessUnitEnabled"); }
+        }
+
         ObjectFieldsViewModel selectedObjectField;
 
         public ObjectFieldsViewModel SelectedObjectField

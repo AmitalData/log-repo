@@ -453,10 +453,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxWithholdingAssessOffice.TaxWithholdingAssessOfficeHeaderScreen", Name = "TaxWithholdingAssessOfficeHeaderScreen", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id;
 		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code;
 
@@ -465,12 +465,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxWithholdingAssessOfficeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxWithholdingAssessOffice.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
