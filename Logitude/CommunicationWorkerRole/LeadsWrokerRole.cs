@@ -49,18 +49,6 @@ namespace CommunicationWorkerRole
             {
                 if (!General.IsUpdating())
                 {
-                    int demoTenant = 65;
-                    if (LogitudeSettings.DeploymentStage == "Dev")
-                    {
-                        demoTenant = 1;
-                    }
-                    else if (LogitudeSettings.DeploymentStage == "logboxwe1")
-                    {
-                        demoTenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                    }
-
-
-
 
                     int sleeptime = 120000;
                     LogitudeLeadRepository leadRepository = new LogitudeLeadRepository();
@@ -70,7 +58,11 @@ namespace CommunicationWorkerRole
                     {
                         try
                         {
+
+
                             int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
+
+                            int demoTenant = GetDemoTenant(lead);
 
                             ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);
 
@@ -622,6 +614,20 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private int GetDemoTenant(LogitudeLead lead)
+        {
+            int demoTenant = 65;
+            if (lead != null && (lead.Country == "United States of America" || lead.Country == "United States" || lead.Country == "USA" || lead.Country == "US"))
+            {
+                demoTenant = 2279;
+            }
+
+            if (LogitudeSettings.DeploymentStage == "Dev") demoTenant = 1;
+            else if (LogitudeSettings.DeploymentStage == "logboxwe1") demoTenant = LogitudeSettings.LogitudeCRMTenantNumber;
+
+            return demoTenant;
         }
 
         private void SendPasswordEmailToUser(int demoTenant, int crmTenant, User ownerUser, LogitudeLead lead, ObjectTable table, StringBuilder HtmlTemplate, UserPM createdUser)
