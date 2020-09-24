@@ -130,9 +130,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string MainHarmonize { get; set; }
     
-    public User SalesmanUser { get; set; }
+    public User Salesman { get; set; }
     
-    public User AccountManagerUser { get; set; }
+    public User AccountManager { get; set; }
     
     public SpecialServicesType SpecialServicesType { get; set; }
     

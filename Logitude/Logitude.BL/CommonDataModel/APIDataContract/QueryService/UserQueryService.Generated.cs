@@ -78,6 +78,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public User GetUserByEmail(string Email,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByEmail(Email,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("User with Email " + Email + " doesn't exist");
+
+				return UserDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public User UserDataMapping(UserPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -88,6 +107,7 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.ExternalCode = MyEntityPM.Code;
+				   temp.Code = MyEntityPM.Email;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Email,ComputingPartnerName,"User");  					
 				   return temp;
@@ -113,6 +133,10 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant);
 					} 
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant);
+					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
                         if(string.IsNullOrEmpty(ComputingPartnerName))
@@ -131,7 +155,7 @@ using Simplog.Data.CommonDataModel;
 					   					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("User with ExternalCode " + MyEntity.ExternalCode + " doesn't exist");
+					    throw new ApplicationException("User with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					
 					if(string.IsNullOrEmpty(temp.Id))
@@ -180,6 +204,14 @@ using Simplog.Data.CommonDataModel;
 
 						
 					}
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+					{							//throw new ApplicationException("Code Can't be update"); 
+							temp.Email = MyEntity.Code;
+
+										}  
+
+					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{							//throw new ApplicationException("PartnerCode Can't be update"); 
