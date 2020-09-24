@@ -1271,7 +1271,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant, ShipmentPM entityPM, bool isNewEntity)
         {
-            if (!entityPM.DontAddToImportersQueue && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (isNewEntity == true ? !entityPM.IsCancelled : true) && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            if (!entityPM.DontAddToImportersQueue
+                && IsLogBoxQueueEnabled(loggedTenant, entityPM)
+                && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive
+                && (isNewEntity == true ? !entityPM.IsCancelled : true)
+                && loggedTenant.IsCustomerTenantShare
+                && (entityPM.DirectionId.ToUpper() == "C"
+                || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM)
+                || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM))
+                )
             {
                 return true;
             }
@@ -1281,6 +1289,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private bool IsLogBoxQueueEnabled(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.CustomerShipmentNumber) && entityPM.CustomerTenantNumber != null)
+                return true;
+            else
+            {
+                CustomerRepository customerRepository = new CustomerRepository(tenant);
+                Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
+                if (customer != null && customer.LogBoxActivated)
+                    return true;
+            }
+
+            return false;
+        }
+        
         private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
             if (loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile == true)
