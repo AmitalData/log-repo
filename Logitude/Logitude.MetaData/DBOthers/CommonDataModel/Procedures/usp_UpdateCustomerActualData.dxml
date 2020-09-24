@@ -6,7 +6,7 @@
   Module="Common">
   <SqlScript>
     <![CDATA[
-alter PROCEDURE [dbo].[usp_UpdateCustomerActualData]
+create PROCEDURE [dbo].[usp_UpdateCustomerActualData]
 (
 @CustomerId_PARAM varchar(15) = null,
 @Tenant int
