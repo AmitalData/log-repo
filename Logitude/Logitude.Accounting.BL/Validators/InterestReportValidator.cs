@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIfPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(entityPM, showLocals);
 
             }
-            ValidateCanUpdaeReport(entityPM, showLocals);
+            //ValidateCanUpdaeReport(entityPM, showLocals);
             ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
             return null;
         }
