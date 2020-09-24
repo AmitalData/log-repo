@@ -98,18 +98,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual ChartOfAccount PreviousChartOfAccount { get; set; }
      
 	    public DateTime? PreviousChartOfAccountsChangeDate { get; set; }
-        [ForeignKey("CustomerGLAccount")]
         [Column("CustomerGLAccountId")]
 	    public string CustomerGLAccountId { get; set; }
-	      
-        public virtual GLAccount CustomerGLAccount { get; set; }
         [Column("RevaluationEnabled")]
 	    public bool? RevaluationEnabled { get; set; }
-        [ForeignKey("ParentAccount")]
         [Column("ParentAccountId")]
 	    public string ParentAccountId { get; set; }
-	      
-        public virtual GLAccount ParentAccount { get; set; }
         [ForeignKey("Category1")]
         [Column("Category1Id")]
 	    public string Category1Id { get; set; }
