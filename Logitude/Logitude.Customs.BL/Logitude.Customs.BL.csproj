@@ -1447,6 +1447,7 @@
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\ModificationAndDiscountTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />

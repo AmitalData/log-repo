@@ -86,6 +86,7 @@
     <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceUCRPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TransactionNatureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />
     <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />
     <Compile Include="EntityPMs\CityPM.cs" />
     <Compile Include="EntityPMs\ClaimsRelatedEntityPM.cs" />
