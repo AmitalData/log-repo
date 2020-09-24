@@ -382,7 +382,11 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var s = new ReverseEngineerControlAccountAccumulateChild( param.MyTenant);
                 s.CheckDbIntegrity(paramDefault.MyDate);
 
-                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
+
+                var myReverseEngineerCashBook = new ReverseEngineerCashBook(param.MyTenant);
+                myReverseEngineerCashBook.CheckDbIntegrity();
+                var union = s.CompareReport.GLAccountBalanceList.Union(myReverseEngineerCashBook.CompareReport.GLAccountBalanceList).ToList();
+                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(union);
                 ReloadGrid(SerializeObjectByte);
 
             }
