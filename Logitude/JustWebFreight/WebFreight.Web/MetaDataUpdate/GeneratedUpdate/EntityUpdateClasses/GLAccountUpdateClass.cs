@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "0c6a01132403d21717a26ce245e0256d";
+
+		public const string HashString = "904e8bcdada65834883e8963c5ba42b8";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7271,8 +7273,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SplitCurrencyAccount",
 					  						DefaultText =  "Split Currency Account",
+					  						FullLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
 					  						ListFieldLable =  "SplitCurrencyAccountListLable",
 					  						ListLableDefaultText =  "Split Currency Account",
+					  						ListLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7328,7 +7332,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentName",
-					  						DefaultText =  "Parent",
+					  						DefaultText =  "Main currency glaccount",
+					  						FullLocalDefaultText =  "כרטיס מטבע ראשי",
+					  						ListFieldLable =  "ParentNameListLable",
+					  						ListLableDefaultText =  "Main currency glaccount",
+					  						ListLocalDefaultText =  "כרטיס מטבע ראשי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
