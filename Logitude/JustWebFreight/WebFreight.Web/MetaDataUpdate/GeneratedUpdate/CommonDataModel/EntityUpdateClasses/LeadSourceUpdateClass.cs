@@ -453,8 +453,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen LeadSourceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LeadSource.HeaderScreen", Name = "Header Screen", ObjectTableId = LeadSourceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField LeadSourceLeadSourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceHeaderScreenScreen0.Id,ScreenCode = LeadSourceHeaderScreenScreen0.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField LeadSourceLeadSourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceHeaderScreenScreen0.Id,ScreenCode = LeadSourceHeaderScreenScreen0.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    LeadSourceObjectTable.HeaderScreenId = LeadSourceHeaderScreenScreen0.Id;
 		    LeadSourceObjectTable.HeaderScreenCode = LeadSourceHeaderScreenScreen0.Code;
 
@@ -463,10 +463,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen LeadSourceGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LeadSource.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LeadSourceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

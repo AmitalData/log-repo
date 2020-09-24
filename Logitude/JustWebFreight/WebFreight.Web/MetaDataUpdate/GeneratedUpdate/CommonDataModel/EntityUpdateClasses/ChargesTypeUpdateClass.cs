@@ -3567,12 +3567,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ChargesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesType.HeaderScreen", Name = "Header Screen", ObjectTableId = ChargesTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ChargesTypeChargesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChargesTypeChargesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChargesTypeChargesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ChargesTypeChargesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChargesTypeChargesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChargesTypeChargesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ChargesTypeObjectTable.HeaderScreenId = ChargesTypeHeaderScreenScreen0.Id;
 		    ChargesTypeObjectTable.HeaderScreenCode = ChargesTypeHeaderScreenScreen0.Code;
 

@@ -1522,26 +1522,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerTenantAccessHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccess.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerTenantAccessObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CustomCompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CompanyVat", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CompanyEmail", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactMobile", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.RequestDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CustomerTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.StockTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CustomCompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CompanyVat", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CompanyEmail", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.ContactMobile", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.RequestDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.CustomerTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerTenantAccess.StockTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CustomerTenantAccessObjectTable.HeaderScreenId = CustomerTenantAccessHeaderScreenScreen0.Id;
 		    CustomerTenantAccessObjectTable.HeaderScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code;
 

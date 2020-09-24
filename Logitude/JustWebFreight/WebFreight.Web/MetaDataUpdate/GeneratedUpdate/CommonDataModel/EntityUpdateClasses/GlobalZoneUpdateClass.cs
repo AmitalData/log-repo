@@ -543,22 +543,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen GlobalZoneGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GlobalZone.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = GlobalZoneObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen GlobalZoneHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GlobalZone.HeaderScreen", Name = "Header Screen", ObjectTableId = GlobalZoneObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    GlobalZoneObjectTable.HeaderScreenId = GlobalZoneHeaderScreenScreen1.Id;
 		    GlobalZoneObjectTable.HeaderScreenCode = GlobalZoneHeaderScreenScreen1.Code;
 

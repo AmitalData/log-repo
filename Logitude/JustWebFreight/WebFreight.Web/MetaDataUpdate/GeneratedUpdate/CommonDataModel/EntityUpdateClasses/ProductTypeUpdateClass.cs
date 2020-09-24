@@ -699,10 +699,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ProductTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ProductType.HeaderScreen", Name = "Header Screen", ObjectTableId = ProductTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ProductTypeProductTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ProductTypeHeaderScreenScreen0.Id,ScreenCode = ProductTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ProductType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ProductTypeProductTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ProductTypeHeaderScreenScreen0.Id,ScreenCode = ProductTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ProductType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ProductTypeProductTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ProductTypeHeaderScreenScreen0.Id,ScreenCode = ProductTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ProductType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ProductTypeProductTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ProductTypeHeaderScreenScreen0.Id,ScreenCode = ProductTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ProductType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ProductTypeObjectTable.HeaderScreenId = ProductTypeHeaderScreenScreen0.Id;
 		    ProductTypeObjectTable.HeaderScreenCode = ProductTypeHeaderScreenScreen0.Code;
 
@@ -711,16 +711,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ProductTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ProductType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ProductTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ProductTypeProductTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ProductTypeProductTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ProductTypeProductTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ProductTypeProductTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.QuotationDefaultTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ProductTypeProductTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.RoutingRQuoteDefaultTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ProductTypeProductTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ProductTypeProductTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ProductTypeProductTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ProductTypeProductTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.QuotationDefaultTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ProductTypeProductTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ProductTypeGeneralTabScreenScreen1.Id,ScreenCode = ProductTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ProductType.RoutingRQuoteDefaultTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

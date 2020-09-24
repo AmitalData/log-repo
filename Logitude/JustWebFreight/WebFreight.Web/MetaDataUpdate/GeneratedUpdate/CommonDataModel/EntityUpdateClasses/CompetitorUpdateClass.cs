@@ -1173,10 +1173,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CompetitorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Competitor.HeaderScreen", Name = "Header Screen", ObjectTableId = CompetitorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CompetitorCompetitorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CompetitorCompetitorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CompetitorObjectTable.HeaderScreenId = CompetitorHeaderScreenScreen0.Id;
 		    CompetitorObjectTable.HeaderScreenCode = CompetitorHeaderScreenScreen0.Code;
 
@@ -1185,30 +1185,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CompetitorGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Competitor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CompetitorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Strengths", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Opportunity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.ZipCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.City", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Weaknesses", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Threat", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Strengths", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Opportunity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.ZipCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.City", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Weaknesses", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CompetitorCompetitorGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Threat", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

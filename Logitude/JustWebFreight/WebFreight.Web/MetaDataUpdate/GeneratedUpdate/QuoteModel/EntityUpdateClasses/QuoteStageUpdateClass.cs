@@ -771,10 +771,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteStageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteStage.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteStageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    QuoteStageObjectTable.HeaderScreenId = QuoteStageHeaderScreenScreen0.Id;
 		    QuoteStageObjectTable.HeaderScreenCode = QuoteStageHeaderScreenScreen0.Code;
 

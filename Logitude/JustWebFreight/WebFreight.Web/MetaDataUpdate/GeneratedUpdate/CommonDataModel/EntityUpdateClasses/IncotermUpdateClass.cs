@@ -909,28 +909,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IncotermGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Incoterm.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IncotermObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IncotermIncotermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Freight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.OtherCharges", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField IncotermIncotermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.Freight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = "Incoterm.OtherCharges", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen IncotermHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Incoterm.HeaderScreen", Name = "Header Screen", ObjectTableId = IncotermObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IncotermIncotermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IncotermIncotermHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField IncotermIncotermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IncotermIncotermHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = "Incoterm.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    IncotermObjectTable.HeaderScreenId = IncotermHeaderScreenScreen1.Id;
 		    IncotermObjectTable.HeaderScreenCode = IncotermHeaderScreenScreen1.Code;
 

@@ -956,8 +956,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TeamTeamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Team.HeaderScreen", Name = "TeamHeaderScreen", ObjectTableId = TeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = "Team.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = "Team.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TeamObjectTable.HeaderScreenId = TeamTeamHeaderScreenScreen0.Id;
 		    TeamObjectTable.HeaderScreenCode = TeamTeamHeaderScreenScreen0.Code;
 

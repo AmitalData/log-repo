@@ -417,12 +417,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen DistributorGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Distributor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DistributorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DistributorDistributorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DistributorDistributorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DistributorDistributorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField DistributorDistributorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DistributorDistributorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DistributorDistributorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

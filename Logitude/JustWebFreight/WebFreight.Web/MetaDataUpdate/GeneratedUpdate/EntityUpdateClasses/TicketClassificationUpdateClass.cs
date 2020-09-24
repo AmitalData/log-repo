@@ -778,8 +778,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketClassificationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketClassification.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketClassificationObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketClassificationTicketClassificationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketClassificationHeaderScreenScreen0.Id,ScreenCode = TicketClassificationHeaderScreenScreen0.Code, ObjectFieldCode = "TicketClassification.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TicketClassificationTicketClassificationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketClassificationHeaderScreenScreen0.Id,ScreenCode = TicketClassificationHeaderScreenScreen0.Code, ObjectFieldCode = "TicketClassification.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TicketClassificationObjectTable.HeaderScreenId = TicketClassificationHeaderScreenScreen0.Id;
 		    TicketClassificationObjectTable.HeaderScreenCode = TicketClassificationHeaderScreenScreen0.Code;
 
