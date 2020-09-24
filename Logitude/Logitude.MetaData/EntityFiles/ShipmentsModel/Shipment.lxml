@@ -89446,7 +89446,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;SalesmanUser&quot;"
+        DCFieldName="&quot;Salesman&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;SalesmanUserId&quot;"
         IsKey="false"
@@ -89462,7 +89462,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;AccountManagerUser&quot;"
+        DCFieldName="&quot;AccountManager&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;AccountManagerUserId&quot;"
         IsKey="false"
@@ -90445,7 +90445,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;SalesmanUser&quot;"
+        DCFieldName="&quot;Salesman&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;SalesmanUserId&quot;"
         IsKey="false"
@@ -90461,7 +90461,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;AccountManagerUser&quot;"
+        DCFieldName="&quot;AccountManager&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;AccountManagerUserId&quot;"
         IsKey="false"
@@ -91947,7 +91947,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;SalesmanUser&quot;"
+        DCFieldName="&quot;Salesman&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;SalesmanUserId&quot;"
         IsKey="false"
@@ -91963,7 +91963,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;AccountManagerUser&quot;"
+        DCFieldName="&quot;AccountManager&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;AccountManagerUserId&quot;"
         IsKey="false"
