@@ -798,6 +798,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
         }
     }
     OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        if (!(this.entityPM.ChangeSetOp=="Update")) return;
         var newValue = this.ClassificationCode;
         this.valid = true;
         logCellTemplate.IsEditMode = false;
