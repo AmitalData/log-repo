@@ -434,7 +434,7 @@
                                                     GLAccountOpenTransactionsCount }}</td>
                                             </tr>
                                             <tr>
-                                                <td><a style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{
+                                                <td><a id="{{'DispalyTransactions' | IdGeneratorPipe}}" style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{
                                                         'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
                                                 <td style="font-size: 12px;">{{ 'GLAccounts.O.NextDueDate' |
                                                     TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate |
