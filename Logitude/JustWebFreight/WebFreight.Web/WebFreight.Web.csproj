@@ -3134,6 +3134,7 @@
     <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
     <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
+    <Content Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx" />
     <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxQueue.aspx" />
     <Content Include="Monitoring\DropBoxCommunicationLogs.aspx" />
@@ -5271,6 +5272,13 @@
     </Compile>
     <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.designer.cs">
       <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.cs">
+      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.designer.cs">
+      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\LogBoxShipmentQueue.aspx.cs">
       <DependentUpon>LogBoxShipmentQueue.aspx</DependentUpon>
