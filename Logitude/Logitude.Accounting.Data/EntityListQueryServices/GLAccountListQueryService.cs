@@ -132,6 +132,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         UpdatedByUserName =     a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
                                                         ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
                                                         AllowEditChequePayToName = a.AllowEditChequePayToName,
+
+                                                        ConsolidationVat = a.ConsolidationVat,
+                                                        IsEquipmentVendor = a.IsEquipmentVendor,
+                                                        CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                        CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
+                                                        ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                        ParentAccountNumber = a.ParentAccount.DisplayNumber,
+
+
+
                                                });
             return query;
         }

@@ -3000,14 +3000,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PaymentChequePaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentCheque.PaymentChequeHeaderScreen", Name = "PaymentChequeHeaderScreen", ObjectTableId = PaymentChequeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.ChequeNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.GLAccountName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.ChequeNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.GLAccountName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    PaymentChequeObjectTable.HeaderScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id;
 		    PaymentChequeObjectTable.HeaderScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code;
 

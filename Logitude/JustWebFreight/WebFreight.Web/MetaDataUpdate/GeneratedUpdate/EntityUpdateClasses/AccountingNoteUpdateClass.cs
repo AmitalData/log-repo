@@ -669,12 +669,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen AccountingNoteAccountingNoteHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingNote.HeaderScreen", Name = "AccountingNoteHeaderScreen", ObjectTableId = AccountingNoteObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.CreatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingNote.CreatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AccountingNoteObjectTable.HeaderScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id;
 		    AccountingNoteObjectTable.HeaderScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code;
 

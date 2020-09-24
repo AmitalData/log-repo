@@ -1102,12 +1102,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpenFormatReportOpenFormatReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.HeaderScreen", Name = "OpenFormatReportHeaderScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    OpenFormatReportObjectTable.HeaderScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id;
 		    OpenFormatReportObjectTable.HeaderScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code;
 
@@ -1116,10 +1116,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpenFormatReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
