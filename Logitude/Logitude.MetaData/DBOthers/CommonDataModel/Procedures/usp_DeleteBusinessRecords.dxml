@@ -24,6 +24,7 @@ delete from QuoteCharges where Tenant = @Tenant
 delete from QuoteDocumentVersions where Tenant = @Tenant
 delete from QuotePackages where Tenant = @Tenant
 delete from QuoteTotalVATs where Tenant = @Tenant
+delete from QuoteTemplateExcludedSections where Tenant = @Tenant
 delete from Quotes where Tenant = @Tenant
 
 delete from ShipmentCustomsTransmissions where Tenant = @Tenant
