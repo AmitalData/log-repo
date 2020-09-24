@@ -449,8 +449,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen RegionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.HeaderScreen", Name = "Header Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RegionHeaderScreenScreen0.Id,ScreenCode = RegionHeaderScreenScreen0.Code, ObjectFieldCode = "Region.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RegionHeaderScreenScreen0.Id,ScreenCode = RegionHeaderScreenScreen0.Code, ObjectFieldCode = "Region.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    RegionObjectTable.HeaderScreenId = RegionHeaderScreenScreen0.Id;
 		    RegionObjectTable.HeaderScreenCode = RegionHeaderScreenScreen0.Code;
 
@@ -459,12 +459,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen RegionGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = "Region.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

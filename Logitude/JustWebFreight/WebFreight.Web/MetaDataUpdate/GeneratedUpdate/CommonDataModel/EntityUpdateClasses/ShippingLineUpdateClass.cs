@@ -3291,34 +3291,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ShippingLineGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShippingLine.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShippingLineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 10, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.SCACCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.CBSA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.CAAT", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.ShippingAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.SCACCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.CBSA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.CAAT", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.ShippingAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = ShippingLineGeneralTabScreenScreen0.Id,ScreenCode = ShippingLineGeneralTabScreenScreen0.Code, ObjectFieldCode = "ShippingLine.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen ShippingLineHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShippingLine.HeaderScreen", Name = "Header Screen", ObjectTableId = ShippingLineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ShippingLineShippingLineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineHeaderScreenScreen1.Id,ScreenCode = ShippingLineHeaderScreenScreen1.Code, ObjectFieldCode = "ShippingLine.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineHeaderScreenScreen1.Id,ScreenCode = ShippingLineHeaderScreenScreen1.Code, ObjectFieldCode = "ShippingLine.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ShippingLineShippingLineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineHeaderScreenScreen1.Id,ScreenCode = ShippingLineHeaderScreenScreen1.Code, ObjectFieldCode = "ShippingLine.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineHeaderScreenScreen1.Id,ScreenCode = ShippingLineHeaderScreenScreen1.Code, ObjectFieldCode = "ShippingLine.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ShippingLineObjectTable.HeaderScreenId = ShippingLineHeaderScreenScreen1.Id;
 		    ShippingLineObjectTable.HeaderScreenCode = ShippingLineHeaderScreenScreen1.Code;
 
@@ -3327,36 +3327,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ShippingLineBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShippingLine.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = ShippingLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.OurCreditNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.OurCreditNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = ShippingLineBillingTabScreenScreen2.Id,ScreenCode = ShippingLineBillingTabScreenScreen2.Code, ObjectFieldCode = "ShippingLine.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen ShippingLineAccountingTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShippingLine.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = ShippingLineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShippingLineShippingLineAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineAccountingTabScreenScreen3.Id,ScreenCode = ShippingLineAccountingTabScreenScreen3.Code, ObjectFieldCode = "ShippingLine.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShippingLineShippingLineAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineAccountingTabScreenScreen3.Id,ScreenCode = ShippingLineAccountingTabScreenScreen3.Code, ObjectFieldCode = "ShippingLine.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ShippingLineShippingLineAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShippingLineAccountingTabScreenScreen3.Id,ScreenCode = ShippingLineAccountingTabScreenScreen3.Code, ObjectFieldCode = "ShippingLine.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShippingLineShippingLineAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShippingLineAccountingTabScreenScreen3.Id,ScreenCode = ShippingLineAccountingTabScreenScreen3.Code, ObjectFieldCode = "ShippingLine.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

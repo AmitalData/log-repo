@@ -516,20 +516,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen CreditCardTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen CreditCardTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.HeaderScreen", Name = "Header Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CreditCardTypeObjectTable.HeaderScreenId = CreditCardTypeHeaderScreenScreen1.Id;
 		    CreditCardTypeObjectTable.HeaderScreenCode = CreditCardTypeHeaderScreenScreen1.Code;
 

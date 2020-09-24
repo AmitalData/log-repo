@@ -882,10 +882,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.HeaderScreen", Name = "Header Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = "Report.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = "Report.FilterControlName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = "Report.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = "Report.FilterControlName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ReportObjectTable.HeaderScreenId = ReportHeaderScreenScreen0.Id;
 		    ReportObjectTable.HeaderScreenCode = ReportHeaderScreenScreen0.Code;
 
@@ -894,16 +894,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.FilterControlName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.FilterControlName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

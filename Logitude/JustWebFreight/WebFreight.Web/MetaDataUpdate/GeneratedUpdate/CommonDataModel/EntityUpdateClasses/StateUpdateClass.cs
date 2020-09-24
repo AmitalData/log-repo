@@ -841,28 +841,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen StateGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "State.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = StateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField StateStateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField StateStateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = StateGeneralTabScreenScreen0.Id,ScreenCode = StateGeneralTabScreenScreen0.Code, ObjectFieldCode = "State.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen StateHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "State.HeaderScreen", Name = "Header Screen", ObjectTableId = StateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField StateStateHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField StateStateHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField StateStateHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField StateStateHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = StateHeaderScreenScreen1.Id,ScreenCode = StateHeaderScreenScreen1.Code, ObjectFieldCode = "State.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    StateObjectTable.HeaderScreenId = StateHeaderScreenScreen1.Id;
 		    StateObjectTable.HeaderScreenCode = StateHeaderScreenScreen1.Code;
 

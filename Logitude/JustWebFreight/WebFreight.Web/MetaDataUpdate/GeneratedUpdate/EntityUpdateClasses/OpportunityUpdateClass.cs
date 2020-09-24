@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityUpdateClass
    {  		
-		public const string HashString = "408ff0e19e3aa825c1cbb8b29795b9d3";
+		public const string HashString = "457e4509a9d64ba724a127abf7b23907";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Opportunity",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Opportunities",
-			      				    OldDBTableName =  "Opportunities",
 			      				    ObjectTableSingular =  "Opportunity",
 			      				    ObjectTablePlural =  "Opportunities",
 			      				    HasCustomFilter =  false,
@@ -147,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OwnerId",
-					  						OldFieldName =  "OwnerId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Subject",
-					  						OldFieldName =  "Subject",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -270,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -336,7 +332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadSourceId",
-					  						OldFieldName =  "LeadSourceId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "LeadSource",
@@ -398,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContactId",
-					  						OldFieldName =  "ContactId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -462,7 +456,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EstimatedClosingDate",
-					  						OldFieldName =  "EstimatedClosingDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -524,7 +517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StageId",
-					  						OldFieldName =  "StageId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Stage",
@@ -586,7 +578,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Probability",
-					  						OldFieldName =  "Probability",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -647,7 +638,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -709,7 +699,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -771,7 +760,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -833,7 +821,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -895,7 +882,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RatingCode",
-					  						OldFieldName =  "RatingCode",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Rating",
@@ -957,7 +943,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsClosed",
-					  						OldFieldName =  "IsClosed",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1018,7 +1003,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActualClosingDate",
-					  						OldFieldName =  "ActualClosingDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1079,7 +1063,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosingDescription",
-					  						OldFieldName =  "ClosingDescription",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1141,7 +1124,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1202,7 +1184,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1262,7 +1243,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OwnerName",
-					  						OldFieldName =  "OwnerName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1322,7 +1302,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StageName",
-					  						OldFieldName =  "StageName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1383,7 +1362,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RatingName",
-					  						OldFieldName =  "RatingName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1444,7 +1422,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosedToCompetitorId",
-					  						OldFieldName =  "ClosedToCompetitorId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1502,7 +1479,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MyOpenOpportunities",
-					  						OldFieldName =  "MyOpenOpportunities",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1560,7 +1536,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllOpenOpportunities",
-					  						OldFieldName =  "AllOpenOpportunities",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1618,7 +1593,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MyClosedOpportunities",
-					  						OldFieldName =  "MyClosedOpportunities",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1676,7 +1650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllClosedOpportunities",
-					  						OldFieldName =  "AllClosedOpportunities",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1734,7 +1707,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NumberOfShipments",
-					  						OldFieldName =  "NumberOfShipments",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1798,7 +1770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityProducts",
-					  						OldFieldName =  "OpportunityProducts",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1856,7 +1827,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ValueField",
-					  						OldFieldName =  "ValueField",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1919,7 +1889,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityCompetitors",
-					  						OldFieldName =  "OpportunityCompetitors",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1977,7 +1946,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastStageDate",
-					  						OldFieldName =  "LastStageDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2039,7 +2007,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastStageIdBeforeClosure",
-					  						OldFieldName =  "LastStageIdBeforeClosure",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Stage",
@@ -2101,7 +2068,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2162,7 +2128,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastCompletedActivityDate",
-					  						OldFieldName =  "LastCompletedActivityDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2224,7 +2189,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenByStageOpp",
-					  						OldFieldName =  "OpenByStageOpp",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2282,7 +2246,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadDescription",
-					  						OldFieldName =  "LeadDescription",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2343,7 +2306,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastCompletedActivityTypeCode",
-					  						OldFieldName =  "LastCompletedActivityTypeCode",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityType",
@@ -2406,7 +2368,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivitySubject",
-					  						OldFieldName =  "LastActivitySubject",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2467,7 +2428,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextActivityDate",
-					  						OldFieldName =  "NextActivityDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2530,7 +2490,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastCompletedActivityTypeName",
-					  						OldFieldName =  "LastCompletedActivityTypeName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2590,7 +2549,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IndustryName",
-					  						OldFieldName =  "IndustryName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2650,7 +2608,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextActivityTypeCode",
-					  						OldFieldName =  "NextActivityTypeCode",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityType",
@@ -2713,7 +2670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextActivitySubject",
-					  						OldFieldName =  "NextActivitySubject",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2774,7 +2730,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextActivityTypeName",
-					  						OldFieldName =  "NextActivityTypeName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2834,7 +2789,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2895,7 +2849,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StageDueDate",
-					  						OldFieldName =  "StageDueDate",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2957,7 +2910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessUnitId",
-					  						OldFieldName =  "BusinessUnitId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BusinessUnit",
@@ -3019,7 +2971,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessUnitName",
-					  						OldFieldName =  "BusinessUnitName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3079,7 +3030,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StageProbability",
-					  						OldFieldName =  "StageProbability",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3136,7 +3086,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RatingIndexOrder",
-					  						OldFieldName =  "RatingIndexOrder",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3193,7 +3142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadUserId",
-					  						OldFieldName =  "LeadUserId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -3252,7 +3200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadPartnerId",
-					  						OldFieldName =  "LeadPartnerId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3312,7 +3259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AgentId",
-					  						OldFieldName =  "AgentId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3373,7 +3319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignClientId",
-					  						OldFieldName =  "ForeignClientId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3434,7 +3379,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityAdditionalServices",
-					  						OldFieldName =  "OpportunityAdditionalServices",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -3492,7 +3436,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContactName",
-					  						OldFieldName =  "ContactName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3552,7 +3495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContactPhone",
-					  						OldFieldName =  "ContactPhone",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3613,7 +3555,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3670,7 +3611,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosingReasonId",
-					  						OldFieldName =  "ClosingReasonId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "OpportunityClosingReason",
@@ -3730,7 +3670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCancelled",
-					  						OldFieldName =  "IsCancelled",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3791,7 +3730,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CancelledOpportunities",
-					  						OldFieldName =  "CancelledOpportunities",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3849,7 +3787,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosingReasonName",
-					  						OldFieldName =  "ClosingReasonName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3909,7 +3846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadSourceName",
-					  						OldFieldName =  "LeadSourceName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3969,7 +3905,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContactEmail",
-					  						OldFieldName =  "ContactEmail",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4029,7 +3964,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityWatch",
-					  						OldFieldName =  "ActivityWatch",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4091,7 +4025,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityTypeId",
-					  						OldFieldName =  "OpportunityTypeId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "OpportunityType",
@@ -4151,7 +4084,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityTypeName",
-					  						OldFieldName =  "OpportunityTypeName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4211,7 +4143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LeadPartnerName",
-					  						OldFieldName =  "LeadPartnerName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4271,7 +4202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsClosedLost",
-					  						OldFieldName =  "IsClosedLost",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4328,7 +4258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRankCode",
-					  						OldFieldName =  "CustomerRankCode",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4385,7 +4314,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRankName",
-					  						OldFieldName =  "CustomerRankName",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4442,7 +4370,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PostToFollowersAsWon",
-					  						OldFieldName =  "PostToFollowersAsWon",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4499,7 +4426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosingReasonCode",
-					  						OldFieldName =  "ClosingReasonCode",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4556,7 +4482,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerExternalId",
-					  						OldFieldName =  "CustomerExternalId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4613,7 +4538,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCopy",
-					  						OldFieldName =  "IsCopy",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4670,7 +4594,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CopyFromEntityId",
-					  						OldFieldName =  "CopyFromEntityId",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4727,7 +4650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCustomerBlockedBusinessUnit",
-					  						OldFieldName =  "IsCustomerBlockedBusinessUnit",
 					  						ObjectTableName =  "Opportunity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5004,22 +4926,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpportunityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Opportunity.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityOpportunityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ValueField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.RatingName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField OpportunityOpportunityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ValueField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.RatingName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    OpportunityObjectTable.HeaderScreenId = OpportunityHeaderScreenScreen0.Id;
 		    OpportunityObjectTable.HeaderScreenCode = OpportunityHeaderScreenScreen0.Code;
 
@@ -5081,10 +5003,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OpportunityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Opportunity" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OpportunityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
-		   Feature OpportunityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
-		   Feature OpportunityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
-		   Feature OpportunityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.PackageFeature", NameTextCodeDefaultText = "Opportunity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable); 
+		   Feature OpportunityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
+		   Feature OpportunityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
+		   Feature OpportunityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable);
+		   Feature OpportunityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.PackageFeature", NameTextCodeDefaultText = "Opportunity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 

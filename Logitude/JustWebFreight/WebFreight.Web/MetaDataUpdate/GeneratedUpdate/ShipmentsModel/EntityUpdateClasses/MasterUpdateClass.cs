@@ -25302,62 +25302,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen MasterPreAlertScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.PreAlert", Name = "Pre Alert", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterPreAlertScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterPreAlertScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageCarrierNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterPreAlertScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageCarrierId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterPreAlertScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageETD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField MasterMasterPreAlertScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterPreAlertScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageCarrierNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterPreAlertScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageCarrierId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterPreAlertScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterPreAlertScreen0.Id,ScreenCode = MasterPreAlertScreen0.Code, ObjectFieldCode = "Master.MainCarriageETD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen MasterCustomerAddEditScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.CustomerAddEditScreen", Name = "Customer Add Edit Screen", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperReference1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperAddressId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperContactId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField MasterMasterCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperReference1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperAddressId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterCustomerAddEditScreenScreen1.Id,ScreenCode = MasterCustomerAddEditScreenScreen1.Code, ObjectFieldCode = "Master.ShipperContactId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen MasterNewMasterScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewMaster", Name = "New Master", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField MasterNewMasterScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterNewMasterScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentReference1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterNewMasterScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField MasterNewMasterScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterNewMasterScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentReference1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterNewMasterScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = MasterNewMasterScreen2.Id,ScreenCode = MasterNewMasterScreen2.Code, ObjectFieldCode = "Master.AgentReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen MasterHeaderScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.HeaderScreen", Name = "Header Screen", ObjectTableId = MasterObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MasterMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.ShipmentTypeViewField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.PPCC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.LongMaster", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.FlightDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.MainCarriageCarrierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.AgentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.IsOperationalClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MasterMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.IsAccountingClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField MasterMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.ShipmentTypeViewField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.PPCC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.LongMaster", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.FlightDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.MainCarriageCarrierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.AgentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.IsOperationalClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MasterMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = MasterHeaderScreenScreen3.Id,ScreenCode = MasterHeaderScreenScreen3.Code, ObjectFieldCode = "Master.IsAccountingClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    MasterObjectTable.HeaderScreenId = MasterHeaderScreenScreen3.Id;
 		    MasterObjectTable.HeaderScreenCode = MasterHeaderScreenScreen3.Code;
 

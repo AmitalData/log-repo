@@ -785,10 +785,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen FeatureToggleFeatureToggleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "FeatureToggle.HeaderScreen", Name = "FeatureToggleHeaderScreen", ObjectTableId = FeatureToggleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField FeatureToggleFeatureToggleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id,ScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code, ObjectFieldCode = "FeatureToggle.TenantNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField FeatureToggleFeatureToggleHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id,ScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code, ObjectFieldCode = "FeatureToggle.ToggleName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField FeatureToggleFeatureToggleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id,ScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code, ObjectFieldCode = "FeatureToggle.TenantNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField FeatureToggleFeatureToggleHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id,ScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code, ObjectFieldCode = "FeatureToggle.ToggleName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    FeatureToggleObjectTable.HeaderScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id;
 		    FeatureToggleObjectTable.HeaderScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code;
 
@@ -797,12 +797,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen FeatureToggleGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "FeatureToggle.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = FeatureToggleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField FeatureToggleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.ToggleCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField FeatureToggleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.TenantNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField FeatureToggleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField FeatureToggleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.ToggleCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField FeatureToggleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.TenantNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField FeatureToggleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = FeatureToggleGeneralTabScreenScreen1.Id,ScreenCode = FeatureToggleGeneralTabScreenScreen1.Code, ObjectFieldCode = "FeatureToggle.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

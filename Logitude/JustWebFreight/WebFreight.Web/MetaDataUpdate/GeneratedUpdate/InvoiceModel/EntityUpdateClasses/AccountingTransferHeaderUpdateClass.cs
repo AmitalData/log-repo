@@ -1055,16 +1055,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen AccountingTransferHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingTransfer.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingTransferHeaderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.FileName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.AccountingTransferTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.FileName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.AccountingTransferTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AccountingTransferHeaderObjectTable.HeaderScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id;
 		    AccountingTransferHeaderObjectTable.HeaderScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code;
 

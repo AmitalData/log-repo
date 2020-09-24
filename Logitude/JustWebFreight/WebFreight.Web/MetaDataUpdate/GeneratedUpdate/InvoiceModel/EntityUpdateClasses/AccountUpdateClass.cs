@@ -615,30 +615,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen AccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Account.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.AccountTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.ExternalAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AccountAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.AccountTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.ExternalAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountGeneralTabScreenScreen0.Id,ScreenCode = AccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "Account.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen AccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Account.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.AccountTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AccountAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.AccountTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountHeaderScreenScreen1.Id,ScreenCode = AccountHeaderScreenScreen1.Code, ObjectFieldCode = "Account.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AccountObjectTable.HeaderScreenId = AccountHeaderScreenScreen1.Id;
 		    AccountObjectTable.HeaderScreenCode = AccountHeaderScreenScreen1.Code;
 

@@ -5428,38 +5428,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AirlineGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Airline.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AirlineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AirlineAirlineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.ICAO", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Prefix", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.CheckDigit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.LimitedLength", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AirlineAirlineGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.ICAO", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.Prefix", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.CheckDigit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.LimitedLength", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AirlineGeneralTabScreenScreen0.Id,ScreenCode = AirlineGeneralTabScreenScreen0.Code, ObjectFieldCode = "Airline.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen AirlineHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Airline.HeaderScreen", Name = "Header Screen", ObjectTableId = AirlineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AirlineAirlineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AirlineAirlineHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = "Airline.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AirlineObjectTable.HeaderScreenId = AirlineHeaderScreenScreen1.Id;
 		    AirlineObjectTable.HeaderScreenCode = AirlineHeaderScreenScreen1.Code;
 
@@ -5468,36 +5468,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AirlineBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Airline.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = AirlineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AirlineAirlineBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.AWBAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AirlineAirlineBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.AWBAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.BankAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AirlineBillingTabScreenScreen2.Id,ScreenCode = AirlineBillingTabScreenScreen2.Code, ObjectFieldCode = "Airline.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen AirlineAccountingTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Airline.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = AirlineObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AirlineAirlineAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineAccountingTabScreenScreen3.Id,ScreenCode = AirlineAccountingTabScreenScreen3.Code, ObjectFieldCode = "Airline.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AirlineAirlineAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineAccountingTabScreenScreen3.Id,ScreenCode = AirlineAccountingTabScreenScreen3.Code, ObjectFieldCode = "Airline.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AirlineAirlineAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineAccountingTabScreenScreen3.Id,ScreenCode = AirlineAccountingTabScreenScreen3.Code, ObjectFieldCode = "Airline.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AirlineAirlineAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineAccountingTabScreenScreen3.Id,ScreenCode = AirlineAccountingTabScreenScreen3.Code, ObjectFieldCode = "Airline.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
