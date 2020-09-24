@@ -312,8 +312,12 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     var reverseEngineerControlAccountAccumulateChild = new ReverseEngineerControlAccountAccumulateChild(accountingIntegrityInParam.Tenant);
                     reverseEngineerControlAccountAccumulateChild.CheckDbIntegrity();
-                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(reverseEngineerControlAccountAccumulateChild.CompareReport.TotalOpenReconciliation);
+                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(reverseEngineerControlAccountAccumulateChild.CompareReport.GLAccountBalanceList);
 
+
+                    var ReverseEngineerCashBook = new ReverseEngineerCashBook(accountingIntegrityInParam.Tenant);
+                    ReverseEngineerCashBook.CheckDbIntegrity();
+                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerCashBook.CompareReport.GLAccountBalanceList);
 
                 }
                 catch (Exception ee)
