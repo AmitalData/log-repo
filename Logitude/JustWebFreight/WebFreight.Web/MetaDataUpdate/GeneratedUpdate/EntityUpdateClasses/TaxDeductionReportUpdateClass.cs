@@ -1164,10 +1164,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxDeductionReportTaxDeductionReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReport.HeaderScreen", Name = "TaxDeductionReportHeaderScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxDeductionReport.TaxYear", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxDeductionReport.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxDeductionReport.TaxYear", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxDeductionReport.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TaxDeductionReportObjectTable.HeaderScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id;
 		    TaxDeductionReportObjectTable.HeaderScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code;
 
