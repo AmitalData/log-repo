@@ -857,14 +857,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 	         Screen ErrorLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.HeaderScreen", Name = "Header Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.LogDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.Tier", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.LogDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.Tier", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ErrorLogObjectTable.HeaderScreenId = ErrorLogHeaderScreenScreen0.Id;
 		    ErrorLogObjectTable.HeaderScreenCode = ErrorLogHeaderScreenScreen0.Code;
 
@@ -873,10 +873,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 	         Screen ErrorLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.IP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.IP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

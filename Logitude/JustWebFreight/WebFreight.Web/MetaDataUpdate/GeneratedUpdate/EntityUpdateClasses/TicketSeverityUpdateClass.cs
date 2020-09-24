@@ -486,8 +486,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketSeverityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketSeverityTicketSeverityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityHeaderScreenScreen0.Id,ScreenCode = TicketSeverityHeaderScreenScreen0.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TicketSeverityTicketSeverityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityHeaderScreenScreen0.Id,ScreenCode = TicketSeverityHeaderScreenScreen0.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TicketSeverityObjectTable.HeaderScreenId = TicketSeverityHeaderScreenScreen0.Id;
 		    TicketSeverityObjectTable.HeaderScreenCode = TicketSeverityHeaderScreenScreen0.Code;
 
@@ -496,10 +496,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketSeverityGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

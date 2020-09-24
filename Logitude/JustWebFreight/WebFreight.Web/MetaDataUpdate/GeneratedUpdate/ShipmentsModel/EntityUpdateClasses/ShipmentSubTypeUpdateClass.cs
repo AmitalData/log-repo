@@ -915,12 +915,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentSubType.HeaderScreen", Name = "ShipmentSubTypeHeaderScreen", ObjectTableId = ShipmentSubTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentSubTypeShipmentSubTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ShipmentSubTypeObjectTable.HeaderScreenId = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Id;
 		    ShipmentSubTypeObjectTable.HeaderScreenCode = ShipmentSubTypeShipmentSubTypeHeaderScreenScreen0.Code;
 
@@ -929,14 +929,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen ShipmentSubTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentSubType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShipmentSubTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

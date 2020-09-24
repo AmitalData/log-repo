@@ -1857,26 +1857,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AddressMainAddressScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customers.Addresses.MainAddress", Name = "Main Address", ObjectTableId = AddressObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AddressCustomersAddressesMainAddressScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.CardEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.Address1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.Address2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.City", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.StateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.ZipCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.FaxNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AddressCustomersAddressesMainAddressScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.ATTN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AddressCustomersAddressesMainAddressScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.CardEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.Address1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.Address2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.City", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.StateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.ZipCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.FaxNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AddressCustomersAddressesMainAddressScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = "Address.ATTN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

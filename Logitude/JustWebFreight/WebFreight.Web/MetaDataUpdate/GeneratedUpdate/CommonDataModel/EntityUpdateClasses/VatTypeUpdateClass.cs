@@ -1285,30 +1285,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VatTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VatType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = VatTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.IsRegionalTax", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.IsRegionalTax", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = VatTypeGeneralTabScreenScreen0.Id,ScreenCode = VatTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "VatType.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen VatTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VatType.HeaderScreen", Name = "Header Screen", ObjectTableId = VatTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VatTypeVatTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField VatTypeVatTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField VatTypeVatTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField VatTypeVatTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VatTypeHeaderScreenScreen1.Id,ScreenCode = VatTypeHeaderScreenScreen1.Code, ObjectFieldCode = "VatType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    VatTypeObjectTable.HeaderScreenId = VatTypeHeaderScreenScreen1.Id;
 		    VatTypeObjectTable.HeaderScreenCode = VatTypeHeaderScreenScreen1.Code;
 

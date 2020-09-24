@@ -1330,32 +1330,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen PaymentTermGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentTerm.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PaymentTermObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.CurrentMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.FromDateTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Days", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.CurrentMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.FromDateTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Days", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen PaymentTermHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentTerm.HeaderScreen", Name = "Header Screen", ObjectTableId = PaymentTermObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PaymentTermPaymentTermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentTermHeaderScreenScreen1.Id,ScreenCode = PaymentTermHeaderScreenScreen1.Code, ObjectFieldCode = "PaymentTerm.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PaymentTermPaymentTermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentTermHeaderScreenScreen1.Id,ScreenCode = PaymentTermHeaderScreenScreen1.Code, ObjectFieldCode = "PaymentTerm.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField PaymentTermPaymentTermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentTermHeaderScreenScreen1.Id,ScreenCode = PaymentTermHeaderScreenScreen1.Code, ObjectFieldCode = "PaymentTerm.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentTermHeaderScreenScreen1.Id,ScreenCode = PaymentTermHeaderScreenScreen1.Code, ObjectFieldCode = "PaymentTerm.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    PaymentTermObjectTable.HeaderScreenId = PaymentTermHeaderScreenScreen1.Id;
 		    PaymentTermObjectTable.HeaderScreenCode = PaymentTermHeaderScreenScreen1.Code;
 

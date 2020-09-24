@@ -1143,12 +1143,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen HelpResourceHelpResourceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HelpResource.HeaderScreen", Name = "HelpResourceHeaderScreen", ObjectTableId = HelpResourceObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField HelpResourceHelpResourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField HelpResourceHelpResourceHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.Language", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField HelpResourceHelpResourceHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.FileName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField HelpResourceHelpResourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField HelpResourceHelpResourceHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.Language", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField HelpResourceHelpResourceHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id,ScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code, ObjectFieldCode = "HelpResource.FileName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    HelpResourceObjectTable.HeaderScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id;
 		    HelpResourceObjectTable.HeaderScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code;
 

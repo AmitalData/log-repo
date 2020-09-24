@@ -617,20 +617,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen SprintGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.IsCompleted", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.IsCompleted", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen SprintSprintHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.HeaderScreen", Name = "SprintHeaderScreen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintSprintHeaderScreenScreen1.Id,ScreenCode = SprintSprintHeaderScreenScreen1.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintSprintHeaderScreenScreen1.Id,ScreenCode = SprintSprintHeaderScreenScreen1.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    SprintObjectTable.HeaderScreenId = SprintSprintHeaderScreenScreen1.Id;
 		    SprintObjectTable.HeaderScreenCode = SprintSprintHeaderScreenScreen1.Code;
 
