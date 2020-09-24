@@ -118,6 +118,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string OceanWeightRoundingCode { get; set; }
         public string InlandWeightRoundingCode { get; set; }
 
+        public int SearchWeight { get; set; }
+
         public DateTime? RecordDate { get; set; }
 
         
