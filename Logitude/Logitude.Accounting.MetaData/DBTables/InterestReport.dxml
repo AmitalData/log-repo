@@ -134,7 +134,7 @@
   </Column>
   <Column
     Name="InvoiceFailureReason"
-    Type="varchar"
+    Type="nvarchar"
     Size="1024">
     <Constraints
       Nullable="true" />

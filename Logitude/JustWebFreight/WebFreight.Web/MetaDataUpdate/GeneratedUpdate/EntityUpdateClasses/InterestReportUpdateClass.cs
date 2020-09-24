@@ -80,7 +80,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class InterestReportUpdateClass
    {  		
 
-		public const string HashString = "ac78576b8b3de3e46e5de752aaa62b86";
+
+		public const string HashString = "3ae560665e596eea07b5a577facc0413";
 
 
 
@@ -2009,7 +2010,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "InvoiceFailureReason",
 					  						ObjectTableName =  "InterestReport",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1024,
 					  						IsRequired =  false,
@@ -2881,9 +2882,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOConfirmRecalculateReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmRecalculateReport", DefaultText = "Confirm recalculating the report",LocalDefaultText = @"יש לאשר חישוב מחדש של הדוח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
-
-	    
 }
 
     
