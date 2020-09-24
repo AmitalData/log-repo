@@ -9970,13 +9970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GLAccountTextCode_GLAccountOMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Multi", DefaultText = "Multi",LocalDefaultText = @"רב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GLAccountTextCode_GLAccountOSmallCashbookAndReportingValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SmallCashbookAndReportingValidation", DefaultText = "It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document",LocalDefaultText = "לא ניתן להגדיר את אותו כרטיס גם כ''קופה קטנה'' וגם לדיווח כ ''תשומות מסמך אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+ 		 
 	    
 }
 
