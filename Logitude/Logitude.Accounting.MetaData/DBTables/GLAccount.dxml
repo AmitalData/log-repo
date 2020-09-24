@@ -427,16 +427,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CustomerGLAccountId"
-    ReferencedTable="GLAccounts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ParentAccountId"
-    ReferencedTable="GLAccounts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="Category1Id"
     ReferencedTable="Category1"
     ReferencedColumn="Id"

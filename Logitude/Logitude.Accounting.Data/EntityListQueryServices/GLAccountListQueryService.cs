@@ -135,10 +135,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                         ConsolidationVat = a.ConsolidationVat,
                                                         IsEquipmentVendor = a.IsEquipmentVendor,
-                                                        CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
-                                                        ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        ParentAccountNumber = a.ParentAccount.DisplayNumber,
+                                                        //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                        //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
+                                                        //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                        //ParentAccountNumber = a.ParentAccount.DisplayNumber,
 
 
 
