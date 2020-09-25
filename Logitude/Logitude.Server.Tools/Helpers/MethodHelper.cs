@@ -16,6 +16,16 @@ namespace Logitude.Server.Tools.Helpers
         {
             bool myResult = false;
 
+            if (myTransportModeId != null)
+            {
+                myTransportModeId = myTransportModeId.ToUpper();
+            }
+
+            if (myShipmentTypeId != null)
+            {
+                myShipmentTypeId = myShipmentTypeId.ToUpper();
+            }
+
             if (myTransportModeId == "A")
             {
                 myResult = true;
@@ -32,6 +42,32 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             return myResult;
+        }
+        public static bool IsFCLEntity(string myTransportModeId, string myShipmentTypeId)
+        {
+            bool output = false;
+
+            if (myTransportModeId != null)
+            {
+                myTransportModeId = myTransportModeId.ToUpper();
+            }
+
+            if (myShipmentTypeId != null)
+            {
+                myShipmentTypeId = myShipmentTypeId.ToUpper();
+            }
+
+            if (myTransportModeId == "O" && (myShipmentTypeId == "FCLD" || myShipmentTypeId == "MYGO"))
+            {
+                output = true;
+            }
+
+            if (myTransportModeId == "I" && (myShipmentTypeId == "FTL" || myShipmentTypeId == "MYGI"))
+            {
+                output = true;
+            }
+
+            return output;
         }
 
         public static double Roundd(double? value, int digits)

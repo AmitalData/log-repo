@@ -454,6 +454,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
             entityPoco.IsBondedWarehouse = entityPM.IsBondedWarehouse;
             entityPoco.IsBondedWarehouseChanged = entityPM.IsBondedWarehouseChanged;
+            entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
+            entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
+            entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)

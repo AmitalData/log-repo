@@ -1,11 +1,14 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.ShipmentsModel.Tools.Initializers
+namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
     public class ShipmentFieldsBehaviour : IServiceBehaviour
     {
@@ -20,6 +23,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 
         private void HandleBehaviour()
         {
+            if (string.IsNullOrEmpty(initializer.EntityPM.ShipmentTypeId) && initializer.EntityPM.TransportModeId == "A")
+            {
+                initializer.EntityPM.ShipmentTypeId = "Air";
+            }
+
+            initializer.EntityPM.House = MethodHelper.Trim(initializer.EntityPM.House);
+
             if (initializer.IsNewEntity)
             {
                 InitializeOnCreating();
@@ -50,12 +60,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 
             if (!initializer.EntityPM.IsHybrid)
             {
-                initializer.EntityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(initializer.Tenant);
+                initializer.EntityPM.CreateDateTime = initializer.TodayDateTime.Value;
             }
+
+            if (initializer.EntityPM.ShipmentLevelCode == "C")
+            {
+                initializer.EntityPM.ProrateReceivables = initializer.LoggedTenant.ProrateMasterReceivables;
+            }
+
+
         }
 
         private void InitializeOnUpdating()
         {
+            initializer.EntityPM.OldStatusValue = initializer.EntityPOCO.StatusId;
+
 
         }
     }
