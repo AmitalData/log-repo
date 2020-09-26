@@ -35,10 +35,24 @@ namespace Logitude.Accounting.Data.Repositories
                                              select a).FirstOrDefault();
             return interestReport;
         }
-        public InterestReport GetSingleByGraterInterestCalculationDate(string CustomerId, DateTime InterestCalculationDate, int tenant)
+        public InterestReport GetSingleByGraterInterestCalculationDate(string CustomerId, string SelectedReportId ,DateTime InterestCalculationDate, int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
-                                             where a.Tenant == tenant && a.CustomerId == CustomerId && a.InterestCalculationDate > InterestCalculationDate && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4")
+                                             where   a.Tenant == tenant 
+                                                  && a.CustomerId == CustomerId 
+                                                  && ( 
+                                                          (   
+                                                             a.InterestCalculationDate > InterestCalculationDate 
+                                                             && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4" || a.InterestReportStatusCode == "1")
+                                                          )
+                                                          ||
+                                                          (  
+                                                             a.InterestCalculationDate == InterestCalculationDate
+                                                             && (a.InterestReportStatusCode == "1")
+                                                          )
+                                                     )
+                                                   && a.Id != SelectedReportId
+
                                              select a).FirstOrDefault();
             return interestReport;
         }
