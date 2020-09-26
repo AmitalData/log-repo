@@ -921,7 +921,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      "[PickupEstimationDate] DATETIME NULL," +
                      "[FromWarehouseDate] DATETIME NULL," +
                      "[FromWarehouseEstimationDate] DATETIME NULL," +
-                     "[FromWarehouseNotes] NVARCHAR(32) NULL," +
+                     "[FromWarehouseNotes] NVARCHAR(500) NULL," +
                      "[DepartureDone] BIT DEFAULT(0) NULL," +
                      "[DepartureDate] DATETIME NULL," +
                      "[DepartureEstimationDate] DATETIME NULL," +

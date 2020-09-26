@@ -199,7 +199,7 @@
   <Column
     Name="FromWarehouseNotes"
     Type="nvarchar"
-    Size="32">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
@@ -367,10 +367,10 @@
     ReferencedTable="CargoTrackingMilestones"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,IsMainRecord,EntityId" />
+  <Index
+    Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
-  <Index
-  Columns="Tenant,IsMainRecord,EntityId" />
-  <Index
-  Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />
 </Table>
