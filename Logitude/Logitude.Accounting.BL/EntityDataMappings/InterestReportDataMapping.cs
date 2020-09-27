@@ -143,7 +143,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             entityPM.CanRecalculate = false;
             InterestReportRepository interestReportRepository = new InterestReportRepository(entityPOCO.Tenant);
-            InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPOCO.CustomerId, entityPOCO.InterestCalculationDate, entityPOCO.Tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPOCO.CustomerId, entityPOCO.Id, entityPOCO.InterestCalculationDate, entityPOCO.Tenant);
             if (interestReport==null && (entityPM.InterestReportStatusCode =="1" || entityPM.InterestReportStatusCode == "6"))
             {
                 entityPM.CanRecalculate = true;
