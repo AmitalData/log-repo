@@ -46,6 +46,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
 
                     }).FirstOrDefault();
         }
@@ -69,6 +71,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
                     });
         }
 
@@ -90,6 +94,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
                     }).FirstOrDefault();
         }
 
@@ -111,6 +117,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
                     });
         }
 
@@ -131,6 +139,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   PivotFieldCode = a.PivotFieldCode,
                                                   AdditionalFactCode = a.AdditionalFactCode,
                                                   AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                                                  RecordType = a.RecordType,
+                                                  ParentFactCode = a.ParentFactCode,
                                               };
 
             return result;

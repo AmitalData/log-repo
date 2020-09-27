@@ -18,8 +18,6 @@ namespace Logitude.BL.Helpers
         private int tenant;
         private bool groupedByCategory = false;
 
-
-
         public DWObjectFieldAdditionalFactService(DWObjectFieldAdditionalFactArgs dWObjectFieldAdditionalFactArgs)
         {
 
@@ -34,15 +32,16 @@ namespace Logitude.BL.Helpers
 
         }
 
-    
 
         public void LoadDWObjectFieldsWithAdditionalFactFields()
         {
-            var factDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, factTableCode) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableCode).Where(d => d.DisplayInQueryBuilder == true).ToList();
+            string factCode = !string.IsNullOrEmpty(DwObjectTable.ParentFactCode) ? DwObjectTable.ParentFactCode : factTableCode;
+
+            var factDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, factCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableCode).Where(d => d.DisplayInQueryBuilder == true && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType == DwObjectTable.RecordType))).ToList();
             DWObjectFieldPMs = new List<DWObjectFieldPM>();
             if (IsHaveAddAdditionalFactFields)
             {
-                var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).ToList(); ;
+                var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode , DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).Where(d=> string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType == DwObjectTable.RecordType)).ToList();
                 foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => d.IsMeasurement == false && (d.DisplayInQueryBuilder || d.IsCustom)))
                 {
                     var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? factDWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode).FirstOrDefault() : null;

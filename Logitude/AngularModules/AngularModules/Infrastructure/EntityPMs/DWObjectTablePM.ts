@@ -85,6 +85,16 @@ export class DWObjectTablePM {
     public set AdditionalFactForeignKey(newValue: string) { if (this.additionalFactForeignKey != newValue) { this.additionalFactForeignKey = newValue; this.MarkAsDirty("AdditionalFactForeignKey"); } }
        
 	 
+    private parentFactCode: string;
+    public get ParentFactCode() { return this.parentFactCode; }
+    public set ParentFactCode(newValue: string) { if (this.parentFactCode != newValue) { this.parentFactCode = newValue; this.MarkAsDirty("ParentFactCode"); } }
+       
+	 
+    private recordType: string;
+    public get RecordType() { return this.recordType; }
+    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

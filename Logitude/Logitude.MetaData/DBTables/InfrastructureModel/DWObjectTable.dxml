@@ -87,4 +87,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RecordType"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentFactCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
