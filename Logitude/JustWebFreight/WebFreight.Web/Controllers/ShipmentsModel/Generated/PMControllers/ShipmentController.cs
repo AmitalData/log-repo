@@ -820,7 +820,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         }
 
         [HttpGet]
-        public HttpResponseMessage CheckIsBondedShipmentById(string shipmentId)
+        public HttpResponseMessage CheckIsCFSShipmentById(string shipmentId)
         {
             try
             {
@@ -829,7 +829,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                bool isBonded = shipmentQuery.CheckIsBondedShipmentById(shipmentId, tenant);
+                bool isBonded = shipmentQuery.CheckIsCFSShipmentById(shipmentId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, isBonded);
             }
