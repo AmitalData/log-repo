@@ -26,30 +26,19 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                       {
 
                                                           Id = a.Id,
-
                                                           Tenant = a.Tenant,
-
                                                           CreateDate = a.CreateDate,
-
                                                           TicketId = a.TicketId,
-
                                                           LineNumber = a.LineNumber,
-
                                                           EscalationFor = a.EscalationFor,
-
                                                           Recepients = a.Recepients,
-
                                                           IsClose = a.IsClose,
-
                                                           IsSLAViolated = a.IsSLAViolated,
-
                                                           DueDate = a.DueDate,
-
                                                           CloseDate = a.CloseDate,
-
                                                           EscalationForName = a.EscalationFor == "FR" ? "First Response" : "Resolve Within",
-
                                                           UpdateDate = a.UpdateDate,
+                                                          SearchFields = a.SearchFields,
                                                       });
             return query;
         }
@@ -72,32 +61,19 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                     select new TicketEscalationList()
                                                     {
                                                         Id = a.Id,
-
                                                         Tenant = a.Tenant,
-
                                                         CreateDate = a.CreateDate,
-
                                                         TicketId = a.TicketId,
-
                                                         LineNumber = a.LineNumber,
-
                                                         EscalationFor = a.EscalationFor,
-
                                                         Recepients = a.Recepients,
-
                                                         IsClose = a.IsClose,
-
                                                         IsSLAViolated = a.IsSLAViolated,
-
                                                         DueDate = a.DueDate,
-
                                                         CloseDate = a.CloseDate,
-
                                                         EscalationForName = a.EscalationFor == "FR" ? "First Response" : "Resolve Within",
-
                                                         UpdateDate = a.UpdateDate,
-
-                                                       
+                                                        SearchFields = a.SearchFields,
                                                     });
             return query.ToList();
         }
