@@ -82,6 +82,19 @@ export class ShipmentPMService {
         */
     }
 
+    checkIsBondedShipmentById(shipmentId: string) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/CheckIsBondedShipmentById?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var isBonded = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = isBonded;
+                return pmresponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     getSingleByForwarderShipmentNumber(ForwarderShipmentNumber: string) {
 
         var callTime = new Date();
