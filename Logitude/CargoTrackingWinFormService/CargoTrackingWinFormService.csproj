@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +82,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CargoTrackingWinService\CargoTrackingWinService.csproj">
+      <Project>{6D5CF168-5E41-4CB6-BB30-04445578C5B4}</Project>
+      <Name>CargoTrackingWinService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
       <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
       <Name>Logitude.CargoTracking.BL</Name>
