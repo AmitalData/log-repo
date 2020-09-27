@@ -1318,6 +1318,7 @@ namespace Logitude.BL.Helpers
         {
 
             string dir = "";
+            string alignContent = quoteTemplateTextDesignTotalsLabel.Alignment;
             if (setting.RightToLeft) dir = "dir='RTL'";
             string totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
             string totalInLocalCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, true) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
@@ -1326,18 +1327,18 @@ namespace Logitude.BL.Helpers
             {
                 if (showTotalInSaleCurrency && showTotalInLocalCurrency)
                 {
-                    HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInSaleCurrency + "</div>");
-                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInLocalCurrency + "</div>");
+                    HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:"+ alignContent + ";'>" + totalInSaleCurrency + "</div>");
+                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
                 }
                 else if (showTotalInSaleCurrency)
                 {
                     totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                    HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInSaleCurrency + "</div>");
+                    HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInSaleCurrency + "</div>");
                 }
                 else if (showTotalInLocalCurrency)
                 {
                     totalInLocalCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                    HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInLocalCurrency + "</div>");
+                    HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
                 }
             }
 
@@ -1359,7 +1360,7 @@ namespace Logitude.BL.Helpers
                         }
 
                         string total = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, isHideTitle) + BuildTotalInSale(amountValue.ToString() + " " + item.CurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                        HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + total + " </div>");
+                        HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + total + " </div>");
                         isHideTitle = true;
                     }
 
@@ -1369,7 +1370,7 @@ namespace Logitude.BL.Helpers
                     {
 
                         totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName, quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(" : " + SaleTotalAmountInLocalCurrency, quoteTemplateTextDesignTotalsValue, false);
-                        HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInLocalCurrency + "</div>");
+                        HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
                     }
 
                 }
@@ -1379,7 +1380,7 @@ namespace Logitude.BL.Helpers
                     if (showTotalInLocalCurrency)
                     {
                         totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                        HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInLocalCurrency + "</div>");
+                        HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
 
                     }
 

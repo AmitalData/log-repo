@@ -200,6 +200,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                 if (this.TotalValueTextDesignPM) {
                    // this.TotalValueTextDesignPM.HideAlignment = true;
                     this.TotalValueTextDesignPM.Title = "Value";
+                    this.TotalValueTextDesignPM.HideAlignment = true;
             
                 }
 
