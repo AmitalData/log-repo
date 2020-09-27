@@ -4604,13 +4604,13 @@ export class ShipmentPM {
     public get ShipmentSubTypeName() { return this.shipmentSubTypeName; }
     public set ShipmentSubTypeName(newValue: string) { if (this.shipmentSubTypeName != newValue) { this.shipmentSubTypeName = newValue; this.MarkAsDirty("ShipmentSubTypeName"); } }
 
-    private isBondedWarehouse: boolean;
-    public get IsBondedWarehouse() { return this.isBondedWarehouse; }
-    public set IsBondedWarehouse(newValue: boolean) { if (this.isBondedWarehouse != newValue) { this.isBondedWarehouse = newValue; this.MarkAsDirty("IsBondedWarehouse"); } }
+    private isCFSWarehouse: boolean;
+    public get IsCFSWarehouse() { return this.isCFSWarehouse; }
+    public set IsCFSWarehouse(newValue: boolean) { if (this.isCFSWarehouse != newValue) { this.isCFSWarehouse = newValue; this.MarkAsDirty("IsCFSWarehouse"); } }
 
-    private isBondedWarehouseChanged: boolean;
-    public get IsBondedWarehouseChanged() { return this.isBondedWarehouseChanged; }
-    public set IsBondedWarehouseChanged(newValue: boolean) { if (this.isBondedWarehouseChanged != newValue) { this.isBondedWarehouseChanged = newValue; this.MarkAsDirty("IsBondedWarehouseChanged"); } }
+    private isCFSWarehouseChanged: boolean;
+    public get IsCFSWarehouseChanged() { return this.isCFSWarehouseChanged; }
+    public set IsCFSWarehouseChanged(newValue: boolean) { if (this.isCFSWarehouseChanged != newValue) { this.isCFSWarehouseChanged = newValue; this.MarkAsDirty("IsCFSWarehouseChanged"); } }
 
     private chargeStorage: boolean;
     public get ChargeStorage() { return this.chargeStorage; }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "ca80754137a22350b9341ab5d4110262";
+		public const string HashString = "d1bc8dec0e2ac16d3da4788ea7abc345";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -40611,7 +40611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsBondedWarehouse",
+					 						FieldName =  "IsCFSWarehouse",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -40629,8 +40629,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsBondedWarehouse",
-					  						ListPropertyPath =  "IsBondedWarehouse",
+					  						PMPropertyPath =  "IsCFSWarehouse",
+					  						ListPropertyPath =  "IsCFSWarehouse",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -40647,9 +40647,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsBondedWarehouse",
-					  						DefaultText =  "Is Bonded",
-					  						HelpTextCode =  "IsBondedWarehouse",
+					  						FullFieldLable =  "IsCFSWarehouse",
+					  						DefaultText =  "Is CFS",
+					  						HelpTextCode =  "IsCFSWarehouse",
 					  						HelpTextDefaultText =  "Limited to one cross dock entry and one cross dock release.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -40669,7 +40669,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsBondedWarehouseChanged",
+					 						FieldName =  "IsCFSWarehouseChanged",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -40687,8 +40687,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsBondedWarehouseChanged",
-					  						ListPropertyPath =  "IsBondedWarehouseChanged",
+					  						PMPropertyPath =  "IsCFSWarehouseChanged",
+					  						ListPropertyPath =  "IsCFSWarehouseChanged",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -40705,8 +40705,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsBondedWarehouseChanged",
-					  						DefaultText =  "IsBondedWarehouseChanged",
+					  						FullFieldLable =  "IsCFSWarehouseChanged",
+					  						DefaultText =  "IsCFSWarehouseChanged",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

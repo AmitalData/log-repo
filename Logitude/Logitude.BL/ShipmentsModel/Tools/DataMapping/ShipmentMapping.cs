@@ -452,8 +452,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ChargeStorageCurrencyId = entityPM.ChargeStorageCurrencyId;
             entityPoco.WeightMeasurementCode = entityPM.WeightMeasurementCode;
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
-            entityPoco.IsBondedWarehouse = entityPM.IsBondedWarehouse;
-            entityPoco.IsBondedWarehouseChanged = entityPM.IsBondedWarehouseChanged;
+            entityPoco.IsCFSWarehouse = entityPM.IsCFSWarehouse;
+            entityPoco.IsCFSWarehouseChanged = entityPM.IsCFSWarehouseChanged;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
