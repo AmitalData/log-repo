@@ -231,7 +231,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
 
-                
+
                 //string PreparedTenantWhere = "";
                 if (!IsClosed)
                 {
@@ -241,13 +241,34 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
                     if (!isParentTenant)
                     {
-                        tenantWhere = ".[Source Tenant] = ";
+                        tenantWhere = Tabel == "DIM_Tenants" ? ".[Tenant Number] = " : ".[Source Tenant] = ";
+                    }
+                    else
+                    {
+                        if (Tabel == "DIM_Tenants")
+                        {
+                            List<int> tenants = DWSettings.GetTenantNumbersByParentTenant(authToken.Tenant);
+                            tenantWhere = ".[Tenant Number] in (";
+                            foreach (int tenantnumber in tenants)
+                            {
+                                string parameterTenantName = "@Tenant" + tenantnumber.ToString();
+                                tenantWhere += parameterTenantName + ",";
+                                sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = tenantnumber.ToString() });
+                            }
+                            tenantWhere += "^";
+                            tenantWhere = tenantWhere.Replace(",^", ")");
+                        }
                     }
 
-                    if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
+                    if ((Tabel != "DIM_Tenants" || !isParentTenant) && Tabel != "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere + parameterName); //authToken.Tenant
                         sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = authToken.Tenant.ToString() });
+                    }
+                    else if (Tabel == "DIM_Tenants")
+                    {
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere);
+
                     }
                     if (Tabel == "DIM_Dates")
                     {
