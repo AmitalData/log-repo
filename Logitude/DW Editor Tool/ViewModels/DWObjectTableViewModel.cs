@@ -34,7 +34,13 @@ namespace DW_Editor_Tool.ViewModels
         private string additionalFactForeignKey;
         public string AdditionalFactForeignKey { get { return additionalFactForeignKey; } set { additionalFactForeignKey = value; FirePropertyChanged("AdditionalFactForeignKey"); } }
 
-        
+
+        private string parentFactCode;
+        public string ParentFactCode { get { return parentFactCode; } set { parentFactCode = value; FirePropertyChanged("ParentFactCode"); } }
+
+
+        private string recordType;
+        public string RecordType { get { return recordType; } set { recordType = value; FirePropertyChanged("RecordType"); } }
 
 
 

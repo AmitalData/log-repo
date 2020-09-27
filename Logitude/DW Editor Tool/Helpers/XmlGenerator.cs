@@ -42,6 +42,9 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("AdditionalFactCode", GetStringValue(tableViewModel.AdditionalFactCode), entityElement);
                 SetAttribute("AdditionalFactForeignKey", GetStringValue(tableViewModel.AdditionalFactForeignKey), entityElement);
 
+                SetAttribute("ParentFactCode", GetStringValue(tableViewModel.ParentFactCode), entityElement);
+                SetAttribute("RecordType", GetStringValue(tableViewModel.RecordType), entityElement);
+
 
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
@@ -146,6 +149,9 @@ namespace DW_Editor_Tool.Helpers
 
                         tableViewModel.AdditionalFactCode = GetAttributeStringValue(entity.Attributes["AdditionalFactCode"]);
                         tableViewModel.AdditionalFactForeignKey = GetAttributeStringValue(entity.Attributes["AdditionalFactForeignKey"]);
+
+                        tableViewModel.ParentFactCode = GetAttributeStringValue(entity.Attributes["ParentFactCode"]);
+                        tableViewModel.RecordType = GetAttributeStringValue(entity.Attributes["RecordType"]);
 
 
 

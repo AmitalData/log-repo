@@ -160,6 +160,8 @@
     <None Include="Files\DIM_Types.dwml" />
     <None Include="Files\DIM_Users.dwml" />
     <None Include="Files\Fact_Charges.dwml" />
+    <None Include="Files\Fact_MasterCharges.dwml" />
+    <None Include="Files\Fact_MasterShipments.dwml" />
     <None Include="Files\Fact_Shipments.dwml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

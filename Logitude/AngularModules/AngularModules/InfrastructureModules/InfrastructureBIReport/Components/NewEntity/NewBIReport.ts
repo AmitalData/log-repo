@@ -131,6 +131,12 @@ export class NewBIReport extends BaseComponent {
             else {
                 this.FactTableSelectionChanged(this.EntityPM.FactTableName);
             }
+
+
+            this.FactTables.push("Master Shipments");
+            this.FactTables.push("Master Charges");
+
+
         });
     }
 
@@ -149,6 +155,18 @@ export class NewBIReport extends BaseComponent {
                 this.FactTableName = "Fact_Charges";
                 this.SelectdFactTableName = "Shipment Charges";
                 break;
+
+
+            case "Master Charges":
+                this.FactTableName = "Fact_MasterCharges";
+                this.SelectdFactTableName = "Master Charges";
+                break;
+
+            case "Master Shipments":
+                this.FactTableName = "Fact_MasterShipments";
+                this.SelectdFactTableName = "Master Shipments";
+                break;
+
             default:
                 this.FactTableName = "";
                 this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);

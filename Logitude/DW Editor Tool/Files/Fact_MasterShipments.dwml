@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;ffa6fa3e-ad2e-4ace-ad86-30acd57feaf3&quot;" Code="&quot;Fact_MasterShipments&quot;" Name="&quot;Fact_MasterShipments&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factMasterShipments&quot;" HasPivotColumn="false" ParentFactCode="&quot;Fact_Shipments&quot;" RecordType="&quot;Master&quot;">
+  <fields />
+</entity>

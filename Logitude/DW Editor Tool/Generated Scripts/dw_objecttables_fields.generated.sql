@@ -687,7 +687,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey) Values(@Fact_ChargesNewId,0,'Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]')  
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,RecordType) Values(@Fact_ChargesNewId,0,'Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Shipment')  
 --Fields --
 declare @Fact_ChargesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -885,9 +885,19 @@ declare @Fact_ChargesRecordTypeNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesRecordTypeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesRecordTypeNewId,0,'Fact_Charges','[Record Type]','Record Type','Text','false',0,100,'false','false','false','false','false','false','true','false')  
 ------------------------------------------------------------------------------------
+declare @Fact_MasterChargesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_MasterChargesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,ParentFactCode,RecordType) Values(@Fact_MasterChargesNewId,0,'Fact_MasterCharges','Fact_MasterCharges','Fact','false','factMasterCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Fact_Charges','Master')  
+--Fields --
+------------------------------------------------------------------------------------
+declare @Fact_MasterShipmentsNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_MasterShipmentsNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType) Values(@Fact_MasterShipmentsNewId,0,'Fact_MasterShipments','Fact_MasterShipments','Fact','false','factMasterShipments','false','Fact_Shipments','Shipment')  
+--Fields --
+------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn) Values(@Fact_ShipmentsNewId,0,'Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false')  
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType) Values(@Fact_ShipmentsNewId,0,'Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Master')  
 --Fields --
 declare @Fact_ShipmentsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsId_NumberNewId OUTPUT,'DWObjectField' 
