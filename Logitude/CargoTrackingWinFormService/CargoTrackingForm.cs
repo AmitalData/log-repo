@@ -2,6 +2,7 @@
 using CargoTrackingWinService.Helper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTrackingSetLogic;
 using Logitude.CargoTracking.BL.CoreBL.Batch;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,7 @@ namespace CargoTrackingWinFormService.Forms
             this.SleepSecounds.Value = SleepTime;
             this.MappingFromConnections.Text = dbSourceConnection;
             this.MappingToConnections.Text = dbSourceConnection;
+
         }
   
 
@@ -1093,14 +1095,65 @@ namespace CargoTrackingWinFormService.Forms
 
         private void button6_Click(object sender, EventArgs e)
         {
+            
             if (string.IsNullOrEmpty(this.MappingFieldName.Text) && string.IsNullOrEmpty(this.MappingTableName.Text))
             {
                 MessageBox.Show("Please Fill All Values ...");
             }
             else
             {
-                this.MappingResult.Text = this.MappingFieldName.Text;
+                MappingFields();
             }
+        }
+
+
+        private void MappingFields()
+        {
+             CargoTable  CargoTable = cargoTrackingService.FillCargoTableList().Where(s=>s.CT_TableName == this.MappingTableName.Text && s.CT_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
+            if (CargoTable==null)
+            {
+                MessageBox.Show("Table or field not found !!!");
+            }
+            else
+            {
+                if (this.MappingTableName.Text!= "CargoTrackingShipments" && this.MappingTableName.Text != "CargoTrackingShipmentSearches")
+                {
+                    this.MappingResult.Text = GetTextMapping(CargoTable.TableName, this.MappingFieldName.Text);
+                }
+                else
+                {
+                    this.MappingResult.Text = GetFieldMappingFeomShipments( this.MappingTableName.Text ,  this.MappingFieldName.Text);
+                }
+                
+            }
+        }
+
+        private string GetFieldMappingFeomShipments(string TableName , string FieldName)
+        {
+            switch (TableName)
+            {
+                case "CargoTrackingShipmentSearches":
+                    {
+                        return CargoTrackingShipmentSearchesLogicService.GetMappingFields(FieldName);
+                        
+                    }
+                case "CargoTrackingShipments":
+                    {
+                        return CargoTrackingShipmentsLogicService.GetMappingFields(FieldName);
+                      
+                    }
+            }
+
+            return null;
+           
+        }
+
+
+        private string GetTextMapping(string TableNmae , string FieldName)
+        {
+            string Note = "Mapping From => "+Environment.NewLine+"Table Name: "+ TableNmae+ Environment.NewLine+"Field Name: "+ FieldName;
+            return Note;
+           
         }
     }
 }

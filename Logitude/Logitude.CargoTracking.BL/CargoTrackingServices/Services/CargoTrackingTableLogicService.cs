@@ -19,13 +19,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (TableName == "CargoTrackingPorts")
             {
-                CargoTrackingShipmentsLogicService.SetTableLogic(TableRow, ConditionNumber);
+                CargoTrackingPortsLogicService.SetTableLogic(TableRow, ConditionNumber);
 
             }
 
             if (TableName == "CargoTrackingShipments")
             {
-                CargoTrackingCardsLogicService.SetTableLogic(TableRow, ConditionNumber);
+                CargoTrackingShipmentsLogicService.SetTableLogic(TableRow, ConditionNumber);
 
             }
 

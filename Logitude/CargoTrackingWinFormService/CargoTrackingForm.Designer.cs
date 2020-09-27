@@ -87,6 +87,27 @@
             this.radioButton25 = new System.Windows.Forms.RadioButton();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.MappingResult = new System.Windows.Forms.TextBox();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.button6 = new System.Windows.Forms.Button();
+            this.MappingTableName = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.MappingFieldName = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.radioButton37 = new System.Windows.Forms.RadioButton();
+            this.MappingFromConnections = new System.Windows.Forms.TextBox();
+            this.radioButton38 = new System.Windows.Forms.RadioButton();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.radioButton39 = new System.Windows.Forms.RadioButton();
+            this.radioButton40 = new System.Windows.Forms.RadioButton();
+            this.radioButton41 = new System.Windows.Forms.RadioButton();
+            this.radioButton42 = new System.Windows.Forms.RadioButton();
+            this.radioButton43 = new System.Windows.Forms.RadioButton();
+            this.label15 = new System.Windows.Forms.Label();
+            this.radioButton44 = new System.Windows.Forms.RadioButton();
+            this.label16 = new System.Windows.Forms.Label();
+            this.MappingToConnections = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -99,18 +120,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.IncrementalStartDate = new System.Windows.Forms.DateTimePicker();
-            this.IncrementalEndDate = new System.Windows.Forms.DateTimePicker();
-            this.Label001 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.radioButton20 = new System.Windows.Forms.RadioButton();
-            this.IncTop1000 = new System.Windows.Forms.RadioButton();
-            this.IncTop5000 = new System.Windows.Forms.RadioButton();
-            this.IncTop500 = new System.Windows.Forms.RadioButton();
-            this.IncTop100 = new System.Windows.Forms.RadioButton();
-            this.label9 = new System.Windows.Forms.Label();
-            this.IncResults = new System.Windows.Forms.Label();
+            this.SleepSecounds = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.radioButton21 = new System.Windows.Forms.RadioButton();
             this.WinServiceFromConnections = new System.Windows.Forms.TextBox();
@@ -125,30 +137,18 @@
             this.radioButton36 = new System.Windows.Forms.RadioButton();
             this.label13 = new System.Windows.Forms.Label();
             this.WinServiceToConnections = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.SleepSecounds = new System.Windows.Forms.NumericUpDown();
-            this.label18 = new System.Windows.Forms.Label();
-            this.MappingToConnections = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.radioButton44 = new System.Windows.Forms.RadioButton();
-            this.label15 = new System.Windows.Forms.Label();
-            this.radioButton43 = new System.Windows.Forms.RadioButton();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.radioButton42 = new System.Windows.Forms.RadioButton();
-            this.radioButton41 = new System.Windows.Forms.RadioButton();
-            this.radioButton40 = new System.Windows.Forms.RadioButton();
-            this.radioButton39 = new System.Windows.Forms.RadioButton();
-            this.radioButton38 = new System.Windows.Forms.RadioButton();
-            this.MappingFromConnections = new System.Windows.Forms.TextBox();
-            this.radioButton37 = new System.Windows.Forms.RadioButton();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.MappingFieldName = new System.Windows.Forms.TextBox();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.MappingTableName = new System.Windows.Forms.TextBox();
-            this.MappingResult = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.IncrementalStartDate = new System.Windows.Forms.DateTimePicker();
+            this.IncrementalEndDate = new System.Windows.Forms.DateTimePicker();
+            this.Label001 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.radioButton20 = new System.Windows.Forms.RadioButton();
+            this.IncTop1000 = new System.Windows.Forms.RadioButton();
+            this.IncTop5000 = new System.Windows.Forms.RadioButton();
+            this.IncTop500 = new System.Windows.Forms.RadioButton();
+            this.IncTop100 = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.IncResults = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -161,18 +161,18 @@
             this.groupBox3.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage6.SuspendLayout();
-            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SleepSecounds)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SleepSecounds)).BeginInit();
-            this.panel7.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.panel8.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -213,8 +213,8 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(25, 220);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 39);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 40);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // CheckLabel
@@ -516,8 +516,8 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 216);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(453, 39);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(453, 40);
             this.tableLayoutPanel2.TabIndex = 28;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
@@ -902,6 +902,255 @@
             this.tabPage4.Text = "Fields Mapping";
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
             // 
+            // MappingResult
+            // 
+            this.MappingResult.Enabled = false;
+            this.MappingResult.Location = new System.Drawing.Point(10, 191);
+            this.MappingResult.Multiline = true;
+            this.MappingResult.Name = "MappingResult";
+            this.MappingResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.MappingResult.Size = new System.Drawing.Size(493, 67);
+            this.MappingResult.TabIndex = 31;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.button6);
+            this.panel8.Controls.Add(this.MappingTableName);
+            this.panel8.Controls.Add(this.label17);
+            this.panel8.Controls.Add(this.MappingFieldName);
+            this.panel8.Controls.Add(this.label18);
+            this.panel8.Location = new System.Drawing.Point(6, 133);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(500, 61);
+            this.panel8.TabIndex = 30;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button6.Font = new System.Drawing.Font("Constantia", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Location = new System.Drawing.Point(347, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(130, 47);
+            this.button6.TabIndex = 33;
+            this.button6.Text = "Start";
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // MappingTableName
+            // 
+            this.MappingTableName.Location = new System.Drawing.Point(150, 30);
+            this.MappingTableName.Name = "MappingTableName";
+            this.MappingTableName.Size = new System.Drawing.Size(174, 20);
+            this.MappingTableName.TabIndex = 32;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(23, 3);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(104, 20);
+            this.label17.TabIndex = 31;
+            this.label17.Text = "Field Name:";
+            // 
+            // MappingFieldName
+            // 
+            this.MappingFieldName.Location = new System.Drawing.Point(150, 5);
+            this.MappingFieldName.Name = "MappingFieldName";
+            this.MappingFieldName.Size = new System.Drawing.Size(174, 20);
+            this.MappingFieldName.TabIndex = 27;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Black;
+            this.label18.Location = new System.Drawing.Point(23, 30);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(109, 20);
+            this.label18.TabIndex = 25;
+            this.label18.Text = "Table Name:";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.radioButton37);
+            this.groupBox6.Controls.Add(this.MappingFromConnections);
+            this.groupBox6.Controls.Add(this.radioButton38);
+            this.groupBox6.Controls.Add(this.panel7);
+            this.groupBox6.Controls.Add(this.radioButton43);
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.radioButton44);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.MappingToConnections);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(500, 121);
+            this.groupBox6.TabIndex = 23;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Connection Strings";
+            // 
+            // radioButton37
+            // 
+            this.radioButton37.AutoSize = true;
+            this.radioButton37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.radioButton37.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton37.Location = new System.Drawing.Point(272, 101);
+            this.radioButton37.Name = "radioButton37";
+            this.radioButton37.Size = new System.Drawing.Size(52, 17);
+            this.radioButton37.TabIndex = 21;
+            this.radioButton37.Text = "Cloud";
+            this.radioButton37.UseVisualStyleBackColor = true;
+            this.radioButton37.CheckedChanged += new System.EventHandler(this.radioButton37_CheckedChanged);
+            // 
+            // MappingFromConnections
+            // 
+            this.MappingFromConnections.Enabled = false;
+            this.MappingFromConnections.Location = new System.Drawing.Point(143, 19);
+            this.MappingFromConnections.Name = "MappingFromConnections";
+            this.MappingFromConnections.Size = new System.Drawing.Size(313, 22);
+            this.MappingFromConnections.TabIndex = 3;
+            this.MappingFromConnections.TextChanged += new System.EventHandler(this.MappingFromConnections_TextChanged);
+            // 
+            // radioButton38
+            // 
+            this.radioButton38.AutoSize = true;
+            this.radioButton38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton38.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton38.Location = new System.Drawing.Point(330, 101);
+            this.radioButton38.Name = "radioButton38";
+            this.radioButton38.Size = new System.Drawing.Size(60, 17);
+            this.radioButton38.TabIndex = 18;
+            this.radioButton38.Text = "Custom";
+            this.radioButton38.UseVisualStyleBackColor = true;
+            this.radioButton38.CheckedChanged += new System.EventHandler(this.radioButton38_CheckedChanged);
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.radioButton39);
+            this.panel7.Controls.Add(this.radioButton40);
+            this.panel7.Controls.Add(this.radioButton41);
+            this.panel7.Controls.Add(this.radioButton42);
+            this.panel7.Location = new System.Drawing.Point(143, 46);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(313, 21);
+            this.panel7.TabIndex = 20;
+            // 
+            // radioButton39
+            // 
+            this.radioButton39.AutoSize = true;
+            this.radioButton39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.radioButton39.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton39.Location = new System.Drawing.Point(129, 3);
+            this.radioButton39.Name = "radioButton39";
+            this.radioButton39.Size = new System.Drawing.Size(52, 17);
+            this.radioButton39.TabIndex = 14;
+            this.radioButton39.Text = "Cloud";
+            this.radioButton39.UseVisualStyleBackColor = true;
+            this.radioButton39.CheckedChanged += new System.EventHandler(this.radioButton39_CheckedChanged);
+            // 
+            // radioButton40
+            // 
+            this.radioButton40.AutoSize = true;
+            this.radioButton40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton40.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton40.Location = new System.Drawing.Point(187, 3);
+            this.radioButton40.Name = "radioButton40";
+            this.radioButton40.Size = new System.Drawing.Size(60, 17);
+            this.radioButton40.TabIndex = 13;
+            this.radioButton40.Text = "Custom";
+            this.radioButton40.UseVisualStyleBackColor = true;
+            this.radioButton40.CheckedChanged += new System.EventHandler(this.radioButton40_CheckedChanged);
+            // 
+            // radioButton41
+            // 
+            this.radioButton41.AutoSize = true;
+            this.radioButton41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton41.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton41.Location = new System.Drawing.Point(77, 3);
+            this.radioButton41.Name = "radioButton41";
+            this.radioButton41.Size = new System.Drawing.Size(46, 17);
+            this.radioButton41.TabIndex = 12;
+            this.radioButton41.Text = "Test";
+            this.radioButton41.UseVisualStyleBackColor = true;
+            this.radioButton41.CheckedChanged += new System.EventHandler(this.radioButton41_CheckedChanged);
+            // 
+            // radioButton42
+            // 
+            this.radioButton42.AutoSize = true;
+            this.radioButton42.Checked = true;
+            this.radioButton42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton42.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton42.Location = new System.Drawing.Point(0, 3);
+            this.radioButton42.Name = "radioButton42";
+            this.radioButton42.Size = new System.Drawing.Size(71, 17);
+            this.radioButton42.TabIndex = 11;
+            this.radioButton42.TabStop = true;
+            this.radioButton42.Text = "Localhost";
+            this.radioButton42.UseVisualStyleBackColor = true;
+            this.radioButton42.CheckedChanged += new System.EventHandler(this.radioButton42_CheckedChanged);
+            // 
+            // radioButton43
+            // 
+            this.radioButton43.AutoSize = true;
+            this.radioButton43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton43.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton43.Location = new System.Drawing.Point(220, 101);
+            this.radioButton43.Name = "radioButton43";
+            this.radioButton43.Size = new System.Drawing.Size(46, 17);
+            this.radioButton43.TabIndex = 17;
+            this.radioButton43.Text = "Test";
+            this.radioButton43.UseVisualStyleBackColor = true;
+            this.radioButton43.CheckedChanged += new System.EventHandler(this.radioButton43_CheckedChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
+            this.label15.Location = new System.Drawing.Point(27, 21);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(100, 20);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Copy From:";
+            // 
+            // radioButton44
+            // 
+            this.radioButton44.AutoSize = true;
+            this.radioButton44.Checked = true;
+            this.radioButton44.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton44.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton44.Location = new System.Drawing.Point(143, 101);
+            this.radioButton44.Name = "radioButton44";
+            this.radioButton44.Size = new System.Drawing.Size(71, 17);
+            this.radioButton44.TabIndex = 16;
+            this.radioButton44.TabStop = true;
+            this.radioButton44.Text = "Localhost";
+            this.radioButton44.UseVisualStyleBackColor = true;
+            this.radioButton44.CheckedChanged += new System.EventHandler(this.radioButton44_CheckedChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
+            this.label16.Location = new System.Drawing.Point(27, 75);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(79, 20);
+            this.label16.TabIndex = 15;
+            this.label16.Text = "Copy To:";
+            // 
+            // MappingToConnections
+            // 
+            this.MappingToConnections.Enabled = false;
+            this.MappingToConnections.Location = new System.Drawing.Point(143, 73);
+            this.MappingToConnections.Name = "MappingToConnections";
+            this.MappingToConnections.Size = new System.Drawing.Size(313, 22);
+            this.MappingToConnections.TabIndex = 14;
+            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.groupBox4);
@@ -1052,151 +1301,35 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Windows Service";
             // 
-            // IncrementalStartDate
+            // SleepSecounds
             // 
-            this.IncrementalStartDate.CustomFormat = "dd/MM/yyy";
-            this.IncrementalStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.IncrementalStartDate.Location = new System.Drawing.Point(644, 48);
-            this.IncrementalStartDate.Name = "IncrementalStartDate";
-            this.IncrementalStartDate.Size = new System.Drawing.Size(123, 20);
-            this.IncrementalStartDate.TabIndex = 29;
+            this.SleepSecounds.Location = new System.Drawing.Point(334, 144);
+            this.SleepSecounds.Name = "SleepSecounds";
+            this.SleepSecounds.Size = new System.Drawing.Size(91, 20);
+            this.SleepSecounds.TabIndex = 24;
             // 
-            // IncrementalEndDate
+            // label14
             // 
-            this.IncrementalEndDate.CustomFormat = "dd/MM/yyy";
-            this.IncrementalEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.IncrementalEndDate.Location = new System.Drawing.Point(887, 48);
-            this.IncrementalEndDate.Name = "IncrementalEndDate";
-            this.IncrementalEndDate.Size = new System.Drawing.Size(123, 20);
-            this.IncrementalEndDate.TabIndex = 30;
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
+            this.label14.Location = new System.Drawing.Point(93, 144);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(235, 20);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "Sleep seconds after period: ";
             // 
-            // Label001
+            // button4
             // 
-            this.Label001.AutoSize = true;
-            this.Label001.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Label001.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label001.ForeColor = System.Drawing.Color.DimGray;
-            this.Label001.Location = new System.Drawing.Point(527, 48);
-            this.Label001.Name = "Label001";
-            this.Label001.Size = new System.Drawing.Size(98, 20);
-            this.Label001.TabIndex = 32;
-            this.Label001.Text = "Start Date:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.DimGray;
-            this.label10.Location = new System.Drawing.Point(783, 48);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(90, 20);
-            this.label10.TabIndex = 33;
-            this.label10.Text = "End Date:";
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panel4.Controls.Add(this.radioButton20);
-            this.panel4.Controls.Add(this.IncTop1000);
-            this.panel4.Controls.Add(this.IncTop5000);
-            this.panel4.Controls.Add(this.IncTop500);
-            this.panel4.Controls.Add(this.IncTop100);
-            this.panel4.Location = new System.Drawing.Point(531, 80);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(416, 21);
-            this.panel4.TabIndex = 21;
-            // 
-            // radioButton20
-            // 
-            this.radioButton20.AutoSize = true;
-            this.radioButton20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton20.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton20.Location = new System.Drawing.Point(327, 3);
-            this.radioButton20.Name = "radioButton20";
-            this.radioButton20.Size = new System.Drawing.Size(36, 17);
-            this.radioButton20.TabIndex = 15;
-            this.radioButton20.Text = "All";
-            this.radioButton20.UseVisualStyleBackColor = true;
-            this.radioButton20.CheckedChanged += new System.EventHandler(this.radioButton20_CheckedChanged);
-            // 
-            // IncTop1000
-            // 
-            this.IncTop1000.AutoSize = true;
-            this.IncTop1000.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.IncTop1000.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.IncTop1000.Location = new System.Drawing.Point(166, 3);
-            this.IncTop1000.Name = "IncTop1000";
-            this.IncTop1000.Size = new System.Drawing.Size(71, 17);
-            this.IncTop1000.TabIndex = 14;
-            this.IncTop1000.Text = "Top 1000";
-            this.IncTop1000.UseVisualStyleBackColor = true;
-            this.IncTop1000.CheckedChanged += new System.EventHandler(this.IncTop1000_CheckedChanged);
-            // 
-            // IncTop5000
-            // 
-            this.IncTop5000.AutoSize = true;
-            this.IncTop5000.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncTop5000.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.IncTop5000.Location = new System.Drawing.Point(250, 3);
-            this.IncTop5000.Name = "IncTop5000";
-            this.IncTop5000.Size = new System.Drawing.Size(71, 17);
-            this.IncTop5000.TabIndex = 13;
-            this.IncTop5000.Text = "Top 5000";
-            this.IncTop5000.UseVisualStyleBackColor = true;
-            this.IncTop5000.CheckedChanged += new System.EventHandler(this.IncTop5000_CheckedChanged);
-            // 
-            // IncTop500
-            // 
-            this.IncTop500.AutoSize = true;
-            this.IncTop500.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncTop500.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.IncTop500.Location = new System.Drawing.Point(89, 3);
-            this.IncTop500.Name = "IncTop500";
-            this.IncTop500.Size = new System.Drawing.Size(65, 17);
-            this.IncTop500.TabIndex = 12;
-            this.IncTop500.Text = "Top 500";
-            this.IncTop500.UseVisualStyleBackColor = true;
-            this.IncTop500.CheckedChanged += new System.EventHandler(this.IncTop500_CheckedChanged);
-            // 
-            // IncTop100
-            // 
-            this.IncTop100.AutoSize = true;
-            this.IncTop100.Checked = true;
-            this.IncTop100.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncTop100.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.IncTop100.Location = new System.Drawing.Point(0, 3);
-            this.IncTop100.Name = "IncTop100";
-            this.IncTop100.Size = new System.Drawing.Size(65, 17);
-            this.IncTop100.TabIndex = 11;
-            this.IncTop100.TabStop = true;
-            this.IncTop100.Text = "Top 100";
-            this.IncTop100.UseVisualStyleBackColor = true;
-            this.IncTop100.CheckedChanged += new System.EventHandler(this.IncTop100_CheckedChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.DimGray;
-            this.label9.Location = new System.Drawing.Point(911, 81);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 20);
-            this.label9.TabIndex = 34;
-            this.label9.Text = "Results:";
-            // 
-            // IncResults
-            // 
-            this.IncResults.AutoSize = true;
-            this.IncResults.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.IncResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncResults.ForeColor = System.Drawing.Color.Green;
-            this.IncResults.Location = new System.Drawing.Point(979, 80);
-            this.IncResults.Name = "IncResults";
-            this.IncResults.Size = new System.Drawing.Size(31, 20);
-            this.IncResults.TabIndex = 35;
-            this.IncResults.Text = "(0)";
+            this.button4.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button4.Font = new System.Drawing.Font("Constantia", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(51, 167);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(425, 83);
+            this.button4.TabIndex = 23;
+            this.button4.Text = "Run As Windows Service";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // groupBox5
             // 
@@ -1376,290 +1509,158 @@
             this.WinServiceToConnections.Size = new System.Drawing.Size(313, 22);
             this.WinServiceToConnections.TabIndex = 14;
             // 
-            // button4
+            // IncrementalStartDate
             // 
-            this.button4.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button4.Font = new System.Drawing.Font("Constantia", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(51, 167);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(425, 83);
-            this.button4.TabIndex = 23;
-            this.button4.Text = "Run As Windows Service";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.IncrementalStartDate.CustomFormat = "dd/MM/yyy";
+            this.IncrementalStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.IncrementalStartDate.Location = new System.Drawing.Point(644, 48);
+            this.IncrementalStartDate.Name = "IncrementalStartDate";
+            this.IncrementalStartDate.Size = new System.Drawing.Size(123, 20);
+            this.IncrementalStartDate.TabIndex = 29;
             // 
-            // label14
+            // IncrementalEndDate
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
-            this.label14.Location = new System.Drawing.Point(93, 144);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(235, 20);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "Sleep seconds after period: ";
+            this.IncrementalEndDate.CustomFormat = "dd/MM/yyy";
+            this.IncrementalEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.IncrementalEndDate.Location = new System.Drawing.Point(887, 48);
+            this.IncrementalEndDate.Name = "IncrementalEndDate";
+            this.IncrementalEndDate.Size = new System.Drawing.Size(123, 20);
+            this.IncrementalEndDate.TabIndex = 30;
             // 
-            // SleepSecounds
+            // Label001
             // 
-            this.SleepSecounds.Location = new System.Drawing.Point(334, 144);
-            this.SleepSecounds.Name = "SleepSecounds";
-            this.SleepSecounds.Size = new System.Drawing.Size(91, 20);
-            this.SleepSecounds.TabIndex = 24;
+            this.Label001.AutoSize = true;
+            this.Label001.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Label001.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label001.ForeColor = System.Drawing.Color.DimGray;
+            this.Label001.Location = new System.Drawing.Point(527, 48);
+            this.Label001.Name = "Label001";
+            this.Label001.Size = new System.Drawing.Size(98, 20);
+            this.Label001.TabIndex = 32;
+            this.Label001.Text = "Start Date:";
             // 
-            // label18
+            // label10
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(23, 30);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(109, 20);
-            this.label18.TabIndex = 25;
-            this.label18.Text = "Table Name:";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.DimGray;
+            this.label10.Location = new System.Drawing.Point(783, 48);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(90, 20);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "End Date:";
             // 
-            // MappingToConnections
+            // panel4
             // 
-            this.MappingToConnections.Enabled = false;
-            this.MappingToConnections.Location = new System.Drawing.Point(143, 73);
-            this.MappingToConnections.Name = "MappingToConnections";
-            this.MappingToConnections.Size = new System.Drawing.Size(313, 22);
-            this.MappingToConnections.TabIndex = 14;
+            this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel4.Controls.Add(this.radioButton20);
+            this.panel4.Controls.Add(this.IncTop1000);
+            this.panel4.Controls.Add(this.IncTop5000);
+            this.panel4.Controls.Add(this.IncTop500);
+            this.panel4.Controls.Add(this.IncTop100);
+            this.panel4.Location = new System.Drawing.Point(531, 80);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(416, 21);
+            this.panel4.TabIndex = 21;
             // 
-            // label16
+            // radioButton20
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
-            this.label16.Location = new System.Drawing.Point(27, 75);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(79, 20);
-            this.label16.TabIndex = 15;
-            this.label16.Text = "Copy To:";
+            this.radioButton20.AutoSize = true;
+            this.radioButton20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton20.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton20.Location = new System.Drawing.Point(327, 3);
+            this.radioButton20.Name = "radioButton20";
+            this.radioButton20.Size = new System.Drawing.Size(36, 17);
+            this.radioButton20.TabIndex = 15;
+            this.radioButton20.Text = "All";
+            this.radioButton20.UseVisualStyleBackColor = true;
+            this.radioButton20.CheckedChanged += new System.EventHandler(this.radioButton20_CheckedChanged);
             // 
-            // radioButton44
+            // IncTop1000
             // 
-            this.radioButton44.AutoSize = true;
-            this.radioButton44.Checked = true;
-            this.radioButton44.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton44.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton44.Location = new System.Drawing.Point(143, 101);
-            this.radioButton44.Name = "radioButton44";
-            this.radioButton44.Size = new System.Drawing.Size(71, 17);
-            this.radioButton44.TabIndex = 16;
-            this.radioButton44.TabStop = true;
-            this.radioButton44.Text = "Localhost";
-            this.radioButton44.UseVisualStyleBackColor = true;
-            this.radioButton44.CheckedChanged += new System.EventHandler(this.radioButton44_CheckedChanged);
+            this.IncTop1000.AutoSize = true;
+            this.IncTop1000.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.IncTop1000.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.IncTop1000.Location = new System.Drawing.Point(166, 3);
+            this.IncTop1000.Name = "IncTop1000";
+            this.IncTop1000.Size = new System.Drawing.Size(71, 17);
+            this.IncTop1000.TabIndex = 14;
+            this.IncTop1000.Text = "Top 1000";
+            this.IncTop1000.UseVisualStyleBackColor = true;
+            this.IncTop1000.CheckedChanged += new System.EventHandler(this.IncTop1000_CheckedChanged);
             // 
-            // label15
+            // IncTop5000
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
-            this.label15.Location = new System.Drawing.Point(27, 21);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(100, 20);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Copy From:";
+            this.IncTop5000.AutoSize = true;
+            this.IncTop5000.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncTop5000.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.IncTop5000.Location = new System.Drawing.Point(250, 3);
+            this.IncTop5000.Name = "IncTop5000";
+            this.IncTop5000.Size = new System.Drawing.Size(71, 17);
+            this.IncTop5000.TabIndex = 13;
+            this.IncTop5000.Text = "Top 5000";
+            this.IncTop5000.UseVisualStyleBackColor = true;
+            this.IncTop5000.CheckedChanged += new System.EventHandler(this.IncTop5000_CheckedChanged);
             // 
-            // radioButton43
+            // IncTop500
             // 
-            this.radioButton43.AutoSize = true;
-            this.radioButton43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton43.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton43.Location = new System.Drawing.Point(220, 101);
-            this.radioButton43.Name = "radioButton43";
-            this.radioButton43.Size = new System.Drawing.Size(46, 17);
-            this.radioButton43.TabIndex = 17;
-            this.radioButton43.Text = "Test";
-            this.radioButton43.UseVisualStyleBackColor = true;
-            this.radioButton43.CheckedChanged += new System.EventHandler(this.radioButton43_CheckedChanged);
+            this.IncTop500.AutoSize = true;
+            this.IncTop500.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncTop500.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.IncTop500.Location = new System.Drawing.Point(89, 3);
+            this.IncTop500.Name = "IncTop500";
+            this.IncTop500.Size = new System.Drawing.Size(65, 17);
+            this.IncTop500.TabIndex = 12;
+            this.IncTop500.Text = "Top 500";
+            this.IncTop500.UseVisualStyleBackColor = true;
+            this.IncTop500.CheckedChanged += new System.EventHandler(this.IncTop500_CheckedChanged);
             // 
-            // panel7
+            // IncTop100
             // 
-            this.panel7.Controls.Add(this.radioButton39);
-            this.panel7.Controls.Add(this.radioButton40);
-            this.panel7.Controls.Add(this.radioButton41);
-            this.panel7.Controls.Add(this.radioButton42);
-            this.panel7.Location = new System.Drawing.Point(143, 46);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(313, 21);
-            this.panel7.TabIndex = 20;
+            this.IncTop100.AutoSize = true;
+            this.IncTop100.Checked = true;
+            this.IncTop100.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncTop100.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.IncTop100.Location = new System.Drawing.Point(0, 3);
+            this.IncTop100.Name = "IncTop100";
+            this.IncTop100.Size = new System.Drawing.Size(65, 17);
+            this.IncTop100.TabIndex = 11;
+            this.IncTop100.TabStop = true;
+            this.IncTop100.Text = "Top 100";
+            this.IncTop100.UseVisualStyleBackColor = true;
+            this.IncTop100.CheckedChanged += new System.EventHandler(this.IncTop100_CheckedChanged);
             // 
-            // radioButton42
+            // label9
             // 
-            this.radioButton42.AutoSize = true;
-            this.radioButton42.Checked = true;
-            this.radioButton42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton42.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton42.Location = new System.Drawing.Point(0, 3);
-            this.radioButton42.Name = "radioButton42";
-            this.radioButton42.Size = new System.Drawing.Size(71, 17);
-            this.radioButton42.TabIndex = 11;
-            this.radioButton42.TabStop = true;
-            this.radioButton42.Text = "Localhost";
-            this.radioButton42.UseVisualStyleBackColor = true;
-            this.radioButton42.CheckedChanged += new System.EventHandler(this.radioButton42_CheckedChanged);
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.DimGray;
+            this.label9.Location = new System.Drawing.Point(911, 81);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(75, 20);
+            this.label9.TabIndex = 34;
+            this.label9.Text = "Results:";
             // 
-            // radioButton41
+            // IncResults
             // 
-            this.radioButton41.AutoSize = true;
-            this.radioButton41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton41.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton41.Location = new System.Drawing.Point(77, 3);
-            this.radioButton41.Name = "radioButton41";
-            this.radioButton41.Size = new System.Drawing.Size(46, 17);
-            this.radioButton41.TabIndex = 12;
-            this.radioButton41.Text = "Test";
-            this.radioButton41.UseVisualStyleBackColor = true;
-            this.radioButton41.CheckedChanged += new System.EventHandler(this.radioButton41_CheckedChanged);
-            // 
-            // radioButton40
-            // 
-            this.radioButton40.AutoSize = true;
-            this.radioButton40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton40.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton40.Location = new System.Drawing.Point(187, 3);
-            this.radioButton40.Name = "radioButton40";
-            this.radioButton40.Size = new System.Drawing.Size(60, 17);
-            this.radioButton40.TabIndex = 13;
-            this.radioButton40.Text = "Custom";
-            this.radioButton40.UseVisualStyleBackColor = true;
-            this.radioButton40.CheckedChanged += new System.EventHandler(this.radioButton40_CheckedChanged);
-            // 
-            // radioButton39
-            // 
-            this.radioButton39.AutoSize = true;
-            this.radioButton39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.radioButton39.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton39.Location = new System.Drawing.Point(129, 3);
-            this.radioButton39.Name = "radioButton39";
-            this.radioButton39.Size = new System.Drawing.Size(52, 17);
-            this.radioButton39.TabIndex = 14;
-            this.radioButton39.Text = "Cloud";
-            this.radioButton39.UseVisualStyleBackColor = true;
-            this.radioButton39.CheckedChanged += new System.EventHandler(this.radioButton39_CheckedChanged);
-            // 
-            // radioButton38
-            // 
-            this.radioButton38.AutoSize = true;
-            this.radioButton38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton38.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton38.Location = new System.Drawing.Point(330, 101);
-            this.radioButton38.Name = "radioButton38";
-            this.radioButton38.Size = new System.Drawing.Size(60, 17);
-            this.radioButton38.TabIndex = 18;
-            this.radioButton38.Text = "Custom";
-            this.radioButton38.UseVisualStyleBackColor = true;
-            this.radioButton38.CheckedChanged += new System.EventHandler(this.radioButton38_CheckedChanged);
-            // 
-            // MappingFromConnections
-            // 
-            this.MappingFromConnections.Enabled = false;
-            this.MappingFromConnections.Location = new System.Drawing.Point(143, 19);
-            this.MappingFromConnections.Name = "MappingFromConnections";
-            this.MappingFromConnections.Size = new System.Drawing.Size(313, 22);
-            this.MappingFromConnections.TabIndex = 3;
-            this.MappingFromConnections.TextChanged += new System.EventHandler(this.MappingFromConnections_TextChanged);
-            // 
-            // radioButton37
-            // 
-            this.radioButton37.AutoSize = true;
-            this.radioButton37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.radioButton37.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton37.Location = new System.Drawing.Point(272, 101);
-            this.radioButton37.Name = "radioButton37";
-            this.radioButton37.Size = new System.Drawing.Size(52, 17);
-            this.radioButton37.TabIndex = 21;
-            this.radioButton37.Text = "Cloud";
-            this.radioButton37.UseVisualStyleBackColor = true;
-            this.radioButton37.CheckedChanged += new System.EventHandler(this.radioButton37_CheckedChanged);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.radioButton37);
-            this.groupBox6.Controls.Add(this.MappingFromConnections);
-            this.groupBox6.Controls.Add(this.radioButton38);
-            this.groupBox6.Controls.Add(this.panel7);
-            this.groupBox6.Controls.Add(this.radioButton43);
-            this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Controls.Add(this.radioButton44);
-            this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Controls.Add(this.MappingToConnections);
-            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox6.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(500, 121);
-            this.groupBox6.TabIndex = 23;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Connection Strings";
-            // 
-            // MappingFieldName
-            // 
-            this.MappingFieldName.Location = new System.Drawing.Point(150, 5);
-            this.MappingFieldName.Name = "MappingFieldName";
-            this.MappingFieldName.Size = new System.Drawing.Size(174, 20);
-            this.MappingFieldName.TabIndex = 27;
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.button6);
-            this.panel8.Controls.Add(this.MappingTableName);
-            this.panel8.Controls.Add(this.label17);
-            this.panel8.Controls.Add(this.MappingFieldName);
-            this.panel8.Controls.Add(this.label18);
-            this.panel8.Location = new System.Drawing.Point(6, 133);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(500, 61);
-            this.panel8.TabIndex = 30;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(23, 3);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(104, 20);
-            this.label17.TabIndex = 31;
-            this.label17.Text = "Field Name:";
-            // 
-            // MappingTableName
-            // 
-            this.MappingTableName.Location = new System.Drawing.Point(150, 30);
-            this.MappingTableName.Name = "MappingTableName";
-            this.MappingTableName.Size = new System.Drawing.Size(174, 20);
-            this.MappingTableName.TabIndex = 32;
-            // 
-            // MappingResult
-            // 
-            this.MappingResult.Location = new System.Drawing.Point(10, 191);
-            this.MappingResult.Multiline = true;
-            this.MappingResult.Name = "MappingResult";
-            this.MappingResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MappingResult.Size = new System.Drawing.Size(493, 67);
-            this.MappingResult.TabIndex = 31;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button6.Font = new System.Drawing.Font("Constantia", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(347, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(130, 47);
-            this.button6.TabIndex = 33;
-            this.button6.Text = "Start";
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.IncResults.AutoSize = true;
+            this.IncResults.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.IncResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncResults.ForeColor = System.Drawing.Color.Green;
+            this.IncResults.Location = new System.Drawing.Point(979, 80);
+            this.IncResults.Name = "IncResults";
+            this.IncResults.Size = new System.Drawing.Size(31, 20);
+            this.IncResults.TabIndex = 35;
+            this.IncResults.Text = "(0)";
             // 
             // CargoTrackingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(517, 284);
+            this.ClientSize = new System.Drawing.Size(521, 284);
             this.Controls.Add(this.IncResults);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.panel4);
@@ -1696,6 +1697,12 @@
             this.panel3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -1704,19 +1711,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SleepSecounds)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SleepSecounds)).EndInit();
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
