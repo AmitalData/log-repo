@@ -260,7 +260,7 @@
   <Column
     Name="ToWarehouseNotes"
     Type="nvarchar"
-    Size="32">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
