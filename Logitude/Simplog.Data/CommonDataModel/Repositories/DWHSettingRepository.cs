@@ -77,6 +77,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a.IsParentTenant).FirstOrDefault();
         }
 
+        public List<int> GetTenantNumbersByParentTenant(int tenant)
+        {
+            return (from a in this.context.DWHSettings
+                    where a.ParentTenant == tenant
+                    select a.Tenant).ToList();
+        }
+
 
         public List<DWHSetting> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
