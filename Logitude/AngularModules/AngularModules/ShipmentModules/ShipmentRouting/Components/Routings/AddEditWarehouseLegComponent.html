@@ -58,14 +58,14 @@
                                 </td>
                             </tr>
 
-                            <!-- IsBondedWarehouse -->
+                            <!-- IsCFSWarehouse -->
                             <tr class="FormFieldRow" *ngIf="IsImportShipment">
                                 <td style="width: 120px;">
-                                    <LogLabel [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'IsCFSWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogCheckBox [Checked]="IsBondedWarehouse" [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    <LogCheckBox [Checked]="IsCFSWarehouse" [ObjectFieldName]="'IsCFSWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                             </tr>
 
@@ -389,7 +389,7 @@
                                                                         <tr style="height:25px;" *ngIf="StoragePricingMessageVisible">
                                                                             <td>
                                                                                 <div class="OrangeInfo" style="margin: 5px;">
-                                                                                    <label>Active for bonded warehouse only</label>
+                                                                                    <label>Active for CFS warehouse only</label>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>

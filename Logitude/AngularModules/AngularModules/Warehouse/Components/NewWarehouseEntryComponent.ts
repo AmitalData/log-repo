@@ -249,7 +249,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseEntryPackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                     .then(cmpRef => {
-                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsBondedWarehouse: this.ShipmentPM.IsBondedWarehouse };
+                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsCFSWarehouse: this.ShipmentPM.IsCFSWarehouse };
                         this.PageChild_WEPD = cmpRef.instance;
                         cmpRef.instance.SetWindowArgs(windowArgs);
                   

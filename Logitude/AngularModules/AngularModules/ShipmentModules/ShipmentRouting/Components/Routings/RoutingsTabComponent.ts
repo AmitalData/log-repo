@@ -587,8 +587,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                             this.EntityPM.WarehouseLegVGMCutOffDate = null;
                             this.EntityPM.WarehouseStorageFreeDays = null;
                             this.EntityPM.GrossWeightPerStorageDays = null;
-                            this.EntityPM.IsBondedWarehouse = false;
-                            this.EntityPM.IsBondedWarehouseChanged = false
+                            this.EntityPM.IsCFSWarehouse = false;
+                            this.EntityPM.IsCFSWarehouseChanged = false
 
                             ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
 

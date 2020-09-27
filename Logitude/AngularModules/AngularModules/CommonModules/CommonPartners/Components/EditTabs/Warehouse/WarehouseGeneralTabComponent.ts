@@ -28,7 +28,7 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
         }
 
         this.pricingFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (this.pricingFeatureToggle && this.TypeCode == "BO") {
+        if (this.pricingFeatureToggle && this.TypeCode == "CFS") {
             this.IsStoragePricingVisible = true;
         }
     }
@@ -80,7 +80,7 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
         if (this.EntityPM.TypeCode != newValue) {
             this.EntityPM.TypeCode = newValue;
 
-            if (newValue == "BO") {
+            if (newValue == "CFS") {
                 this.EntityPM.AirWeightMeasurementCode = "GRWT";
                 this.EntityPM.OceanWeightMeasurementCode = "GRWT";
                 this.EntityPM.InlandWeightMeasurementCode = "GRWT";

@@ -2524,8 +2524,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         }
 
         public List<TransshipmentLeg> MainCarriageLegs { get; set; }
-        public bool IsBondedWarehouse { get; set; }
-        public bool IsBondedWarehouseChanged { get; set; }
+        public bool IsCFSWarehouse { get; set; }
+        public bool IsCFSWarehouseChanged { get; set; }
     }
 
     public class TransshipmentLeg

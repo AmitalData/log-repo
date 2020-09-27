@@ -118,7 +118,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 isUpdated = true;
             }
 
-            if (isUpdated && shipmentPM.IsBondedWarehouse)
+            if (isUpdated && shipmentPM.IsCFSWarehouse)
             {
                 storageCalculationManager.CheckStorageProperties();
                 ReceivablePricingUpdated = true;
@@ -163,7 +163,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 isUpdated = true;
             }
 
-            if (isUpdated && shipmentPM.IsBondedWarehouse)
+            if (isUpdated && shipmentPM.IsCFSWarehouse)
             {
                 storageCalculationManager.CheckStorageProperties();
                 ReceivablePricingUpdated = true;
