@@ -218,7 +218,8 @@
 
                                                                 <!-- CommunicationTypeCode -->
                                                                 <log-column [header]="'Customs.VendorCommunication.F.CommunicationTypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'CommunicationTypeCode'">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                             <span>{{item.CommunicationTypeName}}</span>
                                                                         </div>
@@ -234,11 +235,13 @@
 
                                                                         </div>
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
                                                                 <!-- CommunicationAddress -->
                                                                 <log-column [header]="'Customs.VendorCommunication.F.CommunicationAddress' | TextCodeTranslationPipe" [width]="'180'" [Alignment]="'right'" [binding]="'CommunicationAddress'">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                             <span>{{item.CommunicationAddress}}</span>
                                                                         </div>
@@ -247,15 +250,18 @@
                                                                                         [ObjectTableName]="'Customs.CustomsVendor'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
                                                                 <!-- Buttons -->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                    <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                         <span class="CellSeparator" [style.float]="'right'"></span>
                                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveRow(item)"
                                                                                     style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
                                                             </logitude-edit-grid>

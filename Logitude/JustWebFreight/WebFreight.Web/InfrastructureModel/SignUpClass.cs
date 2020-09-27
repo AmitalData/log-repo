@@ -949,27 +949,30 @@ namespace WebFreight.Web.InfrastructureModel
             TicketClassificationRepository classifiationRepository = new TicketClassificationRepository(tenant);
             TicketSeverityRepository severityRepository = new TicketSeverityRepository(tenant);
             EmployeeGroupRepository employeeGroupRepository = new EmployeeGroupRepository(tenant);
-
-            string defaultSeverityId = severityRepository.GetTicketSeverityByCode("MD", tenant).Id;
-            EmployeeGroup employeeGroup = employeeGroupRepository.GetEmployeeGroupByName("Unassigned Tickets", tenant);
-            bool isTicketClassificationExists = classifiationRepository.IsTicketClassificationExists(tenant);
-
-            if (!isTicketClassificationExists)
+            TicketSeverity ticketSeverity = severityRepository.GetTicketSeverityByCode("MD", tenant);
+            if (ticketSeverity != null)// added because it fails when from customs.
             {
-                TicketClassification classification = new TicketClassification()
-                {
-                    Id = Convert.ToString(tenant),
-                    Tenant = tenant,
-                    Name = "General",
-                    ParentId = null,
-                    SearchFields = "General",
-                    Inactive = false,
-                    DefaultSeverityId = defaultSeverityId,
-                    EmployeeGroupId = employeeGroup.Id,
-                };
+                string defaultSeverityId = severityRepository.GetTicketSeverityByCode("MD", tenant).Id;
+                EmployeeGroup employeeGroup = employeeGroupRepository.GetEmployeeGroupByName("Unassigned Tickets", tenant);
+                bool isTicketClassificationExists = classifiationRepository.IsTicketClassificationExists(tenant);
 
-                classifiationRepository.Add(classification);
-                classifiationRepository.SubmitChanges();
+                if (!isTicketClassificationExists)
+                {
+                    TicketClassification classification = new TicketClassification()
+                    {
+                        Id = Convert.ToString(tenant),
+                        Tenant = tenant,
+                        Name = "General",
+                        ParentId = null,
+                        SearchFields = "General",
+                        Inactive = false,
+                        DefaultSeverityId = defaultSeverityId,
+                        EmployeeGroupId = employeeGroup.Id,
+                    };
+
+                    classifiationRepository.Add(classification);
+                    classifiationRepository.SubmitChanges();
+                }
             }
         }
 
@@ -1036,6 +1039,7 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Id = IdCounter.GetNumber("CustomsRequiredField", tenant).ToString(),
                     ObjectfieldId = field.ObjectfieldId,
+                    ObjectfieldCode = field.ObjectfieldCode,
                     ObjectTableId = field.ObjectTableId,
                     Tenant = tenant,
                 };

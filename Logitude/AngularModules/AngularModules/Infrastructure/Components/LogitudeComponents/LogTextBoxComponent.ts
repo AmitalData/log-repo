@@ -289,7 +289,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             objectFieldAvailable = false;
         }
 
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
 
         this.IsDisabled = !this.uiProperty.IsEnabled;
 
@@ -1253,8 +1253,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
-
-                                    this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
+                                        this.TextValue = val.toFixed(4);
+                                    }
+                                    else{
+                                        this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                       
+                                    }
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
                                         this.TextValue = this.TextValue.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
                                     }

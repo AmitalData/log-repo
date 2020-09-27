@@ -1,5 +1,6 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.MessageLib.PhysicalCheck;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -25,7 +26,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "190"; }
         }
-        
+        protected override CH_NG_190_MSG1_NoticeToClient GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+
+            var myFake_DCAInCH_NG_190_MSG1_NoticeToClient_Service = new Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service();
+            return myFake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.GetFakeCustomsResponse(requestParamsData);
+
+            
+        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CH_NG_190_MSG1_NoticeToClient customsResponse)
         {
             var tableName="Customs.PhysicalCheck";

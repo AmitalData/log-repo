@@ -986,6 +986,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string vehicleChassisNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleChassisNumber  
+	   {
+	    
+	     get
+		{
+		   return vehicleChassisNumber;
+		 }
+		 set
+		 {
+		   if(vehicleChassisNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleChassisNumber",OldValue=vehicleChassisNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleChassisNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime endDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime EndDate  
+	   {
+	    
+	     get
+		{
+		   return endDate;
+		 }
+		 set
+		 {
+		   if(endDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndDate",OldValue=endDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   endDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

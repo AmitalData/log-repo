@@ -575,10 +575,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen SpecialServicesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SpecialServciesType.HeaderScreen", Name = "Header Screen", ObjectTableId = SpecialServicesTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    SpecialServicesTypeObjectTable.HeaderScreenId = SpecialServicesTypeHeaderScreenScreen0.Id;
 		    SpecialServicesTypeObjectTable.HeaderScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code;
 
@@ -587,14 +587,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen SpecialServicesTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SpecialServicesType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SpecialServicesTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

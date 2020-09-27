@@ -73,6 +73,8 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Customs.BL.PatchDistribution;
+using Logitude.Update.PatchDistribution;
 using System.Collections;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
@@ -100,31 +102,42 @@ namespace Logitude.Update
 
             try
             {
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                LogitudeSettings.DatabaseManagementSystem = dbms;
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                LogitudeSettings.Id = setting.Id;
-                LogitudeSettings.ChampEnv = setting.ChampEnv;
-                LogitudeSettings.ChampURL = setting.ChampURL;
-                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
-                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
-                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
-                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
-                LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
-                LogitudeSettings.DeploymentStage = setting.DeploymentStage;
-                LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
-                LogitudeSettings.LogitudeURL = setting.LogitudeURL;
-                LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
-                LogitudeSettings.UsingAzure = setting.UsingAzure;
-                LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
-                LogitudeSettings.StorageAccountName = setting.StorageAccountName;
-                LogitudeSettings.StorageType = setting.StorageType;
-                LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
-                LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
-                LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
-                LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
-                LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
+                LoadLogitudeSettings();
+            }
+            catch (Exception eee)
+            {
+                MessageBox.Show("Exception eee =" + eee.ToString());
+                throw;
+            }
+        }
+
+        public static void LoadLogitudeSettings()
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            LogitudeSettings.DatabaseManagementSystem = dbms;
+            SettingRepository settingRepository = new SettingRepository();
+            Setting setting = settingRepository.GetSingleSetting("1");
+            LogitudeSettings.Id = setting.Id;
+            LogitudeSettings.ChampEnv = setting.ChampEnv;
+            LogitudeSettings.ChampURL = setting.ChampURL;
+            LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+            LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+            LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+            LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
+            LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+            LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+            LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+            LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+            LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+            LogitudeSettings.UsingAzure = setting.UsingAzure;
+            LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+            LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+            LogitudeSettings.StorageType = setting.StorageType;
+            LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+            LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+            LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+            LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
+            LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
 
                 //if (LogitudeSettings.IsCostomsDeploy) 
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
@@ -139,15 +152,8 @@ namespace Logitude.Update
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
 
-                CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
-            }
-            catch (Exception eee)
-            {
-                MessageBox.Show("Exception eee =" + eee.ToString());
-                throw;
-            }
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
-
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
@@ -227,12 +233,36 @@ namespace Logitude.Update
                 }
             }
         }
+        void GETGIT()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("git.exe");
 
+            startInfo.UseShellExecute = false;
+            startInfo.WorkingDirectory = "dir Here";
+            startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.Arguments = "rev-parse --abbrev-ref HEAD";
+
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
+
+            string branchname = process.StandardOutput.ReadLine();
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() =>
             {
                 UpdateModule(0, "customs", UpdateCustomslbl);
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
+
+
+                var repo = new CustomsSettingRepository(_SeedTenant);
+                if (repo.AnyCourierTenant())
+                {
+                    ///MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
+                }
                 Func<string> GetConnetionStringFunc = () =>
                 {
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
@@ -1840,6 +1870,8 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
+        private int _SeedTenant = 0;
+
         private void UpdateZipFiles()
         {
             //timer 
@@ -1896,6 +1928,9 @@ User/Pass",
 
         private void productionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var frm = new PatchDistributionForm();
+            frm.ShowDialog();
+
 
         }
 
@@ -4210,7 +4245,44 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
         private void button49_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => LoadClosedTables());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void LoadClosedTables()
+        {
+            ////LoadClosedTablesLabel
+            //SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Updating...");
+            //SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Black);
+            //Stopwatch stopWatch = new Stopwatch();
+            //stopWatch.Start();
+
+            //// for timer
+            //if (generalLabel != null) SetControlPropertyValue(generalLabel, "Text", "Updating...");
+            //globalStopwatch = stopWatch;
+            //generalLabel = LoadClosedTablesLabel;
+            //timer1.Enabled = true;
+            //timer1.Start();
+
+            //IWebFreightContext context = WebFreightContext.GetContext(0);
+            //MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            //updateClass.UpgradeClosedTablesForTenantZero();
+
+            //globalStopwatch = null;
+            //generalLabel = null;
+
+            //stopWatch.Stop();
+            //TimeSpan ts = stopWatch.Elapsed;
+
+            //SetControlPropertyValue(LoadClosedTablesLabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            //SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
+            //SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+        private void button50_Click(object sender, EventArgs e)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadDefaultReports();
@@ -4473,12 +4545,12 @@ User/Pass",
             ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
          }
 
-        private void button50_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
-            thread.IsBackground = true;
-            thread.Start();
-        }
+        //private void button50_Click(object sender, EventArgs e)
+        //{
+        //    Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
+        //    thread.IsBackground = true;
+        //    thread.Start();
+        //}
     }
 
     public class TenantMailBox

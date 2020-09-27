@@ -5518,15 +5518,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;CUSTOMS&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Customs&quot;"
-      FeatureDefaultText="&quot;Customs&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+    
     <Feature
       Code="&quot;CHAMP&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -6391,15 +6383,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureDefaultText="&quot;Customs Interface Settings&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+   
     <Feature
       Code="&quot;SATINTERFACE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

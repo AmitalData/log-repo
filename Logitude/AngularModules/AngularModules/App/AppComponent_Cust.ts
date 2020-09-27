@@ -1,38 +1,38 @@
-
-import { Component, OnInit, ViewChild, ViewContainerRef, Compiler, ComponentFactoryResolver, Injector, SystemJsNgModuleLoader, NgModuleFactory, isDevMode } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Injector, Compiler, Inject, NgModuleFactory, Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { LAZY_WIDGETS } from './DynamicLoader/LazyWidgetsTokens';
+import { DynamicLoader } from './DynamicLoader/DynamicLoader';
+import { ChildDirective } from './Directives/ChildDirective';
 
 @Component({
-    selector: 'AppComponent',
-    //<img *ngIf="!_FinishLogin" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
-    template:
+  selector: 'AppComponent',
+
+  template:
     `
     <div class="MediaFillRelative">
-        <div #Child></div>
+        <img *ngIf="!IsLoginScreenLoaded" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
+        <div ChildDirective></div>
     </div>
     `,
 })
 
-export class AppComponent_Cust implements OnInit {
-    @ViewChild("Child", { read: ViewContainerRef, static: false }) location: ViewContainerRef;
-    constructor(private compiler: Compiler, private resolver: ComponentFactoryResolver, private moduleLoader: SystemJsNgModuleLoader, private injector: Injector, private httpClient: HttpClient) {
-        //console.log("isDevMode: " + isDevMode);
-        //console.log("environment: " + environment.production);
-    }
+export class AppComponent implements AfterViewInit {
+  public IsLoginScreenLoaded: boolean = false;
 
-    ngOnInit() {
-        this.moduleLoader.load('Infrastructure/Module_INFR#InfrastructureModule').then((moduleFactory: NgModuleFactory<any>) => {
+  @ViewChild(ChildDirective) Child: ChildDirective;
 
-            let Module = (<any>moduleFactory.moduleType);
-            let Component = Module.GetComponent("RootComponent_Cust");
+  constructor(private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
+    DynamicLoader.Injector = injector;
+    DynamicLoader.Compiler = compiler;
+    DynamicLoader.LazyWidgets = lazyWidgets;
+  }
 
-            if (Component) {
-                const moduleRef = moduleFactory.create(this.injector);
-                const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(Component);
-                let cmpRef: any = this.location.createComponent(compFactory);
-                cmpRef.instance.Boot({ Compiler: this.compiler, Resolver: this.resolver, Injector: this.injector, ModuleLoader: this.moduleLoader, HttpClient: this.httpClient });
-            }
-        });
-    }
+  ngAfterViewInit() {
+    DynamicLoader.Load("./Infrastructure/RootComponent_Cust", this.Child.Location)
+      .then(cmpRef => {
+        this.IsLoginScreenLoaded = true;
+        cmpRef.instance.Boot({ Http: this.http });
+      });
+  }
 }

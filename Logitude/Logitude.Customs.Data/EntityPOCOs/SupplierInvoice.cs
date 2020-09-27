@@ -119,6 +119,27 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? VendorComissionPercentage { get; set; }
         [Column("InvoiceAmountInUSD")]
 	    public decimal? InvoiceAmountInUSD { get; set; }
+        [Column("ChangeInSupplierInvoice")]
+	    public string ChangeInSupplierInvoice { get; set; }
+        [Column("BuyerName")]
+	    public string BuyerName { get; set; }
+        [Column("BuyerAddress")]
+	    public string BuyerAddress { get; set; }
+        [ForeignKey("BuyerCountry")]
+        [Column("BuyerCountryCode")]
+	    public string BuyerCountryCode { get; set; }
+	      
+        public virtual CustomsCountry BuyerCountry { get; set; }
+        [ForeignKey("BuyerRole")]
+        [Column("BuyerRoleCode")]
+	    public string BuyerRoleCode { get; set; }
+	      
+        public virtual CustomerRoleType BuyerRole { get; set; }
+        [ForeignKey("PartyRelationship")]
+        [Column("PartyRelationshipCode")]
+	    public string PartyRelationshipCode { get; set; }
+	      
+        public virtual PartyRelationshipType PartyRelationship { get; set; }
     }
 }
 	 

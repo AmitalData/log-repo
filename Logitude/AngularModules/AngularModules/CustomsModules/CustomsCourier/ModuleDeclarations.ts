@@ -8,8 +8,14 @@ import { CourierMasterGeneralTabComponent} from './Components/EditTabs/CourierMa
 import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierWorksheetComponent';
 import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
 import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
+import { DeclarationMamanSpecialActionComponent } from './Components/MamanSpecialAction/DeclarationMamanSpecialActionComponent';
 import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
-
+import { GatepassRequestComponent } from './Components/GatepassRequest/GatepassRequestComponent';
+import { GetStorageSiteCodeComponent } from './Components/CourierWorkSheet/GetStorageSiteCodeComponent';
+import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/AddEditPendingByKeywordComponent';
+import { DeclarationPendingsGeneralComponent } from './Components/CourierPendingReason/DeclarationPendingsGeneralComponent';
+import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent';
+import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyKeywordComponent';
 
 export const Components =
     [
@@ -24,7 +30,13 @@ export const Components =
         GetInternalBankComponent,
         AddEditMamanStickerComponent,
         AddCourierPendingToUnifreightStatusComponent,
-
+        GatepassRequestComponent,
+        DeclarationMamanSpecialActionComponent,
+        GetStorageSiteCodeComponent,
+        AddEditPendingByKeywordComponent,
+        DeclarationPendingsGeneralComponent,
+        CourierDeclarationWorkspaceComponent,
+        AutonomyKeywordComponent,
     ];
 
 export class ModuleDeclarations {
@@ -44,6 +56,14 @@ export class ModuleDeclarations {
             case "GetInternalBankComponent": { myResult = GetInternalBankComponent; break; }
             case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
             case "AddCourierPendingToUnifreightStatusComponent": { myResult = AddCourierPendingToUnifreightStatusComponent; break; }
+            case "GatepassRequestComponent": { myResult = GatepassRequestComponent; break; }
+            case "DeclarationMamanSpecialActionComponent": { myResult = DeclarationMamanSpecialActionComponent; break; }
+            case "GetStorageSiteCodeComponent": { myResult = GetStorageSiteCodeComponent; break; }
+            case "AddEditPendingByKeywordComponent": { myResult = AddEditPendingByKeywordComponent; break; }
+            case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
+            case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
+                
+            case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
         }
 
         return myResult;

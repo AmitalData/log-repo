@@ -1,5 +1,6 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
@@ -334,9 +335,10 @@ namespace Logitude.Server.Tools
                     messageProperties["Tenant"] = tenant.ToString();
                     var queueId = queueService.Send(messageProperties, tenant);
 
-
+                    LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
                     ///throw new Exception("Queue is DbMode "); 
                 }
+                
             }
             catch (Exception ex)
             {

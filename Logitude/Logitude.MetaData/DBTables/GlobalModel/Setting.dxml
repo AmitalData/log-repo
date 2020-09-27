@@ -3,7 +3,7 @@
   Name="Settings"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -24,7 +24,7 @@
     Type="varchar"
     Size="1000">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ChampTestAPIURL"
@@ -32,7 +32,7 @@
     Size="1000"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ChampTestAPIPassword"
@@ -40,7 +40,7 @@
     Size="40"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ChampProdAPIURL"
@@ -48,7 +48,7 @@
     Size="1000"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ChampProdAPIPassword"
@@ -56,7 +56,7 @@
     Size="40"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="DeploymentStage"

@@ -53,11 +53,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.AbandonmentDestructionReferenc).HasColumnName("AbandonmentDestructionReferenc").HasMaxLength(22).IsUnicode(false);
 
-            this.Property(t => t.WarehouseTypeCode).HasColumnName("WarehouseTypeCode").HasMaxLength(9).IsUnicode(false);
+            this.Property(t => t.WarehouseTypeCode).HasColumnName("WarehouseTypeCode").HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.ClaimExplanation).HasColumnName("ClaimExplanation").IsRequired().HasMaxLength(256).IsUnicode(true);
 
-            this.Property(t => t.ContinuousMessagesTypeCode).HasColumnName("ContinuousMessagesTypeCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.ContinuousMessagesTypeCode).HasColumnName("ContinuousMessagesTypeCode").HasMaxLength(9).IsUnicode(false);
 
             this.Property(t => t.ClaimRequestNumber).HasColumnName("ClaimRequestNumber").HasMaxLength(9).IsUnicode(false);
 
@@ -67,7 +67,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Numeral).HasColumnName("Numeral");
 
-            this.Property(t => t.CustomsBranchCode).HasColumnName("CustomsBranchCode").HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.CustomsBranchCode).HasColumnName("CustomsBranchCode").HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.DecisionCode).HasColumnName("DecisionCode").HasMaxLength(2).IsUnicode(false);
 
@@ -78,6 +78,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DepositingAmount).HasColumnName("DepositingAmount").HasPrecision(16, 2);
 
             this.Property(t => t.RefundAmount).HasColumnName("RefundAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.ContinuousRequestTypeCode).HasColumnName("ContinuousRequestTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.Explanation).HasColumnName("Explanation").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.Note).HasColumnName("Note").HasMaxLength(256).IsUnicode(true);
         }
     }
 }

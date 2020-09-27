@@ -15112,38 +15112,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.SalesmanUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.CreatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.DepartmentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.BranchId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoodsCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.SalesmanUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.CreatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.DepartmentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.BranchId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoodsCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen QuoteHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.QuoteTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.IncotermCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.OpenDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.LastUsageDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.QuoteTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.IncotermCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.OpenDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.LastUsageDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = "Quote.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    QuoteObjectTable.HeaderScreenId = QuoteHeaderScreenScreen1.Id;
 		    QuoteObjectTable.HeaderScreenCode = QuoteHeaderScreenScreen1.Code;
 
@@ -15152,14 +15152,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteNewQuoteScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewQuote", Name = "New Quote", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.ShipperReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.ConsigneeReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.ShipperReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.ConsigneeReference2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = "Quote.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -15829,6 +15829,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
 						FeatureUniqeCode = QuoteFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -15847,6 +15849,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
 						FeatureUniqeCode = QuoteFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -15865,6 +15869,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = QuoteFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -15883,6 +15889,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = QuoteFeature_MB3.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -15901,6 +15909,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton QuoteMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -15918,6 +15928,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -15936,6 +15948,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -15954,6 +15968,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -15972,6 +15988,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -15990,6 +16008,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -16008,6 +16028,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB44.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -16026,6 +16048,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -16044,6 +16068,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB45.Id,
 						Style = null,
 						LocalDefaultText = "Convert to LCL",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB45.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -16062,6 +16088,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB46.Id,
 						Style = null,
 						LocalDefaultText = "Convert to FCL",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB46.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

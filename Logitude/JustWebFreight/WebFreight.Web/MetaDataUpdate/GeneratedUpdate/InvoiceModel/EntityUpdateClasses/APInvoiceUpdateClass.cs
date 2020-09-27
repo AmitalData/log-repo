@@ -5427,32 +5427,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen APInvoiceGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.BranchId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.MasterNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.HouseNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.AccountingDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.BranchId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.MasterNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.HouseNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.AccountingDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen APInvoiceHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.HeaderScreen", Name = "Header Screen", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APInvoiceAPInvoiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.ConnectedEntityReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.DueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.AmountDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField APInvoiceAPInvoiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.ConnectedEntityReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.DueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.AmountDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = APInvoiceHeaderScreenScreen1.Id,ScreenCode = APInvoiceHeaderScreenScreen1.Code, ObjectFieldCode = "APInvoice.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    APInvoiceObjectTable.HeaderScreenId = APInvoiceHeaderScreenScreen1.Id;
 		    APInvoiceObjectTable.HeaderScreenCode = APInvoiceHeaderScreenScreen1.Code;
 
@@ -5461,16 +5461,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen APInvoiceFullAccHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.FullACCHeaderScreen", Name = "FullAccHeaderScreen", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.ConnectedEntityReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.DueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.AmountDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.ConnectedEntityReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.DueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.AmountDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceFullACCHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = APInvoiceFullAccHeaderScreenScreen2.Id,ScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code, ObjectFieldCode = "APInvoice.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    APInvoiceObjectTable.HeaderScreenId = APInvoiceFullAccHeaderScreenScreen2.Id;
 		    APInvoiceObjectTable.HeaderScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code;
 
@@ -5747,6 +5747,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "שמור",
 						FeatureUniqeCode = APInvoiceFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5765,6 +5767,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = APInvoiceFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5783,6 +5787,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "הדפסה",
 						FeatureUniqeCode = APInvoiceFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5801,6 +5807,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APInvoiceMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5818,6 +5826,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APInvoiceFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5836,6 +5846,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APInvoiceFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5854,6 +5866,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5872,6 +5886,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB32.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APInvoiceFeature_MB32.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5890,6 +5906,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB33.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APInvoiceFeature_MB33.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5908,6 +5926,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB34.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APInvoiceFeature_MB34.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

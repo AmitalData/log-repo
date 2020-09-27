@@ -43,7 +43,8 @@ export class ExchangeRatesQueryComponent
         if (this.SuperCustomMessageWrapperComponent == null) {
             console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
         } else {
-            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null" + this.SuperCustomMessageWrapperComponent.MyGuid);
+
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
         this.subscribeWrapperComponent()
@@ -61,6 +62,7 @@ export class ExchangeRatesQueryComponent
             this.ExchangeRatesQueryObservableList.InsertCollection(this.ResponseData.CurrencyRateList);
         }
     }
+
 
     get FromDate() { return this.RequestParams.FromDate; }
     set FromDate(value: Date) {
@@ -160,6 +162,7 @@ export class ExchangeRatesQueryComponent
             .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .then((res) => {
                 this.ResponseData = res;
+                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
@@ -175,6 +178,12 @@ export class ExchangeRatesQueryComponent
             });
     }
 
-
-
+    _LOVListCurrencys: any[] = [];
+    get LOVListCurrencys() { return this._LOVListCurrencys; }
+    set LOVListCurrencys(value) {
+        if (this._LOVListCurrencys != value) {
+            this._LOVListCurrencys = value;
+        }
+    }
+    
 }

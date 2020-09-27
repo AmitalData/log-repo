@@ -175,7 +175,9 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
-//import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
+import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
+
 export const Directives =
     [
         FocusMeDirective,
@@ -279,7 +281,9 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
         ImageLibraryComponent,
-        TaskSchedulerHistoryComponent, 
+        TaskSchedulerHistoryComponent,
+        DropdownMenuComponent,
+        MultiSelectLOVComponent
     ];
 export const Components =
     [

@@ -208,6 +208,7 @@ namespace AmitalCustomsWindowsService
                 var state = ServiceState.GetState();
                 if (DateTime.Now.Subtract(GCAt) > TimeSpan.FromMinutes(10))
                 {
+                    GCAt = DateTime.Now;
                     CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 }
 

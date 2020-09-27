@@ -811,10 +811,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PriceStepPriceStepsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PriceSteps.HeaderScreen", Name = "PriceStepsHeaderScreen", ObjectTableId = PriceStepObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = "PriceStep.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = "PriceStep.Steps", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = "PriceStep.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = "PriceStep.Steps", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    PriceStepObjectTable.HeaderScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id;
 		    PriceStepObjectTable.HeaderScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code;
 

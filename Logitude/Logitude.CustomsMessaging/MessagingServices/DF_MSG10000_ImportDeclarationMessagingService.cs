@@ -16,6 +16,7 @@ using UnifreightIIG.Common.TheGateway;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -117,7 +118,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-            
+            if (requestParams.TestCase != null)
+            {
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2755Payment":
+                        var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
+                        break;
+                    
+                }
+                exceptionMessage = null;
+                return response;
+            }
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
@@ -139,9 +151,36 @@ namespace Logitude.CustomsMessaging.MessagingServices
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
-            exceptionMessage = null;
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
-          
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2754Valid":
+                        var Fake2754ValidMsg = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
+                        _ResponseHeader = Fake2754ValidMsg.CallWS(requestParams,out response);
+                        break;
+                    case "2754Constraint":
+                        var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
+                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(requestParams, out response);
+                        break;
+
+                   /* case "2754Payment":
+                        var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
+                        break;*/
+
+                    //case "2754Payment":
+                    //    var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                    //    _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
+                         
+                }
+                exceptionMessage = null;
+                return response;
+            }
+            exceptionMessage = null;
+
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
 

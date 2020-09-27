@@ -54,7 +54,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Check if Tapag file is already exist
 
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
-            string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
+            //string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
+            string tapagId = tapagConnectionTableQueryService.GetTapagIdByFileAndNumeral(customResponse.TapagIdentifier.fileNumber, customResponse.TapagIdentifier.numeral, this._MyTenant);
 
             this.MyRequestSheetParam = new RequestSheetParam();
 
@@ -151,7 +152,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             newNotificationPM.EntityId = _MyDepositPM.Id;
             newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagNumber)) newNotificationPM.Reference2Number = _MyDepositPM.TapagNumber;
+            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagID)) newNotificationPM.Reference2Number = _MyDepositPM.TapagID;
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)

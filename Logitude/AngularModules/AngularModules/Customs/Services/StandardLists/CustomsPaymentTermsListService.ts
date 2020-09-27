@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -30,14 +31,12 @@ export class CustomsPaymentTermListService {
 
     getSingle(code: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
-                headers: authHeader
-            }).map(response => {
-                var list = response;
+          return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+            .pipe(
+              map((response: HttpResponse<any>) => {
+                var list = response.body;
                     
                 var entity: CustomsPaymentTermList;
 				if(list)
@@ -57,14 +56,13 @@ export class CustomsPaymentTermListService {
 
     getAll() {
 
-	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
-       return defer(() => {
-            return this._http.get(this._apiUrl+'/getall', {
-                headers: authHeader
-            }).map(response => {
 
-              var allLists = response;
+       return defer(() => {
+         return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
+           .pipe(
+             map((response: HttpResponse<any>) => {
+
+               var allLists = response.body;
               var _mappedListsArray: Array< CustomsPaymentTermList> = [];
 		      if(allLists)
 			  {
@@ -117,18 +115,17 @@ export class CustomsPaymentTermListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
 	   return defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+         return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+           .pipe(
+             map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+               var serviceResponse: ServiceResponse;
+               serviceResponse = response.body;
                 var _mappedListsArray: Array< CustomsPaymentTermList> = [];
 				if(serviceResponse.Result)
 				{
@@ -168,7 +165,8 @@ export class CustomsPaymentTermListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").map(cachedJson=> {
+          return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
+            map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<CustomsPaymentTermList> = [];
                 if (cachedJson) {
@@ -229,7 +227,8 @@ export class CustomsPaymentTermListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").map(cachedJson=> {
+          return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
+            map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<CustomsPaymentTermList> = [];
                 if (cachedJson) {

@@ -1,3 +1,31 @@
+<style>
+    .P-button-drop-menu {
+        text-align: center;
+        font-size: 15px;
+        list-style: none;
+    }
+
+        .P-button-drop-menu li span {
+            text-align: right;
+            display: block;
+            clear: both;
+            font-family: arial;
+            color: #444;
+            text-decoration: none;
+            height: 22px;
+            line-height: 23px; /*make text center*/
+        }
+
+            .P-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
+
+    .DimLI {
+        opacity: 0.5;
+        cursor: default
+    }
+</style>
 <table *ngIf="Entity">
     <tr>
         <td class="MediaFillAbsolute" style="direction:rtl">
@@ -35,6 +63,7 @@
 
                     </div>
                 </div>
+
 
                 <!-- CourierCustomStatusName -->
                 <div *ngIf="FieldName == 'CourierCustomStatusName'" style="position:relative;width:100%; height: 100%;">
@@ -115,6 +144,278 @@
             </div>
 
 
+
+            <!-- AutonomeyKeyword -->
+            <div *ngIf="ObjectTableName == 'Customs.CustomsAutonomyKeyword'">
+                <div *ngIf="FieldName == 'Delete'" style="position:relative;width:100%; height: 100%;" (click)="DeleteAutonomyKey(Entity['Id'])">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px; top:5px;">
+                        <IconButton [Name]="'Delete'"><</IconButton>
+                    </div>
+                </div>
+            </div>
+
+            <!--DeclarationReferantData-->
+            <div *ngIf="ObjectTableName == 'Customs.DeclarationReferantData'">
+                <!-- DeclarationStatusTypeName -->
+                <div *ngIf="FieldName == 'DeclarationStatusTypeName'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
+
+
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <!-- <div style="display: inline-block;" *ngIf="Entity['HasConstraint']">-->
+                            <img *ngIf="Entity['HasConstraint']" style="width:20px" src="./Images/Warning_icon.png" />
+
+                            <div class="TextTrimming"
+                                 style="display: inline; "
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div class="TextTrimming"
+                                 style="display: inline; position: absolute;left: 0px; padding-top: 1px;"
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}"
+                                 [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                            <div *ngIf="Entity['HasConstraint']">
+                                <img style="width:20px" src="./Images/Warning_icon.png" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div *ngIf="FieldName == 'ArrivalDate'" style="position:relative;width:100%; height: 100%;">
+                    <div class="TextTrimming"
+                         style="display: inline; position: absolute;right: 0px; padding-top: 1px;">
+
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming"
+                             [ngStyle]="{color: Entity.ATAOrETA | StringToColorPipe : 'ArrivalDate'}">
+                            <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="FieldName == 'PreClassification'" style="position:relative;width:100%; height: 100%;" (click)="PreShowCFIFILEMMoveSIToOCRScreen(Entity['PreClassification'])">
+
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['PreClassification']=='V'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['PreClassification']=='X'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/process_failed@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['PreClassification']=='P'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['PreClassification']=='E'">
+                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/Successful_processRemark_button@2x.png" />
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="FieldName == 'ClassificationStatus'" style="position:relative;width:100%; height: 100%;" (click)="OpenClassificationRemarks()">
+
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['ClassificationStatus']=='V' && Entity['IsClassificationRemarks']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ClassificationStatus']=='X' && Entity['IsClassificationRemarks']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/process_failed@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ClassificationStatus']=='P'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ClassificationStatus']=='V' && Entity['IsClassificationRemarks']==true">
+                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/Successful_processRemark_button@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ClassificationStatus']=='X' && Entity['IsClassificationRemarks']==true">
+                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/process_failed_button@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ClassificationStatus']=='N'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/No-Sivug.png" />
+                        </div>
+
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'ExceptionReasonsList'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['ExceptionReasonsList']!=null">
+                            <span data-toggle="tooltip" data-placement="bottom" title="{{ExceptionReasonText}}">
+                                <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/irregular@2x.png" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'NewFile'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['NewFile']== true">
+                            <img class="CenterCenter" style="width:50px;height:20px;margin-top:6px" src="./Images/Referant/New.png" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'LastStatusName'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['LastStatusName'] != null ">
+                            <span data-toggle="tooltip" data-placement="bottom" title="{{LastStatusNameText}}">{{Entity[FieldName]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'AEOImporter'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['AEOImporter'] == 1 ">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/AEO.png" />
+                        </div>
+                        <div *ngIf="Entity['AEOImporter'] == 2 ">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/AI.png" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'LastStatusDate'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['LastStatusDate'] != null ">
+                            <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'IsCustomerLogBoxActivated'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsCustomerLogBoxActivated']== true">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/LogBox/DSV/U_LOGBOX.png" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'ControllerStatus'" style="position:relative;width:100%; height: 100%;" (click)="OpenControllerRemarks()">
+
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['ControllerStatus']=='V' && Entity['IsControllerRemarks']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ControllerStatus']=='X'&& Entity['IsControllerRemarks']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/process_failed@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ControllerStatus']=='P'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ControllerStatus']=='V' && Entity['IsControllerRemarks']==true">
+                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/Successful_processRemark_button@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['ControllerStatus']=='X' && Entity['IsControllerRemarks']==true">
+                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/process_failed_button@2x.png" />
+                        </div>
+
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'Favorite'" style="position:relative;width:100%; height: 100%;" (click)="EditFavorite()">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 50%;">
+                        <div *ngIf="Entity['Favorite']==true">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Active_Favorite.png" />
+                        </div>
+                        <div *ngIf="Entity['Favorite']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Unactive_Favorite.png" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'CollectionOfMoneyStatus'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['CollectionOfMoneyStatus']=='V'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['CollectionOfMoneyStatus']=='P'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="FieldName == 'OrderMoney'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['OrderMoney']=='1'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="FieldName == 'WithPaper'" style="position:relative;width:100%; height: 100%;">
+
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['WithPaper']==true">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Manual_process@2x.png" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div *ngIf="FieldName == 'TransportModeId'" style="position:relative;width:100%; height: 100%;">
+
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['TransportModeId']=='A'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
+                        </div>
+                        <div *ngIf="Entity['TransportModeId']=='L'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Trucker.png" />
+                        </div>
+                        <div *ngIf="Entity['TransportModeId']=='O'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Vessel.png" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
+                    <div (click)="ButtonClick()">
+                        <courier-filter-button #MyDropdownMenuFilterComponent
+                                               [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
+                            <div class="class-filter-content">
+                                <div>
+                                    <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                                </div>
+                            </div>
+
+                            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                                <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowDeclaration($event);  ">
+                                        <span>כניסה להצהרה</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
+                                        <span>העברה לתור</span>
+                                    </li>
+
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowGFUUSTS();">
+                                        <span>מסך F/U</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveSIToOCRScreen();">
+                                        <span>העברת חשבונות ספק ל-OCR</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
+                                        <span>הזנת הערות לתור</span>
+                                    </li>
+                                    <li>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">שיתוף מסמכים</span>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI">שיתוף מסמכים</span>
+
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowMoneyOrder();">
+                                        <span>הזמנת כסף</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDelivery();">
+                                        <span>הובלה יבשתית</span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </courier-filter-button>
+                    </div>
+                </div>
+            </div>
             <!-- PaymentOrder -->
             <div *ngIf="ObjectTableName == 'Customs.PaymentOrder'">
                 <!-- ActualPayDate -->
@@ -132,7 +433,7 @@
                             <span>{{'כן'}}</span>
                         </div>
                         <div *ngIf="!Entity['IsClosed']">
-                            <span>{{'לא'}}</span>
+                            <span>{{'לם'}}</span>
                         </div>
                     </div>
                     <div *ngIf="!IsHeaderScreenTemplate">
@@ -161,6 +462,11 @@
                             <span>{{'Customs.Declaration.O.No' | TextCodeTranslationPipe}}</span>
                         </div>
                     </div>
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <img class="CenterCenter" style="width:10px;height:10px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -174,7 +480,7 @@
 
 
                         <div *ngIf="IsHeaderScreenTemplate" class="TextTrimming"
-                                style="display: inline; padding-right:25px;">
+                             style="display: inline; padding-right:25px;">
                             <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
 
 

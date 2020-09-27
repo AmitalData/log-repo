@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -46,7 +47,7 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostGuaranteeCertificateRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -72,7 +73,7 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostFaultQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -98,7 +99,7 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostGuaranteeFileFilterQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -119,9 +120,7 @@ export class TapagMessagesService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDeclarationTapagsLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetDeclarationTapagsLists/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;
@@ -143,9 +142,7 @@ export class TapagMessagesService {
             var depositPMService: DepositPMService = new DepositPMService();
 
             return this._http.get(this._apiUrl + "/GetDepositPMByPaymentOrderNumberOrTapagId/?paymentNumber=" + paymentNumber + "&tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var pm = response;
                     var entity: DepositPM;
@@ -173,9 +170,7 @@ export class TapagMessagesService {
             var deficitPMService: DeficitPMService = new DeficitPMService();
 
             return this._http.get(this._apiUrl + "/GetDeficitPMByPaymentOrderNumberOrTapagId/?paymentNumber=" + paymentNumber + "&tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var pm = response;
                     var entity: DeficitPM;
@@ -200,9 +195,7 @@ export class TapagMessagesService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSingleTapagList/?id=" + tapagId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetSingleTapagList/?id=" + tapagId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;
@@ -224,9 +217,7 @@ export class TapagMessagesService {
             var guaranteePMService: GuaranteePMService = new GuaranteePMService();
 
             return this._http.get(this._apiUrl + "/GetGuaranteeByTapagId/?tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var pm = response;
                     var entity: GuaranteePM;
@@ -254,9 +245,7 @@ export class TapagMessagesService {
             var deficitConnFileParagraphTypeListService: DeficitConnFileParagraphTypeListService = new DeficitConnFileParagraphTypeListService();
 
             return this._http.get(this._apiUrl + "/GetDeficitConnectedFileParagraphTypeList/?declarationId=" + declarationId + "&deficitId=" + deficitId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     //var pm = response;
                     //var entity: DeficitConnFileParagraphTypeList;
@@ -288,7 +277,7 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationFilterRequestParams/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -314,7 +303,7 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostBankAccountToRefundQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 

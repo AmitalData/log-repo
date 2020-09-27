@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -33,9 +34,7 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", {
-                    headers: authHeader
-                }).map(response => {
+            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
@@ -61,9 +60,7 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var srv = new CustomsRequiredFieldListService();
 
@@ -105,7 +102,7 @@ export class CustomsRequierdFieldsWebService {
             return this._http.post(
                 this._apiUrl + '/PostRequiredFields/',
                 JSON.stringify(fields),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 

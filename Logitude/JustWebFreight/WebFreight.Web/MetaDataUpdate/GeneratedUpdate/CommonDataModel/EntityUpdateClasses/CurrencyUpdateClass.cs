@@ -915,28 +915,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CurrencyGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Currency.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CurrencyObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Sign", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Sign", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CurrencyGeneralTabScreenScreen0.Id,ScreenCode = CurrencyGeneralTabScreenScreen0.Code, ObjectFieldCode = "Currency.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen CurrencyHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Currency.HeaderScreen", Name = "Header Screen", ObjectTableId = CurrencyObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CurrencyCurrencyHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CurrencyCurrencyHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CurrencyCurrencyHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CurrencyCurrencyHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = "Currency.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CurrencyObjectTable.HeaderScreenId = CurrencyHeaderScreenScreen1.Id;
 		    CurrencyObjectTable.HeaderScreenCode = CurrencyHeaderScreenScreen1.Code;
 

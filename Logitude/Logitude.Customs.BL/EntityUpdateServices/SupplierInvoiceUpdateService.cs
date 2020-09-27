@@ -33,7 +33,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
-
+using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -42,6 +43,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private bool _FromDec;
         private AmitalContext _AmitalContext;
         private ICustomContext _Context;
+        private DeclarationPM _DeclarationPM;
+        private bool openTaskForUnifreight;
+
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.
         public bool UpdateFromDeclaration { get; set; }
         protected override void OnCreating(SupplierInvoicePM entityPM, EntityPM entityParentPM)
@@ -65,25 +69,33 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //var accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == "Customs.SupplierInvoice Customs.Declaration")[0];
 
             //FeaturePM feature = TenantContext.Current.Features.Where(d => d.Code == "SENDTESTCASES").FirstOrDefault();
-            try
+            bool notToCheckFeature = false;
+            if (notToCheckFeature)
             {
-                int tenant = entityPM.Tenant;
-                string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
-                string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                if (!string.IsNullOrWhiteSpace(id))
-                {
-                    ContactRepository contactrep = new ContactRepository(tenant);
-                    var contact = contactrep.GetSingleContact(id, tenant);
-                    email = contact.Email;
-
-                }
-                InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ACCUMULATION", tenant, email);
-                if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "1";
-            }
-            catch (Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
                 if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
+            }
+            else
+            {
+                try
+                {
+                    int tenant = entityPM.Tenant;
+                    string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        ContactRepository contactrep = new ContactRepository(tenant);
+                        var contact = contactrep.GetSingleContact(id, tenant);
+                        email = contact.Email;
+
+                    }
+                    InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ACCUMULATION", tenant, email);
+                    if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "1";
+                }
+                catch (SecurityException ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
+                    if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
+                }
             }
             //base.OnCreating(entityPM, entityParentPM);
         }
@@ -158,7 +170,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //    }
         //   // entityPM.InvoiceCounterKey = CodeCounter.GetNumber("Customs.SupplierInvoice", entityPM.Tenant);
         //}
+        protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
+        {
+            if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration)
+            {
+                bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
+                if (pHaveChange)
+                {
 
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+
+                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange);
+                    this.openTaskForUnifreight = true;
+                }
+            }
+
+            base.OnUpdating(entityPM, entityPOCO);
+        }
         protected override void OnUpdating(SupplierInvoicePM entityPM)
         {
 
@@ -177,20 +207,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //    }
             //}
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             
-            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
+            if (_DeclarationPM != null && _DeclarationPM.IsConnectedToUnifreight)
             {
                 base.OnUpdating(entityPM);
                 SupplierInvoicePM dbOccSupplierInvoicePM = GetDBEntity(entityPM);
                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                unifreightFUStatusTaskService.DeleteINAFUStatus(declarationPM.Tenant, declarationPM.CustomFileNo);
+                unifreightFUStatusTaskService.DeleteINAFUStatus(_DeclarationPM.Tenant, _DeclarationPM.CustomFileNo);
 
                 if (dbOccSupplierInvoicePM != null && dbOccSupplierInvoicePM.IsValueForCustomsOnly != entityPM.IsValueForCustomsOnly)
                 {
                     string xml_status = "new";
                     if (entityPM.IsValueForCustomsOnly != true) xml_status = "del";
-                    RaiseStatus(declarationPM, "", "DFC", xml_status);
+                    RaiseStatus(_DeclarationPM, "", "DFC", xml_status);
                 }
             }
 
@@ -227,13 +257,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if(string.IsNullOrEmpty(entityPM.ChangeInSupplierInvoice)) // Task 49995
+                {
+                    entityPM.ChangeInSupplierInvoice = "1";
+                }
+            }
 
             //calculate frieghts total
             //this.CalculateFrieghtTotals(entityPM, declarationPM);
             InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            util.CalculateFreightForInvoice(entityPM, declarationPM.TaxationDateTime);
-            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(declarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-
+            util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
+            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
 
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
@@ -241,6 +277,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (myDec != null)
             {
                 this._FromDec = true;
+                
             }
 
             this.SetDeclarationChanged(entityPM);
@@ -408,6 +445,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceFreightAmountUpdateService supplierInvoiceFreightAmountUpdateService = new SupplierInvoiceFreightAmountUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
             supplierInvoiceFreightAmountUpdateService.UpdateMulti(entityPM.SupplierInvoiceFreightAmounts, entityPM.DeletedSupplierInvoiceFreightAmounts, entityPM, false);
 
+            SupplierInvoicePaymentUpdateService supplierInvoicePaymentUpdateService = new SupplierInvoicePaymentUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
+            supplierInvoicePaymentUpdateService.UpdateMulti(entityPM.SupplierInvoicePayments, entityPM.DeletedSupplierInvoicePayments, entityPM, false);
+
+            SupplierInvoiceUCRUpdateService supplierInvoiceUCRUpdateService = new SupplierInvoiceUCRUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
+            supplierInvoiceUCRUpdateService.UpdateMulti(entityPM.SupplierInvoiceUCRs, entityPM.DeletedSupplierInvoiceUCRs, entityPM, false);
 
 
             base.UpdateComposition(entityPM);
@@ -433,15 +475,79 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //                        select a).Any();
             ICustomContext context = MainContext as CustomContext;
             SupplierInvoiceRepository invoiceRepository = new SupplierInvoiceRepository(context);
-            List<SupplierInvoice> supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
-            supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
+            List<SupplierInvoice> supplierInvoices = null; // invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
+            //supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
 
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            bool toUpdateClassification = false;
+            string defaultClassificationCode = null;
+            string defaultClassificationCodeUnit = null;
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
+            {
+                try
+                {
+                    using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                    {
+                        bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
+                                                                      where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
+                                                                      select a).Any();
+                        if (isInvoiceItemInsertNullClassification)
+                        {
+                            if(entityPM.InvoiceAmountInUSD <= 75)
+                            {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            else if(entityPM.InvoiceAmountInUSD > 75 && entityPM.InvoiceAmountInUSD <= 500)
+                                {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            else if(entityPM.InvoiceAmountInUSD > 500 && entityPM.InvoiceAmountInUSD <= 1000)
+                            {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            
+                            if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
+                            {
+                                CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
+                                foreach (SupplierInvoiceItemPM item in entityPM.SupplierInvoiceItems)
+                                {
+                                    if (string.IsNullOrWhiteSpace(item.ClassificationCode))
+                                    {
+                                        item.ClassificationCode = defaultClassificationCode;
+                                        if (!string.IsNullOrWhiteSpace(defaultClassificationCodeUnit))
+                                        {
+                                            item.InvoiceQuantityType = defaultClassificationCodeUnit;
+                                        }
+                                        else
+                                        {
+                                            item.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(item.ClassificationCode, entityPM.Tenant);
+                                            defaultClassificationCodeUnit = item.InvoiceQuantityType;
+                                        }
+                                    }
+                                }
+                                toUpdateClassification = true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.ChangeExceptionMessage("AfterUpdating update ClassificationCode default Exception");
+                    throw;
+                }
+            }
+
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 SubmitChanges();
+                //if(supplierInvoices == null || supplierInvoices.Count() < 1)
+                {
+                    supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
+                    supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
+                }
+
                 isSubmitChanges = true;
                 int index = 0;
                 var my = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
@@ -457,6 +563,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         //update SequenceNumeric Soo the Client will have Accurate PM !!!!!!
                         entityPM.SequenceNumeric = item.SequenceNumeric;
+                        if (toUpdateClassification)
+                        {
+                            SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
+                            List<SupplierInvoiceItem> supplierInvoiceItems = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey });
+                            foreach (SupplierInvoiceItem SIitem in supplierInvoiceItems)
+                            {
+                                if (string.IsNullOrWhiteSpace(SIitem.ClassificationCode))
+                                {
+                                    SIitem.ClassificationCode = defaultClassificationCode;
+                                    if (string.IsNullOrWhiteSpace(SIitem.InvoiceQuantityType)) SIitem.InvoiceQuantityType = defaultClassificationCodeUnit;
+                                    invoiceItemRepository.Update(SIitem);
+                                }
+                            }
+                        }
                     }
 
                     invoiceRepository.Update(item);
@@ -971,7 +1091,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (declarationPM != null && declarationPM.IsCourierDeclaration)
             {
-                DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                DeclarationQueryService cDeclarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                DeclarationPM fullDeclarationPM = cDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(fullDeclarationPM);
                 /*
@@ -998,6 +1119,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceQueryService = new SupplierInvoiceQueryService(context);
             var supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
             var supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
+            var supplierInvoiceItemssQueryService = new SupplierInvoiceItemQueryService(context);
+
             //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
             string unifreightUser = null;
             if (RequestSheetContext.Current != null)
@@ -1043,6 +1166,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 supplierInvoiceKeys.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
                 supplierInvoicePM.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(supplierInvoiceKeys, false);
                 supplierInvoicePM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, false);
+                supplierInvoicePM.SupplierInvoiceItems = supplierInvoiceItemssQueryService.GetMulti(supplierInvoiceKeys, false);
+
             }
             if (this.Multi_LastSIWillUpdateCCU)
             {
@@ -1053,9 +1178,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 LogMessagingUtil.Instance.AppendLine($"Last!!!! SupplierInvoice{entityPM.SequenceNumeric} Call UnifrightDeclarationUpdateService");
             }
+            bool dotask = false;
+            if (!this.Multi_LastSIWillUpdateCCU && this.openTaskForUnifreight)
+            {
+                dotask = true;
+                myDeclarationPM.TotalInvoiceAmountInUSD = 0;
+                myDeclarationPM.TotalInvoiceAmountInUSD = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
+                this.openTaskForUnifreight = false;
+            }
             UnifrightDeclarationUpdateService UnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(myDeclarationPM, null, unifreightUser);
             UnifrightDeclarationUpdateService._UpdateCCUFILEMFromSupplerInvoice = true;
-            UnifrightDeclarationUpdateService.Update(false);
+            
+            UnifrightDeclarationUpdateService.Update(dotask);
         }
 
         //<--- Yuval Chalup 04.12.2016 TASK-24655
@@ -1331,5 +1465,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
+
+        private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(_AmitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
     }
 }

@@ -13,6 +13,9 @@ using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.BL.Helpers;
+using Logitude.Customs.BL.TraceEvents;
+
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -21,12 +24,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void UpdateComposition(DeclarationPaymentPM entityPM)
         {
             DeclarationPaymentMethodUpdateService declarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
-            declarationPaymentMethodUpdateService.UpdateMulti(entityPM.DeclarationPaymentMethods,entityPM.DeletedDeclarationPaymentMethods,entityPM,false);
+            declarationPaymentMethodUpdateService.UpdateMulti(entityPM.DeclarationPaymentMethods, entityPM.DeletedDeclarationPaymentMethods, entityPM, false);
 
             DeclarationPaymentProtestUpdateService declarationPaymentProtestUpdateService = new DeclarationPaymentProtestUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
             declarationPaymentProtestUpdateService.UpdateMulti(entityPM.DeclarationPaymentProtests, entityPM.DeletedDeclarationPaymentProtests, entityPM, false);
 
             base.UpdateComposition(entityPM);
+        }
+        protected override void OnUpdating(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
+        {
+            if(entityPM.AutomaticPayment!= entityPOCO.AutomaticPayment)
+            {
+                if (entityPM.AutomaticPayment == 1)
+                {
+                    SendAVAPAY(entityPM, null, UnifreightEventMode.@new);
+                }
+                else
+                {
+                    SendAVAPAY(entityPM, null, UnifreightEventMode.del);
+                }
+            }
+          
+            base.OnUpdating(entityPM, entityPOCO);
+
         }
         protected override void OnUpdating(DeclarationPaymentPM entityPM)
         {
@@ -41,7 +61,42 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var unifreightDeclarationPaymentUpdateService = new UnifreightDeclarationPaymentUpdateService(entityPM, declaration);
                 unifreightDeclarationPaymentUpdateService.Update();
             }
+
             base.OnUpdating(entityPM);
+        }
+
+
+        private void SendAVAPAY(DeclarationPaymentPM declarationPaymentPM, string loggingUserId, UnifreightEventMode action)
+        {
+            try
+            {
+                var declarationQueryService = new DeclarationQueryService(declarationPaymentPM.Tenant);
+                DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
+
+               
+               
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "AVAPAY",
+                        Mode = action,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = connectedDeclarationPM.CustomFileNo,
+                        EventRemarks = "",
+                    };
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        connectedDeclarationPM.Tenant,
+                       loggingUserId,
+                        MyUnifreightEventParam);
+            
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
         }
 
         protected override void CheckConcurrency(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
@@ -70,10 +125,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             bool isDeclarationPaymentMethodDelete = (from a in entityPM.DeletedDeclarationPaymentMethods
                                                      select a).Any();
-
-            if (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete)
+            bool theCountOf_DeclarationPaymentProtest_Changed =
+                entityPM.DeletedDeclarationPaymentProtests.Any() ||
+                entityPM.DeclarationPaymentProtests.Any(r => r.ChangeSetOp == ChangeSetOperation.Delete) ||
+                entityPM.DeclarationPaymentProtests.Any(r => r.ChangeSetOp == ChangeSetOperation.Insert)
+                ;
+            bool theCountOf_DeclarationPaymentMethod_Changed = (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete);
+            if (theCountOf_DeclarationPaymentMethod_Changed || theCountOf_DeclarationPaymentProtest_Changed)
             {
                 SubmitChanges();
+            }
+            if (theCountOf_DeclarationPaymentProtest_Changed)
+            {
+                bool fake_until_you_make_it = false;
+                if (fake_until_you_make_it)
+                {
+                    (new Declaration()).IsPaymentProtested = true;//HOW IS CHANGING IsPaymentProtested>LOOK DOWN
+                }
+                //55160	עדכון סימון הצהרה כהוגשה אגב מחאה
+                //please do not set the ischanged>DUE THAT IS SP 
+                var repoFast = new DeclarationPaymentProtestRepository(entityPM.Tenant);
+                bool anyDeclarationPaymentProtest = repoFast.AnyDeclarationPaymentProtest(entityPM.DeclarationId, entityPM.Tenant);
+                CustomsStoredProcedures.Declaration_SetIsPaymentProtested(entityPM.DeclarationId, entityPM.Tenant, anyDeclarationPaymentProtest);
+
+            }
+            //if (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete)
+
+            if (theCountOf_DeclarationPaymentMethod_Changed)
+            {
+                ///SubmitChanges();//moveup 
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPaymentMethodRepository declarationPaymentMethodRepository = new DeclarationPaymentMethodRepository(context);
                 List<DeclarationPaymentMethod> declarationPaymentMethods = declarationPaymentMethodRepository.GetMulti(new DeclarationPaymentKeys() { DeclarationId = entityPM.DeclarationId });
@@ -102,6 +182,5 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
-        
     }
 }

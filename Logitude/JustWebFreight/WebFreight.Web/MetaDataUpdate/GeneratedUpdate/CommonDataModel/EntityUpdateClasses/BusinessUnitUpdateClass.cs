@@ -480,10 +480,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen BusinessUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessUnit.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessUnitObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = "BusinessUnit.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = "BusinessUnit.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = "BusinessUnit.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = "BusinessUnit.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    BusinessUnitObjectTable.HeaderScreenId = BusinessUnitHeaderScreenScreen0.Id;
 		    BusinessUnitObjectTable.HeaderScreenCode = BusinessUnitHeaderScreenScreen0.Code;
 

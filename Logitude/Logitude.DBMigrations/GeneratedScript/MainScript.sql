@@ -1,3568 +1,763 @@
--- General Script From FillShipmentSearchFields.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
-Begin
-Drop Table #temp_Shipments
-End
-CREATE TABLE #temp_Shipments (
-Id varchar(15) not null ,
-SearchFields nvarchar(4000)  null,
-)
-select Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,DirectionId,
-StatusId, QuoteId, SalesmanUserId, MasterShipmentDataId,
-FromPortId, ToPortId, PreCarriageFromPortId, PreCarriageToPortId,
-OnCarriageFromPortId, OnCarriageToPortId,
-House, CustomFileNumber, AWBCarrierTarrifReference,
-AgentId, AgentReference1, AgentReference2,
-ShipperId, ShipperReference1, ShipperReference2,
-ConsigneeId, ConsigneeReference1, ConsigneeReference2,
-CustomerId, CustomerReference1, CustomerReference2,
-Notify1Id, Notify2Id, IssuingCarrierAgentId,
-CustomAgentImportId, CustomAgentImportReference,
-CustomAgentExportId, CustomAgentExportReference,
-ShipperNotExporterId, ConsigneeNotImporterId,
-FreightForwarderId, FreightForwarderReference,
-ConsolidatorId, ConsolidatorReference,
-Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
-CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-AMSBL, WarehouseLegReference
-into #tempTable
-FROM Shipments
-SET NOCOUNT ON
-declare @MySearchFields as nvarchar(4000)
-declare @PortsTable table
-(
-Id varchar(15) not null
-)
-declare @PartnersTable table
-(
-Id varchar(15) not null
-)
-declare @ReferencesTable table
-(
-Reference varchar(50) not null
-)
--- Shipment fields
-BEGIN
-declare @Id as varchar(15)
-declare @Tenant as int
-declare @ShipmentNumber as varchar(15)
-declare @ShipmentLevelCode as varchar(1)
-declare @TransportModeId as varchar(1)
-declare @DirectionId as varchar(1)
-declare @StatusId as varchar(15)
-declare @StatusCode as varchar(4)
-declare @StatusName as varchar(40)
-declare @QuoteId as varchar(15)
-declare @QuoteNumber as varchar(15)
-declare @SalesmanUserId as varchar(15)
-declare @SalesmanUserName as varchar(60)
-declare @MasterShipmentDataId as varchar(15)
-declare @House as varchar(20)
-declare @CustomFileNumber as varchar(15)
-declare @AWBCarrierTarrifReference as varchar(25)
-declare @CustomsDeclarationNumber as varchar(35)
-declare @ForwarderShipmentNumber as varchar(15)
-declare @TransportDocumentNumber as varchar(50)
-declare @ImportManifest as varchar(50)
-declare @BookingConfirmationNumber as varchar(25)
-declare @CarrierTransportDocumentNumber as varchar(50)
-declare @ProjectNumber as varchar(100)
-declare @AMSBL as nvarchar(17)
-declare @WarehouseLegReference as nvarchar(50)
-END
--- Ports Firlds
-BEGIN
-declare @PortId as varchar(15)
-declare @PortCode as varchar(3)
-declare @PortName as varchar(40)
-declare @PortCountryCode as varchar(2)
-declare @PortCountryName as varchar(120)
-declare @FromPortId as varchar(15)
-declare @ToPortId as varchar(15)
-declare @PreCarriageFromPortId as varchar(15)
-declare @PreCarriageToPortId as varchar(15)
-declare @OnCarriageFromPortId as varchar(15)
-declare @OnCarriageToPortId as varchar(15)
-declare @MainCarriageFromPortId as varchar(15)
-declare @MainCarriageToPortId as varchar(15)
-declare @Transshipment1FromPortId as varchar(15)
-declare @Transshipment1ToPortId as varchar(15)
-declare @Transshipment2FromPortId as varchar(15)
-declare @Transshipment2ToPortId as varchar(15)
-declare @Transshipment3FromPortId as varchar(15)
-declare @Transshipment3ToPortId as varchar(15)
-declare @MainCarriageFinalDestinationPortId as varchar(15)
-END
--- Partners Fields
-BEGIN
-declare @PartnerId as varchar(15)
-declare @PartnerName as varchar(60)
-declare @CityName as varchar(120)
-declare @PartnerReference1 as varchar(50)
-declare @PartnerReference2 as varchar(50)
-declare @AgentId as varchar(15)
-declare @AgentReference1 as varchar(50)
-declare @AgentReference2 as varchar(50)
-declare @ShipperId as varchar(15)
-declare @ShipperReference1 as varchar(50)
-declare @ShipperReference2 as varchar(50)
-declare @ConsigneeId as varchar(15)
-declare @ConsigneeReference1 as varchar(50)
-declare @ConsigneeReference2 as varchar(50)
-declare @CustomerId as varchar(15)
-declare @CustomerReference1 as varchar(50)
-declare @CustomerReference2 as varchar(50)
-declare @Notify1Id as varchar(15)
-declare @Notify2Id as varchar(15)
-declare @IssuingCarrierAgentId as varchar(15)
-declare @CustomAgentImportId as varchar(15)
-declare @CustomAgentImportReference as varchar(50)
-declare @CustomAgentExportId as varchar(15)
-declare @CustomAgentExportReference as varchar(50)
-declare @ShipperNotExporterId as varchar(15)
-declare @ConsigneeNotImporterId as varchar(15)
-declare @FreightForwarderId as varchar(15)
-declare @FreightForwarderReference as varchar(50)
-declare @ConsolidatorId as varchar(15)
-declare @ConsolidatorReference as varchar(50)
-declare @ReleasingAgentId as varchar(15)
-declare @ReleasingAgentReference1 as varchar(50)
-declare @ReleasingAgentReference2 as varchar(50)
-declare @MainCarriageFromAddressId as varchar(50)
-declare @MainCarriageToAddressId as varchar(50)
-END
--- MasterData Fields
-BEGIN
-declare @Master as varchar(20)
-declare @LongMaster as varchar(30)
-declare @MasterShipmentNumber as varchar(15)
-declare @MainCarriageVesselId as varchar(15)
-declare @MainCarriageVesselCode as varchar(5)
-declare @MainCarriageVesselName as varchar(40)
-declare @MainCarriageCarrierId as varchar(15)
-declare @MainCarriageCarrierCode as varchar(15)
-declare @MainCarriageCarrierName as varchar(60)
-declare @MainCarriageCarrierPrefix as varchar(3)
-declare @MainCarriageCarrierNumber as varchar(15)
-declare @Transshipment1AdditionalMAWBOBLBL as varchar(20)
-declare @Transshipment2AdditionalMAWBOBLBL as varchar(20)
-declare @Transshipment3AdditionalMAWBOBLBL as varchar(20)
-END
--- Custom Fields
-BEGIN
-declare @Field nvarchar(250)
-declare @FieldName varchar(10)
-declare @FieldDataTypeCode as varchar(10)
-declare @Field1 nvarchar(250)
-declare @Field2 nvarchar(250)
-declare @Field3 nvarchar(250)
-declare @Field4 nvarchar(250)
-declare @Field5 nvarchar(250)
-declare @Field6 nvarchar(250)
-declare @Field7 nvarchar(250)
-declare @Field8 nvarchar(250)
-declare @Field9 nvarchar(250)
-declare @Field10 nvarchar(250)
-END
-declare @ARInvoiceId as varchar(20)
-declare @ARInvoiceNumber as varchar(20)
-declare @ARInvoiceDraftNumber as varchar(20)
-declare @ContainerNumber as varchar(20)
-declare @Count as int
-set @Count = 0;
-BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,DirectionId,
-StatusId, QuoteId, SalesmanUserId, MasterShipmentDataId,
-FromPortId, ToPortId, PreCarriageFromPortId, PreCarriageToPortId,
-OnCarriageFromPortId, OnCarriageToPortId,
-House, CustomFileNumber, AWBCarrierTarrifReference,
-AgentId, AgentReference1, AgentReference2,
-ShipperId, ShipperReference1, ShipperReference2,
-ConsigneeId, ConsigneeReference1, ConsigneeReference2,
-CustomerId, CustomerReference1, CustomerReference2,
-Notify1Id, Notify2Id, IssuingCarrierAgentId,
-CustomAgentImportId, CustomAgentImportReference,
-CustomAgentExportId, CustomAgentExportReference,
-ShipperNotExporterId, ConsigneeNotImporterId,
-FreightForwarderId, FreightForwarderReference,
-ConsolidatorId, ConsolidatorReference,
-Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
-CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-AMSBL, WarehouseLegReference
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO
-@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
-@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
-@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
-@OnCarriageFromPortId, @OnCarriageToPortId,
-@House, @CustomFileNumber, @AWBCarrierTarrifReference,
-@AgentId, @AgentReference1, @AgentReference2,
-@ShipperId, @ShipperReference1, @ShipperReference2,
-@ConsigneeId, @ConsigneeReference1, @ConsigneeReference2,
-@CustomerId, @CustomerReference1, @CustomerReference2,
-@Notify1Id,
-@Notify2Id,
-@IssuingCarrierAgentId,
-@CustomAgentImportId, @CustomAgentImportReference,
-@CustomAgentExportId, @CustomAgentExportReference,
-@ShipperNotExporterId,
-@ConsigneeNotImporterId,
-@FreightForwarderId, @FreightForwarderReference,
-@ConsolidatorId, @ConsolidatorReference,
-@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
-@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-@AMSBL, @WarehouseLegReference
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @MySearchFields = ''
-delete from @PortsTable
-delete from @PartnersTable
-delete from @ReferencesTable
--- Master Data
-BEGIN
-if (@MasterShipmentDataId is not null)
-BEGIN
-select
-@Master = Master,
-@MasterShipmentNumber = MasterShipmentNumber,
-@MainCarriageVesselId = MainCarriageVesselId,
-@MainCarriageCarrierId  = MainCarriageCarrierId,
-@MainCarriageCarrierNumber = MainCarriageCarrierNumber,
-@MainCarriageFromPortId = MainCarriageFromPortId,
-@MainCarriageToPortId = MainCarriageToPortId,
-@Transshipment1FromPortId = Transshipment1FromPortId,
-@Transshipment2FromPortId = Transshipment2FromPortId,
-@Transshipment3FromPortId = Transshipment3FromPortId,
-@Transshipment1ToPortId = Transshipment1ToPortId,
-@Transshipment2ToPortId = Transshipment2ToPortId,
-@Transshipment3ToPortId = Transshipment3ToPortId,
-@MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPortId,
-@ImportManifest = ImportManifest,
-@BookingConfirmationNumber = BookingConfirmationNumber,
-@CarrierTransportDocumentNumber = CarrierTransportDocumentNumber,
-@Transshipment1AdditionalMAWBOBLBL = Transshipment1AdditionalMAWBOBLBL,
-@Transshipment2AdditionalMAWBOBLBL = Transshipment2AdditionalMAWBOBLBL,
-@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL,
-@MainCarriageFromAddressId = MainCarriageFromAddressId,
-@MainCarriageToAddressId = MainCarriageToAddressId
-from ShipmentMasterDatas
-where Id = @MasterShipmentDataId AND Tenant = @Tenant
-END
-END
--- Fields
-BEGIN
-if (@ProjectNumber is not null AND @ProjectNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @ProjectNumber
-else set @MySearchFields = @MySearchFields + ',' + @ProjectNumber
-end
-if (@House is not null AND @House <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @House
-else set @MySearchFields = @MySearchFields + ',' + @House
-end
-if (@Master is not null AND @Master <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Master
-else set @MySearchFields = @MySearchFields + ',' + @Master
-end
-if (@ShipmentNumber is not null AND @ShipmentNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @ShipmentNumber
-else set @MySearchFields = @MySearchFields + ',' + @ShipmentNumber
-end
-if (@CustomFileNumber is not null AND @CustomFileNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @CustomFileNumber
-else set @MySearchFields = @MySearchFields + ',' + @CustomFileNumber
-end
-if (@AWBCarrierTarrifReference is not null AND @AWBCarrierTarrifReference <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @AWBCarrierTarrifReference
-else set @MySearchFields = @MySearchFields + ',' + @AWBCarrierTarrifReference
-end
-if (@CustomsDeclarationNumber is not null AND @CustomsDeclarationNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @CustomsDeclarationNumber
-else set @MySearchFields = @MySearchFields + ',' + @CustomsDeclarationNumber
-end
-if (@ForwarderShipmentNumber is not null AND @ForwarderShipmentNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @ForwarderShipmentNumber
-else set @MySearchFields = @MySearchFields + ',' + @ForwarderShipmentNumber
-end
-if (@TransportDocumentNumber is not null AND @TransportDocumentNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @TransportDocumentNumber
-else set @MySearchFields = @MySearchFields + ',' + @TransportDocumentNumber
-end
-if (@ImportManifest is not null AND @ImportManifest <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @ImportManifest
-else set @MySearchFields = @MySearchFields + ',' + @ImportManifest
-end
-if (@BookingConfirmationNumber is not null AND @BookingConfirmationNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @BookingConfirmationNumber
-else set @MySearchFields = @MySearchFields + ',' + @BookingConfirmationNumber
-end
-if (@CarrierTransportDocumentNumber is not null AND @CarrierTransportDocumentNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @CarrierTransportDocumentNumber
-else set @MySearchFields = @MySearchFields + ',' + @CarrierTransportDocumentNumber
-end
-if (@Transshipment1AdditionalMAWBOBLBL is not null AND @Transshipment1AdditionalMAWBOBLBL <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Transshipment1AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + ',' + @Transshipment1AdditionalMAWBOBLBL
-end
-if (@Transshipment2AdditionalMAWBOBLBL is not null AND @Transshipment2AdditionalMAWBOBLBL <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Transshipment2AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + ',' + @Transshipment2AdditionalMAWBOBLBL
-end
-if (@Transshipment3AdditionalMAWBOBLBL is not null AND @Transshipment3AdditionalMAWBOBLBL <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Transshipment3AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + ',' + @Transshipment3AdditionalMAWBOBLBL
-end
-if (@QuoteId is not null)
-begin
-set @QuoteNumber = (select QuoteNumber from Quotes where Id = @QuoteId AND Tenant = @Tenant)
-if (@QuoteNumber is not null AND @QuoteNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @QuoteNumber
-else set @MySearchFields = @MySearchFields + ',' + @QuoteNumber
-end
-end
-if (@StatusId is not null)
-begin
-select
-@StatusCode = Code,
-@StatusName = Name
-from EntityStatus
-where Id = @StatusId AND Tenant = @Tenant
-if (@StatusCode is not null AND @StatusCode <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @StatusCode
-else set @MySearchFields = @MySearchFields + ',' + @StatusCode
-end
-if (@StatusName is not null AND @StatusName <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @StatusName
-else set @MySearchFields = @MySearchFields + ',' + @StatusName
-end
-end
-if (@MainCarriageVesselId is not null)
-begin
-select
-@MainCarriageVesselCode = Code,
-@MainCarriageVesselName = EnglishName
-from Vessels
-where Id = @MainCarriageVesselId AND Tenant = @Tenant
-if (@MainCarriageVesselCode is not null AND @MainCarriageVesselCode <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @MainCarriageVesselCode
-else set @MySearchFields = @MySearchFields + ',' + @MainCarriageVesselCode
-end
-if (@MainCarriageVesselName is not null AND @MainCarriageVesselName <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @MainCarriageVesselName
-else set @MySearchFields = @MySearchFields + ',' + @MainCarriageVesselName
-end
-end
-if (@MainCarriageCarrierId is not null)
-begin
-select
-@MainCarriageCarrierCode = Cards.Code,
-@MainCarriageCarrierName = Cards.EnglishName,
-@MainCarriageCarrierPrefix = Airlines.Prefix
-from Airlines join Cards on Airlines.Id = Cards.Id
-where Airlines.Tenant = @Tenant AND Airlines.Id = @MainCarriageCarrierId
-if (@TransportModeId = 'A' AND @Master is not null AND @Master <> '')
-begin
-set @LongMaster = @MainCarriageCarrierPrefix + '-' + @Master
-if (@LongMaster is not null AND @LongMaster <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @LongMaster
-else set @MySearchFields = @MySearchFields + ',' + @LongMaster
-end
-end
-if (@MainCarriageCarrierCode is not null AND @MainCarriageCarrierCode <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @MainCarriageCarrierCode
-else set @MySearchFields = @MySearchFields + ',' + @MainCarriageCarrierCode
-end
-if (@MainCarriageCarrierName is not null AND @MainCarriageCarrierName <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @MainCarriageCarrierName
-else set @MySearchFields = @MySearchFields + ',' + @MainCarriageCarrierName
-end
-if (@MainCarriageCarrierNumber is not null AND @MainCarriageCarrierNumber <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @MainCarriageCarrierNumber
-else set @MySearchFields = @MySearchFields + ',' + @MainCarriageCarrierNumber
-end
-end
-if (@SalesmanUserId is not null)
-begin
-set @SalesmanUserName = (select EnglishName from Contacts where Id = @SalesmanUserId AND Tenant = @Tenant)
-if (@SalesmanUserName is not null AND @SalesmanUserName <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @SalesmanUserName
-else set @MySearchFields = @MySearchFields + ',' + @SalesmanUserName
-end
-end
-if (@AMSBL is not null AND @AMSBL <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @AMSBL
-else set @MySearchFields = @MySearchFields + ',' + @AMSBL
-end
-if (@WarehouseLegReference is not null AND @WarehouseLegReference <> '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @WarehouseLegReference
-else set @MySearchFields = @MySearchFields + ',' + @WarehouseLegReference
-end
-END
--- Ports
-BEGIN
-set @PortId = @FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @PreCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @PreCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @OnCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @OnCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment1FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment1ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment2FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment2ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment3FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @Transshipment3ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageFinalDestinationPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + ',' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + ',' + @PortCountryName
-end
-end
-END
--- Partners
-BEGIN
-set @PartnerId = @AgentId
-set @PartnerReference1 = @AgentReference1
-set @PartnerReference2 = @AgentReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ShipperId
-set @PartnerReference1 = @ShipperReference1
-set @PartnerReference2 = @ShipperReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsigneeId
-set @PartnerReference1 = @ConsigneeReference1
-set @PartnerReference2 = @ConsigneeReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomerId
-set @PartnerReference1 = @CustomerReference1
-set @PartnerReference2 = @CustomerReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @Notify1Id
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @Notify2Id
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @IssuingCarrierAgentId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomAgentImportId
-set @PartnerReference1 = @CustomAgentImportReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomAgentExportId
-set @PartnerReference1 = @CustomAgentExportReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ShipperNotExporterId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsigneeNotImporterId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @FreightForwarderId
-set @PartnerReference1 = @FreightForwarderReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsolidatorId
-set @PartnerReference1 = @ConsolidatorReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-set @PartnerId = @ReleasingAgentId
-set @PartnerReference1 = @ReleasingAgentReference1
-set @PartnerReference2 = @ReleasingAgentReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + ',' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2
-end
-end
-if(@TransportModeId = 'I' and @DirectionId ='D' and @MasterShipmentDataId is not null)
-begin
-set @CityName = (select City from Addresses where Id = @MainCarriageFromAddressId AND Tenant = @Tenant)
-if(@CityName is not null or @CityName != '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @CityName
-else set @MySearchFields = @MySearchFields + ',' + @CityName
-end
-set @CityName = (select City from Addresses where Id = @MainCarriageToAddressId AND Tenant = @Tenant)
-if(@CityName is not null or @CityName != '')
-begin
-if (@MySearchFields = '') set @MySearchFields = @CityName
-else set @MySearchFields = @MySearchFields + ',' + @CityName
-end
-end
-END
--- Invoices
-if exists (select * from ARInvoiceEntities where EntityId = @Id AND Tenant = @Tenant)
-BEGIN
-DECLARE ARInvoicesCursor CURSOR READ_ONLY
-FOR
-SELECT ARInvoices.Id, ARInvoices.InvoiceNumber, ARInvoices.DraftNumber
-FROM ARInvoiceEntities join ARInvoices on ARInvoiceEntities.ARInvoiceId = ARInvoices.Id AND ARInvoiceEntities.Tenant = ARInvoices.Tenant
-WHERE ARInvoiceEntities.EntityId = @Id AND ARInvoiceEntities.Tenant = @Tenant
-OPEN ARInvoicesCursor FETCH NEXT FROM ARInvoicesCursor INTO @ARInvoiceId, @ARInvoiceNumber, @ARInvoiceDraftNumber
-WHILE @@FETCH_STATUS = 0
-BEGIN
-if (@ARInvoiceNumber is not null AND @ARInvoiceNumber <> @ARInvoiceId)
-begin
-if (@MySearchFields = '') set @MySearchFields = @ARInvoiceNumber
-else set @MySearchFields = @MySearchFields + ',' + @ARInvoiceNumber
-end
-else if (@ARInvoiceDraftNumber is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @ARInvoiceDraftNumber
-else set @MySearchFields = @MySearchFields + ',' + @ARInvoiceDraftNumber
-end
-FETCH NEXT FROM ARInvoicesCursor INTO @ARInvoiceId, @ARInvoiceNumber, @ARInvoiceDraftNumber
-END
-CLOSE ARInvoicesCursor
-DEALLOCATE ARInvoicesCursor
-END
--- Packages Containers
-if exists (select * from ShipmentPackages where ShipmentId = @Id AND Tenant = @Tenant AND ContainerNumber is not null)
-BEGIN
-DECLARE PackagesCursor CURSOR READ_ONLY
-FOR
-SELECT ContainerNumber
-FROM ShipmentPackages
-Where ShipmentId = @Id AND Tenant = @Tenant AND ContainerNumber is not null AND ContainerNumber <> ''
-group by ContainerNumber
-OPEN PackagesCursor FETCH NEXT FROM PackagesCursor INTO @ContainerNumber
-WHILE @@FETCH_STATUS = 0
-BEGIN
-if (@ContainerNumber is not null)
-begin
-if (@MySearchFields = '') set @MySearchFields = @ContainerNumber
-else set @MySearchFields = @MySearchFields + ',' + @ContainerNumber
-end
-FETCH NEXT FROM PackagesCursor INTO @ContainerNumber
-END
-CLOSE PackagesCursor
-DEALLOCATE PackagesCursor
-END
--- Custom Fields
-BEGIN
-set @Field = @Field1
-set @FieldName = 'Field1'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field2
-set @FieldName = 'Field2'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field3
-set @FieldName = 'Field3'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field4
-set @FieldName = 'Field4'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field5
-set @FieldName = 'Field5'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field6
-set @FieldName = 'Field6'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field7
-set @FieldName = 'Field7'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field8
-set @FieldName = 'Field8'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field9
-set @FieldName = 'Field9'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-set @Field = @Field10
-set @FieldName = 'Field10'
-if (@Field is not null AND @Field <> '')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = 'Shipment'
-if (@FieldDataTypeCode = 'Text' OR @FieldDataTypeCode = 'nText')
-begin
-if (@MySearchFields = '') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + ',' + @Field
-end
-end
-END
-insert into #temp_Shipments(Id, SearchFields) values (@Id, @MySearchFields)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Shipments
-set
-SearchFields = #temp_Shipments.SearchFields
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Shipments
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO
-@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
-@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
-@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
-@OnCarriageFromPortId, @OnCarriageToPortId,
-@House, @CustomFileNumber, @AWBCarrierTarrifReference,
-@AgentId, @AgentReference1, @AgentReference2,
-@ShipperId, @ShipperReference1, @ShipperReference2,
-@ConsigneeId, @ConsigneeReference1, @ConsigneeReference2,
-@CustomerId, @CustomerReference1, @CustomerReference2,
-@Notify1Id,
-@Notify2Id,
-@IssuingCarrierAgentId,
-@CustomAgentImportId, @CustomAgentImportReference,
-@CustomAgentExportId, @CustomAgentExportReference,
-@ShipperNotExporterId,
-@ConsigneeNotImporterId,
-@FreightForwarderId, @FreightForwarderReference,
-@ConsolidatorId, @ConsolidatorReference,
-@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
-@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-@AMSBL, @WarehouseLegReference
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Shipments
-set
-SearchFields = #temp_Shipments.SearchFields
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-SET NOCOUNT OFF
-drop table #tempTable
-drop table #temp_Shipments
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('FillShipmentSearchFields.sxml', GETDATE(), 'If(OBJECT_ID(''tempdb..#tempTable'') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID(''tempdb..#temp_Shipments'') Is Not Null)
-Begin
-Drop Table #temp_Shipments
-End
-CREATE TABLE #temp_Shipments (
-Id varchar(15) not null ,
-SearchFields nvarchar(4000)  null,
-)
-select Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,DirectionId,
-StatusId, QuoteId, SalesmanUserId, MasterShipmentDataId,
-FromPortId, ToPortId, PreCarriageFromPortId, PreCarriageToPortId,
-OnCarriageFromPortId, OnCarriageToPortId,
-House, CustomFileNumber, AWBCarrierTarrifReference,
-AgentId, AgentReference1, AgentReference2,
-ShipperId, ShipperReference1, ShipperReference2,
-ConsigneeId, ConsigneeReference1, ConsigneeReference2,
-CustomerId, CustomerReference1, CustomerReference2,
-Notify1Id, Notify2Id, IssuingCarrierAgentId,
-CustomAgentImportId, CustomAgentImportReference,
-CustomAgentExportId, CustomAgentExportReference,
-ShipperNotExporterId, ConsigneeNotImporterId,
-FreightForwarderId, FreightForwarderReference,
-ConsolidatorId, ConsolidatorReference,
-Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
-CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-AMSBL, WarehouseLegReference
-into #tempTable
-FROM Shipments
-SET NOCOUNT ON
-declare @MySearchFields as nvarchar(4000)
-declare @PortsTable table
-(
-Id varchar(15) not null
-)
-declare @PartnersTable table
-(
-Id varchar(15) not null
-)
-declare @ReferencesTable table
-(
-Reference varchar(50) not null
-)
--- Shipment fields
-BEGIN
-declare @Id as varchar(15)
-declare @Tenant as int
-declare @ShipmentNumber as varchar(15)
-declare @ShipmentLevelCode as varchar(1)
-declare @TransportModeId as varchar(1)
-declare @DirectionId as varchar(1)
-declare @StatusId as varchar(15)
-declare @StatusCode as varchar(4)
-declare @StatusName as varchar(40)
-declare @QuoteId as varchar(15)
-declare @QuoteNumber as varchar(15)
-declare @SalesmanUserId as varchar(15)
-declare @SalesmanUserName as varchar(60)
-declare @MasterShipmentDataId as varchar(15)
-declare @House as varchar(20)
-declare @CustomFileNumber as varchar(15)
-declare @AWBCarrierTarrifReference as varchar(25)
-declare @CustomsDeclarationNumber as varchar(35)
-declare @ForwarderShipmentNumber as varchar(15)
-declare @TransportDocumentNumber as varchar(50)
-declare @ImportManifest as varchar(50)
-declare @BookingConfirmationNumber as varchar(25)
-declare @CarrierTransportDocumentNumber as varchar(50)
-declare @ProjectNumber as varchar(100)
-declare @AMSBL as nvarchar(17)
-declare @WarehouseLegReference as nvarchar(50)
-END
--- Ports Firlds
-BEGIN
-declare @PortId as varchar(15)
-declare @PortCode as varchar(3)
-declare @PortName as varchar(40)
-declare @PortCountryCode as varchar(2)
-declare @PortCountryName as varchar(120)
-declare @FromPortId as varchar(15)
-declare @ToPortId as varchar(15)
-declare @PreCarriageFromPortId as varchar(15)
-declare @PreCarriageToPortId as varchar(15)
-declare @OnCarriageFromPortId as varchar(15)
-declare @OnCarriageToPortId as varchar(15)
-declare @MainCarriageFromPortId as varchar(15)
-declare @MainCarriageToPortId as varchar(15)
-declare @Transshipment1FromPortId as varchar(15)
-declare @Transshipment1ToPortId as varchar(15)
-declare @Transshipment2FromPortId as varchar(15)
-declare @Transshipment2ToPortId as varchar(15)
-declare @Transshipment3FromPortId as varchar(15)
-declare @Transshipment3ToPortId as varchar(15)
-declare @MainCarriageFinalDestinationPortId as varchar(15)
-END
--- Partners Fields
-BEGIN
-declare @PartnerId as varchar(15)
-declare @PartnerName as varchar(60)
-declare @CityName as varchar(120)
-declare @PartnerReference1 as varchar(50)
-declare @PartnerReference2 as varchar(50)
-declare @AgentId as varchar(15)
-declare @AgentReference1 as varchar(50)
-declare @AgentReference2 as varchar(50)
-declare @ShipperId as varchar(15)
-declare @ShipperReference1 as varchar(50)
-declare @ShipperReference2 as varchar(50)
-declare @ConsigneeId as varchar(15)
-declare @ConsigneeReference1 as varchar(50)
-declare @ConsigneeReference2 as varchar(50)
-declare @CustomerId as varchar(15)
-declare @CustomerReference1 as varchar(50)
-declare @CustomerReference2 as varchar(50)
-declare @Notify1Id as varchar(15)
-declare @Notify2Id as varchar(15)
-declare @IssuingCarrierAgentId as varchar(15)
-declare @CustomAgentImportId as varchar(15)
-declare @CustomAgentImportReference as varchar(50)
-declare @CustomAgentExportId as varchar(15)
-declare @CustomAgentExportReference as varchar(50)
-declare @ShipperNotExporterId as varchar(15)
-declare @ConsigneeNotImporterId as varchar(15)
-declare @FreightForwarderId as varchar(15)
-declare @FreightForwarderReference as varchar(50)
-declare @ConsolidatorId as varchar(15)
-declare @ConsolidatorReference as varchar(50)
-declare @ReleasingAgentId as varchar(15)
-declare @ReleasingAgentReference1 as varchar(50)
-declare @ReleasingAgentReference2 as varchar(50)
-declare @MainCarriageFromAddressId as varchar(50)
-declare @MainCarriageToAddressId as varchar(50)
-END
--- MasterData Fields
-BEGIN
-declare @Master as varchar(20)
-declare @LongMaster as varchar(30)
-declare @MasterShipmentNumber as varchar(15)
-declare @MainCarriageVesselId as varchar(15)
-declare @MainCarriageVesselCode as varchar(5)
-declare @MainCarriageVesselName as varchar(40)
-declare @MainCarriageCarrierId as varchar(15)
-declare @MainCarriageCarrierCode as varchar(15)
-declare @MainCarriageCarrierName as varchar(60)
-declare @MainCarriageCarrierPrefix as varchar(3)
-declare @MainCarriageCarrierNumber as varchar(15)
-declare @Transshipment1AdditionalMAWBOBLBL as varchar(20)
-declare @Transshipment2AdditionalMAWBOBLBL as varchar(20)
-declare @Transshipment3AdditionalMAWBOBLBL as varchar(20)
-END
--- Custom Fields
-BEGIN
-declare @Field nvarchar(250)
-declare @FieldName varchar(10)
-declare @FieldDataTypeCode as varchar(10)
-declare @Field1 nvarchar(250)
-declare @Field2 nvarchar(250)
-declare @Field3 nvarchar(250)
-declare @Field4 nvarchar(250)
-declare @Field5 nvarchar(250)
-declare @Field6 nvarchar(250)
-declare @Field7 nvarchar(250)
-declare @Field8 nvarchar(250)
-declare @Field9 nvarchar(250)
-declare @Field10 nvarchar(250)
-END
-declare @ARInvoiceId as varchar(20)
-declare @ARInvoiceNumber as varchar(20)
-declare @ARInvoiceDraftNumber as varchar(20)
-declare @ContainerNumber as varchar(20)
-declare @Count as int
-set @Count = 0;
-BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,DirectionId,
-StatusId, QuoteId, SalesmanUserId, MasterShipmentDataId,
-FromPortId, ToPortId, PreCarriageFromPortId, PreCarriageToPortId,
-OnCarriageFromPortId, OnCarriageToPortId,
-House, CustomFileNumber, AWBCarrierTarrifReference,
-AgentId, AgentReference1, AgentReference2,
-ShipperId, ShipperReference1, ShipperReference2,
-ConsigneeId, ConsigneeReference1, ConsigneeReference2,
-CustomerId, CustomerReference1, CustomerReference2,
-Notify1Id, Notify2Id, IssuingCarrierAgentId,
-CustomAgentImportId, CustomAgentImportReference,
-CustomAgentExportId, CustomAgentExportReference,
-ShipperNotExporterId, ConsigneeNotImporterId,
-FreightForwarderId, FreightForwarderReference,
-ConsolidatorId, ConsolidatorReference,
-Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
-CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-AMSBL, WarehouseLegReference
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO
-@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
-@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
-@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
-@OnCarriageFromPortId, @OnCarriageToPortId,
-@House, @CustomFileNumber, @AWBCarrierTarrifReference,
-@AgentId, @AgentReference1, @AgentReference2,
-@ShipperId, @ShipperReference1, @ShipperReference2,
-@ConsigneeId, @ConsigneeReference1, @ConsigneeReference2,
-@CustomerId, @CustomerReference1, @CustomerReference2,
-@Notify1Id,
-@Notify2Id,
-@IssuingCarrierAgentId,
-@CustomAgentImportId, @CustomAgentImportReference,
-@CustomAgentExportId, @CustomAgentExportReference,
-@ShipperNotExporterId,
-@ConsigneeNotImporterId,
-@FreightForwarderId, @FreightForwarderReference,
-@ConsolidatorId, @ConsolidatorReference,
-@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
-@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-@AMSBL, @WarehouseLegReference
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @MySearchFields = ''''
-delete from @PortsTable
-delete from @PartnersTable
-delete from @ReferencesTable
--- Master Data
-BEGIN
-if (@MasterShipmentDataId is not null)
-BEGIN
-select
-@Master = Master,
-@MasterShipmentNumber = MasterShipmentNumber,
-@MainCarriageVesselId = MainCarriageVesselId,
-@MainCarriageCarrierId  = MainCarriageCarrierId,
-@MainCarriageCarrierNumber = MainCarriageCarrierNumber,
-@MainCarriageFromPortId = MainCarriageFromPortId,
-@MainCarriageToPortId = MainCarriageToPortId,
-@Transshipment1FromPortId = Transshipment1FromPortId,
-@Transshipment2FromPortId = Transshipment2FromPortId,
-@Transshipment3FromPortId = Transshipment3FromPortId,
-@Transshipment1ToPortId = Transshipment1ToPortId,
-@Transshipment2ToPortId = Transshipment2ToPortId,
-@Transshipment3ToPortId = Transshipment3ToPortId,
-@MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPortId,
-@ImportManifest = ImportManifest,
-@BookingConfirmationNumber = BookingConfirmationNumber,
-@CarrierTransportDocumentNumber = CarrierTransportDocumentNumber,
-@Transshipment1AdditionalMAWBOBLBL = Transshipment1AdditionalMAWBOBLBL,
-@Transshipment2AdditionalMAWBOBLBL = Transshipment2AdditionalMAWBOBLBL,
-@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL,
-@MainCarriageFromAddressId = MainCarriageFromAddressId,
-@MainCarriageToAddressId = MainCarriageToAddressId
-from ShipmentMasterDatas
-where Id = @MasterShipmentDataId AND Tenant = @Tenant
-END
-END
--- Fields
-BEGIN
-if (@ProjectNumber is not null AND @ProjectNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ProjectNumber
-else set @MySearchFields = @MySearchFields + '','' + @ProjectNumber
-end
-if (@House is not null AND @House <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @House
-else set @MySearchFields = @MySearchFields + '','' + @House
-end
-if (@Master is not null AND @Master <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Master
-else set @MySearchFields = @MySearchFields + '','' + @Master
-end
-if (@ShipmentNumber is not null AND @ShipmentNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ShipmentNumber
-else set @MySearchFields = @MySearchFields + '','' + @ShipmentNumber
-end
-if (@CustomFileNumber is not null AND @CustomFileNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @CustomFileNumber
-else set @MySearchFields = @MySearchFields + '','' + @CustomFileNumber
-end
-if (@AWBCarrierTarrifReference is not null AND @AWBCarrierTarrifReference <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @AWBCarrierTarrifReference
-else set @MySearchFields = @MySearchFields + '','' + @AWBCarrierTarrifReference
-end
-if (@CustomsDeclarationNumber is not null AND @CustomsDeclarationNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @CustomsDeclarationNumber
-else set @MySearchFields = @MySearchFields + '','' + @CustomsDeclarationNumber
-end
-if (@ForwarderShipmentNumber is not null AND @ForwarderShipmentNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ForwarderShipmentNumber
-else set @MySearchFields = @MySearchFields + '','' + @ForwarderShipmentNumber
-end
-if (@TransportDocumentNumber is not null AND @TransportDocumentNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @TransportDocumentNumber
-else set @MySearchFields = @MySearchFields + '','' + @TransportDocumentNumber
-end
-if (@ImportManifest is not null AND @ImportManifest <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ImportManifest
-else set @MySearchFields = @MySearchFields + '','' + @ImportManifest
-end
-if (@BookingConfirmationNumber is not null AND @BookingConfirmationNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @BookingConfirmationNumber
-else set @MySearchFields = @MySearchFields + '','' + @BookingConfirmationNumber
-end
-if (@CarrierTransportDocumentNumber is not null AND @CarrierTransportDocumentNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @CarrierTransportDocumentNumber
-else set @MySearchFields = @MySearchFields + '','' + @CarrierTransportDocumentNumber
-end
-if (@Transshipment1AdditionalMAWBOBLBL is not null AND @Transshipment1AdditionalMAWBOBLBL <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Transshipment1AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + '','' + @Transshipment1AdditionalMAWBOBLBL
-end
-if (@Transshipment2AdditionalMAWBOBLBL is not null AND @Transshipment2AdditionalMAWBOBLBL <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Transshipment2AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + '','' + @Transshipment2AdditionalMAWBOBLBL
-end
-if (@Transshipment3AdditionalMAWBOBLBL is not null AND @Transshipment3AdditionalMAWBOBLBL <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Transshipment3AdditionalMAWBOBLBL
-else set @MySearchFields = @MySearchFields + '','' + @Transshipment3AdditionalMAWBOBLBL
-end
-if (@QuoteId is not null)
-begin
-set @QuoteNumber = (select QuoteNumber from Quotes where Id = @QuoteId AND Tenant = @Tenant)
-if (@QuoteNumber is not null AND @QuoteNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @QuoteNumber
-else set @MySearchFields = @MySearchFields + '','' + @QuoteNumber
-end
-end
-if (@StatusId is not null)
-begin
-select
-@StatusCode = Code,
-@StatusName = Name
-from EntityStatus
-where Id = @StatusId AND Tenant = @Tenant
-if (@StatusCode is not null AND @StatusCode <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @StatusCode
-else set @MySearchFields = @MySearchFields + '','' + @StatusCode
-end
-if (@StatusName is not null AND @StatusName <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @StatusName
-else set @MySearchFields = @MySearchFields + '','' + @StatusName
-end
-end
-if (@MainCarriageVesselId is not null)
-begin
-select
-@MainCarriageVesselCode = Code,
-@MainCarriageVesselName = EnglishName
-from Vessels
-where Id = @MainCarriageVesselId AND Tenant = @Tenant
-if (@MainCarriageVesselCode is not null AND @MainCarriageVesselCode <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @MainCarriageVesselCode
-else set @MySearchFields = @MySearchFields + '','' + @MainCarriageVesselCode
-end
-if (@MainCarriageVesselName is not null AND @MainCarriageVesselName <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @MainCarriageVesselName
-else set @MySearchFields = @MySearchFields + '','' + @MainCarriageVesselName
-end
-end
-if (@MainCarriageCarrierId is not null)
-begin
-select
-@MainCarriageCarrierCode = Cards.Code,
-@MainCarriageCarrierName = Cards.EnglishName,
-@MainCarriageCarrierPrefix = Airlines.Prefix
-from Airlines join Cards on Airlines.Id = Cards.Id
-where Airlines.Tenant = @Tenant AND Airlines.Id = @MainCarriageCarrierId
-if (@TransportModeId = ''A'' AND @Master is not null AND @Master <> '''')
-begin
-set @LongMaster = @MainCarriageCarrierPrefix + ''-'' + @Master
-if (@LongMaster is not null AND @LongMaster <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @LongMaster
-else set @MySearchFields = @MySearchFields + '','' + @LongMaster
-end
-end
-if (@MainCarriageCarrierCode is not null AND @MainCarriageCarrierCode <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @MainCarriageCarrierCode
-else set @MySearchFields = @MySearchFields + '','' + @MainCarriageCarrierCode
-end
-if (@MainCarriageCarrierName is not null AND @MainCarriageCarrierName <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @MainCarriageCarrierName
-else set @MySearchFields = @MySearchFields + '','' + @MainCarriageCarrierName
-end
-if (@MainCarriageCarrierNumber is not null AND @MainCarriageCarrierNumber <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @MainCarriageCarrierNumber
-else set @MySearchFields = @MySearchFields + '','' + @MainCarriageCarrierNumber
-end
-end
-if (@SalesmanUserId is not null)
-begin
-set @SalesmanUserName = (select EnglishName from Contacts where Id = @SalesmanUserId AND Tenant = @Tenant)
-if (@SalesmanUserName is not null AND @SalesmanUserName <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @SalesmanUserName
-else set @MySearchFields = @MySearchFields + '','' + @SalesmanUserName
-end
-end
-if (@AMSBL is not null AND @AMSBL <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @AMSBL
-else set @MySearchFields = @MySearchFields + '','' + @AMSBL
-end
-if (@WarehouseLegReference is not null AND @WarehouseLegReference <> '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @WarehouseLegReference
-else set @MySearchFields = @MySearchFields + '','' + @WarehouseLegReference
-end
-END
--- Ports
-BEGIN
-set @PortId = @FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @PreCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @PreCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @OnCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @OnCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageFromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment1FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment1ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment2FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment2ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment3FromPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @Transshipment3ToPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-set @PortId = @MainCarriageFinalDestinationPortId
-if (@PortId is not null)
-if not exists (select * from @PortsTable where Id = @PortId)
-begin
-insert into @PortsTable(Id) values (@PortId)
-select
-@PortCode = Ports.Code,
-@PortName = Ports.EnglishName,
-@PortCountryCode = Countries.Code,
-@PortCountryName  = Countries.EnglishName
-from Ports join Countries on Ports.CountryId = Countries.Id AND Ports.Tenant = Countries.Tenant
-where Ports.Id = @PortId AND Ports.Tenant = @Tenant
-if (@PortCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCode
-end
-if (@PortName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortName
-else set @MySearchFields = @MySearchFields + '','' + @PortName
-end
-if (@PortCountryCode is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryCode
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryCode
-end
-if (@PortCountryName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PortCountryName
-else set @MySearchFields = @MySearchFields + '','' + @PortCountryName
-end
-end
-END
--- Partners
-BEGIN
-set @PartnerId = @AgentId
-set @PartnerReference1 = @AgentReference1
-set @PartnerReference2 = @AgentReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ShipperId
-set @PartnerReference1 = @ShipperReference1
-set @PartnerReference2 = @ShipperReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsigneeId
-set @PartnerReference1 = @ConsigneeReference1
-set @PartnerReference2 = @ConsigneeReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomerId
-set @PartnerReference1 = @CustomerReference1
-set @PartnerReference2 = @CustomerReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @Notify1Id
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @Notify2Id
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @IssuingCarrierAgentId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomAgentImportId
-set @PartnerReference1 = @CustomAgentImportReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @CustomAgentExportId
-set @PartnerReference1 = @CustomAgentExportReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ShipperNotExporterId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsigneeNotImporterId
-set @PartnerReference1 = null
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @FreightForwarderId
-set @PartnerReference1 = @FreightForwarderReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ConsolidatorId
-set @PartnerReference1 = @ConsolidatorReference
-set @PartnerReference2 = null
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-set @PartnerId = @ReleasingAgentId
-set @PartnerReference1 = @ReleasingAgentReference1
-set @PartnerReference2 = @ReleasingAgentReference2
-if (@PartnerId is not null)
-begin
-if not exists (select * from @PartnersTable where Id = @PartnerId)
-begin
-insert into @PartnersTable(Id) values (@PartnerId)
-set @PartnerName = (select EnglishName from Cards where Id = @PartnerId AND Tenant = @Tenant)
-if (@PartnerName is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @PartnerName
-else set @MySearchFields = @MySearchFields + '','' + @PartnerName
-end
-end
-if (@PartnerReference1 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference1)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference1)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference1
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference1
-end
-if (@PartnerReference2 is not null)
-if not exists (select * from @ReferencesTable where Reference = @PartnerReference2)
-begin
-insert into @ReferencesTable(Reference) values (@PartnerReference2)
-if (@MySearchFields = '''') set @MySearchFields = @PartnerReference2
-else set @MySearchFields = @MySearchFields + '','' + @PartnerReference2
-end
-end
-if(@TransportModeId = ''I'' and @DirectionId =''D'' and @MasterShipmentDataId is not null)
-begin
-set @CityName = (select City from Addresses where Id = @MainCarriageFromAddressId AND Tenant = @Tenant)
-if(@CityName is not null or @CityName != '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @CityName
-else set @MySearchFields = @MySearchFields + '','' + @CityName
-end
-set @CityName = (select City from Addresses where Id = @MainCarriageToAddressId AND Tenant = @Tenant)
-if(@CityName is not null or @CityName != '''')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @CityName
-else set @MySearchFields = @MySearchFields + '','' + @CityName
-end
-end
-END
--- Invoices
-if exists (select * from ARInvoiceEntities where EntityId = @Id AND Tenant = @Tenant)
-BEGIN
-DECLARE ARInvoicesCursor CURSOR READ_ONLY
-FOR
-SELECT ARInvoices.Id, ARInvoices.InvoiceNumber, ARInvoices.DraftNumber
-FROM ARInvoiceEntities join ARInvoices on ARInvoiceEntities.ARInvoiceId = ARInvoices.Id AND ARInvoiceEntities.Tenant = ARInvoices.Tenant
-WHERE ARInvoiceEntities.EntityId = @Id AND ARInvoiceEntities.Tenant = @Tenant
-OPEN ARInvoicesCursor FETCH NEXT FROM ARInvoicesCursor INTO @ARInvoiceId, @ARInvoiceNumber, @ARInvoiceDraftNumber
-WHILE @@FETCH_STATUS = 0
-BEGIN
-if (@ARInvoiceNumber is not null AND @ARInvoiceNumber <> @ARInvoiceId)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ARInvoiceNumber
-else set @MySearchFields = @MySearchFields + '','' + @ARInvoiceNumber
-end
-else if (@ARInvoiceDraftNumber is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ARInvoiceDraftNumber
-else set @MySearchFields = @MySearchFields + '','' + @ARInvoiceDraftNumber
-end
-FETCH NEXT FROM ARInvoicesCursor INTO @ARInvoiceId, @ARInvoiceNumber, @ARInvoiceDraftNumber
-END
-CLOSE ARInvoicesCursor
-DEALLOCATE ARInvoicesCursor
-END
--- Packages Containers
-if exists (select * from ShipmentPackages where ShipmentId = @Id AND Tenant = @Tenant AND ContainerNumber is not null)
-BEGIN
-DECLARE PackagesCursor CURSOR READ_ONLY
-FOR
-SELECT ContainerNumber
-FROM ShipmentPackages
-Where ShipmentId = @Id AND Tenant = @Tenant AND ContainerNumber is not null AND ContainerNumber <> ''''
-group by ContainerNumber
-OPEN PackagesCursor FETCH NEXT FROM PackagesCursor INTO @ContainerNumber
-WHILE @@FETCH_STATUS = 0
-BEGIN
-if (@ContainerNumber is not null)
-begin
-if (@MySearchFields = '''') set @MySearchFields = @ContainerNumber
-else set @MySearchFields = @MySearchFields + '','' + @ContainerNumber
-end
-FETCH NEXT FROM PackagesCursor INTO @ContainerNumber
-END
-CLOSE PackagesCursor
-DEALLOCATE PackagesCursor
-END
--- Custom Fields
-BEGIN
-set @Field = @Field1
-set @FieldName = ''Field1''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field2
-set @FieldName = ''Field2''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field3
-set @FieldName = ''Field3''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field4
-set @FieldName = ''Field4''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field5
-set @FieldName = ''Field5''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field6
-set @FieldName = ''Field6''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field7
-set @FieldName = ''Field7''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field8
-set @FieldName = ''Field8''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field9
-set @FieldName = ''Field9''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-set @Field = @Field10
-set @FieldName = ''Field10''
-if (@Field is not null AND @Field <> '''')
-begin
-select
-@FieldDataTypeCode = ObjectFields.DataTypeCode
-from ObjectFields join ObjectTables on ObjectFields.ObjectTableId = ObjectTables.Id
-where ObjectFields.FieldName = @FieldName AND ObjectTables.Name = ''Shipment''
-if (@FieldDataTypeCode = ''Text'' OR @FieldDataTypeCode = ''nText'')
-begin
-if (@MySearchFields = '''') set @MySearchFields = @Field
-else set @MySearchFields = @MySearchFields + '','' + @Field
-end
-end
-END
-insert into #temp_Shipments(Id, SearchFields) values (@Id, @MySearchFields)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Shipments
-set
-SearchFields = #temp_Shipments.SearchFields
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Shipments
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO
-@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
-@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
-@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
-@OnCarriageFromPortId, @OnCarriageToPortId,
-@House, @CustomFileNumber, @AWBCarrierTarrifReference,
-@AgentId, @AgentReference1, @AgentReference2,
-@ShipperId, @ShipperReference1, @ShipperReference2,
-@ConsigneeId, @ConsigneeReference1, @ConsigneeReference2,
-@CustomerId, @CustomerReference1, @CustomerReference2,
-@Notify1Id,
-@Notify2Id,
-@IssuingCarrierAgentId,
-@CustomAgentImportId, @CustomAgentImportReference,
-@CustomAgentExportId, @CustomAgentExportReference,
-@ShipperNotExporterId,
-@ConsigneeNotImporterId,
-@FreightForwarderId, @FreightForwarderReference,
-@ConsolidatorId, @ConsolidatorReference,
-@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
-@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-@AMSBL, @WarehouseLegReference
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Shipments
-set
-SearchFields = #temp_Shipments.SearchFields
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-SET NOCOUNT OFF
-drop table #tempTable
-drop table #temp_Shipments', DATEDIFF(MS,@StartTime,@EndTime), 'fd337cc7a59cdf89641a7fbe65fe51de', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+-- Change Size From 4 To 15 For Column COURIERPENDINGREASONCODE
+ALTER TABLE "DECLARATIONCOURIERSTATUSES" MODIFY "COURIERPENDINGREASONCODE" VARCHAR2(15 CHAR);
 
--- General Script From 202007091330_UpdateNotAirQuotesSubType.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID('tempdb..#temp_Quotes') Is Not Null)
-Begin
-Drop Table #temp_Quotes
-End
-CREATE TABLE #temp_Quotes (
-Id varchar(15) not null ,
-ShipmentSubTypeId varchar(15)  null,
-ShipmentTypeId varchar(15)  null
-)
-select
-Id,
-Tenant,
-TransportModeId,
-ShipmentTypeId,
-(
-CASE
-WHEN TransportModeId = 'O' and ShipmentTypeId = 'FCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FCL' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = 'O' and ShipmentTypeId = 'LCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LCL' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = 'I' and ShipmentTypeId = 'FTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FTL' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = 'I' and ShipmentTypeId = 'LTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LTL' and Tenant = Quotes.Tenant)
-END
-) as ShipmentSubTypeId
-into #tempTable
-FROM Quotes where TransportModeId <> 'A'
-declare @Tenant as int
-declare @EntityId as varchar(15)
-declare @ShipmentTypeId as varchar(4)
-declare @TransportModeId as varchar(4)
-declare @ShipmentSubTypeId as varchar(15)
-declare @Count as int
-set @Count = 0;
-BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-WHILE @@FETCH_STATUS = 0
-BEGIN
-insert into #temp_Quotes(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Quotes
-set
-ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Quotes.ShipmentTypeId
-FROM Quotes
-INNER JOIN #temp_Quotes
-on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Quotes
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Quotes
-set
-ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Quotes.ShipmentTypeId
-FROM Quotes
-INNER JOIN #temp_Quotes
-on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-drop table #tempTable
-drop table #temp_Quotes
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202007091330_UpdateNotAirQuotesSubType.sxml', GETDATE(), 'If(OBJECT_ID(''tempdb..#tempTable'') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID(''tempdb..#temp_Quotes'') Is Not Null)
-Begin
-Drop Table #temp_Quotes
-End
-CREATE TABLE #temp_Quotes (
-Id varchar(15) not null ,
-ShipmentSubTypeId varchar(15)  null,
-ShipmentTypeId varchar(15)  null
-)
-select
-Id,
-Tenant,
-TransportModeId,
-ShipmentTypeId,
-(
-CASE
-WHEN TransportModeId = ''O'' and ShipmentTypeId = ''FCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = ''O'' and ShipmentTypeId = ''LCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = ''I'' and ShipmentTypeId = ''FTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = Quotes.Tenant)
-WHEN TransportModeId = ''I'' and ShipmentTypeId = ''LTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = Quotes.Tenant)
-END
-) as ShipmentSubTypeId
-into #tempTable
-FROM Quotes where TransportModeId <> ''A''
-declare @Tenant as int
-declare @EntityId as varchar(15)
-declare @ShipmentTypeId as varchar(4)
-declare @TransportModeId as varchar(4)
-declare @ShipmentSubTypeId as varchar(15)
-declare @Count as int
-set @Count = 0;
-BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-WHILE @@FETCH_STATUS = 0
-BEGIN
-insert into #temp_Quotes(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Quotes
-set
-ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Quotes.ShipmentTypeId
-FROM Quotes
-INNER JOIN #temp_Quotes
-on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Quotes
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Quotes
-set
-ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Quotes.ShipmentTypeId
-FROM Quotes
-INNER JOIN #temp_Quotes
-on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-drop table #tempTable
-drop table #temp_Quotes', DATEDIFF(MS,@StartTime,@EndTime), '6a180068f0f1f9a2d54f22b583fb4a0e', 2);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Change Size From 4 To 15 For Column COURIERPENDINGREASONCODEALTER TABLE "DECLARATIONCOURIERSTATUSES" MODIFY "COURIERPENDINGREASONCODE" VARCHAR2(15 CHAR);'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('bc1560a9-d902-4601-8cd2-329c7b1dc13e', 'DeclarationCourierStatus.dxml', 'DECLARATIONCOURIERSTATUSES', 'COURIERPENDINGREASONCODE', 'Alter Column Size', SYSDATE, ScriptText); END;
 
--- General Script From 202007051322_UpdateNotAirShipmentsSubType.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
-Begin
-Drop Table #temp_Shipments
-End
-CREATE TABLE #temp_Shipments (
-Id varchar(15) not null ,
-ShipmentSubTypeId varchar(15)  null,
-ShipmentTypeId varchar(15)  null
-)
-select
-Id,
-Tenant,
-TransportModeId,
-ShipmentTypeId,
+
+-- Change Size From 4 To 15 For Column COURIERPENDINGREASONCODE
+ALTER TABLE "PENDINGBYKEYWORDS" MODIFY "COURIERPENDINGREASONCODE" VARCHAR2(15 CHAR);
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Change Size From 4 To 15 For Column COURIERPENDINGREASONCODEALTER TABLE "PENDINGBYKEYWORDS" MODIFY "COURIERPENDINGREASONCODE" VARCHAR2(15 CHAR);'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('213f468e-02a6-4a20-b3e5-354fa2579e01', 'PendingByKeyword.dxml', 'PENDINGBYKEYWORDS', 'COURIERPENDINGREASONCODE', 'Alter Column Size', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column COURIERPENDINGREASONCODE In Table DECLARATIONCOURIERSTATUSES As Reference To Column ID In Table COURIERPENDINGREASONS
+ALTER TABLE "DECLARATIONCOURIERSTATUSES" ADD CONSTRAINT "FK_DECLARATIONCOURIERSTA_LGZ0Z" FOREIGN KEY("COURIERPENDINGREASONCODE") REFERENCES "COURIERPENDINGREASONS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column COURIERPENDINGREASONCODE In Table DECLARATIONCOURIERSTATUSES As Reference To Column ID In Table COURIERPENDINGREASONSALTER TABLE "DECLARATIONCOURIERSTATUSES" ADD CONSTRAINT "FK_DECLARATIONCOURIERSTA_LGZ0Z" FOREIGN KEY("COURIERPENDINGREASONCODE") REFERENCES "COURIERPENDINGREASONS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('5cb75c94-5ee1-4ea4-809b-d0ef315553db', 'DeclarationCourierStatus.dxml', 'DECLARATIONCOURIERSTATUSES', 'COURIERPENDINGREASONCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column COURIERPENDINGREASONCODE In Table PENDINGBYKEYWORDS As Reference To Column ID In Table COURIERPENDINGREASONS
+ALTER TABLE "PENDINGBYKEYWORDS" ADD CONSTRAINT "FK_PENDINGBYKEYWORDS_COU_3VVJH" FOREIGN KEY("COURIERPENDINGREASONCODE") REFERENCES "COURIERPENDINGREASONS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column COURIERPENDINGREASONCODE In Table PENDINGBYKEYWORDS As Reference To Column ID In Table COURIERPENDINGREASONSALTER TABLE "PENDINGBYKEYWORDS" ADD CONSTRAINT "FK_PENDINGBYKEYWORDS_COU_3VVJH" FOREIGN KEY("COURIERPENDINGREASONCODE") REFERENCES "COURIERPENDINGREASONS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('688a8bcb-9730-433f-b2e5-17c2060bfb70', 'PendingByKeyword.dxml', 'PENDINGBYKEYWORDS', 'COURIERPENDINGREASONCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column FOLDERID In Table BIFOLDERSPERMISSIONS As Reference To Column ID In Table BIREPORTFOLDERS
+ALTER TABLE "BIFOLDERSPERMISSIONS" ADD CONSTRAINT "FK_BIFOLDERSPERMISSIONS_ZOZYDK" FOREIGN KEY("FOLDERID") REFERENCES "BIREPORTFOLDERS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column FOLDERID In Table BIFOLDERSPERMISSIONS As Reference To Column ID In Table BIREPORTFOLDERSALTER TABLE "BIFOLDERSPERMISSIONS" ADD CONSTRAINT "FK_BIFOLDERSPERMISSIONS_ZOZYDK" FOREIGN KEY("FOLDERID") REFERENCES "BIREPORTFOLDERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('f6384e6e-ce92-4bdb-b365-abe26a29280a', 'BIFoldersPermission.dxml', 'BIFOLDERSPERMISSIONS', 'FOLDERID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On BIFOLDERSPERMISSIONS Table
+CREATE INDEX "IX_BIFOLDERSPERMISSIONS_02J5IB" ON "BIFOLDERSPERMISSIONS"("FOLDERID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On BIFOLDERSPERMISSIONS TableCREATE INDEX "IX_BIFOLDERSPERMISSIONS_02J5IB" ON "BIFOLDERSPERMISSIONS"("FOLDERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('5bbf0c32-ef62-4e1b-b016-fe70bdcb1175', 'BIFoldersPermission.dxml', 'BIFOLDERSPERMISSIONS', 'FOLDERID', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column USERID In Table BIFOLDERSPERMISSIONS As Reference To Column ID In Table USERS
+ALTER TABLE "BIFOLDERSPERMISSIONS" ADD CONSTRAINT "FK_BIFOLDERSPERMISSIONS_ZDLFF4" FOREIGN KEY("USERID") REFERENCES "USERS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column USERID In Table BIFOLDERSPERMISSIONS As Reference To Column ID In Table USERSALTER TABLE "BIFOLDERSPERMISSIONS" ADD CONSTRAINT "FK_BIFOLDERSPERMISSIONS_ZDLFF4" FOREIGN KEY("USERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('21537469-0a1c-444b-b8a3-a3774d56d2af', 'BIFoldersPermission.dxml', 'BIFOLDERSPERMISSIONS', 'USERID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On BIFOLDERSPERMISSIONS Table
+CREATE INDEX "IX_BIFOLDERSPERMISSIONS_USERID" ON "BIFOLDERSPERMISSIONS"("USERID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On BIFOLDERSPERMISSIONS TableCREATE INDEX "IX_BIFOLDERSPERMISSIONS_USERID" ON "BIFOLDERSPERMISSIONS"("USERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c75c69ba-a95f-40f3-9764-247c6a8ed134', 'BIFoldersPermission.dxml', 'BIFOLDERSPERMISSIONS', 'USERID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column PERMITTEDBYUSERID In Table BIREPORTFOLDERS As Reference To Column ID In Table USERS
+ALTER TABLE "BIREPORTFOLDERS" ADD CONSTRAINT "FK_BIREPORTFOLDERS_USERS_21ODM" FOREIGN KEY("PERMITTEDBYUSERID") REFERENCES "USERS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column PERMITTEDBYUSERID In Table BIREPORTFOLDERS As Reference To Column ID In Table USERSALTER TABLE "BIREPORTFOLDERS" ADD CONSTRAINT "FK_BIREPORTFOLDERS_USERS_21ODM" FOREIGN KEY("PERMITTEDBYUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('b7e89ff4-f1fe-4b34-a9e9-be9d5e58e67e', 'BIReportFolder.dxml', 'BIREPORTFOLDERS', 'PERMITTEDBYUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On BIREPORTFOLDERS Table
+CREATE INDEX "IX_BIREPORTFOLDERS_PERMI_IZWLC" ON "BIREPORTFOLDERS"("PERMITTEDBYUSERID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On BIREPORTFOLDERS TableCREATE INDEX "IX_BIREPORTFOLDERS_PERMI_IZWLC" ON "BIREPORTFOLDERS"("PERMITTEDBYUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('96291d04-40ca-4c5d-907f-2b671a46417c', 'BIReportFolder.dxml', 'BIREPORTFOLDERS', 'PERMITTEDBYUSERID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column ID In Table ACCOUNTINGSETTINGS As Reference To Column ID In Table TENANTS
+ALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_TE_FIHZP" FOREIGN KEY("ID") REFERENCES "TENANTS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column ID In Table ACCOUNTINGSETTINGS As Reference To Column ID In Table TENANTSALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_TE_FIHZP" FOREIGN KEY("ID") REFERENCES "TENANTS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('f09c61f3-b66f-4eb7-948d-fcf43c188f8e', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'ID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column ACCOUNTINGSYSTEMCODE In Table ACCOUNTINGSETTINGS As Reference To Column CODE In Table ACCOUNTINGSYSTEMS
+ALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_AC_86UYF" FOREIGN KEY("ACCOUNTINGSYSTEMCODE") REFERENCES "ACCOUNTINGSYSTEMS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column ACCOUNTINGSYSTEMCODE In Table ACCOUNTINGSETTINGS As Reference To Column CODE In Table ACCOUNTINGSYSTEMSALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_AC_86UYF" FOREIGN KEY("ACCOUNTINGSYSTEMCODE") REFERENCES "ACCOUNTINGSYSTEMS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('f480128d-be37-4040-ae9f-874b66f827fa', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'ACCOUNTINGSYSTEMCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On ACCOUNTINGSETTINGS Table
+CREATE INDEX "IX_ACCOUNTINGSETTINGS_AC_6XX4J" ON "ACCOUNTINGSETTINGS"("ACCOUNTINGSYSTEMCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On ACCOUNTINGSETTINGS TableCREATE INDEX "IX_ACCOUNTINGSETTINGS_AC_6XX4J" ON "ACCOUNTINGSETTINGS"("ACCOUNTINGSYSTEMCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('b976fc5a-1243-4479-b3c0-b4beff31868e', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'ACCOUNTINGSYSTEMCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column REGISTRYDATETYPECODE In Table ACCOUNTINGSETTINGS As Reference To Column CODE In Table REGISTRYDATETYPES
+ALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_RE_BC3YM" FOREIGN KEY("REGISTRYDATETYPECODE") REFERENCES "REGISTRYDATETYPES"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column REGISTRYDATETYPECODE In Table ACCOUNTINGSETTINGS As Reference To Column CODE In Table REGISTRYDATETYPESALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_RE_BC3YM" FOREIGN KEY("REGISTRYDATETYPECODE") REFERENCES "REGISTRYDATETYPES"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('af1dd391-906b-401e-97ef-b8ae3aaa8df8', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'REGISTRYDATETYPECODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On ACCOUNTINGSETTINGS Table
+CREATE INDEX "IX_ACCOUNTINGSETTINGS_RE_SF1WT" ON "ACCOUNTINGSETTINGS"("REGISTRYDATETYPECODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On ACCOUNTINGSETTINGS TableCREATE INDEX "IX_ACCOUNTINGSETTINGS_RE_SF1WT" ON "ACCOUNTINGSETTINGS"("REGISTRYDATETYPECODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('664171e8-4ddc-490b-b42a-65ffbf315b15', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'REGISTRYDATETYPECODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column TRANSFERFTPDETAILID In Table ACCOUNTINGSETTINGS As Reference To Column ID In Table FTPDETAILS
+ALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_FT_F93JD" FOREIGN KEY("TRANSFERFTPDETAILID") REFERENCES "FTPDETAILS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column TRANSFERFTPDETAILID In Table ACCOUNTINGSETTINGS As Reference To Column ID In Table FTPDETAILSALTER TABLE "ACCOUNTINGSETTINGS" ADD CONSTRAINT "FK_ACCOUNTINGSETTINGS_FT_F93JD" FOREIGN KEY("TRANSFERFTPDETAILID") REFERENCES "FTPDETAILS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c4f70d2f-dc8c-4153-be67-af2bc20cce37', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'TRANSFERFTPDETAILID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On ACCOUNTINGSETTINGS Table
+CREATE INDEX "IX_ACCOUNTINGSETTINGS_TR_H4TM5" ON "ACCOUNTINGSETTINGS"("TRANSFERFTPDETAILID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On ACCOUNTINGSETTINGS TableCREATE INDEX "IX_ACCOUNTINGSETTINGS_TR_H4TM5" ON "ACCOUNTINGSETTINGS"("TRANSFERFTPDETAILID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('e07ebad9-2b07-4991-8ae6-463c08d95399', 'AccountingSetting.dxml', 'ACCOUNTINGSETTINGS', 'TRANSFERFTPDETAILID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column AUTOMATIONSID In Table AUTOMATIONRESULTEMAILRECIPS As Reference To Column ID In Table AUTOMATIONS
+ALTER TABLE "AUTOMATIONRESULTEMAILRECIPS" ADD CONSTRAINT "FK_AUTOMATIONRESULTEMAIL_BIU3S" FOREIGN KEY("AUTOMATIONSID") REFERENCES "AUTOMATIONS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column AUTOMATIONSID In Table AUTOMATIONRESULTEMAILRECIPS As Reference To Column ID In Table AUTOMATIONSALTER TABLE "AUTOMATIONRESULTEMAILRECIPS" ADD CONSTRAINT "FK_AUTOMATIONRESULTEMAIL_BIU3S" FOREIGN KEY("AUTOMATIONSID") REFERENCES "AUTOMATIONS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('6d0ed5d3-8f55-43fb-a8b0-09a28db77813', 'AutomationResultEmailRecipient.dxml', 'AUTOMATIONRESULTEMAILRECIPS', 'AUTOMATIONSID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On AUTOMATIONRESULTEMAILRECIPS Table
+CREATE INDEX "IX_AUTOMATIONRESULTEMAIL_KBXWN" ON "AUTOMATIONRESULTEMAILRECIPS"("AUTOMATIONSID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On AUTOMATIONRESULTEMAILRECIPS TableCREATE INDEX "IX_AUTOMATIONRESULTEMAIL_KBXWN" ON "AUTOMATIONRESULTEMAILRECIPS"("AUTOMATIONSID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('6f40ed0b-e2a8-45ef-aff8-877f3a06945d', 'AutomationResultEmailRecipient.dxml', 'AUTOMATIONRESULTEMAILRECIPS', 'AUTOMATIONSID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column CARDID In Table CARDSEARCHES As Reference To Column ID In Table CARDS
+ALTER TABLE "CARDSEARCHES" ADD CONSTRAINT "FK_CARDSEARCHES_CARDS_CARDID" FOREIGN KEY("CARDID") REFERENCES "CARDS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column CARDID In Table CARDSEARCHES As Reference To Column ID In Table CARDSALTER TABLE "CARDSEARCHES" ADD CONSTRAINT "FK_CARDSEARCHES_CARDS_CARDID" FOREIGN KEY("CARDID") REFERENCES "CARDS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('0a9a8596-aa3c-40f5-a071-e002fe5a1d4d', 'CardSearch.dxml', 'CARDSEARCHES', 'CARDID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On CARDSEARCHES Table
+CREATE INDEX "IX_CARDSEARCHES_CARDID" ON "CARDSEARCHES"("CARDID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On CARDSEARCHES TableCREATE INDEX "IX_CARDSEARCHES_CARDID" ON "CARDSEARCHES"("CARDID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('d5afbb97-64c2-4570-8b6f-112d672d9d3c', 'CardSearch.dxml', 'CARDSEARCHES', 'CARDID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Drop Foreign Key Constraint For Column COMMUNICATIONLOGID In Table COMMUNICATIONATTACHMENTS That Reference To Column ID In Table COMMUNICATIONLOGS
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_COMMUNICATIONATTACHME_BM3GY'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "COMMUNICATIONATTACHMENTS" DROP CONSTRAINT "FK_COMMUNICATIONATTACHME_BM3GY"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column COMMUNICATIONLOGID In Table COMMUNICATIONATTACHMENTS That Reference To Column ID In Table COMMUNICATIONLOGSDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_COMMUNICATIONATTACHME_BM3GY''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "COMMUNICATIONATTACHMENTS" DROP CONSTRAINT "FK_COMMUNICATIONATTACHME_BM3GY"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('2419bee1-67a5-438f-840b-24917897596c', 'CommunicationAttachment.dxml', 'COMMUNICATIONATTACHMENTS', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
+
+-- Drop Index IX_COMMUNICATIONATTACHME_2LEF9 From Table COMMUNICATIONATTACHMENTS
+DECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = 'IX_COMMUNICATIONATTACHME_2LEF9'; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE 'DROP INDEX "IX_COMMUNICATIONATTACHME_2LEF9"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Index IX_COMMUNICATIONATTACHME_2LEF9 From Table COMMUNICATIONATTACHMENTSDECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = ''IX_COMMUNICATIONATTACHME_2LEF9''; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE ''DROP INDEX "IX_COMMUNICATIONATTACHME_2LEF9"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('69038ecd-fd44-416c-b79b-cd7b50211851', 'CommunicationAttachment.dxml', 'COMMUNICATIONATTACHMENTS', NULL, 'Drop Index', SYSDATE, ScriptText); END;
+
+
+-- Drop Foreign Key Constraint For Column COMMUNICATIONLOGID In Table COMMUNICATIONLOGSTEPS That Reference To Column ID In Table COMMUNICATIONLOGS
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_N1031919793'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "COMMUNICATIONLOGSTEPS" DROP CONSTRAINT "FK_N1031919793"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column COMMUNICATIONLOGID In Table COMMUNICATIONLOGSTEPS That Reference To Column ID In Table COMMUNICATIONLOGSDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_N1031919793''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "COMMUNICATIONLOGSTEPS" DROP CONSTRAINT "FK_N1031919793"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('4d2cadae-6244-49a6-a92e-9dfe705e8e31', 'CommunicationLogStep.dxml', 'COMMUNICATIONLOGSTEPS', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
+
+-- Drop Index IX_N1776182178 From Table COMMUNICATIONLOGSTEPS
+DECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = 'IX_N1776182178'; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE 'DROP INDEX "IX_N1776182178"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Index IX_N1776182178 From Table COMMUNICATIONLOGSTEPSDECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = ''IX_N1776182178''; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE ''DROP INDEX "IX_N1776182178"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c3881673-c444-4027-963e-28046e749053', 'CommunicationLogStep.dxml', 'COMMUNICATIONLOGSTEPS', NULL, 'Drop Index', SYSDATE, ScriptText); END;
+
+
+-- Drop Foreign Key Constraint For Column DOCUMENTID In Table DOCUMENTSFILINGS That Reference To Column ID In Table DOCUMENTS
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_N943064407'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "DOCUMENTSFILINGS" DROP CONSTRAINT "FK_N943064407"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column DOCUMENTID In Table DOCUMENTSFILINGS That Reference To Column ID In Table DOCUMENTSDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_N943064407''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "DOCUMENTSFILINGS" DROP CONSTRAINT "FK_N943064407"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('73a4ba6b-d665-417a-afe1-8fee540ba8a5', 'DocumentsFiling.dxml', 'DOCUMENTSFILINGS', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
+
+-- Drop Index IX_DOCUMENTSFILINGS_DOCUMENTID From Table DOCUMENTSFILINGS
+DECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = 'IX_DOCUMENTSFILINGS_DOCUMENTID'; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE 'DROP INDEX "IX_DOCUMENTSFILINGS_DOCUMENTID"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Index IX_DOCUMENTSFILINGS_DOCUMENTID From Table DOCUMENTSFILINGSDECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = ''IX_DOCUMENTSFILINGS_DOCUMENTID''; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE ''DROP INDEX "IX_DOCUMENTSFILINGS_DOCUMENTID"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('6a9c3cd9-27d6-46fc-b018-8e84a920d69c', 'DocumentsFiling.dxml', 'DOCUMENTSFILINGS', NULL, 'Drop Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column CREATEDBYUSERID In Table HORSES As Reference To Column ID In Table USERS
+ALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_USERS_CREATEDB_G1H56" FOREIGN KEY("CREATEDBYUSERID") REFERENCES "USERS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column CREATEDBYUSERID In Table HORSES As Reference To Column ID In Table USERSALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_USERS_CREATEDB_G1H56" FOREIGN KEY("CREATEDBYUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('e18ea66d-8c55-44be-b20b-f1a6ee54583d', 'Horse.dxml', 'HORSES', 'CREATEDBYUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On HORSES Table
+CREATE INDEX "IX_HORSES_CREATEDBYUSERID" ON "HORSES"("CREATEDBYUSERID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On HORSES TableCREATE INDEX "IX_HORSES_CREATEDBYUSERID" ON "HORSES"("CREATEDBYUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('036618ad-6d41-47ea-81c8-79ae6c67e16d', 'Horse.dxml', 'HORSES', 'CREATEDBYUSERID', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column UPDATEDBYUSERID In Table HORSES As Reference To Column ID In Table USERS
+ALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_USERS_UPDATEDB_KAGJ3" FOREIGN KEY("UPDATEDBYUSERID") REFERENCES "USERS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column UPDATEDBYUSERID In Table HORSES As Reference To Column ID In Table USERSALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_USERS_UPDATEDB_KAGJ3" FOREIGN KEY("UPDATEDBYUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('a8a04c2a-eaa9-4ec6-9e9b-30a7d8100887', 'Horse.dxml', 'HORSES', 'UPDATEDBYUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On HORSES Table
+CREATE INDEX "IX_HORSES_UPDATEDBYUSERID" ON "HORSES"("UPDATEDBYUSERID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On HORSES TableCREATE INDEX "IX_HORSES_UPDATEDBYUSERID" ON "HORSES"("UPDATEDBYUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('30e53920-44d7-4a95-9c24-fe71ecd34a6a', 'Horse.dxml', 'HORSES', 'UPDATEDBYUSERID', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column COUNTRYOFBIRTHID In Table HORSES As Reference To Column ID In Table COUNTRIES
+ALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_COUNTRIES_COUN_4CER7" FOREIGN KEY("COUNTRYOFBIRTHID") REFERENCES "COUNTRIES"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column COUNTRYOFBIRTHID In Table HORSES As Reference To Column ID In Table COUNTRIESALTER TABLE "HORSES" ADD CONSTRAINT "FK_HORSES_COUNTRIES_COUN_4CER7" FOREIGN KEY("COUNTRYOFBIRTHID") REFERENCES "COUNTRIES"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('cb1b86d2-0876-4ca3-966d-b2b79e6a8874', 'Horse.dxml', 'HORSES', 'COUNTRYOFBIRTHID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On HORSES Table
+CREATE INDEX "IX_HORSES_COUNTRYOFBIRTHID" ON "HORSES"("COUNTRYOFBIRTHID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On HORSES TableCREATE INDEX "IX_HORSES_COUNTRYOFBIRTHID" ON "HORSES"("COUNTRYOFBIRTHID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('18342f41-9218-42e6-9ed9-2432d75a73a5', 'Horse.dxml', 'HORSES', 'COUNTRYOFBIRTHID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column VATUNIQUEPARTNERTYPECODE In Table TENANTS As Reference To Column CODE In Table VATUNIQUEPARTNERTYPES
+ALTER TABLE "TENANTS" ADD CONSTRAINT "FK_TENANTS_VATUNIQUEPART_MGTKE" FOREIGN KEY("VATUNIQUEPARTNERTYPECODE") REFERENCES "VATUNIQUEPARTNERTYPES"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column VATUNIQUEPARTNERTYPECODE In Table TENANTS As Reference To Column CODE In Table VATUNIQUEPARTNERTYPESALTER TABLE "TENANTS" ADD CONSTRAINT "FK_TENANTS_VATUNIQUEPART_MGTKE" FOREIGN KEY("VATUNIQUEPARTNERTYPECODE") REFERENCES "VATUNIQUEPARTNERTYPES"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('a7bcb9ec-ad1b-4678-9513-b5df0e838023', 'Tenant.dxml', 'TENANTS', 'VATUNIQUEPARTNERTYPECODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On TENANTS Table
+CREATE INDEX "IX_TENANTS_VATUNIQUEPART_FOYBP" ON "TENANTS"("VATUNIQUEPARTNERTYPECODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On TENANTS TableCREATE INDEX "IX_TENANTS_VATUNIQUEPART_FOYBP" ON "TENANTS"("VATUNIQUEPARTNERTYPECODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('98b96f62-f0ec-4728-b8fc-96725fbcf2dd', 'Tenant.dxml', 'TENANTS', 'VATUNIQUEPARTNERTYPECODE', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column CURRENCYID In Table WAREHOUSES As Reference To Column ID In Table CURRENCIES
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_CURRENCIES_NVBPJ" FOREIGN KEY("CURRENCYID") REFERENCES "CURRENCIES"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column CURRENCYID In Table WAREHOUSES As Reference To Column ID In Table CURRENCIESALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_CURRENCIES_NVBPJ" FOREIGN KEY("CURRENCYID") REFERENCES "CURRENCIES"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('22acdea8-36cf-421a-8fce-d94e4e1344e9', 'Warehouse.dxml', 'WAREHOUSES', 'CURRENCYID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_CURRENCYID" ON "WAREHOUSES"("CURRENCYID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_CURRENCYID" ON "WAREHOUSES"("CURRENCYID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('e2d60e31-4741-4217-ad38-cfe71ef390f8', 'Warehouse.dxml', 'WAREHOUSES', 'CURRENCYID', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column AIRWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_J8VGU" FOREIGN KEY("AIRWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column AIRWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_J8VGU" FOREIGN KEY("AIRWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('7ae8d29e-9398-4423-91fc-5dee36b0a594', 'Warehouse.dxml', 'WAREHOUSES', 'AIRWEIGHTMEASUREMENTCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_AIRWEIGHTM_OFMFM" ON "WAREHOUSES"("AIRWEIGHTMEASUREMENTCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_AIRWEIGHTM_OFMFM" ON "WAREHOUSES"("AIRWEIGHTMEASUREMENTCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('28ce06ca-2c2d-4d57-8324-c9bc474292ac', 'Warehouse.dxml', 'WAREHOUSES', 'AIRWEIGHTMEASUREMENTCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column OCEANWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_DWTAA" FOREIGN KEY("OCEANWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column OCEANWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_DWTAA" FOREIGN KEY("OCEANWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('379e3971-c7ed-45c8-bece-88a5d47d190a', 'Warehouse.dxml', 'WAREHOUSES', 'OCEANWEIGHTMEASUREMENTCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_OCEANWEIGH_BLM3M" ON "WAREHOUSES"("OCEANWEIGHTMEASUREMENTCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_OCEANWEIGH_BLM3M" ON "WAREHOUSES"("OCEANWEIGHTMEASUREMENTCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('87c9753a-1179-4ad0-9961-4c0ca8d95b97', 'Warehouse.dxml', 'WAREHOUSES', 'OCEANWEIGHTMEASUREMENTCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column INLANDWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_ONO76" FOREIGN KEY("INLANDWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column INLANDWEIGHTMEASUREMENTCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTMEASUREMENTSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_ONO76" FOREIGN KEY("INLANDWEIGHTMEASUREMENTCODE") REFERENCES "WAREHOUSEWEIGHTMEASUREMENTS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('27e951d6-9477-4455-876e-07383af46002', 'Warehouse.dxml', 'WAREHOUSES', 'INLANDWEIGHTMEASUREMENTCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_INLANDWEIG_C210K" ON "WAREHOUSES"("INLANDWEIGHTMEASUREMENTCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_INLANDWEIG_C210K" ON "WAREHOUSES"("INLANDWEIGHTMEASUREMENTCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c43d2baa-27d7-4d59-9ec1-83a5d020765f', 'Warehouse.dxml', 'WAREHOUSES', 'INLANDWEIGHTMEASUREMENTCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column AIRWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_NWCGC" FOREIGN KEY("AIRWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column AIRWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_NWCGC" FOREIGN KEY("AIRWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('262ff083-5283-4225-b699-5a6c9dc3cd6a', 'Warehouse.dxml', 'WAREHOUSES', 'AIRWEIGHTROUNDINGCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_AIRWEIGHTR_PRELH" ON "WAREHOUSES"("AIRWEIGHTROUNDINGCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_AIRWEIGHTR_PRELH" ON "WAREHOUSES"("AIRWEIGHTROUNDINGCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('d8262526-c478-49e1-8396-0c8e1e2c861f', 'Warehouse.dxml', 'WAREHOUSES', 'AIRWEIGHTROUNDINGCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column OCEANWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_ORCG3" FOREIGN KEY("OCEANWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column OCEANWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_ORCG3" FOREIGN KEY("OCEANWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c59c8653-4781-430a-9719-926afea8a0c0', 'Warehouse.dxml', 'WAREHOUSES', 'OCEANWEIGHTROUNDINGCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_OCEANWEIGH_5ESN8" ON "WAREHOUSES"("OCEANWEIGHTROUNDINGCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_OCEANWEIGH_5ESN8" ON "WAREHOUSES"("OCEANWEIGHTROUNDINGCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('dc3ee269-d7f0-4d7a-ae00-bdd798c047f4', 'Warehouse.dxml', 'WAREHOUSES', 'OCEANWEIGHTROUNDINGCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+-- Add Foreign Key Constraint For Column INLANDWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGS
+ALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_IKJ92" FOREIGN KEY("INLANDWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column INLANDWEIGHTROUNDINGCODE In Table WAREHOUSES As Reference To Column CODE In Table WAREHOUSEWEIGHTROUNDINGSALTER TABLE "WAREHOUSES" ADD CONSTRAINT "FK_WAREHOUSES_WAREHOUSEW_IKJ92" FOREIGN KEY("INLANDWEIGHTROUNDINGCODE") REFERENCES "WAREHOUSEWEIGHTROUNDINGS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('ef04cdfb-8ad9-4495-91e9-db05580eb676', 'Warehouse.dxml', 'WAREHOUSES', 'INLANDWEIGHTROUNDINGCODE', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSES Table
+CREATE INDEX "IX_WAREHOUSES_INLANDWEIG_WJCOP" ON "WAREHOUSES"("INLANDWEIGHTROUNDINGCODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSES TableCREATE INDEX "IX_WAREHOUSES_INLANDWEIG_WJCOP" ON "WAREHOUSES"("INLANDWEIGHTROUNDINGCODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('0682155d-f9bf-42bb-9a91-1d3498fb6038', 'Warehouse.dxml', 'WAREHOUSES', 'INLANDWEIGHTROUNDINGCODE', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Add Foreign Key Constraint For Column WAREHOUSEID In Table WAREHOUSESTORAGEPRICINGS As Reference To Column ID In Table CARDS
+ALTER TABLE "WAREHOUSESTORAGEPRICINGS" ADD CONSTRAINT "FK_WAREHOUSESTORAGEPRICI_AYXPJ" FOREIGN KEY("WAREHOUSEID") REFERENCES "CARDS"("ID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column WAREHOUSEID In Table WAREHOUSESTORAGEPRICINGS As Reference To Column ID In Table CARDSALTER TABLE "WAREHOUSESTORAGEPRICINGS" ADD CONSTRAINT "FK_WAREHOUSESTORAGEPRICI_AYXPJ" FOREIGN KEY("WAREHOUSEID") REFERENCES "CARDS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('bdfd36c3-d417-4c60-bc8f-9d1813908017', 'WarehouseStoragePricing.dxml', 'WAREHOUSESTORAGEPRICINGS', 'WAREHOUSEID', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On WAREHOUSESTORAGEPRICINGS Table
+CREATE INDEX "IX_WAREHOUSESTORAGEPRICI_XCCCX" ON "WAREHOUSESTORAGEPRICINGS"("WAREHOUSEID");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On WAREHOUSESTORAGEPRICINGS TableCREATE INDEX "IX_WAREHOUSESTORAGEPRICI_XCCCX" ON "WAREHOUSESTORAGEPRICINGS"("WAREHOUSEID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c2edaa3f-4a12-40ff-8087-8f0dbc311b1a', 'WarehouseStoragePricing.dxml', 'WAREHOUSESTORAGEPRICINGS', 'WAREHOUSEID', 'Create Index', SYSDATE, ScriptText); END;
+
+
+-- Drop Foreign Key Constraint For Column ID In Table APILOGSDATA That Reference To Column ID In Table APILOGS
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_APILOGSDATA_APILOGS_ID'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "APILOGSDATA" DROP CONSTRAINT "FK_APILOGSDATA_APILOGS_ID"'; END IF; END;
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column ID In Table APILOGSDATA That Reference To Column ID In Table APILOGSDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_APILOGSDATA_APILOGS_ID''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "APILOGSDATA" DROP CONSTRAINT "FK_APILOGSDATA_APILOGS_ID"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('84436c61-9cee-45c2-84cd-71782913fb05', 'APILogsData.dxml', 'APILOGSDATA', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
+
+
+-- Procedure Script From DelayMsgandChangeStatusTo0.dxml
+create or replace PROCEDURE Q_DelayMsgandChangeStatusTo0
 (
-CASE
-WHEN TransportModeId = 'O' and ShipmentTypeId = 'FCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FCL' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = 'O' and ShipmentTypeId = 'LCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LCL' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = 'O' and ShipmentTypeId = 'MyGO' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGO' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = 'I' and ShipmentTypeId = 'FTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FTL' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = 'I' and ShipmentTypeId = 'LTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LTL' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = 'I' and ShipmentTypeId = 'MyGI' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGI' and Tenant = Shipments.Tenant)
-END
-) as ShipmentSubTypeId
-into #tempTable
-FROM Shipments where TransportModeId <> 'A'
-declare @Tenant as int
-declare @EntityId as varchar(15)
-declare @ShipmentTypeId as varchar(4)
-declare @TransportModeId as varchar(4)
-declare @ShipmentSubTypeId as varchar(15)
-declare @Count as int
-set @Count = 0;
-BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-WHILE @@FETCH_STATUS = 0
-BEGIN
-insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Shipments
-set
-ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Shipments.ShipmentTypeId
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Shipments
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Shipments
-set
-ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Shipments.ShipmentTypeId
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-drop table #tempTable
-drop table #temp_Shipments
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202007051322_UpdateNotAirShipmentsSubType.sxml', GETDATE(), 'If(OBJECT_ID(''tempdb..#tempTable'') Is Not Null)
-Begin
-Drop Table #tempTable
-End
-If(OBJECT_ID(''tempdb..#temp_Shipments'') Is Not Null)
-Begin
-Drop Table #temp_Shipments
-End
-CREATE TABLE #temp_Shipments (
-Id varchar(15) not null ,
-ShipmentSubTypeId varchar(15)  null,
-ShipmentTypeId varchar(15)  null
+MessageId IN NUMBER,
+DelaySeconds IN NUMBER
 )
-select
-Id,
-Tenant,
-TransportModeId,
-ShipmentTypeId,
+AS
+BEGIN
+declare
+l_exst number(1);
+QueueMsgId number;
+BEGIN
+select case
+when exists (SELECT Id FROM QueueMessages  WHERE  ID = MessageId )
+then 1
+else 0
+end into l_exst
+from dual;
+if l_exst = 1
+then
+BEGIN
+select Id into QueueMsgId from QueueMessages  WHERE  ID = MessageId FOR UPDATE;
+--QueueMsgId:=(SELECT Id FROM QueueMessages  WHERE  ID = MessageId );
+UPDATE QueueMessages
+SET  NextRunDateTime =  current_timestamp + numToDSInterval( DelaySeconds, 'second' )
+WHERE Id = MessageId and Status <> 0;
+UPDATE QueueMessages
+SET  Status = 0
+WHERE Id = MessageId and Status <> 0;
+UPDATE QueueMessageMoreDetails
+SET  NextRunDateTime = current_timestamp + numToDSInterval( DelaySeconds, 'second' )
+WHERE Id = MessageId and Status <> 0;
+UPDATE QueueMessageMoreDetails
+SET  Status = 0
+WHERE Id = MessageId and Status <> 0;
+END;
+END IF;
+END;
+end;
+
+
+-- Procedure Script From Queue_Enqueue.dxml
+create or replace PROCEDURE Queue_Enqueue(
+v_QueueDefinitionCode IN VARCHAR2,
+v_MessageBody         IN VARCHAR2,
+v_Tenant              IN NUMBER,
+v_DelaySeconds        IN NUMBER,
+v_CustomerId          IN VARCHAR2,
+v_BatchNumber         IN VARCHAR2 ,
+v_HashCode            IN VARCHAR2,
+v_WatingStatus        IN NUMBER,
+v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
+)
+AS
+v_currentdate     DATE;
+v_nextRunDateTime DATE;
+v_CId             VARCHAR2(15);
+v_BNo             VARCHAR2(15);
+BEGIN
+v_currentdate     := SYSDATE ;
+v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
+INSERT
+INTO QueueMessages
 (
-CASE
-WHEN TransportModeId = ''O'' and ShipmentTypeId = ''FCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = ''O'' and ShipmentTypeId = ''LCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = ''O'' and ShipmentTypeId = ''MyGO'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGO'' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = ''I'' and ShipmentTypeId = ''FTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = ''I'' and ShipmentTypeId = ''LTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = Shipments.Tenant)
-WHEN TransportModeId = ''I'' and ShipmentTypeId = ''MyGI'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGI'' and Tenant = Shipments.Tenant)
-END
-) as ShipmentSubTypeId
-into #tempTable
-FROM Shipments where TransportModeId <> ''A''
-declare @Tenant as int
-declare @EntityId as varchar(15)
-declare @ShipmentTypeId as varchar(4)
-declare @TransportModeId as varchar(4)
-declare @ShipmentSubTypeId as varchar(15)
-declare @Count as int
-set @Count = 0;
+CreateDateTime,
+QueueDefinitionCode,
+Status,
+MessageBody,
+Tenant,
+NextRunDateTime,
+RetryNumber,
+HashCode
+)
+VALUES
+(
+v_currentdate,
+v_QueueDefinitionCode,
+v_WatingStatus,
+v_MessageBody,
+v_Tenant,
+v_nextRunDateTime,
+0,
+v_HashCode
+);
+IF v_CustomerId = ' ' THEN
+v_CId        := NULL ;
+ELSE
+v_CId := v_CustomerId ;
+END IF;
+IF v_BatchNumber = ' ' THEN
+v_BNo         := NULL ;
+ELSE
+v_BNo := v_BatchNumber ;
+END IF;
+v_QueueMessageId :=QUEUEMESSAGES_SEQ1.CURRVAL;
+INSERT
+INTO QueueMessageMoreDetails
+(
+Id,
+CreateDateTime,
+QueueDefinitionCode,
+Status,
+MessageBody,
+Tenant,
+NextRunDateTime,
+RetryNumber,
+Field1,
+Field2
+)
+VALUES
+(
+v_QueueMessageId ---QUEUEMESSAGES_SEQ1.CURRVAL
+,
+v_currentdate,
+v_QueueDefinitionCode,
+v_WatingStatus,
+v_MessageBody,
+v_Tenant,
+v_nextRunDateTime,
+0,
+v_CId,
+v_BNo
+);
+END;
+
+
+-- Procedure Script From Queue_Peek.dxml
+create or replace PROCEDURE Queue_Peek(
+v_MessageId OUT NUMBER,
+v_MessageBody OUT VARCHAR2,
+v_RetryNumber OUT NUMBER,
+v_MessageCreatedServerTime OUT QUEUEMESSAGES.CREATEDATETIME%TYPE ,
+v_QueueDefinitionCode IN VARCHAR2 ,
+v_NextRunDelayInSec IN NUMBER,
+v_WatingStatus IN NUMBER)
+AS
+--DECLARE @NextId INTEGER
+v_frequency NUMBER(10,0);
+v_row QueueMessages%rowtype;
 BEGIN
-DECLARE DataCursor CURSOR READ_ONLY
-FOR
-SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
-FROM #tempTable
-OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-WHILE @@FETCH_STATUS = 0
+v_frequency := 60 ;
+-- Find next available item available where the status is enabled
+DECLARE
+CURSOR c_1 IS
+SELECT /*+FIRST_ROWS_1*/  * --qt.Id
+FROM QueueMessages qt
+WHERE qt.NextRunDateTime <= SYSDATE
+--ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
+AND qt.Status             = v_WatingStatus
+AND QueueDefinitionCode = v_QueueDefinitionCode
+ORDER BY qt.NextRunDateTime ASC
+FOR UPDATE SKIP LOCKED;
 BEGIN
-insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
-set @Count = @Count + 1;
-if(@Count = 4000)
-begin
-update Shipments
-set
-ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Shipments.ShipmentTypeId
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-truncate table #temp_Shipments
-set @Count = 0
-end
-FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
-END
-CLOSE DataCursor
-DEALLOCATE DataCursor
-END
-if (@Count > 0)
-begin
-update Shipments
-set
-ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
-ShipmentTypeId = #temp_Shipments.ShipmentTypeId
-FROM Shipments
-INNER JOIN #temp_Shipments
-on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
-end
-drop table #tempTable
-drop table #temp_Shipments', DATEDIFF(MS,@StartTime,@EndTime), 'd83b69dccd89385b36d4782d9c487e31', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+OPEN c_1;
+FETCH c_1 into v_row; -- v_MessageId;
+IF c_1%FOUND THEN
+--If f
+--If found, flag it to prevent being picked up again
+IF ( v_row.Id IS NOT NULL ) THEN
+BEGIN
+v_MessageId := v_row.id;
+--SELECT RetryNumber       INTO v_RetryNumber        FROM QueueMessages        WHERE Id = v_MessageId;
+v_RetryNumber := v_row.RetryNumber;
+--SELECT MessageBody      INTO v_MessageBody       FROM QueueMessages       WHERE Id = v_MessageId;
+v_MessageBody := v_row.MessageBody;
+v_MessageCreatedServerTime := v_row.CREATEDATETIME;
+UPDATE QueueMessages
+SET ProcessingDateTime = SYSDATE,
+NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), ---(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),
+RetryNumber          = (RetryNumber + 1)
+WHERE Id               = v_MessageId;-- return queue data
+UPDATE queuemessagemoredetails
+SET ProcessingDateTime = SYSDATE,
+NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), ---(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),
+RetryNumber          = (RetryNumber + 1)
+WHERE Id               = v_MessageId;-- return queue data
+END;
+END IF;
+END IF;
+CLOSE c_1;
+END;
+END;
+
+
+-- Procedure Script From usp_DeleteObjectTableMetadata.dxml
+create or replace PROCEDURE usp_DeleteObjectTableMetadata(
+v_pTableName IN VARCHAR2 )
+AS
+v_ObjectTableId VARCHAR2(15);
+BEGIN
+BEGIN
+BEGIN
+SELECT Id
+INTO v_ObjectTableId
+FROM ObjectTables
+WHERE NAME  = v_pTableName
+AND ROWNUM <= 1;
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+v_ObjectTableId := NULL;
+END;
+--*--Delete--*--
+--ObjectFields
+DELETE objectfields
+WHERE tenant      = 0
+AND ObjectTableId = v_ObjectTableId;
+DELETE querycolumns
+WHERE tenant   = 0
+AND userid    IS NULL
+AND QueryCode IN
+( SELECT UniqueCode FROM Queries WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE AdvancedQueryFilters
+WHERE tenant   = 0
+AND userid    IS NULL
+AND QueryCode IN
+( SELECT UniqueCode FROM Queries WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE RuleConditionFields
+WHERE tenant               = 0
+AND ObjectTableRuleId NOT IN
+( SELECT id FROM ObjectTableRules WHERE SystemLevel = 0
+)
+AND ObjectTableRuleId IN
+( SELECT id FROM ObjectTableRules WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE ObjectTableRuleFields
+WHERE tenant           = 0
+AND systemlevel        = 1
+AND ObjectTableRuleId IN
+( SELECT id FROM ObjectTableRules WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE ObjectTableRules
+WHERE tenant    = 0
+AND systemlevel = 1
+AND Id         IN
+( SELECT id FROM ObjectTableRules WHERE ObjectTableId = v_ObjectTableId
+) ;
+--Screens
+DELETE ScreenFields
+WHERE tenant    = 0
+AND ScreenCode IN
+( SELECT code FROM Screens WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE screens WHERE tenant = 0 AND ObjectTableId = v_ObjectTableId;
+--Queries
+DELETE Queries
+WHERE tenant      = 0
+AND userid       IS NULL
+AND systemlevel   = 1
+AND ObjectTableId = v_ObjectTableId;
+--TextCodes
+DELETE MenuButtons
+WHERE tenant           = 0
+AND MenuButtonGroupId IN
+( SELECT id FROM MenuButtonGroups WHERE ObjectTableId = v_ObjectTableId
+) ;
+DELETE ObjectTableTabs WHERE tenant = 0 AND ObjectTableId = v_ObjectTableId;
+DELETE textcodes
+WHERE tenant  = 0
+AND code NOT IN
+(SELECT NameTextCodeCode
+FROM queries
+WHERE tenant          = 0
+AND userid           IS NOT NULL
+AND SystemLevel       = 0
+AND NameTextCodeCode IS NOT NULL
+)
+AND code NOT IN
+( SELECT ShortTextCodeCode FROM tips
+)
+AND ObjectTableId = v_ObjectTableId;
+--Features
+DELETE Features
+WHERE tenant      = 0
+AND ObjectTableId = v_ObjectTableId;-----------
+END;
+END;
+
+
+-- Procedure Script From usp_PreDeleteMetadata.dxml
+create or replace PROCEDURE usp_PreDeleteMetadata(
+v_pTableName IN VARCHAR2 )
+AS
+v_ObjectTableId VARCHAR2(15);
+tbl_exist  PLS_INTEGER;
+featuresCreation varchar2(500);
+spellCheckedCreation varchar2(500);
+BEGIN
+----------------------------------------------------------------Run automation Update before delete
+select count(*) into tbl_exist from user_tables where table_name = 'TEMPOLDFEATURES';
+if tbl_exist = 1 then
+execute immediate 'drop table TEMPOLDFEATURES';
+dbms_output.put_line('drop table TEMPOLDFEATURES');
+end if;
+dbms_output.put_line('out of drop table TEMPOLDFEATURES' || tbl_exist);
+--select * from TempOldFeatures
+featuresCreation:= 'CREATE TABLE TEMPOLDFEATURES
+AS
+SELECT *
+FROM
+(SELECT Code ,
+FeatureUniqeCode ,
+IsOld ,
+Tenant
+FROM features
+WHERE IsOld = 1
+) t';
+execute immediate featuresCreation;
+select count(*) into tbl_exist from user_tables where table_name = 'TEMPISSPELLCHECKEDTEXTCODES';
+if tbl_exist = 1 then
+execute immediate 'drop table TEMPISSPELLCHECKEDTEXTCODES';
+end if;
+spellCheckedCreation:= 'CREATE TABLE TEMPISSPELLCHECKEDTEXTCODES
+AS
+SELECT * FROM
+( SELECT * FROM TextCodes WHERE IsSpellChecked = 1
+) t';--select * from TempIsSpellCheckedTextCodes
+execute immediate spellCheckedCreation;
+END;
+
+
+-- General Script From 202007201100_ReferantSearchfield.sxml File
+DECLARE
+StartTime TIMESTAMP;
+EndTime TIMESTAMP;
+BEGIN
+SAVEPOINT ScriptSavePoint;
+StartTime := SYSTIMESTAMP;
+BEGIN
+update declarationreferantdatas set
+declarationreferantdatas.SEARCHFIELDS=
+(select   to_char(d.DeclarationNumber)||',' ||to_char(d.CustomFileNo) ||',' || to_char(s.localname) ||',' ||
+to_char(c.ManifestNumber )  ||',' || c.SecondCargoID  ||',' || c.ThirdCargoID as SEARCHFIELDS
+from  declarationreferantdatas r
+inner join
+declarations d on  r.DECLARATIONID= d.id
+inner join
+cards s on d.customerid=s.id
+inner join  CONSIGNMENTS c
+on d.id= c.DECLARATIONID  and c.CONSIGNMENTNUMBER=1
+where  d.id= declarationreferantdatas.DECLARATIONID);
+END;
+EndTime:= SYSTIMESTAMP;
+BEGIN
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'update declarationreferantdatas set
+declarationreferantdatas.SEARCHFIELDS=
+(select   to_char(d.DeclarationNumber)||'','' ||to_char(d.CustomFileNo) ||'','' || to_char(s.localname) ||'','' ||
+to_char(c.ManifestNumber )  ||'','' || c.SecondCargoID  ||'','' || c.ThirdCargoID as SEARCHFIELDS
+from  declarationreferantdatas r
+inner join
+declarations d on  r.DECLARATIONID= d.id
+inner join
+cards s on d.customerid=s.id
+inner join  CONSIGNMENTS c
+on d.id= c.DECLARATIONID  and c.CONSIGNMENTNUMBER=1
+where  d.id= declarationreferantdatas.DECLARATIONID);';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202007201100_ReferantSearchfield.sxml', SYSDATE, ScriptBody, EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000), 'ac7d69e9000b872dd8988527eb711e2e', 2);
+END;
+END;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK TO ScriptSavePoint;
+COMMIT;
+END;
+
+-- General Script From 202007201200_DepartmentSearchfield.sxml File
+DECLARE
+StartTime TIMESTAMP;
+EndTime TIMESTAMP;
+BEGIN
+SAVEPOINT ScriptSavePoint;
+StartTime := SYSTIMESTAMP;
+BEGIN
+update departments set
+departments.searchfields=
+(select r.CODE ||',' || r.ENGLISHNAME ||',' ||  r.LOCALNAME
+as SEARCHFIELDS
+from departments r
+where  r.id= departments.id);
+END;
+EndTime:= SYSTIMESTAMP;
+BEGIN
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'update departments set
+departments.searchfields=
+(select r.CODE ||'','' || r.ENGLISHNAME ||'','' ||  r.LOCALNAME
+as SEARCHFIELDS
+from departments r
+where  r.id= departments.id);';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202007201200_DepartmentSearchfield.sxml', SYSDATE, ScriptBody, EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000), 'f7176b686612acb3ce7cb6828f500ec1', 1);
+END;
+END;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK TO ScriptSavePoint;
+COMMIT;
+END;
+
+-- General Script From 202007201431_FillWarehouseWeightClosedTables.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202007201431_FillWarehouseWeightClosedTables.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202007201436_FillWarehouseFieldsDefaultValues.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202007201436_FillWarehouseFieldsDefaultValues.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202008051018_AddNewMeasurementAndChargesType.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202008051018_AddNewMeasurementAndChargesType.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202008110941_AddNewMeasurement.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202008110941_AddNewMeasurement.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 20200812_SetIATACodeToSRForImportStorageCharge.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('20200812_SetIATACodeToSRForImportStorageCharge.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202008261425_SetToggleCodeForHorsesFeature.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202008261425_SetToggleCodeForHorsesFeature.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202008300915_AddHorsesEventTypesToTenants.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202008300915_AddHorsesEventTypesToTenants.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202009011450_ImportToUSADropMaman.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202009011450_ImportToUSADropMaman.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202009101501_AddChargeStorageGroupToTenants.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202009101501_AddChargeStorageGroupToTenants.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202009151233_UpdateWarehouseReleaseEventTypeStatus.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202009151233_UpdateWarehouseReleaseEventTypeStatus.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From 202009152200_FixHorseEventTypes.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202009152200_FixHorseEventTypes.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
+
+-- General Script From BuildSearchKeywordFunction.sxml File
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'NULL';
+INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('BuildSearchKeywordFunction.sxml', SYSDATE, ScriptBody, 0, 'NULL', 1);
+END;
 

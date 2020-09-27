@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(MyContext);
 				supplierInvoiceQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SupplierInvoice", entityPM.Tenant, authToken.Tenant);
+	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         SupplierInvoiceUpdateService service = new SupplierInvoiceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SupplierInvoice", entityPM.Tenant, authToken.Tenant);
+	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         SupplierInvoiceUpdateService service = new SupplierInvoiceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

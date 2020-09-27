@@ -324,7 +324,7 @@ namespace <#= UpdateClassnamespacestring #>
 		i = 0;
 		foreach(XElement Query in Queries) 
 		{ //get all Queries
-		   WriteAddQueryMethod(entity,Query,ObjectTbl,i);
+		   WriteAddQueryMethod(entity,Query,ObjectTbl,i,TableNameFull);
 		   i++;
         }
 #>
@@ -417,7 +417,9 @@ namespace <#= UpdateClassnamespacestring #>
 	    var IsClosed = entity.Attributes().Where(a => a.Name == "IsClosed").FirstOrDefault().Value;
         var NoDefaultFeatures = (entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault()!= null?entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault().Value.ToLower():"false");
 		var DownloadToExcelFeatureCodeAttr = entity.Attributes().Where(a => a.Name == "DownloadToExcelFeatureCode").FirstOrDefault();
-         if (IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false")
+        var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
+        bool hasAdditionalFeature = (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0);
+         if ((IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false")|| hasAdditionalFeature)
         {
 	 #>
 
@@ -443,8 +445,8 @@ namespace <#= UpdateClassnamespacestring #>
 <#+
 		}
 
-		var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
-        if (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0)
+		 
+        if (hasAdditionalFeature)
 		{
 
 #>
@@ -848,9 +850,9 @@ if(!GeneratedTabFeatures.Keys.Contains(FeatureCode))
 
 private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblName,int index)
 { 
-		var MenuButtonTypeAtt = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value != null ?MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'):"";
-	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
-	   var DefaultText = TrimCharacter(MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value,'"'); 
+		var MenuButtonTypeAtt = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value != null ? MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'): "";
+	   var EventCode =  MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault() != null? MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value : "";
+	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null ? TrimCharacter(MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value,'"') : "";
 
 	   var TextCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault();
 	   var FeatureCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
@@ -896,12 +898,12 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 		 int i=0;
 		 foreach(XElement item in MenuItems)
 		 {  
-			 var ItemEventCode = item.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
-	         var ItemDefaultText = item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"'); 
+			 var ItemEventCode = item.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault()!= null ? item.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value: "";
+	         var ItemDefaultText = item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault()!= null ?item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"'): ""; 
 			 var ItemTextCodeAtt = item.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault();
 			 var ItemFeatureCodeAtt = item.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
 			 var ItemFeatureDefaultTextCodeAtt = item.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault();
-			 var MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'); 
+			 var MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault() !=null? item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"') : ""; 
 
 			 if(MenuButtonType.Trim('"') == "separator")
 				continue;
@@ -942,12 +944,14 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 <#+
 private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int index)
 { 
-	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
-	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value; 
-	   var MenuButtonType = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value;
+	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault() != null?MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value:"";
+	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null?MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value:"";
+	   var MenuButtonType = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault()!= null?MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value:"";
 	   var StyleAttr = MButtonAtt.Attributes().Where(a => a.Name == "Style").FirstOrDefault(); 
-	   var IndexOrder = MButtonAtt.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value; 
+	   var IndexOrder = MButtonAtt.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value:""; 
 	   var FeatureCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
+	   var HtmlComponentPath = MButtonAtt.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault().Value:"null"; 
+       var Width = MButtonAtt.Attributes().Where(a => a.Name == "Width").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "Width").FirstOrDefault().Value:"0"; 
 
 	   	   var LocalDefaultTextAttr = MButtonAtt.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault(); 
 		    string LocalDefaultText  = "null";
@@ -987,8 +991,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
                         featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";
 
         }
-        else
-            IndexOrder = "100";
+        //else
+            //IndexOrder = "100";
  
 #>       
    
@@ -1007,6 +1011,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
 						FeatureUniqeCode = <#=featureCodeClassName #>,
+						HtmlComponentPath = <#=HtmlComponentPath #>,
+						Width = <#=Width.Trim('"') #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 <#+
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
@@ -1016,11 +1022,13 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 		 foreach(XElement item in MenuItems)
 		 {  
 			 EventCode = item.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
-	         DefaultText = item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value;
-             MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value;
+	         DefaultText = item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault()!= null?item.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value:"";
+             MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault()!= null?item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value:"";
 	         StyleAttr = item.Attributes().Where(a => a.Name == "Style").FirstOrDefault(); 
-	         IndexOrder = item.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value; 
+	         IndexOrder = item.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault()!=null?item.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value:""; 
 			 var ItemFeatureCodeAtt = item.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
+	   var itemhtmlComponentPath = item.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault() != null ?item.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault().Value:"null"; 
+       var ItemWidth = item.Attributes().Where(a => a.Name == "Width").FirstOrDefault() != null ?item.Attributes().Where(a => a.Name == "Width").FirstOrDefault().Value:"0"; 
 
 		    LocalDefaultTextAttr = item.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault(); 
 		    LocalDefaultText  = "null";
@@ -1071,6 +1079,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						<#= itemfeatureClassName #>
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+                        HtmlComponentPath=<#=itemhtmlComponentPath #>,
+                        Width=<#=ItemWidth.Trim('"') #>,
 						<#=itemfeatureCodeClassName#>
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   <#+
@@ -1081,7 +1091,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 #>
 
 <#+
-private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblName,int index)
+private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblName,int index,string FullTableName)
 { 
 #>  
 	     <#+
@@ -1118,7 +1128,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 
            #> 
 
-			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, NameTextCodeCode = <#= TblName.Trim('"') #>TextCode_<#= index #>.Code, ObjectTableName = <#= TblName #>, Code = <#= Code #>, <#+
+			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, NameTextCodeCode = <#= TblName.Trim('"') #>TextCode_<#= index #>.Code, ObjectTableName = <#= FullTableName #>, Code = <#= Code #>, <#+
     if (!string.IsNullOrEmpty(SpotlightDataTemplate) && SpotlightDataTemplate != "&quot;&quot;" && SpotlightDataTemplate != "\"\"")
     {
 			  #> SpotlightDataTemplate = <#= SpotlightDataTemplate #>, <#+ } 
@@ -1133,13 +1143,13 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))
 		{  //get all Queries
-		   WriteAddQueryColumnMethod(entity,Column,i,TblName);
+		   WriteAddQueryColumnMethod(entity,Column,i,FullTableName);
 		   i++;
         }
 	    i = 0;
 	    foreach(XElement Filter in QueryAtt.Elements("QueryFilters").FirstOrDefault().Elements("QueryFilter"))
 		{  //get all Queries
-		   WriteAddQueryFilterMethod(entity,Filter,i,TblName);
+		   WriteAddQueryFilterMethod(entity,Filter,i,FullTableName);
 		   i++;
         }
 }
@@ -1216,7 +1226,7 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
 	    int i = 0;
 	    foreach(XElement ScreenField in ScreenAtt.Elements("ScreenFields").FirstOrDefault().Elements("ScreenField"))
 		{  //get all Queries
-		   WriteAddScreenFieldMethod(entity,ScreenField,i,TblName,index, screenClassName,ScreenAtt);
+		   WriteAddScreenFieldMethod(entity,ScreenField,i,ObjectTableName,index, screenClassName,ScreenAtt);
 		   i++;
         }
         if (IsHeaderScreen.ToLower() == "true")
@@ -1666,7 +1676,8 @@ public void GenerateAllTableMethods(string sourceFilePath)
 	 
 	 var path= Host.ResolvePath(file);
      XElement entity = XDocument.Load(path).Root;
-	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	 string FulltableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	 string tableName = FulltableName;
 	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
     {
@@ -1679,11 +1690,11 @@ public void GenerateAllTableMethods(string sourceFilePath)
 		 #><#=""#>
 <#+
 #>
-			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=FulltableName #>", ObjectTables, <#=classname #>.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
+					MetadataUpdateUtility.DeleteAllTableMetadata("<#=FulltableName #>");
 <#+
 			if(tableName == "General")
 				{

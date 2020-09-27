@@ -28,6 +28,15 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Configuration;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.DataContracts;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
+using System.Web.Script.Serialization;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Reflection;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -149,6 +158,283 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        public HttpResponseMessage CancelByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Customs.CustomsRequestsSheet",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Customs.CustomsRequestsSheets",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+
+                List<ObjectField> CustomsRequestsSheetObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CustomsRequestsSheet", tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+                        //{
+                        //string[] values = filterValue1.ToString().Split(',');
+                        //if (values.Count() > 1)
+                        //{
+                        //filterValue1 = values[0];
+                        //filterValue2 = values[1];
+                        //}
+                        //}
+                        //ToDo: Get object field by name and set the remained filter properties
+                        ObjectField field = CustomsRequestsSheetObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                        }
+                        else
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                    }
+
+
+
+                }
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = CustomsRequestsSheetObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+
+
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(MyContext);
+
+                List<CustomsRequestsSheetList> entityLists = customsRequestsSheetQuery.GetList(queryOperations, tenant);
+
+
+       
+                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "15" && x.RequestStatusCode != "21") != null)
+                {
+                    throw new Exception("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל");
+
+                }
+
+                CustomsRequestsSheetUpdateService customsRequestsSheetUpdate = new CustomsRequestsSheetUpdateService(MyContext);
+
+
+                customsRequestsSheetUpdate.CancelRequests(entityLists, tenant, MyContext);
+
+                ServiceResponse response = new ServiceResponse();
+                HttpResponseMessage reponseMessage;
+                response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = customsRequestsSheetQuery.GetListCount(queryOperations, tenant);
+                    response.Count = count;
+                }
+
+                response.Result = entityLists;
+                  reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage ReAnalysisByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Customs.CustomsRequestsSheet",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Customs.CustomsRequestsSheets",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+
+                List<ObjectField> CustomsRequestsSheetObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CustomsRequestsSheet", tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+                        //{
+                        //string[] values = filterValue1.ToString().Split(',');
+                        //if (values.Count() > 1)
+                        //{
+                        //filterValue1 = values[0];
+                        //filterValue2 = values[1];
+                        //}
+                        //}
+                        //ToDo: Get object field by name and set the remained filter properties
+                        ObjectField field = CustomsRequestsSheetObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                        }
+                        else
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                    }
+
+
+
+                }
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = CustomsRequestsSheetObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+
+
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(MyContext);
+
+                List<CustomsRequestsSheetList> entityLists = customsRequestsSheetQuery.GetList(queryOperations, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                HttpResponseMessage reponseMessage;
+                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "21" && x.RequestStatusCode != "25") != null)
+                {
+                    throw new Exception("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה");
+
+                }
+
+
+                var messagingService = new DCAInUCB9999ReAnAnalysis_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, entityLists.Select(x=>  x.Id).ToList());
+
+
+
+
+                  response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = customsRequestsSheetQuery.GetListCount(queryOperations, tenant);
+                    response.Count = count;
+                }
+
+                response.Result = entityLists;
+                  reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         public HttpResponseMessage GetRequestByInterfaceTypeCode(int Tenant,
             string InterfaceTypeCode,
             string ObjectTableId1, string EntityId1,
@@ -213,12 +499,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                     {
                                         if (DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault()) < TimeSpan.FromMinutes(10)) //CALL#321639         
                                         {
+                                            var TS = DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault());
+                                            try
+                                            {
+
+                                            
                                             string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
                                             using (var scope1 = TransactionFactory.GetNewTransaction())
                                             {
                                                 var concurrentKiller = new ConcurrentKiller();
                                                 concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
                                                 scope1.Complete();
+                                            }
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                var wait = 10 - TS.TotalMinutes;
+                                                throw new Exception( $"  דקות {wait} נסה עוד",e);
                                             }
                                         }
                                     }
@@ -232,6 +529,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 us.Update(currententityPm, true);
                                 mess = null;
+
+                                if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(currententityPm.InterfaceTypeCode))
+                                {
+                                    var req = new CD_NG_8347_Web01_CurrencyRateSearchRequestParams()
+                                    {
+                                        InterfaceTypeCode = currententityPm.InterfaceTypeCode,
+                                        LoggingObjectTableId = currententityPm.ObjectTableId1,
+                                        LoggingEntityId = currententityPm.EntityId1,
+
+                                    };
+                                    CustomsRequestsSheetDomainModelUtil
+                                        .ReleaseConcurrentVirtualKey(req);
+
+                                }
                                 scope.Complete();
                             }
 

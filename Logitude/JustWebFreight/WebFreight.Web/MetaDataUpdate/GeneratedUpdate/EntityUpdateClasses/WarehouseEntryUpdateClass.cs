@@ -4826,26 +4826,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen WarehouseEntryWarehouseEntryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntry.WarehouseEntryHeaderScreen", Name = "WarehouseEntryHeaderScreen", ObjectTableId = WarehouseEntryObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.WarehouseName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.EntryReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.References", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.MasterHouse", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ShipmentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ActualEntryDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.LastStatusUpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.WarehouseName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.EntryReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.References", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.MasterHouse", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ShipmentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ActualEntryDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.LastStatusUpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    WarehouseEntryObjectTable.HeaderScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id;
 		    WarehouseEntryObjectTable.HeaderScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code;
 
@@ -5074,6 +5074,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = WarehouseEntryFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

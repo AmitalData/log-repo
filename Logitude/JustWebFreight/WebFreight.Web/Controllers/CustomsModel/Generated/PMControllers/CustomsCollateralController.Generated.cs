@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CustomsCollateral", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsCollateral", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsCollateralUpdateService service = new CustomsCollateralUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CustomsCollateral", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsCollateral", entityPM.Tenant, authToken.Tenant);
 	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsCollateralUpdateService service = new CustomsCollateralUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

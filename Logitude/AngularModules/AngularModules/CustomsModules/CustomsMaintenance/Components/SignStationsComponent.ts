@@ -1,34 +1,16 @@
-declare var window: any;
-import {Observable}     from 'rxjs/Rx';
-import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
-import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ListComponentArgs } from '../../../Infrastructure/Args';
-
 import { ApiQueryFilters } from  '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ServiceResponse } from  '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
-import { SignStationExtendedListService, SignStationList, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
-   
-
-
-
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-
+import { SignStationExtendedListService, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
 
 @Component({
     
     templateUrl: './SignStationsComponent.html',
 })
-
-
-
-
 
 export class SignStationsComponent
     extends BaseComponent
@@ -216,7 +198,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsPersonalSignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
         });
 
@@ -229,7 +211,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsCompanySignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
         });
         this.columns.push({
@@ -253,7 +235,7 @@ export class SignStationsComponent
             SortByName: 'LastSignAt'
             ,
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
         });
 
         this.columns.push({
@@ -265,7 +247,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'Status',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
 
         });
@@ -282,7 +264,7 @@ export class SignStationsComponent
         //    Styles: { width: '100px' },
         //    IsCustomTemplate: true,
         //    HtmlListComponentName: 'SignStationListTemplate',
-        //    HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+        //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
         //});
 
 

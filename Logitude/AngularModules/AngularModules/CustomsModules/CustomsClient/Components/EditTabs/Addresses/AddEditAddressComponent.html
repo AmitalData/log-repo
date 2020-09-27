@@ -505,7 +505,8 @@
 
                                                                                 <!-- CommunicationTypeCode -->
                                                                                 <log-column [header]="'Customs.ClientsAddressCommType.F.CommunicationTypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'CommunicationTypeCode'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                             <span>{{item.CommunicationTypeName}}</span>
                                                                                         </div>
@@ -521,11 +522,13 @@
 
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
                                                                                 <!-- CommunicationAddress -->
                                                                                 <log-column [header]="'Customs.ClientsAddressCommType.F.CommunicationAddress' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'CommunicationAddress'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                             <span>{{item.CommunicationAddress}}</span>
                                                                                         </div>
@@ -534,15 +537,18 @@
                                                                                                         [ObjectTableName]="'Customs.ClientsAddressCommType'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
                                                                                 <!-- Buttons -->
                                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                                    <log-cell-template template="let item" [TabIndex]="-1">
+                                                                                    <ng-template let-item>
+<log-cell-template  [TabIndex]="-1">
                                                                                         <span class="CellSeparator" [style.float]="'right'"></span>
                                                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveRow(item)"
                                                                                                     style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
                                                                             </logitude-edit-grid>

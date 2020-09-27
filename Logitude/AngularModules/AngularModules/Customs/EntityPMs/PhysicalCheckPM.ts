@@ -234,6 +234,16 @@ export class PhysicalCheckPM {
     public set NoEscortRequired(newValue: boolean) { if (this.noEscortRequired != newValue) { this.noEscortRequired = newValue; this.MarkAsDirty("NoEscortRequired"); } }
        
 	 
+    private vehicleChassisNumber: string;
+    public get VehicleChassisNumber() { return this.vehicleChassisNumber; }
+    public set VehicleChassisNumber(newValue: string) { if (this.vehicleChassisNumber != newValue) { this.vehicleChassisNumber = newValue; this.MarkAsDirty("VehicleChassisNumber"); } }
+       
+	 
+    private endDate: Date;
+    public get EndDate() { return this.endDate; }
+    public set EndDate(newValue: Date) { if (this.endDate != newValue) { this.endDate = newValue; this.MarkAsDirty("EndDate"); } }
+       
+	 
 
     public OldEntityPM: PhysicalCheckPM;
 		

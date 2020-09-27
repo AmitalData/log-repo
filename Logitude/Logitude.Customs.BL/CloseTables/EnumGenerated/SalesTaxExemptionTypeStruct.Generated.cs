@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct SalesTaxExemptionTypeValues
     {   
+       public const string קוד6-פטורכלליממסקניה = "6";  
+       public const string פטורממסקניהלעוסקרשום = "7";  
     }
 }
 

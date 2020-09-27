@@ -1,0 +1,95 @@
+<style>
+    scrollable-content {
+        background-color: blue;
+    }
+</style>
+<div class="container">
+    <table>
+        <tr class="FormFieldRow">
+            <!--style="width: 400px;"-->
+            <td #multiSelectInput>
+
+                <input type="text" placeholder="{{PlaceHolder}}" [(ngModel)]="_ChosenFormatedList"
+                       [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}"
+                       (focus)="DropdownMenuButtonClick($event,true)"
+                       onkeydown="return false;" />
+                <img *ngIf="_ChosenFormatedList"
+                     [className]="LayoutDirection == 'rtl' ? 'DeleteButton LeftCenter' : 'DeleteButton RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '30px'} : {'right': '30px'}"
+                     src="Images/RedX.png"
+                     (click)="ClearList()"
+                     title="Clear List" />
+                <button class="DeleteButton LeftCenter"
+                        [disabled]="IsDisabled"
+                        (click)="DropdownMenuButtonClick($event,false)"
+                        [attr.id]="_MultiSelectLOVId"
+                        title="Click and choose"
+                        style="background-color: transparent;cursor:pointer;left:5px;width:20px">
+                    &#9660;
+                </button>
+
+            </td>
+            <td>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <div [attr.id]="_MultiSelectLOVMenuId"
+         [ngStyle]="{'display': _DropdownDisplay  }"
+         style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: white;">
+        <div style="height:250px;" [ngStyle]="{'width.px': multiSelectInput.offsetWidth  ,'left' :multiSelectInput.left }">
+
+            <div style="margin:5px;">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width:5px"></td>
+                        <!--style="width: 400px;"-->
+                        <td class="myLOV-td">
+                            <ng-content select=".class-MultiSelectLOV-content"></ng-content>
+                            <!--<LogLov [ObjectFieldName]="'UserId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"
+                                    [LookUpTableName]="'User'"
+                                    [DisplayMemberPath]="'LocalName'">
+                            </LogLov>-->
+
+
+                        </td>
+                        <td style="width:50px;">
+                            <div style="margin:5px;">
+                                <!--&& this.MyLogLovV2Component.SelectedItem-->
+                                <IconButton *ngIf="ButtonAddLabel == null" [IsEnabled]="!IsDisplayOnly " [Name]="'Add'" (click)="AddToList()" title="Add item"></IconButton>
+                                <!--[disabled]="IsDisplayOnly || !this.MyLogLovV2Component.SelectedItem"-->
+                                <button *ngIf="ButtonAddLabel != null" class="Button" [disabled]="IsDisplayOnly" (blur)="addOnBlur()" (click)="AddToList()" title="Add item">{{ButtonAddLabel}}</button>
+
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="height:5px;margin:5px;" class="TabTitleRow">{{ChosenListHeader}}</div>
+
+            <div class="" style="margin:5px;padding:10px;height: 175px;overflow-x: auto;">
+                <table>
+                    <tr [ngClass]="_MultiSelectLOVMenuId" style="height:20px" *ngFor="let item of DataContext[LOVListComponentPropName] ">
+                        <td>
+                            <span> {{item[this.MyLogLovV2Component.DisplayMemberPath]}}</span>
+                        </td>
+                        <td style="width:30px">
+                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteFromList(item)" title="Delete item"></IconButton>
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

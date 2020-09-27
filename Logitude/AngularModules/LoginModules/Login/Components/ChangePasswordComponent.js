@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var LoginService_1 = require('../LoginService');
-var SessionInfo_1 = require('../SessionInfo');
-var PasswordChangeService_1 = require('../PasswordChangeService');
-var ChangePasswordComponent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var PasswordChangeService_1 = require("../PasswordChangeService");
+var ChangePasswordComponent = /** @class */ (function () {
     function ChangePasswordComponent(_passwordChangeService, _loginService) {
         this._passwordChangeService = _passwordChangeService;
         this._loginService = _loginService;
@@ -36,7 +37,6 @@ var ChangePasswordComponent = (function () {
     };
     ChangePasswordComponent.prototype.SubmitBtnClicked = function () {
         var _this = this;
-        this.email = "hamodi@fnarsoft.com";
         if (!this.email) {
             this.HasErrors = true;
             this.ErrorMessage = "Your email is empty.";

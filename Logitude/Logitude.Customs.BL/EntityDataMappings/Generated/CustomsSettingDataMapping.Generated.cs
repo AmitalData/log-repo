@@ -42,7 +42,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightCertificateActivated, 
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
-	         AutoUnitMeasurement,
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS,
 	      }
 
 
@@ -71,7 +76,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightCertificateActivated, 
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
-	         AutoUnitMeasurement,
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -178,6 +188,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
             {
 				entityPOCO.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+            {
+				entityPOCO.CompanyType = entityPM.CompanyType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+            {
+				entityPOCO.IsMessagesPending = entityPM.IsMessagesPending;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+            {
+				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+				entityPOCO.LastRunningDCAWS = entityPM.LastRunningDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+            {
+				entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -291,6 +326,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AutoUnitMeasurement = entityPOCO.AutoUnitMeasurement;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CompanyType))
+            {
+					entityPM.CompanyType = entityPOCO.CompanyType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMessagesPending))
+            {
+					entityPM.IsMessagesPending = entityPOCO.IsMessagesPending;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QtyFeedbackInPendingMessage))
+            {
+					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunningDCAWS))
+            {
+					entityPM.LastRunningDCAWS = entityPOCO.LastRunningDCAWS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastNumOfMessagesDCAWS))
+            {
+					entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -395,6 +455,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
             {
                 oldEntityPM.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+            {
+                oldEntityPM.CompanyType = entityPM.CompanyType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+            {
+                oldEntityPM.IsMessagesPending = entityPM.IsMessagesPending;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+            {
+                oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+                oldEntityPM.LastRunningDCAWS = entityPM.LastRunningDCAWS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+            {
+                oldEntityPM.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
             }
 			
 		}

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.Server.Tools.Utils
 {
@@ -51,9 +52,16 @@ namespace Logitude.Server.Tools.Utils
                 {
 
                 }
-                
+                string trans = "-999";
+                if (Transaction.Current != null)
+                {
+                    trans = Transaction.Current.GetHashCode().ToString();
+                }
                 var sb = new StringBuilder();
                 sb
+                    .AppendLine("Transaction.Current:")
+                    .AppendLine(trans)
+
                     .AppendLine("ResolveUserIdentityName:")
                     .AppendLine(resolveUserIdentityName)
                     .AppendLine("**Stack:")

@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #4b90cb;
@@ -158,7 +158,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="height: 28px;">
+                    <tr *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="height: 28px;">
                         <td colspan="3">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
@@ -169,7 +169,7 @@
                     </tr>
                     <!-- Title -->
                     <tr style="height: 28px;">
-                        <td  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
+                        <td *ngIf="!IsAmendmentErrors"  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
                         <td style="width: 320px;" *ngIf="IsCourierDeclaration">
                             <ul class="FiltersMenu">
                                 <li id="All" (click)="CourierFilterClicked('Declaration')" style="width: 80px; height: 22px;"
@@ -254,11 +254,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -266,11 +268,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -278,11 +282,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -290,11 +296,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -302,14 +310,44 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
+                                <!-- DepositionStatusCode -->
+                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
+                                            [width]="'150'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
+                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
+                                            </div>
+
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                    
+                                </log-column>
                             </logitude-edit-grid>
                         </td>
                     </tr>
@@ -519,11 +557,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming"  [title]="item.Description">
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -531,11 +571,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -543,11 +585,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -555,11 +599,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -567,11 +613,42 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
+
+                                </log-column>
+
+                                <!-- DepositionStatusCode -->
+                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
+                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
+                                            </div>
+
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
 
                                 </log-column>
 

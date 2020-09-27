@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 {
    public class ErrorLogUpdateClass
    {  		
-		public const string HashString = "7a76dba2a6f52e5fd570816528eb3875";
+		public const string HashString = "85675d1f4a41c5dab8254082fc7e6337";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -857,14 +857,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 	         Screen ErrorLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.HeaderScreen", Name = "Header Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.LogDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.Tier", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.LogDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.Tier", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ErrorLogObjectTable.HeaderScreenId = ErrorLogHeaderScreenScreen0.Id;
 		    ErrorLogObjectTable.HeaderScreenCode = ErrorLogHeaderScreenScreen0.Code;
 
@@ -873,10 +873,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 	         Screen ErrorLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.IP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.IP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -915,13 +915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 		   Feature ErrorLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable);
 		   Feature ErrorLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable);
 		   Feature ErrorLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable);
-		   Feature ErrorLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.PackageFeature", NameTextCodeDefaultText = "ErrorLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ErrorLogFeature_ALLERRORLOGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLERRORLOGS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLogObjectTable.Features.AllErrorLog", NameTextCodeDefaultText = @"All Error Log" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable);
-
-   
+		   Feature ErrorLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.PackageFeature", NameTextCodeDefaultText = "ErrorLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ErrorLogObjectTable);    
 	    
 		}
 

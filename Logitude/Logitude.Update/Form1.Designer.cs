@@ -165,6 +165,7 @@
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
             this.button49 = new System.Windows.Forms.Button();
             this.btnCallOldUpdate = new System.Windows.Forms.Button();
+            this.button50 = new System.Windows.Forms.Button();
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -181,6 +182,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CargoTrackingTestBtn = new System.Windows.Forms.Button();
             this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
+            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
@@ -191,7 +193,6 @@
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.FilePathTextBox = new System.Windows.Forms.TextBox();
@@ -442,8 +443,8 @@
             // productionToolStripMenuItem
             // 
             this.productionToolStripMenuItem.Name = "productionToolStripMenuItem";
-            this.productionToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.productionToolStripMenuItem.Text = "Production";
+            this.productionToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.productionToolStripMenuItem.Text = "Update-Database";
             this.productionToolStripMenuItem.Click += new System.EventHandler(this.productionToolStripMenuItem_Click);
             // 
             // customsBookToolStripMenuItem
@@ -1556,6 +1557,26 @@
             this.btnCallOldUpdate.UseVisualStyleBackColor = true;
             this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
             // 
+            // button50
+            // 
+            this.button50.Location = new System.Drawing.Point(543, 313);
+            this.button50.Name = "button49";
+            this.button50.Size = new System.Drawing.Size(184, 36);
+            this.button50.TabIndex = 85;
+            this.button50.Text = "Load Closed Tables";
+            this.button50.UseVisualStyleBackColor = true;
+            this.button50.Click += new System.EventHandler(this.button50_Click);
+            // 
+            // btnCallOldUpdate
+            // 
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
+            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
+            this.btnCallOldUpdate.TabIndex = 98;
+            this.btnCallOldUpdate.Text = "Update Old Code";
+            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
+            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
+            // 
             // UpdateRulesLabel
             // 
             this.UpdateRulesLabel.AutoSize = true;
@@ -2162,11 +2183,13 @@
         private System.Windows.Forms.Button btnCallOldUpdate;
         private System.Windows.Forms.CheckBox cbxOldUpdateCode;
         private System.Windows.Forms.Button button49;
+        private System.Windows.Forms.Button button50;
+
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
         private System.Windows.Forms.Button uploadMexicoCitiesBtn;
         private System.Windows.Forms.ToolStripStatusLabel conStrLabel;
         private System.Windows.Forms.Button CargoTrackingTestBtn;
-        private System.Windows.Forms.Button button50;
+        
         private System.Windows.Forms.Label UpdateCargoTrackingLabel;
     }
 }

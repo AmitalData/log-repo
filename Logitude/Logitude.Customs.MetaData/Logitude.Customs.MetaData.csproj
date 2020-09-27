@@ -51,6 +51,12 @@
     <Reference Include="AmazedSaint.Elastic">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.11.0.dll</HintPath>
@@ -97,13 +103,407 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
+    <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
+    <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
+    <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
+    <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
+    <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
+    <None Include="DBScripts\Pre\202005210107_TablesBackup.sxml" />
+    <None Include="DBScripts\Pre\202005210108_AddMetadataColumns.sxml" />
+    <None Include="DBScripts\Pre\202005210109_ColorIndexScripts.sxml" />
+    <None Include="DBScripts\Pre\202005210110_DeleteDuplicateCountries.sxml" />
+    <None Include="DBScripts\Pre\202005210111_DeleteDuplicateCountryCities.sxml" />
+    <None Include="DBScripts\Pre\202005210112_DeleteDuplicateIncoterms.sxml" />
+    <None Include="DBScripts\Pre\202005210113_DeleteDuplicatePorts.sxml" />
+    <None Include="DBScripts\Pre\202005210114_DeleteDuplicateStates.sxml" />
+    <None Include="DBScripts\Pre\202005210115_NullColumnsMustHaveValueInTenants.sxml" />
+    <None Include="DBScripts\Pre\202005210116_PackageTypePrintAsNullable.sxml" />
+    <None Include="DBScripts\Pre\202005210123_DeleteDuplicateQueries.sxml" />
+    <None Include="DBScripts\Pre\202005210118_UpdateObjectFieldCode.sxml" />
+    <None Include="DBScripts\Pre\202005210119_DropIX_COMMUNICATIONLOGS_ENTITYID.sxml" />
+    <None Include="DBScripts\Pre\202005210120_DataTypeChanges_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210121_DataTypeChanges_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210122_BeforeDeleteMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005261025_CreateSpellCheckedTextCodesTable.sxml" />
+    <None Include="DBScripts\Post\202006031027_AddReferantException901.sxml" />
+    <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
+    <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
+    <None Include="DBScripts\Pre\2020070502_ISVALIDTICKETSDIAMOND.sxml" />
+    <None Include="DBScripts\Pre\2020070560750_UQ_CARDS_TENANT_CODE_PAR_CXQOV.sxml" />
+    <None Include="DBScripts\Pre\202007091941_AddONDeclarationCancellationAndAmendment.sxml" />
+    <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
+    <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
+    <None Include="DBTables\AcceptanceStatus.dxml" />
+    <None Include="DBTables\AccumalationState.dxml" />
+    <None Include="DBTables\ActionCode.dxml" />
+    <None Include="DBTables\AddressContactState.dxml" />
+    <None Include="DBTables\AddressPurpose.dxml" />
+    <None Include="DBTables\AgentTalkBackType.dxml" />
+    <None Include="DBTables\AmendmentFieldReasonType.dxml" />
+    <None Include="DBTables\AmendmentRequestStatus.dxml" />
+    <None Include="DBTables\AmendmentStatus.dxml" />
+    <None Include="DBTables\AmountType.dxml" />
+    <None Include="DBTables\ApprovedProfession.dxml" />
+    <None Include="DBTables\AssigneeNotificationType.dxml" />
+    <None Include="DBTables\AttachmentType.dxml" />
+    <None Include="DBTables\Authority.dxml" />
+    <None Include="DBTables\AuthorizedSignerPermit.dxml" />
+    <None Include="DBTables\AutonomyType.dxml" />
+    <None Include="DBTables\Bank.dxml" />
+    <None Include="DBTables\CancellationReasonRequestType.dxml" />
+    <None Include="DBTables\CancellationRequestStatus.dxml" />
+    <None Include="DBTables\CargoIdentifireType.dxml" />
+    <None Include="DBTables\CargoIdentityQualifier.dxml" />
+    <None Include="DBTables\CargoSplitRequestStatus.dxml" />
+    <None Include="DBTables\CargoStatus.dxml" />
+    <None Include="DBTables\CertificateExemptionType.dxml" />
+    <None Include="DBTables\CertificatesStatus.dxml" />
+    <None Include="DBTables\CheckEntityType.dxml" />
+    <None Include="DBTables\CheckEssenceLookup.dxml" />
+    <None Include="DBTables\CheckQueueType.dxml" />
+    <None Include="DBTables\CheckRepresentativeType.dxml" />
+    <None Include="DBTables\CheckTypeLookup.dxml" />
+    <None Include="DBTables\City.dxml" />
+    <None Include="DBTables\Claim.dxml" />
+    <None Include="DBTables\ClaimEntity.dxml" />
+    <None Include="DBTables\ClaimExplanationCode.dxml" />
+    <None Include="DBTables\ClaimImporterDeclarsP3Loi.dxml" />
+    <None Include="DBTables\ClaimImporterDeclarsPage3.dxml" />
+    <None Include="DBTables\ClaimImporterDeclarsPage3A.dxml" />
+    <None Include="DBTables\ClaimImporterDeclarsPage3B.dxml" />
+    <None Include="DBTables\ClaimReasonType.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntitiesAmount.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntitiesReason.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntitiesRefund.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntitiesSeizure.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntity.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntsExpDeclar.dxml" />
+    <None Include="DBTables\ClaimsRelatedEntsReasonsExp.dxml" />
+    <None Include="DBTables\ClassificationType.dxml" />
+    <None Include="DBTables\Client.dxml" />
+    <None Include="DBTables\ClientAddress.dxml" />
+    <None Include="DBTables\ClientDrivingLicense.dxml" />
+    <None Include="DBTables\ClientDrivingLicenseType.dxml" />
+    <None Include="DBTables\ClientsAddressCommType.dxml" />
+    <None Include="DBTables\ClosedTableStatus.dxml" />
+    <None Include="DBTables\CollateralAnswerStatus.dxml" />
+    <None Include="DBTables\CollateralAnswerType.dxml" />
+    <None Include="DBTables\CollateralRequestStatus.dxml" />
+    <None Include="DBTables\CollateralsRequestFileCond.dxml" />
+    <None Include="DBTables\CollateralType.dxml" />
+    <None Include="DBTables\CommercialSale.dxml" />
+    <None Include="DBTables\CommunicationType.dxml" />
+    <None Include="DBTables\ConfirmationType.dxml" />
+    <None Include="DBTables\Consignment.dxml" />
+    <None Include="DBTables\ConsignmentInternalTransition.dxml" />
+    <None Include="DBTables\ConsignmentPackage.dxml" />
+    <None Include="DBTables\ConsignmentPackDanger.dxml" />
+    <None Include="DBTables\ConstraintApprovalDecision.dxml" />
+    <None Include="DBTables\ConstraintProcessType.dxml" />
+    <None Include="DBTables\ConstraintStatus.dxml" />
+    <None Include="DBTables\ConstraintType.dxml" />
+    <None Include="DBTables\ContactRoleType.dxml" />
+    <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />
+    <None Include="DBTables\ContinuousRequestType.dxml" />
+    <None Include="DBTables\ConverterType.dxml" />
+    <None Include="DBTables\CountryGroup.dxml" />
+    <None Include="DBTables\CourierCustomStatus.dxml" />
+    <None Include="DBTables\CourierDeclaration.dxml" />
+    <None Include="DBTables\CourierDeclarationStatus.dxml" />
+    <None Include="DBTables\CourierManifestStatus.dxml" />
+    <None Include="DBTables\CourierMaster.dxml" />
+    <None Include="DBTables\CourierPaymentStatus.dxml" />
+    <None Include="DBTables\CourierPendingReason.dxml" />
+    <None Include="DBTables\CouriersVat.dxml" />
+    <None Include="DBTables\CourtInstance.dxml" />
+    <None Include="DBTables\CurrencyType.dxml" />
+    <None Include="DBTables\CurrencyTypeTenant.dxml" />
+    <None Include="DBTables\CustomBank.dxml" />
+    <None Include="DBTables\CustomBanksCard.dxml" />
+    <None Include="DBTables\CustomDocumentType.dxml" />
+    <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
+    <None Include="DBTables\CustomerActivityType.dxml" />
+    <None Include="DBTables\CustomerIdentifyType.dxml" />
+    <None Include="DBTables\CustomerRoleType.dxml" />
+    <None Include="DBTables\CustomerTypeGeneral.dxml" />
+    <None Include="DBTables\CustomMetaDataType.dxml" />
+    <None Include="DBTables\CustomsAddressType.dxml" />
+    <None Include="DBTables\CustomsAirline.dxml" />
+    <None Include="DBTables\CustomsAutonomyKeyword.dxml" />
+    <None Include="DBTables\CustomsBook.dxml" />
+    <None Include="DBTables\CustomsBookType.dxml" />
+    <None Include="DBTables\CustomsBranch.dxml" />
+    <None Include="DBTables\CustomsClosedTable.dxml" />
+    <None Include="DBTables\CustomsCollateral.dxml" />
+    <None Include="DBTables\CustomsCollateralsAnswer.dxml" />
+    <None Include="DBTables\CustomsCollateralsCondition.dxml" />
+    <None Include="DBTables\CustomsCountry.dxml" />
+    <None Include="DBTables\CustomsDocument.dxml" />
+    <None Include="DBTables\CustomsDocumentMetaDataValue.dxml" />
+    <None Include="DBTables\CustomsDocumentPointer.dxml" />
+    <None Include="DBTables\CustomsDocumentsDefinition.dxml" />
+    <None Include="DBTables\CustomsDocumentStatusType.dxml" />
+    <None Include="DBTables\CustomsDocumentsTicket.dxml" />
+    <None Include="DBTables\CustomsEnvoirmentType.dxml" />
+    <None Include="DBTables\CustomsExchangeRate.dxml" />
+    <None Include="DBTables\CustomsGeneral.dxml" />
+    <None Include="DBTables\CustomsHouseType.dxml" />
+    <None Include="DBTables\CustomsHouseTypeAdditional.dxml" />
+    <None Include="DBTables\CustomsInsuranceCompany.dxml" />
+    <None Include="DBTables\CustomsItem.dxml" />
+    <None Include="DBTables\CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CustomsPartnerFtp.dxml" />
+    <None Include="DBTables\CustomsPartnersItem.dxml" />
+    <None Include="DBTables\CustomsPaymentTerm.dxml" />
+    <None Include="DBTables\CustomsRequestsSheet.dxml" />
+    <None Include="DBTables\CustomsRequestsSheetStatus.dxml" />
+    <None Include="DBTables\CustomsRequiredField.dxml" />
+    <None Include="DBTables\CustomsSetting.dxml" />
+    <None Include="DBTables\CustomsShip.dxml" />
+    <None Include="DBTables\CustomsTransportMode.dxml" />
+    <None Include="DBTables\CustomsVendor.dxml" />
+    <None Include="DBTables\CustomsVerificationStatusType.dxml" />
+    <None Include="DBTables\DangerousGoodsPackingReq.dxml" />
+    <None Include="DBTables\DebtNotificationType.dxml" />
+    <None Include="DBTables\DecCargoSplitCargoIdentifier.dxml" />
+    <None Include="DBTables\DecCargoSplitCon.dxml" />
+    <None Include="DBTables\DecCargoSplitConsItem.dxml" />
+    <None Include="DBTables\DecCargoSplitConsPackDet.dxml" />
+    <None Include="DBTables\DecDangersContacts.dxml" />
+    <None Include="DBTables\DecisionType.dxml" />
+    <None Include="DBTables\Declaration.dxml" />
+    <None Include="DBTables\DeclarationCargoSplit.dxml" />
+    <None Include="DBTables\DeclarationConsAcceptance.dxml" />
+    <None Include="DBTables\DeclarationConstraint.dxml" />
+    <None Include="DBTables\DeclarationCourierStatus.dxml" />
+    <None Include="DBTables\DeclarationErrorMapping.dxml" />
+    <None Include="DBTables\DeclarationExportRecipient.dxml" />
+    <None Include="DBTables\DeclarationMamanSpecialAction.dxml" />
+    <None Include="DBTables\DeclarationPayment.dxml" />
+    <None Include="DBTables\DeclarationPaymentMethod.dxml" />
+    <None Include="DBTables\DeclarationPaymentProtest.dxml" />
+    <None Include="DBTables\DeclarationPending.dxml" />
+    <None Include="DBTables\DeclarationReferantData.dxml" />
+    <None Include="DBTables\DeclarationStatementType.dxml" />
+    <None Include="DBTables\DeclarationStatusType.dxml" />
+    <None Include="DBTables\DeclarationTax.dxml" />
+    <None Include="DBTables\Deficit.dxml" />
+    <None Include="DBTables\DeficitConnFileParagraphType.dxml" />
+    <None Include="DBTables\DeficitDecision.dxml" />
+    <None Include="DBTables\DeliverySiteType.dxml" />
+    <None Include="DBTables\DemanderType.dxml" />
+    <None Include="DBTables\Deposit.dxml" />
+    <None Include="DBTables\DepositCondition.dxml" />
+    <None Include="DBTables\DepositCustomerActivity.dxml" />
+    <None Include="DBTables\DepositEssenceType.dxml" />
+    <None Include="DBTables\DepositFileType.dxml" />
+    <None Include="DBTables\DocumentTypeCustomsData.dxml" />
+    <None Include="DBTables\EntitlementType.dxml" />
+    <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\FacilitationType.dxml" />
+    <None Include="DBTables\FaultInspectionType.dxml" />
+    <None Include="DBTables\FreightPaymentMethod.dxml" />
+    <None Include="DBTables\FuelType.dxml" />
+    <None Include="DBTables\GatepassRequest.dxml" />
+    <None Include="DBTables\GatepassReturnCode.dxml" />
+    <None Include="DBTables\Gender.dxml" />
+    <None Include="DBTables\GovernmentProcedureType.dxml" />
+    <None Include="DBTables\Guarantee.dxml" />
+    <None Include="DBTables\GuaranteeCertificateType.dxml" />
+    <None Include="DBTables\GuaranteeCondition.dxml" />
+    <None Include="DBTables\GuaranteeCustomerActivity.dxml" />
+    <None Include="DBTables\HazardousSubstance.dxml" />
+    <None Include="DBTables\ImporterDeclarationType.dxml" />
+    <None Include="DBTables\ImporterDesposition.dxml" />
+    <None Include="DBTables\ImporterPeriodicDeclarStatus.dxml" />
+    <None Include="DBTables\ImporterTypeForClaim.dxml" />
+    <None Include="DBTables\InterfaceManagement.dxml" />
+    <None Include="DBTables\InterfaceSendOption.dxml" />
+    <None Include="DBTables\InterfaceTenantDefinition.dxml" />
+    <None Include="DBTables\InternalBorderSiteType.dxml" />
+    <None Include="DBTables\InternationalSite.dxml" />
+    <None Include="DBTables\InvoiceType.dxml" />
+    <None Include="DBTables\ItemGovernmentProcedureType.dxml" />
+    <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
+    <None Include="DBTables\LeadDocumentExceptionType.dxml" />
+    <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\MamanSpecialAction.dxml" />
+    <None Include="DBTables\MamanSpecialActionStatus.dxml" />
+    <None Include="DBTables\MamanStatus.dxml" />
+    <None Include="DBTables\ManifestCargoStatus.dxml" />
+    <None Include="DBTables\MAWBType.dxml" />
+    <None Include="DBTables\MeasureQualifier.dxml" />
+    <None Include="DBTables\MeasurmentUnit.dxml" />
+    <None Include="DBTables\ModificationAndDiscountType.dxml" />
+    <None Include="DBTables\MorningMessageType.dxml" />
+    <None Include="DBTables\NbcDeclarationType.dxml" />
+    <None Include="DBTables\Notification.dxml" />
+    <None Include="DBTables\NotificationDefinition.dxml" />
+    <None Include="DBTables\NotificationReply.dxml" />
+    <None Include="DBTables\NotificationTenantDefinition.dxml" />
+    <None Include="DBTables\NotificationType.dxml" />
+    <None Include="DBTables\OrganizationUnitType.dxml" />
+    <None Include="DBTables\PackageMeasureQualifier.dxml" />
+    <None Include="DBTables\PackingType.dxml" />
+    <None Include="DBTables\ParagraphType.dxml" />
+    <None Include="DBTables\PartyRelationshipType.dxml" />
+    <None Include="DBTables\PassportType.dxml" />
+    <None Include="DBTables\PayerActivityType.dxml" />
+    <None Include="DBTables\PayerType.dxml" />
+    <None Include="DBTables\PaymentMethodStatus.dxml" />
+    <None Include="DBTables\PaymentMethodType.dxml" />
+    <None Include="DBTables\PaymentOrder.dxml" />
+    <None Include="DBTables\PaymentOrderConnectionTable.dxml" />
+    <None Include="DBTables\PaymentOrderLine.dxml" />
+    <None Include="DBTables\PaymentOrderMethod.dxml" />
+    <None Include="DBTables\PaymentOrderProtestReason.dxml" />
+    <None Include="DBTables\PaymentOrderStatus.dxml" />
+    <None Include="DBTables\PaymentOrderType.dxml" />
+    <None Include="DBTables\PaymentProcess.dxml" />
+    <None Include="DBTables\PaymentProtestType.dxml" />
+    <None Include="DBTables\PaymentType.dxml" />
+    <None Include="DBTables\PendingByKeyword.dxml" />
+    <None Include="DBTables\PendingErrorPlace.dxml" />
+    <None Include="DBTables\PhysicalCheck.dxml" />
+    <None Include="DBTables\PhysicalCheckOperation.dxml" />
+    <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
+    <None Include="DBTables\PointerLevel.dxml" />
+    <None Include="DBTables\ProceduralFault.dxml" />
+    <None Include="DBTables\ProceduralFaultInProcessType.dxml" />
+    <None Include="DBTables\ProceduralFaultInSourceType.dxml" />
+    <None Include="DBTables\ProceduralFaultsConnEntity.dxml" />
+    <None Include="DBTables\ProceduralFaultStatus.dxml" />
+    <None Include="DBTables\ProceduralFaultType.dxml" />
+    <None Include="DBTables\ProcessingReason.dxml" />
+    <None Include="DBTables\ProductIdentificationType.dxml" />
+    <None Include="DBTables\ProductNameType.dxml" />
+    <None Include="DBTables\PropertiesDetailsHistory.dxml" />
+    <None Include="DBTables\RansomViolationType.dxml" />
+    <None Include="DBTables\ReferantTeam.dxml" />
+    <None Include="DBTables\RefundCustomerActivityType.dxml" />
+    <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
+    <None Include="DBTables\RequestStatus.dxml" />
+    <None Include="DBTables\RequestType.dxml" />
+    <None Include="DBTables\RequiredGuaranteeType.dxml" />
+    <None Include="DBTables\ReturnCondition.dxml" />
+    <None Include="DBTables\SalesTaxExemptionType.dxml" />
+    <None Include="DBTables\SeizureFactorType.dxml" />
+    <None Include="DBTables\SeizureMethodType.dxml" />
+    <None Include="DBTables\SignatureType.dxml" />
+    <None Include="DBTables\SiteLookup.dxml" />
+    <None Include="DBTables\SiteType.dxml" />
+    <None Include="DBTables\SpecialActionDescriptionType.dxml" />
+    <None Include="DBTables\SpecializationType.dxml" />
+    <None Include="DBTables\SplitOrMergeReason.dxml" />
+    <None Include="DBTables\StorageMessageType.dxml" />
+    <None Include="DBTables\StorageStatus.dxml" />
+    <None Include="DBTables\SubCountry.dxml" />
+    <None Include="DBTables\SuppInvoiceItemsAbachStatement.dxml" />
+    <None Include="DBTables\SupplierInvioceItemCertificat.dxml" />
+    <None Include="DBTables\SupplierInvoice.dxml" />
+    <None Include="DBTables\SupplierInvoiceFreightAmount.dxml" />
+    <None Include="DBTables\SupplierInvoiceItem.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemModVehicle.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemProcesType.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsConDeclar.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsDescript.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsLevy.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsMod.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsPrice.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsProdIdent.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsSerialNum.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemsTax.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemVehicle.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemVehicleAdd.dxml" />
+    <None Include="DBTables\SupplierInvoiceItemVehicleMod.dxml" />
+    <None Include="DBTables\SupplierInvoiceModification.dxml" />
+    <None Include="DBTables\SupplierInvoicePayment.dxml" />
+    <None Include="DBTables\SupplierInvoiceUCR.dxml" />
+    <None Include="DBTables\Tapag.dxml" />
+    <None Include="DBTables\TapagConnectionTable.dxml" />
+    <None Include="DBTables\TapagType.dxml" />
+    <None Include="DBTables\TermsOfSaleType.dxml" />
+    <None Include="DBTables\TPGFileType.dxml" />
+    <None Include="DBTables\TradeAgreement.dxml" />
+    <None Include="DBTables\TradeLevyExamptType.dxml" />
+    <None Include="DBTables\TransactionNatureType.dxml" />
+    <None Include="DBTables\TransferCargoMethodType.dxml" />
+    <None Include="DBTables\TreatmentWay.dxml" />
+    <None Include="DBTables\UIMessage.dxml" />
+    <None Include="DBTables\UIMessageAdditional.dxml" />
+    <None Include="DBTables\UnloadingSiteType.dxml" />
+    <None Include="DBTables\UpdateCode.dxml" />
+    <None Include="DBTables\ValidCustomsItem.dxml" />
+    <None Include="DBTables\Vehicle.dxml" />
+    <None Include="DBTables\VehicleManufacturer.dxml" />
+    <None Include="DBTables\VehicleOwner.dxml" />
+    <None Include="DBTables\VehiclePoolType.dxml" />
+    <None Include="DBTables\VehiclePriceListType.dxml" />
+    <None Include="DBTables\VehicleReductionType.dxml" />
+    <None Include="DBTables\VehicleSafeAccessoryInstlType.dxml" />
+    <None Include="DBTables\VehicleSafetyAccessory.dxml" />
+    <None Include="DBTables\VehicleSafetyAccessoryType.dxml" />
+    <None Include="DBTables\VehicleStatus.dxml" />
+    <None Include="DBTables\VehicleTecnologyType.dxml" />
+    <None Include="DBTables\VehicleType.dxml" />
+    <None Include="DBTables\VendorCommission.dxml" />
+    <None Include="DBTables\VendorCommunication.dxml" />
+    <None Include="DBTables\VendorStatus.dxml" />
+    <None Include="DBTables\VendorTransactionType.dxml" />
+    <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\AmendmentStatus.lxml" />
+    <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
+    <None Include="EntityFiles\CancellationRequestStatus.lxml" />
+    <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\NbcDeclarationType.lxml" />
+    <None Include="EntityFiles\CargoSeal.lxml" />
+    <None Include="EntityFiles\CargoSealIdentifier.lxml" />
+    <None Include="EntityFiles\AmountType.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\ReferantTeam.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsPrice.lxml" />
+    <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
+    <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
+    <None Include="EntityFiles\Team.lxml" />
+    <None Include="EntityFiles\TransactionNatureType.lxml" />
+    <None Include="EntityFiles\ClaimReasonType.lxml" />
+    <None Include="EntityFiles\ContinuousRequestType.lxml" />
+    <None Include="EntityFiles\CurrencyTypeTenant.lxml" />
+    <None Include="EntityFiles\ClassificationType.lxml" />
+    <None Include="EntityFiles\PartyRelationshipType.lxml" />
+    <None Include="EntityFiles\CustomsAutonomyKeyword.lxml" />
+    <None Include="EntityFiles\CustomsGeneral.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
+    <None Include="EntityFiles\ApprovedProfession.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
+    <None Include="EntityFiles\CustomsShip.lxml" />
+    <None Include="EntityFiles\DBMigration.lxml" />
+    <None Include="EntityFiles\DBMigrationLine.lxml" />
+    <None Include="EntityFiles\DecDangersContacts.lxml" />
+    <None Include="EntityFiles\DeclarationExportRecipient.lxml" />
+    <None Include="EntityFiles\ExceptionReason.lxml" />
+    <None Include="EntityFiles\HazardousSubstance.lxml" />
+    <None Include="EntityFiles\RequestType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\DecisionType.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\DeclarationMamanSpecialAction.lxml" />
+    <None Include="EntityFiles\DeclarationPending.lxml" />
+    <None Include="EntityFiles\DeficitDecision.lxml" />
+    <None Include="EntityFiles\GatepassRequest.lxml" />
+    <None Include="EntityFiles\GatepassReturnCode.lxml" />
     <None Include="EntityFiles\MamanSpecialAction.lxml" />
     <None Include="EntityFiles\MamanSpecialActionStatus.lxml" />
     <None Include="EntityFiles\MamanStatus.lxml" />
@@ -115,11 +515,16 @@
     <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\PendingByKeyword.lxml" />
     <None Include="EntityFiles\PendingErrorPlace.lxml" />
     <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
+    <None Include="EntityFiles\SealCompletenes.lxml" />
+    <None Include="EntityFiles\SealType.lxml" />
+    <None Include="EntityFiles\SealUpdateReasonType.lxml" />
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
+    <None Include="EntityFiles\TransferCargoMethodType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />
     <None Include="EntityFiles\DecCargoSplitCon.lxml" />
@@ -164,6 +569,7 @@
     <None Include="EntityFiles\ImporterDeclarationType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ReferantException.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -415,6 +821,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />
     <None Include="EntityFiles\VehicleManufacturer.lxml" />
@@ -443,9 +850,17 @@
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
       <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
+      <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
+      <Name>Logitude.Customs.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
@@ -471,7 +886,16 @@
     <None Include="EntityFiles\CourierStatus.lxml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DBTables\" />
+    <None Include="DBScripts\Pre\202006040612_RefIsClosedForFollowUp.sxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBOthers\Procedures\DelayMsgandChangeStatusTo0.dxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBScripts\Post\202007201100_ReferantSearchfield.sxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBScripts\Post\202007201200_DepartmentSearchfield.sxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

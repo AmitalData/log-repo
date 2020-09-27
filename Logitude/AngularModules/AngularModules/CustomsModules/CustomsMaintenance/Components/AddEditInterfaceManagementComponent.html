@@ -1,4 +1,4 @@
-﻿
+
 <style>
 
 </style>
@@ -26,8 +26,7 @@
                         <!--Code-->
                         <tr class="FormFieldRow">
                             <td class="tbl1Label">
-                                <LogLabel 
-                                          [ObjectFieldName]="'Code'"
+                                <LogLabel [ObjectFieldName]="'Code'"
                                           [ObjectTableName]="ObjectTableName"
                                           [DataContext]="DataContext">
 
@@ -39,7 +38,7 @@
 
                                 <LogTextBox [Text]="Code"
                                             [ObjectFieldName]="'Code'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -70,7 +69,7 @@
 
                                 <LogTextBox [Text]="InOut"
                                             [ObjectFieldName]="'InOut'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -101,7 +100,7 @@
 
                                 <LogTextBox [Text]="DefaultPriority"
                                             [ObjectFieldName]="'DefaultPriority'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -128,14 +127,11 @@
                             <td class="tbl1Col1">
 
 
-                                <LogCheckBox 
-                                             [Checked]="AllowRestore"
+                                <LogCheckBox [Checked]="AllowRestore"
                                              [ObjectFieldName]="'AllowRestore'"
                                              [ObjectTableName]="ObjectTableName"
                                              [DataContext]="DataContext"
-                                             [NoObjectField]="true"
-                                             
-                                             ></LogCheckBox>
+                                             [NoObjectField]="true"></LogCheckBox>
 
                             </td>
 
@@ -145,14 +141,31 @@
 
                         </tr>
 
-
-                        <!--AllowRestore-->
+                        <!--InterfaceType-->
                         <tr class="FormFieldRow">
                             <td class="tbl1Label">
-                                <LogLabel 
-                                          
-                                         
-                                          *ngIf="SignatureTypeVisibility"
+                                <LogLabel [ObjectFieldName]="'InterfaceType'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext">
+
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+
+                            <td class="tbl1Col1">
+                                <ComboBox [IsDisabled]="'true'" [ItemsSource]="InterfaceTypeList" [Binding]="'Name'" [SelectedItem]="SelectedInterfaceType" ></ComboBox>
+                            </td>
+
+
+
+                            <td class="tbl1LastCol"><div></div></td>
+
+                        </tr>
+
+                        <!--SignatureTypeCode-->
+                        <tr class="FormFieldRow">
+                            <td class="tbl1Label">
+                                <LogLabel *ngIf="SignatureTypeVisibility"
                                           [ObjectFieldName]="'SignatureTypeCode'"
                                           [ObjectTableName]="ObjectTableName"
                                           [DataContext]="DataContext">
@@ -164,16 +177,15 @@
                             <td class="tbl1Col1">
 
 
-                                <ul 
-                                    *ngIf="SignatureTypeVisibility"
+                                <ul *ngIf="SignatureTypeVisibility"
                                     class="FiltersMenu" style="width: 165px; vertical-align: middle; position:relative;">
                                     <li style="width:55px;" [class.SelectedFilter]="(SignatureTypeCode != 'C' &&  SignatureTypeCode != 'P')">
-                                      N
+                                        N
                                     </li>
                                     <li style="width:55px;" [class.SelectedFilter]="SignatureTypeCode== 'C'">
-                                       C
+                                        C
                                     </li>
-                                    <li  style="width:55px;" [class.SelectedFilter]="SignatureTypeCode == 'P'">
+                                    <li style="width:55px;" [class.SelectedFilter]="SignatureTypeCode == 'P'">
                                         P
                                     </li>
 
@@ -187,13 +199,13 @@
                         </tr>
 
 
-                        
-                 
+
+
                         <!--placeholder-->
                         <tr class="FormFieldRow"></tr>
 
                         <!--placeholder-->
-                        <tr ></tr>
+                        <tr></tr>
 
 
                     </table>
@@ -220,7 +232,7 @@
 
                                 <LogTextBox [Text]="Description"
                                             [ObjectFieldName]="'Description'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -249,21 +261,21 @@
                             <td class="tbl1Col1">
 
 
-                                <!--<LogTextBox [Text]="DefaultSendOptionsCode"
-                                            [ObjectFieldName]="'DefaultSendOptionsCode'"
-                                            [InputType]="text"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"></LogTextBox>-->
+                              <!--<LogTextBox [Text]="DefaultSendOptionsCode"
+              [ObjectFieldName]="'DefaultSendOptionsCode'"
+              [InputType]="'text'"
+              [DataContext]="DataContext"
+              [ObjectTableName]="ObjectTableName"
+              [HideColumns]="true"></LogTextBox>-->
 
 
-                                <LogLov [ObjectFieldName]="'DefaultSendOptionsCode'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [HideColumns]="true"
-                                        [LookUpTableName]="'Customs.InterfaceSendOption'"
-                                        [DisplayMemberPath]="'LocalName'">
-                                </LogLov>
+                              <LogLov [ObjectFieldName]="'DefaultSendOptionsCode'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [HideColumns]="true"
+                                      [LookUpTableName]="'Customs.InterfaceSendOption'"
+                                      [DisplayMemberPath]="'LocalName'">
+                              </LogLov>
 
                             </td>
 
@@ -290,7 +302,7 @@
 
                                 <LogTextBox [Text]="DcaPrefixName"
                                             [ObjectFieldName]="'DcaPrefixName'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -319,7 +331,7 @@
 
                                 <LogTextBox [Text]="DcaPrefixName2"
                                             [ObjectFieldName]="'DcaPrefixName2'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -349,7 +361,7 @@
 
                                 <LogTextBox [Text]="DcaPrefixName3"
                                             [ObjectFieldName]="'DcaPrefixName3'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -378,7 +390,7 @@
 
                                 <LogTextBox [Text]="DcaPrefixName4"
                                             [ObjectFieldName]="'DcaPrefixName4'"
-                                            [InputType]="text"
+                                            [InputType]="'text'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
@@ -425,20 +437,20 @@
 
                         <td class="tbl1Col1">
 
-                            <!--<LogTextBox [Text]="TenantSendOptionsCode"
-                                    [ObjectFieldName]="'TenantSendOptionsCode'"
-                                    [InputType]="text"
-                                    [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [HideColumns]="true"></LogTextBox>-->
+                          <!--<LogTextBox [Text]="TenantSendOptionsCode"
+          [ObjectFieldName]="'TenantSendOptionsCode'"
+          [InputType]="'text'"
+          [DataContext]="DataContext"
+          [ObjectTableName]="ObjectTableName"
+          [HideColumns]="true"></LogTextBox>-->
 
-                            <LogLov [ObjectFieldName]="'TenantSendOptionsCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"
-                                    [LookUpTableName]="'Customs.InterfaceSendOption'"
-                                    [DisplayMemberPath]="'LocalName'">
-                            </LogLov>
+                          <LogLov [ObjectFieldName]="'TenantSendOptionsCode'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [HideColumns]="true"
+                                  [LookUpTableName]="'Customs.InterfaceSendOption'"
+                                  [DisplayMemberPath]="'LocalName'">
+                          </LogLov>
                         </td>
 
                         <td><div></div></td>
@@ -456,7 +468,7 @@
 
                             <LogTextBox [Text]="TenantPriority"
                                         [ObjectFieldName]="'TenantPriority'"
-                                        [InputType]="text"
+                                        [InputType]="'text'"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"></LogTextBox>
@@ -535,7 +547,7 @@
                             <LogTextBox *ngIf="DcaRenameVisibility"
                                         [Text]="DcaRenameFilePrefix"
                                         [ObjectFieldName]="'DcaRenameFilePrefix'"
-                                        [InputType]="text"
+                                        [InputType]="'text'"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"></LogTextBox>

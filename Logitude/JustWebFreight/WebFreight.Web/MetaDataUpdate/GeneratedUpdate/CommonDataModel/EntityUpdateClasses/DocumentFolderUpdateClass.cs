@@ -591,24 +591,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen DocumentFolderGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentFolder.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DocumentFolderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.ParentFolderId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.IsExternalFolder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.ParentFolderId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.IsExternalFolder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen DocumentFolderHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentFolder.HeaderScreen", Name = "Header Screen", ObjectTableId = DocumentFolderObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    DocumentFolderObjectTable.HeaderScreenId = DocumentFolderHeaderScreenScreen1.Id;
 		    DocumentFolderObjectTable.HeaderScreenCode = DocumentFolderHeaderScreenScreen1.Code;
 

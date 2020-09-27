@@ -90,4 +90,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
+  <Index
+    Columns="HasFile" />
 </Table>

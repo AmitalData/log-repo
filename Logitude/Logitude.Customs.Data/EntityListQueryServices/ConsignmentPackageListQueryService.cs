@@ -21,8 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ConsignmentPackageList> GetIqueryableList(IQueryable<ConsignmentPackage> iQueryable)
         {
-            IQueryable<ConsignmentPackageList> query = (from a in iQueryable.Include("PackageMeasureQualifier").Include("PackingType")
-                                                        
+            IQueryable<ConsignmentPackageList> query = (from a in iQueryable.Include("PackageMeasureQualifier").Include("PackingType").Include("GrossMassMeasurmentUnit")
                                                         select new ConsignmentPackageList()
                                                   {
                                                      ConsignmentNumber = a.ConsignmentNumber,
@@ -35,6 +34,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                     PackageQuantity= a.PackageQuantity,
                                                     PackageTypeCode = a.PackageTypeCode,
                                                     PackageTypeName= a.PackingType.EnglishName,
+                                                    GrossMassMeasureTypeCode = a.GrossMassMeasureTypeCode,
+                                                    GrossMassMeasureTypeName = a.GrossMassMeasurmentUnit.EnglishName,
                                                     Tenant = a.Tenant,
 
 

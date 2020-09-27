@@ -220,58 +220,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
-                            CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            customUpdate.LoadObjectsTenantZero(context);//generated
 
-
-                            ForCourier();
-
-
-                            CustomUpdate updateClass = new CustomUpdate();
-
-                            updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            updateClass.loadQueries();
-                            updateClass.loadScreens();
-                            updateClass.LoadObjectTableTabs();
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadEventTypes();
-                            updateClass.FillTransportModeTable();
-                            updateClass.FillTapagTypeTable();
-
-
-                            updateClass.FillCustomsRequestsSheetStatusTable();
-                            updateClass.FillCustomsNotificationDefinitions();
-
-                            updateClass.FillCustomsInterfaceSendOptions();
-                            updateClass.FillCustomsInterfaceManagements();
-
-
-                            updateClass.FillAssigneeNotificationTypeTable();
-                            updateClass.FillLastReleaseFromWarehouseTable();
-                            updateClass.FillVehicleStatusTable();
-                            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
-                            updateClass.FillCustomerIdentifyType();
-                            updateClass.FillCustomsVerificationStatusTypes();
-                            updateClass.FillSignatureTypeTable();
-                            updateClass.FillCertificateStatus();
-                            updateClass.FillAccumalationStateTable();
-                            updateClass.FillStorageStatus();
-                            updateClass.FillMAWBTypeTable();
-                            updateClass.FillCourierCustomStatus();
-                            updateClass.FillManifestCargoStatusTable();
-                            updateClass.FillAcceptanceStatus();
-                            updateClass.FillMamanStatus();
-                            updateClass.FillPendingErrorPlaceTable();
-                            //updateClass.FillCourierDeclarationStatus();
-                            //updateClass.FillCourierManifestStatus();
-                            //updateClass.FillCourierPaymentStatus();
-                            updateClass.FillMamanSpecialActionTable();
-                            updateClass.FillMamanSpecialActionStatusTable();
-
-
+                            UpdateCustomsRelatedModels(context);
 
                             break;
                         }
@@ -463,13 +413,13 @@ namespace WebFreight.Web.MetaDataUpdate
                             CustomUpdate customUpdateClass = new CustomUpdate();
                             customUpdateClass.UpgradeClosedTablesForTenantZero();
                             customUpdateClass.LoadUpdateTenantZero(context);
-                            customUpdateClass.LoadOtherFields(context);
-                            customUpdateClass.loadQueries();
-                            customUpdateClass.loadScreens();
-                            customUpdateClass.LoadObjectTableTabs();
+                            //customUpdateClass.LoadOtherFields(context);
+                            //customUpdateClass.loadQueries();
+                            //customUpdateClass.loadScreens();
+                            //customUpdateClass.LoadObjectTableTabs();
                             customUpdateClass.LoadObjectTableHelperControls();
                             customUpdateClass.LoadMenustables();
-                            customUpdateClass.LoadEventTypes();
+                            //customUpdateClass.LoadEventTypes();
 
                             //CRM
                             
@@ -599,6 +549,93 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 UpdateTenantData(tenant);
             }
+        }
+
+        private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        {
+            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+            InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+            CustomsUpdateClass customUpdate = new CustomsUpdateClass();
+            MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
+            if (runOldUpdateCode)
+            {
+
+                inframodelUpdateClass.LoadObjectsTenantZero(context);
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                businessInfraUpdateClass.LoadObjectsTenantZero(context);
+                customUpdate.LoadObjectsTenantZero(context);
+            }
+            else
+            {
+                inframodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+                metaDataUpdateClass.LoadUpdateTenantZero(context, false);
+                customUpdate.LoadObjectTablesMetadata(context, true);
+                performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
+
+            }
+
+            ForCourier();
+
+
+            CustomUpdate updateClass = new CustomUpdate();
+
+            updateClass.UpgradeClosedTablesForTenantZero();
+            updateClass.LoadUpdateTenantZero(context);
+            //updateClass.LoadOtherFields(context);
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            updateClass.LoadObjectTableHelperControls();
+            updateClass.LoadMenustables();
+            // updateClass.LoadEventTypes();
+            updateClass.FillTransportModeTable();
+            updateClass.FillTapagTypeTable();
+
+
+            updateClass.FillCustomsRequestsSheetStatusTable();
+            updateClass.FillCustomsNotificationDefinitions();
+
+            updateClass.FillCustomsInterfaceSendOptions();
+            updateClass.FillSchedulerProcedure();
+            updateClass.FillCustomsInterfaceManagements();
+
+
+            updateClass.FillAssigneeNotificationTypeTable();
+            updateClass.FillLastReleaseFromWarehouseTable();
+            updateClass.FillVehicleStatusTable();
+            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
+            updateClass.FillCustomerIdentifyType();
+            updateClass.FillCustomsVerificationStatusTypes();
+            updateClass.FillSignatureTypeTable();
+            updateClass.FillCertificateStatus();
+            updateClass.FillAccumalationStateTable();
+            updateClass.FillStorageStatus();
+            updateClass.FillMAWBTypeTable();
+            updateClass.FillCourierCustomStatus();
+            updateClass.FillManifestCargoStatusTable();
+            updateClass.FillAcceptanceStatus();
+            updateClass.FillMamanStatus();
+            updateClass.FillPendingErrorPlaceTable();
+            //updateClass.FillCourierDeclarationStatus();
+            //updateClass.FillCourierManifestStatus();
+            //updateClass.FillCourierPaymentStatus();
+            updateClass.FillMamanSpecialActionTable();
+            updateClass.FillMamanSpecialActionStatusTable();
+            updateClass.FillCourierPendingReasonTable();
         }
 
         private static void UpdateTenantData(int tenant)
@@ -786,7 +823,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
-            UpdateSystemLogsModule(context,true);
+            UpdateSystemLogsModule(context, runPostDeleteProcedure);
         }
 
         private static void UpdateSystemLogsModule(IWebFreightContext context, bool runPostDeleteProcedure)
@@ -1318,7 +1355,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 if (LogitudeSettings.WorkEnvironment == "customs")
                 {
-                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
                 }
                 else
                 {
@@ -1326,6 +1363,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
 
             }
+            ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
             IQueryable<TextCodePM> textCodePMLists = textCodeQuery.GetTenantZeroTextCodePMs();//.ToList();
             IQueryable<ObjectFieldPM> objectFieldLists = objectFieldsQuery.GetTenantZeroObjectFieldPMs();//.ToList();
 
@@ -1374,9 +1412,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
                             cachedCloseTableJosnByte.Add(objectTable.Name, buffer);
                         }
-                        catch
+                        catch(Exception ex)
                         {
-                            string s = objectTable.Name;
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "BuildZipFiles", "ObjectTable name has a problem:"+ objectTable.Name, null);
                         }
                     }
                     else
@@ -1521,6 +1559,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
+            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 

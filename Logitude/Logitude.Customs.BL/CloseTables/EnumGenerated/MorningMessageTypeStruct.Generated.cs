@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct MorningMessageTypeValues
     {   
+       public const string כללי = "1";  
+       public const string תפעול = "2";  
     }
 }
 

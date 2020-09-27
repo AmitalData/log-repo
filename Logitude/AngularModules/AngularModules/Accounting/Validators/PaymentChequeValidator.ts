@@ -22,13 +22,13 @@ export class PaymentChequeValidator
                
                     if (exist) {
                         errors.push("Payment Cheque already exists");
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-                        //SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+                        //SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = errors;
+                        //SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
                         return errors;
 
                     } else {
-                        //SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                        //SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
+                        //SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
                     }
                 
             });

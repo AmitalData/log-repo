@@ -20,17 +20,189 @@ namespace Logitude.Customs.BL
    {
        public List<EntitlementTypeDetails> GetAll()
        {
-		    var all = new List<EntitlementTypeDetails>(); 
+		    var all = new List<EntitlementTypeDetails>();  
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,עולה חדש", 
+                Inactive = false, 
+                LocalName = "עולה חדש", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,ישראלי מבקר", 
+                Inactive = false, 
+                LocalName = "ישראלי מבקר", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,דיפלומט", 
+                Inactive = false, 
+                LocalName = "דיפלומט", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,ויזת שירות", 
+                Inactive = false, 
+                LocalName = "ויזת שירות", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,איש או''ם", 
+                Inactive = false, 
+                LocalName = "איש או''ם", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,נציגות דיפלומטית", 
+                Inactive = false, 
+                LocalName = "נציגות דיפלומטית", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,אירגון של האו''ם", 
+                Inactive = false, 
+                LocalName = "אירגון של האו''ם", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,אירגון בינלאומי", 
+                Inactive = false, 
+                LocalName = "אירגון בינלאומי", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,נכה ביטוח לאומי ניידות", 
+                Inactive = false, 
+                LocalName = "נכה ביטוח לאומי ניידות", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,נכה ביטוח לאומי פ. איבה", 
+                Inactive = false, 
+                LocalName = "נכה ביטוח לאומי פ. איבה", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,נכה משרד הבטחון", 
+                Inactive = false, 
+                LocalName = "נכה משרד הבטחון", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,תושב קבע", 
+                Inactive = false, 
+                LocalName = "תושב קבע", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,נכה משרד האוצר", 
+                Inactive = false, 
+                LocalName = "נכה משרד האוצר", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,חייל בחובה", 
+                Inactive = false, 
+                LocalName = "חייל בחובה", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,תושב חוזר", 
+                Inactive = false, 
+                LocalName = "תושב חוזר", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,תושב חוזר רש''פ", 
+                Inactive = false, 
+                LocalName = "תושב חוזר רש''פ", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,תייר סטודנט א2", 
+                Inactive = false, 
+                LocalName = "תייר סטודנט א2", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,תייר עבודה ב1", 
+                Inactive = false, 
+                LocalName = "תייר עבודה ב1", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,תייר ביקור ב2", 
+                Inactive = false, 
+                LocalName = "תייר ביקור ב2", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,תייר דת א3", 
+                Inactive = false, 
+                LocalName = "תייר דת א3", 
+			});
+			 
+            all.Add(new EntitlementTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,עיתונאי זר", 
+                Inactive = false, 
+                LocalName = "עיתונאי זר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(EntitlementType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(EntitlementType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

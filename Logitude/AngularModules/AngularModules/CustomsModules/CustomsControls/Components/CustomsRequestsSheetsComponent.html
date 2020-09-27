@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .tbl1Label{
         width:130px;
     }
@@ -161,7 +161,7 @@
 
 
                                         <LogTextBox [ObjectFieldName]="'CorrelationId'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -199,7 +199,7 @@
 
 
                                         <LogTextBox [ObjectFieldName]="'CustomFileNo'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -282,7 +282,7 @@
                                     <td style="width: 200px; padding-right: 15px;text-align:left">
 
                                         <LogTextBox [ObjectFieldName]="'EntityReference'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -317,11 +317,11 @@
                                     <td style="width: 200px; padding-right: 15px;text-align:left">
                                         <dropdown-button [Dropdownbutton_TextCode]="'Customs.RequestSheet.O.AddRemove'">
                                             <div class="class-dropdown-content">
-                                                <div style="width:170px;height:410px">
+                                                <div style="width:170px" [ngStyle]="{'height': selectStatusesHeight}">
                                                     <table>
                                                         <tr style="height:5px;"><td><div></div></td></tr>
 
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow" *ngIf="!isReAnAnalysis">
                                                             <td>
                                                                 <div style="margin-right:5px;">
                                                                     <CheckBox style="margin-right:5px;float:right;"
@@ -341,7 +341,7 @@
                                                             <td>
                                                                 <div style="margin-right:5px;">
                                                                     <CheckBox style="margin-right:5px;float:right;"
-                                                                              [IsChecked]="customsRequestsSheetStatusListVM.IsChecked"
+                                                                              [IsChecked]="customsRequestsSheetStatusListVM.IsChecked && !isReAnAnalysis"
                                                                               (Checked)="customsRequestsSheetStatusListVM.IsChecked = $event;AllCRSSChecked = false"></CheckBox>
                                                                     <span [class.my-checkbox-class]="customsRequestsSheetStatusListVM.IsChecked"
                                                                           style="margin-right:5px;float:right;">{{customsRequestsSheetStatusListVM.MyItem.LocalName}}</span>
@@ -425,7 +425,8 @@
 
                                     <td style="width: 150px; padding-right: 15px;"></td>
 
-                                    <td><div></div></td>
+                                    <td><div>
+                                        </div></td>
 
                                 </tr>
 
@@ -449,15 +450,22 @@
                     </tr>
                     <tr *ngIf="RefreshButtonVisibility"
                         class="FormFieldRow">
+
+
+ 
+
+
+
                         <td style="width:400px;"><div></div></td>
                         <td style="width:350px;padding-right:15px;"><div></div></td>
                         <td style="width:370px;">
                             <table>
+                                 <tbody>
                                 <tr class="FormFieldRow">
                                     <td style="width: 150px"></td>
                                     <td style="width:10px"></td>
 
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
+                                    <td style="width: 200px;" >
                                         <button class="GreenButton"
                                                 style="width:90px;"
                                                 [disabled]="!IsSearchButtonEnabled"
@@ -466,10 +474,28 @@
                                         </button>
                                     </td>
 
-                                    <td style="width: 150px; padding-right: 15px;"></td>
+                             
 
-                                    <td><div></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px"></td>
+                                    <td style="width: 150px; padding-right: 15px;">
+                                        <button *ngIf="isReAnAnalysis"  class="Button" 
+                                                style="width:90px;"  [disabled]="!IsSearchButtonEnabled"
+                                                (click)="ReAnalysisByFilters()">
+                                            נתח מחדש
+                                        </button>
+                                    </td>
 
+                                    <td>
+                                        <div>
+                                            <button style="width:90px;"  class="Button" 
+                                                    *ngIf="isReAnAnalysis"  [disabled]="!IsSearchButtonEnabled"
+                                                    (click)="CancelByFilters()">
+                                               ביטול בקשות
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
 

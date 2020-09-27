@@ -326,10 +326,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<ObjectTable> GetAllCacheOnClient(int tenant)
         {
+            
+
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            var currentTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                       where (a.Tenant == tenant && a.InActive == false && a.CacheOnClient == true)
-                                       select a).ToList();
+            var q = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                     where (a.Tenant == tenant && a.InActive == false && a.CacheOnClient == true)
+                     select a);
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                ///select * From objecttables where name like 'Customs.%'
+                q = q
+                    .Where(r => r.Name != null)
+                    .Where(r => r.Name.StartsWith("Customs."));
+            }
+            var currentTenantTables = q.ToList();
             return currentTenantTables;
         }
     }

@@ -66,4 +66,5 @@ END
 
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

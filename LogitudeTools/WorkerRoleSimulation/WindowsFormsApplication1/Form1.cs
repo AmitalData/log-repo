@@ -60,6 +60,7 @@ namespace WindowsFormsApplication1
                         }
                     }
 
+                    throw new Exception(ErrorMessage);
                     //EventLog.WriteEntry("worker_DoWork", ErrorMessage);
                     //if (exception.InnerException.Message.Contains("Physical connection is not usable"))
                     //{

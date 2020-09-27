@@ -3,7 +3,10 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {CourierMasterPM} from '../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterPM } from '../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterValidator } from '../../../Customs/Validators/CourierMasterValidator';
+import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
 
 @Component({
     
@@ -18,16 +21,22 @@ export class CourierConnectedDeclarationListTemplate {
     entityPM: CourierMasterPM;
     IsConnectedDeclarationChecked: boolean = true;
     IsNotConnectedDeclarationChecked: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef) {
+
+    public IsDisplayOnly: boolean = false;
+    _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+
+    constructor(private CD: ChangeDetectorRef, private _courierMasterService: CourierMasterService) {
+        
     }
 
     setVariables(rowData: any, fieldName: string, additionalData: any)
     {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.entityPM = this.CurrentSession.CurrentEditComponent.EntityPM as CourierMasterPM;
-
+        this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as CourierMasterPM;
+        this.entityPM.IsDirty =  !this._courierMasterService.isNotDirty;
+ 
+        this.DisplayOnlyCheck();
         this.BuildDeclarationsCheckBox();       
         this.CD.detectChanges();
     }
@@ -42,17 +51,40 @@ export class CourierConnectedDeclarationListTemplate {
         }
 
         let sConnectedDeclarations = this.entityPM.ConnectedDeclarations as string;
-        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
             let ConnectedDeclarations = sConnectedDeclarations.split(',')
             let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
             this.IsNotConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
         }
+
+        if (!this.entityPM.NotConnectedDeclarations) {
+            this.entityPM.NotConnectedDeclarations = "";
+        }
+
+        if (!this.entityPM.ConnectedDeclarations) {
+            this.entityPM.ConnectedDeclarations = "";
+        }
+
+ 
+        if (this._courierMasterService.connectedSelectAll == true) {
+            this.IsConnectedDeclarationChecked = true;
+        }
+        else {
+            this.IsConnectedDeclarationChecked = false;
+
+        }
+         if (this._courierMasterService.disconnectedSelectAll == true) {
+             this.IsNotConnectedDeclarationChecked = true;
+
+ 
+       }
+
     }
     
     ShowDeclarationScreen() {
       //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -69,6 +101,10 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.NotConnectedDeclarations) {
             this.entityPM.NotConnectedDeclarations = "";
         }
+ 
+        this._courierMasterService.connectedSelectAll = false;
+                this.entityPM.NotConnectedDeclarations=   this.entityPM.NotConnectedDeclarations.replace("ALL", "");
+
         if (!$event) {
             if (!this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
                 this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations + this.rowData.Id + ",";
@@ -76,7 +112,7 @@ export class CourierConnectedDeclarationListTemplate {
         }
         else {
             if (this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
-
+ 
                 this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace(this.rowData.Id + ",", "");
             }
         }
@@ -87,6 +123,9 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
         }
+ 
+        this._courierMasterService.disconnectedSelectAll = false;
+             this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
         if ($event) {
             if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + this.rowData.Id + ",";
@@ -94,31 +133,28 @@ export class CourierConnectedDeclarationListTemplate {
         }
         else {
             if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
+ 
                 this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
             }
         }
     }
 
 
-    //public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
-       
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
 
-    //    var editWindow = new LogitudeWindow();
-
-    //    editWindow.ShowHeaderButtons = true;
-    //    editWindow.Title = windowTitle;
-    //    editWindow.Height = 1000;
-    //    editWindow.Width = 1500;
-       
-    //    this.CD.detach();
-    //    editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-    //    editWindow.WindowClosed.subscribe((res:any) => {
-    //        this.CD.reattach();
-           
-           
-    //    });
-
-    //}
+        //Check if changing StorageSiteCode
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                }
+            }
+        });
+    }
 
 
 }

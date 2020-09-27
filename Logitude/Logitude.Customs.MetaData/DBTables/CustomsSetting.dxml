@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsSettings"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsConnectedToUniFreight"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsAgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SignServiceAddress"
+    Type="varchar"
+    Size="2048">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IIGServiceAddress"
+    Type="varchar"
+    Size="2048">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DCAServiceAddress"
+    Type="varchar"
+    Size="2048">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DCAPartnerVault"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UServerServiceAddress"
+    Type="varchar"
+    Size="2048">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DefaultNotificationAssignee"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsEnvoirmentTypeCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnPremiseFillingService"
+    Type="varchar"
+    Size="2048">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnfConnectionString"
+    Type="varchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TehilaDca"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BlockAgentBankForMasab"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PaymentOrderAccCard"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnifreightCertificateActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutoFillPaymentScreen"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutoFillAccountType"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutoUnitMeasurement"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CompanyType"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMessagesPending"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QtyFeedbackInPendingMessage"
+    Type="int"
+    DefaultValue="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastRunningDCAWS"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastNumOfMessagesDCAWS"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DefaultNotificationAssignee"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsEnvoirmentTypeCode"
+    ReferencedTable="CustomsEnvoirmentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

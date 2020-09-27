@@ -1697,6 +1697,398 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string marksAndNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MarksAndNumbers  
+	   {
+	    
+	     get
+		{
+		   return marksAndNumbers;
+		 }
+		 set
+		 {
+		   if(marksAndNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MarksAndNumbers",OldValue=marksAndNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   marksAndNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private int? packageQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantity  
+	   {
+	    
+	     get
+		{
+		   return packageQuantity;
+		 }
+		 set
+		 {
+		   if(packageQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? weight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Weight  
+	   {
+	    
+	     get
+		{
+		   return weight;
+		 }
+		 set
+		 {
+		   if(weight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   weight=value;
+		   }
+			
+		 }
+	   }
+	  private decimal ocrHeight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrHeight  
+	   {
+	    
+	     get
+		{
+		   return ocrHeight;
+		 }
+		 set
+		 {
+		   if(ocrHeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrHeight",OldValue=ocrHeight,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrHeight=value;
+		   }
+			
+		 }
+	   }
+	  private decimal ocrTop ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrTop  
+	   {
+	    
+	     get
+		{
+		   return ocrTop;
+		 }
+		 set
+		 {
+		   if(ocrTop != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrTop",OldValue=ocrTop,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrTop=value;
+		   }
+			
+		 }
+	   }
+	  private decimal ocrPageNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrPageNumber  
+	   {
+	    
+	     get
+		{
+		   return ocrPageNumber;
+		 }
+		 set
+		 {
+		   if(ocrPageNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrPageNumber",OldValue=ocrPageNumber,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrPageNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string classificationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return classificationTypeCode;
+		 }
+		 set
+		 {
+		   if(classificationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationTypeCode",OldValue=classificationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transactionNatureCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransactionNatureCode  
+	   {
+	    
+	     get
+		{
+		   return transactionNatureCode;
+		 }
+		 set
+		 {
+		   if(transactionNatureCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransactionNatureCode",OldValue=transactionNatureCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transactionNatureCode=value;
+		   }
+			
+		 }
+	   }
+	  private string claimReasonCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimReasonCode  
+	   {
+	    
+	     get
+		{
+		   return claimReasonCode;
+		 }
+		 set
+		 {
+		   if(claimReasonCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimReasonCode",OldValue=claimReasonCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimReasonCode=value;
+		   }
+			
+		 }
+	   }
+	  private string classificationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationTypeName  
+	   {
+	    
+	     get
+		{
+		   return classificationTypeName;
+		 }
+		 set
+		 {
+		   if(classificationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationTypeName",OldValue=classificationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string transactionNatureName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransactionNatureName  
+	   {
+	    
+	     get
+		{
+		   return transactionNatureName;
+		 }
+		 set
+		 {
+		   if(transactionNatureName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransactionNatureName",OldValue=transactionNatureName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transactionNatureName=value;
+		   }
+			
+		 }
+	   }
+	  private string claimReasonName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimReasonName  
+	   {
+	    
+	     get
+		{
+		   return claimReasonName;
+		 }
+		 set
+		 {
+		   if(claimReasonName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimReasonName",OldValue=claimReasonName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimReasonName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPrices;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvoiceItemsPrices", "DeclarationId,CounterKey,LineNumber","DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber")]
+	   [DataMember]
+	   public virtual List<SupplierInvoiceItemsPricePM> SupplierInvoiceItemsPrices  
+	   {
+	        get
+             {
+                 if (supplierInvoiceItemsPrices == null)
+                 {
+                     supplierInvoiceItemsPrices = new List<SupplierInvoiceItemsPricePM>();
+                 }
+                 return supplierInvoiceItemsPrices;
+              }
+             set { supplierInvoiceItemsPrices = value; }
+	    }
+		   
+	   private List<SupplierInvoiceItemsPricePM>  deletedSupplierInvoiceItemsPrices;
+	   public virtual List<SupplierInvoiceItemsPricePM> DeletedSupplierInvoiceItemsPrices  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoiceItemsPrices == null)
+                 {
+                      deletedSupplierInvoiceItemsPrices = new List<SupplierInvoiceItemsPricePM>();
+                 }
+                 return  deletedSupplierInvoiceItemsPrices;
+              }
+             set {  deletedSupplierInvoiceItemsPrices = value; }
+	    }
+	  
+	   private List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SuppInvoiceItemsAbachStatements", "DeclarationId,CounterKey,LineNumber","DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber")]
+	   [DataMember]
+	   public virtual List<SuppInvoiceItemsAbachStatementPM> SuppInvoiceItemsAbachStatements  
+	   {
+	        get
+             {
+                 if (suppInvoiceItemsAbachStatements == null)
+                 {
+                     suppInvoiceItemsAbachStatements = new List<SuppInvoiceItemsAbachStatementPM>();
+                 }
+                 return suppInvoiceItemsAbachStatements;
+              }
+             set { suppInvoiceItemsAbachStatements = value; }
+	    }
+		   
+	   private List<SuppInvoiceItemsAbachStatementPM>  deletedSuppInvoiceItemsAbachStatements;
+	   public virtual List<SuppInvoiceItemsAbachStatementPM> DeletedSuppInvoiceItemsAbachStatements  
+	   {
+	        get
+             {
+                 if ( deletedSuppInvoiceItemsAbachStatements == null)
+                 {
+                      deletedSuppInvoiceItemsAbachStatements = new List<SuppInvoiceItemsAbachStatementPM>();
+                 }
+                 return  deletedSuppInvoiceItemsAbachStatements;
+              }
+             set {  deletedSuppInvoiceItemsAbachStatements = value; }
+	    }
+	  	  private decimal? itemFOBAmountForeign ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ItemFOBAmountForeign  
+	   {
+	    
+	     get
+		{
+		   return itemFOBAmountForeign;
+		 }
+		 set
+		 {
+		   if(itemFOBAmountForeign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemFOBAmountForeign",OldValue=itemFOBAmountForeign,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   itemFOBAmountForeign=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? itemFOBAmountNIS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ItemFOBAmountNIS  
+	   {
+	    
+	     get
+		{
+		   return itemFOBAmountNIS;
+		 }
+		 set
+		 {
+		   if(itemFOBAmountNIS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemFOBAmountNIS",OldValue=itemFOBAmountNIS,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   itemFOBAmountNIS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

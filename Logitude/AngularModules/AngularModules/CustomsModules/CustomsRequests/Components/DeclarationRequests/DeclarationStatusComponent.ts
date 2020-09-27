@@ -40,7 +40,7 @@ export class DeclarationStatusComponent
     constructor() {
         super();
 
-        this.AvailabiltyQuantitiesList = [];
+        this.AvailabiltyQuantitiesList = [];  
     }
 
     @ViewChild(CustomMessageWrapperComponent)

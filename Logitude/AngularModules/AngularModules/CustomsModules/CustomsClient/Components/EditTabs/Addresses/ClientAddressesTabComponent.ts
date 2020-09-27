@@ -30,7 +30,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
     responseData: INF_MSG_GenericResponseData;
     requestParams: AddAddressContactForClientRequestParams;
 
-    private Mode: string = "";
+    Mode: string = "";
     private newAddressButtonVisibility: boolean = true;
     private editButtonVisibility: boolean = true;
     Parent: ClaimGeneralTabComponent;
@@ -77,7 +77,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
             windowArgs.clientPM = this.entityPM;
             windowArgs.IsNew = true;
             windowArgs.isNewClient = this.isNewClient;
-            var windowTitle = TextCodeTranslator.Translate("General.O.AddAddress"); //"New Address";
+            var windowTitle = "הוסף כתובת";//"New Address";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 700;
@@ -101,7 +101,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
                 windowArgs.clientPM = this.entityPM;
                 windowArgs.IsNew = false;
                 windowArgs.isNewClient = this.isNewClient;
-                var windowTitle = TextCodeTranslator.Translate("General.O.AddAddress"); //"New Address";
+                var windowTitle ="הוסף כתובת";  //"New Address";
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 800;
                 logWindow.Height = 700;

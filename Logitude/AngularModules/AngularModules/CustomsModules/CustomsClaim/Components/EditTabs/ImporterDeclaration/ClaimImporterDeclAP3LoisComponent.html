@@ -11,7 +11,7 @@
                                     <table>
                                         <tr style="height: 30px">
                                             <td class="TabTitleRow" style="width:150px">
-                                                {{'Customs.ClaimImporterDeclarsP3Loi.F.ImporterLoiDeclarationTypeCode'| TextCodeTranslationPipe}}
+                                                {{'Customs.ClaimImporterDeclarsPage3.F.ImporterLoiDeclarationTypeCode'| TextCodeTranslationPipe}}
                                             </td>
 
                                             <td> <div></div> </td>
@@ -34,7 +34,8 @@
                                                         <!-- DeclarationNumber -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsP3Loi.F.DeclarationNumber' | TextCodeTranslationPipe"
                                                                     [width]="'180'" [Alignment]="'right'" [binding]="'DeclarationNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DeclarationNumber}}</span>
                                                                 </div>
@@ -44,15 +45,18 @@
                                                                                 [Text]="item.DeclarationNumber" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'40'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteImporterDeclarsP3LoiCommand(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

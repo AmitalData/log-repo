@@ -600,10 +600,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpportunityClosingReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityClosingReason.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityClosingReasonObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    OpportunityClosingReasonObjectTable.HeaderScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id;
 		    OpportunityClosingReasonObjectTable.HeaderScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code;
 
@@ -612,12 +612,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpportunityClosingReasonGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityClosingReason.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = OpportunityClosingReasonObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

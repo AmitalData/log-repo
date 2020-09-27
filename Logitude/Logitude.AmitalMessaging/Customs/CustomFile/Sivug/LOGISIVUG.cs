@@ -149,6 +149,10 @@
 
         private INVOICEITEMS[] iNVOICEITEMSField;
 
+        private string changeInSupplierInvoiceField;
+
+        private string qUE_TYPEField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -292,6 +296,32 @@
                 this.iNVOICEITEMSField = value;
             }
         }
+
+        /// <remarks/>
+        public string ChangeInSupplierInvoice
+        {
+            get
+            {
+                return this.changeInSupplierInvoiceField;
+            }
+            set
+            {
+                this.changeInSupplierInvoiceField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string QUE_TYPE
+        {
+            get
+            {
+                return this.qUE_TYPEField;
+            }
+            set
+            {
+                this.qUE_TYPEField = value;
+            }
+        }
     }
 
     /// <remarks/>
@@ -330,7 +360,21 @@
 
         private string uNIT_IDField;
 
+        private string tAXEXEMPTCODEField;
+
+        private string statisticQuantityField;
+
+        private string statisticQuantityTypeField;
+
+        private string ocrPageNumberField;
+
+        private string ocrTopField;
+
+        private string ocrHeightField;
+
         private CERTIFICATES[] cERTIFICATESField;
+
+        private EXPENSES[] eXPENSESField;
 
         /// <remarks/>
         public string ITEMLINENO
@@ -502,6 +546,84 @@
         }
 
         /// <remarks/>
+        public string TAXEXEMPTCODE
+        {
+            get
+            {
+                return this.tAXEXEMPTCODEField;
+            }
+            set
+            {
+                this.tAXEXEMPTCODEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantity
+        {
+            get
+            {
+                return this.statisticQuantityField;
+            }
+            set
+            {
+                this.statisticQuantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrPageNumber
+        {
+            get
+            {
+                return this.ocrPageNumberField;
+            }
+            set
+            {
+                this.ocrPageNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrTop
+        {
+            get
+            {
+                return this.ocrTopField;
+            }
+            set
+            {
+                this.ocrTopField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrHeight
+        {
+            get
+            {
+                return this.ocrHeightField;
+            }
+            set
+            {
+                this.ocrHeightField = value;
+            }
+        }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CERTIFICATES")]
         public CERTIFICATES[] CERTIFICATES
         {
@@ -512,6 +634,20 @@
             set
             {
                 this.cERTIFICATESField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EXPENSES")]
+        public EXPENSES[] EXPENSES
+        {
+            get
+            {
+                return this.eXPENSESField;
+            }
+            set
+            {
+                this.eXPENSESField = value;
             }
         }
     }
@@ -639,6 +775,62 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
+    public partial class EXPENSES
+    {
+
+        private string typeCodeField;
+
+        private string amountField;
+
+        private string currencyTypeCodeField;
+
+        /// <remarks/>
+        public string TypeCode
+        {
+            get
+            {
+                return this.typeCodeField;
+            }
+            set
+            {
+                this.typeCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CurrencyTypeCode
+        {
+            get
+            {
+                return this.currencyTypeCodeField;
+            }
+            set
+            {
+                this.currencyTypeCodeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
     public partial class CustomsDocuments
     {
 
@@ -653,6 +845,8 @@
         private string cOM_IDField;
 
         private string serialNumField;
+
+        private string uNFINVOICEKEYField;
 
         /// <remarks/>
         public string Entname
@@ -729,6 +923,19 @@
             set
             {
                 this.serialNumField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string UNFINVOICEKEY
+        {
+            get
+            {
+                return this.uNFINVOICEKEYField;
+            }
+            set
+            {
+                this.uNFINVOICEKEYField = value;
             }
         }
     }

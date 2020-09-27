@@ -20,12 +20,51 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging.ILOVS;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using System.Reflection;
+using Logitude.Customs.Data.EntityLists;
+using WebFreight.Web.CustomWebServices.BL.XLSExport;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CourierMasterController : ApiController
     {
 
+
+        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId,int tenant)
+        {
+            try
+            {
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+
+                var o = new CourierMasterWSheetExport();
+                var result = o.ExportReport(CourierMasterId, tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+                response.Content = new StreamContent(new MemoryStream(result));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =
+                    Guid.NewGuid().ToString() + "_" + CourierMasterId + ".xls";
+                return response;
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetIfCourierMasterExists(string Id, string airlineId, string HAWB, string MAWB)
         {
             try
@@ -51,6 +90,55 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+
+        public HttpResponseMessage GetIfAllowToCancelCourierMaster(string CourierMasterId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(customContext);
+                string error =  courierMasterQueryService.CheckIfAllowToCancelCourierMaster( tenant , CourierMasterId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, error);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+
+        public HttpResponseMessage GetPending(string CourierMasterId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MyContext);
+                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetStatistic(string CourierMasterId)
         {
             try
@@ -123,9 +211,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB1170_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null,
-                    //requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.CourierDeclarationStatusCode, requestParamsData.Declarations);
-                    requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostSendALLChangeStorageSiteCode(SendALLStorageSiteRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCBStorageSite_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -239,7 +348,53 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId)
+        public HttpResponseMessage PostSendALLTerminal(SendALLCorrectRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                
+                var messagingService = new DCAInUCBCTML_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostSendUnCorrectDocuments(SendUnCorrectDocumentsRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCB2715_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId,string testerSendOption)
         {
             try
             {
@@ -251,7 +406,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId);
+                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -346,11 +501,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 CourierMasterQueryService queryService = new CourierMasterQueryService(customContext);
-                IQueryable<DeclarationPM> declarations = queryService.GetNotConnectedDeclaratins(queryOperations, tenant);
-
+                IQueryable<DeclarationPM> querydeclarations = queryService.GetNotConnectedDeclaratins(queryOperations, tenant);
+                querydeclarations = querydeclarations.OrderBy(r => r.Id);
+                if (!queryOperations.GetAll)
+                {
+                    int skippedPorts = queryOperations.PageIndex;
+                    querydeclarations = querydeclarations.Skip(skippedPorts);
+                    querydeclarations = querydeclarations.Take(queryOperations.PageSize);
+                }
                 ServiceResponse response = new ServiceResponse();
-                response.Count = declarations.Count();
-                response.Result = declarations;
+                if (filters.GetCount)
+                {
+                    string CourierSearchField = "";
+                    QueryFilterItem CourierSearchFieldFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CourierSearchFields").FirstOrDefault();
+                    if (CourierSearchFieldFilter != null)
+                    {
+                        CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
+                    }
+                    DeclarationRepository declarationRep = new DeclarationRepository(tenant);
+                    var  declarationsAll = declarationRep.GetNotConnectedDeclarations(tenant);
+                    if (!string.IsNullOrWhiteSpace(CourierSearchField))
+                    {
+                        declarationsAll = declarationsAll.Where(r => r.CourierSearchFields.Contains(CourierSearchField));
+                    }
+                    response.Count = declarationsAll.Count();
+                }
+                response.Result = querydeclarations.ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
 
@@ -407,7 +583,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
 
+        public HttpResponseMessage GetRequiredFieldsForCourierMasterIncludeManifest(string courierMasterId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                CustomsRequiredFieldErrors errors = CustomsRequiredFieldsValidator.GetRequiredFieldsForCourierMaster(courierMasterId, tenant,true);
+                return Request.CreateResponse(HttpStatusCode.OK, errors);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
         public HttpResponseMessage GetSendFTPMamanRequest(string courierMasterId)
@@ -435,10 +627,159 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                string response = "";
 
-                var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                var response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
+                {
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    }
+                    else
+                    {
+                        response = "לא קיימת הרשאה";
+                    }
+                }
+                else
+                {
+                    response = "לא קיימת הרשאה";
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage PostGatepassRequestMessage(GatepassRequestMessageRequestParams requestParams)
+        {
+            try
+            {
+                // use messageing service
+                var service = new GP_1030_GatepassRequestMessageMessagingService();
+                var responseData = service.Send(requestParams);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CourierMaster", "READ", authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+                if (filters.Tenant != null)
+                    tenant = tenant;
+
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Customs.CourierMaster",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Customs.CourierMaster",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+
+                List<ObjectField> CourierMasterObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CourierMaster", tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+
+                        ObjectField field = CourierMasterObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                        }
+                        else
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                    }
+
+                }
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = CourierMasterObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                CourierMasterListQueryService courierMasterListQueryService = new CourierMasterListQueryService(MyContext);
+                List<CourierMasterList> entityLists = courierMasterListQueryService.GetList(queryOperations, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = courierMasterListQueryService.GetListCount(queryOperations, tenant);
+                    response.Count = count;
+                }
+
+                response.Result = entityLists;//.OrderBy(d => d.IsSeenByAssignee).ThenBy(d => d.DueDate);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
             }
             catch (Exception ex)
             {

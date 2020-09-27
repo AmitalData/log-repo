@@ -1,0 +1,154 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class SuppInvoiceItemsAbachStatementDataMapping: IMapping<SuppInvoiceItemsAbachStatementPM, SuppInvoiceItemsAbachStatement>,IMappingEncodeBase64NVARCHARFields<SuppInvoiceItemsAbachStatementPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         InvoiceItemLineNumber, 
+	         SequenceNumeric, 
+	         Tenant, 
+	         StatementTypeCode, 
+	         IsStatementInd,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         InvoiceItemLineNumber, 
+	         SequenceNumeric, 
+	         Tenant, 
+	         StatementTypeCode, 
+	         IsStatementInd, 
+	         StatementTypeName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(SuppInvoiceItemsAbachStatementPM entityPM, SuppInvoiceItemsAbachStatement entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementTypeCode))
+            {
+				entityPOCO.StatementTypeCode = entityPM.StatementTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStatementInd))
+            {
+				entityPOCO.IsStatementInd = entityPM.IsStatementInd;
+			}
+			}
+
+		public void POCOToPM(SuppInvoiceItemsAbachStatementPM entityPM, SuppInvoiceItemsAbachStatement entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceCounterKey))
+            {
+					entityPM.InvoiceCounterKey = entityPOCO.InvoiceCounterKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceItemLineNumber))
+            {
+					entityPM.InvoiceItemLineNumber = entityPOCO.InvoiceItemLineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SequenceNumeric))
+            {
+					entityPM.SequenceNumeric = entityPOCO.SequenceNumeric;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatementTypeCode))
+            {
+					entityPM.StatementTypeCode = entityPOCO.StatementTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsStatementInd))
+            {
+					entityPM.IsStatementInd = entityPOCO.IsStatementInd;
+            }
+
+		}
+
+		public void PMToOldPM(SuppInvoiceItemsAbachStatementPM entityPM, SuppInvoiceItemsAbachStatementPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementTypeCode))
+            {
+                oldEntityPM.StatementTypeCode = entityPM.StatementTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStatementInd))
+            {
+                oldEntityPM.IsStatementInd = entityPM.IsStatementInd;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(SuppInvoiceItemsAbachStatementPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

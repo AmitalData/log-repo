@@ -1609,40 +1609,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen EventTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EventType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = EventTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.ObjectTableId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EntityStatusId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.CustomField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsCustomerView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.ObjectTableId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EntityStatusId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.CustomField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.FollowUpLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsCustomerView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen EventTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EventType.HeaderScreen", Name = "Header Screen", ObjectTableId = EventTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField EventTypeEventTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField EventTypeEventTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField EventTypeEventTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = EventTypeHeaderScreenScreen1.Id,ScreenCode = EventTypeHeaderScreenScreen1.Code, ObjectFieldCode = "EventType.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    EventTypeObjectTable.HeaderScreenId = EventTypeHeaderScreenScreen1.Id;
 		    EventTypeObjectTable.HeaderScreenCode = EventTypeHeaderScreenScreen1.Code;
 

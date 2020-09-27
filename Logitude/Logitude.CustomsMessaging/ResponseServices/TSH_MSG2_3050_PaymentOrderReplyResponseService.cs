@@ -313,6 +313,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                     _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
                     _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
+                    _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(_DeclarationPM, true);
                 }
                 else
@@ -703,6 +704,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                
+                
+                //HD#330080 - moti will connect id to ref 
+                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
+
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
@@ -889,6 +897,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
+                //HD#330080 - moti will connect id to ref 
+                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;

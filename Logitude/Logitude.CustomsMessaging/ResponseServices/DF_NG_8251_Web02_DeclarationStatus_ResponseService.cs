@@ -18,6 +18,12 @@ using System.Configuration;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.AmitalMessaging.Customs.CustomFile;
+using System.Globalization;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -38,10 +44,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
+            
+            
+            
+
+
             this.MyResponseData = new DeclarationStatusResponseData();
+            if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
+            {
+                TesterSendOption(requestParams);
+                return;
+
+            }
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
             string warningMess = "";
+            bool isAutoPayment= false;
             DeclarationStatusTypePM declarationStatusTypePM = null;
             AmitalContext _AmitalContext = AmitalContext.GetContext(requestParams.Tenant);
 
@@ -121,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
                                 var declarationPaymentsPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
-                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue)
+                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && declarationPaymentsPM.PaymentDate < DateTime.Now)
                                 {
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTimeSpecified == true)
                                     {
@@ -186,25 +204,71 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         break;
                                 }
 
+                              //  if (availableStatus == "SMG" && declarationPM.TransportModeId == "O") availableStatus = "SST";
 
                                 LogMessagingUtil.Instance.AppendLine("HAWB Received");
 
-                                if (!string.IsNullOrWhiteSpace(availableStatus))
+                                if (!string.IsNullOrWhiteSpace(availableStatus) && declarationPM.AvailabilityDate==null)
                                 {
-                                    RaiseStatus(declarationPM, "", availableStatus);
-                                    if(availableStatus != "SMG") RaiseStatus(declarationPM, "", "SMG");
+                                    if (availableStatus == "SMG" && declarationPM.TransportModeId == "A")
+                                    {
+                                        RaiseStatus(declarationPM, "", availableStatus);
+
+                                    }
+                                    else if (availableStatus == "SMG" && declarationPM.TransportModeId == "O")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SST");
+
+                                    }
+
+
+                                    if (availableStatus != "SMG" && declarationPM.TransportModeId=="A")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SMG");
+                                        //declarationPM.AvailabilityDate = DateTime.Now;
+                                        isAutoPayment = true;
+                                    }
+
+                                    else if ((availableStatus != "SST" && availableStatus != "SMG") &&  declarationPM.TransportModeId == "O")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SST");
+                                       // declarationPM.AvailabilityDate = DateTime.Now;
+                                        isAutoPayment = true;
+                                    }
+
+                                  else   if(availableStatus=="SMG" || availableStatus == "SST")
+                                    {
+                                       // declarationPM.AvailabilityDate = DateTime.Now;
+                                        isAutoPayment = true;
+                                    }
                                 }
+
+
+                                //if(availableStatus == "SMG")
+                                //{
+                                 
+                                //}
+
                             }
 
                             if (declarationPM.IsCourierDeclaration)
                             {
                                 //declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18
+                                //declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18//Task 49319
                                 switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                 {
                                     case "3":
                                         declarationPM.CourierCustomStatusCode = "1";
                                         courierStatusUpdated = true;
+
+                                        LogMessagingUtil.Instance.AppendLine("Pre Clearance");
+                                        var myEventContextTagModelPRS = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };                                       
+                                        myEventContextTagModelPRS.EventCode = "PRS";
+                                        declarationPM.CurrentContextTag = myEventContextTagModelPRS;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModelPRS.EventCode);
                                         break;
                                     case "25":
                                     case "30":
@@ -215,7 +279,78 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "35":
                                         declarationPM.CourierCustomStatusCode = "2";
                                         courierStatusUpdated = true;
+                                        declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 4/3/2019 Task 49319
+
+                                        var myEventContextTagModel = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };
+                                        switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+                                        {
+                                            case "25":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCI");
+                                                myEventContextTagModel.EventCode = "VCI";
+                                                break;
+                                            case "30":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCS");
+                                                myEventContextTagModel.EventCode = "VCS";
+                                                break;
+                                            case "31":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCD");
+                                                myEventContextTagModel.EventCode = "VCD";
+                                                break;
+                                            case "32":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCE");
+                                                myEventContextTagModel.EventCode = "VCE";
+                                                break;
+                                            case "33":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCA");
+                                                myEventContextTagModel.EventCode = "VCA";
+                                                break;
+                                            case "34":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCG");
+                                                myEventContextTagModel.EventCode = "VCG";
+                                                break;
+                                            case "35":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCT");
+                                                myEventContextTagModel.EventCode = "VCT";
+                                                break;
+                                        }
+                                        declarationPM.CurrentContextTag = myEventContextTagModel;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModel.EventCode);
                                         break;
+                                    case "13":
+                                        if (declarationPM.PaymentDate.HasValue)
+                                        {
+                                            declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                            declarationPM.PaymentDate = null;
+                                            declarationPM.PaymentOrderNumber = null;
+                                            declarationPM.PaymentStatusCode = null;
+                                            declarationPM.CourierCustomStatusCode = null;
+                                            declarationPM.CourierSuspentionCode = null;
+                                            declarationPM.CourierSuspentionReasonCode = null;
+
+                                            //Delete 
+                                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+                                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+                                            if (declarationPaymentPM != null)
+                                            {
+                                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                                                {
+                                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                                                    }
+                                                }
+                                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                                            }
+                                            courierStatusUpdated = true;
+                                        }
+                                        break;
+
+
                                 }
                             }
 
@@ -234,6 +369,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     declarationPM.CurrentContextTag = myEventContextTagModel;
                                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                     declarationUpdateService.Update(declarationPM, true);
+                                    //if (isAutoPayment)
+                                    //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
                                 else if ((declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTimeSpecified == true))
                                 {
@@ -256,6 +393,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                     declarationUpdateService.Update(declarationPM, true);
+                                    //if (isAutoPayment)
+                                    //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
                                 else
                                 {
@@ -269,6 +408,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
                                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                     declarationUpdateService.Update(declarationPM, true);
+                                    //if (isAutoPayment)
+                                    //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
                                 else
                                 {
@@ -282,6 +423,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationUpdateService.Update(declarationPM, true);
+                                //if (isAutoPayment)
+                                //    SendPayment(declarationPM, dbContext, requestParams);
                             }
                         }
                         else
@@ -292,6 +435,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         } // moran 31.12.15 - Task 19428 - change handle <--
                     }
                 }
+
+                if (isAutoPayment)
+                    SendPayment(declarationPM, dbContext, requestParams);
 
                 try
                 {
@@ -435,6 +581,263 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private void SendPayment(DeclarationPM declarationPM,ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
+        {
+            if (declarationPM.AvailabilityDate != null) return;
+            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
+
+            var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+              var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
+            _declarationPM.AvailabilityDate = DateTime.Now;
+            _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            myDeclarationUpdateService.Update(_declarationPM, true);
+
+            var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
+            
+
+            if (declarationPaymentPM != null)
+            {
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+                    if (!CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
+                    {
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = declarationPM.CustomFileNo,
+                            EventRemarks = "לא אושר בבקרת אשראי",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            declarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                declarationPaymentPM.PaymentDate = DateTime.Now;
+                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                                var requestParams2755 = new GenericRequestParams()
+                                {
+                                    Tenant = requestParams.Tenant,
+                                    LoggingEnabled = true,
+                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
+                                    LoggingEntityId = declarationPM.Id,
+                                    AppicationId = declarationPM.Id,
+                                    InterfaceTypeCode = "2755",
+                                    LoggingUserId = requestParams.LoggingUserId,
+                                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                                  
+                                };
+                                if (requestDate != DateTime.MinValue)
+                                {
+                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                                    declarationPaymentPM.PaymentDate = requestDate;
+
+                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+                                    requestParams2755.FutureSendDateTime = requestDate;
+ 
+                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+
+                                }
+                                else
+                                {
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                }
+
+
+
+                                scopeNewCRS.Complete();
+                            }
+
+                        }
+                        catch (System.Exception)
+                        {
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYF",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = declarationPM.CustomFileNo,
+                                EventRemarks = "כשלון בשליחת הגשת תשלום",
+                            };
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                declarationPM.Tenant,
+                               requestParams.LoggingUserId,
+                                MyUnifreightEventParam);
+
+                            throw;
+                        }
+                    }
+                }
+                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
+            }
+
+
+        }
+
+        private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
+        {
+            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
+            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            TimeSpan toTimeCurrent = new TimeSpan();
+            TimeSpan toTime2Current = new TimeSpan();
+            TimeSpan toTime = new TimeSpan();
+            if (timesCompany != null && timesCompany != "")
+            {
+                List<string> times= GetTimesFromDefault(timesCompany);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                  toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                    CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTimeCurrent = toTime;
+                //    return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+
+            if (timesCustomer != null && timesCustomer != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCustomer);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                  toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                    CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTime2Current = toTime;
+                   // return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+
+            if(toTimeCurrent> toTime2Current)
+            {
+                return new DateTime(toTimeCurrent.Ticks).AddMinutes(5);
+            }
+            else if(toTime2Current > toTimeCurrent)
+            {
+                return new DateTime(toTime2Current.Ticks).AddMinutes(5);
+
+            }
+            //else if(toTime!= new TimeSpan())
+            //{
+            //    return new DateTime(toTime.Ticks).AddMinutes(5);
+
+            //}
+
+            return  DateTime.MinValue;
+ 
+        }
+
+        private List<string> GetTimesFromDefault(string times)
+        {
+          var arr = times.Split('-');
+            return new List<string>()
+            {
+                 arr[0].TrimEnd() ,  arr[1].TrimStart()
+            };
+        }
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+        {
+            CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+            {
+                Tenant = declarationPM.Tenant,
+                AppicationId = declarationPaymentPM.DeclarationId,
+                LoggingEnabled = true,
+                LoggingEntityId = declarationPM.Id,
+                InterfaceTypeCode = "2755",
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityReference = declarationPM.DeclarationNumber,
+                LoggingUserId = user,
+                RequestName = "Send to check credit request",
+                ResponseName = "Get check credit Response",
+                Mode = "Check",
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+             if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
+        {
+            string testerSendOption = requestParams.TesterSendOption??"";
+            testerSendOption = testerSendOption.ToUpper();
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+
+            LogMessagingUtil.Instance.AppendLine(testerSendOption);
+            switch (testerSendOption)
+            {
+                case "NOTHING"://this._SendOptionList.push(new KeyValuePair
+                    {
+                        return;
+                    }
+                    break;
+                case "READ"://this._SendOptionList.push(new KeyValuePair("Read".toUpperCase(), "Read"));
+                    {
+
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        return;
+                    }
+                    break;
+                case "UPDATE"://this._SendOptionList.push(new KeyValuePair("Update".toUpperCase(), "Update"));
+                    {
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        var pm=declarationQueryService.GetSingle(declarationId, false, false);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService..GetSingle(declarationId, false, false);");
+                        pm.ChangeSetOp = ChangeSetOperation.Update;
+                        pm.UpdateDateTime = DateTime.UtcNow;
+                        declarationUpdateService.Update(pm, true);
+                        LogMessagingUtil.Instance.AppendLine("declarationUpdateService.Update(pm, true);");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
 
         public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId)
         {

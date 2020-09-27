@@ -560,11 +560,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.BackFromEditSub = this.BackFromEdit.subscribe((res) => {
                 //alert("Oh Yeah !!" + res.rowIndex);
 
-                if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
-                    //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
-                    this.controller.cachedData[res.rowIndex] = res.Data;
-                    this.updateDisplayList();
-                }
+                this.BackFromEditAction(res);
             });
             if (this.SelectedRows && this.EnableMultiSelection == true) {
                 if (this.SelectedRows.Collection.filter(a => a.rowIndex == rowIndex).length > 0) {
@@ -607,6 +603,14 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     //    }
     //}
     AdvanceFilters: ApiQueryFilters;
+    public BackFromEditAction(res: any) {
+        if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
+            //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
+            this.controller.cachedData[res.rowIndex] = res.Data;
+            this.updateDisplayList();
+        }
+    }
+
     processQueryFilter(filters) {
         this.SearchFieldChanged = false;
         if (this.Filters == null) {

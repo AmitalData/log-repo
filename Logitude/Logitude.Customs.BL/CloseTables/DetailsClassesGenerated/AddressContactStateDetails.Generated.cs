@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<AddressContactStateDetails> GetAll()
        {
-		    var all = new List<AddressContactStateDetails>(); 
+		    var all = new List<AddressContactStateDetails>();  
+            all.Add(new AddressContactStateDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,כתובת בתוקף מאומתת", 
+                Inactive = false, 
+                LocalName = "כתובת בתוקף מאומתת", 
+			});
+			 
+            all.Add(new AddressContactStateDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,כתובת בתוקף, לא  מאומתת", 
+                Inactive = false, 
+                LocalName = "כתובת בתוקף, לא  מאומתת", 
+			});
+			 
+            all.Add(new AddressContactStateDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,כתובת לא בתוקף (נמחקה)", 
+                Inactive = false, 
+                LocalName = "כתובת לא בתוקף (נמחקה)", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(AddressContactState newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(AddressContactState rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

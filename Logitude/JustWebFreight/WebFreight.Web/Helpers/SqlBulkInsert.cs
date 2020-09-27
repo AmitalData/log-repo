@@ -82,18 +82,22 @@ namespace WebFreight.Web.Helpers
                 foreach (var item in list)
                 {
                     string valuesString = "values" + BuildValuesSqlString(entityProperties, item) + ")";
-                    string commandString = "into " + insertCommand + " " + valuesString;
+                    string commandString = "into " + insertCommand + " " + valuesString;//+ ";";
                     sqlStringBuilder.AppendLine(commandString);
                     bulkInsertedRowsCount++;
                     insertedRowsCount++;
                     if (bulkInsertedRowsCount == 100 || insertedRowsCount == allRowsCount)
                     {
                         sqlStringBuilder.AppendLine("SELECT 1 FROM dual;");
-
+                        
                         string sqlCommandString = sqlStringBuilder.ToString();
-                        OracleCommand cmd = new OracleCommand(sqlCommandString, connection);
-                        cmd.CommandTimeout = 1200;
-                        var output = cmd.ExecuteNonQuery();
+                        OracleScript oracleScript = new OracleScript(sqlCommandString, connection);
+                        oracleScript.CommandTimeout = 1200;
+                        oracleScript.Execute();
+                        //OracleCommand cmd = new OracleCommand(sqlCommandString, connection);
+                        //cmd.CommandTimeout = 1200;
+                         
+                        //var output = cmd.ExecuteNonQuery();
 
                         sqlStringBuilder = new StringBuilder();
                         sqlStringBuilder.AppendLine("insert all");

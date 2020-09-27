@@ -20,17 +20,49 @@ namespace Logitude.Customs.BL
    {
        public List<ClosedTableStatusDetails> GetAll()
        {
-		    var all = new List<ClosedTableStatusDetails>(); 
+		    var all = new List<ClosedTableStatusDetails>();  
+            all.Add(new ClosedTableStatusDetails()
+            {    
+                Code = "1", 
+                EnglishName = "New", 
+                LocalName = "חדש", 
+                SearchFields = "1,new,חדש", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new ClosedTableStatusDetails()
+            {    
+                Code = "2", 
+                EnglishName = "Updating", 
+                LocalName = "מעדכן", 
+                SearchFields = "2,updating,מעדכן", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new ClosedTableStatusDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Up ToDate", 
+                LocalName = "מעודכן", 
+                SearchFields = "3,up todate,מעודכן", 
+                Inactive = false, 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ClosedTableStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;   
         }
 
 		public string GetSearchFields(ClosedTableStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",",rec.Inactive,",");
         }
    }
 }

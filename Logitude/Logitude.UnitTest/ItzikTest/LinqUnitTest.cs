@@ -19,7 +19,7 @@ namespace Logitude.UnitTest.ItzikTest
             Assert.IsTrue(newlist.Contains(9));
             Assert.IsFalse(newlist.Contains(1));
             Assert.IsFalse(newlist.Contains(8));
-            Assert.IsFalse(newlist.Contains(57));
+            Assert.IsFalse(newlist.Contains(57)); 
         }
 
 

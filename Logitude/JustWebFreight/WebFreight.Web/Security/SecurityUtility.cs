@@ -279,7 +279,7 @@ namespace WebFreight.Web.Security
 
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
 
-                throw new Exception("Sorry! you have no permission to do this operation on " + objectTableName);
+                throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName);
             }
 
 

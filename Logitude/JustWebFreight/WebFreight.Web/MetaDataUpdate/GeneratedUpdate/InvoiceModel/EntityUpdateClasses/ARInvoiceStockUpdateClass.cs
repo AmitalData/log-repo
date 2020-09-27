@@ -1206,14 +1206,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen ARInvoiceStockHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoiceStock.HeaderScreen.HeaderScreen", Name = "Header Screen", ObjectTableId = ARInvoiceStockObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ARInvoiceStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARInvoiceStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARInvoiceStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Amount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ARInvoiceStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Remaining", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ARInvoiceStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARInvoiceStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARInvoiceStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Amount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARInvoiceStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARInvoiceStockHeaderScreenScreen0.Id,ScreenCode = ARInvoiceStockHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoiceStock.Remaining", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ARInvoiceStockObjectTable.HeaderScreenId = ARInvoiceStockHeaderScreenScreen0.Id;
 		    ARInvoiceStockObjectTable.HeaderScreenCode = ARInvoiceStockHeaderScreenScreen0.Code;
 
@@ -1406,7 +1406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceStockMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "ARInvoiceStock.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -1418,6 +1418,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARInvoiceStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1435,6 +1437,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceStockFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -1453,6 +1457,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceStockFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

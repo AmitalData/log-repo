@@ -187,11 +187,18 @@ namespace MetaDataGenerator
 
 					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
 					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-					tables = (from a in rep.context.ObjectTables
-							  where allFiles.Contains(a.Name)
-							  select a).OrderBy(t => t.Name).ToList();
-
+                    if (dialog.SelectedPath.Contains("Logitude.Customs.MetaData"))
+                    {
+                        tables = (from a in rep.context.ObjectTables
+                                  where allFiles.Contains(a.Name.Replace("Customs.",""))
+                                  select a).OrderBy(t => t.Name).ToList();
+                    }
+                    else
+                    {
+                        tables = (from a in rep.context.ObjectTables
+                                  where allFiles.Contains(a.Name)
+                                  select a).OrderBy(t => t.Name).ToList();
+                    }
 					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
 					dbToXmlGeneratorFrom.AppendExistingModelEntityLXMLs(tables, dialog.SelectedPath);
 					MessageBox.Show("Export completed successfully");
@@ -358,8 +365,8 @@ namespace MetaDataGenerator
 		private void btnFormatModelLXMLs_Click(object sender, RoutedEventArgs e)
 		{
 
-			SetDontCreateObjectFieldAttribute();
-			return;
+			//SetDontCreateObjectFieldAttribute();
+			//return;
 
 			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
@@ -481,13 +488,22 @@ namespace MetaDataGenerator
 			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
 			string solutionDirectory = solutionDir.FullName;
+            string dir = solutionDirectory + @"\Logitude.Customs.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
+            DirectoryInfo d = new DirectoryInfo(dir);
 
-			 
-			string dxmlFilesPath = Path.Combine(solutionDirectory);
+            string dxmlFilesPath = Path.Combine(dir);
 			string[] allFiles = Directory.GetFiles(dxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
 			return allFiles;
 		}
-	}
+
+		private void button_Click_2(object sender, RoutedEventArgs e)
+		{
+			DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+			dbToXmlGeneratorFrom.UpdateTextCodesAndFeaturesForCustomsGeneralLXML();
+		}
+
+      
+    }
 }
 /*
  * 

@@ -20,11 +20,15 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
+	  public string ModificationsTypeCode  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-          return VendorId+'_'+CustomerId;
+          return VendorId+'_'+CustomerId+'_'+ModificationsTypeCode;
       }
 
       public override string GetEntityPMName()

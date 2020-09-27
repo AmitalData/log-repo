@@ -1967,26 +1967,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen LogitudeLeadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.HeaderScreen", Name = "Header Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    LogitudeLeadObjectTable.HeaderScreenId = LogitudeLeadHeaderScreenScreen0.Id;
 		    LogitudeLeadObjectTable.HeaderScreenCode = LogitudeLeadHeaderScreenScreen0.Code;
 
@@ -1995,26 +1995,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen LogitudeLeadGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 10, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

@@ -22,17 +22,20 @@
             config.CodeFirstOptions.TruncateLongDefaultNames = true;
             //Devart.Data.Oracle.Entity.OracleEntityProviderServices.HandleNullStringsAsEmptyStrings = true;  
 
-
+            //**OLD ENV 
+            ////"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"  ///573 --מפסיקים הפצת customs ל 5.7
+            ///       "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"  ///583
+            //** OLD ENV
+            config.DatabaseScript.Column.NumericIdentityBehavior = Devart.Data.Oracle.Entity.Configuration.NumericIdentityBehavior.None;
+            
 
             // Create a custom connection to specify the database and set a SQL generator for MySql.
             var connectionInfo =
                 //OracleConnectionInfo.CreateConnection("User Id=devart;  Password=devart; Server=srv64bit;");
                 OracleConnectionInfo.CreateConnection(
-                //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
-                "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"
-                //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ56;port=1521;sid=amital"
-                //"User Id=aminetpre_MAIN;  Password=aminetpre_MAIN;Direct=True;Data Source=10.10.10.72;port=1521;sid=amital"
-                //"User Id=couriernet_main;  Password=couriernet_main;Direct=True;Data Source=Univ58;port=1521;sid=amital"
+                    "User Id=AMINETCST_MAIN;  Password=AMINETCST_MAIN;Direct=True;Data Source=localhost;port=1521;sid=amital"
+                //"User Id=AMINETCST_MAIN;  Password=AMINETCST_MAIN;Direct=True;Data Source=UNIDB2016;port=1521;sid=amital" ///593    
+                // "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"  ///583
 
                 );
 

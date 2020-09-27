@@ -1219,14 +1219,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen MessagingStockHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MessagingStock.HeaderScreen", Name = "Header Screen", ObjectTableId = MessagingStockObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.EndDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Amount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Remaining", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.EndDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Amount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Remaining", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    MessagingStockObjectTable.HeaderScreenId = MessagingStockHeaderScreenScreen0.Id;
 		    MessagingStockObjectTable.HeaderScreenCode = MessagingStockHeaderScreenScreen0.Code;
 
@@ -1348,6 +1348,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MessagingStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1365,6 +1367,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MessagingStockFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MessagingStockFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

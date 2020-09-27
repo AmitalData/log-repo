@@ -21,7 +21,20 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("DWCategories");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.Index).HasColumnName("Index");
+            //#if ORACLE_DB
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Index).HasColumnName("CatIndex");
+            }
+            //#elseelse
+            else
+            {
+                this.Property(t => t.Index).HasColumnName("Index");
+            }
+            //#endif
+
+           
 
 
         }

@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct AccumalationStateValues
     {   
+       public const string צבורמעל998פריטים = "1";  
+       public const string צבורתמיד = "2";  
+       public const string ללאצבירה = "3";  
     }
 }
 

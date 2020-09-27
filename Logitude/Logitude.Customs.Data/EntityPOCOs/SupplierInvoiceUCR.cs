@@ -1,0 +1,42 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class SupplierInvoiceUCR
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("SupplierInvoice")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual SupplierInvoice SupplierInvoice { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoice")]
+        [Column("InvoiceCounterKey" ,Order = 2)]
+	    public int InvoiceCounterKey { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("SequenceNumeric" ,Order = 3)]
+	    public int SequenceNumeric { get; set; }
+        [Column("SupplierChargeID")]
+	    public string SupplierChargeID { get; set; }
+        [Column("AgentChargeID")]
+	    public string AgentChargeID { get; set; }
+    }
+}
+	 

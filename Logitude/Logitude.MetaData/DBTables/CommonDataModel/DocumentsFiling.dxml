@@ -443,4 +443,6 @@
     Columns="Tenant,EntityId,IsDeleted" />
   <Index
     Columns="Tenant,SecurityId" />
+  <Index
+   Columns="CreateDate" />
 </Table>

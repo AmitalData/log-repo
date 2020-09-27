@@ -1,7 +1,7 @@
 import { ApiQueryFiltersAddParams } from './../../DataContracts/ApiQueryFiltersAddParams';
 declare var window: any;
 declare var System: any;
-import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from './BaseComponent';
 import { EntityListService } from '../../Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
@@ -223,7 +223,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
-        private _entityResourceService: EntityResourceService) {
+        private _entityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         this.show = false;
         this.TenantPM = InfraSettings.TenantPM;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -395,8 +395,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
+ 
             if (this.LookUpTable.CacheOnClient) {
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
@@ -409,6 +410,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
             else {
+ 
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
@@ -495,7 +497,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     SetIsDisabledTimer: any;
     InitializeControl() {
-        this.Widths = [];
+         this.Widths = [];
         this.MinWidths = [];
         this.ItemsNgStyles = [];
         this.LogLOVControlClass = "LogLOVControl";
@@ -856,10 +858,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
     }
     DrawColumns() {
-        var lookupFields: any[];
+
+          var lookupFields: any[];
         this.headerColumns = [];
         this.dataColumns = [];
         if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+            var fields: string[] = this.DisplayFieldsFromList.split(',');
             var fields: string[] = this.DisplayFieldsFromList.split(',');
             lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
         }
@@ -1198,10 +1202,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     NavigateListItems(isDown: boolean) {
+ 
         if (isDown) {
             var isSelected = false;
             var active = document.getElementsByClassName("highlighted");
-
             if (!active[0]) {
                 if (this.ItemsSource && this.ItemsSource.length > 0) {
                     var input = document.getElementById(this.MyDataListId);
@@ -2468,7 +2472,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             logWindow.Height = 570;
 
             switch (this.LookUpTableName) {
-                case "Customs.Client": {
+                case "Customs.Client": 
+                case "Customs.CourierPendingReason":
+                    {
+                        
                     logWindow.Width = 800;
                     logWindow.Height = 600;
                     logWindow.IsShowCloseButton = true;
@@ -2952,6 +2959,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.HighlightSelectedValue();
                     this.isLoading = false;
                 }
+                this.CD.detectChanges();
+
             });
         });
     }
@@ -3035,6 +3044,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
 
         }
+ 
         loadPromise.then((res: any) => {
             res.subscribe((resp:any) => {
                 if (resp.Result) {
@@ -3058,6 +3068,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     } else {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
+                        this.headerColumns;
+
                     }
 
                 }
@@ -3075,8 +3087,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ApplyManipulateData(this.bufferData);
 
                     } else {
-                        this.ItemsSource = this.bufferData;//resp.Result;
+                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
+                        this.headerColumns;
                     }
 
                 }
@@ -3107,6 +3120,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ApplyManipulateData(bufferData: any[]) {
+ 
         var objectTableName = this.LookUpTableName;
         if (this.LookUpTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];

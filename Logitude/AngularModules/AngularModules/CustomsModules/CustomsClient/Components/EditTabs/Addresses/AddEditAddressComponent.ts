@@ -22,6 +22,9 @@ import {ClientMessagesService} from '../../../../../Customs/Services/WebServices
     templateUrl: './AddEditAddressComponent.html',
 })
 export class AddEditAddressComponent extends BaseComponent{
+  public IsDisplayOnly: boolean = false;
+  public CustomSendOptionsButtonCanForcePersonalSign: any;
+
     public ObjectTableName: string = "Customs.ClientAddress";
     public DataContext = this;
     LayoutDirection: string = 'ltr';

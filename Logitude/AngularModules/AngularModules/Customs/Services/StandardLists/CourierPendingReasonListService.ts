@@ -32,12 +32,12 @@ export class CourierPendingReasonListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/courierpendingreasonviews';  
     }
 
-	getSingle(code: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class CourierPendingReasonListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -153,6 +153,204 @@ export class CourierPendingReasonListService {
 		});        
 	}
 
+	getSingleFromCache(id: string) {
+
+		var callTime = new Date();
+
+		if (!SessionLocator.UseCachedData) {
+            return this.getSingle(id);
+        }
+	    
+		var exists = CourierPendingReasonListService.CachedData.filter(a => a.Id === id).length;
+
+        var serviceResponse: ServiceResponse = new ServiceResponse(); 
+
+        if (exists === 0) {
+			return defer(() => {
+				var cacheKey = "CourierPendingReason_CachedData_" + SessionLocator.Tenant;
+				var _mappedListsArray: Array<CourierPendingReasonList> = [];
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+                    for (var key in cachedJson) {
+                        var entity: CourierPendingReasonList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
+
+                    CourierPendingReasonListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+                    
+                    var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Id === id)[0];
+                    serviceResponse.Result = filteredData;
+					serviceResponse.CallTime = callTime;
+ 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CourierPendingReason", "GetSingleListFromCache", 'id=' + id); 
+
+                    return of(serviceResponse);                    
+                }
+
+				else {
+					return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+							var list = response.body;
+                    
+							var entity: CourierPendingReasonList;
+							if (list)
+							{
+								entity = this.MapJsonToEntityList(list);
+							}   
+
+							serviceResponse.Result = entity;
+							serviceResponse.CallTime = callTime;
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'id=' + id); 
+                                      
+							return serviceResponse;
+						}), 
+						
+						catchError(ServiceHelper.HandleServiceError));
+				}
+			});
+		}
+
+		else {
+		   var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Id === id)[0];
+		    serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+		   return of(serviceResponse);
+		}
+	}
+
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
+
+		var callTime = new Date();
+
+		if (!SessionLocator.UseCachedData) {
+			return this.getByFilters(filters);
+		}
+
+		var exists = CourierPendingReasonListService.CachedData.length;
+		var urlparameters = '/getbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            if (!ignoreFilter) {
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
+
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
+
+            if (propName == "AdditionalFilters" && propValue.length > 0) {
+                addtionalFiltersValues = JSON.stringify(propValue);
+			}
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var callUrl = this._apiUrl.concat(urlparameters);       
+       
+        if (exists === 0 || filters.ForceCacheRefresh) {
+            var cacheKey = "CourierPendingReason_CachedData_" + filters.Tenant;
+            var _mappedListsArray: Array<CourierPendingReasonList> = [];
+            var serviceResponse: ServiceResponse;
+
+            if (!filters.ForceCacheRefresh) {
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+
+                    for (var key in cachedJson) {
+                        var entity: CourierPendingReasonList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
+
+                    CourierPendingReasonListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+
+                     if (!filters.GetAll) {
+                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                    }
+
+                    serviceResponse.Result = _mappedListsArray;
+					serviceResponse.CallTime = callTime;
+                    
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CourierPendingReason", "GetAllFromCache", "");                     
+                }
+            }
+
+            if (serviceResponse) {
+                return of(serviceResponse);
+            }
+
+            else {
+                return defer(() => {
+                    return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+						.pipe(
+							map((response: HttpResponse<any>) => {
+
+								var serviceResponse: ServiceResponse;
+								serviceResponse = response.body;
+                        
+								if (serviceResponse.Result) {
+									for (var key in serviceResponse.Result) {
+										var entity: CourierPendingReasonList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+										_mappedListsArray.push(entity);
+									}
+								}
+
+								if (filters.GetAll) {
+									LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
+									CourierPendingReasonListService.CachedData = _mappedListsArray;
+								}
+
+								else {
+							
+									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+								}
+
+								serviceResponse.Result = _mappedListsArray;
+								serviceResponse.CallTime = callTime;
+						
+								var servertime = response.headers.get('ServerExecutionTime');
+								PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetAll", ""); 
+
+								return serviceResponse;
+							}),
+							
+							catchError(ServiceHelper.HandleServiceError));
+                });
+            }
+        }
+
+        else {
+            var filteredData = CourierPendingReasonListService.CachedData;
+            if (!filters.GetAll) {
+	
+                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
+            }
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+            return of(serviceResponse);
+        }
+    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        

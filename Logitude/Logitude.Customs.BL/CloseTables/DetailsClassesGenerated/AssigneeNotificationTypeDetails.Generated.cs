@@ -20,17 +20,40 @@ namespace Logitude.Customs.BL
    {
        public List<AssigneeNotificationTypeDetails> GetAll()
        {
-		    var all = new List<AssigneeNotificationTypeDetails>(); 
+		    var all = new List<AssigneeNotificationTypeDetails>();  
+            all.Add(new AssigneeNotificationTypeDetails()
+            {    
+                Code = "A", 
+                EnglishName = "Action", 
+                SearchFields = "a,action,לפעולה", 
+                Inactive = false, 
+                LocalName = "לפעולה", 
+			});
+			 
+            all.Add(new AssigneeNotificationTypeDetails()
+            {    
+                Code = "I", 
+                EnglishName = "Info", 
+                SearchFields = "i,info,לידיעה", 
+                Inactive = false, 
+                LocalName = "לידיעה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(AssigneeNotificationType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(AssigneeNotificationType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

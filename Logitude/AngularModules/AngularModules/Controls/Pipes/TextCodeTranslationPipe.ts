@@ -15,9 +15,11 @@ export class TextCodeTranslationPipe {
         }
         if (translation == "") {
             if (this.ShowAlertMessage(value)) {
-
+                if (SessionLocator.LoggedUserPM.Email.includes("logitudeworld.com")) 
+                {
                     alert("This code:'" + value + "' Not Found!");
-     
+                } 
+         
             }
         }
         return translation;

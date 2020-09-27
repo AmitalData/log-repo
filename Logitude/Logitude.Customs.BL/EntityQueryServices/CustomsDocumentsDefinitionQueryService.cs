@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             if(String.IsNullOrWhiteSpace(cargoTypeCode) || String.IsNullOrWhiteSpace(processTypeCode) || String.IsNullOrWhiteSpace(transportTypeCode))
             {
-                return null;
+                return new List<CustomsDocumentsDefinitionPM>();
             }
             
             List <CustomsDocumentsDefinition> CustomsDocumentsDefinitions = repository.GetCustomsDocumentsDefinitionsForDeclaration(cargoTypeCode, processTypeCode, transportTypeCode, tenant);

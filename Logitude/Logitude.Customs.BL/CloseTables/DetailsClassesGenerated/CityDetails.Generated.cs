@@ -20,17 +20,15647 @@ namespace Logitude.Customs.BL
    {
        public List<CityDetails> GetAll()
        {
-		    var all = new List<CityDetails>(); 
+		    var all = new List<CityDetails>();  
+            all.Add(new CityDetails()
+            {    
+                Code = "0", 
+                EnglishName = "?? ????", 
+                SearchFields = "0,לא ידוע", 
+                Inactive = true, 
+                LocalName = "לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,תירוש", 
+                Inactive = false, 
+                LocalName = "תירוש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1015", 
+                SearchFields = "1015,מבשרת ציון", 
+                Inactive = false, 
+                LocalName = "מבשרת ציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "102", 
+                SearchFields = "102,מאיר שפיה", 
+                Inactive = false, 
+                LocalName = "מאיר שפיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1020", 
+                SearchFields = "1020,אור עקיבא", 
+                Inactive = false, 
+                LocalName = "אור עקיבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1024", 
+                SearchFields = "1024,חרוצים", 
+                Inactive = false, 
+                LocalName = "חרוצים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "103", 
+                SearchFields = "103,תל עדשים", 
+                Inactive = false, 
+                LocalName = "תל עדשים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1031", 
+                SearchFields = "1031,שדרות", 
+                Inactive = false, 
+                LocalName = "שדרות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1034", 
+                SearchFields = "1034,קריית מלאכי", 
+                Inactive = false, 
+                LocalName = "קריית מלאכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "104", 
+                SearchFields = "104,מזרע", 
+                Inactive = false, 
+                LocalName = "מזרע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1041", 
+                SearchFields = "1041,נצאצרה (שבט)", 
+                Inactive = false, 
+                LocalName = "נצאצרה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1042", 
+                SearchFields = "1042,אבו עמאר (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו עמאר (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1043", 
+                SearchFields = "1043,גיזו", 
+                Inactive = false, 
+                LocalName = "גיזו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1044", 
+                SearchFields = "1044,יעף", 
+                Inactive = false, 
+                LocalName = "יעף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1045", 
+                SearchFields = "1045,שתולה", 
+                Inactive = false, 
+                LocalName = "שתולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1046", 
+                SearchFields = "1046,אוהד", 
+                Inactive = false, 
+                LocalName = "אוהד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1047", 
+                SearchFields = "1047,חזון", 
+                Inactive = false, 
+                LocalName = "חזון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1049", 
+                SearchFields = "1049,רמת אפעל", 
+                Inactive = false, 
+                LocalName = "רמת אפעל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1050", 
+                SearchFields = "1050,בית חשמונאי", 
+                Inactive = false, 
+                LocalName = "בית חשמונאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1051", 
+                SearchFields = "1051,תלמי אליהו", 
+                Inactive = false, 
+                LocalName = "תלמי אליהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1052", 
+                SearchFields = "1052,קטורה", 
+                Inactive = false, 
+                LocalName = "קטורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1053", 
+                SearchFields = "1053,עין חצבה", 
+                Inactive = false, 
+                LocalName = "עין חצבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1054", 
+                SearchFields = "1054,תל שבע", 
+                Inactive = false, 
+                LocalName = "תל שבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1056", 
+                SearchFields = "1056,עין כרם-ביס חקלאי", 
+                Inactive = false, 
+                LocalName = "עין כרם-ביס חקלאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1057", 
+                SearchFields = "1057,נווה זוהר", 
+                Inactive = false, 
+                LocalName = "נווה זוהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1058", 
+                SearchFields = "1058,שדה ניצן", 
+                Inactive = false, 
+                LocalName = "שדה ניצן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1059", 
+                SearchFields = "1059,כסיפה", 
+                Inactive = false, 
+                LocalName = "כסיפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "106", 
+                SearchFields = "106,כפר גדעון", 
+                Inactive = false, 
+                LocalName = "כפר גדעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1060", 
+                SearchFields = "1060,לקיה", 
+                Inactive = false, 
+                LocalName = "לקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1061", 
+                SearchFields = "1061,נצרת עילית", 
+                Inactive = false, 
+                LocalName = "נצרת עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1062", 
+                EnglishName = "???? ?????", 
+                SearchFields = "1062,נווה אפרים", 
+                Inactive = false, 
+                LocalName = "נווה אפרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1063", 
+                SearchFields = "1063,מעלות-תרשיחא", 
+                Inactive = false, 
+                LocalName = "מעלות-תרשיחא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1064", 
+                SearchFields = "1064,אמירים", 
+                Inactive = false, 
+                LocalName = "אמירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1065", 
+                SearchFields = "1065,זמרת", 
+                Inactive = false, 
+                LocalName = "זמרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1066", 
+                SearchFields = "1066,בני עיש", 
+                Inactive = false, 
+                LocalName = "בני עיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1067", 
+                SearchFields = "1067,דובב", 
+                Inactive = false, 
+                LocalName = "דובב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1068", 
+                SearchFields = "1068,אדמית", 
+                Inactive = false, 
+                LocalName = "אדמית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1069", 
+                SearchFields = "1069,רם-און", 
+                Inactive = false, 
+                LocalName = "רם-און", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "107", 
+                SearchFields = "107,כפר סילבר", 
+                Inactive = false, 
+                LocalName = "כפר סילבר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1070", 
+                SearchFields = "1070,אביעזר", 
+                Inactive = false, 
+                LocalName = "אביעזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1071", 
+                SearchFields = "1071,נווה מיכאל", 
+                Inactive = false, 
+                LocalName = "נווה מיכאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1072", 
+                SearchFields = "1072,גן הדרום", 
+                Inactive = false, 
+                LocalName = "גן הדרום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1076", 
+                SearchFields = "1076,בית ברל", 
+                Inactive = false, 
+                LocalName = "בית ברל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1077", 
+                SearchFields = "1077,גבעת שפירא", 
+                Inactive = false, 
+                LocalName = "גבעת שפירא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1079", 
+                SearchFields = "1079,צפרירים", 
+                Inactive = false, 
+                LocalName = "צפרירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1080", 
+                SearchFields = "1080,מבועים", 
+                Inactive = false, 
+                LocalName = "מבועים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1081", 
+                SearchFields = "1081,אבן מנחם", 
+                Inactive = false, 
+                LocalName = "אבן מנחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1082", 
+                SearchFields = "1082,מעגלים", 
+                Inactive = false, 
+                LocalName = "מעגלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1083", 
+                SearchFields = "1083,תושייה", 
+                Inactive = false, 
+                LocalName = "תושייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1084", 
+                SearchFields = "1084,בן שמן (כפר נוער)", 
+                Inactive = false, 
+                LocalName = "בן שמן (כפר נוער)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1085", 
+                SearchFields = "1085,כרם שלום", 
+                Inactive = false, 
+                LocalName = "כרם שלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1094", 
+                SearchFields = "1094,כרם יבנה (ישיבה)", 
+                Inactive = false, 
+                LocalName = "כרם יבנה (ישיבה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1095", 
+                SearchFields = "1095,כפר מימון", 
+                Inactive = false, 
+                LocalName = "כפר מימון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1098", 
+                SearchFields = "1098,מרכז שפירא", 
+                Inactive = false, 
+                LocalName = "מרכז שפירא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,ניר חן", 
+                Inactive = false, 
+                LocalName = "ניר חן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1102", 
+                SearchFields = "1102,צוקי ים", 
+                Inactive = false, 
+                LocalName = "צוקי ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1103", 
+                SearchFields = "1103,גני הדר", 
+                Inactive = false, 
+                LocalName = "גני הדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1104", 
+                SearchFields = "1104,פורייה - כפר עבודה", 
+                Inactive = false, 
+                LocalName = "פורייה - כפר עבודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1105", 
+                SearchFields = "1105,פורייה - נווה עובד", 
+                Inactive = false, 
+                LocalName = "פורייה - נווה עובד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1108", 
+                SearchFields = "1108,אומן", 
+                Inactive = false, 
+                LocalName = "אומן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1110", 
+                SearchFields = "1110,חבר", 
+                Inactive = false, 
+                LocalName = "חבר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1111", 
+                SearchFields = "1111,צופייה", 
+                Inactive = false, 
+                LocalName = "צופייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1112", 
+                SearchFields = "1112,יודפת", 
+                Inactive = false, 
+                LocalName = "יודפת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1113", 
+                SearchFields = "1113,צור הדסה", 
+                Inactive = false, 
+                LocalName = "צור הדסה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1114", 
+                SearchFields = "1114,שריגים (לי-און)", 
+                Inactive = false, 
+                LocalName = "שריגים (לי-און)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1115", 
+                SearchFields = "1115,אביבים", 
+                Inactive = false, 
+                LocalName = "אביבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1117", 
+                SearchFields = "1117,יעל", 
+                Inactive = false, 
+                LocalName = "יעל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "112", 
+                SearchFields = "112,כפר חסידים א'", 
+                Inactive = false, 
+                LocalName = "כפר חסידים א'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1123", 
+                SearchFields = "1123,אדרת", 
+                Inactive = false, 
+                LocalName = "אדרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1124", 
+                SearchFields = "1124,נאות הכיכר", 
+                Inactive = false, 
+                LocalName = "נאות הכיכר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1125", 
+                SearchFields = "1125,אלמגור", 
+                Inactive = false, 
+                LocalName = "אלמגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1126", 
+                SearchFields = "1126,אילות", 
+                Inactive = false, 
+                LocalName = "אילות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1127", 
+                SearchFields = "1127,מעלה גלבוע", 
+                Inactive = false, 
+                LocalName = "מעלה גלבוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1128", 
+                SearchFields = "1128,מי עמי", 
+                Inactive = false, 
+                LocalName = "מי עמי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1129", 
+                SearchFields = "1129,גרופית", 
+                Inactive = false, 
+                LocalName = "גרופית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "113", 
+                SearchFields = "113,אדירים", 
+                Inactive = false, 
+                LocalName = "אדירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1130", 
+                SearchFields = "1130,כפר רוזנואלד (זרעית)", 
+                Inactive = false, 
+                LocalName = "כפר רוזנואלד (זרעית)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1132", 
+                SearchFields = "1132,שניר", 
+                Inactive = false, 
+                LocalName = "שניר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1133", 
+                SearchFields = "1133,ורדון", 
+                Inactive = false, 
+                LocalName = "ורדון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1134", 
+                SearchFields = "1134,יד השמונה", 
+                Inactive = false, 
+                LocalName = "יד השמונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1136", 
+                SearchFields = "1136,צוחר", 
+                Inactive = false, 
+                LocalName = "צוחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1137", 
+                SearchFields = "1137,קריית יערים", 
+                Inactive = false, 
+                LocalName = "קריית יערים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1138", 
+                SearchFields = "1138,יעד", 
+                Inactive = false, 
+                LocalName = "יעד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1139", 
+                SearchFields = "1139,כרמיאל", 
+                Inactive = false, 
+                LocalName = "כרמיאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1140", 
+                SearchFields = "1140,מדרשת בן גוריון", 
+                Inactive = false, 
+                LocalName = "מדרשת בן גוריון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1141", 
+                SearchFields = "1141,מבוא מודיעים", 
+                Inactive = false, 
+                LocalName = "מבוא מודיעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1143", 
+                SearchFields = "1143,נס עמים", 
+                Inactive = false, 
+                LocalName = "נס עמים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1144", 
+                SearchFields = "1144,ידידה", 
+                Inactive = false, 
+                LocalName = "ידידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1145", 
+                SearchFields = "1145,אלומה", 
+                Inactive = false, 
+                LocalName = "אלומה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1146", 
+                SearchFields = "1146,עלומים", 
+                Inactive = false, 
+                LocalName = "עלומים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1147", 
+                SearchFields = "1147,נטועה", 
+                Inactive = false, 
+                LocalName = "נטועה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1148", 
+                SearchFields = "1148,צור נתן", 
+                Inactive = false, 
+                LocalName = "צור נתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1149", 
+                SearchFields = "1149,עזר", 
+                Inactive = false, 
+                LocalName = "עזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "115", 
+                SearchFields = "115,חופית", 
+                Inactive = false, 
+                LocalName = "חופית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1150", 
+                SearchFields = "1150,צופר", 
+                Inactive = false, 
+                LocalName = "צופר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1151", 
+                SearchFields = "1151,פארן", 
+                Inactive = false, 
+                LocalName = "פארן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1152", 
+                SearchFields = "1152,אשלים", 
+                Inactive = false, 
+                LocalName = "אשלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1153", 
+                SearchFields = "1153,כישור", 
+                Inactive = false, 
+                LocalName = "כישור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1154", 
+                SearchFields = "1154,מלכישוע", 
+                Inactive = false, 
+                LocalName = "מלכישוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1155", 
+                SearchFields = "1155,מגן שאול", 
+                Inactive = false, 
+                LocalName = "מגן שאול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1156", 
+                SearchFields = "1156,סמר", 
+                Inactive = false, 
+                LocalName = "סמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1157", 
+                SearchFields = "1157,אחווה", 
+                Inactive = false, 
+                LocalName = "אחווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1158", 
+                SearchFields = "1158,יהל", 
+                Inactive = false, 
+                LocalName = "יהל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1160", 
+                SearchFields = "1160,שכניה", 
+                Inactive = false, 
+                LocalName = "שכניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1161", 
+                SearchFields = "1161,רהט", 
+                Inactive = false, 
+                LocalName = "רהט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1162", 
+                SearchFields = "1162,בית רימון", 
+                Inactive = false, 
+                LocalName = "בית רימון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1163", 
+                SearchFields = "1163,מורן", 
+                Inactive = false, 
+                LocalName = "מורן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1165", 
+                SearchFields = "1165,שילת", 
+                Inactive = false, 
+                LocalName = "שילת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1166", 
+                SearchFields = "1166,כפר רות", 
+                Inactive = false, 
+                LocalName = "כפר רות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1167", 
+                SearchFields = "1167,קיסריה", 
+                Inactive = false, 
+                LocalName = "קיסריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1169", 
+                SearchFields = "1169,הוואשלה (שבט)", 
+                Inactive = false, 
+                LocalName = "הוואשלה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1170", 
+                SearchFields = "1170,סייד (שבט)", 
+                Inactive = false, 
+                LocalName = "סייד (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1171", 
+                SearchFields = "1171,לוטם", 
+                Inactive = false, 
+                LocalName = "לוטם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1172", 
+                SearchFields = "1172,תובל", 
+                Inactive = false, 
+                LocalName = "תובל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1173", 
+                SearchFields = "1173,לפידות", 
+                Inactive = false, 
+                LocalName = "לפידות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1174", 
+                SearchFields = "1174,מנוף", 
+                Inactive = false, 
+                LocalName = "מנוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1175", 
+                SearchFields = "1175,עידן", 
+                Inactive = false, 
+                LocalName = "עידן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1176", 
+                SearchFields = "1176,ספיר", 
+                Inactive = false, 
+                LocalName = "ספיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1177", 
+                SearchFields = "1177,טללים", 
+                Inactive = false, 
+                LocalName = "טללים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1178", 
+                SearchFields = "1178,מורשת", 
+                Inactive = false, 
+                LocalName = "מורשת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1179", 
+                SearchFields = "1179,קורנית", 
+                Inactive = false, 
+                LocalName = "קורנית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1180", 
+                SearchFields = "1180,צביה", 
+                Inactive = false, 
+                LocalName = "צביה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1181", 
+                SearchFields = "1181,טל-אל", 
+                Inactive = false, 
+                LocalName = "טל-אל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1182", 
+                SearchFields = "1182,אלון הגליל", 
+                Inactive = false, 
+                LocalName = "אלון הגליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1183", 
+                SearchFields = "1183,כליל", 
+                Inactive = false, 
+                LocalName = "כליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1184", 
+                SearchFields = "1184,מתת", 
+                Inactive = false, 
+                LocalName = "מתת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1185", 
+                SearchFields = "1185,פלך", 
+                Inactive = false, 
+                LocalName = "פלך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1186", 
+                SearchFields = "1186,הושעיה", 
+                Inactive = false, 
+                LocalName = "הושעיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1187", 
+                SearchFields = "1187,עיר אובות", 
+                Inactive = false, 
+                LocalName = "עיר אובות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1188", 
+                SearchFields = "1188,אשחר", 
+                Inactive = false, 
+                LocalName = "אשחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1190", 
+                SearchFields = "1190,מצפה נטופה", 
+                Inactive = false, 
+                LocalName = "מצפה נטופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1191", 
+                SearchFields = "1191,בר יוחאי", 
+                Inactive = false, 
+                LocalName = "בר יוחאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1192", 
+                SearchFields = "1192,ערערה-בנגב", 
+                Inactive = false, 
+                LocalName = "ערערה-בנגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1195", 
+                SearchFields = "1195,ניצנה (קהילת חינוך)", 
+                Inactive = false, 
+                LocalName = "ניצנה (קהילת חינוך)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1196", 
+                SearchFields = "1196,מחנה יתיר", 
+                Inactive = false, 
+                LocalName = "מחנה יתיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1197", 
+                SearchFields = "1197,נאות סמדר", 
+                Inactive = false, 
+                LocalName = "נאות סמדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1198", 
+                SearchFields = "1198,כרמים", 
+                Inactive = false, 
+                LocalName = "כרמים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1199", 
+                SearchFields = "1199,עדי", 
+                Inactive = false, 
+                LocalName = "עדי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1200", 
+                SearchFields = "1200,מודיעין-מכבים-רעות", 
+                Inactive = false, 
+                LocalName = "מודיעין-מכבים-רעות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1201", 
+                SearchFields = "1201,כמון", 
+                Inactive = false, 
+                LocalName = "כמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1202", 
+                SearchFields = "1202,מכמנים", 
+                Inactive = false, 
+                LocalName = "מכמנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1203", 
+                SearchFields = "1203,הררית", 
+                Inactive = false, 
+                LocalName = "הררית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1204", 
+                SearchFields = "1204,גילון", 
+                Inactive = false, 
+                LocalName = "גילון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1205", 
+                SearchFields = "1205,מנות", 
+                Inactive = false, 
+                LocalName = "מנות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1206", 
+                SearchFields = "1206,גיתה", 
+                Inactive = false, 
+                LocalName = "גיתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1207", 
+                SearchFields = "1207,לבון", 
+                Inactive = false, 
+                LocalName = "לבון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1208", 
+                SearchFields = "1208,הילה", 
+                Inactive = false, 
+                LocalName = "הילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1209", 
+                SearchFields = "1209,חרשים", 
+                Inactive = false, 
+                LocalName = "חרשים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1210", 
+                SearchFields = "1210,כחל", 
+                Inactive = false, 
+                LocalName = "כחל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1211", 
+                SearchFields = "1211,קדרים", 
+                Inactive = false, 
+                LocalName = "קדרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1212", 
+                SearchFields = "1212,עמוקה", 
+                Inactive = false, 
+                LocalName = "עמוקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1213", 
+                SearchFields = "1213,צבעון", 
+                Inactive = false, 
+                LocalName = "צבעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1214", 
+                SearchFields = "1214,טפחות", 
+                Inactive = false, 
+                LocalName = "טפחות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1217", 
+                SearchFields = "1217,מחנה יבור", 
+                Inactive = false, 
+                LocalName = "מחנה יבור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1219", 
+                SearchFields = "1219,גורנות הגליל", 
+                Inactive = false, 
+                LocalName = "גורנות הגליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "122", 
+                SearchFields = "122,רמת ישי", 
+                Inactive = false, 
+                LocalName = "רמת ישי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1220", 
+                SearchFields = "1220,אבירים", 
+                Inactive = false, 
+                LocalName = "אבירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1221", 
+                SearchFields = "1221,צורית", 
+                Inactive = false, 
+                LocalName = "צורית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1222", 
+                SearchFields = "1222,מצפה אביב", 
+                Inactive = false, 
+                LocalName = "מצפה אביב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1223", 
+                SearchFields = "1223,שדי אברהם", 
+                Inactive = false, 
+                LocalName = "שדי אברהם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1224", 
+                SearchFields = "1224,כוכב יאיר", 
+                Inactive = false, 
+                LocalName = "כוכב יאיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1225", 
+                SearchFields = "1225,רביד", 
+                Inactive = false, 
+                LocalName = "רביד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1226", 
+                SearchFields = "1226,יובלים", 
+                Inactive = false, 
+                LocalName = "יובלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1227", 
+                SearchFields = "1227,יתד", 
+                Inactive = false, 
+                LocalName = "יתד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1228", 
+                SearchFields = "1228,רקפת", 
+                Inactive = false, 
+                LocalName = "רקפת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1229", 
+                SearchFields = "1229,כלנית", 
+                Inactive = false, 
+                LocalName = "כלנית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1230", 
+                SearchFields = "1230,לבנים", 
+                Inactive = false, 
+                LocalName = "לבנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1231", 
+                SearchFields = "1231,פרי גן", 
+                Inactive = false, 
+                LocalName = "פרי גן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1232", 
+                SearchFields = "1232,יבול", 
+                Inactive = false, 
+                LocalName = "יבול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1233", 
+                SearchFields = "1233,שקף", 
+                Inactive = false, 
+                LocalName = "שקף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1234", 
+                SearchFields = "1234,קבועה (שבט)", 
+                Inactive = false, 
+                LocalName = "קבועה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1235", 
+                SearchFields = "1235,שורשים", 
+                Inactive = false, 
+                LocalName = "שורשים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1236", 
+                SearchFields = "1236,נירית", 
+                Inactive = false, 
+                LocalName = "נירית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1237", 
+                SearchFields = "1237,תלמי יוסף", 
+                Inactive = false, 
+                LocalName = "תלמי יוסף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1238", 
+                SearchFields = "1238,סופה", 
+                Inactive = false, 
+                LocalName = "סופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1239", 
+                SearchFields = "1239,חולית", 
+                Inactive = false, 
+                LocalName = "חולית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1240", 
+                SearchFields = "1240,עין הבשור", 
+                Inactive = false, 
+                LocalName = "עין הבשור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1241", 
+                SearchFields = "1241,דקל", 
+                Inactive = false, 
+                LocalName = "דקל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1242", 
+                SearchFields = "1242,נתיב העשרה", 
+                Inactive = false, 
+                LocalName = "נתיב העשרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1243", 
+                SearchFields = "1243,קציר", 
+                Inactive = false, 
+                LocalName = "קציר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1244", 
+                SearchFields = "1244,תמרת", 
+                Inactive = false, 
+                LocalName = "תמרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1245", 
+                SearchFields = "1245,סלמה", 
+                Inactive = false, 
+                LocalName = "סלמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1246", 
+                SearchFields = "1246,עראמשה", 
+                Inactive = false, 
+                LocalName = "עראמשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1247", 
+                SearchFields = "1247,קציר-חריש", 
+                Inactive = false, 
+                LocalName = "קציר-חריש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1248", 
+                SearchFields = "1248,אליפז", 
+                Inactive = false, 
+                LocalName = "אליפז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1249", 
+                SearchFields = "1249,הרדוף", 
+                Inactive = false, 
+                LocalName = "הרדוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1251", 
+                SearchFields = "1251,עין תמר", 
+                Inactive = false, 
+                LocalName = "עין תמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1252", 
+                SearchFields = "1252,כורזים", 
+                Inactive = false, 
+                LocalName = "כורזים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1253", 
+                SearchFields = "1253,אמנון", 
+                Inactive = false, 
+                LocalName = "אמנון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1254", 
+                SearchFields = "1254,נטף", 
+                Inactive = false, 
+                LocalName = "נטף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1255", 
+                SearchFields = "1255,לוטן", 
+                Inactive = false, 
+                LocalName = "לוטן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1256", 
+                SearchFields = "1256,אשרת", 
+                Inactive = false, 
+                LocalName = "אשרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1257", 
+                SearchFields = "1257,חנתון", 
+                Inactive = false, 
+                LocalName = "חנתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1258", 
+                SearchFields = "1258,מסד", 
+                Inactive = false, 
+                LocalName = "מסד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1259", 
+                SearchFields = "1259,נווה שלום", 
+                Inactive = false, 
+                LocalName = "נווה שלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "126", 
+                SearchFields = "126,שריד", 
+                Inactive = false, 
+                LocalName = "שריד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1260", 
+                SearchFields = "1260,רתמים", 
+                Inactive = false, 
+                LocalName = "רתמים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1261", 
+                SearchFields = "1261,הר עמשא", 
+                Inactive = false, 
+                LocalName = "הר עמשא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1262", 
+                SearchFields = "1262,צוקים", 
+                Inactive = false, 
+                LocalName = "צוקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1263", 
+                SearchFields = "1263,כפר ורדים", 
+                Inactive = false, 
+                LocalName = "כפר ורדים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1264", 
+                SearchFields = "1264,כרמי יוסף", 
+                Inactive = false, 
+                LocalName = "כרמי יוסף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1265", 
+                SearchFields = "1265,שומרייה", 
+                Inactive = false, 
+                LocalName = "שומרייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1266", 
+                SearchFields = "1266,שחרות", 
+                Inactive = false, 
+                LocalName = "שחרות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1267", 
+                SearchFields = "1267,שיטים", 
+                Inactive = false, 
+                LocalName = "שיטים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1268", 
+                SearchFields = "1268,מיתר", 
+                Inactive = false, 
+                LocalName = "מיתר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "127", 
+                SearchFields = "127,רמת רחל", 
+                Inactive = false, 
+                LocalName = "רמת רחל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1271", 
+                SearchFields = "1271,להבים", 
+                Inactive = false, 
+                LocalName = "להבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1272", 
+                SearchFields = "1272,חלוץ", 
+                Inactive = false, 
+                LocalName = "חלוץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1273", 
+                SearchFields = "1273,מכבים-רעות", 
+                Inactive = false, 
+                LocalName = "מכבים-רעות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1274", 
+                SearchFields = "1274,גן נר", 
+                Inactive = false, 
+                LocalName = "גן נר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1275", 
+                SearchFields = "1275,אבטליון", 
+                Inactive = false, 
+                LocalName = "אבטליון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1276", 
+                SearchFields = "1276,אשבל", 
+                Inactive = false, 
+                LocalName = "אשבל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1278", 
+                SearchFields = "1278,באר מילכה", 
+                Inactive = false, 
+                LocalName = "באר מילכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1279", 
+                SearchFields = "1279,נווה חריף", 
+                Inactive = false, 
+                LocalName = "נווה חריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "128", 
+                SearchFields = "128,גת רימון", 
+                Inactive = false, 
+                LocalName = "גת רימון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1280", 
+                SearchFields = "1280,ניצני סיני", 
+                Inactive = false, 
+                LocalName = "ניצני סיני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1282", 
+                SearchFields = "1282,מירב", 
+                Inactive = false, 
+                LocalName = "מירב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1283", 
+                SearchFields = "1283,תל תאומים", 
+                Inactive = false, 
+                LocalName = "תל תאומים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1284", 
+                SearchFields = "1284,נופית", 
+                Inactive = false, 
+                LocalName = "נופית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1285", 
+                SearchFields = "1285,כרכום", 
+                Inactive = false, 
+                LocalName = "כרכום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1286", 
+                SearchFields = "1286,שגב-שלום", 
+                Inactive = false, 
+                LocalName = "שגב-שלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1287", 
+                SearchFields = "1287,שני", 
+                Inactive = false, 
+                LocalName = "שני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1288", 
+                SearchFields = "1288,גבעת אלה", 
+                Inactive = false, 
+                LocalName = "גבעת אלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1290", 
+                SearchFields = "1290,זמר", 
+                Inactive = false, 
+                LocalName = "זמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1291", 
+                SearchFields = "1291,כמהין", 
+                Inactive = false, 
+                LocalName = "כמהין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1292", 
+                SearchFields = "1292,ג'דיידה-מכר", 
+                Inactive = false, 
+                LocalName = "ג'דיידה-מכר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1293", 
+                SearchFields = "1293,גבעת אבני", 
+                Inactive = false, 
+                LocalName = "גבעת אבני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1294", 
+                SearchFields = "1294,אור הגנוז", 
+                Inactive = false, 
+                LocalName = "אור הגנוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1295", 
+                SearchFields = "1295,יאנוח-ג'ת", 
+                Inactive = false, 
+                LocalName = "יאנוח-ג'ת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1296", 
+                SearchFields = "1296,כסרא-סמיע", 
+                Inactive = false, 
+                LocalName = "כסרא-סמיע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1297", 
+                SearchFields = "1297,כפר חנניה", 
+                Inactive = false, 
+                LocalName = "כפר חנניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1298", 
+                SearchFields = "1298,אתגר", 
+                Inactive = false, 
+                LocalName = "אתגר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1299", 
+                SearchFields = "1299,שעורים", 
+                Inactive = false, 
+                LocalName = "שעורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,חצבה", 
+                Inactive = false, 
+                LocalName = "חצבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "130", 
+                SearchFields = "130,משמר העמק", 
+                Inactive = false, 
+                LocalName = "משמר העמק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1303", 
+                SearchFields = "1303,חורה", 
+                Inactive = false, 
+                LocalName = "חורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1304", 
+                SearchFields = "1304,שוהם", 
+                Inactive = false, 
+                LocalName = "שוהם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1306", 
+                EnglishName = "??? ????", 
+                SearchFields = "1306,צור יגאל", 
+                Inactive = false, 
+                LocalName = "צור יגאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1308", 
+                EnglishName = "??? <1308> - ?? ????", 
+                SearchFields = "1308,קוד <1308> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <1308> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1309", 
+                SearchFields = "1309,אלעד", 
+                Inactive = false, 
+                LocalName = "אלעד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1310", 
+                SearchFields = "1310,לפיד", 
+                Inactive = false, 
+                LocalName = "לפיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1311", 
+                SearchFields = "1311,אבשלום", 
+                Inactive = false, 
+                LocalName = "אבשלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1313", 
+                SearchFields = "1313,פורייה עילית", 
+                Inactive = false, 
+                LocalName = "פורייה עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1314", 
+                SearchFields = "1314,נווה זיו", 
+                Inactive = false, 
+                LocalName = "נווה זיו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1315", 
+                SearchFields = "1315,מתן", 
+                Inactive = false, 
+                LocalName = "מתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1316", 
+                SearchFields = "1316,אל -עריאן", 
+                Inactive = false, 
+                LocalName = "אל -עריאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1317", 
+                SearchFields = "1317,דמיידה", 
+                Inactive = false, 
+                LocalName = "דמיידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1318", 
+                SearchFields = "1318,מבואות ים", 
+                Inactive = false, 
+                LocalName = "מבואות ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1319", 
+                SearchFields = "1319,בת חפר", 
+                Inactive = false, 
+                LocalName = "בת חפר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "132", 
+                SearchFields = "132,כפר ברוך", 
+                Inactive = false, 
+                LocalName = "כפר ברוך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1320", 
+                SearchFields = "1320,עין חוד", 
+                Inactive = false, 
+                LocalName = "עין חוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1321", 
+                SearchFields = "1321,ח'ואלד", 
+                Inactive = false, 
+                LocalName = "ח'ואלד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1322", 
+                SearchFields = "1322,הודיות", 
+                Inactive = false, 
+                LocalName = "הודיות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1323", 
+                SearchFields = "1323,בת הדר", 
+                Inactive = false, 
+                LocalName = "בת הדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1324", 
+                SearchFields = "1324,ארסוף", 
+                Inactive = false, 
+                LocalName = "ארסוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1325", 
+                SearchFields = "1325,כפר זוהרים", 
+                Inactive = false, 
+                LocalName = "כפר זוהרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1326", 
+                SearchFields = "1326,בסמה", 
+                Inactive = false, 
+                LocalName = "בסמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1327", 
+                SearchFields = "1327,מעלה עירון", 
+                Inactive = false, 
+                LocalName = "מעלה עירון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "133", 
+                SearchFields = "133,גבת", 
+                Inactive = false, 
+                LocalName = "גבת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1330", 
+                SearchFields = "1330,אחוזת ברק", 
+                Inactive = false, 
+                LocalName = "אחוזת ברק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1331", 
+                SearchFields = "1331,כמאנה", 
+                Inactive = false, 
+                LocalName = "כמאנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1332", 
+                SearchFields = "1332,חוסנייה", 
+                Inactive = false, 
+                LocalName = "חוסנייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1333", 
+                SearchFields = "1333,נוף איילון", 
+                Inactive = false, 
+                LocalName = "נוף איילון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1334", 
+                SearchFields = "1334,ראס אל-עין", 
+                Inactive = false, 
+                LocalName = "ראס אל-עין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1335", 
+                SearchFields = "1335,ערב אל נעים", 
+                Inactive = false, 
+                LocalName = "ערב אל נעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1336", 
+                EnglishName = "?????", 
+                SearchFields = "1336,אירוס", 
+                Inactive = false, 
+                LocalName = "אירוס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1337", 
+                SearchFields = "1337,שמשית", 
+                Inactive = false, 
+                LocalName = "שמשית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1338", 
+                EnglishName = "?????", 
+                SearchFields = "1338,כדיתה", 
+                Inactive = false, 
+                LocalName = "כדיתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1339", 
+                SearchFields = "1339,אל -עזי", 
+                Inactive = false, 
+                LocalName = "אל -עזי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "134", 
+                SearchFields = "134,יפעת", 
+                Inactive = false, 
+                LocalName = "יפעת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1340", 
+                SearchFields = "1340,מרחב עם", 
+                Inactive = false, 
+                LocalName = "מרחב עם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1342", 
+                SearchFields = "1342,אבו קורינאת (יישוב)", 
+                Inactive = false, 
+                LocalName = "אבו קורינאת (יישוב)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1343", 
+                SearchFields = "1343,מכחול", 
+                Inactive = false, 
+                LocalName = "מכחול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1344", 
+                SearchFields = "1344,גבעות בר", 
+                Inactive = false, 
+                LocalName = "גבעות בר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1345", 
+                SearchFields = "1345,צור יצחק", 
+                Inactive = false, 
+                LocalName = "צור יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1346", 
+                SearchFields = "1346,תרבין א-צאנע (יישוב)", 
+                Inactive = false, 
+                LocalName = "תרבין א-צאנע (יישוב)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1347", 
+                SearchFields = "1347,קצר א-סר", 
+                Inactive = false, 
+                LocalName = "קצר א-סר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1348", 
+                SearchFields = "1348,ביר הדאג'", 
+                Inactive = false, 
+                LocalName = "ביר הדאג'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1349", 
+                SearchFields = "1349,דריג'את", 
+                Inactive = false, 
+                LocalName = "דריג'את", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "135", 
+                SearchFields = "135,רמת דוד", 
+                Inactive = false, 
+                LocalName = "רמת דוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1357", 
+                EnglishName = "??? <1357> - ?? ????", 
+                SearchFields = "1357,קוד <1357> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <1357> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1358", 
+                SearchFields = "1358,אום בטין", 
+                Inactive = false, 
+                LocalName = "אום בטין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1359", 
+                SearchFields = "1359,אל סייד", 
+                Inactive = false, 
+                LocalName = "אל סייד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1360", 
+                SearchFields = "1360,מולדה", 
+                Inactive = false, 
+                LocalName = "מולדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1361", 
+                SearchFields = "1361,בת חן", 
+                Inactive = false, 
+                LocalName = "בת חן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1363", 
+                EnglishName = "??? ?????", 
+                SearchFields = "1363,בני נצרים", 
+                Inactive = false, 
+                LocalName = "בני נצרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1365", 
+                EnglishName = "?????", 
+                SearchFields = "1365,אליאב", 
+                Inactive = false, 
+                LocalName = "אליאב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1366", 
+                EnglishName = "????", 
+                SearchFields = "1366,נווה", 
+                Inactive = false, 
+                LocalName = "נווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1367", 
+                SearchFields = "1367,כחלה", 
+                Inactive = false, 
+                LocalName = "כחלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1368", 
+                EnglishName = "??? ?????", 
+                SearchFields = "1368,בני דקלים", 
+                Inactive = false, 
+                LocalName = "בני דקלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1372", 
+                EnglishName = "??? ????", 
+                SearchFields = "1372,נצר חזני", 
+                Inactive = false, 
+                LocalName = "נצר חזני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1376", 
+                EnglishName = "??? ????", 
+                SearchFields = "1376,באר גנים", 
+                Inactive = false, 
+                LocalName = "באר גנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "139", 
+                SearchFields = "139,עין שמר", 
+                Inactive = false, 
+                LocalName = "עין שמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "140", 
+                SearchFields = "140,כפר יהושע", 
+                Inactive = false, 
+                LocalName = "כפר יהושע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1401", 
+                SearchFields = "1401,בת חצור", 
+                Inactive = false, 
+                LocalName = "בת חצור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1402", 
+                SearchFields = "1402,חצרות חולדה", 
+                Inactive = false, 
+                LocalName = "חצרות חולדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1404", 
+                SearchFields = "1404,חצרות יסף", 
+                Inactive = false, 
+                LocalName = "חצרות יסף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1405", 
+                SearchFields = "1405,חצרות כ''ח", 
+                Inactive = false, 
+                LocalName = "חצרות כ''ח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1409", 
+                SearchFields = "1409,חצר בארותיים", 
+                Inactive = false, 
+                LocalName = "חצר בארותיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "141", 
+                SearchFields = "141,ברק", 
+                Inactive = false, 
+                LocalName = "ברק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1411", 
+                SearchFields = "1411,מחנה הילה", 
+                Inactive = false, 
+                LocalName = "מחנה הילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1412", 
+                SearchFields = "1412,מחנה תל נוף", 
+                Inactive = false, 
+                LocalName = "מחנה תל נוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1413", 
+                SearchFields = "1413,מחנה יהודית", 
+                Inactive = false, 
+                LocalName = "מחנה יהודית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1414", 
+                SearchFields = "1414,מחנה מרים", 
+                Inactive = false, 
+                LocalName = "מחנה מרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1415", 
+                SearchFields = "1415,מחנה יפה", 
+                Inactive = false, 
+                LocalName = "מחנה יפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1416", 
+                SearchFields = "1416,מחנה יוכבד", 
+                Inactive = false, 
+                LocalName = "מחנה יוכבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1417", 
+                SearchFields = "1417,מחנה עדי", 
+                Inactive = false, 
+                LocalName = "מחנה עדי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1418", 
+                SearchFields = "1418,מחנה טלי", 
+                Inactive = false, 
+                LocalName = "מחנה טלי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1419", 
+                SearchFields = "1419,ניצן ב'", 
+                Inactive = false, 
+                LocalName = "ניצן ב'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "142", 
+                SearchFields = "142,שדה יעקב", 
+                Inactive = false, 
+                LocalName = "שדה יעקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "143", 
+                SearchFields = "143,בית זרע", 
+                Inactive = false, 
+                LocalName = "בית זרע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "144", 
+                SearchFields = "144,גן שלמה", 
+                Inactive = false, 
+                LocalName = "גן שלמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "145", 
+                SearchFields = "145,גדיש", 
+                Inactive = false, 
+                LocalName = "גדיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "146", 
+                SearchFields = "146,דבורה", 
+                Inactive = false, 
+                LocalName = "דבורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "147", 
+                SearchFields = "147,גבעת ברנר", 
+                Inactive = false, 
+                LocalName = "גבעת ברנר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,נועם", 
+                Inactive = false, 
+                LocalName = "נועם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "154", 
+                SearchFields = "154,תל מונד", 
+                Inactive = false, 
+                LocalName = "תל מונד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "155", 
+                SearchFields = "155,באר טוביה", 
+                Inactive = false, 
+                LocalName = "באר טוביה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "156", 
+                SearchFields = "156,עיינות", 
+                Inactive = false, 
+                LocalName = "עיינות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "157", 
+                SearchFields = "157,עין ורד", 
+                Inactive = false, 
+                LocalName = "עין ורד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "158", 
+                SearchFields = "158,נען", 
+                Inactive = false, 
+                LocalName = "נען", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "159", 
+                SearchFields = "159,בית חנן", 
+                Inactive = false, 
+                LocalName = "בית חנן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,בית ניר", 
+                Inactive = false, 
+                LocalName = "בית ניר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "160", 
+                SearchFields = "160,חולדה", 
+                Inactive = false, 
+                LocalName = "חולדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "162", 
+                SearchFields = "162,חירות", 
+                Inactive = false, 
+                LocalName = "חירות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "163", 
+                SearchFields = "163,תימורים", 
+                Inactive = false, 
+                LocalName = "תימורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "164", 
+                SearchFields = "164,מלאה", 
+                Inactive = false, 
+                LocalName = "מלאה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "165", 
+                SearchFields = "165,ניר יפה", 
+                Inactive = false, 
+                LocalName = "ניר יפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "166", 
+                SearchFields = "166,גן יבנה", 
+                Inactive = false, 
+                LocalName = "גן יבנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "167", 
+                SearchFields = "167,עין החורש", 
+                Inactive = false, 
+                LocalName = "עין החורש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "168", 
+                SearchFields = "168,כפר יונה", 
+                Inactive = false, 
+                LocalName = "כפר יונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "170", 
+                SearchFields = "170,כפר יעבץ", 
+                Inactive = false, 
+                LocalName = "כפר יעבץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1701", 
+                SearchFields = "1701,מפעלי הר טוב", 
+                Inactive = false, 
+                LocalName = "מפעלי הר טוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1702", 
+                SearchFields = "1702,נווה אילן (אזור תעסוקה)", 
+                Inactive = false, 
+                LocalName = "נווה אילן (אזור תעסוקה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1705", 
+                SearchFields = "1705,מרכז כח", 
+                Inactive = false, 
+                LocalName = "מרכז כח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1706", 
+                SearchFields = "1706,מפעלי גליל עליון", 
+                Inactive = false, 
+                LocalName = "מפעלי גליל עליון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1707", 
+                SearchFields = "1707,תל-חי", 
+                Inactive = false, 
+                LocalName = "תל-חי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1708", 
+                SearchFields = "1708,מרכז אזורי מרום הגליל", 
+                Inactive = false, 
+                LocalName = "מרכז אזורי מרום הגליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1709", 
+                SearchFields = "1709,תעשיון דלתון", 
+                Inactive = false, 
+                LocalName = "תעשיון דלתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "171", 
+                SearchFields = "171,פרדסייה", 
+                Inactive = false, 
+                LocalName = "פרדסייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1711", 
+                SearchFields = "1711,מפעלי צמח", 
+                Inactive = false, 
+                LocalName = "מפעלי צמח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1712", 
+                SearchFields = "1712,בית חולים פוריה", 
+                Inactive = false, 
+                LocalName = "בית חולים פוריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1713", 
+                SearchFields = "1713,מרכז אזורי כדורי", 
+                Inactive = false, 
+                LocalName = "מרכז אזורי כדורי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1714", 
+                SearchFields = "1714,תעשיון גליל תחתון", 
+                Inactive = false, 
+                LocalName = "תעשיון גליל תחתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1715", 
+                SearchFields = "1715,מרכז מירב", 
+                Inactive = false, 
+                LocalName = "מרכז מירב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1716", 
+                SearchFields = "1716,אילון תבור", 
+                Inactive = false, 
+                LocalName = "אילון תבור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1717", 
+                SearchFields = "1717,מפעלי יזרעאל (העמק)", 
+                Inactive = false, 
+                LocalName = "מפעלי יזרעאל (העמק)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1719", 
+                SearchFields = "1719,מפעלי שאן", 
+                Inactive = false, 
+                LocalName = "מפעלי שאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1722", 
+                SearchFields = "1722,מגדל תפן", 
+                Inactive = false, 
+                LocalName = "מגדל תפן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1723", 
+                SearchFields = "1723,מרכז אזורי משגב", 
+                Inactive = false, 
+                LocalName = "מרכז אזורי משגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1724", 
+                SearchFields = "1724,אזור תעסוקה משגב", 
+                Inactive = false, 
+                LocalName = "אזור תעסוקה משגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1725", 
+                SearchFields = "1725,ביס אזורי מקיף (אשר)", 
+                Inactive = false, 
+                LocalName = "ביס אזורי מקיף (אשר)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1726", 
+                SearchFields = "1726,אזור תעשייה אכזיב (מילואות)", 
+                Inactive = false, 
+                LocalName = "אזור תעשייה אכזיב (מילואות)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1727", 
+                SearchFields = "1727,אזור תעשייה נעמן (מילואות)", 
+                Inactive = false, 
+                LocalName = "אזור תעשייה נעמן (מילואות)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1728", 
+                SearchFields = "1728,תעשיון בר-לב", 
+                Inactive = false, 
+                LocalName = "תעשיון בר-לב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1729", 
+                SearchFields = "1729,פארק תעשיה חבל מודיעים", 
+                Inactive = false, 
+                LocalName = "פארק תעשיה חבל מודיעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "173", 
+                SearchFields = "173,גבעת חיים (מאוחד)", 
+                Inactive = false, 
+                LocalName = "גבעת חיים (מאוחד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1736", 
+                SearchFields = "1736,בתי זיקוק - קישון", 
+                Inactive = false, 
+                LocalName = "בתי זיקוק - קישון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1739", 
+                SearchFields = "1739,מפעלי גרנות", 
+                Inactive = false, 
+                LocalName = "מפעלי גרנות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "174", 
+                SearchFields = "174,נטעים", 
+                Inactive = false, 
+                LocalName = "נטעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1740", 
+                SearchFields = "1740,גבעת חביבה", 
+                Inactive = false, 
+                LocalName = "גבעת חביבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1741", 
+                SearchFields = "1741,תעשיון השרון", 
+                Inactive = false, 
+                LocalName = "תעשיון השרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1742", 
+                SearchFields = "1742,תעשיון חצב", 
+                Inactive = false, 
+                LocalName = "תעשיון חצב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1744", 
+                SearchFields = "1744,תעשיון בינימין", 
+                Inactive = false, 
+                LocalName = "תעשיון בינימין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1745", 
+                SearchFields = "1745,מפעלי חפר", 
+                Inactive = false, 
+                LocalName = "מפעלי חפר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1746", 
+                SearchFields = "1746,קרית תעופה", 
+                Inactive = false, 
+                LocalName = "קרית תעופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1747", 
+                SearchFields = "1747,מרכז שוהם", 
+                Inactive = false, 
+                LocalName = "מרכז שוהם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1748", 
+                SearchFields = "1748,נמל תעופה בן-גוריון", 
+                Inactive = false, 
+                LocalName = "נמל תעופה בן-גוריון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1749", 
+                SearchFields = "1749,תעשיון צריפין", 
+                Inactive = false, 
+                LocalName = "תעשיון צריפין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "175", 
+                SearchFields = "175,אביחיל", 
+                Inactive = false, 
+                LocalName = "אביחיל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1750", 
+                SearchFields = "1750,תעשיון חוף יבנה", 
+                Inactive = false, 
+                LocalName = "תעשיון חוף יבנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1751", 
+                SearchFields = "1751,המרכז למחקר-נחל שורק", 
+                Inactive = false, 
+                LocalName = "המרכז למחקר-נחל שורק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1753", 
+                SearchFields = "1753,מפעלי כנות", 
+                Inactive = false, 
+                LocalName = "מפעלי כנות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1754", 
+                SearchFields = "1754,תעשיון מבצע", 
+                Inactive = false, 
+                LocalName = "תעשיון מבצע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1755", 
+                SearchFields = "1755,תעשיון ראם", 
+                Inactive = false, 
+                LocalName = "תעשיון ראם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "176", 
+                SearchFields = "176,אפיקים", 
+                Inactive = false, 
+                LocalName = "אפיקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1761", 
+                SearchFields = "1761,מפעלי צומת מלאכי", 
+                Inactive = false, 
+                LocalName = "מפעלי צומת מלאכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1762", 
+                SearchFields = "1762,עד הלום", 
+                Inactive = false, 
+                LocalName = "עד הלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1763", 
+                SearchFields = "1763,תעשיות ספירים", 
+                Inactive = false, 
+                LocalName = "תעשיות ספירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1766", 
+                SearchFields = "1766,קרית חינוך עזתה", 
+                Inactive = false, 
+                LocalName = "קרית חינוך עזתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1767", 
+                SearchFields = "1767,מפעלי אבשלום", 
+                Inactive = false, 
+                LocalName = "מפעלי אבשלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1768", 
+                SearchFields = "1768,קריית חינוך מרחבים", 
+                Inactive = false, 
+                LocalName = "קריית חינוך מרחבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1769", 
+                SearchFields = "1769,מפעלי מעון", 
+                Inactive = false, 
+                LocalName = "מפעלי מעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "177", 
+                SearchFields = "177,כפר בילו", 
+                Inactive = false, 
+                LocalName = "כפר בילו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1770", 
+                SearchFields = "1770,רמת חובב", 
+                Inactive = false, 
+                LocalName = "רמת חובב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1771", 
+                SearchFields = "1771,אורון", 
+                Inactive = false, 
+                LocalName = "אורון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1772", 
+                SearchFields = "1772,ים המלח - בתי מלון", 
+                Inactive = false, 
+                LocalName = "ים המלח - בתי מלון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1773", 
+                SearchFields = "1773,מפעלי רותם", 
+                Inactive = false, 
+                LocalName = "מפעלי רותם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1775", 
+                SearchFields = "1775,מפעלי ים המלח(סדום)", 
+                Inactive = false, 
+                LocalName = "מפעלי ים המלח(סדום)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1776", 
+                SearchFields = "1776,מפעלי צין - ערבה", 
+                Inactive = false, 
+                LocalName = "מפעלי צין - ערבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "178", 
+                SearchFields = "178,רמת יוחנן", 
+                Inactive = false, 
+                LocalName = "רמת יוחנן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1791", 
+                SearchFields = "1791,מפעלי ברקן", 
+                Inactive = false, 
+                LocalName = "מפעלי ברקן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1792", 
+                SearchFields = "1792,תעשיון שחק", 
+                Inactive = false, 
+                LocalName = "תעשיון שחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1793", 
+                SearchFields = "1793,שלומציון", 
+                Inactive = false, 
+                LocalName = "שלומציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1794", 
+                SearchFields = "1794,אזור תעסוקה מיתרים", 
+                Inactive = false, 
+                LocalName = "אזור תעסוקה מיתרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,שדה משה", 
+                Inactive = false, 
+                LocalName = "שדה משה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "182", 
+                SearchFields = "182,אבן יהודה", 
+                Inactive = false, 
+                LocalName = "אבן יהודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "183", 
+                SearchFields = "183,ירקונה", 
+                Inactive = false, 
+                LocalName = "ירקונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "184", 
+                SearchFields = "184,רמת הכובש", 
+                Inactive = false, 
+                LocalName = "רמת הכובש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "186", 
+                SearchFields = "186,נעורים", 
+                Inactive = false, 
+                LocalName = "נעורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "1864", 
+                EnglishName = "??? <1864> - ?? ????", 
+                SearchFields = "1864,קוד <1864> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <1864> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "187", 
+                SearchFields = "187,כפר הס", 
+                Inactive = false, 
+                LocalName = "כפר הס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "188", 
+                SearchFields = "188,אשדות יעקב (מאוחד)", 
+                Inactive = false, 
+                LocalName = "אשדות יעקב (מאוחד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "189", 
+                SearchFields = "189,כפר פינס", 
+                Inactive = false, 
+                LocalName = "כפר פינס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "190", 
+                SearchFields = "190,כפר ויתקין", 
+                Inactive = false, 
+                LocalName = "כפר ויתקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "191", 
+                SearchFields = "191,הדר עם", 
+                Inactive = false, 
+                LocalName = "הדר עם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "192", 
+                SearchFields = "192,כפר החורש", 
+                Inactive = false, 
+                LocalName = "כפר החורש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "193", 
+                SearchFields = "193,כפר חיים", 
+                Inactive = false, 
+                LocalName = "כפר חיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "194", 
+                SearchFields = "194,משמר השרון", 
+                Inactive = false, 
+                LocalName = "משמר השרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "195", 
+                SearchFields = "195,קדימה-צורן", 
+                Inactive = false, 
+                LocalName = "קדימה-צורן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "196", 
+                SearchFields = "196,גיבתון", 
+                Inactive = false, 
+                LocalName = "גיבתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "197", 
+                SearchFields = "197,מעברות", 
+                Inactive = false, 
+                LocalName = "מעברות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "198", 
+                SearchFields = "198,צופית", 
+                Inactive = false, 
+                LocalName = "צופית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "199", 
+                SearchFields = "199,אשדות יעקב (איחוד)", 
+                Inactive = false, 
+                LocalName = "אשדות יעקב (איחוד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "200", 
+                SearchFields = "200,בית ינאי", 
+                Inactive = false, 
+                LocalName = "בית ינאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2002", 
+                SearchFields = "2002,תנובות", 
+                Inactive = false, 
+                LocalName = "תנובות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2003", 
+                SearchFields = "2003,תלמי אלעזר", 
+                Inactive = false, 
+                LocalName = "תלמי אלעזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2006", 
+                SearchFields = "2006,כנות", 
+                Inactive = false, 
+                LocalName = "כנות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2008", 
+                SearchFields = "2008,שדה יצחק", 
+                Inactive = false, 
+                LocalName = "שדה יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2009", 
+                SearchFields = "2009,יובל", 
+                Inactive = false, 
+                LocalName = "יובל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2010", 
+                SearchFields = "2010,כפר בן נון", 
+                Inactive = false, 
+                LocalName = "כפר בן נון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2011", 
+                SearchFields = "2011,ינון", 
+                Inactive = false, 
+                LocalName = "ינון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2012", 
+                SearchFields = "2012,אורות", 
+                Inactive = false, 
+                LocalName = "אורות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2013", 
+                SearchFields = "2013,בן שמן (מושב)", 
+                Inactive = false, 
+                LocalName = "בן שמן (מושב)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2014", 
+                SearchFields = "2014,גבעולים", 
+                Inactive = false, 
+                LocalName = "גבעולים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2015", 
+                SearchFields = "2015,שדי חמד", 
+                Inactive = false, 
+                LocalName = "שדי חמד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2016", 
+                SearchFields = "2016,רוויה", 
+                Inactive = false, 
+                LocalName = "רוויה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2018", 
+                SearchFields = "2018,גבעת חיים (איחוד)", 
+                Inactive = false, 
+                LocalName = "גבעת חיים (איחוד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "202", 
+                SearchFields = "202,בית עובד", 
+                Inactive = false, 
+                LocalName = "בית עובד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2021", 
+                SearchFields = "2021,אשל הנשיא", 
+                Inactive = false, 
+                LocalName = "אשל הנשיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2023", 
+                SearchFields = "2023,להב", 
+                Inactive = false, 
+                LocalName = "להב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2024", 
+                SearchFields = "2024,אום אל-קוטוף", 
+                Inactive = false, 
+                LocalName = "אום אל-קוטוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2026", 
+                SearchFields = "2026,ירדנה", 
+                Inactive = false, 
+                LocalName = "ירדנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2029", 
+                SearchFields = "2029,מדרך עוז", 
+                Inactive = false, 
+                LocalName = "מדרך עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2030", 
+                SearchFields = "2030,מנוחה", 
+                Inactive = false, 
+                LocalName = "מנוחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2033", 
+                SearchFields = "2033,בית חלקיה", 
+                Inactive = false, 
+                LocalName = "בית חלקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2034", 
+                SearchFields = "2034,חצור הגלילית", 
+                Inactive = false, 
+                LocalName = "חצור הגלילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2035", 
+                SearchFields = "2035,עדנים", 
+                Inactive = false, 
+                LocalName = "עדנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2038", 
+                SearchFields = "2038,ברקת", 
+                Inactive = false, 
+                LocalName = "ברקת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2039", 
+                SearchFields = "2039,קריית יערים (מוסד)", 
+                Inactive = false, 
+                LocalName = "קריית יערים (מוסד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "204", 
+                SearchFields = "204,אלישיב", 
+                Inactive = false, 
+                LocalName = "אלישיב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2042", 
+                SearchFields = "2042,עין גדי", 
+                Inactive = false, 
+                LocalName = "עין גדי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2043", 
+                SearchFields = "2043,בחן", 
+                Inactive = false, 
+                LocalName = "בחן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2044", 
+                SearchFields = "2044,מלילות", 
+                Inactive = false, 
+                LocalName = "מלילות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2045", 
+                SearchFields = "2045,נחלה", 
+                Inactive = false, 
+                LocalName = "נחלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2046", 
+                SearchFields = "2046,סגולה", 
+                Inactive = false, 
+                LocalName = "סגולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2047", 
+                SearchFields = "2047,ניר משה", 
+                Inactive = false, 
+                LocalName = "ניר משה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2048", 
+                SearchFields = "2048,ניר עקיבא", 
+                Inactive = false, 
+                LocalName = "ניר עקיבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2049", 
+                SearchFields = "2049,שדה צבי", 
+                Inactive = false, 
+                LocalName = "שדה צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "205", 
+                SearchFields = "205,חגלה", 
+                Inactive = false, 
+                LocalName = "חגלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2050", 
+                SearchFields = "2050,תלמי בילו", 
+                Inactive = false, 
+                LocalName = "תלמי בילו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2051", 
+                SearchFields = "2051,רווחה", 
+                Inactive = false, 
+                LocalName = "רווחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2052", 
+                SearchFields = "2052,אביטל", 
+                Inactive = false, 
+                LocalName = "אביטל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2053", 
+                SearchFields = "2053,פרזון", 
+                Inactive = false, 
+                LocalName = "פרזון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2054", 
+                SearchFields = "2054,מיטב", 
+                Inactive = false, 
+                LocalName = "מיטב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2055", 
+                SearchFields = "2055,מאור", 
+                Inactive = false, 
+                LocalName = "מאור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2057", 
+                SearchFields = "2057,שדי תרומות", 
+                Inactive = false, 
+                LocalName = "שדי תרומות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2059", 
+                SearchFields = "2059,פעמי תשז", 
+                Inactive = false, 
+                LocalName = "פעמי תשז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "206", 
+                SearchFields = "206,רמות השבים", 
+                Inactive = false, 
+                LocalName = "רמות השבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2060", 
+                SearchFields = "2060,ברוש", 
+                Inactive = false, 
+                LocalName = "ברוש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2061", 
+                SearchFields = "2061,תדהר", 
+                Inactive = false, 
+                LocalName = "תדהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2062", 
+                SearchFields = "2062,תאשור", 
+                Inactive = false, 
+                LocalName = "תאשור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2063", 
+                SearchFields = "2063,דישון", 
+                Inactive = false, 
+                LocalName = "דישון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2064", 
+                SearchFields = "2064,זרועה", 
+                Inactive = false, 
+                LocalName = "זרועה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "207", 
+                SearchFields = "207,גבעת חן", 
+                Inactive = false, 
+                LocalName = "גבעת חן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "208", 
+                SearchFields = "208,מוצא עילית", 
+                Inactive = false, 
+                LocalName = "מוצא עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,באר אורה", 
+                Inactive = false, 
+                LocalName = "באר אורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2100", 
+                SearchFields = "2100,טירת כרמל", 
+                Inactive = false, 
+                LocalName = "טירת כרמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "212", 
+                SearchFields = "212,בית צבי", 
+                Inactive = false, 
+                LocalName = "בית צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "213", 
+                SearchFields = "213,משמרות", 
+                Inactive = false, 
+                LocalName = "משמרות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "217", 
+                SearchFields = "217,כפר הראה", 
+                Inactive = false, 
+                LocalName = "כפר הראה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "218", 
+                SearchFields = "218,גני עם", 
+                Inactive = false, 
+                LocalName = "גני עם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "219", 
+                SearchFields = "219,חיבת ציון", 
+                Inactive = false, 
+                LocalName = "חיבת ציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,מקווה ישראל", 
+                Inactive = false, 
+                LocalName = "מקווה ישראל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "220", 
+                SearchFields = "220,כפר ביאליק", 
+                Inactive = false, 
+                LocalName = "כפר ביאליק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2200", 
+                SearchFields = "2200,דימונה", 
+                Inactive = false, 
+                LocalName = "דימונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "223", 
+                SearchFields = "223,עין עירון", 
+                Inactive = false, 
+                LocalName = "עין עירון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "224", 
+                SearchFields = "224,שושנת העמקים", 
+                Inactive = false, 
+                LocalName = "שושנת העמקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "225", 
+                SearchFields = "225,גן השומרון", 
+                Inactive = false, 
+                LocalName = "גן השומרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "229", 
+                SearchFields = "229,גני תקווה", 
+                Inactive = false, 
+                LocalName = "גני תקווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,אמציה", 
+                Inactive = false, 
+                LocalName = "אמציה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "230", 
+                SearchFields = "230,מעש", 
+                Inactive = false, 
+                LocalName = "מעש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2300", 
+                SearchFields = "2300,קריית טבעון", 
+                Inactive = false, 
+                LocalName = "קריית טבעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "232", 
+                SearchFields = "232,שפיים", 
+                Inactive = false, 
+                LocalName = "שפיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "233", 
+                SearchFields = "233,כפר ידידיה", 
+                Inactive = false, 
+                LocalName = "כפר ידידיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "234", 
+                SearchFields = "234,ביצרון", 
+                Inactive = false, 
+                LocalName = "ביצרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "235", 
+                SearchFields = "235,חבצלת השרון", 
+                Inactive = false, 
+                LocalName = "חבצלת השרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "237", 
+                SearchFields = "237,שער העמקים", 
+                Inactive = false, 
+                LocalName = "שער העמקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "239", 
+                SearchFields = "239,גן חיים", 
+                Inactive = false, 
+                LocalName = "גן חיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,לכיש", 
+                Inactive = false, 
+                LocalName = "לכיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "240", 
+                SearchFields = "240,יקנעם עילית", 
+                Inactive = false, 
+                LocalName = "יקנעם עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2400", 
+                SearchFields = "2400,אור יהודה", 
+                Inactive = false, 
+                LocalName = "אור יהודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "241", 
+                SearchFields = "241,יקנעם (מושבה)", 
+                Inactive = false, 
+                LocalName = "יקנעם (מושבה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "242", 
+                SearchFields = "242,בית השיטה", 
+                Inactive = false, 
+                LocalName = "בית השיטה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "246", 
+                SearchFields = "246,נתיבות", 
+                Inactive = false, 
+                LocalName = "נתיבות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "247", 
+                SearchFields = "247,רשפון", 
+                Inactive = false, 
+                LocalName = "רשפון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "248", 
+                SearchFields = "248,בית שערים", 
+                Inactive = false, 
+                LocalName = "בית שערים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "249", 
+                SearchFields = "249,כפר סירקין", 
+                Inactive = false, 
+                LocalName = "כפר סירקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "250", 
+                SearchFields = "250,הזורע", 
+                Inactive = false, 
+                LocalName = "הזורע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2500", 
+                SearchFields = "2500,נשר", 
+                Inactive = false, 
+                LocalName = "נשר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "252", 
+                SearchFields = "252,ביתן אהרן", 
+                Inactive = false, 
+                LocalName = "ביתן אהרן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "253", 
+                SearchFields = "253,חולתה", 
+                Inactive = false, 
+                LocalName = "חולתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2530", 
+                SearchFields = "2530,באר יעקב", 
+                Inactive = false, 
+                LocalName = "באר יעקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "254", 
+                SearchFields = "254,כפר המכבי", 
+                Inactive = false, 
+                LocalName = "כפר המכבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "255", 
+                SearchFields = "255,כפר חיטים", 
+                Inactive = false, 
+                LocalName = "כפר חיטים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2550", 
+                SearchFields = "2550,גדרה", 
+                Inactive = false, 
+                LocalName = "גדרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "256", 
+                SearchFields = "256,ניר דוד (תל עמל)", 
+                Inactive = false, 
+                LocalName = "ניר דוד (תל עמל)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2560", 
+                SearchFields = "2560,ערד", 
+                Inactive = false, 
+                LocalName = "ערד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "257", 
+                SearchFields = "257,נופך", 
+                Inactive = false, 
+                LocalName = "נופך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "259", 
+                SearchFields = "259,שדה נחום", 
+                Inactive = false, 
+                LocalName = "שדה נחום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,ראש פינה", 
+                Inactive = false, 
+                LocalName = "ראש פינה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2600", 
+                SearchFields = "2600,אילת", 
+                Inactive = false, 
+                LocalName = "אילת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2610", 
+                SearchFields = "2610,בית שמש", 
+                Inactive = false, 
+                LocalName = "בית שמש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "262", 
+                SearchFields = "262,גינוסר", 
+                Inactive = false, 
+                LocalName = "גינוסר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2620", 
+                SearchFields = "2620,קריית אונו", 
+                Inactive = false, 
+                LocalName = "קריית אונו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "263", 
+                SearchFields = "263,מסדה", 
+                Inactive = false, 
+                LocalName = "מסדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2630", 
+                SearchFields = "2630,קריית גת", 
+                Inactive = false, 
+                LocalName = "קריית גת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "264", 
+                SearchFields = "264,שער הגולן", 
+                Inactive = false, 
+                LocalName = "שער הגולן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2640", 
+                SearchFields = "2640,ראש העין", 
+                Inactive = false, 
+                LocalName = "ראש העין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "265", 
+                SearchFields = "265,בית יוסף", 
+                Inactive = false, 
+                LocalName = "בית יוסף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2650", 
+                SearchFields = "2650,רמת השרון", 
+                Inactive = false, 
+                LocalName = "רמת השרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2660", 
+                SearchFields = "2660,יבנה", 
+                Inactive = false, 
+                LocalName = "יבנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "267", 
+                SearchFields = "267,כפר שמריהו", 
+                Inactive = false, 
+                LocalName = "כפר שמריהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "268", 
+                SearchFields = "268,טירת צבי", 
+                Inactive = false, 
+                LocalName = "טירת צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "269", 
+                SearchFields = "269,מולדת", 
+                Inactive = false, 
+                LocalName = "מולדת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "27", 
+                SearchFields = "27,שדות מיכה", 
+                Inactive = false, 
+                LocalName = "שדות מיכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "270", 
+                SearchFields = "270,עין השופט", 
+                Inactive = false, 
+                LocalName = "עין השופט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2710", 
+                SearchFields = "2710,אום אל-פחם", 
+                Inactive = false, 
+                LocalName = "אום אל-פחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "272", 
+                SearchFields = "272,מעוז חיים", 
+                Inactive = false, 
+                LocalName = "מעוז חיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2720", 
+                SearchFields = "2720,טירה", 
+                Inactive = false, 
+                LocalName = "טירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "273", 
+                SearchFields = "273,עין גב", 
+                Inactive = false, 
+                LocalName = "עין גב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2730", 
+                SearchFields = "2730,טייבה", 
+                Inactive = false, 
+                LocalName = "טייבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "274", 
+                SearchFields = "274,כפר מנחם", 
+                Inactive = false, 
+                LocalName = "כפר מנחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2742", 
+                SearchFields = "2742,זבארגה (שבט)", 
+                Inactive = false, 
+                LocalName = "זבארגה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "276", 
+                SearchFields = "276,צור משה", 
+                Inactive = false, 
+                LocalName = "צור משה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "278", 
+                SearchFields = "278,אושה", 
+                Inactive = false, 
+                LocalName = "אושה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "28", 
+                SearchFields = "28,מזכרת בתיה", 
+                Inactive = false, 
+                LocalName = "מזכרת בתיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "280", 
+                SearchFields = "280,חניתה", 
+                Inactive = false, 
+                LocalName = "חניתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "2800", 
+                SearchFields = "2800,קריית שמונה", 
+                Inactive = false, 
+                LocalName = "קריית שמונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "281", 
+                SearchFields = "281,פקיעין חדשה", 
+                Inactive = false, 
+                LocalName = "פקיעין חדשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "282", 
+                SearchFields = "282,שבי ציון", 
+                Inactive = false, 
+                LocalName = "שבי ציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "284", 
+                SearchFields = "284,שדה ורבורג", 
+                Inactive = false, 
+                LocalName = "שדה ורבורג", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "285", 
+                SearchFields = "285,אלונים", 
+                Inactive = false, 
+                LocalName = "אלונים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "286", 
+                SearchFields = "286,מעלה החמישה", 
+                Inactive = false, 
+                LocalName = "מעלה החמישה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "287", 
+                SearchFields = "287,תל יצחק", 
+                Inactive = false, 
+                LocalName = "תל יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "288", 
+                SearchFields = "288,בית יהושע", 
+                Inactive = false, 
+                LocalName = "בית יהושע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "289", 
+                SearchFields = "289,עין המפרץ", 
+                Inactive = false, 
+                LocalName = "עין המפרץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "29", 
+                SearchFields = "29,יסוד המעלה", 
+                Inactive = false, 
+                LocalName = "יסוד המעלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "290", 
+                SearchFields = "290,מעיין צבי", 
+                Inactive = false, 
+                LocalName = "מעיין צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "292", 
+                SearchFields = "292,שרונה", 
+                Inactive = false, 
+                LocalName = "שרונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "293", 
+                SearchFields = "293,שדה יואב", 
+                Inactive = false, 
+                LocalName = "שדה יואב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "294", 
+                SearchFields = "294,אילון", 
+                Inactive = false, 
+                LocalName = "אילון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "295", 
+                SearchFields = "295,כפר רופין", 
+                Inactive = false, 
+                LocalName = "כפר רופין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "296", 
+                SearchFields = "296,נווה איתן", 
+                Inactive = false, 
+                LocalName = "נווה איתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "297", 
+                SearchFields = "297,כפר מסריק", 
+                Inactive = false, 
+                LocalName = "כפר מסריק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "298", 
+                SearchFields = "298,מסילות", 
+                Inactive = false, 
+                LocalName = "מסילות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "300", 
+                SearchFields = "300,דלייה", 
+                Inactive = false, 
+                LocalName = "דלייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3000", 
+                SearchFields = "3000,ירושלים", 
+                Inactive = false, 
+                LocalName = "ירושלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3001", 
+                SearchFields = "3001,אבו דיס", 
+                Inactive = false, 
+                LocalName = "אבו דיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3002", 
+                SearchFields = "3002,אבו קש", 
+                Inactive = false, 
+                LocalName = "אבו קש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3003", 
+                SearchFields = "3003,אבו שחידם", 
+                Inactive = false, 
+                LocalName = "אבו שחידם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3004", 
+                SearchFields = "3004,אג'נסניא", 
+                Inactive = false, 
+                LocalName = "אג'נסניא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3005", 
+                SearchFields = "3005,אדנה", 
+                Inactive = false, 
+                LocalName = "אדנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3006", 
+                SearchFields = "3006,אודלה", 
+                Inactive = false, 
+                LocalName = "אודלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3007", 
+                SearchFields = "3007,אכתאבא", 
+                Inactive = false, 
+                LocalName = "אכתאבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3008", 
+                SearchFields = "3008,אם א טלע", 
+                Inactive = false, 
+                LocalName = "אם א טלע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3009", 
+                SearchFields = "3009,אום אל תות", 
+                Inactive = false, 
+                LocalName = "אום אל תות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "301", 
+                SearchFields = "301,בית עוזיאל", 
+                Inactive = false, 
+                LocalName = "בית עוזיאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3010", 
+                SearchFields = "3010,אם סלמונה", 
+                Inactive = false, 
+                LocalName = "אם סלמונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3011", 
+                SearchFields = "3011,אם עלאס", 
+                Inactive = false, 
+                LocalName = "אם עלאס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3012", 
+                SearchFields = "3012,אם עסלה", 
+                Inactive = false, 
+                LocalName = "אם עסלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3013", 
+                SearchFields = "3013,אם צפא", 
+                Inactive = false, 
+                LocalName = "אם צפא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3014", 
+                SearchFields = "3014,אמאתין", 
+                Inactive = false, 
+                LocalName = "אמאתין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3015", 
+                SearchFields = "3015,אמריש", 
+                Inactive = false, 
+                LocalName = "אמריש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3016", 
+                SearchFields = "3016,אסכאכא", 
+                Inactive = false, 
+                LocalName = "אסכאכא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3017", 
+                SearchFields = "3017,ארטאס", 
+                Inactive = false, 
+                LocalName = "ארטאס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3018", 
+                SearchFields = "3018,ארתאח", 
+                Inactive = false, 
+                LocalName = "ארתאח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "302", 
+                SearchFields = "302,דפנה", 
+                Inactive = false, 
+                LocalName = "דפנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "303", 
+                SearchFields = "303,דן", 
+                Inactive = false, 
+                LocalName = "דן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "304", 
+                SearchFields = "304,שדה אליהו", 
+                Inactive = false, 
+                LocalName = "שדה אליהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3041", 
+                SearchFields = "3041,באקה", 
+                Inactive = false, 
+                LocalName = "באקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3042", 
+                SearchFields = "3042,באקה אל שרקיה", 
+                Inactive = false, 
+                LocalName = "באקה אל שרקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3043", 
+                SearchFields = "3043,בדו", 
+                Inactive = false, 
+                LocalName = "בדו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3044", 
+                SearchFields = "3044,בדיא", 
+                Inactive = false, 
+                LocalName = "בדיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3045", 
+                SearchFields = "3045,בדרס", 
+                Inactive = false, 
+                LocalName = "בדרס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3046", 
+                SearchFields = "3046,בורין", 
+                Inactive = false, 
+                LocalName = "בורין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3047", 
+                SearchFields = "3047,בזאריה", 
+                Inactive = false, 
+                LocalName = "בזאריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3048", 
+                SearchFields = "3048,בידא", 
+                Inactive = false, 
+                LocalName = "בידא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3049", 
+                SearchFields = "3049,ביר ג'אלא", 
+                Inactive = false, 
+                LocalName = "ביר ג'אלא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "305", 
+                SearchFields = "305,גשר", 
+                Inactive = false, 
+                LocalName = "גשר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3050", 
+                SearchFields = "3050,ביר זית", 
+                Inactive = false, 
+                LocalName = "ביר זית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3051", 
+                SearchFields = "3051,ביר נבאלא", 
+                Inactive = false, 
+                LocalName = "ביר נבאלא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3052", 
+                SearchFields = "3052,בירה חברון", 
+                Inactive = false, 
+                LocalName = "בירה חברון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3053", 
+                SearchFields = "3053,בית ארוש פוקא", 
+                Inactive = false, 
+                LocalName = "בית ארוש פוקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3054", 
+                SearchFields = "3054,בית ארוש תחתא", 
+                Inactive = false, 
+                LocalName = "בית ארוש תחתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3055", 
+                SearchFields = "3055,בית אג'זא", 
+                Inactive = false, 
+                LocalName = "בית אג'זא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3056", 
+                SearchFields = "3056,בית אולא", 
+                Inactive = false, 
+                LocalName = "בית אולא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3057", 
+                SearchFields = "3057,בית איבא", 
+                Inactive = false, 
+                LocalName = "בית איבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3058", 
+                SearchFields = "3058,בית אכסא", 
+                Inactive = false, 
+                LocalName = "בית אכסא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3059", 
+                SearchFields = "3059,בית אמין", 
+                Inactive = false, 
+                LocalName = "בית אמין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "306", 
+                SearchFields = "306,שדמות דבורה", 
+                Inactive = false, 
+                LocalName = "שדמות דבורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3060", 
+                SearchFields = "3060,בית אמר", 
+                Inactive = false, 
+                LocalName = "בית אמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3061", 
+                SearchFields = "3061,בית אמרין", 
+                Inactive = false, 
+                LocalName = "בית אמרין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3062", 
+                SearchFields = "3062,בית אענאן", 
+                Inactive = false, 
+                LocalName = "בית אענאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3063", 
+                SearchFields = "3063,בית ג'אלא", 
+                Inactive = false, 
+                LocalName = "בית ג'אלא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3064", 
+                SearchFields = "3064,בית דגן שטחים", 
+                Inactive = false, 
+                LocalName = "בית דגן שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3065", 
+                SearchFields = "3065,בית דקו", 
+                Inactive = false, 
+                LocalName = "בית דקו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3066", 
+                SearchFields = "3066,בית וזן", 
+                Inactive = false, 
+                LocalName = "בית וזן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3067", 
+                SearchFields = "3067,בית חנינא", 
+                Inactive = false, 
+                LocalName = "בית חנינא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3068", 
+                SearchFields = "3068,בית כאחל גמרורה", 
+                Inactive = false, 
+                LocalName = "בית כאחל גמרורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3069", 
+                SearchFields = "3069,בית ליד", 
+                Inactive = false, 
+                LocalName = "בית ליד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "307", 
+                SearchFields = "307,הזורעים", 
+                Inactive = false, 
+                LocalName = "הזורעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3070", 
+                SearchFields = "3070,בית לקיא", 
+                Inactive = false, 
+                LocalName = "בית לקיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3071", 
+                SearchFields = "3071,בית מחסיר", 
+                Inactive = false, 
+                LocalName = "בית מחסיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3072", 
+                SearchFields = "3072,בית מרסם", 
+                Inactive = false, 
+                LocalName = "בית מרסם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3073", 
+                SearchFields = "3073,בית סאחור", 
+                Inactive = false, 
+                LocalName = "בית סאחור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3074", 
+                SearchFields = "3074,בית סוריכ", 
+                Inactive = false, 
+                LocalName = "בית סוריכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3075", 
+                SearchFields = "3075,בית סירא", 
+                Inactive = false, 
+                LocalName = "בית סירא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3076", 
+                SearchFields = "3076,בית עוא", 
+                Inactive = false, 
+                LocalName = "בית עוא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3077", 
+                SearchFields = "3077,בית עור אל פוקא", 
+                Inactive = false, 
+                LocalName = "בית עור אל פוקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3078", 
+                SearchFields = "3078,בית עור אל תחתא", 
+                Inactive = false, 
+                LocalName = "בית עור אל תחתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3079", 
+                SearchFields = "3079,בית עמרא", 
+                Inactive = false, 
+                LocalName = "בית עמרא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "308", 
+                SearchFields = "308,מחניים", 
+                Inactive = false, 
+                LocalName = "מחניים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3080", 
+                SearchFields = "3080,בית פג'אר", 
+                Inactive = false, 
+                LocalName = "בית פג'אר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3081", 
+                SearchFields = "3081,בית פוריכ", 
+                Inactive = false, 
+                LocalName = "בית פוריכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3082", 
+                SearchFields = "3082,בית קאד דרום", 
+                Inactive = false, 
+                LocalName = "בית קאד דרום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3083", 
+                SearchFields = "3083,בית קאד צפון", 
+                Inactive = false, 
+                LocalName = "בית קאד צפון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3084", 
+                SearchFields = "3084,בית רימא", 
+                Inactive = false, 
+                LocalName = "בית רימא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3085", 
+                SearchFields = "3085,ביתא א תחתא", 
+                Inactive = false, 
+                LocalName = "ביתא א תחתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3086", 
+                SearchFields = "3086,ביתא פוקא", 
+                Inactive = false, 
+                LocalName = "ביתא פוקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3087", 
+                SearchFields = "3087,ביתוניא", 
+                Inactive = false, 
+                LocalName = "ביתוניא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3088", 
+                SearchFields = "3088,ביתין", 
+                Inactive = false, 
+                LocalName = "ביתין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3089", 
+                SearchFields = "3089,בית אללו", 
+                Inactive = false, 
+                LocalName = "בית אללו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "309", 
+                SearchFields = "309,נהורה", 
+                Inactive = false, 
+                LocalName = "נהורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3090", 
+                SearchFields = "3090,בלאטה", 
+                Inactive = false, 
+                LocalName = "בלאטה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3091", 
+                SearchFields = "3091,בלעא", 
+                Inactive = false, 
+                LocalName = "בלעא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3092", 
+                SearchFields = "3092,בלעין", 
+                Inactive = false, 
+                LocalName = "בלעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3093", 
+                SearchFields = "3093,בני נעים", 
+                Inactive = false, 
+                LocalName = "בני נעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3094", 
+                SearchFields = "3094,ברג'", 
+                Inactive = false, 
+                LocalName = "ברג'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3095", 
+                SearchFields = "3095,ברדלא", 
+                Inactive = false, 
+                LocalName = "ברדלא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3096", 
+                SearchFields = "3096,בורהאם", 
+                Inactive = false, 
+                LocalName = "בורהאם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3097", 
+                SearchFields = "3097,ברוקין", 
+                Inactive = false, 
+                LocalName = "ברוקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3098", 
+                SearchFields = "3098,ברטעה שטחים", 
+                Inactive = false, 
+                LocalName = "ברטעה שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3099", 
+                SearchFields = "3099,בורקה", 
+                Inactive = false, 
+                LocalName = "בורקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,אופקים", 
+                Inactive = false, 
+                LocalName = "אופקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "310", 
+                SearchFields = "310,כפר גליקסון", 
+                Inactive = false, 
+                LocalName = "כפר גליקסון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3100", 
+                SearchFields = "3100,אל בירה", 
+                Inactive = false, 
+                LocalName = "אל בירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3101", 
+                SearchFields = "3101,ברקא", 
+                Inactive = false, 
+                LocalName = "ברקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3102", 
+                SearchFields = "3102,ברקין", 
+                Inactive = false, 
+                LocalName = "ברקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3103", 
+                SearchFields = "3103,בתיר שטחים", 
+                Inactive = false, 
+                LocalName = "בתיר שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "311", 
+                SearchFields = "311,גן שורק", 
+                Inactive = false, 
+                LocalName = "גן שורק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "312", 
+                SearchFields = "312,נווה ים", 
+                Inactive = false, 
+                LocalName = "נווה ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "313", 
+                SearchFields = "313,אפק", 
+                Inactive = false, 
+                LocalName = "אפק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3131", 
+                SearchFields = "3131,ג'אלוד", 
+                Inactive = false, 
+                LocalName = "ג'אלוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3132", 
+                SearchFields = "3132,ג'אניה", 
+                Inactive = false, 
+                LocalName = "ג'אניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3133", 
+                SearchFields = "3133,ג'ארושיה", 
+                Inactive = false, 
+                LocalName = "ג'ארושיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3134", 
+                SearchFields = "3134,ג'בע רמאללה", 
+                Inactive = false, 
+                LocalName = "ג'בע רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3135", 
+                SearchFields = "3135,ג'בע ג'נין", 
+                Inactive = false, 
+                LocalName = "ג'בע ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3136", 
+                SearchFields = "3136,ג'בעה", 
+                Inactive = false, 
+                LocalName = "ג'בעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3137", 
+                SearchFields = "3137,ג'דידה", 
+                Inactive = false, 
+                LocalName = "ג'דידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3138", 
+                SearchFields = "3138,ג'דירה", 
+                Inactive = false, 
+                LocalName = "ג'דירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3139", 
+                SearchFields = "3139,ג'וריש", 
+                Inactive = false, 
+                LocalName = "ג'וריש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3140", 
+                SearchFields = "3140,ג'ורת אל שמעה", 
+                Inactive = false, 
+                LocalName = "ג'ורת אל שמעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3141", 
+                SearchFields = "3141,ג'יב", 
+                Inactive = false, 
+                LocalName = "ג'יב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3142", 
+                SearchFields = "3142,ג'יביא", 
+                Inactive = false, 
+                LocalName = "ג'יביא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3143", 
+                SearchFields = "3143,ג'יוס", 
+                Inactive = false, 
+                LocalName = "ג'יוס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3144", 
+                SearchFields = "3144,ג'ית", 
+                Inactive = false, 
+                LocalName = "ג'ית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3145", 
+                SearchFields = "3145,ג'לבון", 
+                Inactive = false, 
+                LocalName = "ג'לבון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3146", 
+                SearchFields = "3146,ג'לג'ליה", 
+                Inactive = false, 
+                LocalName = "ג'לג'ליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3147", 
+                SearchFields = "3147,ג'לזון", 
+                Inactive = false, 
+                LocalName = "ג'לזון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3148", 
+                SearchFields = "3148,ג'למה", 
+                Inactive = false, 
+                LocalName = "ג'למה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3149", 
+                SearchFields = "3149,ג'לקמוס", 
+                Inactive = false, 
+                LocalName = "ג'לקמוס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "315", 
+                SearchFields = "315,נגבה", 
+                Inactive = false, 
+                LocalName = "נגבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3150", 
+                SearchFields = "3150,ג'מאלה", 
+                Inactive = false, 
+                LocalName = "ג'מאלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3151", 
+                SearchFields = "3151,ג'מאעין", 
+                Inactive = false, 
+                LocalName = "ג'מאעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3152", 
+                SearchFields = "3152,ג'ניד", 
+                Inactive = false, 
+                LocalName = "ג'ניד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3153", 
+                SearchFields = "3153,ג'נצאפוט", 
+                Inactive = false, 
+                LocalName = "ג'נצאפוט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3154", 
+                SearchFields = "3154,גפנא", 
+                Inactive = false, 
+                LocalName = "גפנא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3155", 
+                SearchFields = "3155,ג'רבא", 
+                Inactive = false, 
+                LocalName = "ג'רבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "316", 
+                SearchFields = "316,כפר נטר", 
+                Inactive = false, 
+                LocalName = "כפר נטר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "317", 
+                SearchFields = "317,בית אורן", 
+                Inactive = false, 
+                LocalName = "בית אורן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "318", 
+                SearchFields = "318,עמיעוז", 
+                Inactive = false, 
+                LocalName = "עמיעוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3181", 
+                SearchFields = "3181,דאהריה", 
+                Inactive = false, 
+                LocalName = "דאהריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3182", 
+                SearchFields = "3182,דהר חלת אל ג'מעה", 
+                Inactive = false, 
+                LocalName = "דהר חלת אל ג'מעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3183", 
+                SearchFields = "3183,דהישה", 
+                Inactive = false, 
+                LocalName = "דהישה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3184", 
+                SearchFields = "3184,דומא חברון", 
+                Inactive = false, 
+                LocalName = "דומא חברון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3185", 
+                SearchFields = "3185,דומא שכם", 
+                Inactive = false, 
+                LocalName = "דומא שכם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3186", 
+                SearchFields = "3186,דורא", 
+                Inactive = false, 
+                LocalName = "דורא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3187", 
+                SearchFields = "3187,דורא אל קרע", 
+                Inactive = false, 
+                LocalName = "דורא אל קרע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3188", 
+                SearchFields = "3188,דיוכ", 
+                Inactive = false, 
+                LocalName = "דיוכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3189", 
+                SearchFields = "3189,דיר אל סודאן", 
+                Inactive = false, 
+                LocalName = "דיר אל סודאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "319", 
+                SearchFields = "319,עמיר", 
+                Inactive = false, 
+                LocalName = "עמיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3190", 
+                SearchFields = "3190,דיר א שמס", 
+                Inactive = false, 
+                LocalName = "דיר א שמס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3191", 
+                SearchFields = "3191,דיר אבו דעיף", 
+                Inactive = false, 
+                LocalName = "דיר אבו דעיף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3192", 
+                SearchFields = "3192,דיר אבו משעל", 
+                Inactive = false, 
+                LocalName = "דיר אבו משעל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3193", 
+                SearchFields = "3193,דיר אבזיע", 
+                Inactive = false, 
+                LocalName = "דיר אבזיע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3194", 
+                SearchFields = "3194,דיר אל גצון", 
+                Inactive = false, 
+                LocalName = "דיר אל גצון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3195", 
+                SearchFields = "3195,דיר אל חטב", 
+                Inactive = false, 
+                LocalName = "דיר אל חטב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3196", 
+                SearchFields = "3196,דיר אל עסל פוקא", 
+                Inactive = false, 
+                LocalName = "דיר אל עסל פוקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3197", 
+                SearchFields = "3197,דיר אל עסל תחתא", 
+                Inactive = false, 
+                LocalName = "דיר אל עסל תחתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3198", 
+                SearchFields = "3198,דיר אסתיא", 
+                Inactive = false, 
+                LocalName = "דיר אסתיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3199", 
+                SearchFields = "3199,דיר בלוט", 
+                Inactive = false, 
+                LocalName = "דיר בלוט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,עוצם", 
+                Inactive = false, 
+                LocalName = "עוצם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "320", 
+                SearchFields = "320,כפר ורבורג", 
+                Inactive = false, 
+                LocalName = "כפר ורבורג", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3200", 
+                SearchFields = "3200,בית לחם", 
+                Inactive = false, 
+                LocalName = "בית לחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3201", 
+                SearchFields = "3201,דיר גזאלה", 
+                Inactive = false, 
+                LocalName = "דיר גזאלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3202", 
+                SearchFields = "3202,דיר גסאנה", 
+                Inactive = false, 
+                LocalName = "דיר גסאנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3203", 
+                SearchFields = "3203,דיר גריר", 
+                Inactive = false, 
+                LocalName = "דיר גריר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3204", 
+                SearchFields = "3204,דיר דבואן", 
+                Inactive = false, 
+                LocalName = "דיר דבואן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3205", 
+                SearchFields = "3205,דיר נזאם", 
+                Inactive = false, 
+                LocalName = "דיר נזאם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3206", 
+                SearchFields = "3206,דיר עמאר", 
+                Inactive = false, 
+                LocalName = "דיר עמאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3207", 
+                SearchFields = "3207,דיר קדיס", 
+                Inactive = false, 
+                LocalName = "דיר קדיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3208", 
+                SearchFields = "3208,דיר רזאח", 
+                Inactive = false, 
+                LocalName = "דיר רזאח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3209", 
+                SearchFields = "3209,דיר שרף", 
+                Inactive = false, 
+                LocalName = "דיר שרף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3210", 
+                SearchFields = "3210,דחית בריד", 
+                Inactive = false, 
+                LocalName = "דחית בריד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3211", 
+                SearchFields = "3211,דנאבה", 
+                Inactive = false, 
+                LocalName = "דנאבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "322", 
+                SearchFields = "322,בית הלל", 
+                Inactive = false, 
+                LocalName = "בית הלל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3231", 
+                SearchFields = "3231,האשמיה", 
+                Inactive = false, 
+                LocalName = "האשמיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "324", 
+                SearchFields = "324,שאר ישוב", 
+                Inactive = false, 
+                LocalName = "שאר ישוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3241", 
+                SearchFields = "3241,ואדי אל וער", 
+                Inactive = false, 
+                LocalName = "ואדי אל וער", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3242", 
+                SearchFields = "3242,ואדי אל עראיס", 
+                Inactive = false, 
+                LocalName = "ואדי אל עראיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "325", 
+                SearchFields = "325,מצובה", 
+                Inactive = false, 
+                LocalName = "מצובה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "326", 
+                SearchFields = "326,בית יצחק-שער חפר", 
+                Inactive = false, 
+                LocalName = "בית יצחק-שער חפר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3261", 
+                SearchFields = "3261,זאויה ג'נין", 
+                Inactive = false, 
+                LocalName = "זאויה ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3262", 
+                SearchFields = "3262,זאויה טול כרם", 
+                Inactive = false, 
+                LocalName = "זאויה טול כרם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3263", 
+                SearchFields = "3263,זבאבדה", 
+                Inactive = false, 
+                LocalName = "זבאבדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3264", 
+                SearchFields = "3264,זבדה", 
+                Inactive = false, 
+                LocalName = "זבדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3265", 
+                SearchFields = "3265,זבובה", 
+                Inactive = false, 
+                LocalName = "זבובה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3266", 
+                SearchFields = "3266,זואתה", 
+                Inactive = false, 
+                LocalName = "זואתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3268", 
+                SearchFields = "3268,זיתא", 
+                Inactive = false, 
+                LocalName = "זיתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3269", 
+                SearchFields = "3269,זיתא ג'מעין", 
+                Inactive = false, 
+                LocalName = "זיתא ג'מעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "327", 
+                SearchFields = "327,שדות ים", 
+                Inactive = false, 
+                LocalName = "שדות ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3270", 
+                SearchFields = "3270,זעתרה", 
+                Inactive = false, 
+                LocalName = "זעתרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3271", 
+                SearchFields = "3271,זיף", 
+                Inactive = false, 
+                LocalName = "זיף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "328", 
+                SearchFields = "328,עזוז", 
+                Inactive = false, 
+                LocalName = "עזוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "329", 
+                SearchFields = "329,שדה נחמיה", 
+                Inactive = false, 
+                LocalName = "שדה נחמיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3291", 
+                SearchFields = "3291,חאראס", 
+                Inactive = false, 
+                LocalName = "חאראס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3292", 
+                SearchFields = "3292,חארס", 
+                Inactive = false, 
+                LocalName = "חארס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3293", 
+                SearchFields = "3293,חורסה", 
+                Inactive = false, 
+                LocalName = "חורסה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3294", 
+                SearchFields = "3294,חבילה", 
+                Inactive = false, 
+                LocalName = "חבילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3295", 
+                SearchFields = "3295,חבלה", 
+                Inactive = false, 
+                LocalName = "חבלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3296", 
+                SearchFields = "3296,חגה", 
+                Inactive = false, 
+                LocalName = "חגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3297", 
+                SearchFields = "3297,חגילה", 
+                Inactive = false, 
+                LocalName = "חגילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3298", 
+                SearchFields = "3298,חדב", 
+                Inactive = false, 
+                LocalName = "חדב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3299", 
+                SearchFields = "3299,חדר", 
+                Inactive = false, 
+                LocalName = "חדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,בת שלמה", 
+                Inactive = false, 
+                LocalName = "בת שלמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "330", 
+                SearchFields = "330,אלומות", 
+                Inactive = false, 
+                LocalName = "אלומות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3300", 
+                SearchFields = "3300,ג'נין", 
+                Inactive = false, 
+                LocalName = "ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3301", 
+                SearchFields = "3301,חוארה", 
+                Inactive = false, 
+                LocalName = "חוארה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3302", 
+                SearchFields = "3302,חוסאן", 
+                Inactive = false, 
+                LocalName = "חוסאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3303", 
+                SearchFields = "3303,משרוע מוסא אל עלמ", 
+                Inactive = false, 
+                LocalName = "משרוע מוסא אל עלמ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3304", 
+                SearchFields = "3304,חזמא", 
+                Inactive = false, 
+                LocalName = "חזמא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3305", 
+                SearchFields = "3305,חלחול", 
+                Inactive = false, 
+                LocalName = "חלחול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3306", 
+                SearchFields = "3306,חלת אל פולה", 
+                Inactive = false, 
+                LocalName = "חלת אל פולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3307", 
+                SearchFields = "3307,חסכה", 
+                Inactive = false, 
+                LocalName = "חסכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3308", 
+                SearchFields = "3308,חרבת אל דיר", 
+                Inactive = false, 
+                LocalName = "חרבת אל דיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3309", 
+                SearchFields = "3309,חרבת אל נבי אליאס", 
+                Inactive = false, 
+                LocalName = "חרבת אל נבי אליאס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "331", 
+                SearchFields = "331,ניר צבי", 
+                Inactive = false, 
+                LocalName = "ניר צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3310", 
+                SearchFields = "3310,חרבת אל  נג'אר", 
+                Inactive = false, 
+                LocalName = "חרבת אל  נג'אר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3311", 
+                SearchFields = "3311,חרבת אל סכה", 
+                Inactive = false, 
+                LocalName = "חרבת אל סכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3312", 
+                SearchFields = "3312,חרבת אל צרי", 
+                Inactive = false, 
+                LocalName = "חרבת אל צרי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3313", 
+                SearchFields = "3313,חרבת אל שיח אחמד", 
+                Inactive = false, 
+                LocalName = "חרבת אל שיח אחמד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3315", 
+                SearchFields = "3315,חרבת אבו חמיש", 
+                Inactive = false, 
+                LocalName = "חרבת אבו חמיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3316", 
+                SearchFields = "3316,חרבת אבו נג'ם", 
+                Inactive = false, 
+                LocalName = "חרבת אבו נג'ם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3317", 
+                SearchFields = "3317,חרבת אבו סלמא", 
+                Inactive = false, 
+                LocalName = "חרבת אבו סלמא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3318", 
+                SearchFields = "3318,חרבת אבו פלאח", 
+                Inactive = false, 
+                LocalName = "חרבת אבו פלאח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3319", 
+                SearchFields = "3319,חרבת אל אשקר", 
+                Inactive = false, 
+                LocalName = "חרבת אל אשקר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3320", 
+                SearchFields = "3320,חרבת אל דלבה", 
+                Inactive = false, 
+                LocalName = "חרבת אל דלבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3321", 
+                SearchFields = "3321,חרבת אל הגרה", 
+                Inactive = false, 
+                LocalName = "חרבת אל הגרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3322", 
+                SearchFields = "3322,חרבת אל חדב", 
+                Inactive = false, 
+                LocalName = "חרבת אל חדב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3323", 
+                SearchFields = "3323,חרבת אל חפירה", 
+                Inactive = false, 
+                LocalName = "חרבת אל חפירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3324", 
+                SearchFields = "3324,חרבת אל חרזאן", 
+                Inactive = false, 
+                LocalName = "חרבת אל חרזאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3325", 
+                SearchFields = "3325,חרבת אל כום", 
+                Inactive = false, 
+                LocalName = "חרבת אל כום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3326", 
+                SearchFields = "3326,חרבת אל מגור", 
+                Inactive = false, 
+                LocalName = "חרבת אל מגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3327", 
+                SearchFields = "3327,חרבת אל מגנונה", 
+                Inactive = false, 
+                LocalName = "חרבת אל מגנונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3328", 
+                SearchFields = "3328,חרבת אל מדור", 
+                Inactive = false, 
+                LocalName = "חרבת אל מדור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3329", 
+                SearchFields = "3329,חרבת אל מטלה", 
+                Inactive = false, 
+                LocalName = "חרבת אל מטלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3330", 
+                SearchFields = "3330,חרבת אל מנשיה", 
+                Inactive = false, 
+                LocalName = "חרבת אל מנשיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3331", 
+                SearchFields = "3331,חרבתא אל מצבאח", 
+                Inactive = false, 
+                LocalName = "חרבתא אל מצבאח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3332", 
+                SearchFields = "3332,חרבת אל מרגם", 
+                Inactive = false, 
+                LocalName = "חרבת אל מרגם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3333", 
+                SearchFields = "3333,חרבת אל עוגא פוקא", 
+                Inactive = false, 
+                LocalName = "חרבת אל עוגא פוקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3334", 
+                SearchFields = "3334,חרבת אל לוזה", 
+                Inactive = false, 
+                LocalName = "חרבת אל לוזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3335", 
+                SearchFields = "3335,חרבת אל עלקה", 
+                Inactive = false, 
+                LocalName = "חרבת אל עלקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3336", 
+                SearchFields = "3336,חרבת אל ערוב", 
+                Inactive = false, 
+                LocalName = "חרבת אל ערוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3337", 
+                SearchFields = "3337,חרבת אל עקרבאניה", 
+                Inactive = false, 
+                LocalName = "חרבת אל עקרבאניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3338", 
+                SearchFields = "3338,חרבת אל קצור", 
+                Inactive = false, 
+                LocalName = "חרבת אל קצור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3339", 
+                SearchFields = "3339,חרבת אום אל נמל", 
+                Inactive = false, 
+                LocalName = "חרבת אום אל נמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "334", 
+                SearchFields = "334,קבוצת יבנה", 
+                Inactive = false, 
+                LocalName = "קבוצת יבנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3340", 
+                SearchFields = "3340,חרבת בית חסן", 
+                Inactive = false, 
+                LocalName = "חרבת בית חסן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3341", 
+                SearchFields = "3341,חרבת בית ענון", 
+                Inactive = false, 
+                LocalName = "חרבת בית ענון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3342", 
+                SearchFields = "3342,חרבת בית תעמר", 
+                Inactive = false, 
+                LocalName = "חרבת בית תעמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3343", 
+                SearchFields = "3343,חרבת בריזעה", 
+                Inactive = false, 
+                LocalName = "חרבת בריזעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3344", 
+                SearchFields = "3344,ואדי ברקין", 
+                Inactive = false, 
+                LocalName = "ואדי ברקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3345", 
+                SearchFields = "3345,חרבת גאדור", 
+                Inactive = false, 
+                LocalName = "חרבת גאדור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3346", 
+                SearchFields = "3346,חרבת גיב א רום", 
+                Inactive = false, 
+                LocalName = "חרבת גיב א רום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3347", 
+                SearchFields = "3347,חרבת גהזם", 
+                Inactive = false, 
+                LocalName = "חרבת גהזם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3348", 
+                SearchFields = "3348,חרבת גראד", 
+                Inactive = false, 
+                LocalName = "חרבת גראד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3349", 
+                SearchFields = "3349,חרבת זאהר", 
+                Inactive = false, 
+                LocalName = "חרבת זאהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "335", 
+                SearchFields = "335,רמת השופט", 
+                Inactive = false, 
+                LocalName = "רמת השופט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3350", 
+                SearchFields = "3350,חרבת דיר צאמת", 
+                Inactive = false, 
+                LocalName = "חרבת דיר צאמת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3351", 
+                SearchFields = "3351,חרבת ואדי אל דבע", 
+                Inactive = false, 
+                LocalName = "חרבת ואדי אל דבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3352", 
+                SearchFields = "3352,חרבת ודח", 
+                Inactive = false, 
+                LocalName = "חרבת ודח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3353", 
+                SearchFields = "3353,חרבת זיתא", 
+                Inactive = false, 
+                LocalName = "חרבת זיתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3354", 
+                SearchFields = "3354,חרבת חדיר", 
+                Inactive = false, 
+                LocalName = "חרבת חדיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3355", 
+                SearchFields = "3355,חרבת טויל", 
+                Inactive = false, 
+                LocalName = "חרבת טויל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3356", 
+                SearchFields = "3356,חרבת כזון", 
+                Inactive = false, 
+                LocalName = "חרבת כזון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3357", 
+                SearchFields = "3357,חרבת כנעאן", 
+                Inactive = false, 
+                LocalName = "חרבת כנעאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3358", 
+                SearchFields = "3358,חרבת כרמה", 
+                Inactive = false, 
+                LocalName = "חרבת כרמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3359", 
+                SearchFields = "3359,חרבת מורק", 
+                Inactive = false, 
+                LocalName = "חרבת מורק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "336", 
+                SearchFields = "336,דורות", 
+                Inactive = false, 
+                LocalName = "דורות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3360", 
+                SearchFields = "3360,חרבת מעין", 
+                Inactive = false, 
+                LocalName = "חרבת מעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3361", 
+                SearchFields = "3361,חרבת נבי צאלח", 
+                Inactive = false, 
+                LocalName = "חרבת נבי צאלח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3362", 
+                SearchFields = "3362,חרבת סמיא", 
+                Inactive = false, 
+                LocalName = "חרבת סמיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3363", 
+                SearchFields = "3363,חרבת עאבא", 
+                Inactive = false, 
+                LocalName = "חרבת עאבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3364", 
+                SearchFields = "3364,חרבת עוד", 
+                Inactive = false, 
+                LocalName = "חרבת עוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3365", 
+                SearchFields = "3365,חרבת עסלה", 
+                Inactive = false, 
+                LocalName = "חרבת עסלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3366", 
+                SearchFields = "3366,חרבת פקיקס", 
+                Inactive = false, 
+                LocalName = "חרבת פקיקס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3367", 
+                SearchFields = "3367,חרבת צאפא", 
+                Inactive = false, 
+                LocalName = "חרבת צאפא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3368", 
+                SearchFields = "3368,חרבת ציר", 
+                Inactive = false, 
+                LocalName = "חרבת ציר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3369", 
+                SearchFields = "3369,חרבת קיס", 
+                Inactive = false, 
+                LocalName = "חרבת קיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3370", 
+                SearchFields = "3370,חרבת ראס אל טירה", 
+                Inactive = false, 
+                LocalName = "חרבת ראס אל טירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3371", 
+                SearchFields = "3371,חרבת ראס עטיה", 
+                Inactive = false, 
+                LocalName = "חרבת ראס עטיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3372", 
+                SearchFields = "3372,חרבת רקעה", 
+                Inactive = false, 
+                LocalName = "חרבת רקעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3373", 
+                SearchFields = "3373,חרבת שויכה", 
+                Inactive = false, 
+                LocalName = "חרבת שויכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3374", 
+                SearchFields = "3374,חרבתא", 
+                Inactive = false, 
+                LocalName = "חרבתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3375", 
+                SearchFields = "3375,חרמלה", 
+                Inactive = false, 
+                LocalName = "חרמלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3376", 
+                SearchFields = "3376,חרסה", 
+                Inactive = false, 
+                LocalName = "חרסה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3377", 
+                SearchFields = "3377,חרבת אל טבקה", 
+                Inactive = false, 
+                LocalName = "חרבת אל טבקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3378", 
+                SearchFields = "3378,חרבת אל אקרע", 
+                Inactive = false, 
+                LocalName = "חרבת אל אקרע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "338", 
+                SearchFields = "338,איבים", 
+                Inactive = false, 
+                LocalName = "איבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "339", 
+                SearchFields = "339,רמת צבי", 
+                Inactive = false, 
+                LocalName = "רמת צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "340", 
+                SearchFields = "340,גת (קיבוץ)", 
+                Inactive = false, 
+                LocalName = "גת (קיבוץ)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3400", 
+                SearchFields = "3400,חברון", 
+                Inactive = false, 
+                LocalName = "חברון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3411", 
+                SearchFields = "3411,טואני", 
+                Inactive = false, 
+                LocalName = "טואני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3412", 
+                SearchFields = "3412,טובאס", 
+                Inactive = false, 
+                LocalName = "טובאס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3413", 
+                SearchFields = "3413,טורה אל גרביה", 
+                Inactive = false, 
+                LocalName = "טורה אל גרביה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3414", 
+                SearchFields = "3414,טיבה רמאללה", 
+                Inactive = false, 
+                LocalName = "טיבה רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3415", 
+                SearchFields = "3415,טיבה ג'נין", 
+                Inactive = false, 
+                LocalName = "טיבה ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3416", 
+                SearchFields = "3416,טירה שטחים", 
+                Inactive = false, 
+                LocalName = "טירה שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3417", 
+                SearchFields = "3417,טלוזה", 
+                Inactive = false, 
+                LocalName = "טלוזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3418", 
+                SearchFields = "3418,טמון", 
+                Inactive = false, 
+                LocalName = "טמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3419", 
+                SearchFields = "3419,טראמה", 
+                Inactive = false, 
+                LocalName = "טראמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "342", 
+                SearchFields = "342,גברעם", 
+                Inactive = false, 
+                LocalName = "גברעם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "343", 
+                SearchFields = "343,חמדיה", 
+                Inactive = false, 
+                LocalName = "חמדיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "344", 
+                SearchFields = "344,מענית", 
+                Inactive = false, 
+                LocalName = "מענית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3441", 
+                SearchFields = "3441,יאטה", 
+                Inactive = false, 
+                LocalName = "יאטה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3442", 
+                SearchFields = "3442,יאמון", 
+                Inactive = false, 
+                LocalName = "יאמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3443", 
+                SearchFields = "3443,יאנון", 
+                Inactive = false, 
+                LocalName = "יאנון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3444", 
+                SearchFields = "3444,יאסוף", 
+                Inactive = false, 
+                LocalName = "יאסוף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3445", 
+                SearchFields = "3445,יאציד", 
+                Inactive = false, 
+                LocalName = "יאציד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3446", 
+                SearchFields = "3446,יברוד", 
+                Inactive = false, 
+                LocalName = "יברוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3447", 
+                SearchFields = "3447,יעבד", 
+                Inactive = false, 
+                LocalName = "יעבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3448", 
+                SearchFields = "3448,יתמא", 
+                Inactive = false, 
+                LocalName = "יתמא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "345", 
+                SearchFields = "345,כפר סאלד", 
+                Inactive = false, 
+                LocalName = "כפר סאלד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "346", 
+                SearchFields = "346,גליל ים", 
+                Inactive = false, 
+                LocalName = "גליל ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "347", 
+                SearchFields = "347,מנרה", 
+                Inactive = false, 
+                LocalName = "מנרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3471", 
+                SearchFields = "3471,כובר", 
+                Inactive = false, 
+                LocalName = "כובר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3472", 
+                SearchFields = "3472,כור", 
+                Inactive = false, 
+                LocalName = "כור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3473", 
+                SearchFields = "3473,כזיה אל רטרוט", 
+                Inactive = false, 
+                LocalName = "כזיה אל רטרוט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3474", 
+                SearchFields = "3474,כפיר", 
+                Inactive = false, 
+                LocalName = "כפיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3475", 
+                SearchFields = "3475,כפירת", 
+                Inactive = false, 
+                LocalName = "כפירת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3476", 
+                SearchFields = "3476,כפל חארת", 
+                Inactive = false, 
+                LocalName = "כפל חארת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3477", 
+                SearchFields = "3477,כפר אל דיכ", 
+                Inactive = false, 
+                LocalName = "כפר אל דיכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3478", 
+                SearchFields = "3478,כפר אל לבד", 
+                Inactive = false, 
+                LocalName = "כפר אל לבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3479", 
+                SearchFields = "3479,כפר גמאל", 
+                Inactive = false, 
+                LocalName = "כפר גמאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "348", 
+                SearchFields = "348,ניר עם", 
+                Inactive = false, 
+                LocalName = "ניר עם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3480", 
+                SearchFields = "3480,כפר דאן", 
+                Inactive = false, 
+                LocalName = "כפר דאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3481", 
+                SearchFields = "3481,כפר זיבאד", 
+                Inactive = false, 
+                LocalName = "כפר זיבאד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3482", 
+                SearchFields = "3482,כפר לאקף", 
+                Inactive = false, 
+                LocalName = "כפר לאקף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3483", 
+                SearchFields = "3483,כפר מאלכ", 
+                Inactive = false, 
+                LocalName = "כפר מאלכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3484", 
+                SearchFields = "3484,כפר נעמה", 
+                Inactive = false, 
+                LocalName = "כפר נעמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3485", 
+                SearchFields = "3485,כפר עין", 
+                Inactive = false, 
+                LocalName = "כפר עין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3486", 
+                SearchFields = "3486,כפר עבוש", 
+                Inactive = false, 
+                LocalName = "כפר עבוש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3487", 
+                SearchFields = "3487,כפר עזיז", 
+                Inactive = false, 
+                LocalName = "כפר עזיז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3488", 
+                SearchFields = "3488,כפר עציון", 
+                Inactive = false, 
+                LocalName = "כפר עציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3489", 
+                SearchFields = "3489,כפר עקב", 
+                Inactive = false, 
+                LocalName = "כפר עקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3490", 
+                SearchFields = "3490,כפר צור", 
+                Inactive = false, 
+                LocalName = "כפר צור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3491", 
+                SearchFields = "3491,כפר קדום", 
+                Inactive = false, 
+                LocalName = "כפר קדום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3492", 
+                SearchFields = "3492,כפר קוד", 
+                Inactive = false, 
+                LocalName = "כפר קוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3493", 
+                SearchFields = "3493,כפר קליל", 
+                Inactive = false, 
+                LocalName = "כפר קליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3494", 
+                SearchFields = "3494,כפר ראעי", 
+                Inactive = false, 
+                LocalName = "כפר ראעי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3495", 
+                SearchFields = "3495,כפר רמאן", 
+                Inactive = false, 
+                LocalName = "כפר רמאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3496", 
+                SearchFields = "3496,כפר תלת", 
+                Inactive = false, 
+                LocalName = "כפר תלת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3497", 
+                SearchFields = "3497,כרזה", 
+                Inactive = false, 
+                LocalName = "כרזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3498", 
+                SearchFields = "3498,כרמל שטחים", 
+                Inactive = false, 
+                LocalName = "כרמל שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "35", 
+                SearchFields = "35,גדות", 
+                Inactive = false, 
+                LocalName = "גדות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3500", 
+                SearchFields = "3500,טול כרם", 
+                Inactive = false, 
+                LocalName = "טול כרם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "351", 
+                SearchFields = "351,ניצן", 
+                Inactive = false, 
+                LocalName = "ניצן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "352", 
+                SearchFields = "352,גבולות", 
+                Inactive = false, 
+                LocalName = "גבולות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3521", 
+                SearchFields = "3521,לבן", 
+                Inactive = false, 
+                LocalName = "לבן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3522", 
+                SearchFields = "3522,לבן שרקיה", 
+                Inactive = false, 
+                LocalName = "לבן שרקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "353", 
+                SearchFields = "353,בית זיד", 
+                Inactive = false, 
+                LocalName = "בית זיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3531", 
+                SearchFields = "3531,מאדמא", 
+                Inactive = false, 
+                LocalName = "מאדמא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3532", 
+                SearchFields = "3532,מגד", 
+                Inactive = false, 
+                LocalName = "מגד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3533", 
+                SearchFields = "3533,מגדל בני פאדל", 
+                Inactive = false, 
+                LocalName = "מגדל בני פאדל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3534", 
+                SearchFields = "3534,מגיר רמאללה", 
+                Inactive = false, 
+                LocalName = "מגיר רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3535", 
+                SearchFields = "3535,מגיר ג'נין", 
+                Inactive = false, 
+                LocalName = "מגיר ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3536", 
+                SearchFields = "3536,מדיה", 
+                Inactive = false, 
+                LocalName = "מדיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3537", 
+                SearchFields = "3537,מזארע אל נובאני", 
+                Inactive = false, 
+                LocalName = "מזארע אל נובאני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3538", 
+                SearchFields = "3538,מזרעה אל קבליה", 
+                Inactive = false, 
+                LocalName = "מזרעה אל קבליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3539", 
+                SearchFields = "3539,מזרעה אל שרקיה", 
+                Inactive = false, 
+                LocalName = "מזרעה אל שרקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "354", 
+                SearchFields = "354,רביבים", 
+                Inactive = false, 
+                LocalName = "רביבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3540", 
+                SearchFields = "3540,מחים אל פארעה", 
+                Inactive = false, 
+                LocalName = "מחים אל פארעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3541", 
+                SearchFields = "3541,מחים קלנדיה", 
+                Inactive = false, 
+                LocalName = "מחים קלנדיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3542", 
+                SearchFields = "3542,מחמאס", 
+                Inactive = false, 
+                LocalName = "מחמאס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3544", 
+                SearchFields = "3544,מיתלון", 
+                Inactive = false, 
+                LocalName = "מיתלון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3545", 
+                SearchFields = "3545,מסחה", 
+                Inactive = false, 
+                LocalName = "מסחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3546", 
+                SearchFields = "3546,מסליה", 
+                Inactive = false, 
+                LocalName = "מסליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3547", 
+                SearchFields = "3547,מעסכר אל ערוב", 
+                Inactive = false, 
+                LocalName = "מעסכר אל ערוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3548", 
+                SearchFields = "3548,חרבת אל מעצרה", 
+                Inactive = false, 
+                LocalName = "חרבת אל מעצרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3549", 
+                SearchFields = "3549,מראח אל בקר", 
+                Inactive = false, 
+                LocalName = "מראח אל בקר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "355", 
+                SearchFields = "355,חורשים", 
+                Inactive = false, 
+                LocalName = "חורשים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3550", 
+                SearchFields = "3550,מראח רבאח", 
+                Inactive = false, 
+                LocalName = "מראח רבאח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3551", 
+                SearchFields = "3551,מרג נעגה", 
+                Inactive = false, 
+                LocalName = "מרג נעגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3552", 
+                SearchFields = "3552,מרדה", 
+                Inactive = false, 
+                LocalName = "מרדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3553", 
+                SearchFields = "3553,מרכה", 
+                Inactive = false, 
+                LocalName = "מרכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3555", 
+                SearchFields = "3555,נתיב הגדוד", 
+                Inactive = false, 
+                LocalName = "נתיב הגדוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3556", 
+                SearchFields = "3556,אלמוג", 
+                Inactive = false, 
+                LocalName = "אלמוג", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3557", 
+                SearchFields = "3557,קדומים", 
+                Inactive = false, 
+                LocalName = "קדומים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3558", 
+                SearchFields = "3558,תומר", 
+                Inactive = false, 
+                LocalName = "תומר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "356", 
+                SearchFields = "356,הגושרים", 
+                Inactive = false, 
+                LocalName = "הגושרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3560", 
+                SearchFields = "3560,אלקנה", 
+                Inactive = false, 
+                LocalName = "אלקנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3561", 
+                SearchFields = "3561,מגדל עוז", 
+                Inactive = false, 
+                LocalName = "מגדל עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3563", 
+                SearchFields = "3563,תקוע", 
+                Inactive = false, 
+                LocalName = "תקוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3564", 
+                SearchFields = "3564,כוכב השחר", 
+                Inactive = false, 
+                LocalName = "כוכב השחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3565", 
+                SearchFields = "3565,רימונים", 
+                Inactive = false, 
+                LocalName = "רימונים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3566", 
+                SearchFields = "3566,יפית", 
+                Inactive = false, 
+                LocalName = "יפית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3567", 
+                SearchFields = "3567,סלעית", 
+                Inactive = false, 
+                LocalName = "סלעית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3568", 
+                SearchFields = "3568,ריחן", 
+                Inactive = false, 
+                LocalName = "ריחן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3569", 
+                SearchFields = "3569,מבוא דותן", 
+                Inactive = false, 
+                LocalName = "מבוא דותן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "357", 
+                SearchFields = "357,כפר בלום", 
+                Inactive = false, 
+                LocalName = "כפר בלום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3570", 
+                SearchFields = "3570,אריאל", 
+                Inactive = false, 
+                LocalName = "אריאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3571", 
+                SearchFields = "3571,שבי שומרון", 
+                Inactive = false, 
+                LocalName = "שבי שומרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3572", 
+                SearchFields = "3572,כפר תפוח", 
+                Inactive = false, 
+                LocalName = "כפר תפוח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3573", 
+                SearchFields = "3573,חלמיש", 
+                Inactive = false, 
+                LocalName = "חלמיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3574", 
+                SearchFields = "3574,בית אל", 
+                Inactive = false, 
+                LocalName = "בית אל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3575", 
+                SearchFields = "3575,בית חורון", 
+                Inactive = false, 
+                LocalName = "בית חורון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3576", 
+                SearchFields = "3576,מצפה יריחו", 
+                Inactive = false, 
+                LocalName = "מצפה יריחו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3578", 
+                SearchFields = "3578,שדמות מחולה", 
+                Inactive = false, 
+                LocalName = "שדמות מחולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3579", 
+                SearchFields = "3579,אלון מורה", 
+                Inactive = false, 
+                LocalName = "אלון מורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "358", 
+                SearchFields = "358,יד מרדכי", 
+                Inactive = false, 
+                LocalName = "יד מרדכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3581", 
+                SearchFields = "3581,נאקורה", 
+                Inactive = false, 
+                LocalName = "נאקורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3582", 
+                SearchFields = "3582,נבי צאלח", 
+                Inactive = false, 
+                LocalName = "נבי צאלח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3583", 
+                SearchFields = "3583,נבי צמויל", 
+                Inactive = false, 
+                LocalName = "נבי צמויל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3584", 
+                SearchFields = "3584,נובא", 
+                Inactive = false, 
+                LocalName = "נובא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3585", 
+                SearchFields = "3585,נויעמה", 
+                Inactive = false, 
+                LocalName = "נויעמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3587", 
+                SearchFields = "3587,נור אל שמס", 
+                Inactive = false, 
+                LocalName = "נור אל שמס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3588", 
+                SearchFields = "3588,נזלת אבו נאר", 
+                Inactive = false, 
+                LocalName = "נזלת אבו נאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3589", 
+                SearchFields = "3589,נזלה אל גרביה", 
+                Inactive = false, 
+                LocalName = "נזלה אל גרביה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "359", 
+                SearchFields = "359,ניצנים", 
+                Inactive = false, 
+                LocalName = "ניצנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3590", 
+                SearchFields = "3590,נזלה אל וסטא", 
+                Inactive = false, 
+                LocalName = "נזלה אל וסטא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3591", 
+                SearchFields = "3591,נזלה אל שרקיה", 
+                Inactive = false, 
+                LocalName = "נזלה אל שרקיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3592", 
+                SearchFields = "3592,נזלת זיד", 
+                Inactive = false, 
+                LocalName = "נזלת זיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3593", 
+                SearchFields = "3593,נזלת עיסא", 
+                Inactive = false, 
+                LocalName = "נזלת עיסא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3594", 
+                SearchFields = "3594,נחאלין", 
+                Inactive = false, 
+                LocalName = "נחאלין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3595", 
+                SearchFields = "3595,נצאריה", 
+                Inactive = false, 
+                LocalName = "נצאריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3596", 
+                SearchFields = "3596,נעלין", 
+                Inactive = false, 
+                LocalName = "נעלין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3597", 
+                SearchFields = "3597,נצף גביל", 
+                Inactive = false, 
+                LocalName = "נצף גביל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3598", 
+                SearchFields = "3598,ארגמן", 
+                Inactive = false, 
+                LocalName = "ארגמן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3599", 
+                SearchFields = "3599,מחולה", 
+                Inactive = false, 
+                LocalName = "מחולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "36", 
+                SearchFields = "36,שדה דוד", 
+                Inactive = false, 
+                LocalName = "שדה דוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "360", 
+                SearchFields = "360,גבעת נילי", 
+                Inactive = false, 
+                LocalName = "גבעת נילי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3600", 
+                SearchFields = "3600,יריחו", 
+                Inactive = false, 
+                LocalName = "יריחו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3601", 
+                SearchFields = "3601,קליה", 
+                Inactive = false, 
+                LocalName = "קליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3602", 
+                SearchFields = "3602,ראש צורים", 
+                Inactive = false, 
+                LocalName = "ראש צורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3603", 
+                SearchFields = "3603,הר גילה", 
+                Inactive = false, 
+                LocalName = "הר גילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3604", 
+                SearchFields = "3604,אלון שבות", 
+                Inactive = false, 
+                LocalName = "אלון שבות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3605", 
+                SearchFields = "3605,משואה", 
+                Inactive = false, 
+                LocalName = "משואה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3606", 
+                SearchFields = "3606,גלגל", 
+                Inactive = false, 
+                LocalName = "גלגל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3607", 
+                SearchFields = "3607,ייטב", 
+                Inactive = false, 
+                LocalName = "ייטב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3608", 
+                SearchFields = "3608,מעלה אפרים", 
+                Inactive = false, 
+                LocalName = "מעלה אפרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3609", 
+                SearchFields = "3609,חמרה", 
+                Inactive = false, 
+                LocalName = "חמרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3610", 
+                SearchFields = "3610,מצפה שלם", 
+                Inactive = false, 
+                LocalName = "מצפה שלם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3611", 
+                SearchFields = "3611,קריית ארבע", 
+                Inactive = false, 
+                LocalName = "קריית ארבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3612", 
+                SearchFields = "3612,בקעות", 
+                Inactive = false, 
+                LocalName = "בקעות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3613", 
+                SearchFields = "3613,גיתית", 
+                Inactive = false, 
+                LocalName = "גיתית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3614", 
+                SearchFields = "3614,מכורה", 
+                Inactive = false, 
+                LocalName = "מכורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3615", 
+                SearchFields = "3615,פצאל", 
+                Inactive = false, 
+                LocalName = "פצאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3616", 
+                SearchFields = "3616,מעלה אדומים", 
+                Inactive = false, 
+                LocalName = "מעלה אדומים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3617", 
+                SearchFields = "3617,עפרה", 
+                Inactive = false, 
+                LocalName = "עפרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3618", 
+                SearchFields = "3618,אלעזר", 
+                Inactive = false, 
+                LocalName = "אלעזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3619", 
+                SearchFields = "3619,רועי", 
+                Inactive = false, 
+                LocalName = "רועי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "362", 
+                SearchFields = "362,רוחמה", 
+                Inactive = false, 
+                LocalName = "רוחמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3620", 
+                SearchFields = "3620,נירן", 
+                Inactive = false, 
+                LocalName = "נירן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3621", 
+                SearchFields = "3621,סאויה", 
+                Inactive = false, 
+                LocalName = "סאויה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3622", 
+                SearchFields = "3622,סאלם שטחים", 
+                Inactive = false, 
+                LocalName = "סאלם שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3623", 
+                SearchFields = "3623,צאנור", 
+                Inactive = false, 
+                LocalName = "צאנור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3624", 
+                SearchFields = "3624,סבסטיה", 
+                Inactive = false, 
+                LocalName = "סבסטיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3625", 
+                SearchFields = "3625,סואחרה", 
+                Inactive = false, 
+                LocalName = "סואחרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3626", 
+                SearchFields = "3626,סילת אל דאהר", 
+                Inactive = false, 
+                LocalName = "סילת אל דאהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3627", 
+                SearchFields = "3627,סילת אל חארתיה", 
+                Inactive = false, 
+                LocalName = "סילת אל חארתיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3628", 
+                SearchFields = "3628,סיריס", 
+                Inactive = false, 
+                LocalName = "סיריס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3629", 
+                SearchFields = "3629,סלואד", 
+                Inactive = false, 
+                LocalName = "סלואד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "363", 
+                SearchFields = "363,חפץ חיים", 
+                Inactive = false, 
+                LocalName = "חפץ חיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3630", 
+                SearchFields = "3630,סלפית", 
+                Inactive = false, 
+                LocalName = "סלפית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3631", 
+                SearchFields = "3631,סמוע", 
+                Inactive = false, 
+                LocalName = "סמוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3632", 
+                SearchFields = "3632,סנג'ל", 
+                Inactive = false, 
+                LocalName = "סנג'ל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3633", 
+                SearchFields = "3633,סניריה", 
+                Inactive = false, 
+                LocalName = "סניריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3634", 
+                SearchFields = "3634,סעיר", 
+                Inactive = false, 
+                LocalName = "סעיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3635", 
+                SearchFields = "3635,ספארין", 
+                Inactive = false, 
+                LocalName = "ספארין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3636", 
+                SearchFields = "3636,סרדה", 
+                Inactive = false, 
+                LocalName = "סרדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3637", 
+                SearchFields = "3637,מעלה שומרון", 
+                Inactive = false, 
+                LocalName = "מעלה שומרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3638", 
+                SearchFields = "3638,כפר אדומים", 
+                Inactive = false, 
+                LocalName = "כפר אדומים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3639", 
+                SearchFields = "3639,ורד יריחו", 
+                Inactive = false, 
+                LocalName = "ורד יריחו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "364", 
+                SearchFields = "364,כפר אוריה", 
+                Inactive = false, 
+                LocalName = "כפר אוריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3640", 
+                SearchFields = "3640,קרני שומרון", 
+                Inactive = false, 
+                LocalName = "קרני שומרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3641", 
+                SearchFields = "3641,שילה", 
+                Inactive = false, 
+                LocalName = "שילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3642", 
+                SearchFields = "3642,חומש", 
+                Inactive = false, 
+                LocalName = "חומש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3643", 
+                SearchFields = "3643,חיננית", 
+                Inactive = false, 
+                LocalName = "חיננית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3644", 
+                SearchFields = "3644,גבעון החדשה", 
+                Inactive = false, 
+                LocalName = "גבעון החדשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3645", 
+                SearchFields = "3645,בית הערבה", 
+                Inactive = false, 
+                LocalName = "בית הערבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3646", 
+                SearchFields = "3646,חמדת", 
+                Inactive = false, 
+                LocalName = "חמדת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3647", 
+                SearchFields = "3647,יקיר", 
+                Inactive = false, 
+                LocalName = "יקיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3648", 
+                SearchFields = "3648,מתתיהו", 
+                Inactive = false, 
+                LocalName = "מתתיהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3649", 
+                SearchFields = "3649,שקד", 
+                Inactive = false, 
+                LocalName = "שקד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "365", 
+                SearchFields = "365,בית קשת", 
+                Inactive = false, 
+                LocalName = "בית קשת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3650", 
+                SearchFields = "3650,אפרתה", 
+                Inactive = false, 
+                LocalName = "אפרתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3651", 
+                SearchFields = "3651,מעלה מכמש", 
+                Inactive = false, 
+                LocalName = "מעלה מכמש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3652", 
+                SearchFields = "3652,בית אריה", 
+                Inactive = false, 
+                LocalName = "בית אריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3653", 
+                SearchFields = "3653,מעלה עמוס", 
+                Inactive = false, 
+                LocalName = "מעלה עמוס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3654", 
+                SearchFields = "3654,ברקן", 
+                Inactive = false, 
+                LocalName = "ברקן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3655", 
+                SearchFields = "3655,נילי", 
+                Inactive = false, 
+                LocalName = "נילי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3656", 
+                SearchFields = "3656,כרמל", 
+                Inactive = false, 
+                LocalName = "כרמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3657", 
+                SearchFields = "3657,מעון", 
+                Inactive = false, 
+                LocalName = "מעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3658", 
+                SearchFields = "3658,עטרת", 
+                Inactive = false, 
+                LocalName = "עטרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3659", 
+                SearchFields = "3659,פסגות", 
+                Inactive = false, 
+                LocalName = "פסגות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "366", 
+                SearchFields = "366,שמיר", 
+                Inactive = false, 
+                LocalName = "שמיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3660", 
+                SearchFields = "3660,עמנואל", 
+                Inactive = false, 
+                LocalName = "עמנואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3661", 
+                SearchFields = "3661,עאבוד", 
+                Inactive = false, 
+                LocalName = "עאבוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3662", 
+                SearchFields = "3662,עאנין", 
+                Inactive = false, 
+                LocalName = "עאנין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3663", 
+                SearchFields = "3663,עארורה", 
+                Inactive = false, 
+                LocalName = "עארורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3664", 
+                SearchFields = "3664,עבדה", 
+                Inactive = false, 
+                LocalName = "עבדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3665", 
+                SearchFields = "3665,עבוין", 
+                Inactive = false, 
+                LocalName = "עבוין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3666", 
+                SearchFields = "3666,עבידיה", 
+                Inactive = false, 
+                LocalName = "עבידיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3667", 
+                SearchFields = "3667,עג'ה", 
+                Inactive = false, 
+                LocalName = "עג'ה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3668", 
+                SearchFields = "3668,עגול", 
+                Inactive = false, 
+                LocalName = "עגול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3669", 
+                SearchFields = "3669,אוצרין", 
+                Inactive = false, 
+                LocalName = "אוצרין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "367", 
+                SearchFields = "367,עין העמק", 
+                Inactive = false, 
+                LocalName = "עין העמק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3670", 
+                SearchFields = "3670,עוריף", 
+                Inactive = false, 
+                LocalName = "עוריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3671", 
+                SearchFields = "3671,עורתא", 
+                Inactive = false, 
+                LocalName = "עורתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3672", 
+                SearchFields = "3672,עזון", 
+                Inactive = false, 
+                LocalName = "עזון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3673", 
+                SearchFields = "3673,עזון עתמה", 
+                Inactive = false, 
+                LocalName = "עזון עתמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3674", 
+                SearchFields = "3674,עזמוט", 
+                Inactive = false, 
+                LocalName = "עזמוט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3675", 
+                SearchFields = "3675,עטארה ג'נין", 
+                Inactive = false, 
+                LocalName = "עטארה ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3676", 
+                SearchFields = "3676,עטארה רמאללה", 
+                Inactive = false, 
+                LocalName = "עטארה רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3677", 
+                SearchFields = "3677,עיזריה", 
+                Inactive = false, 
+                LocalName = "עיזריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3678", 
+                SearchFields = "3678,עין אל שלטאן", 
+                Inactive = false, 
+                LocalName = "עין אל שלטאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3679", 
+                SearchFields = "3679,עין איוב", 
+                Inactive = false, 
+                LocalName = "עין איוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "368", 
+                SearchFields = "368,בירייה", 
+                Inactive = false, 
+                LocalName = "בירייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3680", 
+                SearchFields = "3680,עין אל בידא", 
+                Inactive = false, 
+                LocalName = "עין אל בידא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3681", 
+                SearchFields = "3681,עין יברוד", 
+                Inactive = false, 
+                LocalName = "עין יברוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3682", 
+                SearchFields = "3682,עין סיניא", 
+                Inactive = false, 
+                LocalName = "עין סיניא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3683", 
+                SearchFields = "3683,עין עריכ", 
+                Inactive = false, 
+                LocalName = "עין עריכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3684", 
+                SearchFields = "3684,עין קיניא", 
+                Inactive = false, 
+                LocalName = "עין קיניא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3685", 
+                SearchFields = "3685,עינאבוס", 
+                Inactive = false, 
+                LocalName = "עינאבוס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3686", 
+                SearchFields = "3686,עלאר", 
+                Inactive = false, 
+                LocalName = "עלאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3687", 
+                SearchFields = "3687,עלקה", 
+                Inactive = false, 
+                LocalName = "עלקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3688", 
+                SearchFields = "3688,עמוריה", 
+                Inactive = false, 
+                LocalName = "עמוריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3689", 
+                SearchFields = "3689,ענאב אל צגיר", 
+                Inactive = false, 
+                LocalName = "ענאב אל צגיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "369", 
+                SearchFields = "369,גלעד (אבן יצחק)", 
+                Inactive = false, 
+                LocalName = "גלעד (אבן יצחק)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3690", 
+                SearchFields = "3690,ענאתא", 
+                Inactive = false, 
+                LocalName = "ענאתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3691", 
+                SearchFields = "3691,ענבתא", 
+                Inactive = false, 
+                LocalName = "ענבתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3692", 
+                SearchFields = "3692,ענזה", 
+                Inactive = false, 
+                LocalName = "ענזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3693", 
+                SearchFields = "3693,עסכר", 
+                Inactive = false, 
+                LocalName = "עסכר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3694", 
+                SearchFields = "3694,עצירה אל קבליה", 
+                Inactive = false, 
+                LocalName = "עצירה אל קבליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3695", 
+                SearchFields = "3695,עצירה אלשמאליה", 
+                Inactive = false, 
+                LocalName = "עצירה אלשמאליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3696", 
+                SearchFields = "3696,עקאבה", 
+                Inactive = false, 
+                LocalName = "עקאבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3697", 
+                SearchFields = "3697,עקבת גבר", 
+                Inactive = false, 
+                LocalName = "עקבת גבר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3698", 
+                SearchFields = "3698,חרבת עילת עלי", 
+                Inactive = false, 
+                LocalName = "חרבת עילת עלי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3699", 
+                SearchFields = "3699,עקרבה", 
+                Inactive = false, 
+                LocalName = "עקרבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "37", 
+                SearchFields = "37,איתן", 
+                Inactive = false, 
+                LocalName = "איתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "370", 
+                SearchFields = "370,גזר", 
+                Inactive = false, 
+                LocalName = "גזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3700", 
+                SearchFields = "3700,קלקיליה", 
+                Inactive = false, 
+                LocalName = "קלקיליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3701", 
+                SearchFields = "3701,עראבה שטחים", 
+                Inactive = false, 
+                LocalName = "עראבה שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3702", 
+                SearchFields = "3702,עראנה", 
+                Inactive = false, 
+                LocalName = "עראנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3703", 
+                SearchFields = "3703,עראק בורין", 
+                Inactive = false, 
+                LocalName = "עראק בורין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3704", 
+                SearchFields = "3704,ערבונה", 
+                Inactive = false, 
+                LocalName = "ערבונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3705", 
+                SearchFields = "3705,ערקה", 
+                Inactive = false, 
+                LocalName = "ערקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3706", 
+                SearchFields = "3706,עתיל", 
+                Inactive = false, 
+                LocalName = "עתיל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3708", 
+                SearchFields = "3708,עסאכרה", 
+                Inactive = false, 
+                LocalName = "עסאכרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3709", 
+                SearchFields = "3709,מבוא חורון", 
+                Inactive = false, 
+                LocalName = "מבוא חורון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "371", 
+                SearchFields = "371,כדורי", 
+                Inactive = false, 
+                LocalName = "כדורי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3710", 
+                SearchFields = "3710,ברכה", 
+                Inactive = false, 
+                LocalName = "ברכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3711", 
+                SearchFields = "3711,שא-נור", 
+                Inactive = false, 
+                LocalName = "שא-נור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3712", 
+                SearchFields = "3712,ענב", 
+                Inactive = false, 
+                LocalName = "ענב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3713", 
+                SearchFields = "3713,נעמה", 
+                Inactive = false, 
+                LocalName = "נעמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3715", 
+                SearchFields = "3715,עלמון", 
+                Inactive = false, 
+                LocalName = "עלמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3717", 
+                SearchFields = "3717,חרמש", 
+                Inactive = false, 
+                LocalName = "חרמש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3719", 
+                SearchFields = "3719,תלם", 
+                Inactive = false, 
+                LocalName = "תלם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "372", 
+                SearchFields = "372,רמות נפתלי", 
+                Inactive = false, 
+                LocalName = "רמות נפתלי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3720", 
+                SearchFields = "3720,שערי תקווה", 
+                Inactive = false, 
+                LocalName = "שערי תקווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3722", 
+                SearchFields = "3722,אשכולות", 
+                Inactive = false, 
+                LocalName = "אשכולות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3723", 
+                SearchFields = "3723,פני חבר", 
+                Inactive = false, 
+                LocalName = "פני חבר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3724", 
+                SearchFields = "3724,נגוהות", 
+                Inactive = false, 
+                LocalName = "נגוהות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3725", 
+                SearchFields = "3725,נווה דניאל", 
+                Inactive = false, 
+                LocalName = "נווה דניאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3726", 
+                SearchFields = "3726,נוקדים", 
+                Inactive = false, 
+                LocalName = "נוקדים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3727", 
+                SearchFields = "3727,עלי זהב", 
+                Inactive = false, 
+                LocalName = "עלי זהב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3729", 
+                SearchFields = "3729,כדים", 
+                Inactive = false, 
+                LocalName = "כדים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "373", 
+                SearchFields = "373,בית הלוי", 
+                Inactive = false, 
+                LocalName = "בית הלוי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3730", 
+                SearchFields = "3730,גבעת זאב", 
+                Inactive = false, 
+                LocalName = "גבעת זאב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3731", 
+                SearchFields = "3731,פרוש בית דגן", 
+                Inactive = false, 
+                LocalName = "פרוש בית דגן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3732", 
+                SearchFields = "3732,פוור", 
+                Inactive = false, 
+                LocalName = "פוור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3733", 
+                SearchFields = "3733,פחמה", 
+                Inactive = false, 
+                LocalName = "פחמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3734", 
+                SearchFields = "3734,פלאמה", 
+                Inactive = false, 
+                LocalName = "פלאמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3735", 
+                SearchFields = "3735,פנדק", 
+                Inactive = false, 
+                LocalName = "פנדק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3736", 
+                SearchFields = "3736,פנדקומיה", 
+                Inactive = false, 
+                LocalName = "פנדקומיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3737", 
+                SearchFields = "3737,פצאיל", 
+                Inactive = false, 
+                LocalName = "פצאיל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3738", 
+                SearchFields = "3738,פקועה", 
+                Inactive = false, 
+                LocalName = "פקועה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3739", 
+                SearchFields = "3739,פרחה", 
+                Inactive = false, 
+                LocalName = "פרחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "374", 
+                SearchFields = "374,חוקוק", 
+                Inactive = false, 
+                LocalName = "חוקוק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3740", 
+                SearchFields = "3740,פרעה אל גיפטליכ", 
+                Inactive = false, 
+                LocalName = "פרעה אל גיפטליכ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3741", 
+                SearchFields = "3741,פרעון", 
+                Inactive = false, 
+                LocalName = "פרעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3742", 
+                SearchFields = "3742,פרעתה", 
+                Inactive = false, 
+                LocalName = "פרעתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3743", 
+                SearchFields = "3743,טנא", 
+                Inactive = false, 
+                LocalName = "טנא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3744", 
+                EnglishName = "??????", 
+                SearchFields = "3744,ברוכין", 
+                Inactive = false, 
+                LocalName = "ברוכין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3745", 
+                SearchFields = "3745,מצדות יהודה", 
+                Inactive = false, 
+                LocalName = "מצדות יהודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3746", 
+                SearchFields = "3746,קריית נטפים", 
+                Inactive = false, 
+                LocalName = "קריית נטפים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3747", 
+                SearchFields = "3747,דולב", 
+                Inactive = false, 
+                LocalName = "דולב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3748", 
+                SearchFields = "3748,עתניאל", 
+                Inactive = false, 
+                LocalName = "עתניאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3749", 
+                SearchFields = "3749,יצהר", 
+                Inactive = false, 
+                LocalName = "יצהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "375", 
+                SearchFields = "375,מגל", 
+                Inactive = false, 
+                LocalName = "מגל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3750", 
+                SearchFields = "3750,אלפי מנשה", 
+                Inactive = false, 
+                LocalName = "אלפי מנשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3751", 
+                SearchFields = "3751,מגדלים", 
+                Inactive = false, 
+                LocalName = "מגדלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3752", 
+                SearchFields = "3752,מעלה לבונה", 
+                Inactive = false, 
+                LocalName = "מעלה לבונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3754", 
+                SearchFields = "3754,אספר", 
+                Inactive = false, 
+                LocalName = "אספר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3756", 
+                SearchFields = "3756,סוסיה", 
+                Inactive = false, 
+                LocalName = "סוסיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3758", 
+                SearchFields = "3758,גנים", 
+                Inactive = false, 
+                LocalName = "גנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3759", 
+                SearchFields = "3759,אדורה", 
+                Inactive = false, 
+                LocalName = "אדורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "376", 
+                SearchFields = "376,עברון", 
+                Inactive = false, 
+                LocalName = "עברון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3760", 
+                SearchFields = "3760,אורנית", 
+                Inactive = false, 
+                LocalName = "אורנית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3762", 
+                SearchFields = "3762,איתמר", 
+                Inactive = false, 
+                LocalName = "איתמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3763", 
+                SearchFields = "3763,גבע בנימין", 
+                Inactive = false, 
+                LocalName = "גבע בנימין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3764", 
+                SearchFields = "3764,חגי", 
+                Inactive = false, 
+                LocalName = "חגי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3765", 
+                SearchFields = "3765,עלי", 
+                Inactive = false, 
+                LocalName = "עלי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3766", 
+                SearchFields = "3766,כרמי צור", 
+                Inactive = false, 
+                LocalName = "כרמי צור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3767", 
+                SearchFields = "3767,נחליאל", 
+                Inactive = false, 
+                LocalName = "נחליאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3768", 
+                SearchFields = "3768,פדואל", 
+                Inactive = false, 
+                LocalName = "פדואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3769", 
+                SearchFields = "3769,הר אדר", 
+                Inactive = false, 
+                LocalName = "הר אדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "377", 
+                SearchFields = "377,המעפיל", 
+                Inactive = false, 
+                LocalName = "המעפיל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3770", 
+                SearchFields = "3770,חשמונאים", 
+                Inactive = false, 
+                LocalName = "חשמונאים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3771", 
+                SearchFields = "3771,צוריף", 
+                Inactive = false, 
+                LocalName = "צוריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3772", 
+                SearchFields = "3772,צידא", 
+                Inactive = false, 
+                LocalName = "צידא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3773", 
+                SearchFields = "3773,ציר", 
+                Inactive = false, 
+                LocalName = "ציר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3774", 
+                SearchFields = "3774,צפא", 
+                Inactive = false, 
+                LocalName = "צפא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3775", 
+                SearchFields = "3775,צרה", 
+                Inactive = false, 
+                LocalName = "צרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3776", 
+                SearchFields = "3776,צרטא", 
+                Inactive = false, 
+                LocalName = "צרטא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3778", 
+                SearchFields = "3778,עץ אפרים", 
+                Inactive = false, 
+                LocalName = "עץ אפרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3779", 
+                SearchFields = "3779,כוכב יעקב", 
+                Inactive = false, 
+                LocalName = "כוכב יעקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "378", 
+                SearchFields = "378,משגב עם", 
+                Inactive = false, 
+                LocalName = "משגב עם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3780", 
+                SearchFields = "3780,ביתר עילית", 
+                Inactive = false, 
+                LocalName = "ביתר עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3781", 
+                SearchFields = "3781,קדר", 
+                Inactive = false, 
+                LocalName = "קדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3782", 
+                SearchFields = "3782,רותם", 
+                Inactive = false, 
+                LocalName = "רותם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3784", 
+                SearchFields = "3784,שמעה", 
+                Inactive = false, 
+                LocalName = "שמעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3785", 
+                SearchFields = "3785,משכיות", 
+                Inactive = false, 
+                LocalName = "משכיות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3786", 
+                SearchFields = "3786,אבנת", 
+                Inactive = false, 
+                LocalName = "אבנת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3787", 
+                SearchFields = "3787,נעלה", 
+                Inactive = false, 
+                LocalName = "נעלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3788", 
+                SearchFields = "3788,טלמון", 
+                Inactive = false, 
+                LocalName = "טלמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "379", 
+                SearchFields = "379,גאולים", 
+                Inactive = false, 
+                LocalName = "גאולים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3790", 
+                SearchFields = "3790,נופים", 
+                Inactive = false, 
+                LocalName = "נופים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3791", 
+                SearchFields = "3791,צופים", 
+                Inactive = false, 
+                LocalName = "צופים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3793", 
+                SearchFields = "3793,אבני חפץ", 
+                Inactive = false, 
+                LocalName = "אבני חפץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3794", 
+                SearchFields = "3794,בת עין", 
+                Inactive = false, 
+                LocalName = "בת עין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3795", 
+                SearchFields = "3795,רבבה", 
+                Inactive = false, 
+                LocalName = "רבבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3796", 
+                SearchFields = "3796,כפר האורנים", 
+                Inactive = false, 
+                LocalName = "כפר האורנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3797", 
+                SearchFields = "3797,מודיעין עילית", 
+                Inactive = false, 
+                LocalName = "מודיעין עילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "38", 
+                SearchFields = "38,כרי דשא", 
+                Inactive = false, 
+                LocalName = "כרי דשא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "380", 
+                SearchFields = "380,להבות הבשן", 
+                Inactive = false, 
+                LocalName = "להבות הבשן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3800", 
+                SearchFields = "3800,רמאללה", 
+                Inactive = false, 
+                LocalName = "רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3801", 
+                SearchFields = "3801,קבאטיה", 
+                Inactive = false, 
+                LocalName = "קבאטיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3802", 
+                SearchFields = "3802,קביבה", 
+                Inactive = false, 
+                LocalName = "קביבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3803", 
+                SearchFields = "3803,קבלאן", 
+                Inactive = false, 
+                LocalName = "קבלאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3804", 
+                SearchFields = "3804,קוצין", 
+                Inactive = false, 
+                LocalName = "קוצין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3805", 
+                SearchFields = "3805,קטנה", 
+                Inactive = false, 
+                LocalName = "קטנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3806", 
+                SearchFields = "3806,קביא", 
+                Inactive = false, 
+                LocalName = "קביא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3807", 
+                SearchFields = "3807,קילא", 
+                Inactive = false, 
+                LocalName = "קילא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3808", 
+                SearchFields = "3808,קירה", 
+                Inactive = false, 
+                LocalName = "קירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3809", 
+                SearchFields = "3809,קלנדיה", 
+                Inactive = false, 
+                LocalName = "קלנדיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3810", 
+                SearchFields = "3810,קפין", 
+                Inactive = false, 
+                LocalName = "קפין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3811", 
+                SearchFields = "3811,קצרה", 
+                Inactive = false, 
+                LocalName = "קצרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3812", 
+                SearchFields = "3812,קראות בני זיד", 
+                Inactive = false, 
+                LocalName = "קראות בני זיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3813", 
+                SearchFields = "3813,קראות בני חסן", 
+                Inactive = false, 
+                LocalName = "קראות בני חסן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3814", 
+                SearchFields = "3814,קריות", 
+                Inactive = false, 
+                LocalName = "קריות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "382", 
+                SearchFields = "382,מכמורת", 
+                Inactive = false, 
+                LocalName = "מכמורת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3822", 
+                EnglishName = "?????", 
+                SearchFields = "3822,רחלים", 
+                Inactive = false, 
+                LocalName = "רחלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3823", 
+                EnglishName = "??? ???????", 
+                SearchFields = "3823,גני מודיעין", 
+                Inactive = false, 
+                LocalName = "גני מודיעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "383", 
+                SearchFields = "383,עין הנציב", 
+                Inactive = false, 
+                LocalName = "עין הנציב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3841", 
+                SearchFields = "3841,ראבא", 
+                Inactive = false, 
+                LocalName = "ראבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3842", 
+                SearchFields = "3842,ראבוד", 
+                Inactive = false, 
+                LocalName = "ראבוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3843", 
+                SearchFields = "3843,ראם", 
+                Inactive = false, 
+                LocalName = "ראם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3844", 
+                SearchFields = "3844,ראמה שטחים", 
+                Inactive = false, 
+                LocalName = "ראמה שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3845", 
+                SearchFields = "3845,ראמין", 
+                Inactive = false, 
+                LocalName = "ראמין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3846", 
+                SearchFields = "3846,ראס", 
+                Inactive = false, 
+                LocalName = "ראס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3847", 
+                SearchFields = "3847,ראס כרכר", 
+                Inactive = false, 
+                LocalName = "ראס כרכר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3848", 
+                SearchFields = "3848,ראס סניסל", 
+                Inactive = false, 
+                LocalName = "ראס סניסל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3849", 
+                SearchFields = "3849,ראפאת חברון", 
+                Inactive = false, 
+                LocalName = "ראפאת חברון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "385", 
+                SearchFields = "385,עמיעד", 
+                Inactive = false, 
+                LocalName = "עמיעד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3850", 
+                SearchFields = "3850,ראפאת טול כרם", 
+                Inactive = false, 
+                LocalName = "ראפאת טול כרם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3851", 
+                SearchFields = "3851,ראפאת רמאללה", 
+                Inactive = false, 
+                LocalName = "ראפאת רמאללה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3852", 
+                SearchFields = "3852,רוגיב", 
+                Inactive = false, 
+                LocalName = "רוגיב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3853", 
+                SearchFields = "3853,רחימה", 
+                Inactive = false, 
+                LocalName = "רחימה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3854", 
+                SearchFields = "3854,ריחיה", 
+                Inactive = false, 
+                LocalName = "ריחיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3855", 
+                SearchFields = "3855,רמאנה שטחים", 
+                Inactive = false, 
+                LocalName = "רמאנה שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3856", 
+                SearchFields = "3856,רמון", 
+                Inactive = false, 
+                LocalName = "רמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3857", 
+                SearchFields = "3857,רנתיס", 
+                Inactive = false, 
+                LocalName = "רנתיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3858", 
+                SearchFields = "3858,רפידה", 
+                Inactive = false, 
+                LocalName = "רפידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3859", 
+                SearchFields = "3859,רפידיה", 
+                Inactive = false, 
+                LocalName = "רפידיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "386", 
+                SearchFields = "386,בני דרור", 
+                Inactive = false, 
+                LocalName = "בני דרור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "387", 
+                SearchFields = "387,כפר מונש", 
+                Inactive = false, 
+                LocalName = "כפר מונש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "388", 
+                SearchFields = "388,כפר קיש", 
+                Inactive = false, 
+                LocalName = "כפר קיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3881", 
+                SearchFields = "3881,שבתין", 
+                Inactive = false, 
+                LocalName = "שבתין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3882", 
+                SearchFields = "3882,שויכה", 
+                Inactive = false, 
+                LocalName = "שויכה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3883", 
+                SearchFields = "3883,שופה", 
+                Inactive = false, 
+                LocalName = "שופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3884", 
+                SearchFields = "3884,שיוח", 
+                Inactive = false, 
+                LocalName = "שיוח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3885", 
+                SearchFields = "3885,שיח אחמד אל עבד", 
+                Inactive = false, 
+                LocalName = "שיח אחמד אל עבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3886", 
+                SearchFields = "3886,שיח סעיד", 
+                Inactive = false, 
+                LocalName = "שיח סעיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3888", 
+                SearchFields = "3888,שקבה", 
+                Inactive = false, 
+                LocalName = "שקבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "389", 
+                SearchFields = "389,בצרה", 
+                Inactive = false, 
+                LocalName = "בצרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "39", 
+                SearchFields = "39,גפן", 
+                Inactive = false, 
+                LocalName = "גפן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "390", 
+                SearchFields = "390,רגבה", 
+                Inactive = false, 
+                LocalName = "רגבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3900", 
+                SearchFields = "3900,שכם", 
+                Inactive = false, 
+                LocalName = "שכם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3911", 
+                SearchFields = "3911,תיאסיר", 
+                Inactive = false, 
+                LocalName = "תיאסיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3912", 
+                SearchFields = "3912,תל", 
+                Inactive = false, 
+                LocalName = "תל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3913", 
+                SearchFields = "3913,תל א שמסיה", 
+                Inactive = false, 
+                LocalName = "תל א שמסיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3914", 
+                SearchFields = "3914,תל אל בידא", 
+                Inactive = false, 
+                LocalName = "תל אל בידא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3915", 
+                SearchFields = "3915,תלפית שכם", 
+                Inactive = false, 
+                LocalName = "תלפית שכם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3916", 
+                SearchFields = "3916,תלפית ג'נין", 
+                Inactive = false, 
+                LocalName = "תלפית ג'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3917", 
+                SearchFields = "3917,תענך", 
+                Inactive = false, 
+                LocalName = "תענך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3918", 
+                SearchFields = "3918,תפוח", 
+                Inactive = false, 
+                LocalName = "תפוח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3919", 
+                SearchFields = "3919,תקוע שטחים", 
+                Inactive = false, 
+                LocalName = "תקוע שטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "392", 
+                SearchFields = "392,קדמה", 
+                Inactive = false, 
+                LocalName = "קדמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3920", 
+                SearchFields = "3920,תרמוסעיא", 
+                Inactive = false, 
+                LocalName = "תרמוסעיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "3921", 
+                SearchFields = "3921,תרקומיא", 
+                Inactive = false, 
+                LocalName = "תרקומיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "393", 
+                SearchFields = "393,גלאון", 
+                Inactive = false, 
+                LocalName = "גלאון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "394", 
+                SearchFields = "394,שובל", 
+                Inactive = false, 
+                LocalName = "שובל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "395", 
+                SearchFields = "395,משמר הנגב", 
+                Inactive = false, 
+                LocalName = "משמר הנגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "396", 
+                SearchFields = "396,נבטים", 
+                Inactive = false, 
+                LocalName = "נבטים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "397", 
+                SearchFields = "397,חצרים", 
+                Inactive = false, 
+                LocalName = "חצרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "398", 
+                SearchFields = "398,שרשרת", 
+                Inactive = false, 
+                LocalName = "שרשרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "399", 
+                SearchFields = "399,בארי", 
+                Inactive = false, 
+                LocalName = "בארי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "400", 
+                SearchFields = "400,אבן שמואל", 
+                Inactive = false, 
+                LocalName = "אבן שמואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4000", 
+                SearchFields = "4000,חיפה", 
+                Inactive = false, 
+                LocalName = "חיפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4001", 
+                SearchFields = "4001,בוקעאתא", 
+                Inactive = false, 
+                LocalName = "בוקעאתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4002", 
+                SearchFields = "4002,אלי-עד", 
+                Inactive = false, 
+                LocalName = "אלי-עד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4003", 
+                SearchFields = "4003,אל -רום", 
+                Inactive = false, 
+                LocalName = "אל -רום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4004", 
+                SearchFields = "4004,כפר חרוב", 
+                Inactive = false, 
+                LocalName = "כפר חרוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4005", 
+                SearchFields = "4005,חספין", 
+                Inactive = false, 
+                LocalName = "חספין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4006", 
+                SearchFields = "4006,קשת", 
+                Inactive = false, 
+                LocalName = "קשת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4007", 
+                SearchFields = "4007,יונתן", 
+                Inactive = false, 
+                LocalName = "יונתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4008", 
+                SearchFields = "4008,מעלה גמלא", 
+                Inactive = false, 
+                LocalName = "מעלה גמלא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4009", 
+                SearchFields = "4009,שעל", 
+                Inactive = false, 
+                LocalName = "שעל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4010", 
+                SearchFields = "4010,אודם", 
+                Inactive = false, 
+                LocalName = "אודם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4011", 
+                SearchFields = "4011,אבני איתן", 
+                Inactive = false, 
+                LocalName = "אבני איתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4012", 
+                SearchFields = "4012,אניעם", 
+                Inactive = false, 
+                LocalName = "אניעם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4013", 
+                SearchFields = "4013,אורטל", 
+                Inactive = false, 
+                LocalName = "אורטל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4014", 
+                SearchFields = "4014,נטור", 
+                Inactive = false, 
+                LocalName = "נטור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4015", 
+                SearchFields = "4015,בני יהודה", 
+                Inactive = false, 
+                LocalName = "בני יהודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4017", 
+                SearchFields = "4017,אלוני הבשן", 
+                Inactive = false, 
+                LocalName = "אלוני הבשן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4019", 
+                SearchFields = "4019,מיצר", 
+                Inactive = false, 
+                LocalName = "מיצר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "402", 
+                SearchFields = "402,ניר יצחק", 
+                Inactive = false, 
+                LocalName = "ניר יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4021", 
+                SearchFields = "4021,גבעת יואב", 
+                Inactive = false, 
+                LocalName = "גבעת יואב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4022", 
+                SearchFields = "4022,גשור", 
+                Inactive = false, 
+                LocalName = "גשור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4024", 
+                SearchFields = "4024,קלע", 
+                Inactive = false, 
+                LocalName = "קלע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4025", 
+                SearchFields = "4025,קדמת צבי", 
+                Inactive = false, 
+                LocalName = "קדמת צבי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4026", 
+                SearchFields = "4026,חד-נס", 
+                Inactive = false, 
+                LocalName = "חד-נס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4028", 
+                SearchFields = "4028,כנף", 
+                Inactive = false, 
+                LocalName = "כנף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "403", 
+                SearchFields = "403,אורים", 
+                Inactive = false, 
+                LocalName = "אורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "405", 
+                SearchFields = "405,נווה אילן", 
+                Inactive = false, 
+                LocalName = "נווה אילן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "406", 
+                SearchFields = "406,חצור-אשדוד", 
+                Inactive = false, 
+                LocalName = "חצור-אשדוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "407", 
+                SearchFields = "407,דברת", 
+                Inactive = false, 
+                LocalName = "דברת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "408", 
+                SearchFields = "408,נאות מרדכי", 
+                Inactive = false, 
+                LocalName = "נאות מרדכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "409", 
+                SearchFields = "409,יחיעם", 
+                Inactive = false, 
+                LocalName = "יחיעם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "41", 
+                SearchFields = "41,אליכין", 
+                Inactive = false, 
+                LocalName = "אליכין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4100", 
+                SearchFields = "4100,קצרין", 
+                Inactive = false, 
+                LocalName = "קצרין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4101", 
+                SearchFields = "4101,מרום גולן", 
+                Inactive = false, 
+                LocalName = "מרום גולן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "412", 
+                SearchFields = "412,קריית שלמה", 
+                Inactive = false, 
+                LocalName = "קריית שלמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "413", 
+                SearchFields = "413,צאלים", 
+                Inactive = false, 
+                LocalName = "צאלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "414", 
+                SearchFields = "414,קלחים", 
+                Inactive = false, 
+                LocalName = "קלחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "415", 
+                SearchFields = "415,שוקדה", 
+                Inactive = false, 
+                LocalName = "שוקדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "416", 
+                SearchFields = "416,מעיין ברוך", 
+                Inactive = false, 
+                LocalName = "מעיין ברוך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "417", 
+                SearchFields = "417,יקום", 
+                Inactive = false, 
+                LocalName = "יקום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "418", 
+                SearchFields = "418,בני ציון", 
+                Inactive = false, 
+                LocalName = "בני ציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "419", 
+                SearchFields = "419,סעד", 
+                Inactive = false, 
+                LocalName = "סעד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4201", 
+                SearchFields = "4201,מג'דל שמס", 
+                Inactive = false, 
+                LocalName = "מג'דל שמס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4203", 
+                SearchFields = "4203,מסעדה", 
+                Inactive = false, 
+                LocalName = "מסעדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4204", 
+                SearchFields = "4204,מבוא חמה", 
+                Inactive = false, 
+                LocalName = "מבוא חמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "421", 
+                SearchFields = "421,משאבי שדה", 
+                Inactive = false, 
+                LocalName = "משאבי שדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "422", 
+                SearchFields = "422,חרב לאת", 
+                Inactive = false, 
+                LocalName = "חרב לאת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "423", 
+                SearchFields = "423,העוגן", 
+                Inactive = false, 
+                LocalName = "העוגן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "424", 
+                SearchFields = "424,גבים", 
+                Inactive = false, 
+                LocalName = "גבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "425", 
+                SearchFields = "425,משמרת", 
+                Inactive = false, 
+                LocalName = "משמרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "426", 
+                SearchFields = "426,עין כרמל", 
+                Inactive = false, 
+                LocalName = "עין כרמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "427", 
+                SearchFields = "427,כפר גלים", 
+                Inactive = false, 
+                LocalName = "כפר גלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "428", 
+                SearchFields = "428,ברור חיל", 
+                Inactive = false, 
+                LocalName = "ברור חיל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "429", 
+                SearchFields = "429,אלוני אבא", 
+                Inactive = false, 
+                LocalName = "אלוני אבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "43", 
+                SearchFields = "43,מטולה", 
+                Inactive = false, 
+                LocalName = "מטולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "430", 
+                SearchFields = "430,בית לחם הגלילית", 
+                Inactive = false, 
+                LocalName = "בית לחם הגלילית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4301", 
+                SearchFields = "4301,אפיק", 
+                Inactive = false, 
+                LocalName = "אפיק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4303", 
+                SearchFields = "4303,נווה אטיב", 
+                Inactive = false, 
+                LocalName = "נווה אטיב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4304", 
+                SearchFields = "4304,נוב", 
+                Inactive = false, 
+                LocalName = "נוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "431", 
+                SearchFields = "431,דלתון", 
+                Inactive = false, 
+                LocalName = "דלתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "432", 
+                SearchFields = "432,שמרת", 
+                Inactive = false, 
+                LocalName = "שמרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "433", 
+                SearchFields = "433,נחשולים", 
+                Inactive = false, 
+                LocalName = "נחשולים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "434", 
+                SearchFields = "434,החותרים", 
+                Inactive = false, 
+                LocalName = "החותרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "435", 
+                SearchFields = "435,נצר סרני", 
+                Inactive = false, 
+                LocalName = "נצר סרני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "436", 
+                SearchFields = "436,עין דור", 
+                Inactive = false, 
+                LocalName = "עין דור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "437", 
+                SearchFields = "437,רשפים", 
+                Inactive = false, 
+                LocalName = "רשפים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "439", 
+                SearchFields = "439,שלוחות", 
+                Inactive = false, 
+                LocalName = "שלוחות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "44", 
+                SearchFields = "44,זוהר", 
+                Inactive = false, 
+                LocalName = "זוהר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "440", 
+                SearchFields = "440,יסודות", 
+                Inactive = false, 
+                LocalName = "יסודות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "442", 
+                SearchFields = "442,גדעונה", 
+                Inactive = false, 
+                LocalName = "גדעונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "443", 
+                SearchFields = "443,כפר הנשיא", 
+                Inactive = false, 
+                LocalName = "כפר הנשיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "444", 
+                SearchFields = "444,רגבים", 
+                Inactive = false, 
+                LocalName = "רגבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "445", 
+                SearchFields = "445,רמות מנשה", 
+                Inactive = false, 
+                LocalName = "רמות מנשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "446", 
+                SearchFields = "446,אודים", 
+                Inactive = false, 
+                LocalName = "אודים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "447", 
+                SearchFields = "447,נורדייה", 
+                Inactive = false, 
+                LocalName = "נורדייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "448", 
+                SearchFields = "448,בני עטרות", 
+                Inactive = false, 
+                LocalName = "בני עטרות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "449", 
+                SearchFields = "449,נחלים", 
+                Inactive = false, 
+                LocalName = "נחלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "450", 
+                SearchFields = "450,בארות יצחק", 
+                Inactive = false, 
+                LocalName = "בארות יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4501", 
+                SearchFields = "4501,ע'ג'ר", 
+                Inactive = false, 
+                LocalName = "ע'ג'ר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4502", 
+                SearchFields = "4502,עין קנייא", 
+                Inactive = false, 
+                LocalName = "עין קנייא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4503", 
+                SearchFields = "4503,עין זיוון", 
+                Inactive = false, 
+                LocalName = "עין זיוון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "452", 
+                SearchFields = "452,יזרעאל", 
+                Inactive = false, 
+                LocalName = "יזרעאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "453", 
+                SearchFields = "453,יפתח", 
+                Inactive = false, 
+                LocalName = "יפתח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "454", 
+                SearchFields = "454,סער", 
+                Inactive = false, 
+                LocalName = "סער", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4551", 
+                SearchFields = "4551,נאות גולן", 
+                Inactive = false, 
+                LocalName = "נאות גולן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "456", 
+                SearchFields = "456,שורש", 
+                Inactive = false, 
+                LocalName = "שורש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "457", 
+                SearchFields = "457,גזית", 
+                Inactive = false, 
+                LocalName = "גזית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "46", 
+                SearchFields = "46,יבנאל", 
+                Inactive = false, 
+                LocalName = "יבנאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "460", 
+                SearchFields = "460,רמת רזיאל", 
+                Inactive = false, 
+                LocalName = "רמת רזיאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "462", 
+                SearchFields = "462,טל שחר", 
+                Inactive = false, 
+                LocalName = "טל שחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "463", 
+                SearchFields = "463,געתון", 
+                Inactive = false, 
+                LocalName = "געתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "464", 
+                SearchFields = "464,הראל", 
+                Inactive = false, 
+                LocalName = "הראל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "465", 
+                SearchFields = "465,צובה", 
+                Inactive = false, 
+                LocalName = "צובה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "466", 
+                SearchFields = "466,בית דגן", 
+                Inactive = false, 
+                LocalName = "בית דגן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "469", 
+                SearchFields = "469,קריית עקרון", 
+                Inactive = false, 
+                LocalName = "קריית עקרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "47", 
+                SearchFields = "47,כפר תבור", 
+                Inactive = false, 
+                LocalName = "כפר תבור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4701", 
+                SearchFields = "4701,רמת מגשימים", 
+                Inactive = false, 
+                LocalName = "רמת מגשימים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4702", 
+                SearchFields = "4702,רמות", 
+                Inactive = false, 
+                LocalName = "רמות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "472", 
+                SearchFields = "472,אבו גוש", 
+                Inactive = false, 
+                LocalName = "אבו גוש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "473", 
+                SearchFields = "473,אבו סנאן", 
+                Inactive = false, 
+                LocalName = "אבו סנאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "475", 
+                SearchFields = "475,דחי", 
+                Inactive = false, 
+                LocalName = "דחי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "478", 
+                SearchFields = "478,אכסאל", 
+                Inactive = false, 
+                LocalName = "אכסאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "48", 
+                SearchFields = "48,מנחמיה", 
+                Inactive = false, 
+                LocalName = "מנחמיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "480", 
+                SearchFields = "480,בית ג'ן", 
+                Inactive = false, 
+                LocalName = "בית ג'ן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "481", 
+                SearchFields = "481,מגאר", 
+                Inactive = false, 
+                LocalName = "מגאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "482", 
+                SearchFields = "482,בועיינה-נוג'ידאת", 
+                Inactive = false, 
+                LocalName = "בועיינה-נוג'ידאת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "483", 
+                SearchFields = "483,בענה", 
+                Inactive = false, 
+                LocalName = "בענה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "485", 
+                SearchFields = "485,ג'ולס", 
+                Inactive = false, 
+                LocalName = "ג'ולס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "487", 
+                SearchFields = "487,ג'ש (גוש חלב)", 
+                Inactive = false, 
+                LocalName = "ג'ש (גוש חלב)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "489", 
+                SearchFields = "489,דבורייה", 
+                Inactive = false, 
+                LocalName = "דבורייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "49", 
+                SearchFields = "49,אילנייה", 
+                Inactive = false, 
+                LocalName = "אילנייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "490", 
+                SearchFields = "490,דיר אל-אסד", 
+                Inactive = false, 
+                LocalName = "דיר אל-אסד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "492", 
+                SearchFields = "492,דייר חנא", 
+                Inactive = false, 
+                LocalName = "דייר חנא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "493", 
+                SearchFields = "493,דייר ראפאת", 
+                Inactive = false, 
+                LocalName = "דייר ראפאת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "494", 
+                SearchFields = "494,עיר כרמל", 
+                Inactive = false, 
+                LocalName = "עיר כרמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "496", 
+                SearchFields = "496,חורפיש", 
+                Inactive = false, 
+                LocalName = "חורפיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "497", 
+                SearchFields = "497,טייבה (בעמק)", 
+                Inactive = false, 
+                LocalName = "טייבה (בעמק)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "498", 
+                SearchFields = "498,טורעאן", 
+                Inactive = false, 
+                LocalName = "טורעאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "499", 
+                SearchFields = "499,יפיע", 
+                Inactive = false, 
+                LocalName = "יפיע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "4991", 
+                SearchFields = "4991,קרית חיים", 
+                Inactive = false, 
+                LocalName = "קרית חיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5000", 
+                SearchFields = "5000,תל אביב -יפו", 
+                Inactive = false, 
+                LocalName = "תל אביב -יפו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5001", 
+                SearchFields = "5001,אבו טוילה (כפר שן", 
+                Inactive = false, 
+                LocalName = "אבו טוילה (כפר שן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "502", 
+                SearchFields = "502,ירכא", 
+                Inactive = false, 
+                LocalName = "ירכא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "504", 
+                SearchFields = "504,כאבול", 
+                Inactive = false, 
+                LocalName = "כאבול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "505", 
+                SearchFields = "505,כאוכב אבו אל-היג'א", 
+                Inactive = false, 
+                LocalName = "כאוכב אבו אל-היג'א", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "507", 
+                SearchFields = "507,כפר יאסיף", 
+                Inactive = false, 
+                LocalName = "כפר יאסיף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "508", 
+                SearchFields = "508,כפר כמא", 
+                Inactive = false, 
+                LocalName = "כפר כמא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "509", 
+                SearchFields = "509,כפר כנא", 
+                Inactive = false, 
+                LocalName = "כפר כנא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "510", 
+                SearchFields = "510,כפר מנדא", 
+                Inactive = false, 
+                LocalName = "כפר מנדא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5100", 
+                SearchFields = "5100,אל עריש", 
+                Inactive = false, 
+                LocalName = "אל עריש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5101", 
+                SearchFields = "5101,ביוכי", 
+                Inactive = false, 
+                LocalName = "ביוכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5102", 
+                SearchFields = "5102,בית חנון", 
+                Inactive = false, 
+                LocalName = "בית חנון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5103", 
+                SearchFields = "5103,בית לאהיה", 
+                Inactive = false, 
+                LocalName = "בית לאהיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5104", 
+                SearchFields = "5104,בני סוהילה", 
+                Inactive = false, 
+                LocalName = "בני סוהילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "511", 
+                SearchFields = "511,עילוט", 
+                Inactive = false, 
+                LocalName = "עילוט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "512", 
+                SearchFields = "512,כפר מצר", 
+                Inactive = false, 
+                LocalName = "כפר מצר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "514", 
+                SearchFields = "514,עין ראפה", 
+                Inactive = false, 
+                LocalName = "עין ראפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "516", 
+                SearchFields = "516,שגור", 
+                Inactive = false, 
+                LocalName = "שגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "517", 
+                SearchFields = "517,מזרעה", 
+                Inactive = false, 
+                LocalName = "מזרעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "518", 
+                SearchFields = "518,מעיליא", 
+                Inactive = false, 
+                LocalName = "מעיליא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "52", 
+                SearchFields = "52,לוזית", 
+                Inactive = false, 
+                LocalName = "לוזית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "520", 
+                SearchFields = "520,משהד", 
+                Inactive = false, 
+                LocalName = "משהד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5200", 
+                SearchFields = "5200,בריג", 
+                Inactive = false, 
+                LocalName = "בריג", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5201", 
+                SearchFields = "5201,חזאעה", 
+                Inactive = false, 
+                LocalName = "חזאעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5202", 
+                SearchFields = "5202,חרבת אל עדס", 
+                Inactive = false, 
+                LocalName = "חרבת אל עדס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "521", 
+                SearchFields = "521,עין נקובא", 
+                Inactive = false, 
+                LocalName = "עין נקובא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "522", 
+                SearchFields = "522,נחף", 
+                Inactive = false, 
+                LocalName = "נחף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "523", 
+                SearchFields = "523,ניין", 
+                Inactive = false, 
+                LocalName = "ניין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "524", 
+                SearchFields = "524,נאעורה", 
+                Inactive = false, 
+                LocalName = "נאעורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "525", 
+                SearchFields = "525,סאג'ור", 
+                Inactive = false, 
+                LocalName = "סאג'ור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "526", 
+                SearchFields = "526,סולם", 
+                Inactive = false, 
+                LocalName = "סולם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "527", 
+                SearchFields = "527,שזור", 
+                Inactive = false, 
+                LocalName = "שזור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "528", 
+                SearchFields = "528,עוזייר", 
+                Inactive = false, 
+                LocalName = "עוזייר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "529", 
+                SearchFields = "529,אעבלין", 
+                Inactive = false, 
+                LocalName = "אעבלין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "53", 
+                SearchFields = "53,עתלית", 
+                Inactive = false, 
+                LocalName = "עתלית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "530", 
+                SearchFields = "530,עיילבון", 
+                Inactive = false, 
+                LocalName = "עיילבון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5300", 
+                SearchFields = "5300,גבאליה העיר", 
+                Inactive = false, 
+                LocalName = "גבאליה העיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5301", 
+                SearchFields = "5301,מגאזי", 
+                Inactive = false, 
+                LocalName = "מגאזי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5302", 
+                SearchFields = "5302,מצבח", 
+                Inactive = false, 
+                LocalName = "מצבח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "531", 
+                SearchFields = "531,עראבה", 
+                Inactive = false, 
+                LocalName = "עראבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "532", 
+                SearchFields = "532,עין מאהל", 
+                Inactive = false, 
+                LocalName = "עין מאהל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "534", 
+                SearchFields = "534,עספיא", 
+                Inactive = false, 
+                LocalName = "עספיא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "535", 
+                SearchFields = "535,פסוטה", 
+                Inactive = false, 
+                LocalName = "פסוטה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "536", 
+                SearchFields = "536,פקיעין (בוקייעה)", 
+                Inactive = false, 
+                LocalName = "פקיעין (בוקייעה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "537", 
+                SearchFields = "537,פוריידיס", 
+                Inactive = false, 
+                LocalName = "פוריידיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "538", 
+                SearchFields = "538,שעב", 
+                Inactive = false, 
+                LocalName = "שעב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "539", 
+                SearchFields = "539,רומאנה", 
+                Inactive = false, 
+                LocalName = "רומאנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5390", 
+                SearchFields = "5390,גבאליה", 
+                Inactive = false, 
+                LocalName = "גבאליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "540", 
+                SearchFields = "540,ריחאנייה", 
+                Inactive = false, 
+                LocalName = "ריחאנייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5400", 
+                SearchFields = "5400,דיר אל בלח העיר", 
+                Inactive = false, 
+                LocalName = "דיר אל בלח העיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5405", 
+                SearchFields = "5405,כפר דרום", 
+                Inactive = false, 
+                LocalName = "כפר דרום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5407", 
+                SearchFields = "5407,מורג", 
+                Inactive = false, 
+                LocalName = "מורג", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5408", 
+                SearchFields = "5408,נצרים", 
+                Inactive = false, 
+                LocalName = "נצרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "541", 
+                SearchFields = "541,ג'סר א-זרקא", 
+                Inactive = false, 
+                LocalName = "ג'סר א-זרקא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5410", 
+                EnglishName = "??? ???? (??? ????)", 
+                SearchFields = "5410,נצר חזני (גוש קטיף)", 
+                Inactive = true, 
+                LocalName = "נצר חזני (גוש קטיף)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "542", 
+                SearchFields = "542,ריינה", 
+                Inactive = false, 
+                LocalName = "ריינה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5423", 
+                SearchFields = "5423,קטיף", 
+                Inactive = false, 
+                LocalName = "קטיף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5424", 
+                SearchFields = "5424,גני טל", 
+                Inactive = false, 
+                LocalName = "גני טל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5425", 
+                SearchFields = "5425,בני עצמון", 
+                Inactive = false, 
+                LocalName = "בני עצמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5426", 
+                SearchFields = "5426,ניסנית", 
+                Inactive = false, 
+                LocalName = "ניסנית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5427", 
+                SearchFields = "5427,נווה דקלים", 
+                Inactive = false, 
+                LocalName = "נווה דקלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5428", 
+                SearchFields = "5428,אלי סיני", 
+                Inactive = false, 
+                LocalName = "אלי סיני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5429", 
+                SearchFields = "5429,גדיד", 
+                Inactive = false, 
+                LocalName = "גדיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "543", 
+                SearchFields = "543,ראמה", 
+                Inactive = false, 
+                LocalName = "ראמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5431", 
+                SearchFields = "5431,גן אור", 
+                Inactive = false, 
+                LocalName = "גן אור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5432", 
+                SearchFields = "5432,בדולח", 
+                Inactive = false, 
+                LocalName = "בדולח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5433", 
+                SearchFields = "5433,רפיח ים", 
+                Inactive = false, 
+                LocalName = "רפיח ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5434", 
+                SearchFields = "5434,שליו", 
+                Inactive = false, 
+                LocalName = "שליו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5435", 
+                SearchFields = "5435,דוגית", 
+                Inactive = false, 
+                LocalName = "דוגית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5436", 
+                SearchFields = "5436,פאת שדה", 
+                Inactive = false, 
+                LocalName = "פאת שדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "546", 
+                SearchFields = "546,עין אל-אסד", 
+                Inactive = false, 
+                LocalName = "עין אל-אסד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "547", 
+                SearchFields = "547,טמרה (יזרעאל)", 
+                Inactive = false, 
+                LocalName = "טמרה (יזרעאל)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "549", 
+                SearchFields = "549,גנות הדר", 
+                Inactive = false, 
+                LocalName = "גנות הדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5490", 
+                SearchFields = "5490,דיר אל בלח", 
+                Inactive = false, 
+                LocalName = "דיר אל בלח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "55", 
+                SearchFields = "55,נוגה", 
+                Inactive = false, 
+                LocalName = "נוגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5500", 
+                SearchFields = "5500,חאן יונס העיר", 
+                Inactive = false, 
+                LocalName = "חאן יונס העיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5501", 
+                SearchFields = "5501,סייפה", 
+                Inactive = false, 
+                LocalName = "סייפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "553", 
+                SearchFields = "553,ניר בנים", 
+                Inactive = false, 
+                LocalName = "ניר בנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "555", 
+                SearchFields = "555,שדמה", 
+                Inactive = false, 
+                LocalName = "שדמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "559", 
+                SearchFields = "559,בוסתן הגליל", 
+                Inactive = false, 
+                LocalName = "בוסתן הגליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5590", 
+                SearchFields = "5590,חאן יונס", 
+                Inactive = false, 
+                LocalName = "חאן יונס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5600", 
+                SearchFields = "5600,נציראת", 
+                Inactive = false, 
+                LocalName = "נציראת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5601", 
+                SearchFields = "5601,עבאסן אל כביר", 
+                Inactive = false, 
+                LocalName = "עבאסן אל כביר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5602", 
+                SearchFields = "5602,עבאסן אל צעירה", 
+                Inactive = false, 
+                LocalName = "עבאסן אל צעירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5603", 
+                SearchFields = "5603,עטאטרה", 
+                Inactive = false, 
+                LocalName = "עטאטרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5604", 
+                SearchFields = "5604,זוואידה", 
+                Inactive = false, 
+                LocalName = "זוואידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "562", 
+                SearchFields = "562,בית אלעזרי", 
+                Inactive = false, 
+                LocalName = "בית אלעזרי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "563", 
+                SearchFields = "563,משמר דוד", 
+                Inactive = false, 
+                LocalName = "משמר דוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "564", 
+                SearchFields = "564,רבדים", 
+                Inactive = false, 
+                LocalName = "רבדים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5640", 
+                SearchFields = "5640,קבה", 
+                Inactive = false, 
+                LocalName = "קבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5641", 
+                SearchFields = "5641,קרארה", 
+                Inactive = false, 
+                LocalName = "קרארה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "565", 
+                SearchFields = "565,אזור", 
+                Inactive = false, 
+                LocalName = "אזור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "566", 
+                SearchFields = "566,גבעת שמש", 
+                Inactive = false, 
+                LocalName = "גבעת שמש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "567", 
+                SearchFields = "567,צרעה", 
+                Inactive = false, 
+                LocalName = "צרעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "57", 
+                SearchFields = "57,כנרת (קבוצה)", 
+                Inactive = false, 
+                LocalName = "כנרת (קבוצה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "570", 
+                SearchFields = "570,מעונה", 
+                Inactive = false, 
+                LocalName = "מעונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5700", 
+                SearchFields = "5700,עזה", 
+                Inactive = false, 
+                LocalName = "עזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5701", 
+                SearchFields = "5701,שיח עגלין", 
+                Inactive = false, 
+                LocalName = "שיח עגלין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5702", 
+                SearchFields = "5702,שיח אחמד", 
+                Inactive = false, 
+                LocalName = "שיח אחמד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5703", 
+                SearchFields = "5703,שיח זויד", 
+                Inactive = false, 
+                LocalName = "שיח זויד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "571", 
+                SearchFields = "571,בית גמליאל", 
+                Inactive = false, 
+                LocalName = "בית גמליאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "572", 
+                SearchFields = "572,בית העמק", 
+                Inactive = false, 
+                LocalName = "בית העמק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "573", 
+                SearchFields = "573,מבקיעים", 
+                Inactive = false, 
+                LocalName = "מבקיעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "574", 
+                SearchFields = "574,גשר הזיו", 
+                Inactive = false, 
+                LocalName = "גשר הזיו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "575", 
+                SearchFields = "575,יסעור", 
+                Inactive = false, 
+                LocalName = "יסעור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5751", 
+                SearchFields = "5751,אבו חמרה", 
+                Inactive = false, 
+                LocalName = "אבו חמרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5755", 
+                SearchFields = "5755,ביר אל עבד", 
+                Inactive = false, 
+                LocalName = "ביר אל עבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5756", 
+                SearchFields = "5756,ביר לחפאן", 
+                Inactive = false, 
+                LocalName = "ביר לחפאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5757", 
+                SearchFields = "5757,ביר מלאקי", 
+                Inactive = false, 
+                LocalName = "ביר מלאקי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "576", 
+                SearchFields = "576,כברי", 
+                Inactive = false, 
+                LocalName = "כברי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5761", 
+                SearchFields = "5761,ואדי אל עריש", 
+                Inactive = false, 
+                LocalName = "ואדי אל עריש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5765", 
+                SearchFields = "5765,חרובה כולל ג'ראדה", 
+                Inactive = false, 
+                LocalName = "חרובה כולל ג'ראדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "577", 
+                SearchFields = "577,יד בנימין", 
+                Inactive = false, 
+                LocalName = "יד בנימין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5771", 
+                SearchFields = "5771,מזאר", 
+                Inactive = false, 
+                LocalName = "מזאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5772", 
+                SearchFields = "5772,מחשיב", 
+                Inactive = false, 
+                LocalName = "מחשיב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5773", 
+                SearchFields = "5773,מידאן", 
+                Inactive = false, 
+                LocalName = "מידאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5774", 
+                SearchFields = "5774,מצפק", 
+                Inactive = false, 
+                LocalName = "מצפק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5776", 
+                SearchFields = "5776,נגילה", 
+                Inactive = false, 
+                LocalName = "נגילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "578", 
+                SearchFields = "578,סאסא", 
+                Inactive = false, 
+                LocalName = "סאסא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5781", 
+                SearchFields = "5781,סלמאנה", 
+                Inactive = false, 
+                LocalName = "סלמאנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5786", 
+                SearchFields = "5786,קבר עמיר", 
+                Inactive = false, 
+                LocalName = "קבר עמיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "579", 
+                SearchFields = "579,כפר ראש הנקרה", 
+                Inactive = false, 
+                LocalName = "כפר ראש הנקרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5790", 
+                SearchFields = "5790,שאטי", 
+                Inactive = false, 
+                LocalName = "שאטי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5791", 
+                SearchFields = "5791,רבעה כולל ביר קטי", 
+                Inactive = false, 
+                LocalName = "רבעה כולל ביר קטי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5795", 
+                SearchFields = "5795,שלאק וג'ורה", 
+                Inactive = false, 
+                LocalName = "שלאק וג'ורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5796", 
+                SearchFields = "5796,גריעה", 
+                Inactive = false, 
+                LocalName = "גריעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "58", 
+                SearchFields = "58,מצפה", 
+                Inactive = false, 
+                LocalName = "מצפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "580", 
+                SearchFields = "580,כרם מהרל", 
+                Inactive = false, 
+                LocalName = "כרם מהרל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5800", 
+                SearchFields = "5800,רפיח העיר", 
+                Inactive = false, 
+                LocalName = "רפיח העיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5802", 
+                SearchFields = "5802,ג'ז אבו רעד", 
+                Inactive = false, 
+                LocalName = "ג'ז אבו רעד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5806", 
+                SearchFields = "5806,דרב אל מליח", 
+                Inactive = false, 
+                LocalName = "דרב אל מליח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5811", 
+                SearchFields = "5811,טויל אל אמיר", 
+                Inactive = false, 
+                LocalName = "טויל אל אמיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5816", 
+                SearchFields = "5816,כרם אבו מצלח", 
+                Inactive = false, 
+                LocalName = "כרם אבו מצלח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5817", 
+                SearchFields = "5817,כרם אבו שריף", 
+                Inactive = false, 
+                LocalName = "כרם אבו שריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "582", 
+                SearchFields = "582,כפר הנגיד", 
+                Inactive = false, 
+                LocalName = "כפר הנגיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5821", 
+                SearchFields = "5821,מאסורה", 
+                Inactive = false, 
+                LocalName = "מאסורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5822", 
+                SearchFields = "5822,מדפונה", 
+                Inactive = false, 
+                LocalName = "מדפונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5826", 
+                SearchFields = "5826,נקא שעבאני", 
+                Inactive = false, 
+                LocalName = "נקא שעבאני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5831", 
+                SearchFields = "5831,עזבת א דרוב", 
+                Inactive = false, 
+                LocalName = "עזבת א דרוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5832", 
+                SearchFields = "5832,ערב אבו ציבע", 
+                Inactive = false, 
+                LocalName = "ערב אבו ציבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5833", 
+                SearchFields = "5833,ערב אל חסינאת", 
+                Inactive = false, 
+                LocalName = "ערב אל חסינאת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5836", 
+                SearchFields = "5836,רכום", 
+                Inactive = false, 
+                LocalName = "רכום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5837", 
+                SearchFields = "5837,שוכת א צופי", 
+                Inactive = false, 
+                LocalName = "שוכת א צופי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "584", 
+                SearchFields = "584,זיקים", 
+                Inactive = false, 
+                LocalName = "זיקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5841", 
+                SearchFields = "5841,תל אבו שנאר", 
+                Inactive = false, 
+                LocalName = "תל אבו שנאר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5842", 
+                SearchFields = "5842,תל אל אחמר", 
+                Inactive = false, 
+                LocalName = "תל אל אחמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "585", 
+                SearchFields = "585,לביא", 
+                Inactive = false, 
+                LocalName = "לביא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5851", 
+                SearchFields = "5851,אם חשיבה", 
+                Inactive = false, 
+                LocalName = "אם חשיבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5853", 
+                SearchFields = "5853,בגדד", 
+                Inactive = false, 
+                LocalName = "בגדד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5854", 
+                SearchFields = "5854,ביר אבו צוירה", 
+                Inactive = false, 
+                LocalName = "ביר אבו צוירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5855", 
+                SearchFields = "5855,ביר אבו סוירה", 
+                Inactive = false, 
+                LocalName = "ביר אבו סוירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5856", 
+                SearchFields = "5856,באגה", 
+                Inactive = false, 
+                LocalName = "באגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5857", 
+                SearchFields = "5857,ביר אל חסי", 
+                Inactive = false, 
+                LocalName = "ביר אל חסי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5858", 
+                SearchFields = "5858,ביר אל מלחה", 
+                Inactive = false, 
+                LocalName = "ביר אל מלחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5859", 
+                SearchFields = "5859,ביר אלמיין", 
+                Inactive = false, 
+                LocalName = "ביר אלמיין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "586", 
+                SearchFields = "586,מגידו", 
+                Inactive = false, 
+                LocalName = "מגידו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5860", 
+                SearchFields = "5860,ביר חסנה", 
+                Inactive = false, 
+                LocalName = "ביר חסנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5861", 
+                SearchFields = "5861,גבל הלאל", 
+                Inactive = false, 
+                LocalName = "גבל הלאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5862", 
+                SearchFields = "5862,גבל מגארה", 
+                Inactive = false, 
+                LocalName = "גבל מגארה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5863", 
+                SearchFields = "5863,גבל אל ערף", 
+                Inactive = false, 
+                LocalName = "גבל אל ערף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5864", 
+                SearchFields = "5864,גבל חמיר", 
+                Inactive = false, 
+                LocalName = "גבל חמיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5865", 
+                SearchFields = "5865,דפידף", 
+                Inactive = false, 
+                LocalName = "דפידף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5866", 
+                SearchFields = "5866,אבו געדה", 
+                Inactive = false, 
+                LocalName = "אבו געדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5867", 
+                SearchFields = "5867,ואדיאל עמר", 
+                Inactive = false, 
+                LocalName = "ואדיאל עמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5868", 
+                SearchFields = "5868,ואדי מבעוק", 
+                Inactive = false, 
+                LocalName = "ואדי מבעוק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5869", 
+                SearchFields = "5869,ואדי קריה", 
+                Inactive = false, 
+                LocalName = "ואדי קריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "587", 
+                SearchFields = "587,סביון", 
+                Inactive = false, 
+                LocalName = "סביון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5870", 
+                SearchFields = "5870,ואדי רינה", 
+                Inactive = false, 
+                LocalName = "ואדי רינה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5871", 
+                SearchFields = "5871,ואסט  נויבע", 
+                Inactive = false, 
+                LocalName = "ואסט  נויבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5872", 
+                SearchFields = "5872,ואדי אל אחמר", 
+                Inactive = false, 
+                LocalName = "ואדי אל אחמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5873", 
+                SearchFields = "5873,ואדי מחאש", 
+                Inactive = false, 
+                LocalName = "ואדי מחאש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5874", 
+                SearchFields = "5874,כונתילא", 
+                Inactive = false, 
+                LocalName = "כונתילא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5876", 
+                SearchFields = "5876,מנבטח", 
+                Inactive = false, 
+                LocalName = "מנבטח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5877", 
+                SearchFields = "5877,מקדבה (עגילה)", 
+                Inactive = false, 
+                LocalName = "מקדבה (עגילה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5878", 
+                SearchFields = "5878,מיתלה", 
+                Inactive = false, 
+                LocalName = "מיתלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5879", 
+                SearchFields = "5879,מתמתני", 
+                Inactive = false, 
+                LocalName = "מתמתני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "588", 
+                SearchFields = "588,בני ראם", 
+                Inactive = false, 
+                LocalName = "בני ראם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5881", 
+                SearchFields = "5881,נחל (חפגה)", 
+                Inactive = false, 
+                LocalName = "נחל (חפגה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5884", 
+                SearchFields = "5884,שבע בארות", 
+                Inactive = false, 
+                LocalName = "שבע בארות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5886", 
+                SearchFields = "5886,עין קידכאת", 
+                Inactive = false, 
+                LocalName = "עין קידכאת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5887", 
+                SearchFields = "5887,עין צדר", 
+                Inactive = false, 
+                LocalName = "עין צדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5888", 
+                SearchFields = "5888,פוגיה", 
+                Inactive = false, 
+                LocalName = "פוגיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "589", 
+                SearchFields = "589,בצת", 
+                Inactive = false, 
+                LocalName = "בצת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5890", 
+                SearchFields = "5890,רפיח", 
+                Inactive = false, 
+                LocalName = "רפיח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5891", 
+                SearchFields = "5891,קוצימה", 
+                Inactive = false, 
+                LocalName = "קוצימה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5894", 
+                SearchFields = "5894,ראס אל נקב", 
+                Inactive = false, 
+                LocalName = "ראס אל נקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5895", 
+                SearchFields = "5895,ראס סאלם", 
+                Inactive = false, 
+                LocalName = "ראס סאלם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5896", 
+                SearchFields = "5896,ריסאן", 
+                Inactive = false, 
+                LocalName = "ריסאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5897", 
+                SearchFields = "5897,תמד", 
+                Inactive = false, 
+                LocalName = "תמד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "59", 
+                SearchFields = "59,נחושה", 
+                Inactive = false, 
+                LocalName = "נחושה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "590", 
+                SearchFields = "590,נווה אור", 
+                Inactive = false, 
+                LocalName = "נווה אור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5901", 
+                SearchFields = "5901,אם קוצרי", 
+                Inactive = false, 
+                LocalName = "אם קוצרי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5906", 
+                SearchFields = "5906,בוגה", 
+                Inactive = false, 
+                LocalName = "בוגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5907", 
+                SearchFields = "5907,ביר א נצב", 
+                Inactive = false, 
+                LocalName = "ביר א נצב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5908", 
+                SearchFields = "5908,ביר אל מעין", 
+                Inactive = false, 
+                LocalName = "ביר אל מעין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5909", 
+                SearchFields = "5909,ביר מער", 
+                Inactive = false, 
+                LocalName = "ביר מער", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "591", 
+                SearchFields = "591,עשרת", 
+                Inactive = false, 
+                LocalName = "עשרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5910", 
+                SearchFields = "5910,ביר נצב", 
+                Inactive = false, 
+                LocalName = "ביר נצב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5911", 
+                SearchFields = "5911,ביר סדרי", 
+                Inactive = false, 
+                LocalName = "ביר סדרי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5912", 
+                SearchFields = "5912,ביר שיח חמיד", 
+                Inactive = false, 
+                LocalName = "ביר שיח חמיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5913", 
+                SearchFields = "5913,ביר תל", 
+                Inactive = false, 
+                LocalName = "ביר תל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5914", 
+                SearchFields = "5914,ביר הליל", 
+                Inactive = false, 
+                LocalName = "ביר הליל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "592", 
+                SearchFields = "592,בני דרום", 
+                Inactive = false, 
+                LocalName = "בני דרום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5921", 
+                SearchFields = "5921,דהב", 
+                Inactive = false, 
+                LocalName = "דהב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5926", 
+                SearchFields = "5926,ואדי אל בידה", 
+                Inactive = false, 
+                LocalName = "ואדי אל בידה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5927", 
+                SearchFields = "5927,ואדי אסלה", 
+                Inactive = false, 
+                LocalName = "ואדי אסלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5928", 
+                SearchFields = "5928,ואדי קיד", 
+                Inactive = false, 
+                LocalName = "ואדי קיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5929", 
+                SearchFields = "5929,ואדי גרנדל", 
+                Inactive = false, 
+                LocalName = "ואדי גרנדל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "593", 
+                SearchFields = "593,ערוגות", 
+                Inactive = false, 
+                LocalName = "ערוגות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5930", 
+                SearchFields = "5930,ואדי חמר", 
+                Inactive = false, 
+                LocalName = "ואדי חמר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5931", 
+                SearchFields = "5931,ואדי נצב", 
+                Inactive = false, 
+                LocalName = "ואדי נצב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5932", 
+                SearchFields = "5932,ואדי נצריין", 
+                Inactive = false, 
+                LocalName = "ואדי נצריין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5933", 
+                SearchFields = "5933,ואדי רהבה", 
+                Inactive = false, 
+                LocalName = "ואדי רהבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5934", 
+                SearchFields = "5934,ואדי רחבה", 
+                Inactive = false, 
+                LocalName = "ואדי רחבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5935", 
+                SearchFields = "5935,ואדי תמן", 
+                Inactive = false, 
+                LocalName = "ואדי תמן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5936", 
+                SearchFields = "5936,ואדי תר", 
+                Inactive = false, 
+                LocalName = "ואדי תר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "594", 
+                SearchFields = "594,צפרייה", 
+                Inactive = false, 
+                LocalName = "צפרייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5941", 
+                SearchFields = "5941,זיתונה", 
+                Inactive = false, 
+                LocalName = "זיתונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "595", 
+                SearchFields = "595,לוחמי הגיטאות", 
+                Inactive = false, 
+                LocalName = "לוחמי הגיטאות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "596", 
+                SearchFields = "596,מלכייה", 
+                Inactive = false, 
+                LocalName = "מלכייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5961", 
+                SearchFields = "5961,מכסורה", 
+                Inactive = false, 
+                LocalName = "מכסורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5966", 
+                SearchFields = "5966,נבק", 
+                Inactive = false, 
+                LocalName = "נבק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5967", 
+                SearchFields = "5967,נומיס", 
+                Inactive = false, 
+                LocalName = "נומיס", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5969", 
+                SearchFields = "5969,סנטה קטרינה", 
+                Inactive = false, 
+                LocalName = "סנטה קטרינה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "597", 
+                SearchFields = "597,פלמחים", 
+                Inactive = false, 
+                LocalName = "פלמחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5971", 
+                SearchFields = "5971,ואדי סעאל", 
+                Inactive = false, 
+                LocalName = "ואדי סעאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5972", 
+                SearchFields = "5972,עין אל אחדר", 
+                Inactive = false, 
+                LocalName = "עין אל אחדר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5973", 
+                SearchFields = "5973,עין דרויש", 
+                Inactive = false, 
+                LocalName = "עין דרויש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5976", 
+                SearchFields = "5976,פיראן", 
+                Inactive = false, 
+                LocalName = "פיראן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5977", 
+                SearchFields = "5977,פרנגה", 
+                Inactive = false, 
+                LocalName = "פרנגה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "598", 
+                SearchFields = "598,בית קמה", 
+                Inactive = false, 
+                LocalName = "בית קמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5981", 
+                SearchFields = "5981,ק.מ. 54", 
+                Inactive = false, 
+                LocalName = "ק.מ. 54", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5986", 
+                SearchFields = "5986,ראס נצראני", 
+                Inactive = false, 
+                LocalName = "ראס נצראני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5987", 
+                SearchFields = "5987,רמסה", 
+                Inactive = false, 
+                LocalName = "רמסה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "599", 
+                SearchFields = "599,פרוד", 
+                Inactive = false, 
+                LocalName = "פרוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5991", 
+                SearchFields = "5991,שיח חשש", 
+                Inactive = false, 
+                LocalName = "שיח חשש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5992", 
+                SearchFields = "5992,שיח סלימאן ניפעי", 
+                Inactive = false, 
+                LocalName = "שיח סלימאן ניפעי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5993", 
+                SearchFields = "5993,שיח עוד", 
+                Inactive = false, 
+                LocalName = "שיח עוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "5996", 
+                SearchFields = "5996,תרפת אל קדרין", 
+                Inactive = false, 
+                LocalName = "תרפת אל קדרין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6000", 
+                SearchFields = "6000,באקה-ג'ת", 
+                Inactive = false, 
+                LocalName = "באקה-ג'ת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "602", 
+                SearchFields = "602,נירים", 
+                Inactive = false, 
+                LocalName = "נירים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "603", 
+                SearchFields = "603,אלקוש", 
+                Inactive = false, 
+                LocalName = "אלקוש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "604", 
+                SearchFields = "604,בית עריף", 
+                Inactive = false, 
+                LocalName = "בית עריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "605", 
+                SearchFields = "605,כפר שמאי", 
+                Inactive = false, 
+                LocalName = "כפר שמאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "606", 
+                SearchFields = "606,מזור", 
+                Inactive = false, 
+                LocalName = "מזור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "607", 
+                SearchFields = "607,מירון", 
+                Inactive = false, 
+                LocalName = "מירון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "609", 
+                SearchFields = "609,כפר חושן", 
+                Inactive = false, 
+                LocalName = "כפר חושן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "610", 
+                SearchFields = "610,סתרייה", 
+                Inactive = false, 
+                LocalName = "סתרייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6100", 
+                SearchFields = "6100,בני ברק", 
+                Inactive = false, 
+                LocalName = "בני ברק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "612", 
+                SearchFields = "612,צרופה", 
+                Inactive = false, 
+                LocalName = "צרופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "613", 
+                SearchFields = "613,ציפורי", 
+                Inactive = false, 
+                LocalName = "ציפורי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "614", 
+                SearchFields = "614,שומרה", 
+                Inactive = false, 
+                LocalName = "שומרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "615", 
+                SearchFields = "615,קדרון", 
+                Inactive = false, 
+                LocalName = "קדרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "616", 
+                SearchFields = "616,רינתיה", 
+                Inactive = false, 
+                LocalName = "רינתיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "617", 
+                SearchFields = "617,ברקאי", 
+                Inactive = false, 
+                LocalName = "ברקאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "618", 
+                SearchFields = "618,חדיד", 
+                Inactive = false, 
+                LocalName = "חדיד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "619", 
+                SearchFields = "619,בית גוברין", 
+                Inactive = false, 
+                LocalName = "בית גוברין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "62", 
+                SearchFields = "62,דגניה א'", 
+                Inactive = false, 
+                LocalName = "דגניה א'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "620", 
+                SearchFields = "620,משואות יצחק", 
+                Inactive = false, 
+                LocalName = "משואות יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6200", 
+                SearchFields = "6200,בת ים", 
+                Inactive = false, 
+                LocalName = "בת ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "622", 
+                SearchFields = "622,עין צורים", 
+                Inactive = false, 
+                LocalName = "עין צורים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "623", 
+                SearchFields = "623,יראון", 
+                Inactive = false, 
+                LocalName = "יראון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "627", 
+                SearchFields = "627,ג'לג'וליה", 
+                Inactive = false, 
+                LocalName = "ג'לג'וליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "628", 
+                SearchFields = "628,ג'ת", 
+                Inactive = false, 
+                LocalName = "ג'ת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "63", 
+                SearchFields = "63,כנרת (מושבה)", 
+                Inactive = false, 
+                LocalName = "כנרת (מושבה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6300", 
+                SearchFields = "6300,גבעתיים", 
+                Inactive = false, 
+                LocalName = "גבעתיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "633", 
+                SearchFields = "633,כפר ברא", 
+                Inactive = false, 
+                LocalName = "כפר ברא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "634", 
+                SearchFields = "634,כפר קאסם", 
+                Inactive = false, 
+                LocalName = "כפר קאסם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "635", 
+                SearchFields = "635,מוקייבלה", 
+                Inactive = false, 
+                LocalName = "מוקייבלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "636", 
+                SearchFields = "636,צנדלה", 
+                Inactive = false, 
+                LocalName = "צנדלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "637", 
+                SearchFields = "637,ערערה", 
+                Inactive = false, 
+                LocalName = "ערערה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "638", 
+                SearchFields = "638,קלנסווה", 
+                Inactive = false, 
+                LocalName = "קלנסווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "64", 
+                SearchFields = "64,יד רמבם", 
+                Inactive = false, 
+                LocalName = "יד רמבם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6400", 
+                SearchFields = "6400,הרצלייה", 
+                Inactive = false, 
+                LocalName = "הרצלייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "645", 
+                EnglishName = "??? <645> - ?? ????", 
+                SearchFields = "645,קוד <645> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <645> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "648", 
+                SearchFields = "648,מצר", 
+                Inactive = false, 
+                LocalName = "מצר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "649", 
+                SearchFields = "649,מייסר", 
+                Inactive = false, 
+                LocalName = "מייסר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "65", 
+                SearchFields = "65,מגדל", 
+                Inactive = false, 
+                LocalName = "מגדל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6500", 
+                SearchFields = "6500,חדרה", 
+                Inactive = false, 
+                LocalName = "חדרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "652", 
+                SearchFields = "652,אבטין", 
+                Inactive = false, 
+                LocalName = "אבטין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "654", 
+                SearchFields = "654,כפר קרע", 
+                Inactive = false, 
+                LocalName = "כפר קרע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "658", 
+                SearchFields = "658,שייח' דנון", 
+                Inactive = false, 
+                LocalName = "שייח' דנון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "66", 
+                SearchFields = "66,מרחביה (קיבוץ)", 
+                Inactive = false, 
+                LocalName = "מרחביה (קיבוץ)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6600", 
+                SearchFields = "6600,חולון", 
+                Inactive = false, 
+                LocalName = "חולון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "661", 
+                SearchFields = "661,שער אפרים", 
+                Inactive = false, 
+                LocalName = "שער אפרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "662", 
+                SearchFields = "662,חוסן", 
+                Inactive = false, 
+                LocalName = "חוסן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "663", 
+                SearchFields = "663,טירת יהודה", 
+                Inactive = false, 
+                LocalName = "טירת יהודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "664", 
+                SearchFields = "664,כרם בן זמרה", 
+                Inactive = false, 
+                LocalName = "כרם בן זמרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "665", 
+                SearchFields = "665,תקומה", 
+                Inactive = false, 
+                LocalName = "תקומה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "666", 
+                SearchFields = "666,עומר", 
+                Inactive = false, 
+                LocalName = "עומר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "667", 
+                SearchFields = "667,ברעם", 
+                Inactive = false, 
+                LocalName = "ברעם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "668", 
+                SearchFields = "668,מפלסים", 
+                Inactive = false, 
+                LocalName = "מפלסים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "67", 
+                SearchFields = "67,אור הנר", 
+                Inactive = false, 
+                LocalName = "אור הנר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "670", 
+                SearchFields = "670,משמר איילון", 
+                Inactive = false, 
+                LocalName = "משמר איילון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6700", 
+                SearchFields = "6700,טבריה", 
+                Inactive = false, 
+                LocalName = "טבריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "672", 
+                SearchFields = "672,בית נקופה", 
+                Inactive = false, 
+                LocalName = "בית נקופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "673", 
+                SearchFields = "673,כפר טרומן", 
+                Inactive = false, 
+                LocalName = "כפר טרומן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "674", 
+                SearchFields = "674,לימן", 
+                Inactive = false, 
+                LocalName = "לימן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "675", 
+                SearchFields = "675,הבונים", 
+                Inactive = false, 
+                LocalName = "הבונים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "676", 
+                SearchFields = "676,עין השלושה", 
+                Inactive = false, 
+                LocalName = "עין השלושה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "677", 
+                SearchFields = "677,הסוללים", 
+                Inactive = false, 
+                LocalName = "הסוללים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "678", 
+                SearchFields = "678,מעגן", 
+                Inactive = false, 
+                LocalName = "מעגן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "679", 
+                SearchFields = "679,אביאל", 
+                Inactive = false, 
+                LocalName = "אביאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "680", 
+                SearchFields = "680,אומץ", 
+                Inactive = false, 
+                LocalName = "אומץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6800", 
+                SearchFields = "6800,קריית אתא", 
+                Inactive = false, 
+                LocalName = "קריית אתא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "681", 
+                SearchFields = "681,גבעת שמואל", 
+                Inactive = false, 
+                LocalName = "גבעת שמואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "682", 
+                SearchFields = "682,אליקים", 
+                Inactive = false, 
+                LocalName = "אליקים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "683", 
+                SearchFields = "683,גבע כרמל", 
+                Inactive = false, 
+                LocalName = "גבע כרמל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "684", 
+                SearchFields = "684,היוגב", 
+                Inactive = false, 
+                LocalName = "היוגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "685", 
+                SearchFields = "685,בניה", 
+                Inactive = false, 
+                LocalName = "בניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "686", 
+                SearchFields = "686,נווה ימין", 
+                Inactive = false, 
+                LocalName = "נווה ימין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "687", 
+                SearchFields = "687,עין איילה", 
+                Inactive = false, 
+                LocalName = "עין איילה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "688", 
+                SearchFields = "688,עלמה", 
+                Inactive = false, 
+                LocalName = "עלמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "689", 
+                SearchFields = "689,מגדים", 
+                Inactive = false, 
+                LocalName = "מגדים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "69", 
+                SearchFields = "69,ניר עוז", 
+                Inactive = false, 
+                LocalName = "ניר עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "690", 
+                SearchFields = "690,כפר אחים", 
+                Inactive = false, 
+                LocalName = "כפר אחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "6900", 
+                SearchFields = "6900,כפר סבא", 
+                Inactive = false, 
+                LocalName = "כפר סבא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "692", 
+                SearchFields = "692,שפיר", 
+                Inactive = false, 
+                LocalName = "שפיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "693", 
+                SearchFields = "693,נתיב הלה", 
+                Inactive = false, 
+                LocalName = "נתיב הלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "694", 
+                SearchFields = "694,מעגן מיכאל", 
+                Inactive = false, 
+                LocalName = "מעגן מיכאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "695", 
+                SearchFields = "695,מגן", 
+                Inactive = false, 
+                LocalName = "מגן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "696", 
+                SearchFields = "696,כפר חבד", 
+                Inactive = false, 
+                LocalName = "כפר חבד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "697", 
+                SearchFields = "697,בארותיים", 
+                Inactive = false, 
+                LocalName = "בארותיים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "698", 
+                SearchFields = "698,בורגתה", 
+                Inactive = false, 
+                LocalName = "בורגתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "699", 
+                SearchFields = "699,ניר ישראל", 
+                Inactive = false, 
+                LocalName = "ניר ישראל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,שחר", 
+                Inactive = false, 
+                LocalName = "שחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "70", 
+                SearchFields = "70,אשדוד", 
+                Inactive = false, 
+                LocalName = "אשדוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "700", 
+                SearchFields = "700,חצב", 
+                Inactive = false, 
+                LocalName = "חצב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7000", 
+                SearchFields = "7000,לוד", 
+                Inactive = false, 
+                LocalName = "לוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "701", 
+                SearchFields = "701,ארבל", 
+                Inactive = false, 
+                LocalName = "ארבל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "702", 
+                SearchFields = "702,האון", 
+                Inactive = false, 
+                LocalName = "האון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "703", 
+                SearchFields = "703,גבעת עוז", 
+                Inactive = false, 
+                LocalName = "גבעת עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "705", 
+                SearchFields = "705,נחשונים", 
+                Inactive = false, 
+                LocalName = "נחשונים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "706", 
+                SearchFields = "706,גיאה", 
+                Inactive = false, 
+                LocalName = "גיאה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "707", 
+                SearchFields = "707,כפר דניאל", 
+                Inactive = false, 
+                LocalName = "כפר דניאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "708", 
+                SearchFields = "708,עמקה", 
+                Inactive = false, 
+                LocalName = "עמקה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "709", 
+                SearchFields = "709,תפרח", 
+                Inactive = false, 
+                LocalName = "תפרח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "71", 
+                SearchFields = "71,אשבול", 
+                Inactive = false, 
+                LocalName = "אשבול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "710", 
+                SearchFields = "710,בית זית", 
+                Inactive = false, 
+                LocalName = "בית זית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7100", 
+                SearchFields = "7100,אשקלון", 
+                Inactive = false, 
+                LocalName = "אשקלון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "711", 
+                SearchFields = "711,עזריה", 
+                Inactive = false, 
+                LocalName = "עזריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "712", 
+                SearchFields = "712,בן עמי", 
+                Inactive = false, 
+                LocalName = "בן עמי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "713", 
+                SearchFields = "713,רעים", 
+                Inactive = false, 
+                LocalName = "רעים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "714", 
+                SearchFields = "714,ארז", 
+                Inactive = false, 
+                LocalName = "ארז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "715", 
+                SearchFields = "715,להבות חביבה", 
+                Inactive = false, 
+                LocalName = "להבות חביבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "716", 
+                SearchFields = "716,אייל", 
+                Inactive = false, 
+                LocalName = "אייל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "717", 
+                SearchFields = "717,חגור", 
+                Inactive = false, 
+                LocalName = "חגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "718", 
+                SearchFields = "718,ירחיב", 
+                Inactive = false, 
+                LocalName = "ירחיב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "719", 
+                SearchFields = "719,תל קציר", 
+                Inactive = false, 
+                LocalName = "תל קציר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "72", 
+                SearchFields = "72,גן שמואל", 
+                Inactive = false, 
+                LocalName = "גן שמואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "720", 
+                SearchFields = "720,ניר גלים", 
+                Inactive = false, 
+                LocalName = "ניר גלים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7200", 
+                SearchFields = "7200,נס ציונה", 
+                Inactive = false, 
+                LocalName = "נס ציונה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "721", 
+                SearchFields = "721,שדה אילן", 
+                Inactive = false, 
+                LocalName = "שדה אילן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "722", 
+                SearchFields = "722,מגשימים", 
+                Inactive = false, 
+                LocalName = "מגשימים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "723", 
+                SearchFields = "723,בית הגדי", 
+                Inactive = false, 
+                LocalName = "בית הגדי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "726", 
+                SearchFields = "726,הודייה", 
+                Inactive = false, 
+                LocalName = "הודייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "727", 
+                SearchFields = "727,תלמי יחיאל", 
+                Inactive = false, 
+                LocalName = "תלמי יחיאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "729", 
+                SearchFields = "729,משמר השבעה", 
+                Inactive = false, 
+                LocalName = "משמר השבעה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "730", 
+                SearchFields = "730,אליפלט", 
+                Inactive = false, 
+                LocalName = "אליפלט", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7300", 
+                SearchFields = "7300,נצרת", 
+                Inactive = false, 
+                LocalName = "נצרת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "731", 
+                SearchFields = "731,מישר", 
+                Inactive = false, 
+                LocalName = "מישר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "732", 
+                SearchFields = "732,משמר הירדן", 
+                Inactive = false, 
+                LocalName = "משמר הירדן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "734", 
+                SearchFields = "734,גן יאשיה", 
+                Inactive = false, 
+                LocalName = "גן יאשיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "735", 
+                SearchFields = "735,רמות מאיר", 
+                Inactive = false, 
+                LocalName = "רמות מאיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "736", 
+                SearchFields = "736,גילת", 
+                Inactive = false, 
+                LocalName = "גילת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "737", 
+                SearchFields = "737,עולש", 
+                Inactive = false, 
+                LocalName = "עולש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "738", 
+                SearchFields = "738,דור", 
+                Inactive = false, 
+                LocalName = "דור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "739", 
+                SearchFields = "739,שדה עוזיהו", 
+                Inactive = false, 
+                LocalName = "שדה עוזיהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "74", 
+                SearchFields = "74,עין הוד", 
+                Inactive = false, 
+                LocalName = "עין הוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "740", 
+                SearchFields = "740,אשתאול", 
+                Inactive = false, 
+                LocalName = "אשתאול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7400", 
+                SearchFields = "7400,נתניה", 
+                Inactive = false, 
+                LocalName = "נתניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "741", 
+                SearchFields = "741,שואבה", 
+                Inactive = false, 
+                LocalName = "שואבה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "742", 
+                SearchFields = "742,מסילת ציון", 
+                Inactive = false, 
+                LocalName = "מסילת ציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "743", 
+                SearchFields = "743,כפר שמואל", 
+                Inactive = false, 
+                LocalName = "כפר שמואל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "744", 
+                SearchFields = "744,תלמי יפה", 
+                Inactive = false, 
+                LocalName = "תלמי יפה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "745", 
+                SearchFields = "745,גמזו", 
+                Inactive = false, 
+                LocalName = "גמזו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "746", 
+                SearchFields = "746,ברכיה", 
+                Inactive = false, 
+                LocalName = "ברכיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "747", 
+                SearchFields = "747,בית שקמה", 
+                Inactive = false, 
+                LocalName = "בית שקמה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "748", 
+                SearchFields = "748,מסלול", 
+                Inactive = false, 
+                LocalName = "מסלול", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "749", 
+                SearchFields = "749,פטיש", 
+                Inactive = false, 
+                LocalName = "פטיש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "750", 
+                SearchFields = "750,פדויים", 
+                Inactive = false, 
+                LocalName = "פדויים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7500", 
+                SearchFields = "7500,סח'נין", 
+                Inactive = false, 
+                LocalName = "סח'נין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "751", 
+                SearchFields = "751,בית מאיר", 
+                Inactive = false, 
+                LocalName = "בית מאיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "752", 
+                SearchFields = "752,תעוז", 
+                Inactive = false, 
+                LocalName = "תעוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "753", 
+                SearchFields = "753,ינוב", 
+                Inactive = false, 
+                LocalName = "ינוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "755", 
+                SearchFields = "755,גורן", 
+                Inactive = false, 
+                LocalName = "גורן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "756", 
+                SearchFields = "756,בית עזרא", 
+                Inactive = false, 
+                LocalName = "בית עזרא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "757", 
+                SearchFields = "757,מצליח", 
+                Inactive = false, 
+                LocalName = "מצליח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "758", 
+                SearchFields = "758,יד חנה", 
+                Inactive = false, 
+                LocalName = "יד חנה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "759", 
+                SearchFields = "759,יציץ", 
+                Inactive = false, 
+                LocalName = "יציץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "76", 
+                SearchFields = "76,כפר גלעדי", 
+                Inactive = false, 
+                LocalName = "כפר גלעדי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "760", 
+                SearchFields = "760,בן זכאי", 
+                Inactive = false, 
+                LocalName = "בן זכאי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7600", 
+                SearchFields = "7600,עכו", 
+                Inactive = false, 
+                LocalName = "עכו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "761", 
+                SearchFields = "761,שובה", 
+                Inactive = false, 
+                LocalName = "שובה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "762", 
+                SearchFields = "762,בטחה", 
+                Inactive = false, 
+                LocalName = "בטחה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "763", 
+                SearchFields = "763,שתולים", 
+                Inactive = false, 
+                LocalName = "שתולים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "764", 
+                SearchFields = "764,כפר מרדכי", 
+                Inactive = false, 
+                LocalName = "כפר מרדכי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "765", 
+                SearchFields = "765,משגב דב", 
+                Inactive = false, 
+                LocalName = "משגב דב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "766", 
+                SearchFields = "766,קוממיות", 
+                Inactive = false, 
+                LocalName = "קוממיות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "767", 
+                SearchFields = "767,פורת", 
+                Inactive = false, 
+                LocalName = "פורת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "768", 
+                SearchFields = "768,כרמייה", 
+                Inactive = false, 
+                LocalName = "כרמייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "769", 
+                SearchFields = "769,ניר עציון", 
+                Inactive = false, 
+                LocalName = "ניר עציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "77", 
+                SearchFields = "77,איילת השחר", 
+                Inactive = false, 
+                LocalName = "איילת השחר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7700", 
+                SearchFields = "7700,עפולה", 
+                Inactive = false, 
+                LocalName = "עפולה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "771", 
+                SearchFields = "771,מבוא ביתר", 
+                Inactive = false, 
+                LocalName = "מבוא ביתר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "772", 
+                SearchFields = "772,אמונים", 
+                Inactive = false, 
+                LocalName = "אמונים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "773", 
+                SearchFields = "773,עמיקם", 
+                Inactive = false, 
+                LocalName = "עמיקם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "774", 
+                SearchFields = "774,צוריאל", 
+                Inactive = false, 
+                LocalName = "צוריאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "775", 
+                SearchFields = "775,יד נתן", 
+                Inactive = false, 
+                LocalName = "יד נתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "776", 
+                SearchFields = "776,מחסיה", 
+                Inactive = false, 
+                LocalName = "מחסיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "777", 
+                SearchFields = "777,נחשון", 
+                Inactive = false, 
+                LocalName = "נחשון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "778", 
+                SearchFields = "778,תרום", 
+                Inactive = false, 
+                LocalName = "תרום", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "779", 
+                SearchFields = "779,עמינדב", 
+                Inactive = false, 
+                LocalName = "עמינדב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "78", 
+                SearchFields = "78,קריית ענבים", 
+                Inactive = false, 
+                LocalName = "קריית ענבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "780", 
+                SearchFields = "780,אורה", 
+                Inactive = false, 
+                LocalName = "אורה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7800", 
+                SearchFields = "7800,פרדס חנה-כרכור", 
+                Inactive = false, 
+                LocalName = "פרדס חנה-כרכור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "783", 
+                SearchFields = "783,אבן ספיר", 
+                Inactive = false, 
+                LocalName = "אבן ספיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "784", 
+                SearchFields = "784,בית נחמיה", 
+                Inactive = false, 
+                LocalName = "בית נחמיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "785", 
+                SearchFields = "785,אחיהוד", 
+                Inactive = false, 
+                LocalName = "אחיהוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "786", 
+                SearchFields = "786,כפר זיתים", 
+                Inactive = false, 
+                LocalName = "כפר זיתים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "787", 
+                SearchFields = "787,גבעת יערים", 
+                Inactive = false, 
+                LocalName = "גבעת יערים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "788", 
+                SearchFields = "788,זיתן", 
+                Inactive = false, 
+                LocalName = "זיתן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "789", 
+                SearchFields = "789,רנן", 
+                Inactive = false, 
+                LocalName = "רנן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "79", 
+                SearchFields = "79,דגניה ב'", 
+                Inactive = false, 
+                LocalName = "דגניה ב'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "7900", 
+                SearchFields = "7900,פתח תקווה", 
+                Inactive = false, 
+                LocalName = "פתח תקווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "791", 
+                SearchFields = "791,משען", 
+                Inactive = false, 
+                LocalName = "משען", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "792", 
+                SearchFields = "792,נתיב השיירה", 
+                Inactive = false, 
+                LocalName = "נתיב השיירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "793", 
+                SearchFields = "793,גבעתי", 
+                Inactive = false, 
+                LocalName = "גבעתי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "794", 
+                SearchFields = "794,עגור", 
+                Inactive = false, 
+                LocalName = "עגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "795", 
+                SearchFields = "795,יערה", 
+                Inactive = false, 
+                LocalName = "יערה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "796", 
+                SearchFields = "796,צלפון", 
+                Inactive = false, 
+                LocalName = "צלפון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "797", 
+                SearchFields = "797,אחיעזר", 
+                Inactive = false, 
+                LocalName = "אחיעזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "798", 
+                SearchFields = "798,יגל", 
+                Inactive = false, 
+                LocalName = "יגל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "799", 
+                SearchFields = "799,זכריה", 
+                Inactive = false, 
+                LocalName = "זכריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "80", 
+                SearchFields = "80,נהלל", 
+                Inactive = false, 
+                LocalName = "נהלל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "800", 
+                SearchFields = "800,בית חנניה", 
+                Inactive = false, 
+                LocalName = "בית חנניה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8000", 
+                SearchFields = "8000,צפת", 
+                Inactive = false, 
+                LocalName = "צפת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8005", 
+                SearchFields = "8005,לוד נמל תעופה", 
+                Inactive = false, 
+                LocalName = "לוד נמל תעופה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "801", 
+                SearchFields = "801,חמד", 
+                Inactive = false, 
+                LocalName = "חמד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "802", 
+                SearchFields = "802,גבעת כח", 
+                Inactive = false, 
+                LocalName = "גבעת כח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "803", 
+                SearchFields = "803,יושיביה", 
+                Inactive = false, 
+                LocalName = "יושיביה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "804", 
+                SearchFields = "804,אחיסמך", 
+                Inactive = false, 
+                LocalName = "אחיסמך", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "805", 
+                SearchFields = "805,ישעי", 
+                Inactive = false, 
+                LocalName = "ישעי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "806", 
+                SearchFields = "806,עין יהב", 
+                Inactive = false, 
+                LocalName = "עין יהב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "807", 
+                SearchFields = "807,חניאל", 
+                Inactive = false, 
+                LocalName = "חניאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "808", 
+                SearchFields = "808,ניר אליהו", 
+                Inactive = false, 
+                LocalName = "ניר אליהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "809", 
+                SearchFields = "809,נחם", 
+                Inactive = false, 
+                LocalName = "נחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "810", 
+                SearchFields = "810,עופר", 
+                Inactive = false, 
+                LocalName = "עופר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "811", 
+                SearchFields = "811,יכיני", 
+                Inactive = false, 
+                LocalName = "יכיני", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "812", 
+                SearchFields = "812,שלומי", 
+                Inactive = false, 
+                LocalName = "שלומי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "813", 
+                SearchFields = "813,עין יעקב", 
+                Inactive = false, 
+                LocalName = "עין יעקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "814", 
+                SearchFields = "814,תלמים", 
+                Inactive = false, 
+                LocalName = "תלמים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "815", 
+                SearchFields = "815,זבדיאל", 
+                Inactive = false, 
+                LocalName = "זבדיאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "816", 
+                SearchFields = "816,זנוח", 
+                Inactive = false, 
+                LocalName = "זנוח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "817", 
+                SearchFields = "817,עזריקם", 
+                Inactive = false, 
+                LocalName = "עזריקם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "818", 
+                SearchFields = "818,זרחיה", 
+                Inactive = false, 
+                LocalName = "זרחיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "819", 
+                SearchFields = "819,אביגדור", 
+                Inactive = false, 
+                LocalName = "אביגדור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "82", 
+                SearchFields = "82,עין חרוד (מאוחד)", 
+                Inactive = false, 
+                LocalName = "עין חרוד (מאוחד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "820", 
+                SearchFields = "820,חלץ", 
+                Inactive = false, 
+                LocalName = "חלץ", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8200", 
+                SearchFields = "8200,קריית מוצקין", 
+                Inactive = false, 
+                LocalName = "קריית מוצקין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "821", 
+                SearchFields = "821,אחוזם", 
+                Inactive = false, 
+                LocalName = "אחוזם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "822", 
+                SearchFields = "822,מטע", 
+                Inactive = false, 
+                LocalName = "מטע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "823", 
+                SearchFields = "823,בר גיורא", 
+                Inactive = false, 
+                LocalName = "בר גיורא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "824", 
+                SearchFields = "824,כוכב מיכאל", 
+                Inactive = false, 
+                LocalName = "כוכב מיכאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "825", 
+                SearchFields = "825,נס הרים", 
+                Inactive = false, 
+                LocalName = "נס הרים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "826", 
+                SearchFields = "826,עוזה", 
+                Inactive = false, 
+                LocalName = "עוזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "827", 
+                SearchFields = "827,נווה מבטח", 
+                Inactive = false, 
+                LocalName = "נווה מבטח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "828", 
+                SearchFields = "828,ישרש", 
+                Inactive = false, 
+                LocalName = "ישרש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "829", 
+                SearchFields = "829,מבטחים", 
+                Inactive = false, 
+                LocalName = "מבטחים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8300", 
+                SearchFields = "8300,ראשון לציון", 
+                Inactive = false, 
+                LocalName = "ראשון לציון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "831", 
+                SearchFields = "831,ירוחם", 
+                Inactive = false, 
+                LocalName = "ירוחם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "833", 
+                SearchFields = "833,נורית", 
+                Inactive = false, 
+                LocalName = "נורית", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "836", 
+                SearchFields = "836,גנות", 
+                Inactive = false, 
+                LocalName = "גנות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "837", 
+                SearchFields = "837,עזריאל", 
+                Inactive = false, 
+                LocalName = "עזריאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "838", 
+                SearchFields = "838,פדיה", 
+                Inactive = false, 
+                LocalName = "פדיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "839", 
+                SearchFields = "839,פתחיה", 
+                Inactive = false, 
+                LocalName = "פתחיה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "84", 
+                SearchFields = "84,תל יוסף", 
+                Inactive = false, 
+                LocalName = "תל יוסף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "840", 
+                SearchFields = "840,כיסופים", 
+                Inactive = false, 
+                LocalName = "כיסופים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8400", 
+                SearchFields = "8400,רחובות", 
+                Inactive = false, 
+                LocalName = "רחובות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "841", 
+                SearchFields = "841,אלישמע", 
+                Inactive = false, 
+                LocalName = "אלישמע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "842", 
+                SearchFields = "842,געש", 
+                Inactive = false, 
+                LocalName = "געש", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "843", 
+                SearchFields = "843,מרגליות", 
+                Inactive = false, 
+                LocalName = "מרגליות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "844", 
+                SearchFields = "844,נחל עוז", 
+                Inactive = false, 
+                LocalName = "נחל עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "845", 
+                SearchFields = "845,כפר עזה", 
+                Inactive = false, 
+                LocalName = "כפר עזה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "846", 
+                SearchFields = "846,שפר", 
+                Inactive = false, 
+                LocalName = "שפר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "848", 
+                SearchFields = "848,בית רבן", 
+                Inactive = false, 
+                LocalName = "בית רבן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "849", 
+                SearchFields = "849,דבירה", 
+                Inactive = false, 
+                LocalName = "דבירה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "85", 
+                SearchFields = "85,כפר יחזקאל", 
+                Inactive = false, 
+                LocalName = "כפר יחזקאל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "850", 
+                SearchFields = "850,אחיטוב", 
+                Inactive = false, 
+                LocalName = "אחיטוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8500", 
+                SearchFields = "8500,רמלה", 
+                Inactive = false, 
+                LocalName = "רמלה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "851", 
+                SearchFields = "851,ניצני עוז", 
+                Inactive = false, 
+                LocalName = "ניצני עוז", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "852", 
+                SearchFields = "852,גונן", 
+                Inactive = false, 
+                LocalName = "גונן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "853", 
+                SearchFields = "853,גאליה", 
+                Inactive = false, 
+                LocalName = "גאליה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "854", 
+                SearchFields = "854,רחוב", 
+                Inactive = false, 
+                LocalName = "רחוב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "856", 
+                SearchFields = "856,שעלבים", 
+                Inactive = false, 
+                LocalName = "שעלבים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "857", 
+                SearchFields = "857,כפר אביב", 
+                Inactive = false, 
+                LocalName = "כפר אביב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "858", 
+                SearchFields = "858,נווה ירק", 
+                Inactive = false, 
+                LocalName = "נווה ירק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "859", 
+                SearchFields = "859,כסלון", 
+                Inactive = false, 
+                LocalName = "כסלון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "86", 
+                SearchFields = "86,גבע", 
+                Inactive = false, 
+                LocalName = "גבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8600", 
+                SearchFields = "8600,רמת גן", 
+                Inactive = false, 
+                LocalName = "רמת גן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "861", 
+                SearchFields = "861,שדה אליעזר", 
+                Inactive = false, 
+                LocalName = "שדה אליעזר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "862", 
+                SearchFields = "862,גני יוחנן", 
+                Inactive = false, 
+                LocalName = "גני יוחנן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "863", 
+                SearchFields = "863,גינתון", 
+                Inactive = false, 
+                LocalName = "גינתון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "864", 
+                SearchFields = "864,בקוע", 
+                Inactive = false, 
+                LocalName = "בקוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "865", 
+                SearchFields = "865,שיבולים", 
+                Inactive = false, 
+                LocalName = "שיבולים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "866", 
+                SearchFields = "866,יטבתה", 
+                Inactive = false, 
+                LocalName = "יטבתה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "868", 
+                SearchFields = "868,אלוני יצחק", 
+                Inactive = false, 
+                LocalName = "אלוני יצחק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "870", 
+                SearchFields = "870,גבעת השלושה", 
+                Inactive = false, 
+                LocalName = "גבעת השלושה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8700", 
+                SearchFields = "8700,רעננה", 
+                Inactive = false, 
+                LocalName = "רעננה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "871", 
+                SearchFields = "871,עינת", 
+                Inactive = false, 
+                LocalName = "עינת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "872", 
+                SearchFields = "872,גאולי תימן", 
+                Inactive = false, 
+                LocalName = "גאולי תימן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "873", 
+                SearchFields = "873,שלווה", 
+                Inactive = false, 
+                LocalName = "שלווה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "874", 
+                SearchFields = "874,מגדל העמק", 
+                Inactive = false, 
+                LocalName = "מגדל העמק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "875", 
+                SearchFields = "875,כפר עבודה", 
+                Inactive = false, 
+                LocalName = "כפר עבודה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "877", 
+                SearchFields = "877,בית חירות", 
+                Inactive = false, 
+                LocalName = "בית חירות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "88", 
+                SearchFields = "88,כרם בן שמן", 
+                Inactive = false, 
+                LocalName = "כרם בן שמן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "880", 
+                SearchFields = "880,עין שריד", 
+                Inactive = false, 
+                LocalName = "עין שריד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8800", 
+                SearchFields = "8800,שפרעם", 
+                Inactive = false, 
+                LocalName = "שפרעם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "882", 
+                SearchFields = "882,אורנים", 
+                Inactive = false, 
+                LocalName = "אורנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "885", 
+                SearchFields = "885,שדה בוקר", 
+                Inactive = false, 
+                LocalName = "שדה בוקר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "886", 
+                SearchFields = "886,איתנים", 
+                Inactive = false, 
+                LocalName = "איתנים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "888", 
+                SearchFields = "888,כפר הריף", 
+                Inactive = false, 
+                LocalName = "כפר הריף", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "889", 
+                SearchFields = "889,כפר חסידים ב'", 
+                Inactive = false, 
+                LocalName = "כפר חסידים ב'", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "89", 
+                SearchFields = "89,עין חרוד (איחוד)", 
+                Inactive = false, 
+                LocalName = "עין חרוד (איחוד)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "890", 
+                SearchFields = "890,כפר הנוער הדתי", 
+                Inactive = false, 
+                LocalName = "כפר הנוער הדתי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "8900", 
+                SearchFields = "8900,טמרה", 
+                Inactive = false, 
+                LocalName = "טמרה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "892", 
+                SearchFields = "892,עבדון", 
+                Inactive = false, 
+                LocalName = "עבדון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "897", 
+                SearchFields = "897,מדרשת רופין", 
+                Inactive = false, 
+                LocalName = "מדרשת רופין", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "90", 
+                SearchFields = "90,חפצי-בה", 
+                Inactive = false, 
+                LocalName = "חפצי-בה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9000", 
+                SearchFields = "9000,באר שבע", 
+                Inactive = false, 
+                LocalName = "באר שבע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9100", 
+                SearchFields = "9100,נהרייה", 
+                Inactive = false, 
+                LocalName = "נהרייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "913", 
+                SearchFields = "913,שבלי - אום אל-גנם", 
+                Inactive = false, 
+                LocalName = "שבלי - אום אל-גנם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "916", 
+                SearchFields = "916,ישע", 
+                Inactive = false, 
+                LocalName = "ישע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "917", 
+                SearchFields = "917,שגב", 
+                Inactive = false, 
+                LocalName = "שגב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "919", 
+                SearchFields = "919,גבעת ישעיהו", 
+                Inactive = false, 
+                LocalName = "גבעת ישעיהו", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "92", 
+                SearchFields = "92,גיניגר", 
+                Inactive = false, 
+                LocalName = "גיניגר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9200", 
+                SearchFields = "9200,בית שאן", 
+                Inactive = false, 
+                LocalName = "בית שאן", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "921", 
+                SearchFields = "921,שער מנשה", 
+                Inactive = false, 
+                LocalName = "שער מנשה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "922", 
+                SearchFields = "922,רכסים", 
+                Inactive = false, 
+                LocalName = "רכסים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "926", 
+                SearchFields = "926,נווה אבות", 
+                Inactive = false, 
+                LocalName = "נווה אבות", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9300", 
+                SearchFields = "9300,זכרון יעקב", 
+                Inactive = false, 
+                LocalName = "זכרון יעקב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "932", 
+                SearchFields = "932,אבו עמרה (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו עמרה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "935", 
+                SearchFields = "935,אבו סריחאן (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו סריחאן (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "939", 
+                SearchFields = "939,מסעודין אל-עזאזמה (שבט)", 
+                Inactive = false, 
+                LocalName = "מסעודין אל-עזאזמה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "94", 
+                SearchFields = "94,בלפוריה", 
+                Inactive = false, 
+                LocalName = "בלפוריה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9400", 
+                SearchFields = "9400,יהוד", 
+                Inactive = false, 
+                LocalName = "יהוד", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "942", 
+                SearchFields = "942,סואעד (חמרייה)", 
+                Inactive = false, 
+                LocalName = "סואעד (חמרייה)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "944", 
+                SearchFields = "944,בסמת טבעון", 
+                Inactive = false, 
+                LocalName = "בסמת טבעון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "948", 
+                SearchFields = "948,חוג'ייראת (ד'הרה) (שבט)", 
+                Inactive = false, 
+                LocalName = "חוג'ייראת (ד'הרה) (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "95", 
+                SearchFields = "95,בית אלפא", 
+                Inactive = false, 
+                LocalName = "בית אלפא", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9500", 
+                SearchFields = "9500,קריית ביאליק", 
+                Inactive = false, 
+                LocalName = "קריית ביאליק", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "956", 
+                SearchFields = "956,הוזייל (שבט)", 
+                Inactive = false, 
+                LocalName = "הוזייל (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "957", 
+                SearchFields = "957,עוקבי (בנו עוקבה) (שבט)", 
+                Inactive = false, 
+                LocalName = "עוקבי (בנו עוקבה) (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "958", 
+                SearchFields = "958,אבו עבדון (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו עבדון (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "959", 
+                SearchFields = "959,אפיניש (שבט)", 
+                Inactive = false, 
+                LocalName = "אפיניש (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "96", 
+                SearchFields = "96,יגור", 
+                Inactive = false, 
+                LocalName = "יגור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "960", 
+                SearchFields = "960,אסד (שבט)", 
+                Inactive = false, 
+                LocalName = "אסד (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9600", 
+                SearchFields = "9600,קריית ים", 
+                Inactive = false, 
+                LocalName = "קריית ים", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "961", 
+                SearchFields = "961,אבו רוקייק (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו רוקייק (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "962", 
+                SearchFields = "962,טובא-זנגרייה", 
+                Inactive = false, 
+                LocalName = "טובא-זנגרייה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "963", 
+                SearchFields = "963,אעצם (שבט)", 
+                Inactive = false, 
+                LocalName = "אעצם (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "964", 
+                SearchFields = "964,קודייראת א-צאנע (שבט)", 
+                Inactive = false, 
+                LocalName = "קודייראת א-צאנע (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "965", 
+                SearchFields = "965,אטרש (שבט)", 
+                Inactive = false, 
+                LocalName = "אטרש (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "966", 
+                SearchFields = "966,אבו רובייעה (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו רובייעה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "967", 
+                SearchFields = "967,אבו ג'ווייעד (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו ג'ווייעד (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "968", 
+                SearchFields = "968,אבו קורינאת (שבט)", 
+                Inactive = false, 
+                LocalName = "אבו קורינאת (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "969", 
+                SearchFields = "969,עטאוונה (שבט)", 
+                Inactive = false, 
+                LocalName = "עטאוונה (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "97", 
+                SearchFields = "97,מרחביה (מושב)", 
+                Inactive = false, 
+                LocalName = "מרחביה (מושב)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "970", 
+                SearchFields = "970,תראבין א-צאנע (שבט)", 
+                Inactive = false, 
+                LocalName = "תראבין א-צאנע (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9700", 
+                SearchFields = "9700,הוד השרון", 
+                Inactive = false, 
+                LocalName = "הוד השרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "972", 
+                SearchFields = "972,קוואעין (שבט)", 
+                Inactive = false, 
+                LocalName = "קוואעין (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "975", 
+                SearchFields = "975,זרזיר", 
+                Inactive = false, 
+                LocalName = "זרזיר", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "976", 
+                SearchFields = "976,ג'נאביב (שבט)", 
+                Inactive = false, 
+                LocalName = "ג'נאביב (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "978", 
+                SearchFields = "978,כעביה-טבאש-חג'אג'רה", 
+                Inactive = false, 
+                LocalName = "כעביה-טבאש-חג'אג'רה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "98", 
+                SearchFields = "98,כפר מלל", 
+                Inactive = false, 
+                LocalName = "כפר מלל", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9800", 
+                SearchFields = "9800,בנימינה-גבעת עדה", 
+                Inactive = false, 
+                LocalName = "בנימינה-גבעת עדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "986", 
+                SearchFields = "986,ח'ואלד (שבט)", 
+                Inactive = false, 
+                LocalName = "ח'ואלד (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9868", 
+                EnglishName = "???", 
+                SearchFields = "9868,צמח", 
+                Inactive = false, 
+                LocalName = "צמח", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9871", 
+                EnglishName = "??? ??", 
+                SearchFields = "9871,שדה גת", 
+                Inactive = false, 
+                LocalName = "שדה גת", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9875", 
+                EnglishName = "????? ??????", 
+                SearchFields = "9875,גינות שומרון", 
+                Inactive = false, 
+                LocalName = "גינות שומרון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9882", 
+                EnglishName = "??? <9882> - ?? ????", 
+                SearchFields = "9882,קוד <9882> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <9882> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "989", 
+                SearchFields = "989,סואעד (כמאנה) (שבט)", 
+                Inactive = false, 
+                LocalName = "סואעד (כמאנה) (שבט)", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9897", 
+                EnglishName = "??? <9897> - ?? ????", 
+                SearchFields = "9897,קוד <9897> - לא ידוע", 
+                Inactive = false, 
+                LocalName = "קוד <9897> - לא ידוע", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "99", 
+                SearchFields = "99,מצפה רמון", 
+                Inactive = false, 
+                LocalName = "מצפה רמון", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "990", 
+                SearchFields = "990,ראס עלי", 
+                Inactive = false, 
+                LocalName = "ראס עלי", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "993", 
+                SearchFields = "993,חמאם", 
+                Inactive = false, 
+                LocalName = "חמאם", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "994", 
+                SearchFields = "994,מנשית זבדה", 
+                Inactive = false, 
+                LocalName = "מנשית זבדה", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "997", 
+                SearchFields = "997,רומת הייב", 
+                Inactive = false, 
+                LocalName = "רומת הייב", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "998", 
+                SearchFields = "998,ביר אל-מכסור", 
+                Inactive = false, 
+                LocalName = "ביר אל-מכסור", 
+			});
+			 
+            all.Add(new CityDetails()
+            {    
+                Code = "9993", 
+                EnglishName = "??? ????", 
+                SearchFields = "9993,עין בוקק", 
+                Inactive = false, 
+                LocalName = "עין בוקק", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(City newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(City rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

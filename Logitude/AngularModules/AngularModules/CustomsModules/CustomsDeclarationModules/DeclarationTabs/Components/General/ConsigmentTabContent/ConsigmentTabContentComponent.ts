@@ -26,6 +26,9 @@ import { ApiQueryFilters, FilterItem } from '../../../../../../Infrastructure/Da
 import { CouriersVatPMService } from '../../../../../../Customs/Services/StandardPMs/CouriersVatPMService';
 import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services/ExtendedPMs/CouriersVatExtendedPMService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
+import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -95,6 +98,33 @@ export class ConsigmentTabContentComponent
             this._SubConsignmentsChanged = null;
         }
     }
+
+    public FeatureLocatorEXPORTDECLARATIONPSCREEN = FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN")
+
+
+    ShowExportConsScreen() {
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.declarationPM = this.declarationPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+
+        var logWindow = new LogitudeWindow();
+        //windowArgs.Type = "Importer";
+        //this.Type = "Importer";
+        logWindow.Width = 1000;
+        logWindow.Height = 250;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ExportConsigmentContentComponent');
+    }
     private Listen() {
         this._SubDisplayModeChanged=
         DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
@@ -160,14 +190,14 @@ export class ConsigmentTabContentComponent
 
         //**
         //this.SetDateVisibilty(); // this make entity dirty on tab loaded, the following should solve it
-        if (this.CargoTypeCode == "17") {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
         //**
 
 
@@ -186,16 +216,16 @@ export class ConsigmentTabContentComponent
     }
 
     SetDateVisibilty() {
-        if (this.CargoTypeCode == "17") {
-            this.ThirdCargoID = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.CargoDate = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.ThirdCargoID = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.CargoDate = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
     }
 
     SetScreenFieldsEditability() {
@@ -387,6 +417,57 @@ export class ConsigmentTabContentComponent
 
 
     }
+
+
+
+    public get ExportLoadingPortCode() { return this.EntityPM.ExportLoadingPortCode; }
+    public set ExportLoadingPortCode(newValue: string) {
+        this.EntityPM.ExportLoadingPortCode = newValue;
+      
+    }
+
+
+
+    public get ExportUnloadingPortCode() { return this.EntityPM.ExportUnloadingPortCode; }
+    public set ExportUnloadingPortCode(newValue: string) {
+        this.EntityPM.ExportUnloadingPortCode = newValue;
+       
+    }
+
+
+
+    DestinationCountry: any;
+    public get FinalDestinationPortCode() { return this.EntityPM.FinalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) {
+        this.EntityPM.FinalDestinationPortCode = newValue;
+
+    }
+
+   
+
+    public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
+    public set ExportRecieverWareHouseCode(newValue: string) {
+        this.EntityPM.ExportRecieverWareHouseCode = newValue;
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, true);
+        //}
+    }
+
+
+
+    public get IsDangerousGoods() { return this.EntityPM.IsDangerousGoods; }
+    public set IsDangerousGoods(newValue: boolean) {
+        this.EntityPM.IsDangerousGoods = newValue;
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, true);
+        //}
+    }
     //#endregion
 
 
@@ -450,6 +531,33 @@ export class ConsigmentTabContentComponent
         this.ConsimentPackages.Insert(item);
         //this.CurrentSession.ResetRowIndex();
     }
+
+    OpenEditDangerWindow(item) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+             var windowArgs: any = {};
+            windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
+            windowArgs.Declaration = this.declarationPM;
+             
+            windowArgs.Parent = item;
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+             if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
+                windowArgs.IsDisplayOnlyContact = true;
+            }
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 900;
+            logWindow.Height = 300;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent');
+
+
+        }
+    }
+
+ 
     RemovePackageButton(item) {
 
         if (!AppTool.IsNullOrEmpty(item)) {
@@ -491,7 +599,7 @@ export class ConsigmentTabContentComponent
 
     MasterBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return; 
+            //return; 
         }
 
         let customsRequestMenuService = new CustomsRequestMenuService();
@@ -536,7 +644,7 @@ export class ConsigmentTabContentComponent
 
     CourierBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return;
+            //return;
         }
 
         if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
@@ -580,8 +688,8 @@ export class ConsigmentTabContentComponent
     }
 
     CargoQueryRequestMethod() {
-        if (this.IsDisplayOnly) {
-            return;
+        if (this.IsDisplayOnly && this.EntityPM.CargoTypeCode != "20") {
+            //return;
         }
 
         if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
@@ -690,7 +798,7 @@ export class ConsigmentTabContentComponent
         this.AddSiteEnabled = true;
         for (var i = 0; i < this.EntityPM.ConsignmentInternalTransitions.length; i++) {
             var viewModel: ConsignmentInternalTransitionModel = new ConsignmentInternalTransitionModel(this.EntityPM.ConsignmentInternalTransitions[i], this);
-            viewModel.TransitionNumber = i + 1;
+            viewModel.TransitionNumber = i + 1;  
             if (viewModel.SiteCode == null) {
                 this.AddSiteEnabled = false;
             }
@@ -720,14 +828,23 @@ export class ConsigmentTabContentComponent
     }
 
     CheckRequrierdFieldsForSend() {
-        var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
+        var isExport = false;
+        if (this.declarationPM.Direction == 'E') {
+            isExport = true;
+        }
+         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Consignment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Consignment', true);
             });
         });
@@ -762,6 +879,12 @@ export class ConsigmentPackageModel extends BaseComponent {
 
     public get GrossMassMeasure() { return this.EntityPM.GrossMassMeasure; }
     public set GrossMassMeasure(newValue: number) { this.EntityPM.GrossMassMeasure = newValue; }
+
+    public get GrossMassMeasureTypeCode() { return this.EntityPM.GrossMassMeasureTypeCode; }
+    public set GrossMassMeasureTypeCode(newValue: string) { this.EntityPM.GrossMassMeasureTypeCode = newValue; }
+
+    public get GrossMassMeasureTypeName() { return this.EntityPM.GrossMassMeasureTypeName; }
+    public set GrossMassMeasureTypeName(newValue: string) { this.EntityPM.GrossMassMeasureTypeName = newValue; }
 
     public get PackageQuantity() { return this.EntityPM.PackageQuantity; }
     public set PackageQuantity(newValue: number) { this.EntityPM.PackageQuantity = newValue; }

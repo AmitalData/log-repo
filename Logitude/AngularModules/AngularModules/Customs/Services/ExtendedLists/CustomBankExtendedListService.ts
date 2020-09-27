@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -19,8 +20,6 @@ export class CustomBankExtendedListService {
     }
 
     GetCustomBanksForCard(customerId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomBanksForCard?cardId=' + customerId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

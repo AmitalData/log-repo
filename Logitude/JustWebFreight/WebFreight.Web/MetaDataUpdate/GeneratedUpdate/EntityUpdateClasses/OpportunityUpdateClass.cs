@@ -5004,22 +5004,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpportunityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Opportunity.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityOpportunityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ValueField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.RatingName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OpportunityOpportunityHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField OpportunityOpportunityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ValueField", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.RatingName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OpportunityOpportunityHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = "Opportunity.ContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    OpportunityObjectTable.HeaderScreenId = OpportunityHeaderScreenScreen0.Id;
 		    OpportunityObjectTable.HeaderScreenCode = OpportunityHeaderScreenScreen0.Code;
 
@@ -5595,6 +5595,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
 						FeatureUniqeCode = OpportunityFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5613,6 +5615,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
 						FeatureUniqeCode = OpportunityFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5631,6 +5635,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = OpportunityFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5649,6 +5655,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = OpportunityFeature_MB3.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5667,13 +5675,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = OpportunityFeature_MB4.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton OpportunityMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 5, 
 						IsActive = false,
 						LabelTextCodeCode = "Opportunity.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -5685,6 +5695,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton OpportunityMenuButton50 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5702,6 +5714,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB50.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  OpportunityFeature_MB50.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5720,6 +5734,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB51.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  OpportunityFeature_MB51.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5738,6 +5754,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB52.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  OpportunityFeature_MB52.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5756,6 +5774,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB53.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  OpportunityFeature_MB53.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

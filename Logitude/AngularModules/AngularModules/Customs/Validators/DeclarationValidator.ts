@@ -3,9 +3,11 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {Validator} from '../../Infrastructure/Validators/Validator';
-
+import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
 import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
+import { DecDangersContactPM } from '../EntityPMs/DecDangersContactPM';
+import { ConsignmentPackDangerPM } from '../EntityPMs/ConsignmentPackDangerPM';
 
 export class DeclarationValidator {
     private _DeclarationPM: DeclarationPM;
@@ -21,6 +23,15 @@ export class DeclarationValidator {
         this._DeclarationPM = declarationPM;
     }
 
+    public validatePackagesDanger(decDangersContactPM: DecDangersContactPM, consignmentPackDangerPM: ConsignmentPackDangerPM) {
+        var errors = [];
+
+        Validator.TryValidateObject(decDangersContactPM, "Customs.DecDangersContact", errors);
+        Validator.TryValidateObject(consignmentPackDangerPM, "Customs.ConsignmentPackDanger", errors);
+
+        return errors;
+
+    }
 
     public ValidateSupplierInvoiceItem(supplierInvoiceItemPM: SupplierInvoiceItemPM) {
         var errors = [];
@@ -114,11 +125,11 @@ export class DeclarationValidator {
         // Levies
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemLevies) {
             if (AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {
-                errors.push("יש למלא קוד פטור או זיהוי");
+                errors.push("יש למלם קוד פטור או זיהוי");
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
-            //    errors.push("יש למלא קוד פטור או זיהוי ולא גם וגם");
+            //    errors.push("יש למלם קוד פטור םו זיהוי ולם גם וגם");
             //}
             else {
                 // do nothing one of them is filled.
@@ -176,6 +187,22 @@ export class DeclarationValidator {
         return errors;
     }
 
+    //Check if declaration was amendment  with status !=2 
+    public IsAmendment() {
+        var errorMessage: string = "";
+
+        if (this._DeclarationPM != null) {
+            if (this._DeclarationPM.IsAmendment && this._DeclarationPM.AmendmentStatus != "2" && (!AppTool.IsNullOrEmpty(this._DeclarationPM.AmendmentStatus))) {
+                errorMessage = "Customs.Declaration.O.IsAmendment";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                    return ' - ' +  this._DeclarationPM.AmendmentStatusName;
+                }
+            }
+        }
+
+        return "";
+    }
 
     //Check if declaration was already paid
     public PaymentDateCheck() {
@@ -222,7 +249,7 @@ export class DeclarationValidator {
                             //search the code in Clients table 
                             //if (false)
                             //{
-                            //    errorMessage = "יש לשלוף יבואן מהמכס לפני שליחה";
+                            //    errorMessage = "יש לשלוף יבוםן מהמכס לפני שליחה";
                             //}
                         }
                         else {
@@ -252,7 +279,7 @@ export class DeclarationValidator {
                             }
                             else {
                                 //errorMessage = "Customs.General.O.NoImporterId";
-                                errorMessage = "מספר יבואן " + importerField + " הוא שדה חובה";
+                                errorMessage = "מספר יבואן " + importerField + " הום שדה חובה";
                             }
                         }
                         break;
@@ -415,7 +442,7 @@ export class DeclarationValidator {
         //    ErrorCode.Add(errorMessage);
         //}
         //Transfer Importer
-        //errorMessage = ImportersCheck("זכאי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
+        //errorMessage = ImportersCheck("זכםי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
         //if (!string.IsNullOrWhiteSpace(errorMessage))
         //{
         //    ErrorCode.Add(errorMessage);
@@ -427,7 +454,7 @@ export class DeclarationValidator {
     }
 
     //Check if it's a converted declaration (IsConvertedDeclaration=True)  // Mirit 02/12/15 Task 18508
-    public CheckIsCoverteedDeclaration() {
+    public CheckIsConvertedDeclaration() {
 
         if (this._DeclarationPM != null) {
             if (this._DeclarationPM.IsConvertedDeclaration == true) {
@@ -456,12 +483,31 @@ export class DeclarationValidator {
     //<--- Yuval Chalup 18.11.2014 TASK-4240
     //Checks for opening Declaration view as 'Display Only'
     public DeclarationViewDisplayOnlyChecks() {
+        //var error = "";
+        //error= this.IsAmendment();
         this.PaymentDateCheck();
         this.ConstraintsInProgressCheck();
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
-        this.CheckIsCoverteedDeclaration(); // Mirit 02/12/15 Task 18508
-        this.CheckIsCloseDeclaration(); 
+        this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
+        this.CheckIsCloseDeclaration();
+        this.CheckIfAutomaticPayment();
+    }
+    CheckIfAutomaticPayment() {
+
+        var errorMessage: string = "";
+
+        if (this._DeclarationPM != null) {
+            if (this._DeclarationPM.AutomaticPayment) {
+                //"הצהרה בתהליך תשלום םוטומטי - לתצוגה בלבד"
+                errorMessage = "Customs.General.O.InAutomaticPayment";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                }
+            }
+        }
+ 
+
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
@@ -487,12 +533,48 @@ export class DeclarationValidator {
         }
     }
 
+    //Check if ImporterCode Valid
+    public CheckIsImporterCodeValid() {
+
+        if (this._DeclarationPM != null && !AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterCode)) {
+
+            this._DeclarationPM.ImporterTypeCode
+            if (///this._DeclarationPM.ImporterCode[0] == "P" || this._DeclarationPM.ImporterCode[0] == "F") {
+                this._DeclarationPM.ImporterTypeCode == "2" /*"P"*/ ||
+                this._DeclarationPM.ImporterTypeCode == "3" /*"F"*/) {
+                if (!AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterPassportNumber)) {
+                    if (this._DeclarationPM.ImporterPassportNumber.length > 15) {
+                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+                    }
+                }
+                return;
+            }
+
+
+            if (this._DeclarationPM.ImporterCode.length < 9) {
+                this.ValidationErrorMessageCodes.push("מספר יבואן קצר מידיי");
+            }
+            else if (this._DeclarationPM.ImporterCode.length > 9) {
+                this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+            }
+            else {
+                var digit: string = this._DeclarationPM.ImporterCode.toString().substring(8);
+                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(this._DeclarationPM.ImporterCode.substring(0, 8));
+
+                if (digit != checkDigit.toString()) {
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                }
+            }
+        
+        }
+    }
   
     public Validate(entityPM: DeclarationPM) {
    
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
+        this.CheckIsImporterCodeValid();
 
         return this.ValidationErrorMessageCodes;
     }

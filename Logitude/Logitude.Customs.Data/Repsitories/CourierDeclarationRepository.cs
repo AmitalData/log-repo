@@ -32,6 +32,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CourierMasterId == courierMasterId && a.Tenant == tenant
                     select a).Max(rec => rec.SequenceNumeric);
         }
+       
 
         public IQueryable<CourierDeclaration> GetByCourierMasterId(int tenant, string courierMasterId)
         {
@@ -72,6 +73,20 @@ namespace Logitude.Customs.Data.Repsitories
                                                 select a.DeclarationId).ToList();
 
             return courierDeclarations;
+        }
+        public string GetCourierMasterIdByDeclarationId(string declarationId, int tenant)
+        {
+            string courierMasterId = (from a in context.CourierDeclarations
+                                   where a.DeclarationId == declarationId && a.Tenant == tenant
+                                   select a).FirstOrDefault().CourierMasterId;
+            return courierMasterId;
+        }
+        public List<string> GetDeclarationIdsByCourierMasterID(string courierMasterId, int tenant)
+        {
+            var decList = (from a in context.CourierDeclarations
+                           where a.CourierMasterId == courierMasterId && a.Tenant == tenant
+                           select a.DeclarationId).ToList();
+            return decList;
         }
     }
 

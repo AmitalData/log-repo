@@ -51,6 +51,12 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
+        public List<CourierMaster> GetAllOpenCourierMasters(int tenant)
+        {
+            return (from a in context.CourierMasters
+                    where a.Tenant == tenant && a.IsOpen == true
+                    select a).ToList();
+        }
     }
 
 }

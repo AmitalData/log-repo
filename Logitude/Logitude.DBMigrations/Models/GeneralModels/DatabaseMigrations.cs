@@ -103,7 +103,15 @@ namespace Logitude.DBMigrations.Models
                 {
                     if (!IsIndexInDXMLTable(index))
                     {
-                        MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
+                        string tablePrimaryKeyColumns = CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any() ? string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray()) : null;
+                        if (index.Columns.Split(',').Where(c => c.StartsWith("cdrop_")).Any() && tablePrimaryKeyColumns != index.Columns)
+                        {
+                            tableIndexesScript += GetDropIndexScript(index);
+                        }
+                        else
+                        {
+                            MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
+                        }
                     }
                 }
 
@@ -731,9 +739,9 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("cdrop_") || name.ToLower().StartsWith("temp_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
                     {
-                        if (name.ToLower().StartsWith("drop_"))
+                        if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("cdrop_") || name.ToLower().StartsWith("temp_"))
                         {
                             return name.Substring(0, maxLength);
                         }

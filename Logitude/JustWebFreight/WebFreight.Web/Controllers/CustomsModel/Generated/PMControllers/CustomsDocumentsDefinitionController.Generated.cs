@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.CustomsDocumentsDefinition", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CustomsDocumentsDefinitionQueryService customsDocumentsDefinitionQuery = new CustomsDocumentsDefinitionQueryService(MyContext);
 				customsDocumentsDefinitionQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("Customs.CustomsDocumentsDefinition", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsDocumentsDefinition", entityPM.Tenant, authToken.Tenant);
+	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsDocumentsDefinitionUpdateService service = new CustomsDocumentsDefinitionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("Customs.CustomsDocumentsDefinition", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsDocumentsDefinition", entityPM.Tenant, authToken.Tenant);
+	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsDocumentsDefinitionUpdateService service = new CustomsDocumentsDefinitionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

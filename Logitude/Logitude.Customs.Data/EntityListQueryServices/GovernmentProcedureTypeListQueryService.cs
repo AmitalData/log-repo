@@ -30,10 +30,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           SearchFields = a.SearchFields,
                                                           IsImport = a.IsImport,
                                                           Inactive = a.Inactive,
-                                                          IndexOrder = a.IndexOrder
-
+                                                          IndexOrder = a.IndexOrder,
+                                                          IsExport= a.IsExport
                                                       });
-            return query.Where(d => !d.Code.StartsWith("1") );
+            return query;//.Where(d => !d.Code.StartsWith("1") );
 		}
 
         private IQueryable<GovernmentProcedureType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<GovernmentProcedureType> iQueryable)

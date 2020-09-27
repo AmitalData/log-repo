@@ -35,8 +35,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
+            //this.Property(t => t.ObjectFieldCode)
+            //    .IsRequired()
+            //    .HasMaxLength(200)
+            //    .IsUnicode(false);
+
             this.Property(t => t.ObjectFieldCode)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
 

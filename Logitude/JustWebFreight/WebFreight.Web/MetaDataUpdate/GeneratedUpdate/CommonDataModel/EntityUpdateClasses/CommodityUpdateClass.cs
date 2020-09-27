@@ -486,8 +486,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CommodityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Commodity.HeaderScreen", Name = "Header Screen", ObjectTableId = CommodityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CommodityCommodityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityHeaderScreenScreen0.Id,ScreenCode = CommodityHeaderScreenScreen0.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CommodityCommodityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityHeaderScreenScreen0.Id,ScreenCode = CommodityHeaderScreenScreen0.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CommodityObjectTable.HeaderScreenId = CommodityHeaderScreenScreen0.Id;
 		    CommodityObjectTable.HeaderScreenCode = CommodityHeaderScreenScreen0.Code;
 
@@ -496,12 +496,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CommodityGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Commodity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CommodityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CommodityCommodityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommodityCommodityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommodityCommodityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CommodityCommodityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommodityCommodityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommodityCommodityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

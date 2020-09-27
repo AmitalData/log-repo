@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CommunicationLogUpdateClass
    {  		
-		public const string HashString = "950a759d249751ee92af3c9419b0cd22";
+		public const string HashString = "9251e0b0d40395f303602644f36fff70";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2499,14 +2499,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CommunicationLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CommunicationLog.HeaderScreen", Name = "Header Screen", ObjectTableId = CommunicationLogObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.To", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.CommunicationStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.CommunicationLogTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.To", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.CommunicationStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "CommunicationLog.CommunicationLogTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CommunicationLogObjectTable.HeaderScreenId = CommunicationLogHeaderScreenScreen0.Id;
 		    CommunicationLogObjectTable.HeaderScreenCode = CommunicationLogHeaderScreenScreen0.Code;
 
@@ -2515,34 +2515,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CommunicationLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CommunicationLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CommunicationLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.To", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.BCC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Retries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.InOut", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.ObjectTableId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CommunicationStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CommunicationLogTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.TenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.LogSettings", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.To", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.BCC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.Retries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.InOut", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.ObjectTableId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CommunicationStatusTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.CommunicationLogTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.TenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "CommunicationLog.LogSettings", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -2580,7 +2580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGER",HtmlComponentName = "CommunicationLogErrorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogErrorComponent", FeatureId = CommunicationLogErrorFeature_TH2.Id,FeatureUniqeCode = CommunicationLogErrorFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogErrorControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogErrorTextCode_TH2.Id, TabNameTextCodeCode = CommunicationLogErrorTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationLogStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent", FeatureId = CommunicationLogStepsFeature_TH3.Id,FeatureUniqeCode = CommunicationLogStepsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogStepsTextCode_TH3.Id, TabNameTextCodeCode = CommunicationLogStepsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationStepsComponent", FeatureId = CommunicationLogStepsFeature_TH3.Id,FeatureUniqeCode = CommunicationLogStepsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationStepsComponent", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogStepsTextCode_TH3.Id, TabNameTextCodeCode = CommunicationLogStepsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogEventsFeature_TH4.Id,FeatureUniqeCode = CommunicationLogEventsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogEventsTextCode_TH4.Id, TabNameTextCodeCode = CommunicationLogEventsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -2695,6 +2695,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = CommunicationLogFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -2713,6 +2715,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CommunicationLogMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2730,6 +2734,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CommunicationLogFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  CommunicationLogFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2759,6 +2765,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Error", DefaultText = "Error",LocalDefaultText = @"שגיאה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogStepsOLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.Log", DefaultText = "Log",LocalDefaultText = @"לוג", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogStepsOShowResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.ShowResponse", DefaultText = "Response",LocalDefaultText = @"תשובה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

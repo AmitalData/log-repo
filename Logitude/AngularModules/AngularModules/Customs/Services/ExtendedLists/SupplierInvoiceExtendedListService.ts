@@ -53,7 +53,7 @@ export class SupplierInvoiceExtendedListService {
         var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices';
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 
                 //var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -82,7 +82,7 @@ export class SupplierInvoiceExtendedListService {
         var url = this._apiUrl + '/GetSelectedSupplierInvoiceItems';
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSelectedSupplierInvoiceItems/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&lineNubmers=' + lineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSelectedSupplierInvoiceItems/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&lineNubmers=' + lineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 
                 //var serviceResponse: ServiceResponse = new ServiceResponse();

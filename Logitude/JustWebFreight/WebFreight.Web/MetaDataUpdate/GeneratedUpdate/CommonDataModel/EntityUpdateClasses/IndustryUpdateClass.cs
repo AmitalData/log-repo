@@ -455,10 +455,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.HeaderScreen", Name = "Header Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    IndustryObjectTable.HeaderScreenId = IndustryHeaderScreenScreen0.Id;
 		    IndustryObjectTable.HeaderScreenCode = IndustryHeaderScreenScreen0.Code;
 
@@ -467,12 +467,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

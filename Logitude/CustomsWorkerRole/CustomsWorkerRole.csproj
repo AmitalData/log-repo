@@ -111,7 +111,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Services.Client" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -264,6 +266,10 @@
     <None Include="Service References\DeclarationWebServiceReference\DeclarationWebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
+      <Project>{d5834b27-2c00-4ab3-9aa3-4266314b5aba}</Project>
+      <Name>CommunicationWorkerRole</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
       <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
       <Name>Logitude.AmitalMessaging</Name>

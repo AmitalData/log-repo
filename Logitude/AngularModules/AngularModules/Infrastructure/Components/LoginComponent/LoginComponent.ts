@@ -507,12 +507,15 @@ export class LoginComponent implements OnInit {
                     //2
                 });
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
-                  this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
-                    this.generalTableResourcesIsLoaded = true;
-                        this.IncreaseProgressBar("General Resources");
-                        //26
+                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
+                        this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe((response: any) => {
+                            this.generalTableResourcesIsLoaded = true
+                            this.IncreaseProgressBar("General Resources");
+                            //26
+                        });
                     });
+                   
                 });
 
                 this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {

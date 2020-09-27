@@ -1,0 +1,1 @@
+update declarations set isconnectedtounifreight=0

@@ -52,6 +52,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StorageSiteCode" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -152,6 +153,12 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="POINTERS" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CARS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COMMERCE_PRICE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COMMERCE_PRICE_CURRENCY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ADDITIONAL_QUANTITY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ADDITIONAL_QUANTITY_TYPE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="STATISTICAL_QUANTITY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="STATISTICAL_QUANTITY_TYPE" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -243,6 +250,12 @@
   <xs:element name="FOB" type="xs:string" />
   <xs:element name="VEHICLE_FILE" type="xs:string" />
   <xs:element name="EXEMPT_TYPE" type="xs:string" />
+  <xs:element name="COMMERCE_PRICE" type="xs:string" />
+  <xs:element name="COMMERCE_PRICE_CURRENCY" type="xs:string" />
+  <xs:element name="ADDITIONAL_QUANTITY" type="xs:string" />
+  <xs:element name="ADDITIONAL_QUANTITY_TYPE" type="xs:string" />
+  <xs:element name="STATISTICAL_QUANTITY" type="xs:string" />
+  <xs:element name="STATISTICAL_QUANTITY_TYPE" type="xs:string" />
   <xs:element name="TRANSP_VALUE_LIST">
     <xs:complexType>
       <xs:sequence>
@@ -302,4 +315,5 @@
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
   <xs:element name="TaxationDateTime" type="xs:string" />
+  <xs:element name="StorageSiteCode" type="xs:string" />
 </xs:schema>

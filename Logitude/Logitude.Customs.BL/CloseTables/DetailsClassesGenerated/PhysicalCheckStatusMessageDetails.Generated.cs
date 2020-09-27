@@ -20,17 +20,40 @@ namespace Logitude.Customs.BL
    {
        public List<PhysicalCheckStatusMessageDetails> GetAll()
        {
-		    var all = new List<PhysicalCheckStatusMessageDetails>(); 
+		    var all = new List<PhysicalCheckStatusMessageDetails>();  
+            all.Add(new PhysicalCheckStatusMessageDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,first transmition,שליחה ראשונית", 
+                Inactive = false, 
+                LocalName = "שליחה ראשונית", 
+                EnglishName = "First Transmition", 
+			});
+			 
+            all.Add(new PhysicalCheckStatusMessageDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,last transmition,שליחה סופית", 
+                Inactive = false, 
+                LocalName = "שליחה סופית", 
+                EnglishName = "Last Transmition", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PhysicalCheckStatusMessage newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(PhysicalCheckStatusMessage rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

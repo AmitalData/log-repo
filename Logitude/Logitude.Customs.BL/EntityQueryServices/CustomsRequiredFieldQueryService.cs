@@ -14,10 +14,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CustomsRequiredFieldQueryService : EntityQueryService<CustomsRequiredField, CustomsRequiredFieldKeys, CustomsRequiredFieldPM, object, CustomsRequiredFieldKeys>
     {
-        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant)
+        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
-            List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId,Tenant);
+            List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId,Tenant, type);
             List<CustomsRequiredFieldPM> requiredFieldsPms = new List<CustomsRequiredFieldPM>();
             foreach (CustomsRequiredField field in requiredFields)
             {
@@ -30,10 +30,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return requiredFieldsPms;
         }
 
-        public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldId(string ObjectFieldId, int Tenant)
+        public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
-            CustomsRequiredField requiredFields = rep.GetCustomRequiredFieldsByObjectFieldId(ObjectFieldId, Tenant);
+            CustomsRequiredField requiredFields = rep.GetCustomRequiredFieldsByObjectFieldCode(ObjectFieldCode, Tenant);
             CustomsRequiredFieldPM requiredFieldsPms = new CustomsRequiredFieldPM();
            
             CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();

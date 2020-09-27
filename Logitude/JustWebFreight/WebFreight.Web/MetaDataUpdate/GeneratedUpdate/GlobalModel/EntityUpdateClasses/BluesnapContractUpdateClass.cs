@@ -630,10 +630,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen BluesnapContractHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BluesnapContract.HeaderScreen", Name = "Header Screen", ObjectTableId = BluesnapContractObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BluesnapContractBluesnapContractHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BluesnapContractHeaderScreenScreen0.Id,ScreenCode = BluesnapContractHeaderScreenScreen0.Code, ObjectFieldCode = "BluesnapContract.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BluesnapContractBluesnapContractHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BluesnapContractHeaderScreenScreen0.Id,ScreenCode = BluesnapContractHeaderScreenScreen0.Code, ObjectFieldCode = "BluesnapContract.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField BluesnapContractBluesnapContractHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BluesnapContractHeaderScreenScreen0.Id,ScreenCode = BluesnapContractHeaderScreenScreen0.Code, ObjectFieldCode = "BluesnapContract.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BluesnapContractBluesnapContractHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BluesnapContractHeaderScreenScreen0.Id,ScreenCode = BluesnapContractHeaderScreenScreen0.Code, ObjectFieldCode = "BluesnapContract.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    BluesnapContractObjectTable.HeaderScreenId = BluesnapContractHeaderScreenScreen0.Id;
 		    BluesnapContractObjectTable.HeaderScreenCode = BluesnapContractHeaderScreenScreen0.Code;
 
@@ -642,16 +642,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen BluesnapContractGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BluesnapContract.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BluesnapContractObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.ContractId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.BluesnapContractTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.ContractId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BluesnapContractBluesnapContractGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BluesnapContractGeneralTabScreenScreen1.Id,ScreenCode = BluesnapContractGeneralTabScreenScreen1.Code, ObjectFieldCode = "BluesnapContract.BluesnapContractTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {DeficitPM} from '../../EntityPMs/DeficitPM';
 
+import {DeficitDecisionPM} from '../../EntityPMs/DeficitDecisionPM';
 
 @Injectable()
 
@@ -181,12 +182,22 @@ export class DeficitPMService {
                  
             }
 			
+               this.MapDeficitDecisions(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.DeficitDecisions = [];
+            for (var item in entityPM.DeficitDecisions) {
+            var myDeficitDecisionPM = entityPM.DeficitDecisions[item];
+            var newDeficitDecisionPM: DeficitDecisionPM = this.clone(myDeficitDecisionPM);
+						
+							 
+            entityPM.OldEntityPM.DeficitDecisions.push(newDeficitDecisionPM);
+            }
+			   
 		}
         else {
 
@@ -196,6 +207,96 @@ export class DeficitPMService {
         return entityPM;
     }
 
+    MapDeficitDecisions(entityPM: DeficitPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeficitDecisions: DeficitDecisionPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeficitDecisions = entityPM.OldEntityPM.DeficitDecisions;
+        }
+
+        entityPM.DeficitDecisions = new Array<DeficitDecisionPM>();
+        for (var item in jsonPM.DeficitDecisions) {
+            var jItem = jsonPM.DeficitDecisions[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeficitDecisionPM: DeficitDecisionPM;
+	  
+            if (mapParent) {
+                newDeficitDecisionPM = new DeficitDecisionPM(entityPM);
+            }
+            else
+            {
+                newDeficitDecisionPM = new DeficitDecisionPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeficitDecisionPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeficitDecisionPM.UniqueKey = Guid.newGuid();
+                newDeficitDecisionPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeficitDecisionPM.OldEntityPM = this.clone(newDeficitDecisionPM);
+
+				
+            }
+            else {
+                if (newDeficitDecisionPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeficitDecisionPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDeficitDecisionPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDeficitDecisionPM.OldEntityPM = null;
+                newDeficitDecisionPM.EntityParentPM = null;
+            }
+			
+			 newDeficitDecisionPM.IsDirty = false;
+            entityPM.DeficitDecisions.push(newDeficitDecisionPM);
+        }
+        if (oldDeficitDecisions) {
+            
+            for (var itemKey in oldDeficitDecisions) {
+                if (entityPM.DeficitDecisions.filter(p=> p.UniqueKey === oldDeficitDecisions[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeficitDecisions[itemKey]) {
+                        //oldDeficitDecisions[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeficitDecisions.push(oldDeficitDecisions[itemKey]);
+						var oldItemJson = oldDeficitDecisions[itemKey];
+                        var deletedPM: DeficitDecisionPM = new DeficitDecisionPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeficitDecisions.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

@@ -27,7 +27,15 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.PaymentTermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
+            }
+            else
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            }
             this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerRef).HasMaxLength(105).IsUnicode(false);

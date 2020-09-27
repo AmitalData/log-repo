@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,9 +10,11 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomsSettingList} from '../../EntityLists/CustomsSettingList';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 
 
 export class CustomsSettingExtendedListService {
+   
 
     private _http: HttpClient;
     private _apiUrl: string;
@@ -43,6 +46,64 @@ export class CustomsSettingExtendedListService {
         });
     }
 
+
+    GetLastRunningDCAWS() {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetLastRunningDCAWS/?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+              
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
+    GetSincroOption(tenant: number, SincroScreen: string): any {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSincroOption/?SincroScreen=' + SincroScreen.toString() + '&tenant=' + tenant.toString() , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var obj = response;
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = obj;
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    PostSincroOption(genericRequestParams: GenericRequestParams) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSincroOption/',
+                JSON.stringify(genericRequestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
 
     GetAmitalRestrictOwnerModel(getFromCache: boolean) {
 
@@ -84,8 +145,7 @@ export class CustomsSettingExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSkipAutoInsurance/?customerCode=' + customerCode.toString() + '&tenant=' + tenant, { headers: authHeader })
-                .map(response => {
+            return this._http.get(this._apiUrl + '/GetSkipAutoInsurance/?customerCode=' + customerCode.toString() + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var obj = response;
 
                     //var entity: CustomsSettingList;
@@ -106,8 +166,7 @@ export class CustomsSettingExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetInsurancePercentDefault/?customerCode=' + customerCode.toString() + '&tenant=' + tenant, { headers: authHeader })
-                .map(response => {
+            return this._http.get(this._apiUrl + '/GetInsurancePercentDefault/?customerCode=' + customerCode.toString() + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var obj = response;
 
                     //var entity: CustomsSettingList;
@@ -135,8 +194,7 @@ export class CustomsSettingExtendedListService {
                 '&DEFID=' + DEFID.toString() +
                 '&BRANCHID=' + BRANCHID.toString() +
                 '&CARDID=' + CARDID.toString() +
-                '&tenant=' + tenant, { headers: authHeader })
-                .map(response => {
+                '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var obj = response;
 
                     //var entity: CustomsSettingList;

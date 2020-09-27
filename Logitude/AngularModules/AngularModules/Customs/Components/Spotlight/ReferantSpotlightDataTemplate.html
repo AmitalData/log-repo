@@ -1,0 +1,112 @@
+<div style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
+    <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
+        <div class="MediaFillRelative"style="overflow-x: auto;overflow-y: hidden;">
+            <table style="width:80%;">
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td colspan="2" style="top:5px;">
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+                    </td>
+                </tr>
+                <tr style="visibility:visible;">
+                    <td style=" width:10%; padding-bottom:115px; left:110px; z-index:99">
+                        <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+                    </td>
+                    <td style="left:130px">
+                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:300px">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                (RowEnded)="OnRowEnded($event)"
+                                                (Ondblclick)="OnFocus()"
+                                                [ItemSource]="ReferantExceptionItemsSource"
+                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                [SelectedRow]="SelectedRow">
+                                <!-- ExceptionReasonsCode -->
+                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe"  [binding]="'ExceptionReasonsCode'" [width]="'130'" [Alignment]="'center'">
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
+                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ExceptionReasonName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov #ReferantReasonLovBox
+                                                    [ObjectFieldName]="'ExceptionReasonsCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.ExceptionReason'"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
+                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [width]="'130'" [Editable]="true" [Alignment]="'center'">
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ExceptionRemarks}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [ObjectFieldName]="'ExceptionRemarks'" [InputType]="'ntext'" [DataContext]="item"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
+
+                                <!-- Status --> <!-- [Text]="item.Status" -->
+                                <log-column [header]="'Customs.DeclarationReferantData.O.Status ' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.SelectedItemStatus.Value}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
+                                <log-column [width]="'75'" [Editable]="true" [Alignment]="'center'" [visibility]="'collapsed'">
+                                     <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <div style="        width: 30px;
+        float: right;
+        height: 20px;
+        padding-top: 3px">
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+
+                        </div>
+                    </td>
+                    <td style="width:10%; padding-bottom:115px; left:180px; ">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'FollowUpDate'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.DeclarationReferantData.O.FollowUpDate'">
+                        </LogLabel>
+                    </td>
+                    <td style="width:10%; padding-bottom:115px; left:180px; ">
+                        <LogDatePicker [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
+                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="width:10%; right:250px; bottom:4.2px;">
+                        <button class="RedButton" *ngIf="this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" *ngIf="!this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td *ngIf="!(ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="width:10%; right:250px; top:15px;">
+                        <button class="RedButton" *ngIf="this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" *ngIf="!this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <BusyIndicator [Text]="'Loading...'" [IsBusy]="ShowBusyIndicator" [Width]="180" [Height]="100" [ImageWidth]="45" [ImageHeight]="45"></BusyIndicator>
+</div>

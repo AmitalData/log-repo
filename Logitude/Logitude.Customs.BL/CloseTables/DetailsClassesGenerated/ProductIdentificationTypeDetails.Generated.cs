@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<ProductIdentificationTypeDetails> GetAll()
        {
-		    var all = new List<ProductIdentificationTypeDetails>(); 
+		    var all = new List<ProductIdentificationTypeDetails>();  
+            all.Add(new ProductIdentificationTypeDetails()
+            {    
+                Code = "MN", 
+                SearchFields = "MN,דגם יצרן", 
+                Inactive = false, 
+                LocalName = "דגם יצרן", 
+			});
+			 
+            all.Add(new ProductIdentificationTypeDetails()
+            {    
+                Code = "SS", 
+                SearchFields = "SS,מספר קטלוגי", 
+                Inactive = false, 
+                LocalName = "מספר קטלוגי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ProductIdentificationType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ProductIdentificationType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

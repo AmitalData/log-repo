@@ -22,6 +22,10 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
         <xs:element minOccurs="0" maxOccurs="1" ref="FlightNumber" />
         <xs:element minOccurs="0" maxOccurs="1" ref="WeightValueCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StorageSiteCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IntegratorIndex" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="NoOfCourierHawb" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TruckerId" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -37,4 +41,8 @@
   <xs:element name="Tenant" type="xs:string" />
   <xs:element name="FlightNumber" type="xs:string" />
   <xs:element name="WeightValueCode" type="xs:string" />
+  <xs:element name="StorageSiteCode" type="xs:string" />
+  <xs:element name="IntegratorIndex" type="xs:string" />
+  <xs:element name="NoOfCourierHawb" type="xs:string" />
+  <xs:element name="TruckerId" type="xs:string" />
 </xs:schema>

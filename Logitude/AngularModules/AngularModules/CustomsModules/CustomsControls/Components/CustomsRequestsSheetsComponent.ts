@@ -17,6 +17,8 @@ import { ObservableCollection } from    '../../../Infrastructure/Utilities/Obser
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 //////////////////////////////////////////////////////////////////
 
@@ -25,6 +27,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
     selector: 'CustomsRequestsSheetsComponent',
     
     templateUrl: './CustomsRequestsSheetsComponent.html',
+    providers: [CustomsRequestsSheetExtendedListService]
 })
 
 
@@ -92,6 +95,7 @@ export class CustomsRequestsSheetsComponent
     FiltersSectionVisibility: boolean = true;
     RefreshButtonVisibility: boolean;
     CloseButtonVisibility: boolean;//?????
+    selectStatusesHeight: string;
     //_stratSearch: boolean = true;
     public get AllCRSSChecked() { return this._AllCRSSChecked };
     public set AllCRSSChecked(value: boolean) {
@@ -105,14 +109,25 @@ export class CustomsRequestsSheetsComponent
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-
+    isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef) {
+    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef, public customsRequestsSheetExtendedListService: CustomsRequestsSheetExtendedListService) {
         super();
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
         this._AllCustomsRequestsSheetStatusListVM = [];
         console.log("12....");
         
+    }
+
+    SetWindowArgs(args) {
+        if (args != null) {
+            this.isReAnAnalysis = args.isReAnAnalysis;
+            if (this.isReAnAnalysis)
+                this.selectStatusesHeight = "100px";
+            else
+                this.selectStatusesHeight = "410px";
+
+        }
     }
 
 
@@ -177,8 +192,13 @@ export class CustomsRequestsSheetsComponent
                             return (a.LocalName === b.LocalName) ? 0 : (a.LocalName < b.LocalName) ? -1 : 1
 
                         }).forEach((item) => {
+                            if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
+                                 this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
+}
+                            else if (!this.isReAnAnalysis ){
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false));
 
-                            this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+                            }
                         });
 
                         if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
@@ -206,6 +226,198 @@ export class CustomsRequestsSheetsComponent
     ngAfterViewInit() {
         //this._CD.detectChanges();
         //this.CRSSearch();
+    }
+    CancelByFilters() {
+        // if (!this.CheckValidation("Cancel")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //     messageWindow.Show("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל/תשובה תקינה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
+        this.CurrentSession.StartBusyIndicator("");
+
+         this.InitFilter();
+        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(data.ErrorsArray[0]);
+
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
+                }
+
+                else {
+                 var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllSuccess"));
+                }
+
+           
+            }
+        );
+
+       
+      
+        
+    }
+
+    ReAnalysisByFilters() {
+        //if (!this.CheckValidation("ReAnalysis")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //    messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
+        this.CurrentSession.StartBusyIndicator("");
+
+        this.InitFilter();
+        this.customsRequestsSheetExtendedListService.ReAnalysisByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+                         var messageWindow = new MessageWindow();
+                        messageWindow.Width = 400;
+                        messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(data.ErrorsArray[0]);
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
+                  
+                }
+                else {
+              var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.SendReAnalysisInBackground"));
+                }
+            
+            });
+    }
+    CheckValidation(type: string) {
+        if (this.AllCRSSChecked) return false;
+
+        for (var i = 0; i < this._AllCustomsRequestsSheetStatusListVM.length; i++) {
+            if (this._AllCustomsRequestsSheetStatusListVM[i].IsChecked) {
+                if (type == "ReAnalysis" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "21" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "25")
+                    return false;
+                if (type == "Cancel" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "15")
+                    return false;
+            }
+        }  
+
+            
+      
+        return true;
+     }
+
+    InitFilter() {
+
+ 
+          var  filters = new ApiQueryFilters();
+        
+ 
+        filters.GetAll = true;
+        filters.GetCount = true;
+ 
+        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+            filters.SortBy = "RequestCreateDate";
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+            filters.SortDirection = "Descending";
+        }
+
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        let objectTableName = "";
+        let objectTableId1 = "";
+        if (this.entityArgs) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.ObjectTableName)) {
+                objectTableName = this.entityArgs.ObjectTableName;
+                var objectTablePM = //window.ObjectTables.filter(d => d.Id == ObjectTableId)[0];
+                    window.ObjectTables.filter(t => t.Name == objectTableName)[0];
+                objectTableId1 = objectTablePM.Id;
+            }
+        }
+        //if (!AppTool.IsNullOrEmpty(objectTableName)) {
+        if (objectTableName === "Customs.Notification") {
+            //////never tested !!!!!!!- copy from silverlight
+            filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        }
+        else {
+            if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
+                //////never tested !!!!!!!- copy from silverlight
+                //filters.addAdditionalFilter("ObjectTableId1", objectTableId, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("ObjectTableId1", objectTableId1, null, null, "Equals", false, false, false, "string");
+                let EntityId1 = this.entityArgs.EntityPM.Id;
+                if (AppTool.IsNullOrEmpty(EntityId1)) {
+                    EntityId1 = "new Entity do not get any rows !!!!";
+                }
+                //filters.addAdditionalFilter("EntityId1", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("EntityId1", EntityId1, null, null, "Equals", false, false, false, "string");
+
+            }
+
+            else {
+
+                if (this.FromDateTime != null || this.ToDateTime != null) {// for Region
+                    filters.addAdditionalFilter("RequestCreateDate", this.FromDateTime, this.ToDateTime, null, "Between", false, false, false, "DateTime");
+                }
+
+                if (this.MyRequestOnly) {
+                    filters.addAdditionalFilter("RequestOwnerId", SessionLocator.LoggedUserId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CorrelationId)) {
+                    filters.addAdditionalFilter("CorrelationId", this.CorrelationId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+                    filters.addAdditionalFilter("CustomFileNo", this.CustomFileNo, null, null, "Equals", false, false, false, "string");
+                }
+                if (!AppTool.IsNullOrEmpty(this.InterfaceTypeCode)) {
+
+                    filters.addAdditionalFilter("InterfaceTypeCode", this.InterfaceTypeCode, null, null, "Equals", false, false, false, "string");
+
+                }
+                if (!AppTool.IsNullOrEmpty(this.SearchFields)) {
+                    filters.addAdditionalFilter("SearchFields", this.SearchFields, null, null, "Contains", false, false, false, "string");
+
+                }
+
+
+                if (!AppTool.IsNullOrEmpty(this.EntityReference)) {
+
+                    filters.addAdditionalFilter("EntityReference", this.EntityReference, null, null, "Equals", false, false, false, "string");
+                }
+                if (AppTool.IsNullOrEmpty(objectTableName) || objectTableName == "Customs.Declaration") {
+                    this.GetRequestStatusString(filters);
+                }
+
+
+                if (this.IsRestored) {
+                    filters.addAdditionalFilter("IsRestored", this.IsRestored, null, null, "Equals", false, false, false, "boolean");
+                }
+                //_SelectedDCAValue: string = 'ALL';//'ALL';//DCA//!DCA
+                if (this._SelectedDCAValue != "ALL") {
+                    filters.addAdditionalFilter("IsDCA", this._SelectedDCAValue === "DCA", null, null, "Equals", false, false, false, "boolean");
+
+                }
+            }
+        }
+
+        this.filterAgrs = filters;
+
     }
 
     CRSSearch() {
@@ -254,7 +466,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestCreateDate',
             DataTypeCode: 'Date',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestCreateDate"),
-            Styles: { width: '140px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
           HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -304,7 +516,7 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
-            
+            AdditionalDataCustom: this.isReAnAnalysis
         });
         
         
@@ -335,6 +547,8 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
+            AdditionalDataCustom: this.isReAnAnalysis
+
         });
     }
     OnFirstRowSelected($event) {
@@ -369,12 +583,11 @@ export class CustomsRequestsSheetsComponent
     };
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+ 
 
-
-
-        if (filters == null) {
+       // if (filters == null) {
             filters = new ApiQueryFilters();
-        }
+       // }
 
         filters.PageSize = take;
         filters.PageIndex = skip;
@@ -479,11 +692,9 @@ export class CustomsRequestsSheetsComponent
     }
 
     GetRequestStatusString(filters: any) {
-        let RequestStatusString: string = "";
+         let RequestStatusString: string = "";
         if (this.AllCRSSChecked) return;
-
-
-        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
+         this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
 
             if (requestStatus.IsChecked) {
                 if (!AppTool.IsNullOrEmpty(RequestStatusString)) {
@@ -579,17 +790,19 @@ export class CustomsRequestsSheetsComponent
 
 ////////////////////////////////////////
 export class CustomsRequestsSheetStatusListVM {
-    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean) {
+    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
         var Code = MyItem.Code;
-        if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
-            this.IsChecked = true;
-        }
+         if (!isReAnAnalysis) {
+            if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
+                this.IsChecked = true;
+            }
 
-        if (//declarationPM != null
-            isdeclaration
-            && Code != "99") {
+            if (//declarationPM != null
+                isdeclaration
+                && Code != "99") {
 
-            this.IsChecked = true;
+                this.IsChecked = true;
+            }
         }
     }
     IsChecked: boolean;

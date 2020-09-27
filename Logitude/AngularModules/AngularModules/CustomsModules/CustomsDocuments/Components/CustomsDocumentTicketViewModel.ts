@@ -82,7 +82,9 @@ export class CustomsDocumentTicketViewModel {
         if (this.customsDocumentsTicketPM.ExternalAttachmentId != value) {
             this.customsDocumentsTicketPM.ExternalAttachmentId = value;
         }
-  }
+    }
+
+ 
     public FromCompanyDocumentType2Add: boolean = false;
 
     private customDocumentTypeMetaDataLists: CustomDocumentTypeMetaDataList[];
@@ -117,7 +119,6 @@ export class CustomsDocumentTicketViewModel {
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
     //*****************************************//
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
         private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
         this.EntityResourceService = new EntityResourceService();
@@ -408,9 +409,9 @@ export class CustomsDocumentTicketViewModel {
     }
 
     ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent) {
-        if (this.CurrentSession.CurrentEditComponent) {
-            if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+            if (SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.IsDirty) {
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
             }
         }
         if (this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
@@ -432,7 +433,7 @@ export class CustomsDocumentTicketViewModel {
             var relatedDocumentViewModel: RelatedDocumentViewModel = RelatedDocuments.filter(d => d.Id == documentFilingPMId)[0];
             if (!this.isDisplayOnly || !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
                 if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentsFilingId)) {
-                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                    SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                     if (relatedDocumentViewModel.CustomDocument == null) {
                         var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
                         var docId = encodeURIComponent(relatedDocumentViewModel.Id);
@@ -454,9 +455,9 @@ export class CustomsDocumentTicketViewModel {
                                         this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
                                     }
                                     else {
-                                        this.CurrentSession.StopBusyIndicator();
-                                        if (this.CurrentSession.CurrentEditComponent) {
-                                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                                        SessionLocator.SelectedSession.StopBusyIndicator();
+                                        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
                                         }
                                         else {
                                             var messageWindow = new MessageWindow();
@@ -476,8 +477,8 @@ export class CustomsDocumentTicketViewModel {
                                             });
                                         }
                                     }
-                                    //this.CurrentSession.StartBusyIndicatorSaving();
-                                    //                                this.CurrentSession.StopBusyIndicator();
+                                    //SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+                                    //                                SessionLocator.SelectedSession.StopBusyIndicator();
 
                                 });
                             }
@@ -508,7 +509,7 @@ export class CustomsDocumentTicketViewModel {
         });
 
         if (isDifferentData && this.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 200;
@@ -540,9 +541,9 @@ export class CustomsDocumentTicketViewModel {
                 this.isNew = false;
             }
             else {
-                this.CurrentSession.StopBusyIndicator();
-                if (this.CurrentSession.CurrentEditComponent) {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResp.ErrorsArray;
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                    SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = myResp.ErrorsArray;
                 }
                 else {
                     var messageWindow = new MessageWindow();
@@ -605,12 +606,12 @@ export class CustomsDocumentTicketViewModel {
         });
         var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
         customsDocumentPMService.update(relatedDocumentViewModel.CustomDocument).subscribe((response: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
 
             if (response.HasError) {
 
-                if (this.CurrentSession.CurrentEditComponent) {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                    SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
                 }
                 else {
                     var messageWindow = new MessageWindow();
@@ -633,8 +634,8 @@ export class CustomsDocumentTicketViewModel {
             else {
                 this.DataContext.SelectedDocumentId = this.Id;
                 this.DataContext.RefreshEntity();
-                //if (this.CurrentSession.CurrentEditComponent) {
-                //    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                //    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                 //}
                 //this.DataContext.RefreshButtonClicked(this.Id);
                 //this.DataContext.EditCustomsDocumentsTicket(this);
@@ -643,11 +644,11 @@ export class CustomsDocumentTicketViewModel {
     }
 
     ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (relatedDocumentViewModel != null) {
             var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
-            if (fileSizeInMB > 30) {
-                this.CurrentSession.StopBusyIndicator();
+            if (fileSizeInMB > 200) { //if (fileSizeInMB > 30) {
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;
                 confirmWindow.Height = 200;
@@ -697,9 +698,9 @@ export class CustomsDocumentTicketViewModel {
                             this.SetSavedMetaData(relatedDocumentViewModel);
                         }
                         else {
-                            this.CurrentSession.StopBusyIndicator();
-                            if (this.CurrentSession.CurrentEditComponent) {
-                                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
                             }
                             else {
                                 var messageWindow = new MessageWindow();
@@ -726,7 +727,7 @@ export class CustomsDocumentTicketViewModel {
             }
 
             else {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;
                 messageWindow.Height = 200;
@@ -912,12 +913,12 @@ export class CustomsDocumentTicketViewModel {
     }
 
     ApplyDisconnectFromDocument(submit: boolean) {
-        if (this.CurrentSession.CurrentEditComponent) {
-            if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+            if (SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.IsDirty) {
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
             }
         }
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         
         this.customsDocumentsTicketPM.DocumentsFilingId = null;
         this.customsDocumentsTicketPM.Extension = null;
@@ -933,10 +934,10 @@ export class CustomsDocumentTicketViewModel {
         if (submit) {
             var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
             customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (response.HasError) {
-                    if (this.CurrentSession.CurrentEditComponent) {
-                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                    if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
                     }
                     else {
                         var messageWindow = new MessageWindow();
@@ -961,8 +962,8 @@ export class CustomsDocumentTicketViewModel {
                     
 
                     this.DataContext.RefreshEntity();
-                    //if (this.CurrentSession.CurrentEditComponent) {
-                    //    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    //if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                    //    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                     //}
                 }
             });
@@ -971,10 +972,10 @@ export class CustomsDocumentTicketViewModel {
 
     DeleteButtonClicked(dataContext: CustomsDocumentsComponent) {
         this.DataContext = dataContext;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (!this.isNew) {
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;
                 confirmWindow.Height = 200;
@@ -991,7 +992,7 @@ export class CustomsDocumentTicketViewModel {
             else {
                 this.iCustomsDocumentsController.CheckRequestsInProgress(this.customsDocumentsTicketPM.DocumentsFilingId).subscribe((response: ServiceResponse) => {
                     if (response.Result.IsDisplayOnly) {
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Width = 400;
                         confirmWindow.Height = 200;
@@ -1009,13 +1010,13 @@ export class CustomsDocumentTicketViewModel {
 
                         var customsDocumentsTicketPMService: CustomsDocumentsTicketsExtendedService = new CustomsDocumentsTicketsExtendedService();
                         customsDocumentsTicketPMService.delete(this.customsDocumentsTicketPM.Id).subscribe((deleteResp: ServiceResponse) => {
-                            this.CurrentSession.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
                             if (!deleteResp.HasError) {
                                 this.DataContext.RefreshButtonClicked();
                             }
                             else {
-                                if (this.CurrentSession.CurrentEditComponent) {
-                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = deleteResp.ErrorsArray;
+                                if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                    SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = deleteResp.ErrorsArray;
                                 }
                                 else {
                                     var messageWindow = new MessageWindow();
@@ -1042,7 +1043,7 @@ export class CustomsDocumentTicketViewModel {
             }
         }
         else {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.DataContext.RefreshButtonClicked();
         }
     }
@@ -1110,10 +1111,10 @@ export class CustomsDocumentTicketViewModel {
                                     this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
                                 }
                                 else {
-                                    this.CurrentSession.StopBusyIndicator();
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
                                     
-                                    if (this.CurrentSession.CurrentEditComponent) {
-                                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                                    if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
                                     }
                                     else {
                                         var messageWindow = new MessageWindow();
@@ -1133,8 +1134,8 @@ export class CustomsDocumentTicketViewModel {
                                         });
                                     }
                                 }
-                                //this.CurrentSession.StartBusyIndicatorSaving();
-                                //                                this.CurrentSession.StopBusyIndicator();
+                                //SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+                                //                                SessionLocator.SelectedSession.StopBusyIndicator();
 
                             });
                         }

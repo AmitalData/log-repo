@@ -59,6 +59,11 @@ export class GovernmentProcedureTypePM {
     public set IndexOrder(newValue: number) { if (this.indexOrder != newValue) { this.indexOrder = newValue; this.MarkAsDirty("IndexOrder"); } }
        
 	 
+    private isExport: boolean;
+    public get IsExport() { return this.isExport; }
+    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
+       
+	 
 
     public OldEntityPM: GovernmentProcedureTypePM;
 		

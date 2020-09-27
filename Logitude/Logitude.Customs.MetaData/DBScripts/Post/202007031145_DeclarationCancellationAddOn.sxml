@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+             declare
+ n int := 0;
+begin
+  select count(*) into n
+  from PACKAGES
+ where code='DECA';
+  if n = 0 then
+   Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DECA','Declaration Cancellation','DECA,Declaration Cancellation',0,'BS');
+    Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DECAA','Declaration Cancellation AddOn','DECAA,Declaration Cancellation AddOn',0,'AD');
+        Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-23','DECA','DECAA');commit;
+            end if;
+end;
+
+    ]]>
+  </Oracle>
+</Script>

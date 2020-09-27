@@ -1,17 +1,4095 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;49d03a0f-bf86-4e4f-bc3d-6f44e61c0d34&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" DBTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" ObjectTableSingular="&quot;CustomDocumentTypeMetaData&quot;" ObjectTablePlural="&quot;CustomDocumentTypeMetaData&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" KeyPropertyPath="&quot;Format&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Format&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Custom Document Type MetaData&quot;" Code="&quot;8905&quot;" Name="&quot;Customs.CustomDocumentTypeMetaData Query Group&quot;" CloseTableCode="&quot;MetaDataTypeCode&quot;" CloseTableName="&quot;MetaDataTypeName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;fbc54d64-b39e-4e7f-bf9f-e7778f7d5572&quot;" FieldName="&quot;MetaDataTypeCode&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;LookUp&quot;" LookUpTableName="&quot;Customs.CustomMetaDataType&quot;" MinLength="0" MaxLength="6" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="6" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;MetaDataTypeCode&quot;" ListPropertyPath="&quot;MetaDataTypeCode&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;MetaDataTypeCode&quot;" DefaultText="&quot;MetaData Type&quot;" ListFieldLable="&quot;MetaDataTypeCodeListLable&quot;" ListLableDefaultText="&quot;MetaData Type&quot;" IsNullable="true" IsForeignKey="true" ForeignEntity="CustomMetaDataType" NavigationPropertyName="CustomMetaDataType" IsPrimaryKey="true" Order="1" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;3f718eb2-1954-481e-a12e-e748cd46a16c&quot;" FieldName="&quot;Mandatory&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Mandatory&quot;" ListPropertyPath="&quot;Mandatory&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Mandatory&quot;" DefaultText="&quot;Mandatory&quot;" ListFieldLable="&quot;MandatoryListLable&quot;" ListLableDefaultText="&quot;Mandatory&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;3112b6bc-3b0b-42b8-a815-1c6621f1c9f5&quot;" FieldName="&quot;Format&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="20" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="20" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Format&quot;" ListPropertyPath="&quot;Format&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Format&quot;" DefaultText="&quot;Format&quot;" FullLocalDefaultText="&quot;פורמט&quot;" ListFieldLable="&quot;FormatListLable&quot;" ListLableDefaultText="&quot;Format&quot;" ListLocalDefaultText="&quot;פורמט&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;ddfa6a4d-177e-4cbf-b913-b10b9fe1195d&quot;" FieldName="&quot;DocumentTypeCode&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;LookUp&quot;" LookUpTableName="&quot;Customs.CustomDocumentType&quot;" MinLength="0" MaxLength="7" IsRequired="true" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="7" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;DocumentTypeCode&quot;" ListPropertyPath="&quot;DocumentTypeCode&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;DocumentTypeCode&quot;" DefaultText="&quot;Document Type&quot;" FullLocalDefaultText="&quot;סוג מסמך&quot;" ListFieldLable="&quot;DocumentTypeCodeListLable&quot;" ListLableDefaultText="&quot;Document Type&quot;" ListLocalDefaultText="&quot;סוג מסמך&quot;" IsNullable="false" IsForeignKey="true" ForeignEntity="CustomDocumentType" NavigationPropertyName="CustomDocumentType" IsPrimaryKey="true" Order="2" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;fa6e5cb4-942b-4104-9077-83de42ff1d2d&quot;" FieldName="&quot;ValuesTable&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;ValuesTable&quot;" ListPropertyPath="&quot;ValuesTable&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;ValuesTable&quot;" DefaultText="&quot;Values Table&quot;" ListFieldLable="&quot;ValuesTableListLable&quot;" ListLableDefaultText="&quot;Values Table&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;c5ba9644-2e48-4e7c-8f93-9770bf5ab98e&quot;" FieldName="&quot;MetaDataTypeName&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;MetaDataTypeName&quot;" ListPropertyPath="&quot;MetaDataTypeName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;MetaDataTypeName&quot;" DefaultText="&quot;MetaData Type Name&quot;" ListFieldLable="&quot;MetaDataTypeNameListLable&quot;" ListLableDefaultText="&quot;MetaData Type Name&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="false" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;fdcef63b-781c-4393-9b62-f3a7c0541c72&quot;" FieldName="&quot;DocumentTypeName&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="120" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="120" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;DocumentTypeName&quot;" ListPropertyPath="&quot;DocumentTypeName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;DocumentTypeName&quot;" DefaultText="&quot;Document Type Name&quot;" ListFieldLable="&quot;DocumentTypeNameListLable&quot;" ListLableDefaultText="&quot;Document Type Name&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="false" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;157d672d-5884-4460-a268-86ca66d1b3fb&quot;" FieldName="&quot;IsLeading&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;IsLeading&quot;" ListPropertyPath="&quot;IsLeading&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;IsLeading&quot;" DefaultText="&quot;IsLeading&quot;" ListFieldLable="&quot;IsLeadingListLable&quot;" ListLableDefaultText="&quot;IsLeading&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;1bf0be07-8422-4e92-ba63-73f85d6b81b2&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" FullLocalDefaultText="&quot;חסום&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;49d03a0f-bf86-4e4f-bc3d-6f44e61c0d34&quot;"
+  ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+  DBTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+  ObjectTableSingular="&quot;CustomDocumentTypeMetaData&quot;"
+  ObjectTablePlural="&quot;CustomDocumentTypeMetaData&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  KeyPropertyPath="&quot;Format&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Format&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Custom Document Type MetaData&quot;"
+  Code="&quot;8905&quot;"
+  Name="&quot;Customs.CustomDocumentTypeMetaData Query Group&quot;"
+  CloseTableCode="&quot;MetaDataTypeCode&quot;"
+  CloseTableName="&quot;MetaDataTypeName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;fbc54d64-b39e-4e7f-bf9f-e7778f7d5572&quot;"
+    FieldName="&quot;MetaDataTypeCode&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Customs.CustomMetaDataType&quot;"
+    MinLength="0"
+    MaxLength="6"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="6"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;MetaDataTypeCode&quot;"
+    ListPropertyPath="&quot;MetaDataTypeCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;MetaDataTypeCode&quot;"
+    DefaultText="&quot;MetaData Type&quot;"
+    ListFieldLable="&quot;MetaDataTypeCodeListLable&quot;"
+    ListLableDefaultText="&quot;MetaData Type&quot;"
+    IsNullable="true"
+    IsForeignKey="true"
+    ForeignEntity="CustomMetaDataType"
+    NavigationPropertyName="CustomMetaDataType"
+    IsPrimaryKey="true"
+    Order="1"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;3f718eb2-1954-481e-a12e-e748cd46a16c&quot;"
+    FieldName="&quot;Mandatory&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Mandatory&quot;"
+    ListPropertyPath="&quot;Mandatory&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Mandatory&quot;"
+    DefaultText="&quot;Mandatory&quot;"
+    ListFieldLable="&quot;MandatoryListLable&quot;"
+    ListLableDefaultText="&quot;Mandatory&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;3112b6bc-3b0b-42b8-a815-1c6621f1c9f5&quot;"
+    FieldName="&quot;Format&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="20"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="20"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Format&quot;"
+    ListPropertyPath="&quot;Format&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Format&quot;"
+    DefaultText="&quot;Format&quot;"
+    FullLocalDefaultText="&quot;פורמט&quot;"
+    ListFieldLable="&quot;FormatListLable&quot;"
+    ListLableDefaultText="&quot;Format&quot;"
+    ListLocalDefaultText="&quot;פורמט&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;ddfa6a4d-177e-4cbf-b913-b10b9fe1195d&quot;"
+    FieldName="&quot;DocumentTypeCode&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Customs.CustomDocumentType&quot;"
+    MinLength="0"
+    MaxLength="7"
+    IsRequired="true"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="7"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;DocumentTypeCode&quot;"
+    ListPropertyPath="&quot;DocumentTypeCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;DocumentTypeCode&quot;"
+    DefaultText="&quot;Document Type&quot;"
+    FullLocalDefaultText="&quot;סוג מסמך&quot;"
+    ListFieldLable="&quot;DocumentTypeCodeListLable&quot;"
+    ListLableDefaultText="&quot;Document Type&quot;"
+    ListLocalDefaultText="&quot;סוג מסמך&quot;"
+    IsNullable="false"
+    IsForeignKey="true"
+    ForeignEntity="CustomDocumentType"
+    NavigationPropertyName="CustomDocumentType"
+    IsPrimaryKey="true"
+    Order="2"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;fa6e5cb4-942b-4104-9077-83de42ff1d2d&quot;"
+    FieldName="&quot;ValuesTable&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ValuesTable&quot;"
+    ListPropertyPath="&quot;ValuesTable&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ValuesTable&quot;"
+    DefaultText="&quot;Values Table&quot;"
+    ListFieldLable="&quot;ValuesTableListLable&quot;"
+    ListLableDefaultText="&quot;Values Table&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;c5ba9644-2e48-4e7c-8f93-9770bf5ab98e&quot;"
+    FieldName="&quot;MetaDataTypeName&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;MetaDataTypeName&quot;"
+    ListPropertyPath="&quot;MetaDataTypeName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;MetaDataTypeName&quot;"
+    DefaultText="&quot;MetaData Type Name&quot;"
+    ListFieldLable="&quot;MetaDataTypeNameListLable&quot;"
+    ListLableDefaultText="&quot;MetaData Type Name&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;fdcef63b-781c-4393-9b62-f3a7c0541c72&quot;"
+    FieldName="&quot;DocumentTypeName&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="120"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="120"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;DocumentTypeName&quot;"
+    ListPropertyPath="&quot;DocumentTypeName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;DocumentTypeName&quot;"
+    DefaultText="&quot;Document Type Name&quot;"
+    ListFieldLable="&quot;DocumentTypeNameListLable&quot;"
+    ListLableDefaultText="&quot;Document Type Name&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;157d672d-5884-4460-a268-86ca66d1b3fb&quot;"
+    FieldName="&quot;IsLeading&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsLeading&quot;"
+    ListPropertyPath="&quot;IsLeading&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsLeading&quot;"
+    DefaultText="&quot;IsLeading&quot;"
+    ListFieldLable="&quot;IsLeadingListLable&quot;"
+    ListLableDefaultText="&quot;IsLeading&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;1bf0be07-8422-4e92-ba63-73f85d6b81b2&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive&quot;"
+    FullLocalDefaultText="&quot;חסום&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      MetaDataTypeCode="419"
+      Mandatory="false"
+      Format="&quot;boolean&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="271"
+      IsLeading="true"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="96"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="96"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="70"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="71"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="780"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="780"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="70"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="72"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="70"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="70"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="70"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="77"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_261"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="77"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_262"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="106"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_345"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="107"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_345"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="69"
+      Mandatory="false"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_70"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="87"
+      Mandatory="true"
+      Format="&quot;Boolean&quot;"
+      DocumentTypeCode="IL_70"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_83"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_83"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="7"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_83"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_60"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_61"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="105"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_345"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_40"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_339"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="86"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_285"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_29"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_30"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="92"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_304"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_306"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="91"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_27"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="58"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_26"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_26"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_28"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="82"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_284"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_17"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_180"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_183"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_182"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="58"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="58"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_204"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_21"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_22"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_132"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_132"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_135"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_135"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_141"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_141"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_143"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_143"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_145"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_128"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_129"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_125"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_119"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_119"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_123"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="780"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="60"
+      Mandatory="false"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="IL_100"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="55"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="119"
+      Mandatory="false"
+      Format="&quot;date&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="56"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="112"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="57"
+      Mandatory="true"
+      Format="&quot;Date&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="106"
+      Mandatory="true"
+      Format="&quot;int&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="25"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="780"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="28"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="85"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="47"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_100"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="50"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_100"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_11"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_13"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="27"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="49"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="53"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="49"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_132"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="53"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_132"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="49"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_134"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="52"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_134"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="53"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_134"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="37"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_136"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_22"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_22"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="93"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_234"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_21"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_21"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_235"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_236"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_237"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_238"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_239"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_240"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_241"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="47"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_183"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="50"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_183"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_182"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_182"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_180"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_180"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="32"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_147"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="88"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_15"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_17"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_17"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_202"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="30"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_207"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="30"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_208"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="85"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_284"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_282"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_262"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_283"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_281"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_273"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_278"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_261"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_272"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_242"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_243"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_244"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_245"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_246"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_247"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_249"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="23"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_25"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_248"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_252"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="Il_253"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_254"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_255"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_256"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_257"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_258"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="99"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="95"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_310"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="30"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="95"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_311"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="47"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="24"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_304"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="26"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_304"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="90"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_300"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="27"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="Il_286"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="37"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="Il_286"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="28"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_34"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="97"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="27"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_338"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="108"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_346"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="109"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_346"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="108"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_347"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="109"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_347"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="110"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_348"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="108"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_349"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="109"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_349"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="43"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_40"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="27"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_340"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="108"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_355"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="109"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_355"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="110"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_356"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="29"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_56"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="32"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_57"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="28"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_44"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_81"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="81"
+      Mandatory="false"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_85"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="22"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_83"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="75"
+      Mandatory="true"
+      Format="&quot;Int&quot;"
+      DocumentTypeCode="IL_97"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_9"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_97"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_83"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_81"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_85"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_44"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_45"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_45"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_48"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="61"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_48"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_49"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_50"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_50"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_50"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="13"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_52"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="61"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_52"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_53"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_53"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_53"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_54"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_54"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_54"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="16"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_55"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_56"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_58"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_58"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_60"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_57"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_61"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="13"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_63"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="13"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_64"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_67"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_67"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_67"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_68"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_68"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_68"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_69"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_69"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="8"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_69"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_70"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_37"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_38"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_4"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_40"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_341"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="104"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_341"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_342"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_345"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_41"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="54"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_41"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="13"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_42"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_42"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_43"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_43"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_35"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_350"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_351"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_352"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_353"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_354"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_339"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="98"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_338"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_34"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_340"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="16"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_289"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_29"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_290"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_3"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_30"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="19"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_303"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_306"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="36"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_306"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="61"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_32"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_327"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_33"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_331"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_333"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_334"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="61"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_311"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="89"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_304"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="79"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_306"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="89"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_306"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="94"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_309"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_31"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="54"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_31"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_26"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_258"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_257"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_256"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_255"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_254"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="Il_253"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_249"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="40"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_25"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_252"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_248"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_247"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_246"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_245"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_244"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_243"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_272"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_273"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="39"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="79"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_265"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_27"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="54"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_27"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="78"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_261"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="2"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_262"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="2"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_261"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="54"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_26"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_278"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_28"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_282"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_281"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_283"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_285"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_285"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="83"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_284"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="84"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_284"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_209"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_209"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_202"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_203"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_203"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="103"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_204"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_199"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="39"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_199"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="41"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_202"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="12"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="19"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="35"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_185"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_148"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_149"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="12"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="19"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="35"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_184"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_242"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_241"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_24"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_24"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_240"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_239"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_238"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_237"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_236"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_205"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_206"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_210"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_210"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_211"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_211"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_212"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_235"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_23"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_23"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_234"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_138"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_139"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="1"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="15"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="10"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_135"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="44"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_135"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="45"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_133"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_140"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_141"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_147"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_144"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_145"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_142"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_143"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="2"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="20"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="10"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_136"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="45"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_132"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="16"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_13"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="6"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_128"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_129"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="12"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="19"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="35"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_126"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="11"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_125"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_125"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_119"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="54"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_119"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="15"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_123"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="17"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_123"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="46"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="5"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="1"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="2"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_124"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="85"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="86"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="890"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="67"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="890"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="98"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="21"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="39"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="785"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="9"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_103"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="9"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_104"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="9"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_105"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="16"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="IL_11"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="740"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="780"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="741"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="707"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="714"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="712"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="704"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="705"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="706"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="703"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="422"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="65"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="635"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="68"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="640"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="700"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="67"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="336"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="18"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="380"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="3"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="380"
+      ValuesTable="&quot;1136&quot;"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="39"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="380"
+      IsLeading="true"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="111"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="419"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="41"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="271"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="270"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="298"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="67"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="298"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="14"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="4"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="42"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="325"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="1"
+      Mandatory="false"
+      Format="&quot;string&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="80"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="1"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="119"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="66"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="122"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="100"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="101"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="102"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="64"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="14"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="62"
+      Mandatory="false"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+    <Record
+      MetaDataTypeCode="64"
+      Mandatory="true"
+      Format="&quot;String&quot;"
+      DocumentTypeCode="106"
+      IsLeading="false"
+      Inactive="false" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="false"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Customs.CustomDocumentTypeMetaData.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+  </AdditionalFeatures>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CustomDocumentTypeMetaData&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

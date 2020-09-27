@@ -1521,14 +1521,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen AnalyzeQueueHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.HeaderScreen", Name = "Header Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AnalyzeQueueObjectTable.HeaderScreenId = AnalyzeQueueHeaderScreenScreen0.Id;
 		    AnalyzeQueueObjectTable.HeaderScreenCode = AnalyzeQueueHeaderScreenScreen0.Code;
 
@@ -1537,26 +1537,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen AnalyzeQueueGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.FileSize", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Retries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.TenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToEntity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.FileSize", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Retries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.TenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToEntity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -1665,6 +1665,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = AnalyzeQueueFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

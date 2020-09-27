@@ -1,0 +1,103 @@
+<div class="class-response-content">
+    <table style="width: 620px;height: 350px;padding-top: 10px;">
+
+        <tr class="FormFieldRow" style="height:1px">
+            <!--background-color :aquamarine;-->
+            <td colspan="5" style="width: 100% ; height : 100%">
+                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DeclarationRemarksQueryObservableList">
+
+                        <!-- StatusName -->
+                        <log-column [header]="'תאריך'"
+                                    [binding]="'StatusDate'"
+                                    [width]="'80'" [Alignment]="'Right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.StatusDate}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- StatusDate -->
+                        <log-column [header]="'שעה'"
+                                    [width]="'80'" [Alignment]="'Right'"
+                                    [binding]="'StatusDate'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.StatusTime}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                        <!-- StatuseTime -->
+                        <log-column [header]="'סטטוס'"
+                                    [width]="'100'" [Alignment]="'Right'"
+                                    [binding]="'StatuseTime'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.StatusName}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                        <!--<log-column [header]="'הערות'"
+                                                            [binding]="'StatusComment'"
+                                                            [width]="'200'" [Alignment]="'Right'">
+                                                    <ng-template let-item>
+                        <log-cell-template  #logcelltemplate>
+                                                        <div class="RightCenter">
+                                                            <span>{{item.StatusComment}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                        </ng-template>
+                                                </log-column>-->
+
+                        <log-column [header]="'הערות'"
+                                    [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="TextTrimming"  style="text-align:right">
+                                        <span>{{item.StatusComment}}</span>
+                                    </div>
+                                    <!--<<div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                        <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'text'" [DataContext]="item"
+                                                    [HideColumns]="true"
+                                                    [NoObjectField]="true"></LogTextBox>
+                                    </div>-->
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column >
+                        <log-column [width]="'30'" [Alignment]="'right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div  *ngIf="item.StatusComment != null ">
+                                        <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                        <!--<log-column [header]="'הערות'"
+                                                            [binding]="'StatusComment'"
+                                                            [width]="'100'" [Alignment]="'Right'">
+                                                    <ng-template let-item>
+                        <log-cell-template  #logcelltemplate>
+                                                        <div class="RightCenter">
+                                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Id'" [NoObjectField]="true" [Text]="item.StatusComment" [DataContext]="item" [ObjectTableName]="'Customs.Declaration'" [HideColumns]="true"></LogTextBox>
+
+                                                        </div>
+                                                    </log-cell-template>
+                        </ng-template>
+                                                </log-column>-->
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -942,26 +942,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CountryCityGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CountryCity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CountryCityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CountryCityGeneralTabScreenScreen0.Id,ScreenCode = CountryCityGeneralTabScreenScreen0.Code, ObjectFieldCode = "CountryCity.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen CountryCityHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CountryCity.HeaderScreen", Name = "Header Screen", ObjectTableId = CountryCityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CountryCityCountryCityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CountryCityHeaderScreenScreen1.Id,ScreenCode = CountryCityHeaderScreenScreen1.Code, ObjectFieldCode = "CountryCity.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CountryCityCountryCityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CountryCityHeaderScreenScreen1.Id,ScreenCode = CountryCityHeaderScreenScreen1.Code, ObjectFieldCode = "CountryCity.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CountryCityCountryCityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CountryCityHeaderScreenScreen1.Id,ScreenCode = CountryCityHeaderScreenScreen1.Code, ObjectFieldCode = "CountryCity.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CountryCityCountryCityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CountryCityHeaderScreenScreen1.Id,ScreenCode = CountryCityHeaderScreenScreen1.Code, ObjectFieldCode = "CountryCity.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CountryCityObjectTable.HeaderScreenId = CountryCityHeaderScreenScreen1.Id;
 		    CountryCityObjectTable.HeaderScreenCode = CountryCityHeaderScreenScreen1.Code;
 

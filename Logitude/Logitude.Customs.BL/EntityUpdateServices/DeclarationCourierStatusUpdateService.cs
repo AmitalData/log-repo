@@ -20,11 +20,13 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.BL;
+using System.Diagnostics;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationCourierStatusUpdateService //: EntityUpdateService<DeclarationCourierStatus, DeclarationCourierStatusPM, DeclarationPM>
     {
+        //public bool IsAfterUpdatingUpdate { get; set; }
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             //if (entityParentPM != null)
@@ -36,6 +38,68 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
+            declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
+
+            ICustomContext context = MainContext as CustomContext;
+            if (entityPM != null)
+            {
+                var prevCourierPendingReasonList = entityPM.CourierPendingReasonList;
+                entityPM.CourierPendingReasonList = null;
+                foreach (var declarationPending in entityPM.DeclarationPendings)
+                {
+                    if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
+                    {
+                        if (declarationPending.Status == "A")
+                        {
+                            if (entityPM.CourierPendingReasonList == null)
+                            {
+                                entityPM.CourierPendingReasonList = declarationPending.CourierPendingReasonCode;
+                            }
+                            else
+                            {
+                                entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
+                            }
+                        }
+                    }
+                }
+            }
+
+            DateTime stopLogAt = new DateTime(2020, 03, 01);
+            Debug.WriteLine("DeclarationCourierStatusUpdateServiceOnUpdating");
+            string logData = "";
+            try
+            {
+                if (!String.IsNullOrWhiteSpace(entityPOCO.CourierPaymentStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierPaymentStatusCode))
+                {
+                    logData = $"CourierPaymentStatusCode was {entityPOCO.CourierPaymentStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("CourierPaymentStatusCode " + logData, false, "DeclarationCourierStatus.CourierPaymentStatusCode", stopLogAt);
+                    Debug.WriteLine("CourierPaymentStatusCode==null");
+                }
+                if (!String.IsNullOrWhiteSpace(entityPOCO.DocumentStatusCode) && String.IsNullOrWhiteSpace(entityPM.DocumentStatusCode))
+                {
+                    logData += $"DocumentStatusCode was {entityPOCO.DocumentStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("DocumentStatusCode " + logData, false, "DeclarationCourierStatus.DocumentStatusCode", stopLogAt);
+                    Debug.WriteLine("DocumentStatusCode==null");
+                }
+                if (!String.IsNullOrWhiteSpace(entityPOCO.CourierDeclarationStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierDeclarationStatusCode))
+                {
+                    logData += $"CourierDeclarationStatusCode was {entityPOCO.CourierDeclarationStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("CourierDeclarationStatusCode " + logData, false, "DeclarationCourierStatus.CourierDeclarationStatusCode", stopLogAt);
+                    Debug.WriteLine("CourierDeclarationStatusCode==null");
+                }
+            }
+            catch (Exception E)
+            {
+
+                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "DeclarationCourierStatusUpdateServiceOnUpdating", stopLogAt);
+                throw;
+            }
+            finally
+            {
+
+            }
+
             UpdateUnifreight(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -44,12 +108,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
+            DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            declarationPendingUpdateService.IsUpdateComposition = true;
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp == ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
             base.UpdateComposition(entityPM);
         }
 
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
-
+            LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
@@ -57,7 +125,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //(Repository as Logitude.Customs.Data.Repsitories.DeclarationCourierStatusRepository).FastDeleteMulti(entityKeyFields);
         }
 
-        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM)
+        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false)
         {
             CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
             return calculateDeclarationCourierStatus.CalcAll();

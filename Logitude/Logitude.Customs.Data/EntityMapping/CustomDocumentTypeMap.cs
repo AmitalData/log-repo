@@ -36,6 +36,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.PointerLevel).HasColumnName("PointerLevel").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.AutoSetOriginalDocumentTrue).HasColumnName("AutoSetOriginalDocumentTrue");
+
+            this.Property(t => t.IsCourierManadatory).HasColumnName("IsCourierManadatory");
+
+            this.Property(t => t.IsDiamondManadatory).HasColumnName("IsDiamondManadatory");
         }
     }
 }

@@ -55,6 +55,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("ExcludeFromInterface")]
 	    public bool ExcludeFromInterface { get; set; }
+        [Column("IdentifierID")]
+	    public string IdentifierID { get; set; }
     }
 }
 	 

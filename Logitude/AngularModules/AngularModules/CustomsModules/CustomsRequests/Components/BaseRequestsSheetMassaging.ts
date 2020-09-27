@@ -29,11 +29,15 @@ export class BaseRequestsSheetMassaging
     protected _RequestParamsXml: string;
     protected _ResponseDataXml: string;
 
-    _MyCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
+
+    public IsViewChildCustomMessageWrapperComponentInit: boolean = false;
+
     @ViewChild(CustomMessageWrapperComponent)
+    private _MyCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     public get MyCustomMessageWrapperComponent() { return this._MyCustomMessageWrapperComponent; }
     public set MyCustomMessageWrapperComponent(val: CustomMessageWrapperComponent) {
-        console.log("MyCustomMessageWrapperComponent is settt!!!!");
+        this.IsViewChildCustomMessageWrapperComponentInit = true;
+        console.log("MyCustomMessageWrapperComponent is settt!!!!" + val.MyGuid);
         this._MyCustomMessageWrapperComponent = val;
     }
     //private _callBackOnMassageDisplay: () => void;
@@ -48,8 +52,7 @@ export class BaseRequestsSheetMassaging
         //alert("BaseRequestsSheetMassaging:ngOnInit")
         //this.CallOnMassageDisplayMethod();
         ///alert(this.MyCustomMessageWrapperComponent);
-
-
+     
 
     }
 
@@ -92,7 +95,6 @@ export class BaseRequestsSheetMassaging
 
     public MassageDisplay(RequestParamsXml: string, ResponseDataXml: string): void {
 
-        
 
         this._RequestParamsXml = RequestParamsXml;
         this._ResponseDataXml = ResponseDataXml;
@@ -164,6 +166,7 @@ export class BaseRequestsSheetMassaging
     public set MyCustomsMenuItem(newValue: CustomsMenuItem) {
         if (this._MyCustomMessageWrapperComponent.MyCustomsMenuItem != newValue) {
             this._MyCustomMessageWrapperComponent.MyCustomsMenuItem = newValue;
+            console.log("MyCustomsMenuItem is set !!" + JSON.stringify(this._MyCustomMessageWrapperComponent.MyCustomsMenuItem));
         }
     }
 

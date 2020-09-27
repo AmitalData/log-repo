@@ -48,7 +48,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<DeclarationCargoSplitPM> GetDeclarationCargoSplitsList(string declarationId, int tenant)
         {
-            List<DeclarationCargoSplit> DeclarationCargoSplits = repository.GetDeclarationCargoSplitsList(declarationId, tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            var declarationPMs = declarationQueryService.GetDeclarationAmendmentsById(tenant, declarationId);
+
+            List<string> declarationIds = new List<string>();
+            declarationPMs.ForEach(x => declarationIds.Add(x.Id));
+            declarationIds.Add(declarationId);
+
+            List<DeclarationCargoSplit> DeclarationCargoSplits = repository.GetDeclarationCargoSplitsList(declarationIds, tenant);
             List<DeclarationCargoSplitPM> DeclarationCargoSplitList = new List<DeclarationCargoSplitPM>();
             if (DeclarationCargoSplits != null)
             {

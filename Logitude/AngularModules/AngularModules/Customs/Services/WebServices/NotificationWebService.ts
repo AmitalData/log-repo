@@ -31,7 +31,8 @@ export class NotificationWebService {
             serviceResponse = new ServiceResponse();
             var notificationPMService: NotificationPMService = new NotificationPMService();
 
-            return this._http.get(this._apiUrl + "/GetNotificationsByDefinitionCode/?objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetNotificationsByDefinitionCode/?objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var allLists = response;
                     var _mappedListsArray: Array<NotificationPM> = [];
@@ -55,14 +56,13 @@ export class NotificationWebService {
     PostSendNotificationReplyRequest(entity: MessageToAgentRequestParams) {
 
         return defer(() => {
-
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
                 this._apiUrl + '/PostSendNotificationReplyRequest/',
-              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -75,8 +75,6 @@ export class NotificationWebService {
     }
 
     SetNotificationsStatus(Ids: string[], status: string) {
-
-   
 
         // Send request
         return defer(() => {
@@ -93,12 +91,11 @@ export class NotificationWebService {
                 return;
             }
 
-
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSetNotificationsStatus/?" + IdsParameterString + "status=" + status, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSetNotificationsStatus/?" + IdsParameterString + "status=" + status
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     //var res = response;
 

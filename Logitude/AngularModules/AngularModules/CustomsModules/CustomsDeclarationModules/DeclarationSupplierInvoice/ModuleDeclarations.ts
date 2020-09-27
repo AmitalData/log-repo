@@ -6,6 +6,7 @@ import { SupplierInvoiceItemCertificatesComponent } from './Components/SupplierI
 import { DeclarationSupplierInvoiceTabComponent } from './Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent';
 import { VendorExtendedSearchComponent } from './Components/SupplierInvoices/VendorExtendedSearchComponent';
 import { UpdateProcessCodeComponent } from './Components/SupplierInvoices/UpdateProcessCodeComponent';
+import { UpdateCountryOfOriginComponent } from './Components/SupplierInvoices/UpdateCountryOfOriginComponent';
 import { AddEditSupplierInvoiceComponent } from './Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { SupplierInvoiceGeneralTabComponent } from './Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { SupplierInvoiceMoreTabComponent } from './Components/SupplierInvoices/SupplierInvoiceMoreTabComponent';
@@ -14,6 +15,8 @@ import { MultiCertificateUpdateComponent } from './Components/SupplierInvoices/M
 import { SupplierInvoiceItemVehicleComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent';
 import { VehiclesSearchComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/VehiclesSearchComponent';
 import { AddEditActualLinesComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/AddEditActualLinesComponent';
+import { ExporterInvoiceComponent } from './Components/SupplierInvoices/ExporterInvoiceComponent';
+import { ExporterInvoiceItemComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent';
 
 
 
@@ -27,6 +30,7 @@ export const Components =
     SupplierInvoiceItemCertificatesComponent,
     VendorExtendedSearchComponent,
     UpdateProcessCodeComponent,
+    UpdateCountryOfOriginComponent,
     AddEditSupplierInvoiceComponent,
     SupplierInvoiceGeneralTabComponent,
     SupplierInvoiceMoreTabComponent,
@@ -35,7 +39,8 @@ export const Components =
     SupplierInvoiceItemVehicleComponent,
     VehiclesSearchComponent,
     AddEditActualLinesComponent,
-
+        ExporterInvoiceComponent,
+        ExporterInvoiceItemComponent
   ];
 
 export class ModuleDeclarations {
@@ -49,6 +54,7 @@ export class ModuleDeclarations {
       case "SupplierInvoiceItemCertificatesComponent": { myResult = SupplierInvoiceItemCertificatesComponent; break; }
       case "VendorExtendedSearchComponent": { myResult = VendorExtendedSearchComponent; break; }
       case "UpdateProcessCodeComponent": { myResult = UpdateProcessCodeComponent; break; }
+      case "UpdateCountryOfOriginComponent": { myResult = UpdateCountryOfOriginComponent; break; }
       case "AddEditSupplierInvoiceComponent": { myResult = AddEditSupplierInvoiceComponent; break; }
       case "SupplierInvoiceGeneralTabComponent": { myResult = SupplierInvoiceGeneralTabComponent; break; }
       case "SupplierInvoiceMoreTabComponent": { myResult = SupplierInvoiceMoreTabComponent; break; }
@@ -61,7 +67,10 @@ export class ModuleDeclarations {
       }
 
       case "AddEditActualLinesComponent": { myResult = AddEditActualLinesComponent; break; }
-      case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
+        case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
+        case "ExporterInvoiceComponent": { myResult = ExporterInvoiceComponent; break; }
+        case "ExporterInvoiceItemComponent": { myResult = ExporterInvoiceItemComponent; break; }
+
     }
 
     return myResult;

@@ -252,6 +252,37 @@
     <Content Include="2020.R2\05\Day 13 [Abed] FixCardsCountryThatConnectedToTenantZeroFromOtherTenant.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
+    <Content Include="Customs2019\to execute problem of chronological dates.sql" />
+    <Content Include="Customs2020\1modify customs required fields.sql" />
+    <Content Include="Customs2020\1modify screen name oracle.sql" />
+    <Content Include="Customs2020\1tenantmanagementlicenses_PACKAGECODE_ORACLE.sql" />
+    <Content Include="Customs2020\4before update delete all metadata.sql" />
+    <Content Include="Customs2020\2DROP CONSTRAINTS FOR METADATA ORACLE.sql" />
+    <Content Include="Customs2020\3oracle before delete metadata.sql" />
+    <Content Include="Customs2020\5 after update.sql" />
+    <Content Include="Customs2020\1delete from metadata bad records.sql" />
+    <Content Include="Customs2020\DeleteObjectTableMetadataSP.sql" />
+    <Content Include="Customs2020\export for spellchecked.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\AddMetadataColumns.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\Color Index Script.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\DropEmptyTables_Global.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\DropEmptyTables_Main.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\DropEmptyTables_SystemLogs.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate countries.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate country cities.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate incoterms.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate ports.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate states.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\null column must have a value %28Tenants%29.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\package type print as nullable.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForGlobalDB.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForMainDB.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForSystemLogsDB.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\1 TablesBackup.sql" />
+    <Content Include="Customs2020\PreDeleteMetadata.sql" />
+    <Content Include="Customs2020\ReconnectObjectMetaData.sql" />
+    <Content Include="Customs2020\SELECT CONSTRAINTS.sql" />
+    <Content Include="Customs2020\Set Declaration To not connected to unf.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -739,7 +770,10 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between ObjectFieldModifications and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on ObjectFieldModifications.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 15 [Rabaia] set FeatureId as NULL.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between CustomsRequiredFields and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Delete Constraint between Restrictions and objectFields.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions - Copy.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill objectfieldcode on CustomsRequiredFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill HeaderScreenCode on ObjectTable.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenModifications.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenFields.sql" />
@@ -2063,6 +2097,7 @@
     <Content Include="Usefull Scripts\MetaData\StoredProcedures\ReconnectObjectTableMetadata.sql" />
     <Content Include="Usefull Scripts\MetaData\StoredProcedures\Delete Stored Procedure.sql" />
     <Content Include="Usefull Scripts\MetaData\2MetaDataScripts -Delete.sql" />
+    <Content Include="Usefull Scripts\MetaData\2MetaDataScripts-DeleteCustoms.sql" />
     <Content Include="Usefull Scripts\MetaData\3MetaDataScripts -AfterDelete.sql" />
     <Content Include="Usefull Scripts\MetaData\1MetaDataScripts -BeforeDelete.sql" />
     <Content Include="Usefull Scripts\Mohammad\Set Event Types Local Names To English Names.sql" />
@@ -2150,6 +2185,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Customs2020\PreDatabaseMigrationScripts\Fix Local Oracle Database.docx" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />

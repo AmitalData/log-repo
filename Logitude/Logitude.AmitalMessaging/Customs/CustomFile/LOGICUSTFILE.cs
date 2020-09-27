@@ -156,6 +156,26 @@ public partial class LogitudeCustomsFile
 
     private string casualImporterContactField;
 
+    private string casualImporterCountryField;
+
+    private string isDiamondsDeclarationField;
+
+    private string estimatedTimeOfArrivalField;
+
+    private string orderNumberField;
+
+    private string withPaperField;
+
+    private string fileStatusField;
+
+    private string newFileField;
+
+    private string importerFileField;
+
+    private string teamField;
+
+    private string fileOpenDateField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -829,6 +849,136 @@ public partial class LogitudeCustomsFile
         set
         {
             this.casualImporterContactField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string CasualImporterCountry
+    {
+        get
+        {
+            return this.casualImporterCountryField;
+        }
+        set
+        {
+            this.casualImporterCountryField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string IsDiamondsDeclaration
+    {
+        get
+        {
+            return this.isDiamondsDeclarationField;
+        }
+        set
+        {
+            this.isDiamondsDeclarationField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string EstimatedTimeOfArrival
+    {
+        get
+        {
+            return this.estimatedTimeOfArrivalField;
+        }
+        set
+        {
+            this.estimatedTimeOfArrivalField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string OrderNumber
+    {
+        get
+        {
+            return this.orderNumberField;
+        }
+        set
+        {
+            this.orderNumberField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string WithPaper
+    {
+        get
+        {
+            return this.withPaperField;
+        }
+        set
+        {
+            this.withPaperField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FileStatus
+    {
+        get
+        {
+            return this.fileStatusField;
+        }
+        set
+        {
+            this.fileStatusField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string NewFile
+    {
+        get
+        {
+            return this.newFileField;
+        }
+        set
+        {
+            this.newFileField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string ImporterFile
+    {
+        get
+        {
+            return this.importerFileField;
+        }
+        set
+        {
+            this.importerFileField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string Team
+    {
+        get
+        {
+            return this.teamField;
+        }
+        set
+        {
+            this.teamField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FileOpenDate
+    {
+        get
+        {
+            return this.fileOpenDateField;
+        }
+        set
+        {
+            this.fileOpenDateField = value;
         }
     }
 }

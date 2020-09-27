@@ -25,7 +25,11 @@ namespace Logitude.Server.Tools.SQL
 
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                throw new Exception("to do ExecuteStoredProcedures.ExecuteOracle meanwhile there is only 1 ()real  Call"); 
+                //throw new Exception("to do ExecuteStoredProcedures.ExecuteOracle meanwhile there is only 1 ()real  Call"); 
+                if (procedureName.Contains("dbo."))
+                {
+                    procedureName = procedureName.Split('.')[1];
+                }
                 return ExecuteOracle(procedureName, tenant, storedProcedureParams);
             }
             else
@@ -56,26 +60,26 @@ namespace Logitude.Server.Tools.SQL
 
         static object ExecuteOracle(string procedureName, int tenant, List<StoredProcedureParam> storedProcedureParams)
         {
-#if true
-		    return null;
-#else 
+//#if true
+//		    return null;
+//#else 
               
             string strConnString = GetConnection(tenant);
             object outValue = null;
-           using (DbConnection cn = (CommonDataContext.GetContext(tenant) as DbContext).Database.Connection)
+            using (OracleConnection cn = new OracleConnection(strConnString))
             {
                 
                 var cmd = new OracleCommand();
-                cmd.Connection = cn as OracleConnection;
+                cmd.Connection = cn;
                 cmd.CommandText = // "usp_UpdateQueueCommunicationLo";
-                    procedureName.Substring(0, Math.Min(procedureName.Length, 30))
+                    procedureName.Substring(0, Math.Min(procedureName.Length, 30));
                 cmd.CommandType = CommandType.StoredProcedure;
 
 
                 foreach (StoredProcedureParam parameter in storedProcedureParams)
                 {
                     OracleParameter param = ToOracleParameter(parameter);
-                        ToOracleParamName(parameter.ParamName), parameter.ParamDBType, parameter.ParamSize);
+                        //ToOracleParamName(parameter.ParamName), parameter.ParamDBType, parameter.ParamSize);
                     param.Direction = parameter.Direction;
                     if (parameter.Value != null)
                     {
@@ -94,7 +98,7 @@ namespace Logitude.Server.Tools.SQL
                 }
             }
             return outValue;
-#endif
+//#endif
 
         }
 

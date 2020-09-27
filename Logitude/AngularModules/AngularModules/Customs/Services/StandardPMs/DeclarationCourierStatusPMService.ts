@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {DeclarationCourierStatusPM} from '../../EntityPMs/DeclarationCourierStatusPM';
 
+import {DeclarationPendingPM} from '../../EntityPMs/DeclarationPendingPM';
 
 @Injectable()
 
@@ -181,12 +182,22 @@ export class DeclarationCourierStatusPMService {
                  
             }
 			
+               this.MapDeclarationPendings(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.DeclarationPendings = [];
+            for (var item in entityPM.DeclarationPendings) {
+            var myDeclarationPendingPM = entityPM.DeclarationPendings[item];
+            var newDeclarationPendingPM: DeclarationPendingPM = this.clone(myDeclarationPendingPM);
+						
+							 
+            entityPM.OldEntityPM.DeclarationPendings.push(newDeclarationPendingPM);
+            }
+			   
 		}
         else {
 
@@ -196,6 +207,96 @@ export class DeclarationCourierStatusPMService {
         return entityPM;
     }
 
+    MapDeclarationPendings(entityPM: DeclarationCourierStatusPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationPendings: DeclarationPendingPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationPendings = entityPM.OldEntityPM.DeclarationPendings;
+        }
+
+        entityPM.DeclarationPendings = new Array<DeclarationPendingPM>();
+        for (var item in jsonPM.DeclarationPendings) {
+            var jItem = jsonPM.DeclarationPendings[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationPendingPM: DeclarationPendingPM;
+	  
+            if (mapParent) {
+                newDeclarationPendingPM = new DeclarationPendingPM(entityPM);
+            }
+            else
+            {
+                newDeclarationPendingPM = new DeclarationPendingPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationPendingPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationPendingPM.UniqueKey = Guid.newGuid();
+                newDeclarationPendingPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationPendingPM.OldEntityPM = this.clone(newDeclarationPendingPM);
+
+				
+            }
+            else {
+                if (newDeclarationPendingPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationPendingPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDeclarationPendingPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDeclarationPendingPM.OldEntityPM = null;
+                newDeclarationPendingPM.EntityParentPM = null;
+            }
+			
+			 newDeclarationPendingPM.IsDirty = false;
+            entityPM.DeclarationPendings.push(newDeclarationPendingPM);
+        }
+        if (oldDeclarationPendings) {
+            
+            for (var itemKey in oldDeclarationPendings) {
+                if (entityPM.DeclarationPendings.filter(p=> p.UniqueKey === oldDeclarationPendings[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationPendings[itemKey]) {
+                        //oldDeclarationPendings[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationPendings.push(oldDeclarationPendings[itemKey]);
+						var oldItemJson = oldDeclarationPendings[itemKey];
+                        var deletedPM: DeclarationPendingPM = new DeclarationPendingPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationPendings.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

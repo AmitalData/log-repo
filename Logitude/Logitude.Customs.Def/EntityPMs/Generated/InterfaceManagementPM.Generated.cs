@@ -549,6 +549,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string interfaceType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterfaceType  
+	   {
+	    
+	     get
+		{
+		   return interfaceType;
+		 }
+		 set
+		 {
+		   if(interfaceType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterfaceType",OldValue=interfaceType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interfaceType=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

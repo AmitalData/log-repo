@@ -207,7 +207,6 @@ export class RecallSuppliersFromFileComponent
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
-
         this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallSuppliersFromFileRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;

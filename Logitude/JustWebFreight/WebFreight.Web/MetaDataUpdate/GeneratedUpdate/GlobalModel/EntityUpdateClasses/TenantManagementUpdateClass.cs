@@ -9079,14 +9079,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen TenantManagementHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TenantManagement.HeaderScreen", Name = "Header Screen", ObjectTableId = TenantManagementObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.TimeZone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.GlobalDBId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.TimeZone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.GlobalDBId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TenantManagementObjectTable.HeaderScreenId = TenantManagementHeaderScreenScreen0.Id;
 		    TenantManagementObjectTable.HeaderScreenCode = TenantManagementHeaderScreenScreen0.Code;
 
@@ -9521,6 +9521,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = TenantManagementFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

@@ -15,12 +15,59 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.Validators;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.BL
 {
     public class CalculateDeclarationCourierStatus
     {
         private DeclarationPM declarationPM;
+        public static void UpdateCourierDeclarationStatusCode(int Tenant, string DeclarationId)
+        {
+            var customContext = CustomContext.GetContext(Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string prevVal = null;
+                string currvVal = null;
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, DeclarationId, Tenant);
+                prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                if (prevVal != currvVal)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+
+            }
+        }
+         public static void UpdateCourierManifestStatusCode(int Tenant, string DeclarationId)
+        {
+            var customContext = CustomContext.GetContext(Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string prevVal = null;
+                string currvVal = null;
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, DeclarationId, Tenant);
+                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+
+                if (prevVal != currvVal)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
 
         public CalculateDeclarationCourierStatus(DeclarationPM declarationPM, string declarationId = null, int tenant = 0)
         {
@@ -36,7 +83,22 @@ namespace Logitude.Customs.BL.BL
                 this.declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
             }
         }
+        public void Update( Action<DeclarationCourierStatusPM> UPDATEDeclarationCourierStatusPM)
+        {
+            var context = CustomContext.GetContext(this.declarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this.declarationPM.Id, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
 
+                //currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                UPDATEDeclarationCourierStatusPM(currentDeclarationCourierStatusPM);
+                var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), this.declarationPM.Tenant);
+                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+            }
+        }
         public DeclarationCourierStatusPM CalcAll()
         {
             if (declarationPM == null) return null;
@@ -44,7 +106,7 @@ namespace Logitude.Customs.BL.BL
             {
                 var context = CustomContext.GetContext(declarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
+                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                 if (myDeclarationCourierStatusPM == null)
                 {
                     myDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -64,12 +126,14 @@ namespace Logitude.Customs.BL.BL
 
                 CalcCourierManifestStatusCode(myDeclarationCourierStatusPM);
                 CalcTotalInvoiceAmountInUSD(myDeclarationCourierStatusPM);
+                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
                 CalcHighLowValue(myDeclarationCourierStatusPM);
-                CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
+                CalcFastIndividualProcess(myDeclarationCourierStatusPM);
+                CalcDeclarationPendings(myDeclarationCourierStatusPM);
 
                 return myDeclarationCourierStatusPM;
 
@@ -81,7 +145,21 @@ namespace Logitude.Customs.BL.BL
         {
             if (myDeclarationCourierStatusPM == null) return;
             //Set DocumentStatusCode
-            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
+
+            else if (IsDocumentError(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "X";
+
+            }
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+            }
+
         }
 
         public void CalcSpecialActionStatus(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
@@ -146,39 +224,46 @@ namespace Logitude.Customs.BL.BL
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set IsCourierMissingClassification
-            if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
+            if (declarationPM.PaymentDate.HasValue)
             {
-
-                List<SupplierInvoicePM> emptyClassificationCodeList = declarationPM.SupplierInvoices.
-                    Where(SI => SI.SupplierInvoiceItems != null && SI.SupplierInvoiceItems.Any(u => string.IsNullOrWhiteSpace(u.ClassificationCode))).ToList();
-
-                if (emptyClassificationCodeList != null && emptyClassificationCodeList.Count() > 0)
+                myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+            }
+            else
+            {
+                if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
                 {
-                    myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
-                }
-                else
-                {
-                    List<SupplierInvoicePM> emptyItemsList = declarationPM.SupplierInvoices.
-                    Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count() == 0).ToList();
-                    if (emptyItemsList != null && emptyItemsList.Count() > 0)
+
+                    List<SupplierInvoicePM> emptyClassificationCodeList = declarationPM.SupplierInvoices.
+                        Where(SI => SI.SupplierInvoiceItems != null && SI.SupplierInvoiceItems.Any(u => string.IsNullOrWhiteSpace(u.ClassificationCode))).ToList();
+
+                    if (emptyClassificationCodeList != null && emptyClassificationCodeList.Count() > 0)
                     {
                         myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
                     }
                     else
                     {
-                        myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+                        List<SupplierInvoicePM> emptyItemsList = declarationPM.SupplierInvoices.
+                        Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count() == 0).ToList();
+                        if (emptyItemsList != null && emptyItemsList.Count() > 0)
+                        {
+                            myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                        }
+                        else
+                        {
+                            myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+                        }
                     }
                 }
-            }
-            else
-            {
-                myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                else
+                {
+                    myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                }
             }
         }
 
         public void CalcCourierPaymentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
-            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            if (declarationPM == null || myDeclarationCourierStatusPM == null || (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.CourierPaymentStatusCode == "P")) return;
             //Set CourierPaymentStatusCode
             if (declarationPM.PaymentDate == null)
             {
@@ -218,7 +303,11 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
-            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 100 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            {
+                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
+            }
+            else if (myDeclarationCourierStatusPM.DocumentStatusCode == "M")
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
@@ -243,7 +332,14 @@ namespace Logitude.Customs.BL.BL
                                 break;
                             case "11":
                             case "13":
-                                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                if(declarationPM.IsChanged == true)
+                                {
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                                }
+                                else
+                                {
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                }
                                 break;
                             default:
                                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
@@ -254,13 +350,62 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
+        public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+ 
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+
+            List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
+            if (CustomDocumentTypePMList != null)
+            {
+                foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
+                {
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null ).FirstOrDefault();
+                    if (customsDocumentsTicketPM == null)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public Boolean IsDocumentError(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+
+            //List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
+            //if (CustomDocumentTypePMList != null)
+            //{
+            //    foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList) d.DocumentTypeCode == customDocumentTypePMItem.Code &&
+            //    {
+            CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d =>  d.DocumentsFilingId != null && d.DocumentStatusCode == "2").FirstOrDefault();
+                    if (customsDocumentsTicketPM != null)
+                    {
+                        return true;
+                    }
+            //    }
+            //}
+
+            return false;
+        }
+
         public void CalcTotalInvoiceAmountInUSD(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set TotalInvoiceAmountInUSD - sum field InvoiceAmountInUSD from all SupplierInvoices
-            myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = 0;
+            
             if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
             {
+                myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = 0;
                 myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = declarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
             }
         }
@@ -291,6 +436,11 @@ namespace Logitude.Customs.BL.BL
                         case "3":
                             myDeclarationCourierStatusPM.CourierManifestStatusCode = "X";
                             break;
+
+
+                        case "4":// sana + eitan (+itzik !!) ----> R - While Send Failed !!-- Ready 2 send (again)
+                            myDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+                            break;
                         default:
                             myDeclarationCourierStatusPM.CourierManifestStatusCode = "";
                             break;
@@ -299,5 +449,62 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
+        public void CalcFastIndividualProcess(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (myDeclarationCourierStatusPM == null) return;
+
+            //Set CalcFastIndividualProcess
+            if (!string.IsNullOrEmpty(myDeclarationCourierStatusPM.ManualProcessCode))
+            {
+                myDeclarationCourierStatusPM.FastIndividualProcessCode = myDeclarationCourierStatusPM.ManualProcessCode;
+            }
+            else
+            {
+                if(myDeclarationCourierStatusPM.HighLowValue == "L")
+                {
+                    myDeclarationCourierStatusPM.FastIndividualProcessCode = "F";
+                }
+                else
+                {
+                    myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
+                }
+            }
+
+        }
+
+        public void CalcDeclarationPendings(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+
+            DeclarationPendingPM declarationPendingPM_902 = null;
+            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            {
+                declarationPendingPM_902 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "902").FirstOrDefault();
+            }
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            { 
+                // Set Pending 902- Missing ID
+                // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
+                if (declarationPendingPM_902 == null)
+                {
+                    declarationPendingPM_902 = new DeclarationPendingPM();
+                    declarationPendingPM_902.CourierPendingReasonCode = "902";
+                    declarationPendingPM_902.Status = "A";
+                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
+                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
+                }
+                else if (declarationPendingPM_902.Status != "A")
+                {
+                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationPendingPM_902.Status = "A";
+                }
+            }
+            else if (declarationPendingPM_902 != null)
+            {
+                declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Update;
+                declarationPendingPM_902.Status = "S";
+                //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+            }
+        }
     }
 }

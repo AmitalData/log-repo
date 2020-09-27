@@ -1,13 +1,670 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;5fd7548d-f885-4220-b35d-3670c8c5d16c&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" DBTableName="&quot;Customs.TradeAgreements&quot;" ObjectTableSingular="&quot;Customs.TradeAgreement&quot;" ObjectTablePlural="&quot;Customs.TradeAgreements&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Trade Agreement&quot;" Code="&quot;abed&quot;" Name="&quot;Customs.TradeAgreement Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;eba2ec83-33b4-49c2-9e99-8c97a403d5e1&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="8" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="true" ObjectFieldNotRequired="false" SystemMaxLength="8" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;98fb0a41-fe6c-47ad-a822-0d3635627f93&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="40" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="40" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;4362410e-bf2e-48da-b776-335ccbae0696&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;1b7293e3-f867-4170-9941-40600277f4e3&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search Fields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFileds&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;a29798b4-1320-4c4d-82d5-6b8d3a4b9ec4&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;5fd7548d-f885-4220-b35d-3670c8c5d16c&quot;"
+  ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+  DBTableName="&quot;Customs.TradeAgreements&quot;"
+  ObjectTableSingular="&quot;Customs.TradeAgreement&quot;"
+  ObjectTablePlural="&quot;Customs.TradeAgreements&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Trade Agreement&quot;"
+  Code="&quot;TRAG&quot;"
+  Name="&quot;Customs.TradeAgreement&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;eba2ec83-33b4-49c2-9e99-8c97a403d5e1&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="8"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="true"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="8"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;98fb0a41-fe6c-47ad-a822-0d3635627f93&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;4362410e-bf2e-48da-b776-335ccbae0696&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;1b7293e3-f867-4170-9941-40600277f4e3&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search Fields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFileds&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;a29798b4-1320-4c4d-82d5-6b8d3a4b9ec4&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.TradeAgreement&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,סלובקיה&quot;"
+      Inactive="false"
+      LocalName="&quot;סלובקיה&quot;" />
+    <Record
+      Code="&quot;101&quot;"
+      SearchFields="&quot;101,A1&quot;"
+      Inactive="false"
+      LocalName="&quot;A1&quot;" />
+    <Record
+      Code="&quot;102&quot;"
+      SearchFields="&quot;102,A1JE&quot;"
+      Inactive="false"
+      LocalName="&quot;A1JE&quot;" />
+    <Record
+      Code="&quot;103&quot;"
+      SearchFields="&quot;103,A2&quot;"
+      Inactive="false"
+      LocalName="&quot;A2&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,הונגריה&quot;"
+      Inactive="false"
+      LocalName="&quot;הונגריה&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,פולין&quot;"
+      Inactive="false"
+      LocalName="&quot;פולין&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,סלובניה&quot;"
+      Inactive="false"
+      LocalName="&quot;סלובניה&quot;" />
+    <Record
+      Code="&quot;14&quot;"
+      SearchFields="&quot;14,מקסיקו&quot;"
+      Inactive="false"
+      LocalName="&quot;מקסיקו&quot;" />
+    <Record
+      Code="&quot;15&quot;"
+      SearchFields="&quot;15,רומניה&quot;"
+      Inactive="false"
+      LocalName="&quot;רומניה&quot;" />
+    <Record
+      Code="&quot;16&quot;"
+      SearchFields="&quot;16,בולגריה&quot;"
+      Inactive="false"
+      LocalName="&quot;בולגריה&quot;" />
+    <Record
+      Code="&quot;17&quot;"
+      SearchFields="&quot;17,איחוד&quot;"
+      Inactive="false"
+      LocalName="&quot;איחוד&quot;" />
+    <Record
+      Code="&quot;18&quot;"
+      SearchFields="&quot;18,WTO&quot;"
+      Inactive="false"
+      LocalName="&quot;WTO&quot;" />
+    <Record
+      Code="&quot;19&quot;"
+      SearchFields="&quot;19,ברזיל -- מרקורסור&quot;"
+      Inactive="false"
+      LocalName="&quot;ברזיל -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,קהיליה&quot;"
+      Inactive="true"
+      LocalName="&quot;קהיליה&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,אורוגוואי -- מרקורסור&quot;"
+      Inactive="false"
+      LocalName="&quot;אורוגוואי -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,פרגוואי -- מרקורסור&quot;"
+      Inactive="false"
+      LocalName="&quot;פרגוואי -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;22&quot;"
+      SearchFields="&quot;22,ארגנטינה -- מרקורסור&quot;"
+      Inactive="false"
+      LocalName="&quot;ארגנטינה -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;23&quot;"
+      SearchFields="&quot;23,בדיקה&quot;"
+      Inactive="true"
+      LocalName="&quot;בדיקה&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,אוטונומיה&quot;"
+      Inactive="true"
+      LocalName="&quot;אוטונומיה&quot;" />
+    <Record
+      Code="&quot;25&quot;"
+      SearchFields="&quot;25,מכסה זהה&quot;"
+      Inactive="true"
+      LocalName="&quot;מכסה זהה&quot;" />
+    <Record
+      Code="&quot;26&quot;"
+      SearchFields="&quot;26,מכסה זהה2&quot;"
+      Inactive="true"
+      LocalName="&quot;מכסה זהה2&quot;" />
+    <Record
+      Code="&quot;27&quot;"
+      SearchFields="&quot;27,תעריף מחושב&quot;"
+      Inactive="true"
+      LocalName="&quot;תעריף מחושב&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,ארה&quot;ב&quot;"
+      Inactive="false"
+      LocalName="&quot;ארה&quot;ב&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,ארצות ערב&quot;"
+      Inactive="false"
+      LocalName="&quot;ארצות ערב&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,ירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;ירדן&quot;" />
+    <Record
+      Code="&quot;50&quot;"
+      SearchFields="&quot;50,QIZ ירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;QIZ ירדן&quot;" />
+    <Record
+      Code="&quot;51&quot;"
+      SearchFields="&quot;51,QIZ מצריים&quot;"
+      Inactive="false"
+      LocalName="&quot;QIZ מצריים&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,קנדה&quot;"
+      Inactive="false"
+      LocalName="&quot;קנדה&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,אפט&quot;א&quot;"
+      Inactive="false"
+      LocalName="&quot;אפט&quot;א&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,טורקיה&quot;"
+      Inactive="false"
+      LocalName="&quot;טורקיה&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,צ'כיה&quot;"
+      Inactive="false"
+      LocalName="&quot;צ'כיה&quot;" />
+    <Record
+      Code="&quot;BGR&quot;"
+      SearchFields="&quot;BGR,בולגריה&quot;"
+      Inactive="true"
+      LocalName="&quot;בולגריה&quot;" />
+    <Record
+      Code="&quot;CAN&quot;"
+      SearchFields="&quot;CAN,קנדה&quot;"
+      Inactive="true"
+      LocalName="&quot;קנדה&quot;" />
+    <Record
+      Code="&quot;CHECK&quot;"
+      SearchFields="&quot;CHECK,בדיקה&quot;"
+      Inactive="true"
+      LocalName="&quot;בדיקה&quot;" />
+    <Record
+      Code="&quot;CZE&quot;"
+      SearchFields="&quot;CZE,צ'כיה&quot;"
+      Inactive="true"
+      LocalName="&quot;צ'כיה&quot;" />
+    <Record
+      Code="&quot;DOUBLE&quot;"
+      SearchFields="&quot;DOUBLE,מכסה זהה&quot;"
+      Inactive="true"
+      LocalName="&quot;מכסה זהה&quot;" />
+    <Record
+      Code="&quot;DOUBLE2&quot;"
+      SearchFields="&quot;DOUBLE2,מכסה זהה2&quot;"
+      Inactive="true"
+      LocalName="&quot;מכסה זהה2&quot;" />
+    <Record
+      Code="&quot;EFTA&quot;"
+      SearchFields="&quot;EFTA,אפט&quot;א&quot;"
+      Inactive="true"
+      LocalName="&quot;אפט&quot;א&quot;" />
+    <Record
+      Code="&quot;EU&quot;"
+      SearchFields="&quot;EU,איחוד&quot;"
+      Inactive="true"
+      LocalName="&quot;איחוד&quot;" />
+    <Record
+      Code="&quot;EU1&quot;"
+      SearchFields="&quot;EU1,קהיליה&quot;"
+      Inactive="true"
+      LocalName="&quot;קהיליה&quot;" />
+    <Record
+      Code="&quot;EUROPE&quot;"
+      SearchFields="&quot;EUROPE,כללי&quot;"
+      Inactive="true"
+      LocalName="&quot;כללי&quot;" />
+    <Record
+      Code="&quot;HUN&quot;"
+      SearchFields="&quot;HUN,הונגריה&quot;"
+      Inactive="true"
+      LocalName="&quot;הונגריה&quot;" />
+    <Record
+      Code="&quot;JOR&quot;"
+      SearchFields="&quot;JOR,ירדן&quot;"
+      Inactive="true"
+      LocalName="&quot;ירדן&quot;" />
+    <Record
+      Code="&quot;MERC-AR&quot;"
+      SearchFields="&quot;MERC-AR,ארגנטינה -- מרקורסור&quot;"
+      Inactive="true"
+      LocalName="&quot;ארגנטינה -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;MERC-BR&quot;"
+      SearchFields="&quot;MERC-BR,ברזיל -- מרקורסור&quot;"
+      Inactive="true"
+      LocalName="&quot;ברזיל -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;MERC-PY&quot;"
+      SearchFields="&quot;MERC-PY,פרגוואי -- מרקורסור&quot;"
+      Inactive="true"
+      LocalName="&quot;פרגוואי -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;MERC-UY&quot;"
+      SearchFields="&quot;MERC-UY,אורוגוואי -- מרקורסור&quot;"
+      Inactive="true"
+      LocalName="&quot;אורוגוואי -- מרקורסור&quot;" />
+    <Record
+      Code="&quot;MEX&quot;"
+      SearchFields="&quot;MEX,מקסיקו&quot;"
+      Inactive="true"
+      LocalName="&quot;מקסיקו&quot;" />
+    <Record
+      Code="&quot;ORLY22&quot;"
+      SearchFields="&quot;ORLY22,אורלי 22&quot;"
+      Inactive="true"
+      LocalName="&quot;אורלי 22&quot;" />
+    <Record
+      Code="&quot;OTO&quot;"
+      SearchFields="&quot;OTO,אוטונומיה&quot;"
+      Inactive="true"
+      LocalName="&quot;אוטונומיה&quot;" />
+    <Record
+      Code="&quot;POL&quot;"
+      SearchFields="&quot;POL,פולין&quot;"
+      Inactive="true"
+      LocalName="&quot;פולין&quot;" />
+    <Record
+      Code="&quot;ROM&quot;"
+      SearchFields="&quot;ROM,רומניה&quot;"
+      Inactive="true"
+      LocalName="&quot;רומניה&quot;" />
+    <Record
+      Code="&quot;SVK&quot;"
+      SearchFields="&quot;SVK,סלובקיה&quot;"
+      Inactive="true"
+      LocalName="&quot;סלובקיה&quot;" />
+    <Record
+      Code="&quot;SVN&quot;"
+      SearchFields="&quot;SVN,סלובניה&quot;"
+      Inactive="true"
+      LocalName="&quot;סלובניה&quot;" />
+    <Record
+      Code="&quot;TUR&quot;"
+      SearchFields="&quot;TUR,טורקיה&quot;"
+      Inactive="true"
+      LocalName="&quot;טורקיה&quot;" />
+    <Record
+      Code="&quot;USA&quot;"
+      SearchFields="&quot;USA,ארה&quot;ב&quot;"
+      Inactive="true"
+      LocalName="&quot;ארה&quot;ב&quot;" />
+    <Record
+      Code="&quot;WTO&quot;"
+      SearchFields="&quot;WTO,WTO&quot;"
+      Inactive="true"
+      LocalName="&quot;WTO&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;TradeAgreement&quot;"
+    ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.TradeAgreement&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;TRAG&quot;"
+    QueryGroupName="&quot;Customs.TradeAgreement&quot;"
+    LocalTextCode="&quot;סוג הסכם סחר&quot;"
+    TextCode="&quot;Trade Agreement Type Views&quot;"
+    TextCodeCode="&quot;Customs.TradeAgreement.Q.TradeAgreementQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;TRADEAGREEMENT&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.TradeAgreement.Features.TradeAgreements&quot;"
+    FeatureDefaultText="&quot;Trade Agreements&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;TradeAgreement&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;TradeAgreement&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;TradeAgreement&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;TradeAgreement&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.TradeAgreement&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

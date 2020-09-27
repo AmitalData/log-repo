@@ -35,6 +35,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -130,7 +131,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (dirtyDeclarationPM.CurrentContextTag.ToString().Contains("Upsert"))  // moran 28.7.16 - Task 22249
             {
-                doTask = false;
+                if (dirtyDeclarationPM.CurrentContextTag != null && dirtyDeclarationPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()+CourierMasterChange")
+                {
+                    dirtyDeclarationPM.CurrentContextTag = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
+                }
+                else
+                {
+                    doTask = false;
+                }
+            }
+
+            if (dirtyDeclarationPM.AmendmentDontDisplayInList == true)
+            {
+                var eventContextTagModel2 = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
+                if (eventContextTagModel2 != null)
+                {
+                    if (eventContextTagModel2.CallProccessID != EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                    {
+                        doTask = false;
+
+                    }
+                    //if (dirtyDeclarationPM.HatraDate != dbOccDeclarationPM.HatraDate)
+                    //{
+                    //  //  doTask = true;
+                    //}
+
+                }
+            }
+
+            if (dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
+            {
+                OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
+                return;
             }
             bool deleteStatus = false;
             try
@@ -198,6 +230,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService consignmentQueryService = new Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService(dirtyDeclarationPM.Tenant);
                     dirtyDeclarationPM.Consignments = consignmentQueryService.GetMulti(declarationKeys, true);
                 }
+
+                if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
+                {
+                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = 0;
+                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = dirtyDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
+                }
                 var myUnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, dbOccDeclarationPM, loggingUserId);
                 myUnifrightDeclarationUpdateService.Update(doTask);
                 this._NO_LD2U = myUnifrightDeclarationUpdateService._NO_LD2U;
@@ -248,7 +286,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DateTime paymentDateTime = dirtyDeclarationPM.PaymentDate.Value;
                     if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
                     {
-                        SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
+                        using (var trans = TransactionFactory.GetNewTransaction())
+                        {
+                            SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
+                            trans.Complete();
+                        }
                     }
                     statusDateTimeLP2U = dirtyDeclarationPM.PaymentDate.Value; // Task 36100
                 }
@@ -306,6 +348,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         break;
                     case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceCancel: // moran 8.9.16 - Task 20303  
+                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance:
+                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceMessageToAgent:
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
@@ -331,11 +375,129 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
+
+        private void OpenLogBoxUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
+        {
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            var statusDateTime = DateTime.Now;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
+                    var requestData = "";
+                    string vendorCode = null;
+                    string vendorName = null;
+                    if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(dirtyDeclarationPM.SupplierInvoices[0].VendorId))
+                        {
+                            var myQueryService = new CustomsVendorQueryService(this.currentContext);
+                            var custVendor = myQueryService.GetSingle(dirtyDeclarationPM.SupplierInvoices[0].VendorId, false, true);
+                            if (custVendor != null)
+                            {
+                                vendorCode = custVendor.VendorNumber;
+                                vendorName = custVendor.VendorName;
+                            }
+                        }
+                    }
+                    if (vendorCode == null ) return;
+                    
+                    var XMLData = new XDocument(
+                        new XElement("DepositionRequestPM",
+                            new XElement("RequestDateTime", DateTime.Now.ToString("o")),
+                            new XElement("ForwarderShipmentNumber", dirtyDeclarationPM.CustomFileNo),
+                            new XElement("VendorCode", vendorCode),
+                            new XElement("VendorName", vendorName)
+                            )
+                            );
+
+
+                    requestData = XMLData.ToString(SaveOptions.None);
+                    string unifreightUser = null;
+
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    }
+
+                    var myYCULTASKPM = new YCULTASKPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = dirtyDeclarationPM.Id,
+                        PRIORITY = YCULTASKPM.calcPriority(taskType),
+                        TYPE = taskType,
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F",
+                    };
+
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT",
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20),
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = "0",
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
+
+
         public void SendDelayedDeclarationStatusRequest(DeclarationPM dirtyDeclarationPM)
         {
-            if(this.IsDelayedDeclarationStatusRequestSent == true)return;
+            //bool DoNotsendDelayedDeclarationStatusRequest = String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20181024.SendDelayedDeclarationStatusRequest"]);
+            //if (DoNotsendDelayedDeclarationStatusRequest)
+            //{
+            //    LogMessagingUtil.Instance.AppendLine("DoNotsendDelayedDeclarationStatusRequest ==String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[20181024.SendDelayedDeclarationStatusRequest]) 14:45 til 15:15");
+            //    return;
+            //}
+            if (this.IsDelayedDeclarationStatusRequestSent == true) return;
+            LogMessagingUtil.Instance.AppendLine("SendDelayedDeclarationStatusRequest 13:45 til 14:15");
+            LogitudeSettings.HandleLogMe(
+                "DeclarationId:" + dirtyDeclarationPM.Id + Environment.NewLine + Environment.StackTrace.ToString()
+                , false, "8250", new DateTime(2021, 1, 1));
+
             string user = null;
-            if(RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
             if (string.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
             DateTime? execTime = DateTime.Now;
             execTime = execTime.Value.AddMinutes(10);
@@ -588,7 +750,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (dirtyDeclarationPM != null && dirtyDeclarationPM.IsCourierDeclaration)
                     {
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dirtyDeclarationPM.Tenant);
-                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, false, false);
+                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, true, false);
                         if (currentDeclarationCourierStatusPM != null && taskType == "LP2U" && string.IsNullOrWhiteSpace(dirtyDeclarationPM.PaymentOrderNumber) && dirtyDeclarationPM.TotalTax > 5)
                         {
                             if (raiseStatus == true)
@@ -1269,16 +1431,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        private static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
+        public static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = dirtyDeclarationPM.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = eventCode,
-                    notes = "Delete FU Status " + eventCode + " in unifreight ",
+                    //notes = "Delete FU Status " + eventCode + " in unifreight ",
+                    notes = "DO_NOT_RAISE_EVENT",
                     CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
                     EntityId = dirtyDeclarationPM.Id,
                     UserId = loggingUserId,
@@ -1292,8 +1456,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         xml_status = "del",
                         status_id = eventCode,
                         status_DateTime = DateTime.Now,
-                        //status_place = "DFP",
-                        //status_save = "no_fail",
                         comments = "",
                     }
                 };

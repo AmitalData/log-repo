@@ -21,6 +21,8 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 })
 
 export class ClientDrivingLicenseTabComponent extends BaseComponent {
+  public DrivingLicenseNumber: any;
+  public DriversLicenseTypeCode: any;
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: ClientDrivingLicenseTabComponent = this;

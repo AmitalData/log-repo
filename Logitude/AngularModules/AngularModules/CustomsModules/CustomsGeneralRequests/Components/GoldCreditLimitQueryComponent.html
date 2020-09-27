@@ -160,110 +160,130 @@
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.TransactionType' | TextCodeTranslationPipe"
                                             [binding]="'TransactionType'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.TransactionType }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentID -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.PaymentID' | TextCodeTranslationPipe"
                                             [binding]="'PaymentID'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentID}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentStatus -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.PaymentStatus' | TextCodeTranslationPipe"
                                             [binding]="'PaymentStatus'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentStatus}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentDate -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.PaymentDate' | TextCodeTranslationPipe"
                                             [binding]="'PaymentDate'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentDate}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- EntityType -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.EntityType' | TextCodeTranslationPipe"
                                             [binding]="'EntityType'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.EntityType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- EntityID -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.EntityID' | TextCodeTranslationPipe"
                                             [binding]="'EntityID'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.EntityID}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- TransactionAmount -->
                                 <log-column [width]="'70'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.TransactionAmount' | TextCodeTranslationPipe"
                                             [binding]="'TransactionAmount'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.TransactionAmount}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- RTGSBalance -->
                                 <log-column [width]="'70'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.RTGSBalance' | TextCodeTranslationPipe"
                                             [binding]="'RTGSBalance'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.RTGSBalance}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- RTGSRefund -->
                                 <log-column [width]="'70'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.RTGSRefund' | TextCodeTranslationPipe"
                                             [binding]="'RTGSRefund'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.RTGSRefund}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- UpdateUser -->
                                 <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.UpdateUser' | TextCodeTranslationPipe"
                                             [binding]="'UpdateUser'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.UpdateUser}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

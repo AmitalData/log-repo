@@ -32,12 +32,12 @@ export class VendorCommissionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/vendorcommissionviews';  
     }
 
-	getSingle(vendorid: string, customerid: string) {
+	getSingle(vendorid: string, customerid: string, modificationstypecode: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'vendorid=' + vendorid+'&'+'customerid=' + customerid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'vendorid=' + vendorid+'&'+'customerid=' + customerid+'&'+'modificationstypecode=' + modificationstypecode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class VendorCommissionListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VendorCommission", "GetSingleList", 'vendorid=' + vendorid+'&'+'customerid=' + customerid); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VendorCommission", "GetSingleList", 'vendorid=' + vendorid+'&'+'customerid=' + customerid+'&'+'modificationstypecode=' + modificationstypecode); 
 
 						return serviceResponse;
 					}),

@@ -3,7 +3,7 @@
   Name="GlobalDBs"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="nvarchar"
@@ -37,14 +37,14 @@
     Size="512"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SecondaryAzureDBConnection"
     Type="nvarchar"
     Size="512">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IsBlocking"

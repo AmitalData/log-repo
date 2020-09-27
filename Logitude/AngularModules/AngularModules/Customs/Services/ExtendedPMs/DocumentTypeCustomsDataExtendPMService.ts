@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -41,8 +42,7 @@ export class DocumentTypeCustomsDataExtendPMService {
 
         var callTime = new Date();
         return defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteRecord?' + 'documenttypeid=' + documenttypeid, { headers: authHeader }
-            ).map(res => {
+            return this._http.delete(this._apiUrl + '/DeleteRecord?' + 'documenttypeid=' + documenttypeid, ServiceHelper.GetHttpHeaders()).pipe(map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
 

@@ -23,7 +23,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             RequestCancelled,
             AggregateDCAAnalyzerIsMust,
             AggregateDCAAnalyzerLockIt,
-            DcaMessageNotBelongOurEnvironment
+            DcaMessageNotBelongOurEnvironment,
+            InterfaceNotActiveOrBelongOurCompanyType,//*** שיפור במנגנון הבקשות - בניית בקשה רק באם הבקשה אקטיבית + מתאימה לסביבה - 2.5
+
 
         }
         public enum What2DoEnum
@@ -61,13 +63,18 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     ip = currentIP;
                     
                 }
+                
                 System.Exception ex = this;
                 if (innerException != null)
                 {
                     innerException.ChangeExceptionMessage("CustomsRequestsSheetDomainModelServiceException:");
                     ex = innerException;
                 }
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "system", "CustomsRequestsSheetService:whereEnum=" + whereEnum.ToString() + ":What2Do=" + What2Do + ":" + message, ip);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "system", "CustomsRequestsSheetService:whereEnum=" + whereEnum.ToString() + ":What2Do=" + What2Do + ":" + Environment.MachineName
+                    + ":" + Environment.CommandLine
+                + ":" + message 
+
+                    , ip);
             }
 
         }

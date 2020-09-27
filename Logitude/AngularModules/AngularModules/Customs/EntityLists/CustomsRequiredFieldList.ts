@@ -13,6 +13,9 @@ export class CustomsRequiredFieldList {
 	ObjectTableId: string;
 	ObjectfieldId: string;
 	ObjectFieldName: string;
+	ObjectfieldCode: string;
+	IsImport: boolean;
+	IsExport: boolean;
 	
 }
  

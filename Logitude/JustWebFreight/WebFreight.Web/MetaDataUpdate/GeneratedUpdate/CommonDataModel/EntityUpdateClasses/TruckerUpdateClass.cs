@@ -2789,26 +2789,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen TruckerGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Trucker.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TruckerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TruckerTruckerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TruckerTruckerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = TruckerGeneralTabScreenScreen0.Id,ScreenCode = TruckerGeneralTabScreenScreen0.Code, ObjectFieldCode = "Trucker.Remark", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen TruckerHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Trucker.HeaderScreen", Name = "Header Screen", ObjectTableId = TruckerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TruckerTruckerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerHeaderScreenScreen1.Id,ScreenCode = TruckerHeaderScreenScreen1.Code, ObjectFieldCode = "Trucker.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerHeaderScreenScreen1.Id,ScreenCode = TruckerHeaderScreenScreen1.Code, ObjectFieldCode = "Trucker.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TruckerTruckerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerHeaderScreenScreen1.Id,ScreenCode = TruckerHeaderScreenScreen1.Code, ObjectFieldCode = "Trucker.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerHeaderScreenScreen1.Id,ScreenCode = TruckerHeaderScreenScreen1.Code, ObjectFieldCode = "Trucker.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TruckerObjectTable.HeaderScreenId = TruckerHeaderScreenScreen1.Id;
 		    TruckerObjectTable.HeaderScreenCode = TruckerHeaderScreenScreen1.Code;
 
@@ -2817,34 +2817,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen TruckerBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Trucker.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = TruckerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TruckerTruckerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TruckerTruckerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = TruckerBillingTabScreenScreen2.Id,ScreenCode = TruckerBillingTabScreenScreen2.Code, ObjectFieldCode = "Trucker.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen TruckerAccountingTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Trucker.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = TruckerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TruckerTruckerAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerAccountingTabScreenScreen3.Id,ScreenCode = TruckerAccountingTabScreenScreen3.Code, ObjectFieldCode = "Trucker.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TruckerTruckerAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerAccountingTabScreenScreen3.Id,ScreenCode = TruckerAccountingTabScreenScreen3.Code, ObjectFieldCode = "Trucker.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TruckerTruckerAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TruckerAccountingTabScreenScreen3.Id,ScreenCode = TruckerAccountingTabScreenScreen3.Code, ObjectFieldCode = "Trucker.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TruckerTruckerAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TruckerAccountingTabScreenScreen3.Id,ScreenCode = TruckerAccountingTabScreenScreen3.Code, ObjectFieldCode = "Trucker.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -2992,7 +2992,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton TruckerMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "Trucker.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -3004,6 +3004,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = "More",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TruckerMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3021,6 +3023,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  TruckerFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TruckerFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

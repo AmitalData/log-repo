@@ -20,17 +20,53 @@ namespace Logitude.Customs.BL
    {
        public List<AttachmentTypeDetails> GetAll()
        {
-		    var all = new List<AttachmentTypeDetails>(); 
+		    var all = new List<AttachmentTypeDetails>();  
+            all.Add(new AttachmentTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,אישור/רישיון ידני", 
+                Inactive = false, 
+                LocalName = "אישור/רישיון ידני", 
+			});
+			 
+            all.Add(new AttachmentTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,אישור/רישיון ממוחשב", 
+                Inactive = false, 
+                LocalName = "אישור/רישיון ממוחשב", 
+			});
+			 
+            all.Add(new AttachmentTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,צרופה סרוקה", 
+                Inactive = false, 
+                LocalName = "צרופה סרוקה", 
+			});
+			 
+            all.Add(new AttachmentTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,פטור מאישור/רישיון", 
+                Inactive = false, 
+                LocalName = "פטור מאישור/רישיון", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(AttachmentType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(AttachmentType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

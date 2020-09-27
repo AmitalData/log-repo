@@ -36,10 +36,12 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {CertificateConnectedItem} from '../../../../../Customs/DataContract/CertificateConnectedItem';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/ConfirmationTypePM';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     
     templateUrl: './CertificateTabComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class CertificateTabComponent extends BaseComponent implements OnInit {
@@ -62,13 +64,14 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     public ExcludedItems: ObservableCollection;
 
     SelectedItemsCountText: string;
-    SelectedItemsCount: number;;
+    SelectedItemsCount: number;IsDisplayMessage: boolean;
+;
     public IsVisible: boolean;
     showTemplate: boolean = false;
     CertificateTicketsList: CertificateTicketListItem[] = [];
     preventSelect: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
         this.CurrentSession.SubscriptionAdd(
@@ -313,6 +316,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }
+        
     }
 
 
@@ -421,8 +425,15 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     timerToken: any;
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+            {
+                this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                this.IsDisplayMessage = true;
+            }
+        }
 
-        if (this.IsDisplayOnly) {
+    else  if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
@@ -434,24 +445,33 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
+       
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+                {
+                    this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
+           
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             }, 200);
         });
     }
 
-
+ 
     public columns: any[] = null;
 
     BuildColumns() {
@@ -635,7 +655,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             }
         }
-
+        this.originalItemSource.InsertCollection(this.connectedItems.Collection);
         if (this.SelectedItemsCount > 0) {
             this.IsVisible = true;
         }
@@ -708,7 +728,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             logWindow.WindowClosed.subscribe(($event: any) => {
                                 this.LoadConnectedItems($event);
                                 this.CD.reattach();
-                                this.RefreshEntity();
+                              //  this.RefreshEntity();
                             });
                             this.CD.detach();
                           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
@@ -750,7 +770,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         if (this.SelectedInvoiceNumber != null) {
             filters.addAdditionalFilter("InvoiceNumber", this.SelectedInvoiceNumber, null, null, "Equals", false, false, false, "string");
         }
-
+        if (!AppTool.IsNullOrEmpty(this.SearchText)){
+            filters.addAdditionalFilter("ClassificationCode", this.SearchText, null, null, "Contains", false, false, false, "string");            
+        }
         if (this.selecteCertificate) {
             if (this.ConfirmationType) {
                 return this.multiCertificatesService.getPromiseByFilters(filters, this.DeclarationPM.Id, this.selecteCertificate.AttachmentTypeCode, this.ConfirmationType.Code, this.selecteCertificate.CertificateExemptionTypeCode, this.selecteCertificate.CertificateNumber, this.selecteCertificate.ResConfirmationTypeCode);
@@ -866,6 +888,16 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     {
         this.confirmationTypeCode = value;
     }
+    //this.connectedItems
+    originalItemSource: ObservableCollection = new ObservableCollection([]);
+    ItemsSource: ObservableCollection = new ObservableCollection([]);
+    SearchText: string = "";
+    Search(SearchText: string) {
+        this.SearchText = SearchText;
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+    public SearchFilterChangedEvent: any;
+
 }
 
 export class CertificateTicketListItem extends BaseComponent {
@@ -930,7 +962,7 @@ export class CertificateTicketListItem extends BaseComponent {
         this.parent.SelectedItem = this;
         this.parent.IsVisible = false;
         this.parent.selecteCertificate = this.ticket;
-        this.parent.activeItem = item;
+        this.parent.activeItem = this;
 
         this.parent.SelectedItemsCountText = null;
         this.parent.SelectedItemsCount = 0;
@@ -970,14 +1002,26 @@ export class CertificateTicketListItem extends BaseComponent {
 
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                if ($event == "ok") {
-                    this.ReloadCertificates($event);
-                    this.parent.CD.reattach();
-                    this.parent.RefreshEntity();
-                }
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe($event => {
+                   
+                    if ($event == "ok") {
+                        this.ticket = s.certificateTicke;
+                        this.ReloadCertificates($event);
+                       // this.parent.CD.reattach();
+                        //  this.parent.RefreshEntity();
+                    } 
+                });
             });
-            this.parent.CD.detach();
+
+            //logWindow.WindowClosed.subscribe(($event: any) => {
+            //    if ($event == "ok") {
+            //        this.ReloadCertificates($event);
+            //        this.parent.CD.reattach();
+            //      //  this.parent.RefreshEntity();
+            //    }
+            //});
+         //   this.parent.CD.detach();
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
                     //}
 

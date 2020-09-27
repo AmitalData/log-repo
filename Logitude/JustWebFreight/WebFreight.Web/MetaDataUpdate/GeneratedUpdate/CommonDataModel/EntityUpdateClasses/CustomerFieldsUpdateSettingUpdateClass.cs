@@ -503,10 +503,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerFieldsUpdateSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerFieldsUpdateSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.ObjectFieldName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.UpdateDirection", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.ObjectFieldName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.UpdateDirection", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CustomerFieldsUpdateSettingObjectTable.HeaderScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id;
 		    CustomerFieldsUpdateSettingObjectTable.HeaderScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code;
 

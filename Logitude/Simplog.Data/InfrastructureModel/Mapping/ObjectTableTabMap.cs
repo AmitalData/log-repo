@@ -42,7 +42,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.TabNameTextCodeCode)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             this.Property(t => t.FeatureUniqeCode)

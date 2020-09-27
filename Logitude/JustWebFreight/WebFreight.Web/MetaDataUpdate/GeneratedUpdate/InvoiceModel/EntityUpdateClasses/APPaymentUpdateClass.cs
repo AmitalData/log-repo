@@ -4924,14 +4924,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen APPaymentHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPayment.HeaderScreen", Name = "Header Screen", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APPaymentAPPaymentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField APPaymentAPPaymentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APPaymentHeaderScreenScreen0.Id,ScreenCode = APPaymentHeaderScreenScreen0.Code, ObjectFieldCode = "APPayment.TransferStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    APPaymentObjectTable.HeaderScreenId = APPaymentHeaderScreenScreen0.Id;
 		    APPaymentObjectTable.HeaderScreenCode = APPaymentHeaderScreenScreen0.Code;
 
@@ -4940,32 +4940,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen APPaymentGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPayment.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.AccountingPaymentMethodCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.VendorId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.StatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.LocalCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.PaymentCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.InternalNotes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.AccountingPaymentMethodCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.VendorId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.StatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.LocalCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.PaymentCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = APPaymentGeneralTabScreenScreen1.Id,ScreenCode = APPaymentGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPayment.InternalNotes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen APPaymentAPPaymentFullACCHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPayment.FullACCHeaderScreen", Name = "APPayment.FullACCHeaderScreen", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.PaymentNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.OpenAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = "APPayment.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen APPaymentAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalFields", Name = "Additional Fields", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
@@ -5239,6 +5239,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = APPaymentFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5257,6 +5259,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "הדפסה",
 						FeatureUniqeCode = APPaymentFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5275,6 +5279,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APPaymentMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5292,6 +5298,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5310,6 +5318,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5328,6 +5338,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5346,6 +5358,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB22.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB22.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5364,6 +5378,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB23.Id,
 						Style = null,
 						LocalDefaultText = "Enter External Payment",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB23.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -5382,6 +5398,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB24.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB24.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

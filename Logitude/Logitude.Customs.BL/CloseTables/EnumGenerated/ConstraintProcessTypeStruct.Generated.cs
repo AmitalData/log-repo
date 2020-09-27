@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct ConstraintProcessTypeValues
     {   
+       public const string הגשה = "1";  
+       public const string התרה = "2";  
     }
 }
 

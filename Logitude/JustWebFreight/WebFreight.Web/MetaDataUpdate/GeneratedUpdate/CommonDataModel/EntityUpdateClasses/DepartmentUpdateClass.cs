@@ -752,22 +752,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen DepartmentGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Department.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DepartmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField DepartmentDepartmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DepartmentDepartmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DepartmentDepartmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DepartmentDepartmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DepartmentDepartmentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = "Department.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen DepartmentHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Department.HeaderScreen", Name = "Header Screen", ObjectTableId = DepartmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DepartmentDepartmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DepartmentHeaderScreenScreen1.Id,ScreenCode = DepartmentHeaderScreenScreen1.Code, ObjectFieldCode = "Department.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField DepartmentDepartmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DepartmentHeaderScreenScreen1.Id,ScreenCode = DepartmentHeaderScreenScreen1.Code, ObjectFieldCode = "Department.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    DepartmentObjectTable.HeaderScreenId = DepartmentHeaderScreenScreen1.Id;
 		    DepartmentObjectTable.HeaderScreenCode = DepartmentHeaderScreenScreen1.Code;
 

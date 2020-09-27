@@ -41,6 +41,9 @@ export class CustomSendOptionsComponent implements OnInit {
     _ButtonCodeText: string;
     @Input()
     IsCheckBoxVisibile: boolean = true;
+
+    @Input()
+    HaveTestCase: boolean = false;
    
     @Input()
     public get ButtonCodeText() { return this._ButtonCodeText; }
@@ -51,14 +54,17 @@ export class CustomSendOptionsComponent implements OnInit {
         this._CD.detectChanges();
     }
 
+    public get IsTestTenant() { return SessionLocator.TenantPM.IsTestTenant; }
+    
+
       
     private _CustomSendOptionsArgs: CustomSendOptionsArgs;
-    private _DropdownDisplay: string = 'none';
+     _DropdownDisplay: string = 'none';
     private _ElementRef: any;
 
     static MyId: number = 0;
-    private _CustomSendOptionsComponentId: string;
-    private _CustomSendOptionsComponentMenuId: string;
+     _CustomSendOptionsComponentId: string;
+     _CustomSendOptionsComponentMenuId: string;
     _IsLoaded: boolean = false;
     private EntityResourceService: EntityResourceService;
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
@@ -66,12 +72,14 @@ export class CustomSendOptionsComponent implements OnInit {
         ///this.DataContext = this; 
         this._CustomSendOptionsArgs = new CustomSendOptionsArgs();
         this._CustomSendOptionsArgs.ForcePersonalSign = false;
+        this._CustomSendOptionsArgs.TestCase = false;
         var curId = CustomSendOptionsComponent.MyId++;
         this._CustomSendOptionsComponentId = "CustomSendOptionsComponent_" + curId;
         this._CustomSendOptionsComponentMenuId = "CustomSendOptionsComponentMenuId_" + curId;
 
         this.EntityResourceService = new EntityResourceService();
-      
+
+        
         
     }
     public get ForcePersonalSign(){return this._CustomSendOptionsArgs.ForcePersonalSign;}
@@ -89,17 +97,27 @@ export class CustomSendOptionsComponent implements OnInit {
         this._CustomSendOptionsArgs.RequestVIA = SendRequestVIA.WebServiceInteractive;
         this.JustEmit();
     }
+
+    SendTestCase() {
+        this._CustomSendOptionsArgs.Option = "WI";
+        this._CustomSendOptionsArgs.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        this._CustomSendOptionsArgs.TestCase = true;
+        this.JustEmit();
+    }
+
+
     public IsDisabledTimeout: boolean = false;
     JustEmit() {
         this.DropdownDisplayClose();
         var toSign = this._CustomSendOptionsArgs.ForcePersonalSign;
         this.SendButtonClicked.emit( { 
             Option :this._CustomSendOptionsArgs.Option,
-            ForcePersonalSign: toSign ,
+            ForcePersonalSign: toSign,
             RequestVIA: this._CustomSendOptionsArgs.RequestVIA,
-
+            TestCase: this._CustomSendOptionsArgs.TestCase,
         });
         this._CustomSendOptionsArgs.ForcePersonalSign = false;
+        this._CustomSendOptionsArgs.TestCase = false;
 
 
         if (this.AvoidDoubleClick || this.CustomSendOptionsButtonCanForcePersonalSign) {//Due double request == double click 
@@ -184,7 +202,7 @@ export class CustomSendOptionsComponent implements OnInit {
             
             let DDLHeight = 67;//    height: 22px; * 3 +30 
             let Extra =  22+1+1; //    height: 22px; +1 UP +1 DOWN 
-            if (itemRect.bottom + DDLHeight > this.getScreenHeight()) {//this.PaintTop = true                
+            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
                 document.getElementById(this._CustomSendOptionsComponentMenuId).style.top =
                     (itemRect.top - DDLHeight - Extra) + 'px';
             }

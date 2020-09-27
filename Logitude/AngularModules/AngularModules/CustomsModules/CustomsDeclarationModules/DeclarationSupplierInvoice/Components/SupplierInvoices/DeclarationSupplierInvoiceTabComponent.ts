@@ -23,15 +23,18 @@ import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 declare var window: any;
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
     
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
-})
+    providers: [DeclarationExtendedListService]
+ })
 
 export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implements OnInit{
+  public onQueryChangeEvent: any;
 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = null;
@@ -55,7 +58,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     NumberOfLoadedItems: number = 500;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
@@ -181,7 +185,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             FieldName: 'ItemCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.ItemCode"), 
-            Styles: { width: '100px' },
+            Styles: { width: '100px', direction: 'ltr' },
+            HtmlListComponentName: 'DeclarationSupplierInvoiceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationSupplierInvoiceListTemplate',
             IsCustomTemplate: true
         });
         this.columns.push({
@@ -446,23 +452,29 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 var windowTitle = "Supplier Invoice";
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 995; // don't change this width!
+            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
             logWindow.Height = 600;
+            var textCodeTitle = "Customs.Declaration.O.EditInvoice";
 
+
+            if (this.EntityPM.Direction == "E") {
+                textCodeTitle = "Customs.Declaration.O.ExporterInvoice";
+            }
+            
                 if (!AppTool.IsNullOrEmpty(item.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + item.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + item.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
 
                 }
                 else if (AppTool.IsNullOrEmpty(item.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + this.EntityPM.DeclarationNumber;
 
                 }
                 else if (!AppTool.IsNullOrEmpty(item.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + item.InvoiceNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + item.InvoiceNumber;
 
                 }
                 else if (AppTool.IsNullOrEmpty(item.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle);
 
                 }
                 windowArgs.IsDisplayOnly = this.IsDisplayOnly;
@@ -605,17 +617,25 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
     }
     accumulationFeature: any;
+    notToCheckFeature: boolean = false;
     NewInvoice() {
         var itemPM = new SupplierInvoicePM();
         itemPM.DeclarationId = this.EntityPM.Id;
         itemPM.Tenant = SessionLocator.Tenant;
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
-        if (this.accumulationFeature == null) {
+        
+        if (this.notToCheckFeature) {
             itemPM.AccumalationStateCode = "3";
         }
         else {
-            itemPM.AccumalationStateCode = "1";
+            //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
+            if (this.accumulationFeature == null) {
+                itemPM.AccumalationStateCode = "3";
+            }
+            else {
+                itemPM.AccumalationStateCode = "1";
+            }
         }
         itemPM.InvoiceCounterKey = 0;
      
@@ -646,9 +666,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         windowArgs.declarationPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         windowArgs.IsNewEntity = true;
+        windowArgs.NumberOfLoadedItems = 0;
         windowArgs.WindowTitle = windowTitle;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 995; // don't change this width!
+        logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
         logWindow.Height = 600;
       //  logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
@@ -675,7 +696,16 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+            this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+
+      else  if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             //DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -690,17 +720,27 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
-        var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+            
             if (this.EntityPM.SupplierInvoices != null) {
                 for (var i = 0; i < this.EntityPM.SupplierInvoices.length; i++) {
                     this.EntityPM.SupplierInvoices[i].UIProperties.SetEnabled("IsPrimarySupplierInvoice", "Customs.SupplierInvoice", !this.IsDisplayOnly);
@@ -714,7 +754,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.SelectedRow2 = CurrentRow.rowData;
         
     }
-}
+
+ }
+
+
 
 //export class SupplierInvoiceLine extends BaseComponent {
 //    public SupplierInvoicePM: SupplierInvoicePM = null;

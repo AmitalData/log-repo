@@ -249,6 +249,11 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateTenants.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateUsers.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
+    <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
+    <None Include="DBScripts\ScreenField Unique index removal.sxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\UpdateTenantCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteDuplicatedQueueMessagesProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
@@ -362,8 +367,6 @@
     <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\CommonModel\202009101501_AddChargeStorageGroupToTenants.sxml" />
     <None Include="DBScripts\CommonModel\BuildSearchKeywordFunction.sxml" />
-    <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
-    <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\CommonModel\FillCardSearchData.sxml" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />

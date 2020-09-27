@@ -18,7 +18,7 @@ export class ModuleProviders {
       case "SendDeclarationService": { myResult = new SendDeclarationService(); break; }
       case "SendManifestService": { myResult = new SendManifestService(); break; }
 
-
+ 
     }
 
     return myResult;

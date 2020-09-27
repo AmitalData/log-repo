@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {DeclarationPendingPM} from './DeclarationPendingPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -219,16 +220,6 @@ export class DeclarationCourierStatusPM {
     public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
        
 	 
-    private mamanStatusCode: string;
-    public get MamanStatusCode() { return this.mamanStatusCode; }
-    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
-       
-	 
-    private mamanErrorXml: string;
-    public get MamanErrorXml() { return this.mamanErrorXml; }
-    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
-       
-	 
     private courierSuspentionCode: string;
     public get CourierSuspentionCode() { return this.courierSuspentionCode; }
     public set CourierSuspentionCode(newValue: string) { if (this.courierSuspentionCode != newValue) { this.courierSuspentionCode = newValue; this.MarkAsDirty("CourierSuspentionCode"); } }
@@ -247,6 +238,120 @@ export class DeclarationCourierStatusPM {
     private specialActionsErrorXml: string;
     public get SpecialActionsErrorXml() { return this.specialActionsErrorXml; }
     public set SpecialActionsErrorXml(newValue: string) { if (this.specialActionsErrorXml != newValue) { this.specialActionsErrorXml = newValue; this.MarkAsDirty("SpecialActionsErrorXml"); } }
+       
+	 
+    private courierPendingReasonErrorPlace: string;
+    public get CourierPendingReasonErrorPlace() { return this.courierPendingReasonErrorPlace; }
+    public set CourierPendingReasonErrorPlace(newValue: string) { if (this.courierPendingReasonErrorPlace != newValue) { this.courierPendingReasonErrorPlace = newValue; this.MarkAsDirty("CourierPendingReasonErrorPlace"); } }
+       
+	 
+    private fastIndividualProcessCode: string;
+    public get FastIndividualProcessCode() { return this.fastIndividualProcessCode; }
+    public set FastIndividualProcessCode(newValue: string) { if (this.fastIndividualProcessCode != newValue) { this.fastIndividualProcessCode = newValue; this.MarkAsDirty("FastIndividualProcessCode"); } }
+       
+	 
+    private manualProcessCode: string;
+    public get ManualProcessCode() { return this.manualProcessCode; }
+    public set ManualProcessCode(newValue: string) { if (this.manualProcessCode != newValue) { this.manualProcessCode = newValue; this.MarkAsDirty("ManualProcessCode"); } }
+       
+	 
+    private terminalSuspentionNumber: string;
+    public get TerminalSuspentionNumber() { return this.terminalSuspentionNumber; }
+    public set TerminalSuspentionNumber(newValue: string) { if (this.terminalSuspentionNumber != newValue) { this.terminalSuspentionNumber = newValue; this.MarkAsDirty("TerminalSuspentionNumber"); } }
+       
+	 
+    private lastMileStatusCode: string;
+    public get LastMileStatusCode() { return this.lastMileStatusCode; }
+    public set LastMileStatusCode(newValue: string) { if (this.lastMileStatusCode != newValue) { this.lastMileStatusCode = newValue; this.MarkAsDirty("LastMileStatusCode"); } }
+       
+	 
+    private lastMileStatusDate: Date;
+    public get LastMileStatusDate() { return this.lastMileStatusDate; }
+    public set LastMileStatusDate(newValue: Date) { if (this.lastMileStatusDate != newValue) { this.lastMileStatusDate = newValue; this.MarkAsDirty("LastMileStatusDate"); } }
+       
+	 
+    private lastMileStatusRemarks: string;
+    public get LastMileStatusRemarks() { return this.lastMileStatusRemarks; }
+    public set LastMileStatusRemarks(newValue: string) { if (this.lastMileStatusRemarks != newValue) { this.lastMileStatusRemarks = newValue; this.MarkAsDirty("LastMileStatusRemarks"); } }
+       
+	 
+    private storageSiteStatusCode: string;
+    public get StorageSiteStatusCode() { return this.storageSiteStatusCode; }
+    public set StorageSiteStatusCode(newValue: string) { if (this.storageSiteStatusCode != newValue) { this.storageSiteStatusCode = newValue; this.MarkAsDirty("StorageSiteStatusCode"); } }
+       
+	 
+    private storageSiteErrorText: string;
+    public get StorageSiteErrorText() { return this.storageSiteErrorText; }
+    public set StorageSiteErrorText(newValue: string) { if (this.storageSiteErrorText != newValue) { this.storageSiteErrorText = newValue; this.MarkAsDirty("StorageSiteErrorText"); } }
+       
+	 
+    private storageSiteStatusName: string;
+    public get StorageSiteStatusName() { return this.storageSiteStatusName; }
+    public set StorageSiteStatusName(newValue: string) { if (this.storageSiteStatusName != newValue) { this.storageSiteStatusName = newValue; this.MarkAsDirty("StorageSiteStatusName"); } }
+       
+	 
+    private courierPendingReasonList: string;
+    public get CourierPendingReasonList() { return this.courierPendingReasonList; }
+    public set CourierPendingReasonList(newValue: string) { if (this.courierPendingReasonList != newValue) { this.courierPendingReasonList = newValue; this.MarkAsDirty("CourierPendingReasonList"); } }
+       
+	 
+     
+	private declarationPendings: DeclarationPendingPM[];
+    get  DeclarationPendings() {
+        if (this.declarationPendings == null) {
+            this.declarationPendings = [];
+        }
+
+        return this.declarationPendings;
+    }
+    set  DeclarationPendings(newValue: DeclarationPendingPM[]) {
+        if (this.declarationPendings != newValue) {
+            this.declarationPendings = newValue;
+        }
+    }
+    public AddDeclarationPending(item: DeclarationPendingPM) {
+        if (item != null) {
+            var index = this. DeclarationPendings.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationPendings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationPending(item: DeclarationPendingPM) {
+        if (item != null) {
+            var index = this. DeclarationPendings.indexOf(item);
+            if (index > -1) {
+                this. DeclarationPendings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationPendings: Array<DeclarationPendingPM>= [];
+     private lastMileStatusName: string;
+    public get LastMileStatusName() { return this.lastMileStatusName; }
+    public set LastMileStatusName(newValue: string) { if (this.lastMileStatusName != newValue) { this.lastMileStatusName = newValue; this.MarkAsDirty("LastMileStatusName"); } }
+       
+	 
+    private sortedImporterCode: string;
+    public get SortedImporterCode() { return this.sortedImporterCode; }
+    public set SortedImporterCode(newValue: string) { if (this.sortedImporterCode != newValue) { this.sortedImporterCode = newValue; this.MarkAsDirty("SortedImporterCode"); } }
+       
+	 
+    private sortedDocumentStatusCode: string;
+    public get SortedDocumentStatusCode() { return this.sortedDocumentStatusCode; }
+    public set SortedDocumentStatusCode(newValue: string) { if (this.sortedDocumentStatusCode != newValue) { this.sortedDocumentStatusCode = newValue; this.MarkAsDirty("SortedDocumentStatusCode"); } }
+       
+	 
+    private sortedCourierManifestStatus: string;
+    public get SortedCourierManifestStatus() { return this.sortedCourierManifestStatus; }
+    public set SortedCourierManifestStatus(newValue: string) { if (this.sortedCourierManifestStatus != newValue) { this.sortedCourierManifestStatus = newValue; this.MarkAsDirty("SortedCourierManifestStatus"); } }
+       
+	 
+    private sortedCourierDeclarationStatus: string;
+    public get SortedCourierDeclarationStatus() { return this.sortedCourierDeclarationStatus; }
+    public set SortedCourierDeclarationStatus(newValue: string) { if (this.sortedCourierDeclarationStatus != newValue) { this.sortedCourierDeclarationStatus = newValue; this.MarkAsDirty("SortedCourierDeclarationStatus"); } }
        
 	 
 

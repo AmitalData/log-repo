@@ -1,2 +1,13 @@
-Warning: Missing Index In DXML File CargoTrackingShipmentSearch.dxml, The Found Index On DB Is IX_CargoTrackingShipmentSearches_Tenant_ShipmentDate_SearchFields, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File CargoTrackingShipmentSearch.dxml, The Found Index On DB Is IX_CargoTrackingShipmentSearches_Tenant_SearchFields, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CourierMaster.dxml, The Found Index On DB Is AIRLINEID_MAWB_UNIQUE, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CustomsRequiredField.dxml, The Found Index On DB Is IX_1480032751, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_DECLARATIONS_DECLNUMBER, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_DECLARATIONS_CUSTOMFILENO, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_DECLARATIONS_ISPTPROTESTED, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DeclarationCourierStatus.dxml, The Found Index On DB Is IX_527281997, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File PendingByKeyword.dxml, The Found Index On DB Is IX_1425891065, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentType.dxml, The Found Index On DB Is UC_DOCUMENTTYPES_TCO, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Feature.dxml, The Found Index On DB Is IX_FEATURES_NAMETEXTCODEID, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_762314686, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_OBJECTTABLES_HEADERSCREENID, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_268056798, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is UC_OBJECTTABLE_NAME, The Index Should Added To The DXML File

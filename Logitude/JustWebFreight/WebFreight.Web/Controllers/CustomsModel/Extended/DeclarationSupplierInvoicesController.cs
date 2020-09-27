@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
-                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);
+                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant,true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, supplierInvoices);
             }
@@ -300,6 +300,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 deletedItem.DeletedSupplierInvoiceItemModVehicles.Add(deletedItemModVehicle);
                             }
+
+                            SuppInvoiceItemsAbachStatementQueryService suppInvoiceItemsAbachStatementQueryService = new SuppInvoiceItemsAbachStatementQueryService(MyContext);
+                            List< SuppInvoiceItemsAbachStatementPM > suppInvoiceItemsAbachStatementChangeSet = suppInvoiceItemsAbachStatementQueryService.GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(item.DeclarationId, item.CounterKey,new List<int>{ item.LineNumber}, item.Tenant);
+                            foreach (SuppInvoiceItemsAbachStatementPM itemAbach in suppInvoiceItemsAbachStatementChangeSet)
+                            {
+                                SuppInvoiceItemsAbachStatementPM deletedItemAbach = new SuppInvoiceItemsAbachStatementPM()
+                                {
+                                    InvoiceCounterKey = itemAbach.InvoiceCounterKey,
+                                    DeclarationId = itemAbach.DeclarationId,
+                                     InvoiceItemLineNumber = itemAbach.InvoiceItemLineNumber,
+                                    Tenant = itemAbach.Tenant,
+                                    ChangeSetOp = ChangeSetOperation.Delete,
+                                    IsStatementInd= itemAbach.IsStatementInd,
+                                    SequenceNumeric= itemAbach.SequenceNumeric,
+                                    StatementTypeCode = itemAbach.StatementTypeCode
+                                };
+
+                                deletedItem.DeletedSuppInvoiceItemsAbachStatements.Add(deletedItemAbach);
+                            }
+
+
+                            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(MyContext);
+                            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPriceChangeSet = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(item.DeclarationId, item.CounterKey, new List<int> { item.LineNumber }, item.Tenant);
+                            foreach (SupplierInvoiceItemsPricePM itemPrice in supplierInvoiceItemsPriceChangeSet)
+                            {
+                                SupplierInvoiceItemsPricePM deletedItemPrice = new SupplierInvoiceItemsPricePM()
+                                {
+                                    InvoiceCounterKey = itemPrice.InvoiceCounterKey,
+                                    DeclarationId = itemPrice.DeclarationId,
+                                    InvoiceItemLineNumber = itemPrice.InvoiceItemLineNumber,
+                                    Tenant = itemPrice.Tenant,
+                                    ChangeSetOp = ChangeSetOperation.Delete,
+                                   AdditionalPrice= itemPrice.AdditionalPrice,
+                                   AdditionalPriceTypeCode= itemPrice.AdditionalPriceTypeCode,
+                                   LineNumber= itemPrice.LineNumber
+                                };
+
+                                deletedItem.DeletedSupplierInvoiceItemsPrices.Add(deletedItemPrice);
+                            }
+
                             // Vehicles
 
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQuery = new SupplierInvoiceItemVehicleQueryService(MyContext);
@@ -320,7 +360,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                     VehicleId = vehicle.VehicleId,
                                     VehicleTypeCode = vehicle.VehicleTypeCode,
                                     ExcludeFromInterface = vehicle.ExcludeFromInterface,
-
+                                    IdentifierID = vehicle.IdentifierID,                     
                                     ChangeSetOp = ChangeSetOperation.Delete,
                                 };
 
@@ -399,6 +439,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             entityPM.SupplierInvoiceModifications.Add(deletedItem);
 
                         }
+
+                        SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(MyContext);
+
+                        List<SupplierInvoicePaymentPM> supplierInvoicePaymentsChangeset = supplierInvoicePaymentQueryService.GetSupplierInvoicePaymentsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
+                        foreach (SupplierInvoicePaymentPM item in supplierInvoicePaymentsChangeset)
+                        {
+                            SupplierInvoicePaymentPM deletedItem = new SupplierInvoicePaymentPM()
+                            {
+                                InvoiceCounterKey = item.InvoiceCounterKey,
+                                DeclarationId = item.DeclarationId,
+                                ChangeSetOp = ChangeSetOperation.Delete,
+                                PaymentAmount = item.PaymentAmount,
+                                PaymentTypeCode = item.PaymentTypeCode,
+                                SequenceNumeric = item.SequenceNumeric,
+                                 Tenant = item.Tenant,
+                            };
+                            entityPM.DeletedSupplierInvoicePayments.Add(deletedItem);
+
+                        }
+
+                        SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(MyContext);
+
+                        List<SupplierInvoiceUCRPM> supplierInvoiceUCRsChangeset = supplierInvoiceUCRQueryService.GetSupplierInvoiceUCRsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
+                        foreach (SupplierInvoiceUCRPM item in supplierInvoiceUCRsChangeset)
+                        {
+                            SupplierInvoiceUCRPM deletedItem = new SupplierInvoiceUCRPM()
+                            {
+                                InvoiceCounterKey = item.InvoiceCounterKey,
+                                DeclarationId = item.DeclarationId,
+                                ChangeSetOp = ChangeSetOperation.Delete,
+                                 Tenant = item.Tenant,
+                                 AgentChargeID= item.AgentChargeID,
+                                 SequenceNumeric= item.SequenceNumeric,
+                                 SupplierChargeID = item.SupplierChargeID
+                            };
+                            entityPM.DeletedSupplierInvoiceUCRs.Add(deletedItem);
+
+                        }
+
+
                         #endregion
 
                         service.Update(entityPM, true);

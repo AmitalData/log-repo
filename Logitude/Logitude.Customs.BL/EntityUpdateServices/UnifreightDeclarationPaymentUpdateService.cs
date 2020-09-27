@@ -24,6 +24,7 @@ using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Logitude.Customs.Def.Messaging.Customs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -94,33 +95,52 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         _CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
 
-                        if (_CCUPAYHAND != null)
+                        Boolean noUpdate = false;
+                        var currentRequestSheetContext = RequestSheetContext.Current.GetContextOrDefault();
+                        if (!(currentRequestSheetContext != null && string.IsNullOrWhiteSpace(currentRequestSheetContext.CustomsRequestsSheetId)))
                         {
-                            if (_CCUPAYHAND.CCUPAYLINEFPMs != null)
+                            if (_CCUPAYHAND != null)
                             {
-                                foreach (var paymentline in _CCUPAYHAND.CCUPAYLINEFPMs)
+                                if (_CCUPAYHAND.CCUPAYLINEFPMs != null)
                                 {
-                                    paymentline.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                                    var lineWithPAYORDNO = _CCUPAYHAND.CCUPAYLINEFPMs.Where(r => r.PAYORDNO != null).FirstOrDefault();
+                                    if(lineWithPAYORDNO != null)
+                                    {
+                                        noUpdate = true;
+                                    }
                                 }
-
-
-                                _CCUPAYHAND.DeletedCCUPAYLINEFs = _CCUPAYHAND.CCUPAYLINEFPMs;
-                                _CCUPAYHAND.CCUPAYLINEFPMs = null;
-
-                                _CCUPAYHAND.ChangeSetOp = ChangeSetOperation.Update;
-                                // Update for the Delete
-                                myCCUPAYHANDUpdateService.Update(_CCUPAYHAND, true);
-                                //Clean up the Supplier Invoices
-                                _CCUPAYHAND.CCUPAYLINEFPMs = null;
-                                _CCUPAYHAND.DeletedCCUPAYLINEFs = null;
-                                _CCUPAYHAND.PAYTAX = null; // moran 15.12.15 - bug found by anat - error message in unifreight while entering VAT in billing - calc of total pay lines amount not equal taxes amount - keep adding each pay hand
-                                _CCUPAYHAND.TOTALPAYTAX = null; // moran 15.12.15 - bug found by anat - error message in unifreight while entering VAT in billing - calc of total tax to pay not equal taxes amount - keep adding each pay hand
                             }
                         }
+                        if (!noUpdate)
+                        {
+                            if (_CCUPAYHAND != null)
+                            {
+                                if (_CCUPAYHAND.CCUPAYLINEFPMs != null)
+                                {
+                                    foreach (var paymentline in _CCUPAYHAND.CCUPAYLINEFPMs)
+                                    {
+                                        paymentline.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                                    }
 
-                        DeclarationPayment(FILENO.Value);
-                        _CCUPAYHAND.CurrentContextTag = _DeclarationPM.Id;
-                        myCCUPAYHANDUpdateService.Update(_CCUPAYHAND, true);
+
+                                    _CCUPAYHAND.DeletedCCUPAYLINEFs = _CCUPAYHAND.CCUPAYLINEFPMs;
+                                    _CCUPAYHAND.CCUPAYLINEFPMs = null;
+
+                                    _CCUPAYHAND.ChangeSetOp = ChangeSetOperation.Update;
+                                    // Update for the Delete
+                                    myCCUPAYHANDUpdateService.Update(_CCUPAYHAND, true);
+                                    //Clean up the Supplier Invoices
+                                    _CCUPAYHAND.CCUPAYLINEFPMs = null;
+                                    _CCUPAYHAND.DeletedCCUPAYLINEFs = null;
+                                    _CCUPAYHAND.PAYTAX = null; // moran 15.12.15 - bug found by anat - error message in unifreight while entering VAT in billing - calc of total pay lines amount not equal taxes amount - keep adding each pay hand
+                                    _CCUPAYHAND.TOTALPAYTAX = null; // moran 15.12.15 - bug found by anat - error message in unifreight while entering VAT in billing - calc of total tax to pay not equal taxes amount - keep adding each pay hand
+                                }
+                            }
+
+                            DeclarationPayment(FILENO.Value);
+                            _CCUPAYHAND.CurrentContextTag = _DeclarationPM.Id;
+                            myCCUPAYHANDUpdateService.Update(_CCUPAYHAND, true);
+                        }
                         if (scope != null)
                         {
                             scope.Complete();
@@ -202,6 +222,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     _CCUPAYHAND.OBJECTIONEXPLAIN = _CCUPAYHAND.OBJECTIONEXPLAIN + declarationPaymentProtests.CustomsAgentExplanation;
                 }
             }
+            if (!string.IsNullOrEmpty(_CCUPAYHAND.OBJECTIONEXPLAIN) && _CCUPAYHAND.OBJECTIONEXPLAIN.Length > 75) _CCUPAYHAND.OBJECTIONEXPLAIN = _CCUPAYHAND.OBJECTIONEXPLAIN.Substring(0, 75);
             User myUser = userRepository.GetSingleUser(_DirtyDeclarationPaymentPM.CreatedByUserId, _DirtyDeclarationPaymentPM.Tenant, true);
             if (myUser != null)
             {
@@ -293,7 +314,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             curCCUPAYLINEF.PAYAMOUNT = decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
             _CCUPAYHAND.PAYTAX = _CCUPAYHAND.PAYTAX.GetValueOrDefault() + decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
-
 
             //curCCUPAYLINEF.TYPE = decDeclarationPaymentMethods.;
             if (decDeclarationPaymentMethods.PayerActivityTypeCode == "0")

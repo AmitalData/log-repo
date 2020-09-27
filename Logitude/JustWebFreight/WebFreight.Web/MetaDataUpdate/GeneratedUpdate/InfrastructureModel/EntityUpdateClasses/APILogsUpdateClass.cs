@@ -1441,14 +1441,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen APILogsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogs.HeaderScreen", Name = "Header Screen", ObjectTableId = APILogsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APILogsAPILogsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField APILogsAPILogsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    APILogsObjectTable.HeaderScreenId = APILogsHeaderScreenScreen0.Id;
 		    APILogsObjectTable.HeaderScreenCode = APILogsHeaderScreenScreen0.Code;
 
@@ -1457,24 +1457,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen APILogsGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogs.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APILogsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.NumberOfRetries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.PartnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.LastExceptionMessage", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.NumberOfRetries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.PartnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APILogsAPILogsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.LastExceptionMessage", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -1607,6 +1607,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APILogsMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1624,6 +1626,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 						FeatureId=  APILogsFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APILogsFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

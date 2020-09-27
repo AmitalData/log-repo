@@ -351,6 +351,9 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             }
         });
     }
+   
+
+
 
     IgnoreMouseDown() {
         if (this.newViewClicked == true) {

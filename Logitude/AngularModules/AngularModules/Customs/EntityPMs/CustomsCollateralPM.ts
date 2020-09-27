@@ -244,6 +244,11 @@ export class CustomsCollateralPM {
     public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
        
 	 
+    private isAnswer: boolean;
+    public get IsAnswer() { return this.isAnswer; }
+    public set IsAnswer(newValue: boolean) { if (this.isAnswer != newValue) { this.isAnswer = newValue; this.MarkAsDirty("IsAnswer"); } }
+       
+	 
 
     public OldEntityPM: CustomsCollateralPM;
 		

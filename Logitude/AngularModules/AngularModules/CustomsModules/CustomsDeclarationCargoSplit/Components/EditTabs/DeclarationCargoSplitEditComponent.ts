@@ -25,6 +25,8 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 })
 
 export class DeclarationCargoSplitEditComponent extends BaseComponent {
+  public right: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: DeclarationCargoSplitPM;
     public ObjectTableName: string = "Customs.DeclarationCargoSplit";
@@ -55,10 +57,9 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
     private timerToken: any;
     BuildTabs() {
         this.TabsItemsSource = [];
-        this.TabsItemsSource.push(new TabItem("General", "Customs.DeclarationCargoSplit.TH.General"));
-        
+         this.TabsItemsSource.push(new TabItem("General", "Customs.DeclarationCargoSplit.TH.General"));
 
-        this.timerToken = setTimeout(() => {
+         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
         }, 100);
     }

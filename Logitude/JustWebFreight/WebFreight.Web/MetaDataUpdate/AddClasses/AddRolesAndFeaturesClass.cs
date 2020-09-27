@@ -14,7 +14,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddRolesAndFeaturesClass
     {
-
+        //private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
+        //private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
         public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles)
         {
             if (tenantRoles.Keys.Contains(roleDetails.Code))
@@ -126,11 +127,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             else
             {
-                TextCode newTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
-                {
-                    newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                }
+                //if (!AddedFeatures.ContainsKey(featureDetails.Code))
+                //{
+                    TextCode newTextCode = null;
+                    if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
+                    {
+                        newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
+                    }
 
                 if (newTextCode == null)
                 {
@@ -144,9 +147,15 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         TextCodeTypeCode = "O",
                     };
 
-                    textCodeReposit.Add(newTextCode);
-                    textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                }
+                            textCodeReposit.Add(newTextCode);
+                            textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
+                        //    AddedTextCodes.Add(featureDetails.NameTextCodeCode, newTextCode);
+                        //}
+                        //else
+                        //{
+                        //    newTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
+                        //}
+                    }
 
                 Feature newFeature = new Feature()
                 {

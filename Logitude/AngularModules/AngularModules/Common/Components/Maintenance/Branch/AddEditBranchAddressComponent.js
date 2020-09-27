@@ -202,17 +202,17 @@ export var AddEditBranchAddressComponent = (function (_super) {
     };
     AddEditBranchAddressComponent.prototype.CancelButtonClicked = function () {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     };
     AddEditBranchAddressComponent.prototype.OkButtonClicked = function () {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         var isValid = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
         else {
             if (!this.AddressPM.IsDirty) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                SessionLocator.SelectedSession.CloseCurrentWindow();
             }
             else {
                 this.Save();
@@ -244,12 +244,12 @@ export var AddEditBranchAddressComponent = (function (_super) {
             myService.insert(this.AddressPM).subscribe(function (myResult) {
                 var mm = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(_this.AddressPM.Id);
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit(_this.AddressPM.Id);
                 }
                 else {
                     _this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
             });
         }
@@ -257,12 +257,12 @@ export var AddEditBranchAddressComponent = (function (_super) {
             myService.update(this.AddressPM).subscribe(function (myResult) {
                 var mm = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(_this.AddressPM.Id);
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit(_this.AddressPM.Id);
                 }
                 else {
                     _this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
             });
         }

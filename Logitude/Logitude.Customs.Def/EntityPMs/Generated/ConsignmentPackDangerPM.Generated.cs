@@ -1,0 +1,285 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ConsignmentPackDangerPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int? consignmentNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ConsignmentNumber  
+	   {
+	    
+	     get
+		{
+		   return consignmentNumber;
+		 }
+		 set
+		 {
+		   if(consignmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsignmentNumber",OldValue=consignmentNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   consignmentNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int? lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int? dangerousLineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? DangerousLineNo  
+	   {
+	    
+	     get
+		{
+		   return dangerousLineNo;
+		 }
+		 set
+		 {
+		   if(dangerousLineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DangerousLineNo",OldValue=dangerousLineNo,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   dangerousLineNo=value;
+		   }
+			
+		 }
+	   }
+	  private string uNCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UNCode  
+	   {
+	    
+	     get
+		{
+		   return uNCode;
+		 }
+		 set
+		 {
+		   if(uNCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UNCode",OldValue=uNCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   uNCode=value;
+		   }
+			
+		 }
+	   }
+	  private string uNName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UNName  
+	   {
+	    
+	     get
+		{
+		   return uNName;
+		 }
+		 set
+		 {
+		   if(uNName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UNName",OldValue=uNName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   uNName=value;
+		   }
+			
+		 }
+	   }
+	  private string dangerousGoodsPackingReqCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DangerousGoodsPackingReqCode  
+	   {
+	    
+	     get
+		{
+		   return dangerousGoodsPackingReqCode;
+		 }
+		 set
+		 {
+		   if(dangerousGoodsPackingReqCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DangerousGoodsPackingReqCode",OldValue=dangerousGoodsPackingReqCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dangerousGoodsPackingReqCode=value;
+		   }
+			
+		 }
+	   }
+	  private string flashpointTemperature ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FlashpointTemperature  
+	   {
+	    
+	     get
+		{
+		   return flashpointTemperature;
+		 }
+		 set
+		 {
+		   if(flashpointTemperature != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FlashpointTemperature",OldValue=flashpointTemperature,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   flashpointTemperature=value;
+		   }
+			
+		 }
+	   }
+	  private string storageTemperature ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageTemperature  
+	   {
+	    
+	     get
+		{
+		   return storageTemperature;
+		 }
+		 set
+		 {
+		   if(storageTemperature != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageTemperature",OldValue=storageTemperature,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageTemperature=value;
+		   }
+			
+		 }
+	   }
+	  private string classificationFourDigit ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationFourDigit  
+	   {
+	    
+	     get
+		{
+		   return classificationFourDigit;
+		 }
+		 set
+		 {
+		   if(classificationFourDigit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationFourDigit",OldValue=classificationFourDigit,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationFourDigit=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

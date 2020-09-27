@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using CommunicationWorkerRole;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace AmitalCustomsWindowsService
 {
@@ -241,7 +242,14 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            bool testCustomsSchedularWR = false;
+            if (testCustomsSchedularWR)
+            {
+                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
+            }
+            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
             
+
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
@@ -344,6 +352,8 @@ namespace AmitalCustomsWindowsService
                 var state=ServiceState.GetState();
                 if (DateTime.Now.Subtract(GCAt) > TimeSpan.FromMinutes(10))
                 {
+                    GCAt = DateTime.Now;
+                    CacheManager.ClearCacheItems();
                     CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 }
                 

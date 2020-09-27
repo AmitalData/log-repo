@@ -10,6 +10,8 @@
 import {SupplierInvoiceItemPM} from './SupplierInvoiceItemPM';
 import {SupplierInvoiceModificationPM} from './SupplierInvoiceModificationPM';
 import {SupplierInvoiceFreightAmountPM} from './SupplierInvoiceFreightAmountPM';
+import {SupplierInvoicePaymentPM} from './SupplierInvoicePaymentPM';
+import {SupplierInvoiceUCRPM} from './SupplierInvoiceUCRPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -339,7 +341,125 @@ export class SupplierInvoicePM {
     public set InvoiceAmountInUSD(newValue: number) { if (this.invoiceAmountInUSD != newValue) { this.invoiceAmountInUSD = newValue; this.MarkAsDirty("InvoiceAmountInUSD"); } }
        
 	 
+    private changeInSupplierInvoice: string;
+    public get ChangeInSupplierInvoice() { return this.changeInSupplierInvoice; }
+    public set ChangeInSupplierInvoice(newValue: string) { if (this.changeInSupplierInvoice != newValue) { this.changeInSupplierInvoice = newValue; this.MarkAsDirty("ChangeInSupplierInvoice"); } }
+       
+	 
+    private invoiceCurrencyTypeName: string;
+    public get InvoiceCurrencyTypeName() { return this.invoiceCurrencyTypeName; }
+    public set InvoiceCurrencyTypeName(newValue: string) { if (this.invoiceCurrencyTypeName != newValue) { this.invoiceCurrencyTypeName = newValue; this.MarkAsDirty("InvoiceCurrencyTypeName"); } }
+       
+	 
+    private buyerName: string;
+    public get BuyerName() { return this.buyerName; }
+    public set BuyerName(newValue: string) { if (this.buyerName != newValue) { this.buyerName = newValue; this.MarkAsDirty("BuyerName"); } }
+       
+	 
+    private buyerAddress: string;
+    public get BuyerAddress() { return this.buyerAddress; }
+    public set BuyerAddress(newValue: string) { if (this.buyerAddress != newValue) { this.buyerAddress = newValue; this.MarkAsDirty("BuyerAddress"); } }
+       
+	 
+    private buyerCountryCode: string;
+    public get BuyerCountryCode() { return this.buyerCountryCode; }
+    public set BuyerCountryCode(newValue: string) { if (this.buyerCountryCode != newValue) { this.buyerCountryCode = newValue; this.MarkAsDirty("BuyerCountryCode"); } }
+       
+	 
+    private buyerRoleCode: string;
+    public get BuyerRoleCode() { return this.buyerRoleCode; }
+    public set BuyerRoleCode(newValue: string) { if (this.buyerRoleCode != newValue) { this.buyerRoleCode = newValue; this.MarkAsDirty("BuyerRoleCode"); } }
+       
+	 
+    private partyRelationshipCode: string;
+    public get PartyRelationshipCode() { return this.partyRelationshipCode; }
+    public set PartyRelationshipCode(newValue: string) { if (this.partyRelationshipCode != newValue) { this.partyRelationshipCode = newValue; this.MarkAsDirty("PartyRelationshipCode"); } }
+       
+	 
+    private partyRelationshipName: string;
+    public get PartyRelationshipName() { return this.partyRelationshipName; }
+    public set PartyRelationshipName(newValue: string) { if (this.partyRelationshipName != newValue) { this.partyRelationshipName = newValue; this.MarkAsDirty("PartyRelationshipName"); } }
+       
+	 
+    private buyerRoleName: string;
+    public get BuyerRoleName() { return this.buyerRoleName; }
+    public set BuyerRoleName(newValue: string) { if (this.buyerRoleName != newValue) { this.buyerRoleName = newValue; this.MarkAsDirty("BuyerRoleName"); } }
+       
+	 
+    private buyerCountryName: string;
+    public get BuyerCountryName() { return this.buyerCountryName; }
+    public set BuyerCountryName(newValue: string) { if (this.buyerCountryName != newValue) { this.buyerCountryName = newValue; this.MarkAsDirty("BuyerCountryName"); } }
+       
+	 
+     
+	private supplierInvoicePayments: SupplierInvoicePaymentPM[];
+    get  SupplierInvoicePayments() {
+        if (this.supplierInvoicePayments == null) {
+            this.supplierInvoicePayments = [];
+        }
 
+        return this.supplierInvoicePayments;
+    }
+    set  SupplierInvoicePayments(newValue: SupplierInvoicePaymentPM[]) {
+        if (this.supplierInvoicePayments != newValue) {
+            this.supplierInvoicePayments = newValue;
+        }
+    }
+    public AddSupplierInvoicePayment(item: SupplierInvoicePaymentPM) {
+        if (item != null) {
+            var index = this. SupplierInvoicePayments.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvoicePayments.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvoicePayment(item: SupplierInvoicePaymentPM) {
+        if (item != null) {
+            var index = this. SupplierInvoicePayments.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvoicePayments.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvoicePayments: Array<SupplierInvoicePaymentPM>= [];
+      
+	private supplierInvoiceUCRs: SupplierInvoiceUCRPM[];
+    get  SupplierInvoiceUCRs() {
+        if (this.supplierInvoiceUCRs == null) {
+            this.supplierInvoiceUCRs = [];
+        }
+
+        return this.supplierInvoiceUCRs;
+    }
+    set  SupplierInvoiceUCRs(newValue: SupplierInvoiceUCRPM[]) {
+        if (this.supplierInvoiceUCRs != newValue) {
+            this.supplierInvoiceUCRs = newValue;
+        }
+    }
+    public AddSupplierInvoiceUCR(item: SupplierInvoiceUCRPM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceUCRs.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvoiceUCRs.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvoiceUCR(item: SupplierInvoiceUCRPM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceUCRs.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvoiceUCRs.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvoiceUCRs: Array<SupplierInvoiceUCRPM>= [];
+ 
     public OldEntityPM: SupplierInvoicePM;
 		
     public IsDirty: boolean;
