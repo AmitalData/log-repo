@@ -453,8 +453,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.WeightMeasurementCode = entityPM.WeightMeasurementCode;
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
 
-            entityPoco.IsBondedWarehouse = entityPM.IsBondedWarehouse;
-            entityPoco.IsBondedWarehouseChanged = entityPM.IsBondedWarehouseChanged;
+            entityPoco.IsCFSWarehouse = entityPM.IsCFSWarehouse;
+            entityPoco.IsCFSWarehouseChanged = entityPM.IsCFSWarehouseChanged;
             entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
             entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
