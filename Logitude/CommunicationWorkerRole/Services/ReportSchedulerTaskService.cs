@@ -149,6 +149,7 @@ namespace CommunicationWorkerRole.Services
 
             if (!string.IsNullOrEmpty(inActiveRecipients))
             {
+                inActiveRecipients = this.RemoveDuplicateEmails(inActiveRecipients);
                 string warningMessage = "The E-mail was not sent to " + inActiveRecipients;
                 warningMessage = ReformatWarningMessage(warningMessage);
                 currentTask.LogWarning(warningMessage);
@@ -164,10 +165,19 @@ namespace CommunicationWorkerRole.Services
 
         private string ReformatWarningMessage(string warningMessage)
         {
-            warningMessage.Remove(warningMessage.LastIndexOf(','));
-            if (warningMessage.IndexOf(',') != warningMessage.LastIndexOf(','))
-                warningMessage = warningMessage.Substring(0, warningMessage.LastIndexOf(',')) + " and " + warningMessage.Substring(warningMessage.LastIndexOf(',') + 1, warningMessage.Length);
+            warningMessage = warningMessage.Remove(warningMessage.LastIndexOf(','));
+            if (warningMessage.IndexOf(',') > 0)
+                warningMessage = warningMessage.Substring(0, warningMessage.LastIndexOf(',')) + " and " + warningMessage.Substring(warningMessage.LastIndexOf(',') + 1, warningMessage.Length - warningMessage.LastIndexOf(',') - 1);
             return warningMessage;
+        }
+
+        private string RemoveDuplicateEmails(string inActiveRecipientsEmails)
+        {
+            string[] recepientsEmails = inActiveRecipientsEmails.Split(',');
+            string[] recepients = recepientsEmails.Distinct().ToArray();
+            string emails = string.Join(",", recepients);
+            
+            return emails;
         }
 
         private List<ActivatedEmail> FillAllRecepients(string recepients)
@@ -346,6 +356,7 @@ namespace CommunicationWorkerRole.Services
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
             ContactList contact = contactQuery.GetContactListsById(customerId, tenant);
+            if(contact == null ) contactQuery.GetContactListsById(customerId, 0);
             if (contact != null && !contact.InActive) return true;
             return false;
         }
