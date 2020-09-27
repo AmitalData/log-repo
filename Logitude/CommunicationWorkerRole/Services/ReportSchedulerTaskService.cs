@@ -36,6 +36,7 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
+        TaskManagerBase currentTask;
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -48,6 +49,10 @@ namespace CommunicationWorkerRole.Services
         };
         public ReportSchedulerTaskService()
         {
+        }
+        public ReportSchedulerTaskService(TaskManagerBase taskManagerBase) : this()
+        {
+            this.currentTask = taskManagerBase;
         }
 
         public void SendPdfReportToReceipent(TasksSchedulerPM reportTask)
@@ -66,7 +71,15 @@ namespace CommunicationWorkerRole.Services
                 {
                     StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                     string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                    bool isActiveCustomer = CheckIsActiveCustomer(schedulerDetails.ReportDetails.CreatedByUserId, reportTask.Tenant);
+                    if (isActiveCustomer)
+                    {
+                        SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                    }
+                    else
+                    {
+                        currentTask.LogWarning("The E-mail was not sent, the customer status is inactive.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -109,21 +122,37 @@ namespace CommunicationWorkerRole.Services
             List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To);
             List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc);
             List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc);
-
+            string inActiveRecipients = "";
             allPermittedContacts.ForEach(contact => {
                 toEmails.ForEach(to => {
                     if (contact.Email == to.To)
-                        to.IsActive = true;
+                    {
+                        if (!contact.InActive) to.IsActive = true;
+                        else inActiveRecipients += contact.Email + ',';
+                    }
                 });
                 ccEmails.ForEach(cc => {
                     if (contact.Email == cc.To)
-                        cc.IsActive = true;
+                    {
+                        if (!contact.InActive) cc.IsActive = true;
+                        else inActiveRecipients += contact.Email + ',';
+                    }
                 });
                 bccEmails.ForEach(bcc => {
                     if (contact.Email == bcc.To)
-                        bcc.IsActive = true;
+                    {
+                        if (!contact.InActive) bcc.IsActive = true;
+                        else inActiveRecipients += contact.Email + ',';
+                    }
                 });
             });
+
+            if (!string.IsNullOrEmpty(inActiveRecipients))
+            {
+                string warningMessage = "The E-mail was not sent to " + inActiveRecipients;
+                warningMessage = ReformatWarningMessage(warningMessage);
+                currentTask.LogWarning(warningMessage);
+            }
 
             recepients.To = FillOnlyActiveRecepients(toEmails);
             recepients.Cc = FillOnlyActiveRecepients(ccEmails);
@@ -132,7 +161,15 @@ namespace CommunicationWorkerRole.Services
                 return null;
             return recepients;
         }
-        
+
+        private string ReformatWarningMessage(string warningMessage)
+        {
+            warningMessage.Remove(warningMessage.LastIndexOf(','));
+            if (warningMessage.IndexOf(',') != warningMessage.LastIndexOf(','))
+                warningMessage = warningMessage.Substring(0, warningMessage.LastIndexOf(',')) + " and " + warningMessage.Substring(warningMessage.LastIndexOf(',') + 1, warningMessage.Length);
+            return warningMessage;
+        }
+
         private List<ActivatedEmail> FillAllRecepients(string recepients)
         {
             List<ActivatedEmail> activatedEmails = new List<ActivatedEmail>();
@@ -303,6 +340,14 @@ namespace CommunicationWorkerRole.Services
             };
 
             storageservice.Write(ByteData, fileInfo);
+        }
+
+        private bool CheckIsActiveCustomer(string customerId, int tenant)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactList contact = contactQuery.GetContactListsById(customerId, tenant);
+            if (contact != null && !contact.InActive) return true;
+            return false;
         }
 
         private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
