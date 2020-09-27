@@ -34,10 +34,10 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
 
             }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                ValidateCanUpdaeReport(entityPM, showLocals);
-            }
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            //{
+            //    ValidateCanUpdaeReport(entityPM, showLocals);
+            //}
            
             ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
 
@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.Validators
             string InterestReportStatusCode = interestReportRepository.GetInterestReportStatusCode(entityPM.Id , entityPM.Tenant);
             List<string> StatusesThatAllowEditing = GetStatusesThatAllowEditing();
 
-            if (!StatusesThatAllowEditing.Contains(InterestReportStatusCode))
+            if (!StatusesThatAllowEditing.Contains(InterestReportStatusCode) && entityPM.InterestReportStatusCode !="3")
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
             }
