@@ -356,7 +356,7 @@ namespace CommunicationWorkerRole.Services
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
             ContactList contact = contactQuery.GetContactListsById(customerId, tenant);
-            if(contact == null ) contactQuery.GetContactListsById(customerId, 0);
+            if(contact == null ) contact = contactQuery.GetContactListsById(customerId, 0);
             if (contact != null && !contact.InActive) return true;
             return false;
         }
