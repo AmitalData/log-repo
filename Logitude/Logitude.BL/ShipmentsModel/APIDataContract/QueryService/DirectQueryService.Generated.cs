@@ -417,7 +417,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.MainCarriageLegs = MainCarriageLegService28.MainCarriageLegDataMapping(MyEntityPM.MainCarriageLegs,Tenant);
 				}
 
-							 					
+							 
+				   temp.ConcurrencyGUID = MyEntityPM.ConcurrencyGUID;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1318,7 +1319,15 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
 
-								 					   
+								 
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConcurrencyGUID))
+					{							//throw new ApplicationException("ConcurrencyGUID Can't be update"); 
+							temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
+
+										}  
+
+										   
 					return temp;
 		    }
             catch (Exception ex)

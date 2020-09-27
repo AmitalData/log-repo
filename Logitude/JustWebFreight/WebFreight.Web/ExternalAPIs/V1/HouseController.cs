@@ -633,7 +633,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (HousePM.IsCancelled)
                         {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                            throw new ApplicationException("Can't update cancelled shipments");
                         }
 
                         if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))

@@ -719,7 +719,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (MasterPM.IsCancelled)
                         {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                            throw new ApplicationException("Can't update cancelled shipments");
                         }
 
                         APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(MasterPM, authToken.Tenant);
