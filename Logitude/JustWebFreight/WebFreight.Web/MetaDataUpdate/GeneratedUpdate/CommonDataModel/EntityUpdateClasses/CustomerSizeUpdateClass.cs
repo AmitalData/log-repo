@@ -451,10 +451,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerSizeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CustomerSizeObjectTable.HeaderScreenId = CustomerSizeHeaderScreenScreen0.Id;
 		    CustomerSizeObjectTable.HeaderScreenCode = CustomerSizeHeaderScreenScreen0.Code;
 
@@ -463,12 +463,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerSizeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

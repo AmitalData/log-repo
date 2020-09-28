@@ -72,6 +72,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
             {
+                if (entityPM.RecalculateData) 
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
                 if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
                 {
                     
@@ -82,6 +86,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
+
             }
 
         }

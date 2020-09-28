@@ -79,9 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-		public const string HashString = "fc9594bf1c145c0b10dbe68b686b757a";
-
+		public const string HashString = "3a2aeee668a93ef782d0ee6389606f5d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4059,7 +4057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  20,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4234,7 +4232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5290,7 +5288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7126,7 +7124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7187,7 +7185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7273,8 +7271,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SplitCurrencyAccount",
 					  						DefaultText =  "Split Currency Account",
+					  						FullLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
 					  						ListFieldLable =  "SplitCurrencyAccountListLable",
 					  						ListLableDefaultText =  "Split Currency Account",
+					  						ListLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7330,7 +7330,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentName",
-					  						DefaultText =  "Parent",
+					  						DefaultText =  "Main currency glaccount",
+					  						FullLocalDefaultText =  "כרטיס מטבע ראשי",
+					  						ListFieldLable =  "ParentNameListLable",
+					  						ListLableDefaultText =  "Main currency glaccount",
+					  						ListLocalDefaultText =  "כרטיס מטבע ראשי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9562,7 +9566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOSmallCashbookAndReportingValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SmallCashbookAndReportingValidation", DefaultText = "It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document",LocalDefaultText = "לא ניתן להגדיר את אותו כרטיס גם כ''קופה קטנה'' וגם לדיווח כ ''תשומות מסמך אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
 
    
 	    

@@ -78,34 +78,47 @@ namespace Logitude.Accounting.Data.Repositories
 
             return cashbook;
         }
+        private List<string> GetEnableChequeStatusesForCashbook()
+        {
+            List<string> EnablesARPChequeStatusCode = new List<string>();
+            EnablesARPChequeStatusCode.Add("1");
+            EnablesARPChequeStatusCode.Add("2");
+            EnablesARPChequeStatusCode.Add("3");
+            EnablesARPChequeStatusCode.Add("4");
+            EnablesARPChequeStatusCode.Add("7");
+
+            return EnablesARPChequeStatusCode;
+
+        }
 
         public int GetCashChequesTotalsForCashbook(string cashbookId, int tenant)
         {
             DateTime todayDate = GetTodayDate(tenant);
-
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
             List<CashBookLine> query = (from cbLine in context.CashBookLines
                                         join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                                         where
                                             cbLine.CashBookId == cashbookId
                                             && arpch.ValueDate <= todayDate
-                                            && arpch.StatusCode != "5"
+                                            && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)
                                             && cbLine.IsDeposited == false
                                             && cbLine.Tenant == tenant
                                         select cbLine).ToList();
 
             return query.Count();
         }
+
         public int GetPostdatedChequesTotalsForCashbook(string cashbookId, int tenant)
         {
             DateTime todayDate = GetTodayDate(tenant);
-
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
             List<CashBookLine> query = (from cb in context.CashBooks
                                         join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
                                         join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                                         where
                                             cb.Id == cashbookId
                                             && arpch.ValueDate > todayDate
-                                            && arpch.StatusCode != "5"
+                                            && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)   
                                             && cbLine.IsDeposited == false
                                             && cb.Tenant == tenant
                                         select cbLine).ToList();
@@ -113,11 +126,13 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public int GetUndepositedChequesCount(string cashbookId, int tenant)
         {
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
+
             List<CashBookLine> query = (from cbLine in context.CashBookLines
                                         join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                                         where
                                             cbLine.CashBookId == cashbookId
-                                            && arpch.StatusCode != "5"
+                                           && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)
                                             && cbLine.IsDeposited == false
                                             && cbLine.Tenant == tenant
                                         select cbLine).ToList();
@@ -154,12 +169,14 @@ namespace Logitude.Accounting.Data.Repositories
 
         private decimal? GetAllChequesTotalAmount(string cashbookId, int tenant)
         {
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
+
             return (from cb in context.CashBooks
                     join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
                     join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                     where
                         cb.Id == cashbookId
-                        && arpch.StatusCode != "5"
+                        && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)
                         && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);
@@ -168,6 +185,7 @@ namespace Logitude.Accounting.Data.Repositories
         private decimal? GetPostdatedChequesTotalAmount(string cashbookId, int tenant)
         {
             DateTime todayDate = GetTodayDate(tenant);
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
 
             decimal? total = (from cb in context.CashBooks
                     join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
@@ -175,7 +193,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where
                         cb.Id == cashbookId
                         && arpch.ValueDate > todayDate
-                        && arpch.StatusCode != "5"
+                        && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)
                         && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);
@@ -186,13 +204,15 @@ namespace Logitude.Accounting.Data.Repositories
         private decimal? GetCashedChequesTotalAmount(string cashbookId, int tenant)
         {
             DateTime todayDate = GetTodayDate(tenant);
+            List<string> EnablesARPChequeStatusCode = GetEnableChequeStatusesForCashbook();
+
             return (from cb in context.CashBooks
                     join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
                     join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                     where
                         cb.Id == cashbookId
                         && arpch.ValueDate <= todayDate
-                        && arpch.StatusCode != "5"
+                        && EnablesARPChequeStatusCode.Contains(arpch.StatusCode)
                         && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);

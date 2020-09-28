@@ -811,12 +811,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteClosingReason.HeaderScreen", Name = "QuoteClosingReasonHeaderScreen", ObjectTableId = QuoteClosingReasonObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteClosingReasonQuoteClosingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id,ScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteClosingReason.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    QuoteClosingReasonObjectTable.HeaderScreenId = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Id;
 		    QuoteClosingReasonObjectTable.HeaderScreenCode = QuoteClosingReasonQuoteClosingReasonHeaderScreenScreen0.Code;
 
@@ -825,12 +825,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteClosingReasonGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteClosingReason.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteClosingReasonObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField QuoteClosingReasonQuoteClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = QuoteClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "QuoteClosingReason.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

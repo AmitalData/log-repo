@@ -3315,7 +3315,7 @@ namespace WebFreight.Web.WebServices
                         newItem.Notes = pickup.Notes;
                         newItem.TransportMode = pickup.TransportModeName;
                         newItem.Weight = pickup.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
-                        myServicHelper.GetPickUpFromAddress(pickup, newItem, addressRepository, tenant);
+                        myServicHelper.GetPickUpAddresses(pickup, newItem, addressRepository, tenant);
 
                         foreach (ShipmentPickUpDeliveryPackagePM package in pickup.ShipmentPickUpDeliveryPackages)
                         {

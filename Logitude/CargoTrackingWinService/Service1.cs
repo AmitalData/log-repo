@@ -19,8 +19,11 @@ namespace CargoTrackingWinService
         {
             InitializeComponent();
         }
-        public void OnDebug()
+        public void OnDebug(string SourceConnection, string DestinationConnection , int Sleep)
         {
+            ApplicationInfo.SourceConnection = SourceConnection;
+            ApplicationInfo.DestinationConnection = DestinationConnection;
+            ApplicationInfo.UpdateCargoTrackingSleepTime = Sleep;
             OnStart(null);
 
         }
@@ -35,10 +38,15 @@ namespace CargoTrackingWinService
                 //string sourceConnection = cargoTrackingServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 //ApplicationInfo.SourceConnection = cargoTrackingServiceHelper.GetMainDBConnectionString(sourceConnection);
                 ApplicationInfo.UpdateCounter = 0;
-                ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
-                ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
-                string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateCargoTrackingSleepTime"];
-                ApplicationInfo.UpdateCargoTrackingSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
+                if (ApplicationInfo.Mode!= "Debug")
+                {
+                    ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
+                    ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
+                    string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateCargoTrackingSleepTime"];
+                    ApplicationInfo.UpdateCargoTrackingSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
+                }
+               
+                
                 string retryBuildWithinHours = ConfigurationSettings.AppSettings["RetryBuildWithinHours"];
                 ApplicationInfo.RunCargoTrackingImmediately = GetIsBuildCargoTrackingFromConfigurationSettings();
 

@@ -216,7 +216,7 @@
                         <!-- Quantity -->
                         <log-column [width]="'70'" [header]="'Quantity'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="!IsCancelled && (item.IsQuantityEnabled && !item.IsDisabled) && !IsBondedWarehouse">
+                                <log-cell-template #logcelltemplate [IsEnabled]="!IsCancelled && (item.IsQuantityEnabled && !item.IsDisabled) && !IsCFSWarehouse">
 
                                     <div [attr.title]="item.Quantity" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                                         {{item.Quantity}}

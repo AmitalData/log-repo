@@ -1161,12 +1161,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen BankAccountLiteHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccountLite.HeaderScreen", Name = "Header Screen", ObjectTableId = BankAccountLiteObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.BankCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.BankCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankAccountLiteHeaderScreenScreen0.Id,ScreenCode = BankAccountLiteHeaderScreenScreen0.Code, ObjectFieldCode = "BankAccountLite.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    BankAccountLiteObjectTable.HeaderScreenId = BankAccountLiteHeaderScreenScreen0.Id;
 		    BankAccountLiteObjectTable.HeaderScreenCode = BankAccountLiteHeaderScreenScreen0.Code;
 
@@ -1175,28 +1175,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen BankAccountLiteGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccountLite.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BankAccountLiteObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BankCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.IBAN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.SwiftCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BankCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.IBAN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.SwiftCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountLiteBankAccountLiteGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountLiteGeneralTabScreenScreen1.Id,ScreenCode = BankAccountLiteGeneralTabScreenScreen1.Code, ObjectFieldCode = "BankAccountLite.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

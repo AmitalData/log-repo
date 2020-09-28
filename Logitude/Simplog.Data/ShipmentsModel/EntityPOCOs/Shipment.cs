@@ -802,8 +802,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ChargeStorageCurrencyId { get; set; }
         public string WeightMeasurementCode { get; set; }
         public string WeightRoundingCode { get; set; }
-        public bool IsBondedWarehouse { get; set; }
-        public bool IsBondedWarehouseChanged { get; set; }
+        public bool IsCFSWarehouse { get; set; }
+        public bool IsCFSWarehouseChanged { get; set; }
 
         public virtual Currency ChargeStorageCurrency { get; set; }
         public virtual WarehouseWeightMeasurement WeightMeasurement { get; set; }

@@ -721,12 +721,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomsShipperCustomsShipperHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsShipper.HeaderScreen", Name = "CustomsShipperHeaderScreen", ObjectTableId = CustomsShipperObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.CustomsShipperCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.ValidDepositionNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.CustomsShipperCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsShipper.ValidDepositionNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    CustomsShipperObjectTable.HeaderScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id;
 		    CustomsShipperObjectTable.HeaderScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code;
 

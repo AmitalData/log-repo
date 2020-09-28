@@ -39,6 +39,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             try
             {
                 interestReportPM = interestReportPM !=null?interestReportPM: interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestReportPM.GLAccountInterestCreditLimit = interestReportCalculationPreparations.GetCreditLimitFromGLAccount(interestReportPM.GLAccountId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
                 glaccountIds.Add(interestReportPM.GLAccountId);
@@ -59,7 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             catch (Exception e)
             {
                 SetInterestReportStatusFailed();
-                throw new Exception(e.Message+"\n"+ e.StackTrace);
+                throw new Exception(e.Message);
             }
         }
 
@@ -120,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestTransactionPM firstTransaction = interestTransactionPMs.OrderBy(d => d.InterestValueDate).FirstOrDefault();
             DateTime openBalanceInterestValueDate = GetOpenBalanceInterestValueDate(latestInterestReport);
 
-            if(openBalanceInterestValueDate != firstTransaction.InterestValueDate.Date)
+            if (firstTransaction == null || openBalanceInterestValueDate != firstTransaction.InterestValueDate.Date)
             {
                 if (latestInterestReport != null)
                 {

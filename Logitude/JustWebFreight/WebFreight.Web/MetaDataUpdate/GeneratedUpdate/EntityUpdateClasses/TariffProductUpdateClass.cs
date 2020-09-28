@@ -557,10 +557,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TariffProductTariffProductHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.HeaderScreen", Name = "TariffProductHeaderScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TariffProductTariffProductHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TariffProductTariffProductHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField TariffProductTariffProductHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffProductTariffProductHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    TariffProductObjectTable.HeaderScreenId = TariffProductTariffProductHeaderScreenScreen0.Id;
 		    TariffProductObjectTable.HeaderScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code;
 
@@ -569,14 +569,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TariffProductTariffProductGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.GeneralTabScreen", Name = "TariffProductGeneralTabScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField TariffProductTariffProductGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffProductTariffProductGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffProductTariffProductGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

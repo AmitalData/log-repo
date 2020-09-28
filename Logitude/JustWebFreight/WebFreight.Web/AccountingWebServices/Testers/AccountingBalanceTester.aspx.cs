@@ -66,6 +66,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonCheckBalance_Click,
             _ButtonGetReconcile_Click,
             _ButtonReverseGLBalance_Click,
+            _ButtonReverseEngineerControlAccountAccumulateChild_Click,
             _ButtonCurrBalanceByType_Click,
             _ButtonTreeMapCOA_Click,
             _ButtonDueLocalBalance_Click,
@@ -353,6 +354,60 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
+
+        protected void _ButtonReverseEngineerControlAccountAccumulateChild_Click(object sender, EventArgs e)
+        {
+
+            ParamBasic param = null;
+            ParamBasic paramDefault = new ParamBasic()
+            {
+                MyTenant = 989,
+                MyDate = DateTime.Now.AddMonths(-1),
+                MyGLAccId = "notinuse",
+
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonReverseEngineerControlAccountAccumulateChild_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
+                var s = new ReverseEngineerControlAccountAccumulateChild( param.MyTenant);
+                s.CheckDbIntegrity(paramDefault.MyDate);
+
+
+                var myReverseEngineerCashBook = new ReverseEngineerCashBook(param.MyTenant);
+                myReverseEngineerCashBook.CheckDbIntegrity();
+                var union = s.CompareReport.GLAccountBalanceList.Union(myReverseEngineerCashBook.CompareReport.GLAccountBalanceList).ToList();
+                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(union);
+                ReloadGrid(SerializeObjectByte);
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonReverseEngineerControlAccountAccumulateChild_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<ParamBasic>(param);
+                _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
 
 
         protected void _AccountingIntegrityService_Click(object sender, EventArgs e)

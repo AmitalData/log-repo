@@ -20,6 +20,8 @@ import {PackageTypeListService} from '../../Common/Services/StandardLists/Packag
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ObservableCollection} from '../../Infrastructure/Utilities/ObservableCollection';
 import {WarehouseEntryPackageItem} from '../../Warehouse/Components/AddEditWarehouseEntryPackagesAndContainers';
+import { isNullOrUndefined } from 'util';
+import { ShipmentPMService } from '../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 
 
@@ -56,10 +58,11 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     IsNewEntity: boolean = false;
     public ItemsSource: ObservableCollection;
     IsEditMode: boolean = false;
-    IsBondedWarehouse: boolean = false;
+    IsCFSWarehouse: boolean = false;
     IsFromFullWarehouseEntryComponent: boolean = false;
 
     myPackageTypeService: PackageTypeListService;
+    shipmentPMService: ShipmentPMService;
     savedItems: WarehouseEntryPackagePM[] = [];
 
     ShowAddPackageButton: boolean = false;
@@ -69,6 +72,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     constructor() {
         super();
         this.myPackageTypeService = new PackageTypeListService();
+        this.shipmentPMService = new ShipmentPMService();
         this.ItemsSource = new ObservableCollection([]);
 
     }
@@ -88,7 +92,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.IsEditMode = args.IsEditMode;
         this.ShowPackageSummary = args.ShowPackageSummary;
         this.ShowAddPackageButton = args.ShowAddPackageButton;
-        this.IsBondedWarehouse = args.IsBondedWarehouse;
+        this.IsCFSWarehouse = args.IsCFSWarehouse;
         if (!this.IsEditMode) {
             this.ShowAddPackageButton = true;
         }
@@ -422,7 +426,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.ViewModelTrigger = args.ViewModelTrigger;
         
         if (this.warehouseEntryPM) {
-
             if (this.warehouseEntryPM.DirectionId == "I" && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
                 this.DisableAddPackageButton = true;
             }
@@ -497,9 +500,21 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             });
         }
 
-  
-        this.BuildItemsSource();
-        this.ComputeAndFullTotalPackage(true);
+        if (isNullOrUndefined(this.IsCFSWarehouse) && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
+            if (!AppTool.IsNullOrEmpty(this.warehouseEntryPM.ShipmentId)) {
+                this.shipmentPMService.CheckIsCFSShipmentById(this.warehouseEntryPM.ShipmentId).subscribe((Response: ServiceResponse) => {
+                    if (!Response.HasError) {
+                        this.IsCFSWarehouse = Response.Result;
+                        this.BuildItemsSource();
+                        this.ComputeAndFullTotalPackage(true);
+                    }
+                });
+            }
+        }
+        else {
+            this.BuildItemsSource();
+            this.ComputeAndFullTotalPackage(true);
+        }
     }
 
 

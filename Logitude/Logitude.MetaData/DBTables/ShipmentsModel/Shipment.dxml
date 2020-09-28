@@ -2987,13 +2987,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsBondedWarehouse"
+    Name="IsCFSWarehouse"
+    OldNames="IsBondedWarehouse"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="IsBondedWarehouseChanged"
+    Name="IsCFSWarehouseChanged"
+    OldNames="IsBondedWarehouseChanged"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -3762,6 +3764,8 @@
     Columns="Tenant,ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,ComputedStatusDate" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint

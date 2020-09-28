@@ -2602,10 +2602,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AccountingPartnerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AccountingPartnerObjectTable.HeaderScreenId = AccountingPartnerHeaderScreenScreen0.Id;
 		    AccountingPartnerObjectTable.HeaderScreenCode = AccountingPartnerHeaderScreenScreen0.Code;
 
@@ -2614,42 +2614,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AccountingPartnerGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen AccountingPartnerBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

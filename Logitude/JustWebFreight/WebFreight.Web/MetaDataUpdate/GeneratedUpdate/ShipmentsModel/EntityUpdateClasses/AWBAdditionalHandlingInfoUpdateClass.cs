@@ -456,10 +456,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen AWBAdditionalHandlingInfoHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AWBAdditionalHandlingInfo.HeaderScreen", Name = "Header Screen", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    AWBAdditionalHandlingInfoObjectTable.HeaderScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id;
 		    AWBAdditionalHandlingInfoObjectTable.HeaderScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code;
 

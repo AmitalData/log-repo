@@ -6,18 +6,16 @@
   Module="Common">
   <SqlScript>
     <![CDATA[
-Create PROCEDURE [dbo].[usp_UpdateCustomerActualData]
+create PROCEDURE [dbo].[usp_UpdateCustomerActualData]
 (
-	@CustomerId_PARAM varchar(15) = null,
-	@Tenant int
+@CustomerId_PARAM varchar(15) = null,
+@Tenant int
 )
 AS
-
 -- Select the Firt day of the current date
 -- in order to get date of the last month and bellow
 declare @DateOfFirstDayOfCurrentDate as datetime
 set @DateOfFirstDayOfCurrentDate = DATEADD(m, DATEDIFF(m, 0, GETDATE()), 0)
-
 DECLARE @CustomerId AS varchar(15)
 DECLARE @TypeCode AS varchar(2)
 DECLARE @CountryId AS varchar(15)
@@ -28,408 +26,358 @@ DECLARE @Revenue AS float
 DECLARE @ChargeableWeight AS float
 DECLARE @NumberOfShipments AS int
 DECLARE @LastDate as datetime
-
 declare @MemoryTable table
 (
-  CustomerId varchar(15) not null,
-  ProductCode varchar(2) not null,
-  Year int not null,
-  Month int not null,
-  TEU decimal(18, 2) not null,
-  Revenue decimal(18, 2) not null,
-  ChargeableWeight decimal(18, 2) not null,
-  NumberOfShipments int not null,
-  CountryId varchar(15) null,
-  LastShipmentDate datetime not null
+CustomerId varchar(15) not null,
+ProductCode varchar(2) not null,
+Year int not null,
+Month int not null,
+TEU decimal(18, 2) not null,
+Revenue decimal(18, 2) not null,
+ChargeableWeight decimal(18, 2) not null,
+NumberOfShipments int not null,
+CountryId varchar(15) null,
+LastShipmentDate datetime not null
 )
-
 declare @MemoryTable_Customers table
 (
-  Id varchar(15) not null
+Id varchar(15) not null
 )
-
 declare @MemoryTable_ActualData table
 (
-  CustomerId varchar(15) not null,
-  ProductCode varchar(2) not null,
-  Year int not null,
-  Month int not null,
-  TEU decimal(18, 2) not null,
-  Revenue decimal(18, 2) not null,
-  ChargeableWeight decimal(18, 2) not null,
-  NumberOfShipments int not null
+CustomerId varchar(15) not null,
+ProductCode varchar(2) not null,
+Year int not null,
+Month int not null,
+TEU decimal(18, 2) not null,
+Revenue decimal(18, 2) not null,
+ChargeableWeight decimal(18, 2) not null,
+NumberOfShipments int not null
 )
-
 declare @MemoryTable_LocationActualData table
 (
-  CustomerId varchar(15) not null,
-  ProductCode varchar(2) not null,
-  Year int not null,
-  Month int not null,
-  TEU decimal(18, 2) not null,
-  Revenue decimal(18, 2) not null,
-  ChargeableWeight decimal(18, 2) not null,
-  NumberOfShipments int not null,
-  CountryId varchar(15) not null
+CustomerId varchar(15) not null,
+ProductCode varchar(2) not null,
+Year int not null,
+Month int not null,
+TEU decimal(18, 2) not null,
+Revenue decimal(18, 2) not null,
+ChargeableWeight decimal(18, 2) not null,
+NumberOfShipments int not null,
+CountryId varchar(15) not null
 )
-
 declare @MemoryTable_LastShipmentDate table
 (
-  CustomerId varchar(15) not null,  
-  ProductCode varchar(2) not null,
-  LastShipmentDate datetime not null
+CustomerId varchar(15) not null,
+ProductCode varchar(2) not null,
+LastShipmentDate datetime not null
 )
-
 declare @MemoryTable_CustomersLastShipmentDate table
 (
-  CustomerId varchar(15) not null,  
-  LastShipmentDate datetime not null
+CustomerId varchar(15) not null,
+LastShipmentDate datetime not null
 )
-
 -- 1) Select Memory Data + Reset Actual Data
 BEGIN
-	if (@CustomerId_PARAM is null)
-	BEGIN
-		BEGIN
-			insert into @MemoryTable
-			SELECT
-			CustomerId,
-			ProductCode,
-			Year(CreateDateTime),
-			Month(CreateDateTime),
-			sum(isnull(TEU,0)),
-			sum(ISNULL(OpenReceivablesInProfitCurrency,0) + ISNULL(AccountedReceivablesInProfitCurrency,0)),
-			sum(isnull(ChargeableWeightInKG,0)),
-			count(*),
-			CountryForStatisticsId,
-			max(CreateDateTime)			
-			From Shipments
-			Where IsCancelled = 0 AND Tenant = @Tenant AND ProductCode is not null AND CustomerId is not null
-			group by CustomerId, ProductCode, Month(CreateDateTime), Year(CreateDateTime), CountryForStatisticsId
-		END
-
-		BEGIN
-			insert into @MemoryTable_Customers
-			SELECT
-			Id
-			From Customers
-			Where Tenant = @Tenant
-		END
-
-		BEGIN
-			update CustomerProductActualDatas
-			set
-			TEU = 0,
-			Revenue = 0,
-			ChargeableWeight = 0,
-			NumberOfShipments = 0
-			where Tenant = @Tenant
-		END
-
-		BEGIN
-			update CustomerProductLocationActualDatas
-			set
-			TEU = 0,
-			Revenue = 0,
-			ChargeableWeight = 0,
-			NumberOfShipments = 0
-			where Tenant = @Tenant
-		END
-	END
-
-	else
-	BEGIN
-		BEGIN
-			insert into @MemoryTable
-			SELECT
-			CustomerId,
-			ProductCode,
-			Year(CreateDateTime),
-			Month(CreateDateTime),
-			sum(isnull(TEU,0)),
-			sum(ISNULL(OpenReceivablesInProfitCurrency,0) + ISNULL(AccountedReceivablesInProfitCurrency,0)),
-			sum(isnull(ChargeableWeightInKG,0)),
-			count(*),
-			CountryForStatisticsId,
-			max(CreateDateTime)			
-			From Shipments
-			Where IsCancelled = 0 AND Tenant = @Tenant AND ProductCode is not null AND CustomerId = @CustomerId_PARAM
-			group by CustomerId, ProductCode, Month(CreateDateTime), Year(CreateDateTime), CountryForStatisticsId
-		END
-
-		BEGIN
-			insert into @MemoryTable_Customers
-			SELECT
-			Id
-			From Customers
-			Where Tenant = @Tenant AND Id = @CustomerId_PARAM
-		END
-
-		BEGIN
-			update CustomerProductActualDatas
-			set TEU = 0,
-			Revenue = 0,
-			ChargeableWeight = 0,
-			NumberOfShipments = 0
-			where Tenant = @Tenant AND CustomerId = @CustomerId_PARAM
-		END
-
-		BEGIN
-			update CustomerProductLocationActualDatas
-			set TEU = 0,
-			Revenue = 0,
-			ChargeableWeight = 0,
-			NumberOfShipments = 0
-			where Tenant = @Tenant AND CustomerId = @CustomerId_PARAM
-		END
-	END
+if (@CustomerId_PARAM is null)
+BEGIN
+BEGIN
+insert into @MemoryTable
+SELECT
+CustomerId,
+ProductCode,
+Year(CreateDateTime),
+Month(CreateDateTime),
+sum(isnull(TEU,0)),
+sum(ISNULL(OpenReceivablesInProfitCurrency,0) + ISNULL(AccountedReceivablesInProfitCurrency,0)),
+sum(isnull(ChargeableWeightInKG,0)),
+count(*),
+CountryForStatisticsId,
+max(CreateDateTime)
+From Shipments
+Where CreateDateTime >= '2020-01-01' and IsCancelled = 0 AND Tenant = @Tenant AND ProductCode is not null AND CustomerId is not null
+group by CustomerId, ProductCode, Month(CreateDateTime), Year(CreateDateTime), CountryForStatisticsId
 END
-
+BEGIN
+--insert into @MemoryTable_Customers
+--SELECT
+--Id
+--From Customers
+--Where Tenant = @Tenant
+--END
+--BEGIN
+update CustomerProductActualDatas
+set
+TEU = 0,
+Revenue = 0,
+ChargeableWeight = 0,
+NumberOfShipments = 0
+where Tenant = @Tenant and Year = 2020
+END
+BEGIN
+update CustomerProductLocationActualDatas
+set
+TEU = 0,
+Revenue = 0,
+ChargeableWeight = 0,
+NumberOfShipments = 0
+where Tenant = @Tenant and Year = 2020
+END
+END
+else
+BEGIN
+BEGIN
+insert into @MemoryTable
+SELECT
+CustomerId,
+ProductCode,
+Year(CreateDateTime),
+Month(CreateDateTime),
+sum(isnull(TEU,0)),
+sum(ISNULL(OpenReceivablesInProfitCurrency,0) + ISNULL(AccountedReceivablesInProfitCurrency,0)),
+sum(isnull(ChargeableWeightInKG,0)),
+count(*),
+CountryForStatisticsId,
+max(CreateDateTime)
+From Shipments
+Where IsCancelled = 0 AND Tenant = @Tenant AND ProductCode is not null AND CustomerId = @CustomerId_PARAM
+group by CustomerId, ProductCode, Month(CreateDateTime), Year(CreateDateTime), CountryForStatisticsId
+END
+--BEGIN
+--insert into @MemoryTable_Customers
+--SELECT
+--Id
+--From Customers
+--Where Tenant = @Tenant AND Id = @CustomerId_PARAM
+--END
+BEGIN
+update CustomerProductActualDatas
+set TEU = 0,
+Revenue = 0,
+ChargeableWeight = 0,
+NumberOfShipments = 0
+where Tenant = @Tenant AND CustomerId = @CustomerId_PARAM and Year = 2020
+END
+BEGIN
+update CustomerProductLocationActualDatas
+set TEU = 0,
+Revenue = 0,
+ChargeableWeight = 0,
+NumberOfShipments = 0
+where Tenant = @Tenant AND CustomerId = @CustomerId_PARAM and Year = 2020
+END
+END
+END
 -- 2) Select Actual Data
 BEGIN
-	insert into @MemoryTable_ActualData
-	SELECT
-	CustomerId,
-	ProductCode,
-	Year,
-	Month,		
-	sum(isnull(TEU,0)),
-	sum(isnull(Revenue,0)),
-	sum(isnull(ChargeableWeight,0)),
-	sum(isnull(NumberOfShipments,0))
-	From @MemoryTable
-	where (DATEADD(year, Year-1900, DATEADD(month, Month-1, DATEADD(day, 20-1, 0)))) < @DateOfFirstDayOfCurrentDate
-	group by CustomerId, ProductCode, Month, Year
+insert into @MemoryTable_ActualData
+SELECT
+CustomerId,
+ProductCode,
+Year,
+Month,
+sum(isnull(TEU,0)),
+sum(isnull(Revenue,0)),
+sum(isnull(ChargeableWeight,0)),
+sum(isnull(NumberOfShipments,0))
+From @MemoryTable
+where (DATEADD(year, Year-1900, DATEADD(month, Month-1, DATEADD(day, 20-1, 0)))) < @DateOfFirstDayOfCurrentDate
+group by CustomerId, ProductCode, Month, Year
 END
-
 -- 3) Select Location Actual Data
 BEGIN
-	insert into @MemoryTable_LocationActualData
-	SELECT
-	CustomerId,
-	ProductCode,
-	Year,
-	Month,
-	sum(isnull(TEU,0)),
-	sum(isnull(Revenue,0)),
-	sum(isnull(ChargeableWeight,0)),
-	sum(isnull(NumberOfShipments,0)),
-	CountryId
-	From @MemoryTable
-	Where CountryId is not null AND (DATEADD(year, Year-1900, DATEADD(month, Month-1, DATEADD(day, 20-1, 0)))) < @DateOfFirstDayOfCurrentDate
-	group by CustomerId, ProductCode, Month, Year, CountryId
+insert into @MemoryTable_LocationActualData
+SELECT
+CustomerId,
+ProductCode,
+Year,
+Month,
+sum(isnull(TEU,0)),
+sum(isnull(Revenue,0)),
+sum(isnull(ChargeableWeight,0)),
+sum(isnull(NumberOfShipments,0)),
+CountryId
+From @MemoryTable
+Where CountryId is not null AND (DATEADD(year, Year-1900, DATEADD(month, Month-1, DATEADD(day, 20-1, 0)))) < @DateOfFirstDayOfCurrentDate
+group by CustomerId, ProductCode, Month, Year, CountryId
 END
-
 -- 4) Select Last Date _ Customer Products
 BEGIN
-	insert into @MemoryTable_LastShipmentDate
-	SELECT
-	CustomerId,
-	ProductCode,
-	max(LastShipmentDate)
-	From @MemoryTable		
-	group by CustomerId, ProductCode
+insert into @MemoryTable_LastShipmentDate
+SELECT
+CustomerId,
+ProductCode,
+max(LastShipmentDate)
+From @MemoryTable
+group by CustomerId, ProductCode
 END
 BEGIN
-	insert into @MemoryTable_CustomersLastShipmentDate
-	SELECT
-	CustomerId,
-	max(LastShipmentDate)
-	From @MemoryTable		
-	group by CustomerId
+insert into @MemoryTable_CustomersLastShipmentDate
+SELECT
+CustomerId,
+max(LastShipmentDate)
+From @MemoryTable
+group by CustomerId
 END
-
 -- 5) Update Product ActualDatas
-BEGIN 
-	DECLARE DataCursor1 CURSOR READ_ONLY
-	FOR
-	SELECT CustomerId, ProductCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments
-	From @MemoryTable_ActualData 
-	OPEN DataCursor1 FETCH NEXT FROM DataCursor1 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-
-	if exists (select * from @MemoryTable_Customers where Id = @CustomerId)
-	BEGIN
-		
-		IF exists (
-		select * from CustomerProductActualDatas
-		where
-		Tenant = @Tenant
-		AND CustomerId = @CustomerId
-		AND ProductTypeCode = @TypeCode
-		AND Year = @Year
-		AND Month = @Month
-		)
-
-		BEGIN
-
-				UPDATE CustomerProductActualDatas
-				set				
-				TEU = isnull(@TEU,0),
-				Revenue = isnull(@Revenue,0),
-				ChargeableWeight =isnull(@ChargeableWeight,0),
-				NumberOfShipments = isnull(@NumberOfShipments,0)
-				
-				where Tenant = @Tenant
-				AND CustomerId = @CustomerId
-				AND ProductTypeCode = @TypeCode
-				AND Year = @Year
-				AND Month = @Month
-
-		END
-
-		else
-		BEGIN
-		
-				INSERT INTO CustomerProductActualDatas(CustomerId, Tenant, ProductTypeCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments)
-				VALUES
-				(
-				@CustomerId,
-				@Tenant,
-				@TypeCode,
-				@Year,
-				@Month,
-				isnull(@TEU,0),
-				isnull(@Revenue,0),
-				isnull(@ChargeableWeight,0),
-				isnull(@NumberOfShipments,0)
-				)
-
-		END
-
-		if not exists (select * from CustomerProducts where CustomerId = @CustomerId AND Tenant = @Tenant AND ProductTypeCode = @TypeCode)
-		begin
-			insert into CustomerProducts(CustomerId, ProductTypeCode,Tenant) values(@CustomerId,@TypeCode,@Tenant)		 
-		end
-
-	END
-
-	FETCH NEXT FROM DataCursor1 INTO @CustomerId, @TypeCode,@Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments
-	END
-	CLOSE DataCursor1
-	DEALLOCATE DataCursor1
+BEGIN
+DECLARE DataCursor1 CURSOR READ_ONLY
+FOR
+SELECT CustomerId, ProductCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments
+From @MemoryTable_ActualData
+OPEN DataCursor1 FETCH NEXT FROM DataCursor1 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if exists (select * from Customers where Id = @CustomerId)
+BEGIN
+IF exists (
+select * from CustomerProductActualDatas
+where
+Tenant = @Tenant
+AND CustomerId = @CustomerId
+AND ProductTypeCode = @TypeCode
+AND Year = @Year
+AND Month = @Month
+)
+BEGIN
+UPDATE CustomerProductActualDatas
+set
+TEU = isnull(@TEU,0),
+Revenue = isnull(@Revenue,0),
+ChargeableWeight =isnull(@ChargeableWeight,0),
+NumberOfShipments = isnull(@NumberOfShipments,0)
+where Tenant = @Tenant
+AND CustomerId = @CustomerId
+AND ProductTypeCode = @TypeCode
+AND Year = @Year
+AND Month = @Month
 END
-
+else
+BEGIN
+INSERT INTO CustomerProductActualDatas(CustomerId, Tenant, ProductTypeCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments)
+VALUES
+(
+@CustomerId,
+@Tenant,
+@TypeCode,
+@Year,
+@Month,
+isnull(@TEU,0),
+isnull(@Revenue,0),
+isnull(@ChargeableWeight,0),
+isnull(@NumberOfShipments,0)
+)
+END
+if not exists (select * from CustomerProducts where CustomerId = @CustomerId AND Tenant = @Tenant AND ProductTypeCode = @TypeCode)
+begin
+insert into CustomerProducts(CustomerId, ProductTypeCode,Tenant) values(@CustomerId,@TypeCode,@Tenant)
+end
+END
+FETCH NEXT FROM DataCursor1 INTO @CustomerId, @TypeCode,@Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments
+END
+CLOSE DataCursor1
+DEALLOCATE DataCursor1
+END
 -- 6) Update Location ActualDatas
-BEGIN 
-	DECLARE DataCursor2 CURSOR READ_ONLY
-	FOR
-	SELECT CustomerId, ProductCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments, CountryId
-	From @MemoryTable_LocationActualData 
-	OPEN DataCursor2 FETCH NEXT FROM DataCursor2 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments, @CountryId
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		
-	if exists (select * from @MemoryTable_Customers where Id = @CustomerId)
-	BEGIN
-
-		IF EXISTS (
-		select * from CustomerProductLocationActualDatas
-		where Tenant = @Tenant
-		AND CustomerId = @CustomerId
-		AND ProductTypeCode = @TypeCode
-		AND Year = @Year
-		AND Month = @Month
-		AND CountryId = @CountryId
-		)
-
-		BEGIN
-
-				UPDATE CustomerProductLocationActualDatas
-				set
-				TEU = isnull(@TEU,0),
-				Revenue = isnull(@Revenue,0),
-				ChargeableWeight =isnull(@ChargeableWeight,0),
-				NumberOfShipments = isnull(@NumberOfShipments,0)
-				
-				where Tenant = @Tenant
-				AND CustomerId = @CustomerId
-				AND ProductTypeCode = @TypeCode
-				AND Year = @Year
-				AND Month = @Month
-				AND CountryId = @CountryId
-
-		END
-
-		else
-		BEGIN
-				INSERT INTO CustomerProductLocationActualDatas(CustomerId, Tenant, ProductTypeCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments,CountryId)
-				VALUES
-				(
-				@CustomerId,
-				@Tenant,
-				@TypeCode,
-				@Year,
-				@Month,
-				isnull(@TEU,0),
-				isnull(@Revenue,0),
-				isnull(@ChargeableWeight,0),
-				isnull(@NumberOfShipments,0),
-				@CountryId
-				)
-
-		END
-
-		if not exists (select * from CustomerProductLocations where CustomerId = @CustomerId and ProductTypeCode = @TypeCode and CountryId  = @CountryId and Tenant = @Tenant)
-		begin
-			insert into CustomerProductLocations(CountryId, CustomerId, ProductTypeCode, Tenant) values(@CountryId, @CustomerId, @TypeCode,@Tenant)
-		end
-
-	END
-
-	FETCH NEXT FROM DataCursor2 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments, @CountryId
-	END
-	CLOSE DataCursor2
-	DEALLOCATE DataCursor2
+BEGIN
+DECLARE DataCursor2 CURSOR READ_ONLY
+FOR
+SELECT CustomerId, ProductCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments, CountryId
+From @MemoryTable_LocationActualData
+OPEN DataCursor2 FETCH NEXT FROM DataCursor2 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments, @CountryId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if exists (select * from Customers where Id = @CustomerId)
+BEGIN
+IF EXISTS (
+select * from CustomerProductLocationActualDatas
+where Tenant = @Tenant
+AND CustomerId = @CustomerId
+AND ProductTypeCode = @TypeCode
+AND Year = @Year
+AND Month = @Month
+AND CountryId = @CountryId
+)
+BEGIN
+UPDATE CustomerProductLocationActualDatas
+set
+TEU = isnull(@TEU,0),
+Revenue = isnull(@Revenue,0),
+ChargeableWeight =isnull(@ChargeableWeight,0),
+NumberOfShipments = isnull(@NumberOfShipments,0)
+where Tenant = @Tenant
+AND CustomerId = @CustomerId
+AND ProductTypeCode = @TypeCode
+AND Year = @Year
+AND Month = @Month
+AND CountryId = @CountryId
 END
-
+else
+BEGIN
+INSERT INTO CustomerProductLocationActualDatas(CustomerId, Tenant, ProductTypeCode, Year, Month, TEU, Revenue, ChargeableWeight, NumberOfShipments,CountryId)
+VALUES
+(
+@CustomerId,
+@Tenant,
+@TypeCode,
+@Year,
+@Month,
+isnull(@TEU,0),
+isnull(@Revenue,0),
+isnull(@ChargeableWeight,0),
+isnull(@NumberOfShipments,0),
+@CountryId
+)
+END
+if not exists (select * from CustomerProductLocations where CustomerId = @CustomerId and ProductTypeCode = @TypeCode and CountryId  = @CountryId and Tenant = @Tenant)
+begin
+insert into CustomerProductLocations(CountryId, CustomerId, ProductTypeCode, Tenant) values(@CountryId, @CustomerId, @TypeCode,@Tenant)
+end
+END
+FETCH NEXT FROM DataCursor2 INTO @CustomerId, @TypeCode, @Year, @Month, @TEU, @Revenue, @ChargeableWeight, @NumberOfShipments, @CountryId
+END
+CLOSE DataCursor2
+DEALLOCATE DataCursor2
+END
 -- 7) Update Products Last Shipment Date
 BEGIN
-	DECLARE DataCursor3 CURSOR READ_ONLY
-	FOR
-	SELECT CustomerId, ProductCode, LastShipmentDate
-	From @MemoryTable_LastShipmentDate 
-	OPEN DataCursor3 FETCH NEXT FROM DataCursor3 INTO @CustomerId, @TypeCode, @LastDate
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-
-	if exists (select * from @MemoryTable_Customers where Id = @CustomerId)
-	BEGIN
-		update CustomerProducts
-		set LastShipmentDate = @LastDate
-		where Tenant = @Tenant
-		and CustomerId = @CustomerId
-		and ProductTypeCode = @TypeCode
-	END
-
-	FETCH NEXT FROM DataCursor3 INTO @CustomerId, @TypeCode, @LastDate
-	END
-	CLOSE DataCursor3
-	DEALLOCATE DataCursor3
-
+DECLARE DataCursor3 CURSOR READ_ONLY
+FOR
+SELECT CustomerId, ProductCode, LastShipmentDate
+From @MemoryTable_LastShipmentDate
+OPEN DataCursor3 FETCH NEXT FROM DataCursor3 INTO @CustomerId, @TypeCode, @LastDate
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if exists (select * from Customers where Id = @CustomerId)
+BEGIN
+update CustomerProducts
+set LastShipmentDate = @LastDate
+where Tenant = @Tenant
+and CustomerId = @CustomerId
+and ProductTypeCode = @TypeCode
 END
-
+FETCH NEXT FROM DataCursor3 INTO @CustomerId, @TypeCode, @LastDate
+END
+CLOSE DataCursor3
+DEALLOCATE DataCursor3
+END
 -- 8) Update Customers Last Shipment Date
 BEGIN
-	DECLARE DataCursor4 CURSOR READ_ONLY
-	FOR
-	SELECT CustomerId, LastShipmentDate
-	From @MemoryTable_CustomersLastShipmentDate 
-	OPEN DataCursor4 FETCH NEXT FROM DataCursor4 INTO @CustomerId, @LastDate
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-
-		update Customers
-		set LastShipmentDate = @LastDate
-		where Tenant = @Tenant
-		and Id = @CustomerId
-
-	FETCH NEXT FROM DataCursor4 INTO @CustomerId, @LastDate
-	END
-	CLOSE DataCursor4
-	DEALLOCATE DataCursor4
-
+DECLARE DataCursor4 CURSOR READ_ONLY
+FOR
+SELECT CustomerId, LastShipmentDate
+From @MemoryTable_CustomersLastShipmentDate
+OPEN DataCursor4 FETCH NEXT FROM DataCursor4 INTO @CustomerId, @LastDate
+WHILE @@FETCH_STATUS = 0
+BEGIN
+update Customers
+set LastShipmentDate = @LastDate
+where Tenant = @Tenant
+and Id = @CustomerId
+FETCH NEXT FROM DataCursor4 INTO @CustomerId, @LastDate
+END
+CLOSE DataCursor4
+DEALLOCATE DataCursor4
 END
 ]]>
   </SqlScript>

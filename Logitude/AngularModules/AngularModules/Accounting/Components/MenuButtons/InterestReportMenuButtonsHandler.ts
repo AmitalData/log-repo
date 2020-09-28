@@ -90,6 +90,14 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                     button.IsDisabled = false;
                                 break;
                             }
+                            case "RecalculateReport":{
+                                if(this.EntityPM.CanRecalculate){
+                                    button.IsDisabled = false;
+                                }
+                                else{
+                                    button.IsDisabled = true;
+                                }
+                            }
                     }
                 }
             }
@@ -122,12 +130,29 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                     this.CancelReport();
                     break;
                 }
+                case "RecalculateReport":{
+                    this.ConfirmRecalculatingReport();
+                }
             }
         }
         else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.entityArgs.EditComponent.ValidationErrorsList = errors;
         }
+    }
+    ConfirmRecalculatingReport() {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RecalculateData=true;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        });
+        confirmWindow.Show(TextCodeTranslator.Translate('InterestReport.O.ConfirmRecalculateReport'));
     }
 
     private PrintInterestReport() {
@@ -273,103 +298,133 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         });
     }
 
-    get ARInvoicePMWithLine(): ARInvoicePM {
-        var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
-        _ARInvoicePM.ARInvoiceTypeCode = "IT";
-         _ARInvoicePM.BillToGLAccountId = this.EntityPM.GLAccountId;
-         _ARInvoicePM.BillToId = this.EntityPM.CustomerId;
-        _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;
-        _ARInvoicePM.BillToName = this.EntityPM.CustomerName;
-        _ARInvoicePM.Tenant = this.TenantPM.Id;
-        this.GetBillToCard(_ARInvoicePM.BillToId).then(res => {
-          this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
-         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
-        _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
-
-        var _ARInvoiceEntityPM: ARInvoiceEntityPM = new ARInvoiceEntityPM();
-        _ARInvoiceEntityPM.Tenant = this.TenantPM.Id;
-        _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
-        _ARInvoiceEntityPM.EntityReference = this.EntityPM.ReportNumber;
-
-        _ARInvoicePM.AmountInLocalCurrency = this.EntityPM.TotalAmount;
-        _ARInvoicePM.LocalCurrencyId = this.TenantPM.CurrencyId;
-        _ARInvoicePM.InvoiceCurrencyId = this.TenantPM.CurrencyId;
-        _ARInvoicePM.AmountInInvoiceCurrency = this.EntityPM.TotalAmount;
-        _ARInvoicePM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
-        _ARInvoicePM.BranchId  = SessionLocator.LoggedUserPM.BranchId;;
-        var todayDate = DateTool.GetCurrentDateAsUtc();
-        _ARInvoicePM.CreateDate = todayDate;
-        _ARInvoicePM.UpdateDate = todayDate;
-        _ARInvoicePM.InvoiceDate = this.EntityPM.InterestCalculationDate;
-        _ARInvoicePM.BranchId = SessionLocator.LoggedUserPM.BranchId;
-        _ARInvoicePM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
-        _ARInvoicePM.IssuedByUserId = SessionLocator.LoggedUserId;
-        _ARInvoicePM.CreatedByUserId = SessionLocator.LoggedUserId;
-        _ARInvoicePM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        _ARInvoicePM.MainEntityId = null;
-        _ARInvoicePM.MainEntityReference = null;
-        _ARInvoicePM.HasInterestFeature=true;
-        _ARInvoicePM.HouseNumber = null;
-        _ARInvoicePM.MasterNumber = null;
-        var myDescription: string = null;
-        _ARInvoicePM.Description = myDescription;
-        _ARInvoicePM.IsGeneralInvoice = true;
-        _ARInvoicePM.IsFullAccounting = true;
-            _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-            _ARInvoicePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
-       // _ARInvoicePM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-         InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
-         _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-        _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
-        // _ARInvoicePM.DueDate = _ARInvoicePM.InvoiceDate;
-
-        if(this.chargesTypeList!=null){
-            
-        
-        var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
-        _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
-        _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
-        _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
-        _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
-        _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
-        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
-        _ARInvoiceLinePM.Quantity = 1; 
-        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount; 
-        _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount;
-        _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
-        _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
-        _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
-            _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
-            var length = this.EntityPM.InterestReportLinesByDates.length;
-            _ARInvoiceLinePM.Description = "Interest between " +this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " and " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
-            _ARInvoiceLinePM.LocalDescription = "ריבית לתםריכים " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " עד " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
-         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
-        //  if(this.cardList.VatTypeId){
-        //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
-        //  }
-        //  else{
-            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList?this.chargesTypeList.VatTypeId:null; 
-
-        //  }
-         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList?this.chargesTypeList.ReceivableCreditGLAccountId:null;
-        _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
-        this.getVatTypePercentegeListByDates().then(res => {
-            _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
-            this.GetVatTypeName( _ARInvoiceLinePM.VatTypeId).then(res => {
-                _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
-            _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
-        }); 
-        }); 
-    }
-         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
-        var objectTableId = objectTable.Id;
-        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
+public GetARInvoicePMWithLine(): ARInvoicePM {
+        var _ARInvoicePM: ARInvoicePM = this.getMappingARInvoicePM();
+        var _ARInvoiceLinePM: ARInvoiceLinePM = this.getMappingARInvoiceLinePM(_ARInvoicePM);
+        var _ARInvoiceEntityPM: ARInvoiceEntityPM = this.getMappingARInvoiceEntityPM();
         _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
-      
-    }); 
+        _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
         return _ARInvoicePM;
   }
  
+
+  private getMappingARInvoiceLinePM(_ARInvoicePM: ARInvoicePM ){
+      
+
+    var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
+    _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
+    _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
+    _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
+    _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
+    _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
+    _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
+    _ARInvoiceLinePM.Quantity = 1; 
+    _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount; 
+    _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount;
+    _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
+    _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
+    _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
+        _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
+        var length = this.EntityPM.InterestReportLinesByDates.length;
+        _ARInvoiceLinePM.Description = "Interest between " +this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " and " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
+        _ARInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " עד " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
+     _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
+        _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+     _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
+    _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
+    _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
+    _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
+    
+      return  _ARInvoiceLinePM;
+  }
+
+
+  private getMappingARInvoiceEntityPM(){
+      
+    var _ARInvoiceEntityPM: ARInvoiceEntityPM = new ARInvoiceEntityPM();
+    _ARInvoiceEntityPM.Tenant = this.TenantPM.Id;
+    _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
+    _ARInvoiceEntityPM.EntityReference = this.EntityPM.ReportNumber;
+    var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
+    var objectTableId = objectTable.Id;
+    _ARInvoiceEntityPM.ObjectTableId = objectTableId;
+
+    return  _ARInvoiceEntityPM;
+  }
+
+
+
+  private getMappingARInvoicePM(){
+    var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
+    _ARInvoicePM.ARInvoiceTypeCode = "IT";
+     _ARInvoicePM.BillToGLAccountId = this.EntityPM.GLAccountId;
+     _ARInvoicePM.BillToId = this.EntityPM.CustomerId;
+    _ARInvoicePM.BillToLocalName = this.EntityPM.CustomerLocalName;
+    _ARInvoicePM.BillToName = this.EntityPM.CustomerName;
+    _ARInvoicePM.Tenant = this.TenantPM.Id;
+      this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+     this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
+    _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
+    _ARInvoicePM.AmountInLocalCurrency = this.EntityPM.TotalAmount;
+    _ARInvoicePM.LocalCurrencyId = this.TenantPM.CurrencyId;
+    _ARInvoicePM.InvoiceCurrencyId = this.TenantPM.CurrencyId;
+    _ARInvoicePM.AmountInInvoiceCurrency = this.EntityPM.TotalAmount;
+    _ARInvoicePM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
+    _ARInvoicePM.BranchId  = SessionLocator.LoggedUserPM.BranchId;;
+    var todayDate = DateTool.GetCurrentDateAsUtc();
+    _ARInvoicePM.CreateDate = todayDate;
+    _ARInvoicePM.UpdateDate = todayDate;
+    _ARInvoicePM.InvoiceDate = this.EntityPM.InterestCalculationDate;
+    _ARInvoicePM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+    _ARInvoicePM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
+    _ARInvoicePM.IssuedByUserId = SessionLocator.LoggedUserId;
+    _ARInvoicePM.CreatedByUserId = SessionLocator.LoggedUserId;
+    _ARInvoicePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+    _ARInvoicePM.MainEntityId = null;
+    _ARInvoicePM.MainEntityReference = null;
+    _ARInvoicePM.HasInterestFeature=true;
+    _ARInvoicePM.HouseNumber = null;
+    _ARInvoicePM.MasterNumber = null;
+    var myDescription: string = null;
+    _ARInvoicePM.Description = myDescription;
+    _ARInvoicePM.IsGeneralInvoice = true;
+    _ARInvoicePM.IsFullAccounting = true;
+    _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+    _ARInvoicePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
+     InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
+    _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+    _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
+    if (this.cardList  != null) {
+         _ARInvoicePM.BillToName = this.cardList .EnglishName;
+         _ARInvoicePM.BillToLocalName = this.cardList .LocalName;
+        if (!AppTool.IsNullOrEmpty(this.cardList .SATPaymentMethodCode)) {
+             _ARInvoicePM.SATPaymentMethodCode = this.cardList .SATPaymentMethodCode;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.cardList .InvoiceCurrencyId)) {
+             _ARInvoicePM.InvoiceCurrencyId = this.cardList .InvoiceCurrencyId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.cardList .PaymentTermId)) {
+             _ARInvoicePM.PaymentTermId = this.cardList .PaymentTermId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.cardList .VatNumber)) {
+             _ARInvoicePM.VatNumber = this.cardList .VatNumber;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.cardList .BillingAddressId)) {
+            _ARInvoicePM.BillToAddressId = this.cardList .BillingAddressId;
+        }
+
+        else if (!AppTool.IsNullOrEmpty(this.cardList .MainAddressId)) {
+            _ARInvoicePM.BillToAddressId = this.cardList.MainAddressId;
+        }
+
+    }
+    return _ARInvoicePM;
+  
+  }
   public  getDateString(DateTime: Date): string {
         var month =DateTool.GetDateParts(DateTime).Month;
         var year = DateTool.GetDateParts(DateTime).Year;
@@ -389,7 +444,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     getVatTypePercentegeListByDates() {
         return new Promise(resolve => {
-        var loadingDate = this._ARInvoicePM.InvoiceDate;
+        var loadingDate = this.EntityPM.InterestCalculationDate;
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
         }
@@ -451,23 +506,31 @@ public VatTypeName:string;
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ChargesTypePMService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.chargesTypeList = myResponse.Result[0];
-                    this._ARInvoicePM = this.ARInvoicePMWithLine;
-                    this.LoadCurrencyRates().then(res => {
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
-                                cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
-                            });
+                    this.GetBillToCard( this.EntityPM.CustomerId).then(res => {  
+                        this.getVatTypePercentegeListByDates().then(res => {   
+                            this.GetVatTypeName(this.chargesTypeList.VatTypeId).then(res => {
+                                this._ARInvoicePM = this.GetARInvoicePMWithLine();
+                                   this.LoadCurrencyRates().then(res => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                                          .then(cmpRef => {
+                                              cmpRef.instance.ComponentRef = cmpRef;
+                                              cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
+                                              cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
+                                         });
+                                    });
+                        });
+                      });
                     });
+                 
                 }
             }
         });
     }
+    
  
     private LastRatesList: LastRate[] = [];
     LoadCurrencyRates() {
@@ -515,34 +578,6 @@ public VatTypeName:string;
             if (!myResponse.HasError) {
                 var list: CardList = myResponse.Result;
                 this.cardList = list;
-                if (list != null) {
-                    this._ARInvoicePM.BillToName = list.EnglishName;
-                    this._ARInvoicePM.BillToLocalName = list.LocalName;
-                    if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
-                        this._ARInvoicePM.SATPaymentMethodCode = list.SATPaymentMethodCode;
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                        this._ARInvoicePM.InvoiceCurrencyId = list.InvoiceCurrencyId;
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
-                        this._ARInvoicePM.PaymentTermId = list.PaymentTermId;
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(list.VatNumber)) {
-                        this._ARInvoicePM.VatNumber = list.VatNumber;
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(list.BillingAddressId)) {
-                        this._ARInvoicePM.BillToAddressId = list.BillingAddressId;
-                    }
-
-                    else if (!AppTool.IsNullOrEmpty(list.MainAddressId)) {
-                        this._ARInvoicePM.BillToAddressId = list.MainAddressId;
-                    }
- 
-                }
                 resolve(myResponse.Result);
             }
             else {

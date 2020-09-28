@@ -1836,22 +1836,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OccasionOccasionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Occasion.HeaderScreen", Name = "OccasionHeaderScreen", ObjectTableId = OccasionObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OccasionOccasionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.TypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.Location", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.IndustryName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.OwnerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.StartDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.EndDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.Goal", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionOccasionHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.OccasionStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField OccasionOccasionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.TypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.Location", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.IndustryName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.OwnerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.StartDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.EndDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.Goal", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField OccasionOccasionHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = OccasionOccasionHeaderScreenScreen0.Id,ScreenCode = OccasionOccasionHeaderScreenScreen0.Code, ObjectFieldCode = "Occasion.OccasionStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    OccasionObjectTable.HeaderScreenId = OccasionOccasionHeaderScreenScreen0.Id;
 		    OccasionObjectTable.HeaderScreenCode = OccasionOccasionHeaderScreenScreen0.Code;
 

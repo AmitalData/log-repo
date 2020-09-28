@@ -276,7 +276,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                         {
                             double result = 0;
                             Double.TryParse(queryParameters["taxAmountUSD"], out result);
-                            totalPayments += result;
+                            totalPayments -= result;
                         }
                     }
                 }

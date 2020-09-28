@@ -337,8 +337,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
-                    //Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
-
                     if (houseShipment != null)
                     {
                         houseShipment.MasterShipmentDataId = entityPM.Id;
@@ -350,6 +348,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         this.RunRegistryDateProcedure(houseShipment.Id);
                         this.RunFirstApprovalDateProcedure(houseShipment.Id);
+
+                        //ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
+                        //ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(houseShipment.Id, this.tenant);
+                        //{
+                        //    if (iHousePM != null)
+                        //    {
+                        //        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                        //        iShipmentService.Update();
+                        //    }
+                        //}
 
                         calculateProfit = true;
                         calculatePayables = true;
@@ -622,21 +630,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #endregion
             }
 
-            if (this.deletedHousesIds.Count > 0)
-            {
-                foreach (string myShipmentId in this.deletedHousesIds)
-                {
-                    this.RunRegistryDateProcedure(myShipmentId);
-                    this.RunFirstApprovalDateProcedure(myShipmentId);
+            //if (this.deletedHousesIds.Count > 0)
+            //{
+            //    foreach (string myShipmentId in this.deletedHousesIds)
+            //    {
+            //        this.RunRegistryDateProcedure(myShipmentId);
+            //        this.RunFirstApprovalDateProcedure(myShipmentId);
 
-                    RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(myShipmentId, tenant);
+            //        RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(myShipmentId, tenant);
 
-                    if (entityPM != null && !entityPM.IsHybrid)
-                    {
-                        UpdateShipmentProfitClass.UpdateProfitFunction(myShipmentId, tenant, false);
-                    }
-                }
-            }
+            //        if (entityPM != null && !entityPM.IsHybrid)
+            //        {
+            //            UpdateShipmentProfitClass.UpdateProfitFunction(myShipmentId, tenant, false);
+            //        }
+            //    }
+            //}
         }
         
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
@@ -1271,7 +1279,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant, ShipmentPM entityPM, bool isNewEntity)
         {
-            if (!entityPM.DontAddToImportersQueue && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (isNewEntity == true ? !entityPM.IsCancelled : true) && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            if (!entityPM.DontAddToImportersQueue
+                && IsLogBoxQueueEnabled(loggedTenant, entityPM)
+                && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive
+                && (isNewEntity == true ? !entityPM.IsCancelled : true)
+                && loggedTenant.IsCustomerTenantShare
+                && (entityPM.DirectionId.ToUpper() == "C"
+                || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM)
+                || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM))
+                )
             {
                 return true;
             }
@@ -1281,6 +1297,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private bool IsLogBoxQueueEnabled(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.CustomerShipmentNumber) && entityPM.CustomerTenantNumber != null)
+                return true;
+            else
+            {
+                CustomerRepository customerRepository = new CustomerRepository(tenant);
+                Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
+                if (customer != null && customer.LogBoxActivated)
+                    return true;
+            }
+
+            return false;
+        }
+        
         private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
             if (loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile == true)
@@ -1310,7 +1341,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             RunStoredProcedureClass.UpdateForeignPartnerCountryCode(entityPM.Id, entityPM.Tenant);
             RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
             RunStoredProcedureClass.UpdateShipmentOperationalDate(entityPM.Id, entityPM.Tenant);
-            RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(entityPM.Id, entityPM.Tenant);
+
+            //RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(entityPM.Id, entityPM.Tenant);
 
             if (!string.IsNullOrEmpty(entityPM.CustomFilePocoId))
             {
@@ -1402,9 +1434,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CreditNoteIssued = updatedPOCO.CreditNoteIssued;
 
                 entityPM.OperationalDate = updatedPOCO.OperationalDate;
-                entityPM.FinalArrivalDate = updatedPOCO.FinalArrivalDate;
-                entityPM.EstimatedFinalArrivalDate = updatedPOCO.EstimatedFinalArrivalDate;
-                entityPM.ActualFinalArrivalDate = updatedPOCO.ActualFinalArrivalDate;
+
                 entityPM.RegistryDate = updatedPOCO.RegistryDate;
                 entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
             }
@@ -3170,6 +3200,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeTEU();
                 this.UpdateQuoteUsage();
                 this.FillDefaultSubType();
+
+                ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.entityMasterData, this.objectContext);
+                behaviour.Handle();
+                this.isUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
         }
 
@@ -4920,6 +4954,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         private bool isUpdatingHouses = false;
+        private bool isUpdatingHousesFinalArrivalDate = false;
         List<Shipment> allHouses = new List<Shipment>();
         private void CheckUpdatingMasterHouses()
         {
@@ -4954,83 +4989,124 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void ApplyUpdatingMasterHouses()
         {
-            if (!this.isNewEntity)
+            if (!this.isNewEntity && entityPM.ShipmentLevelCode == "C")
             {
-                if (entityPM.ShipmentLevelCode == "C")
+                if (allHouses.Count > 0)
                 {
-                    if (allHouses.Count > 0)
+                    foreach (Shipment item in allHouses)
                     {
-                        foreach (Shipment item in allHouses)
+                        item.NextETA = this.entityPoco.NextETA;
+                        item.NextETD = this.entityPoco.NextETD;
+                        item.NextLeg = this.entityPoco.NextLeg;
+                        item.NextLegCode = this.entityPoco.NextLegCode;
+
+                        if (string.IsNullOrEmpty(item.AgentId))
                         {
-                            item.NextETA = this.entityPoco.NextETA;
-                            item.NextETD = this.entityPoco.NextETD;
-                            item.NextLeg = this.entityPoco.NextLeg;
-                            item.NextLegCode = this.entityPoco.NextLegCode;
-                            if (string.IsNullOrEmpty(item.AgentId))
-                            {
-                                item.AgentComputed = entityPM.AgentId;
-                            }
-                            entityRepository.Update(item);
+                            item.AgentComputed = entityPM.AgentId;
                         }
 
-                        entityRepository.SubmitChanges();
+                        entityRepository.Update(item);
                     }
 
-                    if (isUpdatingHouses)
+                    entityRepository.SubmitChanges();
+                }
+
+                if (isUpdatingHouses || isUpdatingHousesFinalArrivalDate)
+                {
+                    if (shipmentConsoleShipmentsChangeSet != null)
                     {
-                        if (shipmentConsoleShipmentsChangeSet != null)
+                        List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+
+                        if (ids.Count > 0)
                         {
-                            List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                            ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
 
-                            if (ids.Count > 0)
+                            foreach (string id in ids)
                             {
-                                ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
+                                // Bug 70470: TEU of house is changed to NULL
+                                // ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
 
-                                foreach (string id in ids)
+                                ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
+
+                                if (iHousePM != null)
                                 {
-                                    // Bug 70470: TEU of house is changed to NULL
-                                    // ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+                                    iHousePM.IsCancelled = this.entityPM.IsCancelled;
+                                    iHousePM.CancelledDate = this.entityPM.CancelledDate;
+                                    iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
+                                    iHousePM.OperationalClosedByUserId = this.entityPM.OperationalClosedByUserId;
+                                    iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
+                                    iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
+                                    iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
+                                    iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
+                                    iHousePM.FirstAccountingCloseDate = this.entityPM.FirstAccountingCloseDate;
 
-                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
-
-                                    if (iHousePM != null)
+                                    if (iHousePM.FromPortId != this.entityPM.MainCarriageFromPortId)
                                     {
-                                        iHousePM.IsCancelled = this.entityPM.IsCancelled;
-                                        iHousePM.CancelledDate = this.entityPM.CancelledDate;
-                                        iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
-                                        iHousePM.OperationalClosedByUserId = this.entityPM.OperationalClosedByUserId;
-                                        iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
-                                        iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
-                                        iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
-                                        iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
-                                        iHousePM.FirstAccountingCloseDate = this.entityPM.FirstAccountingCloseDate;
+                                        iHousePM.FromPortId = this.entityPM.MainCarriageFromPortId;
 
-                                        if (iHousePM.FromPortId != this.entityPM.MainCarriageFromPortId)
+                                        if (iHousePM.PreCarriageFromPortId != null && iHousePM.PreCarriageToPortId != null)
                                         {
-                                            iHousePM.FromPortId = this.entityPM.MainCarriageFromPortId;
-
-                                            if (iHousePM.PreCarriageFromPortId != null && iHousePM.PreCarriageToPortId != null)
-                                            {
-                                                iHousePM.PreCarriageToPortId = iHousePM.FromPortId;
-                                            }
+                                            iHousePM.PreCarriageToPortId = iHousePM.FromPortId;
                                         }
-
-                                        if (iHousePM.ToPortId != this.entityPM.MainCarriageFinalDestinationPortId)
-                                        {
-                                            iHousePM.ToPortId = this.entityPM.MainCarriageFinalDestinationPortId;
-
-                                            if (iHousePM.OnCarriageFromPortId != null && iHousePM.OnCarriageToPortId != null)
-                                            {
-                                                iHousePM.OnCarriageFromPortId = iHousePM.ToPortId;
-                                            }
-                                        }
-
-                                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
-                                        iShipmentService.Update();
                                     }
+
+                                    if (iHousePM.ToPortId != this.entityPM.MainCarriageFinalDestinationPortId)
+                                    {
+                                        iHousePM.ToPortId = this.entityPM.MainCarriageFinalDestinationPortId;
+
+                                        if (iHousePM.OnCarriageFromPortId != null && iHousePM.OnCarriageToPortId != null)
+                                        {
+                                            iHousePM.OnCarriageFromPortId = iHousePM.ToPortId;
+                                        }
+                                    }
+
+                                    ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                                    iShipmentService.Update();
                                 }
                             }
                         }
+                    }
+                }
+
+                else if (connectedHousesIds.Count > 0)
+                {
+                    UpdateMasterHouses(connectedHousesIds);
+                }
+
+                if (this.deletedHousesIds.Count > 0)
+                {
+                    UpdateMasterHouses(deletedHousesIds);
+
+                    foreach (string myShipmentId in this.deletedHousesIds)
+                    {
+                        this.RunRegistryDateProcedure(myShipmentId);
+                        this.RunFirstApprovalDateProcedure(myShipmentId);
+
+                        //RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(myShipmentId, tenant);
+
+                        if (entityPM != null && !entityPM.IsHybrid)
+                        {
+                            UpdateShipmentProfitClass.UpdateProfitFunction(myShipmentId, tenant, false);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UpdateMasterHouses(List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
+
+                foreach (string id in ids)
+                {
+                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
+
+                    if (iHousePM != null)
+                    {
+                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                        iShipmentService.Update();
                     }
                 }
             }
@@ -6443,6 +6519,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         private List<string> deletedHousesIds = new List<string>();
+        private List<string> connectedHousesIds = new List<string>();
         private void CreateConsoleShipment(ConsoleShipmentPM itemPM)
         {
             Shipment houseShipment = entityRepository.GetSingleShipment(itemPM.Id, tenant);
@@ -6461,6 +6538,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 calculateProfit = true;
                 calculatePayables = true;
                 calculateReceivables = true;
+
+                connectedHousesIds.Add(houseShipment.Id);
             }
         }
         private void DeleteConsoleShipment(ConsoleShipmentPM itemPM)
@@ -6481,8 +6560,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 calculateProfit = true;
                 calculatePayables = true;
                 calculateReceivables = true;
-
-                //RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(houseShipment.Id, entityPM.Tenant);
 
                 List<ShipmentPayable> myPayables = shipmentPayableRepository.GetConsoleChildPayables(houseShipment.Id, tenant);
                 foreach (ShipmentPayable item in myPayables)

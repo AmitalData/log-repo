@@ -120,11 +120,11 @@
                                     <div></div>
                                 </td>
 
-                                <td style="width:100px;">Transport Mode</td>
-
+                                <td style="width:100px;">Transport Mode:</td>
                                 <td style="width:117px;">
                                     <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                                 </td>
+
                                 <td style="width:20px;"><div style="width:15px;"></div></td>
 
                                 <td style="width:60px;">Direction:</td>
@@ -133,22 +133,17 @@
                                         <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                     </div>
                                 </td>
+
                                 <td style="width:20px;"><div style="width:15px;"></div></td>
 
                                 <td style="width:40px;">Level:</td>
-                                <td style="width:117px; vertical-align:middle;">
+                                <td style="width:160px; vertical-align:middle;">
                                     <ul class="FiltersMenu">
-                                        <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
-                                            All
+                                        <li style="width:80px;" (click)="LevelCodeitemClicked('Shipments')" (mouseover)="LevelCodeMouseOver('Shipments')" (mouseleave)="LevelCodeMouseLeave('Shipments')" [class.SelectedFilter]="LevelCodeSelectedValue === 'Shipments'" title="Direct and House">
+                                            Shipments
                                         </li>
-                                        <li (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
-                                            D
-                                        </li>
-                                        <li (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
-                                            H
-                                        </li>
-                                        <li (click)="LevelCodeitemClicked('C')" (mouseover)="LevelCodeMouseOver('C')" (mouseleave)="LevelCodeMouseLeave('C')" [class.SelectedFilter]="LevelCodeSelectedValue === 'C'" title="Master">
-                                            M
+                                        <li style="width:80px;" (click)="LevelCodeitemClicked('Masters')" (mouseover)="LevelCodeMouseOver('Masters')" (mouseleave)="LevelCodeMouseLeave('Masters')" [class.SelectedFilter]="LevelCodeSelectedValue === 'Masters'" title="Direct and Master">
+                                            Masters
                                         </li>
                                     </ul>
                                 </td>

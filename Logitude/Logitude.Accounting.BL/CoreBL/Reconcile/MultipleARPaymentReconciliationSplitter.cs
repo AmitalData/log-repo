@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         {
             ReconciliationPM newReconciliation = InitNewReconciliation();
             newReconciliation.ReconciliationLines.Add(paymentReconcileLine);
-            decimal paymentAmount2Reconcile = paymentReconcileLine.ReconciliationAmount * -1;
+            decimal paymentAmount2Reconcile = Math.Abs(paymentReconcileLine.ReconciliationAmount);
 
             while (nonPaymentsRecoLines.Count > 0 && paymentAmount2Reconcile > 0)
             {
@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                 {
                     newReconciliation.ReconciliationLines.Add(otherRecoLine);
                     nonPaymentsRecoLines.Remove(otherRecoLine);
-                    paymentAmount2Reconcile -= otherRecoLine.ReconciliationAmount;
+                    paymentAmount2Reconcile -= Math.Abs(otherRecoLine.ReconciliationAmount);
                 }
             }
             return newReconciliation;

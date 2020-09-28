@@ -330,9 +330,10 @@
   </Column>
   <Column
     Name="ActiveForInterest"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InterestCalculationStartDate"
@@ -342,9 +343,10 @@
   </Column>
   <Column
     Name="ActiveForInterestCreditInvoice"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InterestCreditLimit"

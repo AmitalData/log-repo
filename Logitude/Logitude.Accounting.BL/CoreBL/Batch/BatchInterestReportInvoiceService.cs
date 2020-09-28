@@ -78,6 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
             args.InvoiceDate = interestReportArguments.InvoiceDate;
+
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
