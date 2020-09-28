@@ -835,6 +835,11 @@ export class TenantManagementPM {
     public set TotalPaymentamount(newValue: number) { if (this.totalPaymentamount != newValue) { this.totalPaymentamount = newValue; this.MarkAsDirty("TotalPaymentamount"); } }
        
 	 
+    private noPaymentForChildTenants: boolean;
+    public get NoPaymentForChildTenants() { return this.noPaymentForChildTenants; }
+    public set NoPaymentForChildTenants(newValue: boolean) { if (this.noPaymentForChildTenants != newValue) { this.noPaymentForChildTenants = newValue; this.MarkAsDirty("NoPaymentForChildTenants"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

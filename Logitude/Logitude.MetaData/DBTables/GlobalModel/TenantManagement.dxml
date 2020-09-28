@@ -857,6 +857,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NoPaymentForChildTenants"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

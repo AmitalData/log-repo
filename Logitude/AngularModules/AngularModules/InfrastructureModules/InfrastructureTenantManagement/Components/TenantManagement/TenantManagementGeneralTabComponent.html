@@ -442,6 +442,16 @@
                                                                             <ComboBox [MaxHeight]="95" [ItemsSource]="ParentTenantsList" [Binding]="'DisplyText'" [SelectedItem]="SelectedParentTenant" (SelectedItemChanged)="SelectedParentTenant = $event" [IsDisabled]="!ParentComboEnabled"></ComboBox>
                                                                         </td>
                                                                     </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
                                                                 </table>
                                                             </td>
 
