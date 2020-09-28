@@ -21,7 +21,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastVersionNumber).IsRequired();
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(true);
          
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -330,6 +330,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.PickupDeliveryVolumetricWeight).HasColumnName("PickupDeliveryVolumetricWeight");
             this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
             this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
+            this.Property(t => t.DescriptionRightToLeft).HasColumnName("DescriptionRightToLeft");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
