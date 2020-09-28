@@ -192,5 +192,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public double? TotalPaymentamount { get; set; }
      
         public string BackgroundId { get; set; }
+
+        public bool NoPaymentForChildTenants { get; set; }
+
     }
 }
