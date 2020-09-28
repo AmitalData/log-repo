@@ -131,7 +131,7 @@ export class TicketOverviewTabComponent {
         ];
 
         if (this.PerformanceChartIdExistance)
-        makeAMLineChartMultiple(this.PerformanceChartId, lineData, null, graphs,true,this.LegendDiv, "[Hours]");
+        makeAMLineChartMultiple(this.PerformanceChartId, lineData, null, graphs,true,this.LegendDiv, "Hours");
 
     }
 

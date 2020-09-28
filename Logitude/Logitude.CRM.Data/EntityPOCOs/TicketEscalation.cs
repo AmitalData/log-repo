@@ -43,6 +43,8 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public DateTime? CloseDate { get; set; }
         [Column("UpdateDate")]
 	    public DateTime? UpdateDate { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 
