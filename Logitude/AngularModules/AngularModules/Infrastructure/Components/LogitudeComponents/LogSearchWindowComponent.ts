@@ -235,6 +235,19 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         }
     }
 
+
+    IsReady: boolean = false;
+    onCountReady(event) {
+
+        this.IsReady = true;
+    }
+
+
+
+
+
+
+
     BuildColumns() {
 
         var objectTableId = this.ObjectTableId;
