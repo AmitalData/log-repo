@@ -1305,7 +1305,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 }
 
                 else {
-                    var matchedItem = this.EntityPM.ShipmentPackages.filter(f => f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
+                    var matchedItem = this.EntityPM.ShipmentPackages.filter(f => AppTool.IsNullOrEmpty(f.HorseId) && f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
                     if (matchedItem != null) {
 
                         // Quantity
