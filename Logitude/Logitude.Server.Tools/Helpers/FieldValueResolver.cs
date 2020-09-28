@@ -5,6 +5,7 @@ using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -154,19 +155,19 @@ namespace Logitude.Server.Tools.Helpers
                                 return null;
                             }
                             decimal d = Convert.ToDecimal(value);
-                            string decimalTostore = ConvertToString(d);
+                            string decimalTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);//ConvertToString(d);
                             return decimalTostore;
                         }
                     case "Integer":
                         {
                             int d = Convert.ToInt32(value);
-                            string intTostore = ConvertToString(d);
+                            string intTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);// ConvertToString(d);
                             return intTostore;
                         }
                     case "Double":
                         {
                             double d = Convert.ToDouble(value);
-                            string doubleTostore = ConvertToString(d);
+                            string doubleTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);// ConvertToString(d);
                             return doubleTostore;
                         }
                     case "Boolean":
@@ -304,141 +305,143 @@ namespace Logitude.Server.Tools.Helpers
 
         #endregion
 
-        #region ConvertToString Integer
+        //#region ConvertToString Integer
 
-        public static string ConvertToString(int d)
-        {
-            string dstring = d.ToString();
-            string s = "";
-            if (dstring.Length == 1)
-            {
-                s = "0000000" + dstring;
-            }
+        //public static string ConvertToString(int d)
+        //{
+        //    string dstring = d.ToString();
+        //    string s = "";
+        //    if (dstring.Length == 1)
+        //    {
+        //        s = "0000000" + dstring;
+        //    }
 
-            if (dstring.Length == 2)
-            {
-                s = "000000" + dstring;
-            }
-            if (dstring.Length == 3)
-            {
-                s = "00000" + dstring;
-            }
-            if (dstring.Length == 4)
-            {
-                s = "0000" + dstring;
-            }
-            if (dstring.Length == 5)
-            {
-                s = "000" + dstring;
-            }
-            if (dstring.Length == 6)
-            {
-                s = "00" + dstring;
-            }
+        //    if (dstring.Length == 2)
+        //    {
+        //        s = "000000" + dstring;
+        //    }
+        //    if (dstring.Length == 3)
+        //    {
+        //        s = "00000" + dstring;
+        //    }
+        //    if (dstring.Length == 4)
+        //    {
+        //        s = "0000" + dstring;
+        //    }
+        //    if (dstring.Length == 5)
+        //    {
+        //        s = "000" + dstring;
+        //    }
+        //    if (dstring.Length == 6)
+        //    {
+        //        s = "00" + dstring;
+        //    }
 
-            if (dstring.Length == 7)
-            {
-                s = "0" + dstring;
-            }
-            if (dstring.Length == 8)
-            {
-                s = dstring;
-            }
-            return s;
-        }
+        //    if (dstring.Length == 7)
+        //    {
+        //        s = "0" + dstring;
+        //    }
+        //    if (dstring.Length >= 8)
+        //    {
+        //        s = dstring;
+        //    }
+        //    return s;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region ConvertToString Double
+        //#region ConvertToString Double
 
-        public static string ConvertToString(double d)
-        {
-            string dstring = d.ToString();
-            string s = "";
-            if (dstring.Length == 1)
-            {
-                s = "0000000" + dstring;
-            }
+        //public static string ConvertToString(double d)
+        //{
+        //    string dstring = d.ToString();
+        //    string s = "";
+        //    if (dstring.Length == 1)
+        //    {
+        //        s = "0000000" + dstring;
+        //    }
 
-            if (dstring.Length == 2)
-            {
-                s = "000000" + dstring;
-            }
-            if (dstring.Length == 3)
-            {
-                s = "00000" + dstring;
-            }
-            if (dstring.Length == 4)
-            {
-                s = "0000" + dstring;
-            }
-            if (dstring.Length == 5)
-            {
-                s = "000" + dstring;
-            }
-            if (dstring.Length == 6)
-            {
-                s = "00" + dstring;
-            }
+        //    if (dstring.Length == 2)
+        //    {
+        //        s = "000000" + dstring;
+        //    }
+        //    if (dstring.Length == 3)
+        //    {
+        //        s = "00000" + dstring;
+        //    }
+        //    if (dstring.Length == 4)
+        //    {
+        //        s = "0000" + dstring;
+        //    }
+        //    if (dstring.Length == 5)
+        //    {
+        //        s = "000" + dstring;
+        //    }
+        //    if (dstring.Length == 6)
+        //    {
+        //        s = "00" + dstring;
+        //    }
 
-            if (dstring.Length == 7)
-            {
-                s = "0" + dstring;
-            }
-            if (dstring.Length == 8)
-            {
-                s = dstring;
-            }
-            return s;
-        }
+        //    if (dstring.Length == 7)
+        //    {
+        //        s = "0" + dstring;
+        //    }
+        //    if (dstring.Length >= 8)
+        //    {
+        //        s = dstring;
+        //    }
+        //    return s;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region ConvertToString Decimal
+        //#region ConvertToString Decimal
 
-        public static string ConvertToString(decimal d)
-        {
-            string dstring = d.ToString();
-            string s = "";
-            if (dstring.Length == 1)
-            {
-                s = "0000000" + dstring;
-            }
+        //public static string ConvertToString(decimal d)
+        //{
+        //    string dstring = d.ToString();
+        //    string s = "";
+        //    if (dstring.Length == 1)
+        //    {
+        //        s = "0000000" + dstring;
+        //    }
 
-            if (dstring.Length == 2)
-            {
-                s = "000000" + dstring;
-            }
-            if (dstring.Length == 3)
-            {
-                s = "00000" + dstring;
-            }
-            if (dstring.Length == 4)
-            {
-                s = "0000" + dstring;
-            }
-            if (dstring.Length == 5)
-            {
-                s = "000" + dstring;
-            }
-            if (dstring.Length == 6)
-            {
-                s = "00" + dstring;
-            }
+        //    if (dstring.Length == 2)
+        //    {
+        //        s = "000000" + dstring;
+        //    }
+        //    if (dstring.Length == 3)
+        //    {
+        //        s = "00000" + dstring;
+        //    }
+        //    if (dstring.Length == 4)
+        //    {
+        //        s = "0000" + dstring;
+        //    }
+        //    if (dstring.Length == 5)
+        //    {
+        //        s = "000" + dstring;
+        //    }
+        //    if (dstring.Length == 6)
+        //    {
+        //        s = "00" + dstring;
+        //    }
 
-            if (dstring.Length == 7)
-            {
-                s = "0" + dstring;
-            }
-            if (dstring.Length == 8)
-            {
-                s = dstring;
-            }
-            return s;
-        }
+        //    if (dstring.Length == 7)
+        //    {
+        //        s = "0" + dstring;
+        //    }
+        //    if (dstring.Length >= 8)
+        //    {
+        //        s = dstring;
+        //    }
+        //    return s;
+        //}
 
-        #endregion
+        //#endregion
 
+
+        
         #region ConvertToDate
 
         public static DateTime? ConvertToDate(string s)
@@ -502,7 +505,7 @@ namespace Logitude.Server.Tools.Helpers
                             decimal d;
                             if (decimal.TryParse(value, out d))
                             {
-                                string decimalTostore = ConvertToString(d);
+                                string decimalTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
                                 result = decimalTostore;
                             }
                             break;
@@ -512,7 +515,7 @@ namespace Logitude.Server.Tools.Helpers
                             int d;
                             if (int.TryParse(value, out d))
                             {
-                                string intTostore = ConvertToString(d);
+                                string intTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
                                 result = intTostore;
                             }
 
@@ -523,7 +526,7 @@ namespace Logitude.Server.Tools.Helpers
                             double d;
                             if (double.TryParse(value, out d))
                             {
-                                string doubleTostore = ConvertToString(d);
+                                string doubleTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
                                 result = doubleTostore;
                             }
                             break;

@@ -301,7 +301,7 @@ namespace WebFreight.Web.Helpers
             {
                 s = "0" + dstring;
             }
-            if (dstring.Length == 8)
+            if (dstring.Length >= 8)
             {
                 s = dstring;
             }
@@ -347,7 +347,7 @@ namespace WebFreight.Web.Helpers
             {
                 s = "0" + dstring;
             }
-            if (dstring.Length == 8)
+            if (dstring.Length >= 8)
             {
                 s = dstring;
             }
@@ -395,7 +395,7 @@ namespace WebFreight.Web.Helpers
             {
                 s = "0" + dstring;
             }
-            if (dstring.Length == 8)
+            if (dstring.Length >= 8)
             {
                 s = dstring;
             }
