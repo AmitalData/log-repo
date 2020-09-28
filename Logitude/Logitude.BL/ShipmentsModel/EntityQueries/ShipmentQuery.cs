@@ -11909,6 +11909,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ImportManifest = f.ImportManifest,
                                IsDangerous = f.IsDangerous,
                                DangerousUnNumber = f.DangerousUnNumber,
+                               ComputedStatusId = f.ComputedStatusId,
+                               ComputedStatusDate = f.ComputedStatusDate,
                            };
             return myResult;
         }
