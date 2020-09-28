@@ -12,6 +12,8 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -21,6 +23,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
         {
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             entityPOCO.Id = entityPM.Id;
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
         }
 
         public void CustomPOCOToPM(TicketEscalationPM entityPM, TicketEscalation entityPOCO)
@@ -39,6 +44,29 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 }
             }
         }
-   }
+
+        private void BuildSearchFields(TicketEscalationPM entityPM, TicketEscalation entityPOCO, bool p)
+        {
+            string mySearchFields = "";
+
+            if (!string.IsNullOrEmpty(entityPM.EscalationForName))
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EscalationForName);
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.Recepients))
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Recepients);
+            }
+
+            if (mySearchFields.Length > 1000)
+            {
+                mySearchFields = mySearchFields.Substring(0, 1000);
+            }
+
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
+        }
+    }
 }
    
