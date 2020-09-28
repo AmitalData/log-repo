@@ -500,11 +500,11 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             });
         }
 
-        if (isNullOrUndefined(this.IsBondedWarehouse) && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
+        if (isNullOrUndefined(this.IsCFSWarehouse) && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
             if (!AppTool.IsNullOrEmpty(this.warehouseEntryPM.ShipmentId)) {
-                this.shipmentPMService.checkIsBondedShipmentById(this.warehouseEntryPM.ShipmentId).subscribe((Response: ServiceResponse) => {
+                this.shipmentPMService.CheckIsCFSShipmentById(this.warehouseEntryPM.ShipmentId).subscribe((Response: ServiceResponse) => {
                     if (!Response.HasError) {
-                        this.IsBondedWarehouse = Response.Result;
+                        this.IsCFSWarehouse = Response.Result;
                         this.BuildItemsSource();
                         this.ComputeAndFullTotalPackage(true);
                     }

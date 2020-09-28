@@ -82,13 +82,13 @@ export class ShipmentPMService {
         */
     }
 
-    checkIsBondedShipmentById(shipmentId: string) {
+    CheckIsCFSShipmentById(shipmentId: string) {
         return defer(() => {
-            return this._http.get(this._apiUrl + '/CheckIsBondedShipmentById?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var isBonded = response;
+            return this._http.get(this._apiUrl + '/CheckIsCFSShipmentById?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var isCFS = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
-                pmresponse.Result = isBonded;
+                pmresponse.Result = isCFS;
                 return pmresponse;
 
             }), catchError(ServiceHelper.HandleServiceError));
