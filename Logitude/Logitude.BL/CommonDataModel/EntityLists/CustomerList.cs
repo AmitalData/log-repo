@@ -129,9 +129,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool StartWorkingManuallySet { get; set; }
 
         [DataMember]
-        public string Activity { get; set; }
-
-        [DataMember]
         public double InvoicesDue { get; set; }
 
         [DataMember]
