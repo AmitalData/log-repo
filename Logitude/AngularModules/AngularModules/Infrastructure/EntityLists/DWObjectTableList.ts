@@ -19,5 +19,7 @@ export class DWObjectTableList {
 		PivotFieldCode: string;
 		AdditionalFactCode: string;
 		AdditionalFactForeignKey: string;
+		ParentFactCode: string;
+		RecordType: string;
 	
 }

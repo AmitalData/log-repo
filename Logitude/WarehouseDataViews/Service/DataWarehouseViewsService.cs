@@ -24,11 +24,14 @@ namespace WarehouseDataViews.Service
 
         public void BuildDataWarehouseViewLists()
         {
-            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName from DWObjectTables where TypeCode = 'Fact'");
+            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
             foreach (DataRow row in factTables.AsEnumerable())
             {
                 string factCode = row["Code"]!=null ? row["Code"].ToString() : "";
                 string viewName = row["DataViewName"] != null ? row["DataViewName"].ToString() : "";
+                string recordType = row["RecordType"] != null ? row["RecordType"].ToString() : "";
+
+
                 if (!string.IsNullOrEmpty(viewName))
                 {
                     foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
@@ -36,12 +39,12 @@ namespace WarehouseDataViews.Service
                         CreateDimensionDataView(field);
                     }
 
-                    CreateFactDataView(factCode, viewName);
+                    CreateFactDataView(factCode, recordType,  viewName);
                 }
             }
         }
        
-        private void CreateFactDataView(string factCode, string viewName)
+        private void CreateFactDataView(string factCode,string recordType, string viewName)
         {
             var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(),ViewName = viewName, IsFactView = true,SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
             foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode).ToList())
@@ -67,6 +70,8 @@ namespace WarehouseDataViews.Service
             warehouseView.IsHaveCustomFields = CheckIfFactHaveCustomField(factCode);
             warehouseView.SqlString = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
             warehouseView.SqlString +=((warehouseView.IsHaveCustomFields ? ",@CustomFields":"") +  " FROM " + factCode);
+
+            warehouseView.SqlString += " where [Record Type] = '" + recordType + "'";
             DataWarehouseViewLists.Add(warehouseView);
         }
 

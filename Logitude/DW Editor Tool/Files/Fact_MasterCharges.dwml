@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;2013b6f7-0594-49f7-b399-7c79c54c0dd0&quot;" Code="&quot;Fact_MasterCharges&quot;" Name="&quot;Fact_MasterCharges&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factMasterCharges&quot;" HasPivotColumn="true" PivotFieldCode="&quot;DIM_ChargesTypes&quot;" AdditionalFactCode="&quot;Fact_Shipments&quot;" AdditionalFactForeignKey="&quot;[Shipment Id]&quot;" ParentFactCode="&quot;Fact_Charges&quot;" RecordType="&quot;Master&quot;">
+  <fields />
+</entity>
