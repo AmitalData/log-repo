@@ -133,7 +133,7 @@ export class NewBIReport extends BaseComponent {
             }
 
 
-            this.FactTables.push("Master Shipments");
+            this.FactTables.push("Masters");
             this.FactTables.push("Master Charges");
 
 
@@ -162,9 +162,9 @@ export class NewBIReport extends BaseComponent {
                 this.SelectdFactTableName = "Master Charges";
                 break;
 
-            case "Master Shipments":
-                this.FactTableName = "Fact_MasterShipments";
-                this.SelectdFactTableName = "Master Shipments";
+            case "Masters":
+                this.FactTableName = "Fact_Masters";
+                this.SelectdFactTableName = "Masters";
                 break;
 
             default:
