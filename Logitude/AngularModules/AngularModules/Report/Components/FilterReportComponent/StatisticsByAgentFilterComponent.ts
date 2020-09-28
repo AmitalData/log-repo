@@ -4,14 +4,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {CodeNameClass} from './CodeNameClass';
+import {Component }  from '@angular/core';
+import { AppTool } from '../../../Infrastructure/Tools';
 
-@Component({
-    
+@Component({    
     selector: 'StatisticsByAgentFilterComponent',
     templateUrl: './StatisticsByAgentFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -92,7 +88,7 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();            
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
@@ -110,8 +106,8 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
             if (this.SelectedCurrency == this.LocalCurrencyCode)
                 this.queryFilterItem.FieldValue = this.LocalCurrencyCode + ",local";
             else
-                this.queryFilterItem.FieldValue = this.ProfitCurrencyCode + ",profit";           
-            
+                this.queryFilterItem.FieldValue = this.ProfitCurrencyCode + ",profit";
+
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "IncludeOperationalyClosed";
@@ -138,7 +134,7 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
             this.queryFilterItem.FieldName = "ToDate";
             this.queryFilterItem.FieldValue = this.ToDate;
             this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem); 
+            this.queryFilterItems.push(this.queryFilterItem);
 
             if (this.SelectedDirectionFilter != "All") {
                 this.queryFilterItem = new QueryFilterItem();
@@ -158,14 +154,12 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
                 this.queryFilterItems.push(this.queryFilterItem);
             }
 
-            if (this.LevelCodeSelectedValue != "All") {
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "ShipmentLevel";
-                this.queryFilterItem.FieldValue = this.LevelCodeSelectedValue;
-                this.queryFilterItem.Operator = "Equals";
-                this.queryFilterItems.push(this.queryFilterItem);
-            }
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ShipmentLevel";
+            this.queryFilterItem.FieldValue = this.LevelCodeSelectedValue;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -175,7 +169,7 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
             this.reportFliter.NumberOfPage = 1;
             this.reportFliter.ProcessType = "GenerateReport";
-            
+
             this.ReportsPreview.CleanPartnersObslist();
             if (!AppTool.IsNullOrEmpty(this.AgentId)) {
                 this.ReportsPreview.AddPartner("Agent", this.AgentId);
@@ -216,7 +210,7 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
         }
     }
 
-    public LevelCodeSelectedValue: string = "All";
+    public LevelCodeSelectedValue: string = "Shipments";
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;                        

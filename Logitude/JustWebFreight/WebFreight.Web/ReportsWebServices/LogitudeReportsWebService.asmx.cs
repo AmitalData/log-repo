@@ -6531,7 +6531,6 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
-
             #region Report Filters
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -6685,7 +6684,15 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(ShipmentLevel))
             {
-                iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == ShipmentLevel);
+                if(ShipmentLevel.ToLower() == "shipments")
+                {
+                    iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C");
+                }
             }
 
             #endregion
