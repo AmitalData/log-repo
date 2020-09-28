@@ -356,5 +356,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public double? AveragePrice { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? TotalPaymentamount { get; set; }
+        public bool NoPaymentForChildTenants { get; set; }
+
     }
 }
