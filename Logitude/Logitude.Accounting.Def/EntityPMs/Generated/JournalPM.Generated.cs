@@ -1041,6 +1041,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isNew ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsNew  
+	   {
+	    
+	     get
+		{
+		   return isNew;
+		 }
+		 set
+		 {
+		   if(isNew != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNew",OldValue=isNew,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isNew=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
