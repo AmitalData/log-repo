@@ -47,7 +47,6 @@ export class CustomerList {
 		InvoiceCurrencyCode: string;
 		StartWorkingDate: Date;
 		StartWorkingManuallySet: boolean;
-		Activity: string;
 		InvoicesDue: number;
 		CityName: string;
 		CountryId: string;
@@ -147,4 +146,4 @@ export class CustomerList {
 		StorageFreeDays: number;
 		GLAccountNumber: string;
 	
-}
+}
