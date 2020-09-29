@@ -108,7 +108,7 @@ export class InterestInvoiceAutoCreditComponent extends BaseComponent {
             }
         });
     }
-
+    oldStatusCode:string;
     FIELD_IS_REQUIERD: string;
     OkButtonClicked() {
 
@@ -117,6 +117,8 @@ export class InterestInvoiceAutoCreditComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.SetInterestReportInvoiceDate();
+            this.oldStatusCode = this.interestReportPM.InterestReportStatusCode
+
             this.interestReportPM.InterestReportStatusCode = "3";
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.InterestReportPMService.update(this.interestReportPM).subscribe((result: ServiceResponse) => {

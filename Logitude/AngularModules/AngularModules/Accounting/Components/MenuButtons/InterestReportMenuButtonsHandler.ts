@@ -184,15 +184,17 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         var messageWindow = new MessageWindow();
         messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel")); 
     }
-    UpdateReport() {
-        //this.EntityPM.InterestReportStatusCode = "3";
-        //this.entityArgs.EditComponent.SaveChanges();
-        //this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-        //    if (isSaveSuccess) {
-        //        this.entityArgs.EditComponent.ReloadEntityPM();
-        //    }
-        //});
+    UpdateReport(event: any) {
+        if (event != "Cancel" ) {
+            this.EntityPM.InterestReportStatusCode = "3";
+            this.entityArgs.EditComponent.SaveChanges();
+            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
 
+        }
     }
     OpenConfirmWindow() {
         var confirmMessage: string = null;
@@ -220,8 +222,11 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                     confirmWindow.Close();
                 }
                 else {
-                    this.OpenCreditARinvoiceScreen();
-                   // this.UpdateReport();
+                    if (this.EntityPM.InterestReportStatusCode == "2") {
+                        this.OpenCreditARinvoiceScreen();
+                    }
+                    else {
+                   this.UpdateReport(null);}
                 }
             }
         });
@@ -242,7 +247,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         logWindow.Title = windowTitle;
         //  logWindow.ShowCloseButton = true;
         windowArgs.InterestReportPM = this.EntityPM;
-        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateReport());
+        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateReport($event));
         logWindow.Show('./Accounting/Components/Other/InterestInvoiceAutoCreditComponent');
         this.CurrentSession.StopBusyIndicator();
 
