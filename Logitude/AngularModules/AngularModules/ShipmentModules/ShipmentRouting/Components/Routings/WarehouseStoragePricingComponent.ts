@@ -35,11 +35,23 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
 
+        this.SetUIProperties();
         this.BuildPricingItems();
         this.CopyPricings();
         this.MaxLineNumber = ArrayTool.Max(this.PricingItemsList.Collection, "LineNumber");
         this.ComputeWeightLabel();
         this.Clone();
+    }
+
+    private SetUIProperties() {
+        var isCurrencyEnabled: boolean = true;
+
+        var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+        if (invoicedStorageReceivable) {
+            isCurrencyEnabled = false;
+        }
+
+        this.UIProperties.SetEnabled("ChargeStorageCurrencyId", this.ObjectTableName, isCurrencyEnabled);
     }
 
     BuildPricingItems() {
