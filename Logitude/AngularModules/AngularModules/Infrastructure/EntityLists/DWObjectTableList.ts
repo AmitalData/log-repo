@@ -21,5 +21,6 @@ export class DWObjectTableList {
 		AdditionalFactForeignKey: string;
 		ParentFactCode: string;
 		RecordType: string;
+		DisplayName: string;
 	
 }

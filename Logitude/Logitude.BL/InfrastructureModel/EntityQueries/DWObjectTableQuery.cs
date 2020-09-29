@@ -48,6 +48,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
 
                     }).FirstOrDefault();
         }
@@ -73,6 +74,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     });
         }
 
@@ -96,6 +98,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     }).FirstOrDefault();
         }
 
@@ -119,6 +122,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                         RecordType = a.RecordType,
                         ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     });
         }
 
@@ -141,6 +145,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                                                   RecordType = a.RecordType,
                                                   ParentFactCode = a.ParentFactCode,
+                                                  DisplayName = a.DisplayName,
                                               };
 
             return result;
@@ -159,7 +164,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             return (from a in repository.webFreightContext.DWObjectTables
                     where a.Tenant == 0 && a.TypeCode == "Fact"
-                    select a.Name).ToList();
+                    select a.DisplayName).ToList();
         }
     }
 }

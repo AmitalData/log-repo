@@ -95,6 +95,11 @@ export class DWObjectTablePM {
     public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
        
 	 
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

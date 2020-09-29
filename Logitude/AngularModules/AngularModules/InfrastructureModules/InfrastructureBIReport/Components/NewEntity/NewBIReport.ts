@@ -113,17 +113,8 @@ export class NewBIReport extends BaseComponent {
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
             var factTablesNames: string[] = response.Result;
             factTablesNames.forEach((factTable: string) => {
-                switch (factTable) {
-                    case "Fact_Shipments":
-                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.Shipments"))
-                            this.FactTables.push("Shipments");
-                        break;
-
-                    case "Fact_Charges":
-                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.ShipmentCharges"))
-                            this.FactTables.push("Shipment Charges");
-                        break;
-                }
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact." + factTable))
+                    this.FactTables.push(factTable);
             });
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
                 this.FactTableSelectionChanged("");
@@ -131,12 +122,6 @@ export class NewBIReport extends BaseComponent {
             else {
                 this.FactTableSelectionChanged(this.EntityPM.FactTableName);
             }
-
-
-            this.FactTables.push("Masters");
-            this.FactTables.push("Master Charges");
-
-
         });
     }
 

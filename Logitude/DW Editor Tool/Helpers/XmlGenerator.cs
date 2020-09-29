@@ -44,6 +44,7 @@ namespace DW_Editor_Tool.Helpers
 
                 SetAttribute("ParentFactCode", GetStringValue(tableViewModel.ParentFactCode), entityElement);
                 SetAttribute("RecordType", GetStringValue(tableViewModel.RecordType), entityElement);
+                SetAttribute("DisplayName", GetStringValue(tableViewModel.DisplayName), entityElement);
 
 
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
@@ -152,6 +153,7 @@ namespace DW_Editor_Tool.Helpers
 
                         tableViewModel.ParentFactCode = GetAttributeStringValue(entity.Attributes["ParentFactCode"]);
                         tableViewModel.RecordType = GetAttributeStringValue(entity.Attributes["RecordType"]);
+                        tableViewModel.DisplayName = GetAttributeStringValue(entity.Attributes["DisplayName"]);
 
 
 

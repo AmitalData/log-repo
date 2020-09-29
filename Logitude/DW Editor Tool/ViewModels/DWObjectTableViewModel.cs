@@ -43,6 +43,10 @@ namespace DW_Editor_Tool.ViewModels
         public string RecordType { get { return recordType; } set { recordType = value; FirePropertyChanged("RecordType"); } }
 
 
+        private string displayName;
+        public string DisplayName { get { return displayName; } set { displayName = value; FirePropertyChanged("DisplayName"); } }
+
+
 
         bool isClosed;
         public bool IsClosed
