@@ -712,6 +712,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     if (MasterPM != null)
                     {
+                        MasterPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
                         if (MasterPM.IsOperationalClosed)
                         {
                             throw new ApplicationException("Can't update operationally closed shipments");
@@ -719,7 +721,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (MasterPM.IsCancelled)
                         {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                            throw new ApplicationException("Can't update cancelled shipments");
                         }
 
                         APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(MasterPM, authToken.Tenant);

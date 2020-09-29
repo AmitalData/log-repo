@@ -391,7 +391,8 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.Ratio = MyEntityPM.Ratio;					
+				   temp.Ratio = MyEntityPM.Ratio;
+				   temp.ConcurrencyGUID = MyEntityPM.ConcurrencyGUID;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1236,6 +1237,14 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)// && MyEntity.Ratio != null)
 					{							//throw new ApplicationException("Ratio Can't be update"); 
 							temp.Ratio = MyEntity.Ratio;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConcurrencyGUID))
+					{							//throw new ApplicationException("ConcurrencyGUID Can't be update"); 
+							temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
 
 										}  
 

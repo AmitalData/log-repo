@@ -678,14 +678,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     if(directPM != null)
                     {
-                        if(directPM.IsOperationalClosed)
+                        directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
+                        if (directPM.IsOperationalClosed)
                         {
                             throw new ApplicationException("Can't update operationally closed shipments");
                         }
 
                         if (directPM.IsCancelled)
                         {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                            throw new ApplicationException("Can't update cancelled shipments");
                         }
 
                         APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
