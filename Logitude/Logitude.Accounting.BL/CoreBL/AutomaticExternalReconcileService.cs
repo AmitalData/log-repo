@@ -554,7 +554,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
                     ).ToList();
             else
-                return null;
+                return new List<MyLedgerTransaction>();
         }
         private void AddMatchedTransaction(int groupNumberCounter, MyLedgerTransaction transaction)
         {
