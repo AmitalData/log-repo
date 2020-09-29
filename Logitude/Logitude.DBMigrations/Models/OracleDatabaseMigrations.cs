@@ -8,8 +8,9 @@ namespace Logitude.DBMigrations.Models
     public class OracleDatabaseMigrations : DatabaseMigrations
     {
         protected bool IsDataTypeChangesArgumentProvided;
+        protected bool IsAllowDropArgumentProvided;
 
-        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided, bool isDataTypeChangesArgumentProvided)
+        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided, bool isDataTypeChangesArgumentProvided, bool isAllowDropArgumentProvided)
         {
             ConnectionString = connectionString;
             DXMLTable = FormatCaseSensitiveNames(dxmlTable);
@@ -17,6 +18,7 @@ namespace Logitude.DBMigrations.Models
             DXMLFileName = dxmlFileName;
             IsDataTypeChangesArgumentProvided = isDataTypeChangesArgumentProvided;
             IsBasicArgumentProvided = isBasicArgumentProvided;
+            IsAllowDropArgumentProvided = isAllowDropArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -660,6 +662,11 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetRenameColumnScript(ColumnMigration columnMigration)
         {
+            if (!IsAllowDropArgumentProvided)
+            {
+                return null;
+            }
+
             if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
@@ -679,6 +686,11 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropColumnScript(ColumnMigration columnMigration)
         {
+            if (!IsAllowDropArgumentProvided)
+            {
+                return null;
+            }
+
             if (IsDataTypeChangesArgumentProvided)
             {
                 return null;

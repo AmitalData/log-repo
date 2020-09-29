@@ -628,7 +628,8 @@ namespace Logitude.DBMigrations.Models
             if (DatabaseType.ToLower() == "oracle")
             {
                 bool isDataTypeChangesArgumentProvided = IsArgumentProvided("-datatypechanges");
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided, isDataTypeChangesArgumentProvided);
+                bool isAllowDropArgumentProvided = IsArgumentProvided("-allowdrop");
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided, isDataTypeChangesArgumentProvided, isAllowDropArgumentProvided);
                 return oracleDatabaseMigrations;
             }
 
