@@ -555,6 +555,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateShipmentStoragePricingsCollection();
                     }
 
+                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
+                    {
+                        shipmentTracing.TraceTerminalData();
+                    }
+                 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
