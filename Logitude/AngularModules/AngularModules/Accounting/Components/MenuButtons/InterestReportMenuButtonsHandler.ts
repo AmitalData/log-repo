@@ -333,8 +333,8 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
      _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
     _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
     _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
-    _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
-    
+      _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
+      _ARInvoiceLinePM.LineActionCode = "1";
       return  _ARInvoiceLinePM;
   }
 

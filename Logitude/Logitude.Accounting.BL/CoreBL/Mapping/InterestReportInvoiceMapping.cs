@@ -168,7 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 aRInvoiceLinePM.ForiegnExchangeRate = aRInvoiceLinePM.ForiegnCurrencyAmount / aRInvoiceLinePM.LocalCurrencyAmount;
 
             }
-
+            aRInvoiceLinePM.LineActionCode = "1";
 
             return aRInvoiceLinePM;
 
