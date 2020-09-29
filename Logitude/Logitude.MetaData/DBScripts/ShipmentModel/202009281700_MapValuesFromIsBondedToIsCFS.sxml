@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="2">
+    <![CDATA[
+    
+     update Shipments set IsCFSWarehouse = IsBondedWarehouse, IsCFSWarehouseChanged = IsBondedWarehouseChanged
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
