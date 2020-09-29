@@ -71,8 +71,8 @@ namespace CommunicationWorkerRole.Services
                 {
                     StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                     string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                    bool isActiveCustomer = CheckIsActiveCustomer(schedulerDetails.ReportDetails.CreatedByUserId, reportTask.Tenant);
-                    if (isActiveCustomer)
+                    schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(cardId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
+                    if (schedulerDetails.ReportDetails.Recepients != null)
                     {
                         SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
                     }
@@ -119,9 +119,9 @@ namespace CommunicationWorkerRole.Services
 
         private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
         {
-            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To);
-            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc);
-            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc);
+            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, false);
+            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, false);
+            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc, false);
             string inActiveRecipients = "";
             allPermittedContacts.ForEach(contact => {
                 toEmails.ForEach(to => {
@@ -180,7 +180,7 @@ namespace CommunicationWorkerRole.Services
             return emails;
         }
 
-        private List<ActivatedEmail> FillAllRecepients(string recepients)
+        private List<ActivatedEmail> FillAllRecepients(string recepients, bool isActive)
         {
             List<ActivatedEmail> activatedEmails = new List<ActivatedEmail>();
             ActivatedEmail activatedEmail = null;
@@ -190,7 +190,7 @@ namespace CommunicationWorkerRole.Services
                 activatedEmail = new ActivatedEmail
                 {
                     To = allRecepients[i],
-                    IsActive = false
+                    IsActive = isActive
                 };
                 activatedEmails.Add(activatedEmail);
             }
@@ -352,15 +352,93 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-        private bool CheckIsActiveCustomer(string customerId, int tenant)
+        private ReportSchedulerRecepients GetRecepientsAfterRemoveInActiveCustomer(string cardId, int tenant, ReportSchedulerRecepients recepients)
         {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactList contact = contactQuery.GetContactListsById(customerId, tenant);
-            if(contact == null ) contact = contactQuery.GetContactListsById(customerId, 0);
-            if (contact != null && !contact.InActive) return true;
-            return false;
+            if (string.IsNullOrEmpty(cardId)) return recepients;
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(cardId, tenant);
+
+            if (connectedPartners.Count() == 0) return recepients;
+            else if (GetInactivePartnerCounts(connectedPartners) == 0) return recepients;
+            else if (GetInactivePartnerCounts(connectedPartners) == connectedPartners.Count()) return null;
+            else
+            {
+                recepients = RemoveInActiveCustomerRecepients(recepients, connectedPartners, tenant);
+                if (string.IsNullOrEmpty(recepients.To))
+                    return null;
+            }
+
+            return recepients;
         }
 
+        private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
+        {
+            CardContactRepository repositry = new CardContactRepository(tenant);
+            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, true);
+            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, true);
+            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc, true);
+            string inActiveRecipients = "";
+            connectedPartners.ForEach(connectedPartner =>
+            {
+                if (connectedPartner.InActive)
+                {
+                    List<Contact> partnerContacts = repositry.GetContactsByCardId(connectedPartner.PartnerId).ToList();
+                    partnerContacts.ForEach(partner =>
+                    {
+                        toEmails.ForEach(to =>
+                        {
+                            if (partner.Email == to.To)
+                            {
+                                to.IsActive = false;
+                                inActiveRecipients += partner.Email + ',';
+                            }
+                        });
+                        ccEmails.ForEach(cc =>
+                        {
+                            if (partner.Email == cc.To)
+                            {
+                                cc.IsActive = false;
+                                inActiveRecipients += partner.Email + ',';
+                            }
+                        });
+                        bccEmails.ForEach(bcc =>
+                        {
+                            if (partner.Email == bcc.To)
+                            {
+                                bcc.IsActive = false;
+                                inActiveRecipients += partner.Email + ',';
+                            }
+                        });
+                    });
+                }
+            });
+
+
+            recepients.To = FillOnlyActiveRecepients(toEmails);
+            recepients.Cc = FillOnlyActiveRecepients(ccEmails);
+            recepients.Bcc = FillOnlyActiveRecepients(bccEmails);
+
+            if (!string.IsNullOrEmpty(inActiveRecipients) && !string.IsNullOrEmpty(recepients.To))
+            {
+                inActiveRecipients = this.RemoveDuplicateEmails(inActiveRecipients);
+                string warningMessage = "The E-mail was not sent to " + inActiveRecipients;
+                warningMessage = ReformatWarningMessage(warningMessage);
+                currentTask.LogWarning(warningMessage);
+            }
+
+            return recepients;
+        }
+
+        private int GetInactivePartnerCounts(List<ShortPartnersDetails> connectedPartners)
+        {
+            int inactivePartnerCounts = 0;
+            connectedPartners.ForEach(partner =>
+            {
+                if (partner.InActive) inactivePartnerCounts += 1;
+            });
+            
+            return inactivePartnerCounts;
+        }
         private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
