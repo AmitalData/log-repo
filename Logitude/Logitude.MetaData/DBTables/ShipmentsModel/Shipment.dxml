@@ -2987,15 +2987,25 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="IsBondedWarehouse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsBondedWarehouseChanged"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="IsCFSWarehouse"
-    OldNames="IsBondedWarehouse"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="IsCFSWarehouseChanged"
-    OldNames="IsBondedWarehouseChanged"
     Type="bit">
     <Constraints
       Nullable="false" />
