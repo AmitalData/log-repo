@@ -4,12 +4,13 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 @Component({
     templateUrl: './WarehouseStoragePricingComponent.html',
@@ -83,6 +84,21 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
             this.PricesChanged = true;
+        }
+    }
+
+    private chargeStorageCurrency: CurrencyList;
+    get ChargeStorageCurrency() { return this.chargeStorageCurrency; }
+    set ChargeStorageCurrency(value: CurrencyList) {
+        if (this.chargeStorageCurrency != value) {
+            this.chargeStorageCurrency = value;
+        }
+
+        if (value != null) {
+            this.EntityPM.ChargeStorageCurrencyCode = value.Code;
+        }
+        else {
+            this.EntityPM.ChargeStorageCurrencyCode = null;
         }
     }
 
@@ -175,6 +191,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                     }
                 }
             });
+
+            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+            if (storageReceivable) {
+                storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
+                storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
+            }
 
             var emitMessage: string = "ok";
             if (this.PricesChanged) {

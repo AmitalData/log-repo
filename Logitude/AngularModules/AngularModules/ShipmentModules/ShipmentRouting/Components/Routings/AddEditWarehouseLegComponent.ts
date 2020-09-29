@@ -775,7 +775,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
     private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
         var amount: number = this.ComputeReceivableAmount();
-
+       
         storageReceivable.TotalAmount = amount;
         storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
 
