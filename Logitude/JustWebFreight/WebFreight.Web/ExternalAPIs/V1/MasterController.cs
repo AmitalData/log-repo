@@ -712,6 +712,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     if (MasterPM != null)
                     {
+                        MasterPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
                         if (MasterPM.IsOperationalClosed)
                         {
                             throw new ApplicationException("Can't update operationally closed shipments");

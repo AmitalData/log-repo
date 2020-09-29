@@ -626,6 +626,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     if (HousePM != null)
                     {
+                        HousePM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
                         if (HousePM.IsOperationalClosed)
                         {
                             throw new ApplicationException("Can't update operationally closed shipments");
