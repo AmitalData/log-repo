@@ -202,6 +202,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                  
                     declarationPM = myQueryService.GetSingle(idOrg, true,false);
  
+
+                    //if(isUpdateAfterAccept)
+                    //{
+                          
+                    //    declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
+                    //    //declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //    //declarationUpdateService.Update(declarationPM,true);
+                    //    declarationPM = myQueryService.GetSingle(idOrg, true, false);
+                    //}
+
+
+
                     declarationPM.DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID);
                     declarationPM.Tenant = tenant;
                     declarationPM.IsConnectedToUnifreight = false;
@@ -260,6 +272,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
                 else
                     declarationId = declarationPM.Id;
+
+                if(isUpdateAfterAccept)
+                { 
+                var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
+                var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
+                                                                                                                                                                                      //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                var myDeclarationKeys = new DeclarationKeys { Id = _MyDeclarationPM.Id };
+                myDeclarationTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemVehicleModUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemsTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemModVehicleUpdateService.FastDeleteComposition(myDeclarationKeys);
+                }
                 declarationPM.DeclarationTaxes = GetDeclarationTaxesPM(declaration, declarationOrg, declarationId, tenant);
 
 
@@ -273,7 +300,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(tenant);
-                if(declarationOrg!=null)
+                if(declarationOrg!=null && !isUpdateAfterAccept)
                 {
                     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMs = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, "Declaration");
                     CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
@@ -457,7 +484,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (declaration.GoodsShipment[0].Consignment == null || declaration.GoodsShipment[0].Consignment.Count() == 0) return null;
 
 
-            if(declarationPM!=null && _isUpdateAfterAccept && declarationPM.Consignments!= null & declarationPM.Consignments.Count()>0)
+            if (declarationPM != null && _isUpdateAfterAccept && declarationPM.Consignments != null & declarationPM.Consignments.Count() > 0)
             {
                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
                 declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
@@ -470,6 +497,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ConsignmentPM consignmentPM = new ConsignmentPM();
                 consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
                 consignmentPM.Tenant = tenant;
+
+                var consignmentQueryService = new ConsignmentQueryService(context);
+
+               var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
+
+                consignmentPM.SequenceNumeric = maxCounter +1;
+
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
@@ -614,6 +648,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private List<SupplierInvoicePM> GetSupplierInvoices(Declaration declaration, int tenant, ICustomContext context, string declarationId, DeclarationPM declarationPMOrg)
         {
             List<SupplierInvoicePM> supplierInvoicePMs = new List<SupplierInvoicePM>();
+
+            if(_isUpdateAfterAccept)
+            {
+                var declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
+                declarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, context);
+            }
+
 
             foreach (var item in declaration.GoodsShipment)
             {
