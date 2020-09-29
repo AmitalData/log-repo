@@ -34,6 +34,7 @@ import { CommonDomainService } from '../../../Common/Services/CommonDomainServic
 import { VatTypePercentagePM } from '../../../Common/EntityPMs/VatTypePercentagePM';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InterestReportExtendedListService } from 'Accounting/Services/ExtendedLists/InterestReportExtendedListService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
@@ -184,13 +185,13 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel")); 
     }
     UpdateReport() {
-        this.EntityPM.InterestReportStatusCode = "3";
-        this.entityArgs.EditComponent.SaveChanges();
-        this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            if (isSaveSuccess) {
-                this.entityArgs.EditComponent.ReloadEntityPM();
-            }
-        });
+        //this.EntityPM.InterestReportStatusCode = "3";
+        //this.entityArgs.EditComponent.SaveChanges();
+        //this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        //    if (isSaveSuccess) {
+        //        this.entityArgs.EditComponent.ReloadEntityPM();
+        //    }
+        //});
 
     }
     OpenConfirmWindow() {
@@ -218,8 +219,9 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                 if(this.EntityPM.InterestReportStatusCode == "5"){
                     confirmWindow.Close();
                 }
-                else{
-                    this.UpdateReport();
+                else {
+                    this.OpenCreditARinvoiceScreen();
+                   // this.UpdateReport();
                 }
             }
         });
@@ -227,7 +229,24 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
 
     }
 
- 
+    OpenCreditARinvoiceScreen() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+
+        var windowTitle = TextCodeTranslator.Translate("InterestReport.O.CreditInvoiceDate");
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 480;
+        logWindow.Height = 170;
+        logWindow.Title = windowTitle;
+        //  logWindow.ShowCloseButton = true;
+        windowArgs.InterestReportPM = this.EntityPM;
+        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateReport());
+        logWindow.Show('./Accounting/Components/Other/InterestInvoiceAutoCreditComponent');
+        this.CurrentSession.StopBusyIndicator();
+
+    }
     CancelReport() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.InterestReportService.GetCheckRecentReports(this.EntityPM.InterestCalculationDate, this.EntityPM.CustomerId).subscribe((myResult: ServiceResponse) => {
