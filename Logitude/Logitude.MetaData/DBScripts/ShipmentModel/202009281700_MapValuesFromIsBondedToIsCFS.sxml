@@ -1,8 +1,9 @@
 ﻿<Script DBType="Main" Module="Shipment" >
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     
      update Shipments set IsCFSWarehouse = IsBondedWarehouse, IsCFSWarehouseChanged = IsBondedWarehouseChanged
+     where IsBondedWarehouse = 1
 
     ]]>
   </Sql>
