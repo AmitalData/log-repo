@@ -29,6 +29,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.AdditionalFactForeignKey = entityPM.AdditionalFactForeignKey;
             entityPOCO.RecordType = entityPM.RecordType;
             entityPOCO.ParentFactCode = entityPM.ParentFactCode;
+            entityPOCO.DisplayName = entityPM.DisplayName;
 
         }
     }

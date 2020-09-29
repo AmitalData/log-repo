@@ -101,4 +101,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DisplayName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

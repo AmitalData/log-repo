@@ -40835,7 +40835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsBondedWarehouse",
 					  						DefaultText =  "Is Bonded",
-					  						HelpTextCode =  "IsCFSWarehouse",
+					  						HelpTextCode = "IsBondedWarehouse",
 					  						HelpTextDefaultText =  "Limited to one cross dock entry and one cross dock release.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,

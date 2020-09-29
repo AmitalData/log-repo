@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;3701&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1679,6 +1680,24 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.ShipmentCharges&quot;"
       FeatureDefaultText="&quot;Shipment Charges&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReport.Fact.Masters&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.Masters&quot;"
+      FeatureDefaultText="&quot;Masters&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReport.Fact.MasterCharges&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.MasterCharges&quot;"
+      FeatureDefaultText="&quot;Master Charges&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

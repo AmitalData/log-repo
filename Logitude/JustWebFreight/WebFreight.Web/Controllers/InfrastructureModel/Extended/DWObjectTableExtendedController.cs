@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
-                List<string> dwFactTablesNames = dWObjectTableQuery.GetFactTablesNames();
+                List<ShortFactTableDetails> dwFactTablesNames = dWObjectTableQuery.GetFactTablesNames();
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
