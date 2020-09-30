@@ -143,6 +143,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card FreightForwarder { get; set; }
     
     public double? Ratio { get; set; }
+    
+    public string ConcurrencyGUID { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
