@@ -296,7 +296,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.ShipperName = card.EnglishName;
                 }
 
-                Address address = GetMainAddressByCardId(tenant);
+                Address address = GetMainAddressByCardId(tenant , warehouseEntryPM.ShipperId);
                 if (address != null)
                 {
                     crossDockEntryDataProvider.ShipperAddress = DataProviders.General.GetAddress(address);
@@ -314,7 +314,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.ConsigneeName = card.EnglishName;
                 }
 
-                Address address = GetMainAddressByCardId(tenant);
+                Address address = GetMainAddressByCardId(tenant , warehouseEntryPM.ConsigneeId);
                 if (address != null)
                 {
                     crossDockEntryDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
@@ -322,10 +322,10 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
         }
 
-        private Address GetMainAddressByCardId(int tenant)
+        private Address GetMainAddressByCardId(int tenant , string cardId)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
-            Address address = addressRepository.GetMainAddressByCardId(warehouseEntryPM.ShipperId, tenant);
+            Address address = addressRepository.GetMainAddressByCardId(cardId, tenant);
             return address;
         }
 
