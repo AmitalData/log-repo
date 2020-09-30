@@ -86,4 +86,9 @@
     ReferencedTable="CustomsDocumentsTickets"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
+
+  <Index
+    Columns="ParentEntityId,ParentEntityCode" />
+  <Index
+    Columns="ParentEntityId" />
 </Table>
