@@ -66,7 +66,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             _RevenueExpenseReportParam.FromDate = _RevenueExpenseReportParam.FromDate.Date;
             _RevenueExpenseReportParam.ToDate = _RevenueExpenseReportParam.ToDate.Date;
-            
+
+            if (_RevenueExpenseReportParam.FromDatePeriod2.HasValue && _RevenueExpenseReportParam.ToDatePeriod2.HasValue)
+            {
+                _RevenueExpenseReportParam.FromDatePeriod2 = _RevenueExpenseReportParam.FromDatePeriod2.Value.Date; ;
+                _RevenueExpenseReportParam.ToDatePeriod2 = _RevenueExpenseReportParam.ToDatePeriod2.Value.Date;
+            }
+            else
+            {
+                //ignore !!!
+                _RevenueExpenseReportParam.FromDatePeriod2 = _RevenueExpenseReportParam.ToDatePeriod2 = null;
+
+            }
+
+
             _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
 
             _AccountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
@@ -124,8 +137,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 var myData = QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
             }
-
-
             IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM
                 =
                 (from r in QUnionAllCurrSummary
@@ -161,7 +172,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      GLAccountId = g.Key.AccountId,
                      ChartOfAccountId = "",
 
-                     LocalCloseBalance =
+                     LocalCloseBalancePeriod1 =
                      (
                      +g.Sum(x => x.LocalAmountDebitTransStart)
                      - g.Sum(x => x.LocalAmountCreditTransStart)
@@ -171,8 +182,113 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      + g.Sum(x => x.LocalAmountDebitTransEnd)
                      - g.Sum(x => x.LocalAmountCreditTransEnd)
                      ),
+                     LocalCloseBalancePeriod2=0
 
                  });
+
+
+
+            IQueryable<TrailReportTemp> QUnionAllCurrSummaryPeriod2 = Enumerable.Empty<TrailReportTemp>().AsQueryable();
+            if (_RevenueExpenseReportParam.FromDatePeriod2.HasValue)
+            {
+                QUnionAllCurrSummaryPeriod2 = GetMoneyDataPerDate(
+                    _RevenueExpenseReportParam.FromDatePeriod2.GetValueOrDefault(), _RevenueExpenseReportParam.ToDatePeriod2.GetValueOrDefault(),
+                    _RevenueExpenseReportParam.Tenant, _AccountingContext);
+
+
+                if (!string.IsNullOrWhiteSpace(debugAccId))
+                {
+                    var myData = QUnionAllCurrSummaryPeriod2.Where(r => r.AccountId_COAType == debugAccId).ToList();
+                }
+
+                IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportMPeriod2
+       =
+       (from r in QUnionAllCurrSummaryPeriod2
+        group r by new
+        {
+            AccountId = r.AccountId_COAType,
+                     //r.CurrencyId
+                 } into g
+        select new RevenueExpenseReportM()
+        {
+
+            ChartOfAcountType = "",
+            ChartOfAcount1 = "",
+            ChartOfAcount2 = "",
+            ChartOfAcount3 = "",
+            ChartOfAcount4 = "",
+            ChartOfAcount5 = "",
+            ChartOfAcountName1 = "",
+            ChartOfAcountName2 = "",
+            ChartOfAcountName3 = "",
+            ChartOfAcountName4 = "",
+            ChartOfAcountName5 = "",
+            ChartOfAcountCode1 = "",
+            ChartOfAcountCode2 = "",
+            ChartOfAcountCode3 = "",
+            ChartOfAcountCode4 = "",
+            ChartOfAcountCode5 = "",
+
+
+
+            GLAccountName = "",
+            GLAccountNumber = "",
+            GLAccountId = g.Key.AccountId,
+            ChartOfAccountId = "",
+
+            LocalCloseBalancePeriod1 =0 ,
+            LocalCloseBalancePeriod2 = (
+            +g.Sum(x => x.LocalAmountDebitTransStart)
+            - g.Sum(x => x.LocalAmountCreditTransStart)
+
+            + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+            - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+            + g.Sum(x => x.LocalAmountDebitTransEnd)
+            - g.Sum(x => x.LocalAmountCreditTransEnd)
+            )
+
+        });
+
+
+                qAllMoneySideRevenueExpenseReportM =
+                    (from a in qAllMoneySideRevenueExpenseReportM.Union(qAllMoneySideRevenueExpenseReportMPeriod2)
+                     group a by a.GLAccountId into gbGLAccountId
+
+                     select new RevenueExpenseReportM()
+                      {
+
+                          ChartOfAcountType = "",
+                          ChartOfAcount1 = "",
+                          ChartOfAcount2 = "",
+                          ChartOfAcount3 = "",
+                          ChartOfAcount4 = "",
+                          ChartOfAcount5 = "",
+                          ChartOfAcountName1 = "",
+                          ChartOfAcountName2 = "",
+                          ChartOfAcountName3 = "",
+                          ChartOfAcountName4 = "",
+                          ChartOfAcountName5 = "",
+                          ChartOfAcountCode1 = "",
+                          ChartOfAcountCode2 = "",
+                          ChartOfAcountCode3 = "",
+                          ChartOfAcountCode4 = "",
+                          ChartOfAcountCode5 = "",
+
+
+
+                          GLAccountName = "",
+                          GLAccountNumber = "",
+                          GLAccountId = gbGLAccountId.Key,
+                          ChartOfAccountId = "",
+
+                          LocalCloseBalancePeriod1 = gbGLAccountId.Sum(a=>a.LocalCloseBalancePeriod1),
+                          LocalCloseBalancePeriod2 = gbGLAccountId.Sum(a => a.LocalCloseBalancePeriod2)
+            
+
+                      });
+
+
+            }
 
 
             IQueryable<RevenueExpenseReportM> _QTrailReportFull = null;
@@ -211,7 +327,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAccountId = chartf.ChartOfAccountId,
 
 
-                 LocalCloseBalance = groupJoinData.LocalCloseBalance,
+                 LocalCloseBalancePeriod1 = groupJoinData.LocalCloseBalancePeriod1,
+                 LocalCloseBalancePeriod2 = groupJoinData.LocalCloseBalancePeriod2,
+
 
              });
             if (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel == ReportLevel.GLAccount)
@@ -221,8 +339,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
                         _QTrailReportFull =
                             _QTrailReportFull
-                            .Where(r => r.LocalCloseBalance != null)
-                            .Where(r => r.LocalCloseBalance != 0m);
+                            //.Where(r => r.LocalCloseBalancePeriod1 != null)
+                            //.Where(r => r.LocalCloseBalancePeriod1 != 0m)
+                            .Where(r =>
+                            (r.LocalCloseBalancePeriod1 != null  &&  r.LocalCloseBalancePeriod1 != 0m) 
+                            ||
+                            (r.LocalCloseBalancePeriod2 != null && r.LocalCloseBalancePeriod2 != 0m)
+                            )
+                           ;
                         break;
                     case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
                         _QTrailReportFull =
@@ -254,7 +378,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountId = chartf.GLAccountId,
                  ChartOfAccountId = chartf.ChartOfAccountId,
 
-                 LocalCloseBalance = data.LocalCloseBalance,
+                 LocalCloseBalancePeriod1 = data.LocalCloseBalancePeriod1,
+                 LocalCloseBalancePeriod2 = data.LocalCloseBalancePeriod2,
 
              });
                         break;
@@ -321,7 +446,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  ChartOfAccountId = "",
 
 
-                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
+                                                 LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
 
                                              }
             );
@@ -384,7 +510,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
 
-                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
+                                                 LocalCloseBalancePeriod2 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod2),
 
                                              }
             );
@@ -757,7 +884,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
-      
+
+        public DateTime? FromDatePeriod2 { get; set; }
+        public DateTime? ToDatePeriod2 { get; set; }
+
         //filter the GLAccount (if COATypeLevel) + Group by 
         public ReportLevel MyRevenueExpenseReportLevel { get; set; }
 
@@ -803,9 +933,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string GLAccountNumber { get; set; }
         public string ChartOfAccountId { get; set; }
 
-        public decimal? LocalCloseBalance { get; set; }
+        public decimal? LocalCloseBalancePeriod1 { get; set; }
 
-       // public RevenueExpenseEnum MyRevenueExpenseEnum { get; set; }
+        public decimal? LocalCloseBalancePeriod2 { get; set; }
+
+        // public RevenueExpenseEnum MyRevenueExpenseEnum { get; set; }
 
 
 
@@ -831,8 +963,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             sb.Append("Local:");
 
-            sb.Append("CB:").Append(this.LocalCloseBalance.GetValueOrDefault().ToString());
-
+            sb.Append("CB:").Append(this.LocalCloseBalancePeriod1.GetValueOrDefault().ToString());
+            sb.Append("CB2:").Append(this.LocalCloseBalancePeriod2.GetValueOrDefault().ToString());
 
 
             return sb.ToString();
