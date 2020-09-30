@@ -126,17 +126,16 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "KPI,KPI Document Fields", 
 			});
 			 
-          
             all.Add(new ToggleDetails()
             {    
                 Code = "STR", 
                 SearchFields = "STR,Storage Pricing", 
                 Name = "Storage Pricing", 
 			});
-			
+			 
             all.Add(new ToggleDetails()
-            {
-                Code = "OI2",
+            {    
+                Code = "OI2", 
                 Name = "OceanInsightsV2", 
                 SearchFields = "OI2,OceanInsightsV2", 
 			});
@@ -148,15 +147,20 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SWC,Shipment Warning Checkbox", 
 			});
 			 
- 
             all.Add(new ToggleDetails()
             {    
                 Code = "AMS", 
                 Name = "AMS in Export", 
                 SearchFields = "AMS,AMS in Export", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LIC", 
+                Name = "License Management", 
+                SearchFields = "LIC,License Management", 
+			});
 			
-						
             return all;
        }
 

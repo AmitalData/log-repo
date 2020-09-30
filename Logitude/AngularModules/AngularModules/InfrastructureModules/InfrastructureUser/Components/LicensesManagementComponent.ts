@@ -53,12 +53,16 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public AllUserLicenses: UserLicensePM[];
     public AllPackages: PackageList[];
-    private ActiveNotAdditionalUsersCount: number = 0;
+    private ActiveNotAdditionalUsersCount: number = 0;    
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
         this.ActiveNotAdditionalUsersCount = args.ActiveNotAdditionalUsersCount;
         this.dirtyItem = null;
-        
+
+        if (!AppTool.IsNullOrEmpty(args.SearchField)) {
+            this.SearchTextChanged(args.SearchField);
+        }
+
         this.InitColumns();
         this.LoadUserLicenses();
     }
