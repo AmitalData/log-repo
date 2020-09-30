@@ -54,5 +54,26 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return entityPM;
         }
 
+        public List<ChartOfAccountsTypePM> GetAllChartOfAccounts()
+        {
+            List<ChartOfAccountsTypePM> entityPMs = null;
+
+            entityPMs =
+                (from a in repository.All()
+                
+                 select new ChartOfAccountsTypePM()
+                 {
+                     Code = a.Code,
+                     LocalName = a.LocalName,
+                     EnglishName = a.EnglishName,
+                     Inactive = a.Inactive,
+
+
+                     SearchFields = a.SearchFields,
+                 }).ToList();
+
+            return entityPMs;
+        }
+
     }
 }
