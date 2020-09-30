@@ -4,7 +4,7 @@
   ObjectTableName="&quot;FeatureToggle&quot;"
   IsNew="true"
   DBTableName="&quot;FeatureToggles&quot;"
-  OldDBTableName="&quot;FeatureToggles&quot;"
+  DBTableOldNames="FeatureToggles"
   ObjectTableSingular="&quot;Feature Toggle&quot;"
   ObjectTablePlural="&quot;Feature Toggles&quot;"
   HasCustomFilter="false"
@@ -52,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;5bcf&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -64,7 +65,7 @@
   <field
     Id="&quot;d8a17cd1-5103-4309-92c6-77b73d103cf1&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -109,6 +110,7 @@
     DefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -122,6 +124,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -132,7 +135,7 @@
   <field
     Id="&quot;ce9e06ba-4cb8-453b-82ec-4670de67e2b6&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -177,6 +180,7 @@
     DefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -190,6 +194,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -200,7 +205,7 @@
   <field
     Id="&quot;8acd82da-0237-4468-b68b-5b4063f60562&quot;"
     FieldName="&quot;CreateDate&quot;"
-    OldFieldName="&quot;CreateDate&quot;"
+    OldNames="CreateDate"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -247,6 +252,7 @@
     ListLableDefaultText="&quot;Create Date&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -260,6 +266,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -270,7 +277,7 @@
   <field
     Id="&quot;63d2015e-bfd3-42a4-b04e-9de4a281431d&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
-    OldFieldName="&quot;CreatedByUserId&quot;"
+    OldNames="CreatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -316,6 +323,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CreatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -330,6 +338,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -340,7 +349,7 @@
   <field
     Id="&quot;bf50de44-c23a-4b64-a566-cea90fdde56d&quot;"
     FieldName="&quot;UpdateDate&quot;"
-    OldFieldName="&quot;UpdateDate&quot;"
+    OldNames="UpdateDate"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -387,6 +396,7 @@
     ListLableDefaultText="&quot;Update Date&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -400,6 +410,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -410,7 +421,7 @@
   <field
     Id="&quot;00a8839a-88ed-4da6-b939-b1cdc514f42c&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
-    OldFieldName="&quot;UpdatedByUserId&quot;"
+    OldNames="UpdatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -456,6 +467,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="UpdatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -470,6 +482,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -480,7 +493,7 @@
   <field
     Id="&quot;cc8a243c-0542-4016-88e9-9b968c32138d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -527,6 +540,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -540,6 +554,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -550,7 +565,7 @@
   <field
     Id="&quot;8ac7303d-69a4-4e88-934d-bacde81438e8&quot;"
     FieldName="&quot;TenantNumber&quot;"
-    OldFieldName="&quot;TenantNumber&quot;"
+    OldNames="TenantNumber"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -598,6 +613,7 @@
     ListLableDefaultText="&quot;Tenant Number&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -611,6 +627,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -621,7 +638,7 @@
   <field
     Id="&quot;62ed10a7-5b32-4e6c-8bdc-a68bd7fe7179&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -669,6 +686,7 @@
     ListLableDefaultText="&quot;Inactive&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -682,6 +700,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -692,7 +711,7 @@
   <field
     Id="&quot;fd94ff92-2bbb-418f-8421-2721cb8b0855&quot;"
     FieldName="&quot;ToggleCode&quot;"
-    OldFieldName="&quot;ToggleCode&quot;"
+    OldNames="ToggleCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -738,6 +757,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Toggle"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Toggle"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -752,6 +772,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -762,7 +783,7 @@
   <field
     Id="&quot;53df9dac-8ee7-4685-873e-ddf985be4512&quot;"
     FieldName="&quot;ToggleName&quot;"
-    OldFieldName="&quot;ToggleName&quot;"
+    OldNames="ToggleName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -809,6 +830,7 @@
     ListLableDefaultText="&quot;Toggle&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -822,6 +844,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -832,7 +855,7 @@
   <field
     Id="&quot;c7905fa7-2264-490e-afd5-4d43337c0d20&quot;"
     FieldName="&quot;CreatedByUser&quot;"
-    OldFieldName="&quot;CreatedByUser&quot;"
+    OldNames="CreatedByUser"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -879,6 +902,7 @@
     ListLableDefaultText="&quot;Created by&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -892,6 +916,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -936,6 +961,57 @@
         ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;InactiveFeatureToggles&quot;"
+    TextCode="&quot;Inactive Feature Toggles&quot;"
+    LocalTextCode="&quot;Inactive Feature Toggles&quot;"
+    QueryGroupCode="&quot;f4de&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;FeatureToggle&quot;"
+    QuerySection="&quot;FeatureToggle&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;TenantNumber&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreatedByUser&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ToggleName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;TenantNumber&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;InactiveFeatureToggles&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;Inactive&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;FeatureToggleHeaderScreen&quot;"

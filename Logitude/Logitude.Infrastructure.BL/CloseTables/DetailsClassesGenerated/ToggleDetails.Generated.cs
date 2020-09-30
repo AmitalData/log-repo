@@ -126,7 +126,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "KPI,KPI Document Fields", 
 			});
 			 
-          
             all.Add(new ToggleDetails()
             {    
                 Code = "STR", 
@@ -148,7 +147,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SWC,Shipment Warning Checkbox", 
 			});
 			 
- 
             all.Add(new ToggleDetails()
             {    
                 Code = "AMS", 
@@ -163,7 +161,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "API Update", 
 			});
 			
-						
             return all;
        }
 
