@@ -31,7 +31,7 @@ namespace WarehouseDataViews.Service
                 }
                 DropView(view.ViewName, privateViewArgs.ConnectionString);
                 CreateView(privateViewArgs.ConnectionString, viewscript);
-                if(privateViewArgs.ApplyGrantOnViews) GrantView(view.ViewName, privateViewArgs);
+                if (privateViewArgs.ApplyGrantOnViews) GrantView(view.ViewName, privateViewArgs);
             }
 
         }

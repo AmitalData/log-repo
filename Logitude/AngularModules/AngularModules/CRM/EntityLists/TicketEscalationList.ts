@@ -21,6 +21,7 @@ export class TicketEscalationList {
 	CloseDate: Date;
 	UpdateDate: Date;
 	EscalationForName: string;
+	SearchFields: string;
 	
 }
  

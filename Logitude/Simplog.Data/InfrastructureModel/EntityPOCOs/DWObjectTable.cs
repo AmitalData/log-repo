@@ -22,6 +22,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string PivotFieldCode { get; set; }
         public string AdditionalFactCode { get; set; }
         public string AdditionalFactForeignKey { get; set; }
+        public string ParentFactCode { get; set; }
+        public string RecordType { get; set; }
+        public string DisplayName { get; set; }
+
 
     }
 }

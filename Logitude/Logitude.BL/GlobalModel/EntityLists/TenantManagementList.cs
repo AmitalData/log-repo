@@ -146,5 +146,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int? TotalFreeUsers { get; set; }
         public double? AveragePrice { get; set; }
         public double? TotalPaymentamount { get; set; }
+        public bool NoPaymentForChildTenants { get; set; }
+
     }
 }

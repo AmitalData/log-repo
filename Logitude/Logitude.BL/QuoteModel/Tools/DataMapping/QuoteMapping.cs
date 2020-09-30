@@ -212,6 +212,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.PickupDeliveryVolumetricWeight = entityPM.PickupDeliveryVolumetricWeight;
             entityPoco.RegionalTaxId = entityPM.RegionalTaxId;
             entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
+            entityPoco.DescriptionRightToLeft = entityPM.DescriptionRightToLeft;
 
             BuildSearchField(entityPM, entityPoco);
 

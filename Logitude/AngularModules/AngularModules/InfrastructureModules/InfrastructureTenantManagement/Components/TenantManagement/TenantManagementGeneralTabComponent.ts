@@ -310,6 +310,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         else {
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, true);
         }
+
+        this.UIProperties.SetEnabled("NoPaymentForChildTenants", this.ObjectTableName, this.IsParentTenant);
     }
     SetUIProperties_TotalPrice() {
         this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
@@ -408,10 +410,21 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+    get NoPaymentForChildTenants() { return this.EntityPM.NoPaymentForChildTenants; }
+    set NoPaymentForChildTenants(newValue: boolean) {
+        if (this.EntityPM.NoPaymentForChildTenants != newValue) {
+            this.EntityPM.NoPaymentForChildTenants = newValue;
+        }
+    }
+
     get IsParentTenant() { return this.EntityPM.IsParentTenant; }
     set IsParentTenant(newValue: boolean) {
         if (this.EntityPM.IsParentTenant != newValue) {
             this.EntityPM.IsParentTenant = newValue;
+
+            if (!newValue) {
+                this.NoPaymentForChildTenants = false;
+            }
 
             this.SetUIProperties_ParentTenant();
 

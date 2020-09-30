@@ -131,6 +131,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string ShipmentNumber { get; set; }
+    
+    public string ConcurrencyGUID { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

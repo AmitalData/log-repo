@@ -46,6 +46,8 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.CloseDate).HasColumnName("CloseDate");
 
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

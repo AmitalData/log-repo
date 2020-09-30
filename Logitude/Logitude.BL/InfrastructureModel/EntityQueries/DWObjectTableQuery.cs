@@ -37,15 +37,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
-                        TypeCode =a.TypeCode,
+                        TypeCode = a.TypeCode,
                         Code = a.Code,
-                        IsClosed=  a.IsClosed,
+                        IsClosed = a.IsClosed,
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
                         HasPivotColumn = a.HasPivotColumn,
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
 
                     }).FirstOrDefault();
         }
@@ -69,6 +72,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     });
         }
 
@@ -90,6 +96,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     }).FirstOrDefault();
         }
 
@@ -111,27 +120,33 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         PivotFieldCode = a.PivotFieldCode,
                         AdditionalFactCode = a.AdditionalFactCode,
                         AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        RecordType = a.RecordType,
+                        ParentFactCode = a.ParentFactCode,
+                        DisplayName = a.DisplayName,
                     });
         }
 
         public IQueryable<DWObjectTableList> GetIQueryableEntityList(IQueryable<DWObjectTable> iQueryable)
         {
             IQueryable<DWObjectTableList> result = from a in iQueryable
-                                              select new DWObjectTableList()
-                                              {
-                                                  Id = a.Id,
-                                                  Tenant = a.Tenant,
-                                                  Name = a.Name,
-                                                  TypeCode = a.TypeCode,
-                                                  Code = a.Code,
-                                                  IsClosed = a.IsClosed,
-                                                  DefaultFilterBy = a.DefaultFilterBy,
-                                                  DataViewName = a.DataViewName,
-                                                  HasPivotColumn = a.HasPivotColumn,
-                                                  PivotFieldCode = a.PivotFieldCode,
-                                                  AdditionalFactCode = a.AdditionalFactCode,
-                                                  AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                                              };
+                                                   select new DWObjectTableList()
+                                                   {
+                                                       Id = a.Id,
+                                                       Tenant = a.Tenant,
+                                                       Name = a.Name,
+                                                       TypeCode = a.TypeCode,
+                                                       Code = a.Code,
+                                                       IsClosed = a.IsClosed,
+                                                       DefaultFilterBy = a.DefaultFilterBy,
+                                                       DataViewName = a.DataViewName,
+                                                       HasPivotColumn = a.HasPivotColumn,
+                                                       PivotFieldCode = a.PivotFieldCode,
+                                                       AdditionalFactCode = a.AdditionalFactCode,
+                                                       AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                                                       RecordType = a.RecordType,
+                                                       ParentFactCode = a.ParentFactCode,
+                                                       DisplayName = a.DisplayName,
+                                                   };
 
             return result;
         }
@@ -145,11 +160,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public List<string> GetFactTablesNames()
+        public List<ShortFactTableDetails> GetFactTablesNames()
         {
             return (from a in repository.webFreightContext.DWObjectTables
                     where a.Tenant == 0 && a.TypeCode == "Fact"
-                    select a.Name).ToList();
+                    select new ShortFactTableDetails()
+                    { 
+                        DisplayName = a.DisplayName,
+                        Code = a.Code
+                    }).ToList();
         }
+    }
+
+    public class ShortFactTableDetails
+    { 
+        public string DisplayName { get; set; }
+        public string Code { get; set; }
     }
 }

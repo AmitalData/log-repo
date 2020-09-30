@@ -382,5 +382,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public double? RegionalTaxPercentage { get; set; }
 
+        public bool DescriptionRightToLeft { get; set; }
+
     }
 }

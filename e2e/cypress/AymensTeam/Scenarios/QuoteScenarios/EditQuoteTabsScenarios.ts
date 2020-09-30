@@ -15,7 +15,7 @@ export class EditQuoteTabsScenarios {
         this.PartnersTab.RunPartnersTabScenarios(direction, transportMode);
         this.PackagesTab.RunPackagesTabsScenarios(shipmentType);
         this.RoutingTab.RunRoutingTabScenarios();
-        //this.ChargesTab.RunChargesTabScenarios();
+        this.ChargesTab.RunChargesTabScenarios();
     }
 
     private FillDetailsTab() {

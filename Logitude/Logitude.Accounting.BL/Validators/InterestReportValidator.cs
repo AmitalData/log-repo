@@ -15,6 +15,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Simplog.Server.Infrastructure;
+using System.Runtime.InteropServices;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -34,15 +35,38 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIfPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(entityPM, showLocals);
 
             }
-            //ValidateCanUpdaeReport(entityPM, showLocals);
+
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            //{
+            //    ValidateCanUpdaeReport(entityPM, showLocals);
+            //}
+
+           
             ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
+
             return null;
         }
 
-        
+        private static List<string> GetStatusesThatAllowEditing()
+        {
+            List<string> StatusesThatAllowEditing = new List<string>();
+            StatusesThatAllowEditing.Add("1");
+            StatusesThatAllowEditing.Add("6");
+            StatusesThatAllowEditing.Add("9");
+            StatusesThatAllowEditing.Add(null);
+            
+
+            return StatusesThatAllowEditing;
+        }
+
+
         private static void ValidateCanUpdaeReport(InterestReportPM entityPM, bool showLocals)
         {
-            if (entityPM.InterestReportStatusCode != "1" && entityPM.InterestReportStatusCode != "6" && entityPM.InterestReportStatusCode != "3" && entityPM.InterestReportStatusCode != null)
+            InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
+            string InterestReportStatusCode = interestReportRepository.GetInterestReportStatusCode(entityPM.Id , entityPM.Tenant);
+            List<string> StatusesThatAllowEditing = GetStatusesThatAllowEditing();
+
+            if (!StatusesThatAllowEditing.Contains(InterestReportStatusCode) && entityPM.InterestReportStatusCode !="3")
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
             }
@@ -51,7 +75,7 @@ namespace Logitude.Accounting.BL.Validators
         private static void ValidateIfThereIsARecentInvoicedOrClosedReport(InterestReportPM entityPM, bool showLocals)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
-            InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.Id, entityPM.InterestCalculationDate, entityPM.Tenant);
             if (interestReport != null)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);

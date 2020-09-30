@@ -10,6 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BusyIndicator } from 'src/CargoTracking/Materials/BusyIndicator/BusyIndicator';
+import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
+import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
+import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
+import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +21,12 @@ import { BusyIndicator } from 'src/CargoTracking/Materials/BusyIndicator/BusyInd
         ShipmentComponent,
         SearchComponent,
         BusyIndicator
+        PublicGateComponent,
+        
+        // Dashboard
+        DashboardComponent,
+        DashboardShipmentsComponent,
+        FavoritesComponent,
         
     ],
     imports: [

@@ -1,5 +1,8 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
@@ -36,6 +39,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private int tenant;
 
         public bool ReceivablePricingUpdated { get; set; }
+        public bool DatesFromCrossDocsUpdated { get; set; }
+
         public UpdateCrossDockBehaviour(ShipmentPM shipmentPM)
         {
             this.shipmentPM = shipmentPM;
@@ -118,10 +123,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 isUpdated = true;
             }
 
-            if (isUpdated && shipmentPM.IsCFSWarehouse)
+            if (isUpdated)
             {
-                storageCalculationManager.CheckStorageProperties();
-                ReceivablePricingUpdated = true;
+                DatesFromCrossDocsUpdated = true;
+
+                if (shipmentPM.IsCFSWarehouse)
+                {
+                    storageCalculationManager.CheckStorageProperties();
+                    ReceivablePricingUpdated = true;
+                }
             }
         }
         private void UpdateActualExpectedWarehouseReleasesDates()
@@ -163,10 +173,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 isUpdated = true;
             }
 
-            if (isUpdated && shipmentPM.IsCFSWarehouse)
+            if (isUpdated)
             {
-                storageCalculationManager.CheckStorageProperties();
-                ReceivablePricingUpdated = true;
+                DatesFromCrossDocsUpdated = true;
+
+                if (shipmentPM.IsCFSWarehouse)
+                {
+                    storageCalculationManager.CheckStorageProperties();
+                    ReceivablePricingUpdated = true;
+                }
             }
         }
         private void UpdateDeliveryDepartureDates()
@@ -176,7 +191,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             List<ShipmentPickUpDelivery> shipmentDeliveries = shipmentPickUpDeliveryRepository.GetShipmentDeliveryByShipmentId(shipmentPM.Id, tenant);
 
             IQueryable<WarehouseRelease> deliveryWarehouseReleases = null;
-            shipmentDeliveries.ForEach(delivery => {
+            shipmentDeliveries.ForEach(delivery =>
+            {
                 deliveryWarehouseReleases = activeDeliveryWarehouseRelases.Where(r => r.ChildEntityReference == delivery.PickUpDeliveryNumber);
                 if (deliveryWarehouseReleases.Count() == 1)
                 {
@@ -269,7 +285,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 }
             }
             shipmentPM.WarehouseReleasesIds = null;
-        }
+        }        
     }
 
     public class StorageCalculationManager

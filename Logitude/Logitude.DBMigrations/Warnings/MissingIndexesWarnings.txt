@@ -1,2 +1,0 @@
-Warning: Missing Index In DXML File CargoTrackingShipmentSearch.dxml, The Found Index On DB Is IX_CargoTrackingShipmentSearches_Tenant_ShipmentDate_SearchFields, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File CargoTrackingShipmentSearch.dxml, The Found Index On DB Is IX_CargoTrackingShipmentSearches_Tenant_SearchFields, The Index Should Added To The DXML File

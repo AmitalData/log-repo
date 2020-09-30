@@ -397,6 +397,7 @@
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202009230840_AddNewSpecialHandlingCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
