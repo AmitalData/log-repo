@@ -14971,7 +14971,7 @@
     DefaultText="&quot;Ship Id&quot;"
     FullLocalDefaultText="&quot;כלי הובלה ימי&quot;"
     ListFieldLable="&quot;ShipCodeListLable&quot;"
-    ListLableDefaultText="&quot;Ship Id&quot;"
+    ListLableDefaultText="&quot;Ship Id &quot;"
     ListLocalDefaultText="&quot;כלי הובלה ימי&quot;"
     IsNullable="false"
     IsForeignKey="true"
