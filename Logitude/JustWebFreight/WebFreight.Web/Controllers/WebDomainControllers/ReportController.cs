@@ -117,7 +117,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    FileName = fileName,
+                    FileName = (fileName + "mdc"),
                     FolderName = "others",
                     Extension = "mdc",
                     Tenant = tenant,
