@@ -16,8 +16,14 @@ namespace Logitude.Customs.Data.Repsitories
 {
    public partial class CustomsDocumentsTicketRepository:IRepository<CustomsDocumentsTicket>
    {
-        
-		public List<CustomsDocumentsTicket> GetMulti(EntityKeyFields entityKeys)
+
+        public CustomsDocumentsTicketRepository()
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+        }
+
+        public List<CustomsDocumentsTicket> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
