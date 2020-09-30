@@ -10939,7 +10939,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.GLAccountNumber + "-" + item.GLAccountName,
 
                         ParentId = item.ChartOfAccountId,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     GLAccountParents.Add(record.ParentId);
@@ -10977,7 +10977,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
                         Number = null,
                         ParentId = item.ChartOfAcount4,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
 
@@ -11004,7 +11004,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
                         Number = null,
                         ParentId = item.ChartOfAcount3,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     if (record.Balance == null)
@@ -11042,7 +11042,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
                         Number = null,
                         ParentId = item.ChartOfAcount2,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
                     if (record.Balance == null)
                     {
@@ -11080,7 +11080,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
                         Number = null,
                         ParentId = item.ChartOfAcount1,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     if (record.Balance == null)
@@ -11118,7 +11118,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
                         Number = null,
                         ParentId = item.ChartOfAcountType,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
                     if (record.Balance == null)
                     {
@@ -11156,7 +11156,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Name = item.ChartOfAcountType == "1" ? "1-הכנסות" : "2-הוצאות",
                     Number = null,
                     ParentId = null,
-                    Balance = item.LocalCloseBalance,
+                    Balance = item.LocalCloseBalancePeriod1,
                 };
 
                 totalData.ResultList.Add(record);
@@ -11170,13 +11170,13 @@ namespace WebFreight.Web.ReportsWebServices
             decimal? totalRevenues = null;
             if (revenues != null)
             {
-                totalRevenues = revenues.LocalCloseBalance;
+                totalRevenues = revenues.LocalCloseBalancePeriod1;
             }
             var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
             decimal? totalExpenses = null;
             if (expenses != null)
             {
-                totalExpenses = expenses.LocalCloseBalance;
+                totalExpenses = expenses.LocalCloseBalancePeriod1;
             }
 
 

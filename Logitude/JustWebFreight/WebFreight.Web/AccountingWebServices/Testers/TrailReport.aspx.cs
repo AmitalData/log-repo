@@ -60,6 +60,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     Tenant = 989,
                     FromDate = DateTime.Now.Date.AddMonths(-3),
                     ToDate = DateTime.Now.Date, //new DateTime(2016, 11, 20),
+                    FromDatePeriod2 = DateTime.Now.Date.AddMonths(-1),
+                    ToDatePeriod2 = DateTime.Now.Date, //new DateTime(2016, 11, 20),
+
                     MyRevenueExpenseReportLevelOptions = "ChartofaccountType=1,Chartofaccount=2,GLAccount=3",
                     MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType,
                     MyCardFilterOptions="DoNotShowCardWithZeroBalance=0,ShowCardsWithActivity_EvenBalanceItsZero=1,ShowAllCard=2",

@@ -255,7 +255,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      GLAccountId = g.Key.AccountId,
                      ChartOfAccountId = "",
 
-                     LocalCloseBalance =
+                     LocalCloseBalancePeriod1 =
                      (
                      +g.Sum(x => x.LocalAmountDebitTotalDelta2End)
                      - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
@@ -302,7 +302,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAccountId = chartf.ChartOfAccountId,
 
 
-                 LocalCloseBalance = groupJoinData.LocalCloseBalance,
+                 LocalCloseBalancePeriod1 = groupJoinData.LocalCloseBalancePeriod1,
 
              });
             if (_RevenueExpenseReportParam.MyRevenueExpenseReportLevel == ReportLevel.GLAccount)
@@ -312,8 +312,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
                         _QTrailReportFull =
                             _QTrailReportFull
-                            .Where(r => r.LocalCloseBalance != null)
-                            .Where(r => r.LocalCloseBalance != 0m);
+                            .Where(r => r.LocalCloseBalancePeriod1 != null)
+                            .Where(r => r.LocalCloseBalancePeriod1 != 0m);
                         break;
                     case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
                         _QTrailReportFull =
@@ -345,7 +345,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountId = chartf.GLAccountId,
                  ChartOfAccountId = chartf.ChartOfAccountId,
 
-                 LocalCloseBalance = data.LocalCloseBalance,
+                 LocalCloseBalancePeriod1 = data.LocalCloseBalancePeriod1,
 
              });
                         break;
@@ -412,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  ChartOfAccountId = "",
 
 
-                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
 
                                              }
             );
@@ -475,7 +475,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
 
-                                                 LocalCloseBalance = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalance),
+                                                 LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
 
                                              }
             );
