@@ -38,6 +38,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingQuery()
         {
             repository = new DocumentsFilingRepository();
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
         }
 
         public DocumentsFilingQuery(int tenant)
