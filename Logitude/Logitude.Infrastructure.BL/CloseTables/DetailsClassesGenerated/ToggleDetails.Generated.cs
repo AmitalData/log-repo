@@ -133,10 +133,10 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "STR,Storage Pricing", 
                 Name = "Storage Pricing", 
 			});
-			
+			 
             all.Add(new ToggleDetails()
-            {
-                Code = "OI2",
+            {    
+                Code = "OI2", 
                 Name = "OceanInsightsV2", 
                 SearchFields = "OI2,OceanInsightsV2", 
 			});
@@ -154,6 +154,13 @@ namespace Logitude.Infrastructure.BL
                 Code = "AMS", 
                 Name = "AMS in Export", 
                 SearchFields = "AMS,AMS in Export", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "API", 
+                SearchFields = "API,API Update", 
+                Name = "API Update", 
 			});
 			
 						
