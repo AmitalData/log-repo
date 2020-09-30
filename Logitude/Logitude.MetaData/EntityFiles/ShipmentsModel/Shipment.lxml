@@ -84133,7 +84133,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;IsCFSWarehouse&quot;"
-    DefaultText="&quot;Is Bonded&quot;"
+    DefaultText="&quot;Is CFS&quot;"
     HelpTextCode="&quot;IsCFSWarehouse&quot;"
     HelpTextDefaultText="&quot;Limited to one cross dock entry and one cross dock release.&quot;"
     IsNullable="false"
