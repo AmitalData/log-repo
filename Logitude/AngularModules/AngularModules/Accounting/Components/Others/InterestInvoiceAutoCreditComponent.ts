@@ -128,7 +128,9 @@ export class InterestInvoiceAutoCreditComponent extends BaseComponent {
                     this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    this.ValidationErrorsList = result.ErrorsArray; 
+                    this.ValidationErrorsList = result.ErrorsArray;
+                    this.interestReportPM.InterestReportStatusCode = this.oldStatusCode;
+
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
@@ -153,6 +155,9 @@ export class InterestInvoiceAutoCreditComponent extends BaseComponent {
     }
    
     CancelButtonClicked() {
+        if (this.ValidationErrorsList.length > 0) {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        }
         this.CurrentSession.CurrentWindow.Close("Cancel");
     }
 }
