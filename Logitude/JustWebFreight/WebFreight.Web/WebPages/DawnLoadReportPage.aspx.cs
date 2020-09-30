@@ -66,7 +66,7 @@ namespace WebFreight.Web.WebPages
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    FileName = fileName,
+                    FileName = fileName + "mdc",
                     FolderName = "others",
                     Extension = "mdc",
                     Tenant = (int)tenant,
