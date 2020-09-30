@@ -672,35 +672,43 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);                    
-                    ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-
-                    if(directPM != null)
+                    if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
-                        directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
+                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
-                        if (directPM.IsOperationalClosed)
+                        if (directPM != null)
                         {
-                            throw new ApplicationException("Can't update operationally closed shipments");
+                            directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
+                            if (directPM.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Can't update operationally closed shipments");
+                            }
+
+                            if (directPM.IsCancelled)
+                            {
+                                throw new ApplicationException("Can't update cancelled shipments");
+                            }
+
+                            APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
+                            aPITransshipmentHelper.ValidateTransshipments();
+                            aPITransshipmentHelper.MapTransshipments();
+
+                            ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
+                            service.Update(true);
                         }
 
-                        if (directPM.IsCancelled)
-                        {
-                            throw new ApplicationException("Can't update cancelled shipments");
-                        }
-
-                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
-                        aPITransshipmentHelper.ValidateTransshipments();
-                        aPITransshipmentHelper.MapTransshipments();
-
-                        ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
-                        service.Update(true);
+                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
+                        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, result);
                     }
-                    
-                    var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
+
+                    else
+                    {
+                        throw new ApplicationException("Update is not allowed");
+                    } 
                 }
 
                 catch (Exception ex)
