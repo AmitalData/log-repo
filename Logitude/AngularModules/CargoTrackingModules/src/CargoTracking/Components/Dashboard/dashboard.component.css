@@ -6,6 +6,7 @@ h1{
   margin: 0;
 }
 .sidebar {
+  user-select: none;
     margin: 0;
     padding: 0;
     width: 170px;
@@ -19,15 +20,15 @@ h1{
   
   .sidebar a {
     display: block;
-    padding: 10px;
+    padding: 17px;
     margin: 11px 0px;
-    color: white;
+    color: #d6d6d6;
     text-decoration: none;
     cursor: pointer;
     font-weight: 100;
     text-align: left;
-    /* text-indent: 24px; */
-    padding-left: 40px;
+    padding-left: 30px;
+    font-size: 18px;
     border-left: 6px solid var(--MainColor);
   }
    
@@ -46,7 +47,7 @@ h1{
   div.content {
     margin-left: 170px;
     min-height: 100vh;
-    background: #FAFBFC;
+    /* background: #FAFBFC; */
     padding: 0 46px;
   }
 
@@ -73,7 +74,7 @@ h1{
   }
 
   .sidebar .logo > img{
-    width: 120px;
+    /* width: 120px; */ 
   }
 
   
@@ -87,9 +88,53 @@ h1{
     div.content {margin-left: 0;}
   }
   
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 479px) {
+    div.content {
+      padding: 0 15px;
+    }
+   
+    
+    .sidebar { 
+      height: 50px; 
+    }
     .sidebar a {
       text-align: center;
       float: none;
+    }
+    .sidebar .logo{
+      position: relative;
+      top: 0;
+      width: fit-content;
+      margin: 0 auto;
+      padding-top: 12px;
+      display: inline-block;
+    }
+
+    .sidebar .logo img{
+        width: 80px;
+    }
+
+    .sidebar .action-buttons{
+        width: 50px;
+        height: 35px;
+        padding-top: 15px;
+    }
+    .sidebar .right-button{
+        float: right;
+        
+    }
+    .sidebar .left-button{
+        float: left;
+        
+    }
+    .nav-opened{
+        display: block !important;
+        position: fixed;
+        background: var(--MainColor);
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
     }
   }

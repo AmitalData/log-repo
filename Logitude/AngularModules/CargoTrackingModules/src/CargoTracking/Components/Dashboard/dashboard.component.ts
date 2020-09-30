@@ -34,8 +34,14 @@ export class DashboardComponent implements AfterViewInit
         // this.GetVariablesFromURI();
         // this.listenToRouterEvents();
        
+         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+
     }
 
+    isNavOpened = false;
+    openNav(){
+        this.isNavOpened = !this.isNavOpened;
+    }
 
     private GetSearchTextFromURI()
     {   

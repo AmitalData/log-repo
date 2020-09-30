@@ -43,6 +43,7 @@ export class PublicGateComponent
 
             //     CargoTrackingBrandingData.MainColor = this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
     
+            //     document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
             //     document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
             //     document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
             //     document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);

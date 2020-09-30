@@ -32,6 +32,8 @@ export class DashboardShipmentsComponent
         this.GetVariablesFromURI();
         // this.listenToRouterEvents();
         this.InitForm();
+        this.SearchText = '1000x';
+        this.Search();
 
     }
     private InitForm()
@@ -76,7 +78,7 @@ export class DashboardShipmentsComponent
     Clear()
     {
         this.SearchText = '';
-        this.Search();
+        this.LoadShipments();
     }
     Search()
     {

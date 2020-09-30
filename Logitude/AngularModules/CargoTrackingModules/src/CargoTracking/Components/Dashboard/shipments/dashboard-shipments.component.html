@@ -1,7 +1,7 @@
 <h1>Shipments</h1>
 
 <div class="toolbar">
-
+ 
     <div class="search-bar">
         <form [formGroup]="searchForm" (ngSubmit)="Search()">
 
@@ -24,25 +24,25 @@
         </form>
     </div>
 
-    <div class="filters">
+    <div class="filters hide-mobile">
         <ul class="toolbar-filters">
             <li *ngFor="let filter of SearchFilters" (click)="SelectFilter(filter)">{{filter.Name}} ({{filter.Count}})</li>
             <li class="toggle-menu">
                 Company
-                <ul class="menu-drawer">
+                <ul class="menu-drawer"> 
                     <li>Company 1</li>
-                    <li>Company 2</li>
+                    <li>Company 2</li> 
                 </ul> 
             </li>
         </ul>
     </div>
-
-    <div class="actions-buttons">
-        <div><img src="./assets/images/icons/filter.png" alt=" " /></div>
-        <div><img src="./assets/images/icons/ascending-sort.png" alt=" " /></div>
+    <div class="actions-buttons hide-mobile">
+        <div><img src="./assets/images/icons/filter@1x.png" alt=" " /></div>
+        <div><img src="./assets/images/icons/sort@1x.png" alt=" " /></div>
     </div>
 
 </div>
+<div class="clearFix hide-mobile"></div>
 
 <div class="selected-filters" *ngIf="SelectedFilters.length > 0">
     <ul>
@@ -60,11 +60,12 @@
 
 <!-- No Result -->
 <div class="no-result-div" *ngIf="noResult">
-    <h1>We couldn't find the shipment you were looking for...</h1>
+    <img src="./assets/images/misc/No results@1x.png" alt=" " />
+    <div class="title">There are no search results</div>
     <p>
-        Please check your input or use a different reference. Make sure to enter the entire reference - or choose your shipment from the search suggesions we provide.
+        Make sure to enter the entire reference - or choose your shipment from the search suggestions we provide.
+        Just start typing to start your new search.
     </p>
-    <p>Just start typing to start your new search.</p>
 
 </div>
 
@@ -115,7 +116,7 @@
                 <div>
                   <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">Reference NO.</div>
                     <div class="truncateText" *ngFor="let item of references; let i = index">
-                       <span [ngClass]="{'hide-mobile': i > 1}" >
+                       <span [ngClass]="{'hide-mobile': i > 0}" >
                           {{item}}  
                        </span>
                     </div>
@@ -133,8 +134,8 @@
                     </div>
 
 
-                    <div class="subtitle">Destination Port</div>
-                    <div   class="value uppercase truncateText">
+                    <div class="subtitle hide-mobile">Destination Port</div>
+                    <div   class="value uppercase truncateText hide-mobile">
                         <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} , {{shipment.ToPortCountryCode}}
                     </div>
 
@@ -191,8 +192,8 @@
                     <div   class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
 
 
-                    <div class="subtitle">Last Updated</div>
-                    <div class="value">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                    <div class="subtitle hide-mobile">Last Updated</div>
+                    <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
                 </div>
             </div>
         </div>
