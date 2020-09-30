@@ -20,7 +20,7 @@ import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favor
         AppComponent,
         ShipmentComponent,
         SearchComponent,
-        BusyIndicator
+        BusyIndicator,
         PublicGateComponent,
         
         // Dashboard
