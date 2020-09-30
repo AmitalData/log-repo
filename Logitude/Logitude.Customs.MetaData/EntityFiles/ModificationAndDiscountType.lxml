@@ -622,6 +622,16 @@
         IndexOrder="3"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ModificationAndDiscountType&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;IsRelevantGoodsItem&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ModificationAndDiscountType&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsRelevantInvoice&quot;"
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />
   </Query>

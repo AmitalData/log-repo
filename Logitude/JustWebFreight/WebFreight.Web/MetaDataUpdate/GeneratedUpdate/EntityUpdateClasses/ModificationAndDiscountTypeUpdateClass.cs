@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ModificationAndDiscountTypeUpdateClass
    {  		
-		public const string HashString = "24af1569ad970d55f130ff921cebab11";
+		public const string HashString = "6bee1bfc5d2b0321fb4e74211c77d142";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -610,6 +610,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ModificationAndDiscountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ModificationAndDiscountType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn ModificationAndDiscountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ModificationAndDiscountType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantGoodsItem" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantInvoice" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

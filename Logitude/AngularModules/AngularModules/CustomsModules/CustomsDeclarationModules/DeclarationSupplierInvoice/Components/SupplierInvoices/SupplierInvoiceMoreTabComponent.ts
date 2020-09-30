@@ -64,8 +64,10 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
       this.TypeCodeFilterItems.addAdditionalFilter("SearchFields", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
 
 
-      this.TypeCodeFilterItems = new ApiQueryFilters();
-      this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
+      this.TypeCodeFilterItems = new ApiQueryFilters(); 
+        this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
+        //this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean");
+        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", "true", null, null, "Equals", false, false, false, "string");
 
     }
 

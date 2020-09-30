@@ -40,6 +40,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     public ValidationErrorsList: any[] = [];
     public OriginalItemPM: SupplierInvoiceItemPM; 
     public ClonedItemPM: SupplierInvoiceItemPM;
+    public TypeCodeFilterItems: ApiQueryFilters;
 
     //public OriginalItemPM: SupplierInvoiceItemPM; // screen bindingObjectsLocator 
 
@@ -73,6 +74,8 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
+            this.TypeCodeFilterItems = new ApiQueryFilters(); 
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", "true", null, null, "Equals", false, false, false, "string");
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
