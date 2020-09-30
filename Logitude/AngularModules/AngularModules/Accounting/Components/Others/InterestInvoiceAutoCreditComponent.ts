@@ -155,9 +155,10 @@ export class InterestInvoiceAutoCreditComponent extends BaseComponent {
     }
    
     CancelButtonClicked() {
-        if (this.ValidationErrorsList.length > 0) {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        }
+        //if (this.ValidationErrorsList.length > 0) {
+        //    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //}
+        this.interestReportPM.IsDirty = false;
         this.CurrentSession.CurrentWindow.Close("Cancel");
     }
 }
