@@ -56,6 +56,8 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.CustomsBookTypeFilterItems = new ApiQueryFilters();
         this.CustomsBookTypeFilterItems.addAdditionalFilter("Code", "2", null, null, "Exclude", false, false, false, "string", false, true);
+        this.TypeCodeFilterItems = new ApiQueryFilters();
+        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean");
 
         this.BuildTabs();
 
@@ -74,8 +76,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
-            this.TypeCodeFilterItems = new ApiQueryFilters(); 
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", "true", null, null, "Equals", false, false, false, "string");
+         
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
