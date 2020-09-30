@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;b47c&quot;"
+  Code="&quot;dc2e&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5172,6 +5172,12 @@
       Code="&quot;General.MH.Notifications&quot;"
       DefaultText="&quot;Notifications&quot;"
       LocalDefaultText="&quot;מרכז התראות&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.CourierMaster&quot;"
+      DefaultText="&quot;Courier Master&quot;"
+      LocalDefaultText="&quot;בלדר ראשי&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

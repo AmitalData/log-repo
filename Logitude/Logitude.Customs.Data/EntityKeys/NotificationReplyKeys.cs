@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return NotificationId+'_'+Line;
+                 return NotificationId+'_'+Line ;
+                 
       }
 
       public override string GetEntityPMName()

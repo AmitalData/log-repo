@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.TotalInvoiceAmountInUSD).HasColumnName("TotalInvoiceAmountInUSD").HasPrecision(16, 2);
 
-            this.Property(t => t.CourierPendingReasonCode).HasColumnName("CourierPendingReasonCode").HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.CourierPendingReasonCode).HasColumnName("CourierPendingReasonCode").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PendingRemarks).HasColumnName("PendingRemarks").HasMaxLength(1024).IsUnicode(true);
 

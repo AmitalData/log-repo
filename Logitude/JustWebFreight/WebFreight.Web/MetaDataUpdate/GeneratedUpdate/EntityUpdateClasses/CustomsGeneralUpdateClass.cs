@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "3b0d658d9acc7ffc21402154a972b380";
+		public const string HashString = "af7f342948d150b444ebf8735eca226e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "b47c",
+			      				    Code =  "dc2e",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2003,6 +2003,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_GeneralMHProceduralFaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ProceduralFaults", DefaultText = "Procedural Faults",LocalDefaultText = @"ליקויים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMHNotifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Notifications", DefaultText = "Notifications",LocalDefaultText = @"מרכז התראות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHCourierMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CourierMaster", DefaultText = "Courier Master",LocalDefaultText = @"בלדר ראשי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
