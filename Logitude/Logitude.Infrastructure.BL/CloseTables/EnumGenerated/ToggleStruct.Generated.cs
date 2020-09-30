@@ -24,9 +24,9 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string CardSearchsToggle = "CST";  
        public const string ShipmentSubType = "SUB";  
        public const string Horse = "HRS";  
+       public const string KPIDocumentFields = "KPI";  
        public const string StoragePricing = "STR";  
-       public const string OceanInsightsV2 = "OI2"; 
-       public const string KPIDocumentFields = "KPI"; 
+       public const string OceanInsightsV2 = "OI2";  
        public const string ShipmentWarningCheckbox = "SWC";  
        public const string AMSinExport = "AMS";  
        public const string APIUpdate = "API";  
