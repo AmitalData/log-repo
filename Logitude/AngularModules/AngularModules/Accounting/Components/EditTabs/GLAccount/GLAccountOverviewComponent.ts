@@ -157,6 +157,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard"); 
     Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards"); 
 
+    private LoadExternalTransactionTotal()
+    {
+        this._GLAccountExtendedListService.GetGLAccountExternalTransactionsTotal(this.AccountPM.Id).subscribe((myResult: any) =>
+        {
+            console.log("GetAccountOpenTransactionsCount", myResult);
+            var result: ServiceResponse = myResult;
+            if (!result.HasError) {
+                this.externalTransactionsTotal = result.Result || 0;
+            }
+            else {
+            }
+        });
+    }
+
     GetDefaultValues() {
 
         // Get GLAccountMoreData
@@ -641,8 +655,11 @@ export class GLAccountOverviewComponent extends BaseComponent {
     creditPercentage:number = 0;
     accountTotal: number = 0;
     creditStatusAmount: number = 0;
+    externalTransactionsTotal: number = 0;
     LoadCreditDetailsData(){
 
+
+        this.LoadExternalTransactionTotal();
 
         console.log("LoadCreditDetailsData");
 

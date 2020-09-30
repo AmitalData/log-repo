@@ -711,7 +711,37 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-    
+
+        public HttpResponseMessage GetGLAccountExternalTransactionsTotal(string accountId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
+
+                var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(accountId, tenant).ToList();
+                var externalTransactionsTotal = externalTransactions.Sum(d=>d.LocalAmountCredit);
+
+                return Request.CreateResponse(HttpStatusCode.OK, externalTransactionsTotal);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            string loggedUserEmail = authToken.Email;
+            int tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            return tenant;
+        }
     }
 
     class MyPeriodM
