@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2123&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2757,6 +2758,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;9816888d-b075-4cf1-9169-03e03697c54d&quot;"
+    FieldName="&quot;InvoiceDate&quot;"
+    OldNames="InvoiceDate"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;InterestReport&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;InvoiceDate&quot;"
+    ListPropertyPath="&quot;InvoiceDate&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;InvoiceDate&quot;"
+    DefaultText="&quot;InvoiceDate&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Interest Report&quot;"
     TextCode="&quot;Interest Report&quot;"
@@ -3339,14 +3409,12 @@
       LocalDefaultText="&quot;נא לאשר סגירת דוחות ללא הפקת חשבוניות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;InterestReport.O.AttachReportWithEachInvoice&quot;"
       DefaultText="&quot;Attach Report with Each Invoice&quot;"
       LocalDefaultText="&quot;צרף פירוט ריבית להדפסה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;InterestReport.O.on&quot;"
       DefaultText="&quot;on&quot;"
@@ -3369,6 +3437,8 @@
       IsSpellChecked="false" />
 
     <TextCode
+
+    <TextCode
       Code="&quot;InterestReport.O.UpdatingInvoicepermitted&quot;"
       DefaultText="&quot;Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;"
       LocalDefaultText="&quot;ניתן לעדכן דוח רק כאשר הסטאטוס של הדוח &quot;הוא &quot;טיוטה&quot; או &quot;נכשל&quot;"
@@ -3380,7 +3450,24 @@
       LocalDefaultText="&quot;יש לאשר חישוב מחדש של הדוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;InterestReport.O.EnterCreditInvoiceDate&quot;"
+      DefaultText="&quot;Enter Credit Invoice Date&quot;"
+      LocalDefaultText="&quot;הקלד תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.RequiedCreditInvoiceDate&quot;"
+      DefaultText="&quot;The credit invoice date is required&quot;"
+      LocalDefaultText="&quot;חובה להקליד תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CreditInvoiceDate&quot;"
+      DefaultText="&quot;Credit Invoice Date&quot;"
+      LocalDefaultText="&quot; תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
