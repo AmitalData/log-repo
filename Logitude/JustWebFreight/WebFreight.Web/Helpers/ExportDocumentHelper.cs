@@ -52,6 +52,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.AccountingModel.Reports.Interest;
 using Simplog.Data.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Helpers
 {

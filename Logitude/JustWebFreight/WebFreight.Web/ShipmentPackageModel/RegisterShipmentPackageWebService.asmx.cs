@@ -164,7 +164,6 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.ETD = shipment.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETD) : "";
                 provider.ETA = shipment.MainCarriageFinalDestinationETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageFinalDestinationETA) : "";
                 provider.MasterNumber = !string.IsNullOrEmpty(shipment.MasterNumber) ? shipment.MasterNumber : "";
-                provider.Vessel_Voyage = !string.IsNullOrEmpty(shipment.Vessel_Voyage) ? shipment.Vessel_Voyage : "";
                 provider.Status = !string.IsNullOrEmpty(shipment.StatusName) ? shipment.StatusName : "";
                 provider.AgentName = !string.IsNullOrEmpty(shipment.AgentName) ? shipment.AgentName : "";
                 provider.CustomerName = !string.IsNullOrEmpty(shipment.CustomerName) ? shipment.CustomerName : "";
@@ -574,6 +573,8 @@ namespace WebFreight.Web.ShipmentPackageModel
                     provider.Type = "";
                 }
 
+                provider.Vessel_Voyage = shipment.Voyage;                
+
                 if (!string.IsNullOrEmpty(shipment.VesselId))
                 {
                     VesselRepository rep = new VesselRepository(tenant);
@@ -582,6 +583,16 @@ namespace WebFreight.Web.ShipmentPackageModel
                     if (vessel != null)
                     {
                         provider.VesselName = vessel.EnglishName;
+
+                        if (string.IsNullOrEmpty(provider.Vessel_Voyage))
+                        {
+                            provider.Vessel_Voyage = vessel.EnglishName;
+                        }
+
+                        else
+                        {
+                            provider.Vessel_Voyage = vessel.EnglishName + " - " + shipment.Voyage;
+                        }
                     }
                 }
 

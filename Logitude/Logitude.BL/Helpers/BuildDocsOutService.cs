@@ -1,16 +1,18 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using WebFreight.Web.DataContracts;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebFreight.Web.Helpers
+namespace Logitude.BL.Helpers
 {
     public class BuildDocsOutService
     {
@@ -67,14 +69,37 @@ namespace WebFreight.Web.Helpers
 
         private void SendQueueService(ExportDocumentArgs args)
         {
-            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-            DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(args);
+            
+            DocumentsExecutionLog documentsExecutionLog = GetNewInStanceFromDocumentsExecutionLog(args);
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
             queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, documentsExecutionLog.Tenant, null, null, null, null);
         }
+
+
+        public DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
+        {
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(exportDocumentArgs.Tenant);
+            DocumentsExecutionLog documentsExecutionLog = new DocumentsExecutionLog()
+            {
+                Id = IdCounter.GetNumber("DocumentsExecutionLog", exportDocumentArgs.Tenant).ToString(),
+                Tenant = exportDocumentArgs.Tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = exportDocumentArgs.LoggedContactId,
+                RequestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocumentArgs),
+                StatusCode = "W",
+                DocumentTypeId = exportDocumentArgs.DocumentTypeId,
+                DocumentTypeTemplateId = exportDocumentArgs.DocumentTypeTemplateId,
+                Subject = exportDocumentArgs.DocumentTypeName,
+            };
+            documentsExecutionLogRepository.Add(documentsExecutionLog);
+            documentsExecutionLogRepository.SubmitChanges();
+
+            return documentsExecutionLog;
+        }
     }
 
+   
     public class BuildDocsOutArgs
     {
         public string DocumentTypeId { get; set; }
@@ -86,7 +111,7 @@ namespace WebFreight.Web.Helpers
         public string LoggedUserId { get; set; }
         public string ChildObjectTableId { get; set; }
 
-        
+
 
 
     }

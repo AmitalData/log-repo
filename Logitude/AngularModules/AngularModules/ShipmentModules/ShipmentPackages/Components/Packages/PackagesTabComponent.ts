@@ -1260,41 +1260,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (this.TransportModeId == "A") {
             allPackages.forEach(item => {
-
-                var matchedItem = this.EntityPM.ShipmentPackages.filter(f => f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
-                if (matchedItem != null) {
-
-                    // Quantity
-                    if (AppTool.IsNullOrEmpty(matchedItem.Quantity)) {
-                        matchedItem.Quantity = item.Quantity;
-                    }
-
-                    else {
-                        matchedItem.Quantity = matchedItem.Quantity + item.Quantity;
-                    }
-
-                    // Weight
-                    if (AppTool.IsNullOrEmpty(matchedItem.Weight)) {
-                        matchedItem.Weight = item.Weight;
-                    }
-
-                    else {
-                        matchedItem.Weight = matchedItem.Weight + item.Weight;
-                    }
-
-                    // Volume
-                    if (AppTool.IsNullOrEmpty(matchedItem.Width) || AppTool.IsNullOrEmpty(matchedItem.Height) || AppTool.IsNullOrEmpty(matchedItem.Length)) {
-                        matchedItem.Volume = (matchedItem.Weight * this.EntityPM.Ratio) / 1000;
-                        matchedItem.VolumetricWeight = matchedItem.Weight;
-                    }
-
-                    else {
-                        matchedItem.Volume = (matchedItem.Width * matchedItem.Height * matchedItem.Length * matchedItem.Quantity) / 1000000;
-                        matchedItem.VolumetricWeight = (matchedItem.Volume * 1000) / this.EntityPM.Ratio;
-                    }
-                }
-
-                else {
+                if (!AppTool.IsNullOrEmpty(item.HorseId)) {
                     var newPackage = new ShipmentPackagePM(null);
                     newPackage.ShipmentId = this.EntityPM.Id;
                     newPackage.ClassNumber = item.ClassNumber;
@@ -1304,7 +1270,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.Harmonize = item.Harmonize;
                     newPackage.Height = item.Height;
                     newPackage.IMDGCode = item.IMDGCode;
-                    newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;                    
+                    newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;
                     newPackage.IsContainer = item.IsContainer;
                     newPackage.IsDangerous = item.IsDangerous;
                     newPackage.Length = item.Length;
@@ -1336,6 +1302,85 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.HorseId = item.HorseId;
                     newPackage.HorseName = item.HorseName;
                     this.EntityPM.AddPackage(newPackage);
+                }
+
+                else {
+                    var matchedItem = this.EntityPM.ShipmentPackages.filter(f => AppTool.IsNullOrEmpty(f.HorseId) && f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
+                    if (matchedItem != null) {
+
+                        // Quantity
+                        if (AppTool.IsNullOrEmpty(matchedItem.Quantity)) {
+                            matchedItem.Quantity = item.Quantity;
+                        }
+
+                        else {
+                            matchedItem.Quantity = matchedItem.Quantity + item.Quantity;
+                        }
+
+                        // Weight
+                        if (AppTool.IsNullOrEmpty(matchedItem.Weight)) {
+                            matchedItem.Weight = item.Weight;
+                        }
+
+                        else {
+                            matchedItem.Weight = matchedItem.Weight + item.Weight;
+                        }
+
+                        // Volume
+                        if (AppTool.IsNullOrEmpty(matchedItem.Width) || AppTool.IsNullOrEmpty(matchedItem.Height) || AppTool.IsNullOrEmpty(matchedItem.Length)) {
+                            matchedItem.Volume = (matchedItem.Weight * this.EntityPM.Ratio) / 1000;
+                            matchedItem.VolumetricWeight = matchedItem.Weight;
+                        }
+
+                        else {
+                            matchedItem.Volume = (matchedItem.Width * matchedItem.Height * matchedItem.Length * matchedItem.Quantity) / 1000000;
+                            matchedItem.VolumetricWeight = (matchedItem.Volume * 1000) / this.EntityPM.Ratio;
+                        }
+                    }
+
+                    else {
+                        var newPackage = new ShipmentPackagePM(null);
+                        newPackage.ShipmentId = this.EntityPM.Id;
+                        newPackage.ClassNumber = item.ClassNumber;
+                        newPackage.ContainerNumber = item.ContainerNumber;
+                        newPackage.Description = item.Description;
+                        newPackage.FlashPoint = item.FlashPoint;
+                        newPackage.Harmonize = item.Harmonize;
+                        newPackage.Height = item.Height;
+                        newPackage.IMDGCode = item.IMDGCode;
+                        newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;
+                        newPackage.IsContainer = item.IsContainer;
+                        newPackage.IsDangerous = item.IsDangerous;
+                        newPackage.Length = item.Length;
+                        newPackage.MarksAndNumbers = item.MarksAndNumbers;
+                        newPackage.MaterialDescription = item.MaterialDescription;
+                        newPackage.PackageTypeId = item.PackageTypeId;
+                        newPackage.PackageTypeName = item.PackageTypeName;
+                        newPackage.PackagingGroup = item.PackagingGroup;
+                        newPackage.Quantity = item.Quantity;
+                        newPackage.ShipperSeal = item.ShipperSeal;
+                        newPackage.CarrierSeal = item.CarrierSeal;
+                        newPackage.SOC = item.SOC;
+                        newPackage.Tare = item.Tare;
+                        newPackage.Temperature = item.Temperature;
+                        newPackage.Tenant = item.Tenant;
+                        newPackage.UnNumber = item.UnNumber;
+                        newPackage.Ventilation = item.Ventilation;
+                        newPackage.Volume = item.Volume;
+                        newPackage.VolumetricWeight = item.VolumetricWeight;
+                        newPackage.Weight = item.Weight;
+                        newPackage.Width = item.Width;
+                        newPackage.OriginalShipmentPackageId = item.Id;
+                        newPackage.Reference1 = item.Reference1;
+                        newPackage.Reference2 = item.Reference2;
+                        newPackage.Reference3 = item.Reference3;
+                        newPackage.Reference4 = item.Reference4;
+                        newPackage.CommodityNumber = item.CommodityNumber;
+                        newPackage.CommodityName = item.CommodityName;
+                        newPackage.HorseId = item.HorseId;
+                        newPackage.HorseName = item.HorseName;
+                        this.EntityPM.AddPackage(newPackage);
+                    }
                 }
             });
         }

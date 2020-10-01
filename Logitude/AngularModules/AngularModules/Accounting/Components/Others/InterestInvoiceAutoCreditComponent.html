@@ -1,0 +1,74 @@
+
+
+<table *ngIf="IsVisibile">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 200px;">
+                                    <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [Text]="InvoiceDateText"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+
+                                <td style="width: 140px;">
+                                    <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td style="width:70px;"><div></div></td>
+                            </tr>
+
+
+
+                            <tr style="height:5px"><td><div></div></td></tr>
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+       
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

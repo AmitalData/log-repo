@@ -15,6 +15,7 @@ using System.Threading;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {

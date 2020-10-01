@@ -648,22 +648,35 @@ export class PartnerItem extends BaseComponent {
         }
     }
     EditPartnerClicked() {
-        var objectTableName: string = null;
-        objectTableName = "Customer";
-        if (objectTableName != null) {
-            var logWindow = new LogitudeWindow();
-            logWindow.Title = "Edit " + this.PartnerTypeName;
-            logWindow.IsFillScreen = true;
-            logWindow.ShowEditComponent(this.PartnerId, objectTableName);
 
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
+        var myService = this.fatherComponent.CardListService;
+        myService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                var list: CardList = myResponse.Result;
+                var objectTableName: string = list.PartnerTypeName;
+                if (objectTableName != null) {
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Title = "Edit " + objectTableName;
+                    logWindow.IsFillScreen = true;
+                    logWindow.ShowEditComponent(this.PartnerId, objectTableName);
 
-                    this.PartnerName = comp.EntityPM.EnglishName;
-                    this.GetPartnerAddress();
-                });
-            });
-        }
+                    logWindow.ComponentLoaded.subscribe(comp => {
+                        logWindow.WindowClosed.subscribe(s => {
+
+                            this.PartnerName = comp.EntityPM.EnglishName;
+                            this.GetPartnerAddress();
+                        });
+                    });
+                }
+            }
+        });
+
+
+
+
+
+
+
     }
 
     public IsReseting: boolean = false;

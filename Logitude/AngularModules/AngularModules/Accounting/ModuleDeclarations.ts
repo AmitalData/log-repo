@@ -15,6 +15,7 @@ import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
 import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
 import { InvoiceDateForBatchInvoicesComponent } from './Components/Others/InvoiceDateForBatchInvoicesComponent';
+import { InterestInvoiceAutoCreditComponent } from './Components/Others/InterestInvoiceAutoCreditComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -213,6 +214,7 @@ export const Components =
         ManageExternalReconciliationTabComponent,
         ExternalPagesTabComponent,
         GLAccountInterestComponent,
+        InterestInvoiceAutoCreditComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -421,7 +423,9 @@ export class ModuleDeclarations {
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
             case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
-            case "BtatchPrintWarningComponent" :{myResult =BtatchPrintWarningComponent; break;}
+            case "BtatchPrintWarningComponent": { myResult = BtatchPrintWarningComponent; break; }
+            case "InterestInvoiceAutoCreditComponent": { myResult = InterestInvoiceAutoCreditComponent; break; }
+            
 
         }
 
