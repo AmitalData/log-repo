@@ -254,41 +254,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             _context = null;
             return req;
         }
-        private Attachment[] GetAttachments(string parentEntityId, int tenant)
-        {
-            List<Attachment> attachments = new List<Attachment>();
-
-
-
-            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = parentEntityId, ParentEntityCode = "SpecialRequest" }, tenant);
-
-            foreach (var customsDocumentPM in customsDocumentPMList)
-            {
-                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                {
-                    var attachment = new Attachment();
-                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
-                    attachment.IsAttachment = "false";
-                    //   attachment.keywords = customsDocumentPM.Name;
-                    //    attachment.fileName = customsDocumentPM.Name;
-
-                    //  attachment.documentType = customsDocumentPM.DocumentTypeCode;
-                    attachments.Add(attachment);
-                }
-            }
-            return attachments.ToArray();
-
-        }
-
-        //private Attachment[] GetAttachments(DeclarationPM declaration)
+        //private Attachment[] GetAttachments(string parentEntityId, int tenant)
         //{
         //    List<Attachment> attachments = new List<Attachment>();
 
 
 
-        //     var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-        //    var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declaration.Id, ParentEntityCode = "DeclarationCancellation" }, declaration.Tenant);
+        //    var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+        //    var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = parentEntityId, ParentEntityCode = "SpecialRequest" }, tenant);
 
         //    foreach (var customsDocumentPM in customsDocumentPMList)
         //    {
@@ -297,16 +270,43 @@ namespace Logitude.CustomsMessaging.RequestServices
         //            var attachment = new Attachment();
         //            attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
         //            attachment.IsAttachment = "false";
-        //            attachment.keywords = customsDocumentPM.Name;
-        //            attachment.fileName = customsDocumentPM.Name;
+        //            //   attachment.keywords = customsDocumentPM.Name;
+        //            //    attachment.fileName = customsDocumentPM.Name;
 
-        //            attachment.documentType = customsDocumentPM.DocumentTypeCode;
+        //            //  attachment.documentType = customsDocumentPM.DocumentTypeCode;
         //            attachments.Add(attachment);
         //        }
         //    }
         //    return attachments.ToArray();
 
         //}
+
+        private Attachment[] GetAttachments(DeclarationPM declaration)
+        {
+            List<Attachment> attachments = new List<Attachment>();
+
+
+
+            var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declaration.Id, ParentEntityCode = "DeclarationCancellation" }, declaration.Tenant);
+
+            foreach (var customsDocumentPM in customsDocumentPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                {
+                    var attachment = new Attachment();
+                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                    attachment.IsAttachment = "false";
+                    //attachment.keywords = customsDocumentPM.Name;
+                    //attachment.fileName = customsDocumentPM.Name;
+
+                   // attachment.documentType = customsDocumentPM.DocumentTypeCode;
+                    attachments.Add(attachment);
+                }
+            }
+            return attachments.ToArray();
+
+        }
 
 
         private int GetNextCancelRequestNumber(DeclarationPM declarationPM)
