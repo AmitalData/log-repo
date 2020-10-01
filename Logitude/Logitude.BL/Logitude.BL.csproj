@@ -418,6 +418,7 @@
     <Compile Include="CommonDataModel\Tools\Validating\TariffCarrierTranslationValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
+    <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -429,6 +430,8 @@
     <Compile Include="GlobalModel\Tools\DataMapping\HelpResourceMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\HelpResourceService.cs" />
     <Compile Include="GlobalModel\Tools\TraceEvents\HelpResourceTracing.cs" />
+    <Compile Include="Helpers\BuildDocsOutService.cs" />
+    <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldAdditionalFactService.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EventTypeCategoryDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />

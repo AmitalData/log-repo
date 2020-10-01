@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
