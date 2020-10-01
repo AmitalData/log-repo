@@ -883,6 +883,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? invoiceDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InvoiceDate  
+	   {
+	    
+	     get
+		{
+		   return invoiceDate;
+		 }
+		 set
+		 {
+		   if(invoiceDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceDate",OldValue=invoiceDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   invoiceDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

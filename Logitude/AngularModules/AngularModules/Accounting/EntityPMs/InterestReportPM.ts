@@ -239,6 +239,11 @@ export class InterestReportPM {
     public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
        
 	 
+    private invoiceDate: Date;
+    public get InvoiceDate() { return this.invoiceDate; }
+    public set InvoiceDate(newValue: Date) { if (this.invoiceDate != newValue) { this.invoiceDate = newValue; this.MarkAsDirty("InvoiceDate"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
