@@ -223,10 +223,22 @@ namespace Logitude.BL.Helpers
                 pdfConverter.PdfFooterOptions.AddElement(footerHtml);
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
 
-
-                TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
-                footerTextElement.TextAlign = HorizontalTextAlign.Right;
-                pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+                if (!setting.HidePageNumber)
+                {
+                    QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PageNumberingTextDesignId).FirstOrDefault();
+                    TextElement footerTextElement = null;
+                    if (quotetemplateTextDesignPMPageNumbering != null)
+                    {
+                        footerTextElement = GetTextElementProperitiesForQuotetemplateTextDesign(quotetemplateTextDesignPMPageNumbering, heightFooter);
+                        pdfConverter.PdfFooterOptions.FooterHeight += Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize) - 7;
+                    }
+                    else 
+                    {
+                        footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+                        footerTextElement.TextAlign = HorizontalTextAlign.Right;
+                    }
+                    pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+                }
 
 
             }
@@ -276,6 +288,27 @@ namespace Logitude.BL.Helpers
             return pdfData;
         }
 
+
+        private TextElement GetTextElementProperitiesForQuotetemplateTextDesign(QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering, float heightFooter)
+        {
+            FontFamily family = new FontFamily(quotetemplateTextDesignPMPageNumbering.FontFamily);
+            bool isBold = quotetemplateTextDesignPMPageNumbering.FontWeight.ToLower() == "bold";
+            bool isItalic = quotetemplateTextDesignPMPageNumbering.Italic;
+            bool isUnderline = quotetemplateTextDesignPMPageNumbering.UnDerLine;
+            Color backGroundColor = System.Drawing.ColorTranslator.FromHtml(quotetemplateTextDesignPMPageNumbering.BackgroundColor);
+            Color ForeColor = System.Drawing.ColorTranslator.FromHtml(quotetemplateTextDesignPMPageNumbering.TextColor);
+            HorizontalTextAlign textAlign = quotetemplateTextDesignPMPageNumbering.Alignment.ToLower() == "right" ? HorizontalTextAlign.Right : quotetemplateTextDesignPMPageNumbering.Alignment.ToLower() == "left" ? HorizontalTextAlign.Left : HorizontalTextAlign.Center;
+            float size = Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize);
+            
+            Font font = new Font(family, size, (isBold ? FontStyle.Bold : FontStyle.Regular) | (isItalic ? FontStyle.Italic : FontStyle.Regular) | (isUnderline ? FontStyle.Underline : FontStyle.Regular), GraphicsUnit.Point);
+
+            TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", font);
+            footerTextElement.TextAlign = textAlign;
+            footerTextElement.BackColor = backGroundColor;
+            footerTextElement.ForeColor = ForeColor;
+
+            return footerTextElement;
+        }
         private  void SetPdfMargins(QuoteTemplateSettingPM setting, PdfDocumentOptions PdfDocumentOptions)
         {
             if (setting != null)
