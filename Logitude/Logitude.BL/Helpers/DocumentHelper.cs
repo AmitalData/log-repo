@@ -23,8 +23,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-
-namespace WebFreight.Web.Helpers
+namespace Logitude.BL.Helpers
 {
     public class DocumentHelper
     {
@@ -144,8 +143,8 @@ namespace WebFreight.Web.Helpers
             foreach (TenantList tenant in tenantList)
             {
                 DocumentRepository documentRepository = new DocumentRepository(0);
-                List<Document> documentsList = documentRepository.GetDocuments(tenant.Id).Where(d =>!d.IsEncrypted).ToList();
-     
+                List<Document> documentsList = documentRepository.GetDocuments(tenant.Id).Where(d => !d.IsEncrypted).ToList();
+
                 foreach (Document document in documentsList)
                 {
                     try
@@ -166,16 +165,16 @@ namespace WebFreight.Web.Helpers
                         {
                             fileInfo.IsEncrypted = true;
                             storageservice.Write(fileData, fileInfo);
-              
+
                             using (SqlConnection cn = new SqlConnection(strConnString))
                             {
-                                string cmd = "Update Documents set IsEncrypted=1 , HasFile =1 where id =" + "'"+ document.Id+ "' and tenant ="+ document.Tenant;
+                                string cmd = "Update Documents set IsEncrypted=1 , HasFile =1 where id =" + "'" + document.Id + "' and tenant =" + document.Tenant;
                                 SqlCommand sqlCommand = new SqlCommand(cmd, cn);
                                 cn.Open();
                                 sqlCommand.ExecuteNonQuery();
                                 cn.Close();
                             }
-             
+
                         }
 
                     }
@@ -204,7 +203,7 @@ namespace WebFreight.Web.Helpers
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;
