@@ -28,7 +28,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentTypeName { get; set; }
         public DateTime? MainCarriageFinalDestinationETA { get; set; } //ETA
         public string MasterNumber { get; set; }
-        public string Vessel_Voyage { get; set; } //main carriage carrier number
+        public string Voyage { get; set; } //main carriage carrier number
         public string StatusName { get; set; }
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }

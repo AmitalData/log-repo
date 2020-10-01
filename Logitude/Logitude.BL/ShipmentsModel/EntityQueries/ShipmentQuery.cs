@@ -10807,7 +10807,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipmentTypeName = shipment.ShipmentType != null ? shipment.ShipmentType.Name : null,
                      MainCarriageFinalDestinationETA = m.MainCarriageFinalDestinationETA,
                      MasterNumber = m.Master,
-                     Vessel_Voyage = m.MainCarriageCarrierNumber,
+                     Voyage = m.MainCarriageCarrierNumber,
                      StatusName = shipment.EntityStatus.Name,
                      AgentReference1 = shipment.AgentReference1,
                      AgentReference2 = shipment.AgentReference2,
