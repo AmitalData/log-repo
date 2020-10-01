@@ -33,6 +33,7 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using WebFreight.Web.CustomWebServices;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.WebServices
 {
