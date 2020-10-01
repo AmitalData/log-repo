@@ -103,8 +103,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
+                    if (customResponse.Response.Declaration != null)
                     _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false,isUpdateAfterAccept:true);
-
+                
                 }
                 else
                 {
@@ -114,8 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
                         _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
-
-                   
+ 
                     }
 
                     else if(customResponse.Response.Declaration!= null)
@@ -197,10 +197,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
                 using (var disposableToken =
-                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
+                ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
                     )
                 {
-                    foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
+ 
+                foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
                     {
                         switch (additionalInformation.StatementTypeCode.Value)
                         {
@@ -411,8 +412,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     break;
                                 }
                         }
-                    }
-
+                   }
+ 
                     if (customResponse.Response.Error != null && (!new string[]{ "3","6"}.Contains( _MyDeclarationPM.AmendmentStatus)))
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
@@ -501,6 +502,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.UserNotes = "LoadTest";
                         }
 
+ 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 

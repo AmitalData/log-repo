@@ -28,6 +28,8 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO
 using Logitude.Customs.BL.BL;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -147,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
                 isFromImporter = FromImporter;
 
-
+                List<SupplierInvoicePM> invoicePMs = new List<SupplierInvoicePM>(); ;
 
                 DeclarationPM declarationPM;
 
@@ -201,17 +203,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                  
                     declarationPM = myQueryService.GetSingle(idOrg, true,false);
- 
+
 
                     //if(isUpdateAfterAccept)
                     //{
-                          
+
                     //    declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
                     //    //declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     //    //declarationUpdateService.Update(declarationPM,true);
                     //    declarationPM = myQueryService.GetSingle(idOrg, true, false);
                     //}
 
+                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
+
+                    invoicePMs = GetSupplierInvoices(declaration, tenant, context, declarationId2, declarationOrg);
+                    DeleteSomeObjects(declarationPM,tenant,context);
 
 
                     declarationPM.DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID);
@@ -264,33 +270,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SetImporters(ref declarationPM, declaration, tenant, context);
                 }
 
-                declarationUpdateService.Update(declarationPM, true);
+                context = CustomContext.GetContext(tenant);
+                declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+ 
+                    declarationUpdateService.Update(declarationPM, true);
+                
 
 
+ 
                 string declarationId;
                 if (declarationOrg != null)
                     declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
                 else
                     declarationId = declarationPM.Id;
 
-                if(isUpdateAfterAccept)
-                { 
-                var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
-                var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
-                                                                                                                                                                                      //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
-
-                var myDeclarationKeys = new DeclarationKeys { Id = _MyDeclarationPM.Id };
-                myDeclarationTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
-                mySupplierInvoiceItemVehicleModUpdateService.FastDeleteComposition(myDeclarationKeys);
-                mySupplierInvoiceItemsTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
-                mySupplierInvoiceItemModVehicleUpdateService.FastDeleteComposition(myDeclarationKeys);
-                }
+            
                 declarationPM.DeclarationTaxes = GetDeclarationTaxesPM(declaration, declarationOrg, declarationId, tenant);
 
+                if(isUpdateAfterAccept)
+                {
+                    declarationPM.SupplierInvoices = invoicePMs;
 
+                }
+
+                else
+                {
                 declarationPM.SupplierInvoices = GetSupplierInvoices(declaration, tenant, context, declarationId, declarationOrg);
+
+                }
                 declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 declarationPM.Consignments.ForEach(x => x.ChangeSetOp = ChangeSetOperation.None);
                 declarationUpdateService.Update(declarationPM, true);
@@ -330,6 +338,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private void DeleteSomeObjects(DeclarationPM declarationPM, int tenant, ICustomContext context)
+        {
+
+
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
+            declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
+            declarationUpdateService.DeclarationSupplierInvoicesFastDelete(declarationPM, context);
+            
+                var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
+                var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
+                                                                                                                                                                        //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                var myDeclarationKeys = new DeclarationKeys { Id = declarationPM.Id };
+                myDeclarationTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemVehicleModUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemsTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
+                mySupplierInvoiceItemModVehicleUpdateService.FastDeleteComposition(myDeclarationKeys);
+            
+            (context as DbContextBase).SaveChanges();
+
+
+        }
 
         private void SetImporters(ref DeclarationPM declarationPM, Declaration declaration, int tenant, ICustomContext context)
         {
@@ -484,12 +516,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (declaration.GoodsShipment[0].Consignment == null || declaration.GoodsShipment[0].Consignment.Count() == 0) return null;
 
 
-            if (declarationPM != null && _isUpdateAfterAccept && declarationPM.Consignments != null & declarationPM.Consignments.Count() > 0)
-            {
-                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
-                declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
+            //if (declarationPM != null && _isUpdateAfterAccept && declarationPM.Consignments != null & declarationPM.Consignments.Count() > 0)
+            //{
+            //    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
+            //    declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
+            //    (context as DbContextBase).SaveChanges();
 
-            }
+            //}
 
             List<ConsignmentPM> consignmentPMs = new List<ConsignmentPM>();
             foreach (var consignment in declaration.GoodsShipment[0].Consignment)
@@ -651,8 +684,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if(_isUpdateAfterAccept)
             {
-                var declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
-                declarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, context);
+                //var declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
+                //declarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, context);
             }
 
 
