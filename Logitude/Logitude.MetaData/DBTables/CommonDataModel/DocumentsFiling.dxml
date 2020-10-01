@@ -444,4 +444,8 @@
     Columns="Tenant,SecurityId" />
   <Index
    Columns="CreateDate" />
+  <Index
+    Columns="EntityId,ChildEntityId"  />
+ <Index
+    Columns="ChildEntityId" />
 </Table>

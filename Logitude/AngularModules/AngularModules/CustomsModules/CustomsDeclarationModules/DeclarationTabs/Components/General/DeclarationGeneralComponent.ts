@@ -100,11 +100,16 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     this.checkImportersVisibility();
                                                     this.DisplayOnlyCheck();
                                                     this.CheckRequrierdFieldsForSend();
-                                                    
+
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
                                                     if (this.EntityPM.Direction != "E") {
                                                         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
 
+                                                    }
+                                                    if (this.EntityPM.Direction == "E") {
+                                                        SessionLocator.SelectedSession.ChangeSessionHeader({ Text: "הצהרות יצוא" });
+                                                    } else {
+                                                        SessionLocator.SelectedSession.ChangeSessionHeader({ Text: "הצהרות יבוא" });
                                                     }
                                                 }
                                             });

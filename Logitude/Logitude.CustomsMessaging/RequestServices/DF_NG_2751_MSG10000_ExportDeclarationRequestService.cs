@@ -1544,7 +1544,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             foreach (var suppInvoiceItemsAbachStatement in suppInvoiceItemsAbachStatements)
             {
                 DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement dangerousGoodsStatement = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement();
-                dangerousGoodsStatement.SequenceNumeric = dangerousGoodsStatement.SequenceNumeric;
+                dangerousGoodsStatement.SequenceNumeric =Convert.ToInt32( suppInvoiceItemsAbachStatement.SequenceNumeric);
                 dangerousGoodsStatement.StatementType = SetIDTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatementStatementType>(suppInvoiceItemsAbachStatement.StatementTypeCode);
                 dangerousGoodsStatement.DangerousGoodsStatementInd = new DangerousGoodsStatementIndType() { Value = suppInvoiceItemsAbachStatement.IsStatementInd}; //change to StatementInd field 
                 dangerousGoodsStatements.Add(dangerousGoodsStatement);

@@ -16,7 +16,11 @@ namespace Logitude.Customs.Data.Repsitories
 {
    public partial class CustomsDocumentPointerRepository:IRepository<CustomsDocumentPointer>
    {
-        
+
+        public CustomsDocumentPointerRepository()
+        {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+        }
 		public List<CustomsDocumentPointer> GetMulti(EntityKeyFields entityKeys)
         {
             
@@ -46,6 +50,8 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<CustomsDocumentPointer> GetQParentDocumentPointer(string parentEntityId, string parentEntityCode, int tenant)
         {
+           
+
             return (from a in context.CustomsDocumentPointers
                     where (a.ParentEntityId == parentEntityId && a.ParentEntityCode == parentEntityCode)
                     && a.Tenant == tenant
