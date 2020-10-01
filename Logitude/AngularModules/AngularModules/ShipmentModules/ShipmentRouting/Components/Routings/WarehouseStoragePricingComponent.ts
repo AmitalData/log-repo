@@ -95,7 +95,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set ChargeStorageCurrencyId(newValue: string) {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
-            this.PricesChanged = true;
+            //this.PricesChanged = true;
         }
     }
 
