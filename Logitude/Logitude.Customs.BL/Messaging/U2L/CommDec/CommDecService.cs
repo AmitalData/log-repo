@@ -622,7 +622,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void UpdateNoIdUnder150()
         {
-            if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150 && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 if (_CourierMasterPM != null)
                 {
@@ -634,18 +640,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
                         if (defValue == "Y")
                         {
-                            {
-                                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
-                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
-                                declarationUpdateService.Update(this._MyDeclarationPM, true);
-                                _context = CustomContext.GetContext(ResolvedTenant());
-                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                            }
-                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
-                            {
-                                this._MyDeclarationPM.ImporterCode = null;
-                            }
+                            this._MyDeclarationPM.ImporterCode = null;
                         }
                     }
                 }
