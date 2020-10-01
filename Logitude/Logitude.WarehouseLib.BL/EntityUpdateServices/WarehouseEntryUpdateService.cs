@@ -85,7 +85,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                     {
                         if (entryPackage.OverManifest > 0)
                         {
-                            overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity - entryPackage.OverManifest);
+                            overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity);
                         }
                     });
 

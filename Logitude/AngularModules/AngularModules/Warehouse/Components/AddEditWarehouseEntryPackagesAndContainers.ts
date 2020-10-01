@@ -246,7 +246,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     ChargeableWeightUnitCode: string;
     GrossWeightUnitCode: string;
     IsDependencyFilter2Value: boolean;
-    IsBondedWarehouse: boolean = false;
+    IsCFSWarehouse: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
     public IsVehicleDetails: boolean = false;
 
@@ -261,7 +261,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
         this.IsDependencyFilter2Value = this.EntityPM.IsContainer;
         this.ReleasesNumber = this.EntityPM.ReleasesNumber;
-        this.IsBondedWarehouse = this.FatherComponent.IsBondedWarehouse;
+        this.IsCFSWarehouse = this.FatherComponent.IsCFSWarehouse;
 
         this.SetLabel();
         this.SetUIProperties();
@@ -334,7 +334,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, !this.IsBondedWarehouse);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, !this.IsCFSWarehouse);
         this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 
