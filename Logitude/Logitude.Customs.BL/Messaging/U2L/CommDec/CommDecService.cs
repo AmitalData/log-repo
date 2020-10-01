@@ -635,7 +635,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
                         if (defValue == "Y")
                         {
-                            if(this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert || (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount))
+                            if(this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
                             {
                                 ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
                                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
@@ -1159,6 +1159,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
             else
             {
+                this._SupplierInvoiceAmount = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault();
                 AppendLogLine("Unknown state of Invoice update, Invoice will not be Updated..");
                 return;
             }
