@@ -845,6 +845,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
+                case "ERLR":
+                    {
+                        ExternalReconciliationLinesReportManager ExternalReconciliationManager = new ExternalReconciliationLinesReportManager(filters, reportFliter.tenant);
+                        dataProvider = ExternalReconciliationManager.GetData();
+                        break;
+                    }
                 case "UPTR":
                     {
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
@@ -1833,6 +1839,15 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ShipperReturns", Name = "ShipperReturnsDataProvider", BusinessObjectValue = reportDataProvider };
                         
+                        break;
+                    }
+
+                case "ERLR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ExternalReconciliationLinesReportDataProvider));
+                        ExternalReconciliationLinesReportDataProvider reportDataProvider = (ExternalReconciliationLinesReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
 

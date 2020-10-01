@@ -61,22 +61,36 @@
                         <!-- from date -->
                         <td style="width:10px"></td>
                         <td style="width: 75px;">
-                            {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
+                          REF Date From:
                         </td>
 
                         <td style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext"  [SelectedDateValue]="FromDate"></LogDatePicker>
+                          <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
                         <td style="width:20px;"></td>
                         <!-- ToDate -->
                         <td style="width:10px"></td>
                         <td style="width: 70px;">
-                            {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
+                          REF To:
                         </td>
 
                         <td style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext"  [SelectedDateValue]="ToDate"></LogDatePicker>
+                          <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td style="width:20px;"></td>
+                        <!-- ToDate -->
+                        <td style="width:10px"></td>
+
+                        <td style="width:150px;">
+                          <LogLabel [NoObjectField]="true" [Text] ="'Includes Transfer Glaccount'"
+                          [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:20px;">
+                          <CheckBox [IsChecked]="IncludesTransferGlaccount"
+                                                          (Checked)="IncludesTransferGlaccount = $event"></CheckBox>
                         </td>
 
                         <td></td>
@@ -97,33 +111,42 @@
                 <table>
                   <tr>
                     <td style="width:10px"></td>
-                    <td style="width:70px">{{'Accounting.General.O.Level' | TextCodeTranslationPipe}}</td>
-
-                    <!--<td style="width:180px;">
-
-
-      <div class="RadioButton" style="width:100px;">
-          <input [attr.id]="chartofaccounttypeHtmlinputId" type="radio" (click)="Level = 'ChartOfAccountType'" name="levelRadio" [checked]="true" />
-          <label [attr.for]="chartofaccounttypeHtmlinputId" style="font-size: 12px">
-              {{'Accounting.General.O.ChartOfaccountType' | TextCodeTranslationPipe}}
-          </label>
-      </div>
-
-  </td>-->
+                    <td style="width:70px"> </td>
                     <td style="width:210px">
-                      <ul class="FiltersMenu">
-                        <li id="ChartofaccountHtmlinputId" (click)="FilterItemClicked('ChartOfAccount')" style="width: 105px; height: 22px;"
-                            [class.SelectedFilter]="FilterSelectedValue === 'ChartOfAccount'">
-                          {{ 'Accounting.General.O.ChartOfaccountFilter' | TextCodeTranslationPipe }}
+                      <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
+                        <li float-start   (click)="IsExternalEeconciledFilterItemClicked('all')"
+                            [class.SelectedFilter]="IsExternalEeconciledFilter === 'all'">
+                           All
                         </li>
-                        <li id="GLAccountHtmlinputId" (click)="FilterItemClicked('GLAccount')"  style="width: 105px; height: 22px;"
-                            [class.SelectedFilter]="FilterSelectedValue === 'GLAccount'">
-                          {{ 'Accounting.General.O.GLAccount' | TextCodeTranslationPipe }} 
+                        <li float-start  (click)="IsExternalEeconciledFilterItemClicked('open')"
+                            [class.SelectedFilter]="IsExternalEeconciledFilter === 'open'">
+                            close
                         </li>
-                     
-                      </ul>
+                        <li float-start (click)="IsExternalEeconciledFilterItemClicked('close')"
+                            [class.SelectedFilter]="IsExternalEeconciledFilter === 'close'">
+                            Open
+                        </li>
+                    </ul>
                     </td>
-          
+                    <td style="width: 20px;"></td>
+
+                    <td style="width:210px">
+                      <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
+                        <li float-start  (click)="TypeFilterItemClicked('all')"
+                            [class.SelectedFilter]="TypeFilter === 'all'">
+                           All
+                        </li>
+                        <li float-start   (click)="TypeFilterItemClicked('open')"
+                            [class.SelectedFilter]="TypeFilter === 'open'">
+                            Bank only
+                        </li>
+                        <li float-start   (click)="TypeFilterItemClicked('close')"
+                            [class.SelectedFilter]="TypeFilter === 'close'">
+                            GLAccount only
+                        </li>
+                    </ul>
+                    </td>
+
                     <td></td>
                   </tr>
                 </table>
@@ -137,15 +160,30 @@
                 <table>
                   <tr>
                     <td style="width:10px"></td>
-                    <td style="width:30px">
+                    <!-- <td style="width:30px">
                       <CheckBox [IsChecked]="UseBalanceFilter" (Checked)="UseBalanceFilter = $event"></CheckBox>
 
-                    </td>
-                    <td style="width:250px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
+                    </td> -->
+                    <td style="width:70px">Bank: </td>
 
                     <td style="width:200px; min-width: 200px;">
-                      <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showlocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
+                                   <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [ObjectTableName]="'Card'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'">
+                                    </LogLov>  
                     </td>
+
+                    <td style="width:250px">
+                      <LogLabel [NoObjectField]="true" [Text] ="'External Reconciliation Number'"
+                      [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:200px; min-width: 200px;">
+                      <LogTextBox [ObjectFieldName]="'ExternalReconciliationNumber'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="ExternalReconciliationNumber"
+                      [NoObjectField]="true"   [HideColumns]="true"></LogTextBox>
+                    </td>
+
 
                     <td style="width:70px"></td>
                     <td style="width:90px;text-align:left">
