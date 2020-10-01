@@ -47,6 +47,7 @@ using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.TraceEvents;
+using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -1187,8 +1188,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                     */
-                    if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    /*
+                    if (!String.IsNullOrWhiteSpace(entityPM.ImporterCode))
                     {
+                        var myCourierMasterQueryService = new CourierMasterQueryService(context);
+                        CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(entityPM.Id, entityPM.Tenant);
+
+                        if (_CourierMasterPM != null)
+                        {
+                            Card myCard = null;
+                            var repository = new CardRepository(ResolvedTenant());
+                            myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, ResolvedTenant());
+                            if (!String.IsNullOrWhiteSpace(myCard.Code))
+                            {
+                                string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
+                                if (defValue == "Y")
+                                {
+                                    if (newDeclarationCourierStatusPM != null && newDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && newDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+                                    {
+                                        entityPM.ImporterCode = null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    */
+
+                    if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    { 
                         if(entityPM.Consignments != null && entityPM.Consignments.Count() > 0)
                         {
                             ConsignmentPM consignmentPM = entityPM.Consignments.FirstOrDefault();
@@ -1497,6 +1524,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             NotificationBase.CloseAllRelatedNotification(this.MainContext as ICustomContext, tmpNotificationPM, "5101S");
             NotificationBase.CloseAllRelatedNotification(this.MainContext as ICustomContext, tmpNotificationPM, "5101U");
             NotificationBase.CloseAllRelatedNotification(this.MainContext as ICustomContext, tmpNotificationPM, "5101G");
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
 
         protected override void CheckConcurrency(DeclarationPM entityPM, Declaration entityPOCO)
