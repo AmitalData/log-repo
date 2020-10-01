@@ -92,7 +92,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     public SortBy: string = 'ReferenceDate';
     SortByFilterItemClicked(itemValue: string)
     {
-        if (this.SortBy != itemValue && !this.ExternalReconciliationNumber) {
+        if (this.SortBy != itemValue) {
             this.SortBy = itemValue;
         }
     }

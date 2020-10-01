@@ -377,11 +377,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 if (IsExternalReconciled == "close")
                 {
-                    ledgerTransactions = ledgerTransactions.Where(s => s.IsReconciled == true);
+                    ledgerTransactions = ledgerTransactions.Where(s => s.IsExternalReconcile == true);
                 }
                 else if (IsExternalReconciled == "open")
                 {
-                    ledgerTransactions = ledgerTransactions.Where(s => s.IsReconciled == false);
+                    ledgerTransactions = ledgerTransactions.Where(s => s.IsExternalReconcile == false);
                 }
             }
            

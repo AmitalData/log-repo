@@ -127,23 +127,23 @@
 
                     <td style="width: 20px;"> </td>
                     <td class="Label" [style.text-align]="isRTL? 'right': 'left'"  style="width: 90px;"> {{'LedgerTransaction.O.SortBy' | TextCodeTranslationPipe}}:</td>
-                    <td style="width:340px">
+                    <td style="width:380px">
                       <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
                         <li    
-                               style="width: 110px;"
+                               style="width: 120px;"
                               sty float-start   (click)="SortByFilterItemClicked('ReferenceDate')"
                               [class.SelectedFilter]="SortBy === 'ReferenceDate'">
                               {{'LedgerTransaction.O.ReferenceDate' | TextCodeTranslationPipe}}
                         </li>
                         <li  
                             float-start  (click)="SortByFilterItemClicked('ReconcileNumber')"
-                            style="width: 110px;"
+                            style="width: 135px;"
                             [class.SelectedFilter]="SortBy === 'ReconcileNumber'">
                             {{'LedgerTransaction.O.ReconciliationNo' | TextCodeTranslationPipe}}
                         </li>
                         <li  
                             float-start (click)="SortByFilterItemClicked('Amount')"
-                            style="width: 110px;"
+                            style="width: 120px;"
                             [class.SelectedFilter]="SortBy === 'Amount'">
                             {{'LedgerTransaction.O.Amount' | TextCodeTranslationPipe}}
 
