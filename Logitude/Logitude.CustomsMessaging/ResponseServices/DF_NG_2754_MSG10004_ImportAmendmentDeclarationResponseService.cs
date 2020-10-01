@@ -533,10 +533,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 var consignmentQueryService = new ConsignmentQueryService(context);
 
-               var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
+                if(declarationPM!= null)
+                {
+     var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
 
                 consignmentPM.SequenceNumeric = maxCounter +1;
 
+                }
+          
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
