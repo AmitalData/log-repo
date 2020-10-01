@@ -57,7 +57,7 @@ namespace CommunicationWorkerRole
 
                                         using (APIWebClient client = new APIWebClient())
                                         {
-                                            client.Url = "http://www.CustomsForce.com/customsforcewebservice.asmx";
+                                            client.Url = "http://cargowise.customsforce.com/customsforcewebservice.asmx";
 
                                             XmlDocument doc = new XmlDocument();
                                             doc.LoadXml(fileBody);
