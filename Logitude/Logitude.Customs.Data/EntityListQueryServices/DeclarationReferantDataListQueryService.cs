@@ -61,6 +61,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  TransportModeId = d.TransportModeId,
 
                                                                  DeclarationOfficeCode = d.DeclarationOfficeCode,
+                                                                 DeclarationOfficeName= d.DeclarationOffice.LocalName,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
                                                                  ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
