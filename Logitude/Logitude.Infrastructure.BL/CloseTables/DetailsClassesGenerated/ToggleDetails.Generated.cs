@@ -125,13 +125,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "STR,Storage Pricing", 
                 Name = "Storage Pricing", 
 			});
-			
+			 
             all.Add(new ToggleDetails()
-            {
-                Code = "OI2",
-                Name = "OceanInsightsV2",
-                SearchFields = "OI2,OceanInsightsV2",
-            });
+            {    
+                Code = "OI2", 
+                Name = "OceanInsightsV2", 
+                SearchFields = "OI2,OceanInsightsV2", 
+			});
 			 
             all.Add(new ToggleDetails()
             {    
@@ -145,6 +145,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Shipment Warning Checkbox", 
                 Code = "SWC", 
                 SearchFields = "SWC,Shipment Warning Checkbox", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "API", 
+                SearchFields = "API,API Update", 
+                Name = "API Update", 
 			});
 			
             return all;

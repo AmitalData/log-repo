@@ -371,7 +371,8 @@ using Simplog.Data.ShipmentsModel;
 				}
 
 							 
-				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;					
+				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;
+				   temp.ConcurrencyGUID = MyEntityPM.ConcurrencyGUID;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1141,6 +1142,14 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{							//throw new ApplicationException("ShipmentNumber Can't be update"); 
 							temp.ShipmentNumber = MyEntity.ShipmentNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConcurrencyGUID))
+					{							//throw new ApplicationException("ConcurrencyGUID Can't be update"); 
+							temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
 
 										}  
 

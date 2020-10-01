@@ -706,33 +706,43 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
-                    ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-
-                    if (MasterPM != null)
+                    if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
-                        if (MasterPM.IsOperationalClosed)
+                        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
+                        ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+
+                        if (MasterPM != null)
                         {
-                            throw new ApplicationException("Can't update operationally closed shipments");
+                            MasterPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
+                            if (MasterPM.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Can't update operationally closed shipments");
+                            }
+
+                            if (MasterPM.IsCancelled)
+                            {
+                                throw new ApplicationException("Can't update cancelled shipments");
+                            }
+
+                            APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(MasterPM, authToken.Tenant);
+                            aPITransshipmentHelper.ValidateTransshipments();
+                            aPITransshipmentHelper.MapTransshipments();
+
+                            ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
+                            service.Update(true);
                         }
 
-                        if (MasterPM.IsCancelled)
-                        {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
-                        }
-
-                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(MasterPM, authToken.Tenant);
-                        aPITransshipmentHelper.ValidateTransshipments();
-                        aPITransshipmentHelper.MapTransshipments();
-
-                        ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
-                        service.Update(true);
+                        var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
+                        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, result);
                     }
-                    
-                    var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
+
+                    else
+                    {
+                        throw new ApplicationException("Update is not allowed");
+                    }
                 }
 
                 catch (Exception ex)
