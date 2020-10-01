@@ -106,11 +106,9 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
-
         public string Openedby { get; set; }
         public string OperationalClosedby { get; set; }
         public string TruckerName { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -151,18 +149,24 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string CustomerExternalID { get; set; }
         public string ShipperConsigneeExternalID { get; set; }
-
         public int NumberofDeliveries { get; set; }
         public DateTime? LastPickupArrivalDate { get; set; }
         public DateTime? LastDeliveryArrivalDate { get; set; }
         public double? ChargeableWeight { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string FinalPortofDestination { get; set; }
-        public string FinalCountryofDestination{get;set;}
+        public string FinalCountryofDestination { get; set; }
         public string OnCarriageTransportMode { get; set; }
-
+        public string CustomerName { get; set; }
+        public string Notify1Name { get; set; }
+        public string Notify2Name { get; set; }
+        public string Notify1ReceivablesAccountingCard { get; set; }
+        public string Notify2ReceivablesAccountingCard { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string ConsigneeReceivablesAccountingCard { get; set; }
+        public string ShipperNotExporterName { get; set; }
+        public string ShipperReceivablesAccountingCard { get; set; }
     }
 }
