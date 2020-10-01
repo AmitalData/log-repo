@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ledger Transaction&quot;"
-  Code="&quot;d3d0&quot;"
+  Code="&quot;dc10&quot;"
   Name="&quot;LedgerTransaction Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -50,6 +50,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;bbc9&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -4061,6 +4062,90 @@
       Code="&quot;LedgerTransaction.O.AgingMonthNotSet&quot;"
       DefaultText="&quot;Number of aging months is not set in Full Accounting Settings&quot;"
       LocalDefaultText="&quot;יש להגדיר מספר חודשי גיול בהגדרות מערכת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.REFFrom&quot;"
+      DefaultText="&quot;REF From&quot;"
+      LocalDefaultText="&quot;מתאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.REFTo&quot;"
+      DefaultText="&quot;REF To&quot;"
+      LocalDefaultText="&quot;עד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Bank&quot;"
+      DefaultText="&quot;Bank&quot;"
+      LocalDefaultText="&quot;בנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Open&quot;"
+      DefaultText="&quot;Open&quot;"
+      LocalDefaultText="&quot;פתוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Close&quot;"
+      DefaultText="&quot;Close&quot;"
+      LocalDefaultText="&quot;סגורות &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.BankOnly&quot;"
+      DefaultText="&quot;Bank&quot;"
+      LocalDefaultText="&quot;דפי בנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.GlaccountOnly&quot;"
+      DefaultText="&quot;Glaccount&quot;"
+      LocalDefaultText="&quot;כרטיס עוש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.ReconciliationNo&quot;"
+      DefaultText="&quot;Reconciliation Number&quot;"
+      LocalDefaultText="&quot;מספר התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.ReferenceDate&quot;"
+      DefaultText="&quot;Reference Date&quot;"
+      LocalDefaultText="&quot;תאריך אסמכתא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Amount&quot;"
+      DefaultText="&quot;Amount&quot;"
+      LocalDefaultText="&quot;סכום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Type&quot;"
+      DefaultText="&quot;Type&quot;"
+      LocalDefaultText="&quot;סוּג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.SortBy&quot;"
+      DefaultText="&quot;Sort By&quot;"
+      LocalDefaultText="&quot;מיון לפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.IncludesTransferGlaccount&quot;"
+      DefaultText="&quot;Includes Transfer Glaccount&quot;"
+      LocalDefaultText="&quot;כולל כרטיס דחויים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

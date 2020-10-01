@@ -49,7 +49,8 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "FocusOnMe",
         "IsFreeValue",
         "ForceSubscribe",
-        "RefreshMe"
+        "RefreshMe",
+        "IsDisabled",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
