@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebFreight.Web.DataContracts
+namespace Logitude.BL.DataContracts
 {
     public class ExportDocumentArgs
     {
-    
-        public string  DocumentTypeTemplateId { get; set; }
-        public int  Tenant{ get; set; }
+
+        public string DocumentTypeTemplateId { get; set; }
+        public int Tenant { get; set; }
         public string CurrentDocumentOutId { get; set; }
-        public string CurrentDocumentTypeCode{ get; set; }
+        public string CurrentDocumentTypeCode { get; set; }
         public string DocumentTypeCopyId { get; set; }
-        public string  EntityId { get; set; }
+        public string EntityId { get; set; }
         public bool IsDisplayOnly { get; set; }
         public string LoggedContactId { get; set; }
         public string ObjectTableId { get; set; }
@@ -31,7 +32,7 @@ namespace WebFreight.Web.DataContracts
         public string ObjectTableName { get; set; }
         public string DocumentTemplateEditorTool { get; set; }
 
-        
+
 
     }
 }

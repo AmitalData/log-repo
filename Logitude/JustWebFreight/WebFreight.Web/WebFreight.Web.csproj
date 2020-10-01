@@ -2121,7 +2121,6 @@
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
-    <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\HtmlTemplateClass.cs" />
     <Compile Include="DataContracts\ScreenLayoutArgs.cs" />
     <Compile Include="DataContracts\PickListGeneralEntitiesArgs.cs" />
@@ -2464,7 +2463,6 @@
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
-    <Compile Include="Helpers\BuildDocsOutService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
@@ -2497,7 +2495,6 @@
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
     <Compile Include="Helpers\DataWarehouseHelper.cs" />
     <Compile Include="Helpers\DepositionRequestHelper.cs" />
-    <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\EntityUpdateReflectorService.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
