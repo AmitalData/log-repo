@@ -19,6 +19,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges.AutomationResult;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
@@ -177,7 +178,7 @@ namespace CommunicationWorkerRole
                                     continue;
                                 }
 
-                                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+                                GeneralAutomationResultService generalAutomationResultService = new GeneralAutomationResultService();
                                 DateTime dateBefore = DateTime.Now;
                                 EntityChangeAutomation entityChangesAutomation = new EntityChangeAutomation()
                                 {
@@ -230,7 +231,7 @@ namespace CommunicationWorkerRole
                                     dateString = otherObjectTableLastUpdateDate;
                                 }
 
-                                ValidateAutomationResultClass validateResult = entityChangeHelper.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, "Delayed");
+                                ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, "Delayed");
                                 List<EntityChangeAutomation> ChangesAutomationsLists = FullEntityChangeAutomationList(entityChange, null);
 
                                 List<EntityChangeAutomation> entityChangesAutomationsLists = ChangesAutomationsLists.Where(d => d.ResultCode == entityChangesAutomation.ResultCode).ToList();
@@ -284,7 +285,8 @@ namespace CommunicationWorkerRole
                                                     }
                                                 }
 
-                                                entityChangeHelper.SetValue(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, changesFields, automation, entityChangesAutomation, dateBefore);
+
+                                                new AutomationSetValueResultService().SetValue(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, changesFields, automation, entityChangesAutomation, dateBefore);
                                                 UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                                 rFields.cs = changesFields;
                                                 entityChange.ChangesAutomationFieldsXml = rFields.cs != null && rFields.cs.Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(rFields) : "";
@@ -314,7 +316,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                entityChangeHelper.AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationFollowUpResultService().AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                // UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
@@ -342,7 +344,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                entityChangeHelper.AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationQueuedTaskResultService().AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                 UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }

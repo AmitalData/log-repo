@@ -63,6 +63,7 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.Server.Tools.EntityChanges;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -2624,31 +2625,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (entityPM != null)
             {
                 DateTime? dateBefore = DateTime.Now;
+
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
-                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
-                if (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) entityChangeHelper.ExternalEntity = this.entityPM;
+                string objectTableName = tableName;
+                string otherObjectTableName = "";
+
+                if (tableName == "MasterAndHouse")
+                {
+                    objectTableName = "Master";
+                    otherObjectTableName = "Shipment";
+                }
+
+                GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+                object externalEntity = (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) ? this.entityPM : null;
                 if (type == "OnCreate")
                 {
-                    bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
+                    bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        entityChangeHelper.AddEntityChange(entityPM, null, "OnCreate", "", tableName, dateBefore);
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore , OtherObjectTableName = otherObjectTableName });
+                        mainEntityChangeService.AddEntityChange();
                     }
                 }
 
                 else if (!entityPM.IsUpdateByAutomation && type == "OnUpdate")
                 {
-                    bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnUpdate", entityPM.Tenant);
+                    bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnUpdate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        entityChangeHelper.AddEntityChange(entityPM, shipmentChangeTracking.ChangeTrackingPM, "OnUpdate", shipmentChangeTracking.EntityChangeFieldXml, tableName, dateBefore);
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM,   ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName });
+                        mainEntityChangeService.AddEntityChange();
                     }
 
                     #region Houses
 
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
+                        isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
                         if (isHaveAutomation)
                         {
                             string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
@@ -2663,9 +2676,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
                                 dateBefore = DateTime.Now;
                                 ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                var changeHelper = new EntityChangeHelper();
-                                changeHelper.ExternalEntity = this.entityPM;
-                                changeHelper.AddEntityChange(shipmentPm, oldHousePM, "OnUpdate", shipmentChangeTracking.EntityChangeFieldXml, "Shipment", dateBefore);
+                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml,  ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore });
+
                             }
                             // }
                         }
