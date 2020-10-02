@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
+using Logitude.Server.Tools.EntityChanges.AutomationResult;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
@@ -141,7 +143,7 @@ namespace CommunicationWorkerRole
 
                                 List<EntityChangeAutomation> EntityChangesAutomationsFailedList = new List<EntityChangeAutomation>();
                                 List<EntityChangeAutomation> EntityChangesAutomationsSsucceedList = new List<EntityChangeAutomation>();
-                                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+                                GeneralAutomationResultService generalAutomationResultService = new GeneralAutomationResultService();
                                 AutomationHistoryQuery automationHistoryQuery = new AutomationHistoryQuery(tenant);
 
                                 bool IsEntityChageContainAnyDelay = false;
@@ -168,7 +170,7 @@ namespace CommunicationWorkerRole
 
                                     if (!string.IsNullOrEmpty(otherObjectTableId) && automation.ObjectTableId == otherObjectTableId) dateString = otherObjectTableLastUpdateDate;
 
-                                    ValidateAutomationResultClass validateResult = entityChangeHelper.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, "");
+                                    ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, "");
                                     entityChangesAutomation.type = validateResult.IsAutomationValid ? "EmailSsucceed" : "EmailFailed";
 
                                     if (validateResult.IsAutomationValid)
@@ -176,7 +178,7 @@ namespace CommunicationWorkerRole
                                         if (validateResult.Type == "Delayed")
                                         {
                                             IsEntityChageContainAnyDelay = true;
-                                            entityChangeHelper.AddDelayedAutomationQueue(entityChange.Id, type, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityChange.EntityId);
+                                            generalAutomationResultService.AddDelayedAutomationQueue(entityChange.Id, type, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityChange.EntityId);
                                         }
                                         else
                                         {
