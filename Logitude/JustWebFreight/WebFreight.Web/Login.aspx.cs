@@ -86,7 +86,7 @@ namespace WebFreight.Web
             //            }
             //        }
             //    }
-               
+
             //}
             //if (!string.IsNullOrEmpty(currentIP))
             //{
@@ -117,7 +117,12 @@ namespace WebFreight.Web
             //        }
             //    }
             //}
-            if (enableHttps && LogitudeSettings.ForceHttps)
+            string IsSecureConnection = context.Request.IsSecureConnection.ToString();
+            if (context.Request.Headers.AllKeys.Contains("X-IsSecure"))
+            {
+                IsSecureConnection = context.Request.Headers["X-IsSecure"];
+            } 
+            if (IsSecureConnection != "true" && enableHttps && LogitudeSettings.ForceHttps)
             {
                 SecurityUtility.RedirectToHttps();
             }
