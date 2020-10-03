@@ -81,7 +81,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "3a2aeee668a93ef782d0ee6389606f5d";
+		public const string HashString = "324df7ac767d193c005b3fb582d67fb1";
+
 
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
@@ -93,7 +94,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "GLAccount",
 			      				    IsNew =  false,
 			      				    DBTableName =  "GLAccounts",
-			      				    OldDBTableName =  "GLAccounts",
 			      				    ObjectTableSingular =  "GL Account",
 			      				    ObjectTablePlural =  "GL Accounts",
 			      				    HasCustomFilter =  false,
@@ -155,7 +155,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InternalNumber",
-					  						OldFieldName =  "InternalNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -218,7 +217,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountTypeCode",
-					  						OldFieldName =  "AccountTypeCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccountType",
@@ -282,7 +280,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DisplayNumber",
-					  						OldFieldName =  "DisplayNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -345,7 +342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -408,7 +404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -471,7 +466,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -533,7 +527,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMultiCurrency",
-					  						OldFieldName =  "IsMultiCurrency",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -596,7 +589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -660,7 +652,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevenueExpenseType",
-					  						OldFieldName =  "RevenueExpenseType",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "RevenueExpenseType",
@@ -724,7 +715,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsControlAccount",
-					  						OldFieldName =  "IsControlAccount",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -787,7 +777,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsId",
-					  						OldFieldName =  "ChartOfAccountsId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChartOfAccount",
@@ -851,7 +840,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -914,7 +902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountTypeName",
-					  						OldFieldName =  "AccountTypeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -977,7 +964,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyName",
-					  						OldFieldName =  "CurrencyName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1040,7 +1026,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevenueExpenseName",
-					  						OldFieldName =  "RevenueExpenseName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1103,7 +1088,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsName",
-					  						OldFieldName =  "ChartOfAccountsName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1166,7 +1150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsTypeCode",
-					  						OldFieldName =  "ChartOfAccountsTypeCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChartOfAccountsType",
@@ -1230,7 +1213,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsTypeName",
-					  						OldFieldName =  "ChartOfAccountsTypeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1293,7 +1275,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
-					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1356,7 +1337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconcileMethodCode",
-					  						OldFieldName =  "ReconcileMethodCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ReconcileMethod",
@@ -1420,7 +1400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconcileMethodName",
-					  						OldFieldName =  "ReconcileMethodName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1483,7 +1462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ControlAccountId",
-					  						OldFieldName =  "ControlAccountId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -1547,7 +1525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ControlAccountName",
-					  						OldFieldName =  "ControlAccountName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1610,7 +1587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ControlAccountNumber",
-					  						OldFieldName =  "ControlAccountNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1673,7 +1649,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActiveStatusName",
-					  						OldFieldName =  "ActiveStatusName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1736,7 +1711,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OldCurrencyId",
-					  						OldFieldName =  "OldCurrencyId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1793,7 +1767,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OldIsMultiCurrency",
-					  						OldFieldName =  "OldIsMultiCurrency",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1850,7 +1823,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutomaticReconcileId",
-					  						OldFieldName =  "AutomaticReconcileId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AutomaticReconcileMethod",
@@ -1914,7 +1886,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutomaticReconcileName",
-					  						OldFieldName =  "AutomaticReconcileName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1977,7 +1948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousEnglishName",
-					  						OldFieldName =  "PreviousEnglishName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2040,7 +2010,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousEnglishNameChangeDate",
-					  						OldFieldName =  "PreviousEnglishNameChangeDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2103,7 +2072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousLocalName",
-					  						OldFieldName =  "PreviousLocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2166,7 +2134,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousLocalNameChangeDate",
-					  						OldFieldName =  "PreviousLocalNameChangeDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2229,7 +2196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousNumber",
-					  						OldFieldName =  "PreviousNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2292,7 +2258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousNumberChangeDate",
-					  						OldFieldName =  "PreviousNumberChangeDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2355,7 +2320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousChartOfAccountsId",
-					  						OldFieldName =  "PreviousChartOfAccountsId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -2418,7 +2382,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PreviousChartOfAccountsChangeDate",
-					  						OldFieldName =  "PreviousChartOfAccountsChangeDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2481,7 +2444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerGLAccountId",
-					  						OldFieldName =  "CustomerGLAccountId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -2545,7 +2507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerGLAccountName",
-					  						OldFieldName =  "CustomerGLAccountName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2608,7 +2569,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerGLAccountNumber",
-					  						OldFieldName =  "CustomerGLAccountNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2671,7 +2631,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BalanceInLocalCurrency",
-					  						OldFieldName =  "BalanceInLocalCurrency",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2736,7 +2695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationEnabled",
-					  						OldFieldName =  "RevaluationEnabled",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2799,7 +2757,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentAccountId",
-					  						OldFieldName =  "ParentAccountId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -2863,7 +2820,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentAccountName",
-					  						OldFieldName =  "ParentAccountName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2926,7 +2882,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentAccountNumber",
-					  						OldFieldName =  "ParentAccountNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2989,7 +2944,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerGLAccountInternalNumber",
-					  						OldFieldName =  "CustomerGLAccountInternalNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3052,7 +3006,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category1Id",
-					  						OldFieldName =  "Category1Id",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Category1",
@@ -3116,7 +3069,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category1Name",
-					  						OldFieldName =  "Category1Name",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3179,7 +3131,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category2Id",
-					  						OldFieldName =  "Category2Id",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Category2",
@@ -3243,7 +3194,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category2Name",
-					  						OldFieldName =  "Category2Name",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3306,7 +3256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category3Id",
-					  						OldFieldName =  "Category3Id",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Category3",
@@ -3370,7 +3319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category3Name",
-					  						OldFieldName =  "Category3Name",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3433,7 +3381,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category4Id",
-					  						OldFieldName =  "Category4Id",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Category4",
@@ -3497,7 +3444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category4Name",
-					  						OldFieldName =  "Category4Name",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3560,7 +3506,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category5Id",
-					  						OldFieldName =  "Category5Id",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Category5",
@@ -3624,7 +3569,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Category5Name",
-					  						OldFieldName =  "Category5Name",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3687,7 +3631,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsVATExempt",
-					  						OldFieldName =  "IsVATExempt",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3750,7 +3693,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsCode",
-					  						OldFieldName =  "ChartOfAccountsCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3812,7 +3754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerCode",
-					  						OldFieldName =  "CustomerCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3874,7 +3815,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentAccountByCurrency",
-					  						OldFieldName =  "ParentAccountByCurrency",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3936,7 +3876,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityDate",
-					  						OldFieldName =  "LastActivityDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3995,7 +3934,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityTypeName",
-					  						OldFieldName =  "LastActivityTypeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4054,7 +3992,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityByUserName",
-					  						OldFieldName =  "LastActivityByUserName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4113,7 +4050,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4175,7 +4111,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4232,7 +4167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CollectorId",
-					  						OldFieldName =  "CollectorId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -4291,7 +4225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SalesmanUserId",
-					  						OldFieldName =  "SalesmanUserId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4351,7 +4284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NewGLAccountCardId",
-					  						OldFieldName =  "NewGLAccountCardId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4408,7 +4340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalBalanceInDue",
-					  						OldFieldName =  "LocalBalanceInDue",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4473,7 +4404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextDueDate",
-					  						OldFieldName =  "NextDueDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Date",
 					  						MinLength =  0,
@@ -4536,7 +4466,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencySign",
-					  						OldFieldName =  "CurrencySign",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4595,7 +4524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedItems",
-					  						OldFieldName =  "ConnectedItems",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4652,7 +4580,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Type",
-					  						OldFieldName =  "Type",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4709,7 +4636,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionFileTypeId",
-					  						OldFieldName =  "DeductionFileTypeId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4767,7 +4693,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionFileNumber",
-					  						OldFieldName =  "DeductionFileNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4829,7 +4754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AssessingOfficeCode",
-					  						OldFieldName =  "AssessingOfficeCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4887,7 +4811,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Occupation",
-					  						OldFieldName =  "Occupation",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4949,7 +4872,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionTypeId",
-					  						OldFieldName =  "DeductionTypeId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5007,7 +4929,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConsolidationVat",
-					  						OldFieldName =  "ConsolidationVat",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5069,7 +4990,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountWithholdingTaxes",
-					  						OldFieldName =  "GLAccountWithholdingTaxes",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -5127,7 +5047,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TaxWithholdingLastLine",
-					  						OldFieldName =  "TaxWithholdingLastLine",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5184,7 +5103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconcilationCount",
-					  						OldFieldName =  "ReconcilationCount",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5241,7 +5159,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsEquipmentVendor",
-					  						OldFieldName =  "IsEquipmentVendor",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5303,7 +5220,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExcludeFromDeductionReport",
-					  						OldFieldName =  "ExcludeFromDeductionReport",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5365,7 +5281,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Parent",
-					  						OldFieldName =  "Parent",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5427,7 +5342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionTypeName",
-					  						OldFieldName =  "DeductionTypeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5484,7 +5398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionFileTypeCode",
-					  						OldFieldName =  "DeductionFileTypeCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5541,7 +5454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionFileTypeName",
-					  						OldFieldName =  "DeductionFileTypeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5598,7 +5510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AssessingOfficeName",
-					  						OldFieldName =  "AssessingOfficeName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5655,7 +5566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeductionTypeEnglishName",
-					  						OldFieldName =  "DeductionTypeEnglishName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5712,7 +5622,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalOpenChequesInLocalCur",
-					  						OldFieldName =  "TotalOpenChequesInLocalCur",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -5776,7 +5685,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutomaticReconcileLocalName",
-					  						OldFieldName =  "AutomaticReconcileLocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5835,7 +5743,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconcileMethodLocalName",
-					  						OldFieldName =  "ReconcileMethodLocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5894,7 +5801,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotFutureOpenChequesInLocalCur",
-					  						OldFieldName =  "TotFutureOpenChequesInLocalCur",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -5957,7 +5863,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CardId",
-					  						OldFieldName =  "CardId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6014,7 +5919,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -6078,7 +5982,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -6142,7 +6045,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6205,7 +6107,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6268,7 +6169,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6332,7 +6232,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6394,7 +6293,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByLocalName",
-					  						OldFieldName =  "CreatedByLocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6451,7 +6349,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByLocalName",
-					  						OldFieldName =  "UpdatedByLocalName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6508,7 +6405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CardCode",
-					  						OldFieldName =  "CardCode",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6565,7 +6461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PartnerTypeId",
-					  						OldFieldName =  "PartnerTypeId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6622,7 +6517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllowEditChequePayToName",
-					  						OldFieldName =  "AllowEditChequePayToName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6684,7 +6578,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActiveForInterest",
-					  						OldFieldName =  "ActiveForInterest",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6747,7 +6640,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestCalculationStartDate",
-					  						OldFieldName =  "InterestCalculationStartDate",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6810,7 +6702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActiveForInterestCreditInvoice",
-					  						OldFieldName =  "ActiveForInterestCreditInvoice",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6873,7 +6764,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountInterestPeriods",
-					  						OldFieldName =  "GLAccountInterestPeriods",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -6931,7 +6821,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestCreditLimit",
-					  						OldFieldName =  "InterestCreditLimit",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -6996,7 +6885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NameForPrintingCheques",
-					  						OldFieldName =  "NameForPrintingCheques",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7054,7 +6942,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Smallcashbook",
-					  						OldFieldName =  "Smallcashbook",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7112,7 +6999,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MinimumInterestInvoiceBilling",
-					  						OldFieldName =  "MinimumInterestInvoiceBilling",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7175,7 +7061,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsSplitted",
-					  						OldFieldName =  "IsSplitted",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7232,7 +7117,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SalesmanName",
-					  						OldFieldName =  "SalesmanName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7294,7 +7178,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CollectorName",
-					  						OldFieldName =  "CollectorName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7356,7 +7239,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SplitCurrencyAccount",
-					  						OldFieldName =  "SplitCurrencyAccount",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7417,7 +7299,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentName",
-					  						OldFieldName =  "ParentName",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7478,7 +7359,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountCurrencies",
-					  						OldFieldName =  "GLAccountCurrencies",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -7536,7 +7416,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentCurrencyId",
-					  						OldFieldName =  "ParentCurrencyId",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7593,7 +7472,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReportingAsAnotherDocument",
-					  						OldFieldName =  "ReportingAsAnotherDocument",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9693,6 +9571,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOSmallCashbookAndReportingValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SmallCashbookAndReportingValidation", DefaultText = "It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document",LocalDefaultText = "לא ניתן להגדיר את אותו כרטיס גם כ''קופה קטנה'' וגם לדיווח כ ''תשומות מסמך אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCantChangeRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CantChangeRecoMethod", DefaultText = "The reconcile method can’t be updated, the GLAcocunt has transactions",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
