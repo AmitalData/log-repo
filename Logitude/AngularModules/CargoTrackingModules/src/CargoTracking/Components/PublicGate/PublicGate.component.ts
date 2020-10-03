@@ -59,23 +59,24 @@ export class PublicGateComponent
         this.router.events.subscribe((event: any) =>
         {
             if (this._Tenant == null || Number.isNaN(this._Tenant)) {
-                var params:any[] = event.snapshot.params;
-                var tenant = params['Tenant'];
-                this._Tenant = tenant;
-                // var url: string = event.url;
-                // var URLParts = url.split('/');
+                // var params:any[] = event.snapshot.params;
+                // var tenant = params['Tenant'];
+                // this._Tenant = tenant;
+                var url: string =this.router.url;
+                var URLParts = url.split('/');
 
-                // for (let i = 0; i < URLParts.length; i++) {
-                //     if (URLParts && URLParts.length > 0 && URLParts[i]) {
-                //         this._Tenant = Number(URLParts[i]);
-                //         if (!Number.isNaN(this._Tenant)) {
-                //             break;
-                //         }
-                //     }
-                // }
+                for (let i = 0; i < URLParts.length; i++) {
+                    if (URLParts && URLParts.length > 0 && URLParts[i]) {
+                        this._Tenant = Number(URLParts[i]);
+                        if (!Number.isNaN(this._Tenant)) {
+                            break;
+                        }
+                    }
+                }
 
-                if (Number.isNaN(this._Tenant)) {
-                    this._Tenant = 1;
+                if (Number.isNaN(this._Tenant) || !this._Tenant || this._Tenant==null){
+                    this._Tenant=1;
+                    this.back();  
                 }
                 // else{
                 //     this._Tenant=1; 
