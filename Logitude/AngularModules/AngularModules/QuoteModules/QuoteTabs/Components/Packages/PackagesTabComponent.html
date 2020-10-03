@@ -685,8 +685,32 @@
                                 <tr class="FormFieldRow" style="height:70px;">
                                     <td colspan="3">
                                         <div class="MediaFill">
-                                            <LogTextBox [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            <LogTextBox [ForceDirection]="DescriptionFlowDirection" [HideColumns]="IsDescriptionRightToLeftEnabled" [InputType]="'ntext'" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                         </div>
+                                    </td>
+
+                                    <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
+                                        <table style="width: 50px;height:20px; vertical-align:top;">
+                                            <tr style="width: 50px;height:20px; vertical-align:top;">
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 16px;height: 14px;">
+                                                    <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
+                                                        <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
+
+                                                    </div>
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 16px;height: 14px;">
+                                                    <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
+                                                        <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
 
