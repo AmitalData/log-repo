@@ -188,6 +188,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null;
             IQueryable<LedgerTransaction> ledgerTransactions = null;
+            IQueryable<LedgerTransaction> TransferledgerTransactions = null;
+
             if (this.ExternalReconciliationNumber == null)
             {
                 switch (Type)
@@ -201,13 +203,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     case "glAccount":
                         {
                             ledgerTransactions = GetAllTransactionsForGLAccountByFilter(ledgerTransactions, AllBankAccounts);
-
+                            if (this.IncludesTransferGlaccount == true)
+                            {
+                                TransferledgerTransactions = GetAllTransactionsForGLAccountByFilter(TransferledgerTransactions, AllBankAccounts, true);
+                            }
                             break;
                         }
                     default:
                         {
                             reconcileExternalPageLines = GetAllTransactionsForBankByFilter(reconcileExternalPageLines);
                             ledgerTransactions = GetAllTransactionsForGLAccountByFilter(ledgerTransactions, AllBankAccounts);
+                            if (this.IncludesTransferGlaccount == true)
+                            {
+                                TransferledgerTransactions = GetAllTransactionsForGLAccountByFilter(TransferledgerTransactions, AllBankAccounts, true);
+                            }
                             break;
                         }
 
@@ -217,49 +226,44 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 reconcileExternalPageLines = GetAllTransactionsForBankByFilter(reconcileExternalPageLines);
                 ledgerTransactions = GetAllTransactionsForGLAccountByFilter(ledgerTransactions, AllBankAccounts);
+                TransferledgerTransactions = GetAllTransactionsForGLAccountByFilter(TransferledgerTransactions, AllBankAccounts, true);
+
             }
 
 
-            return  MappingTransactionToExternalReconciliationPeriod(reconcileExternalPageLines, ledgerTransactions);
+            return  MappingTransactionToExternalReconciliationPeriod(reconcileExternalPageLines, ledgerTransactions , TransferledgerTransactions);
         }
 
 
-         public List<ExternalReconciliationPeriod> MappingTransactionToExternalReconciliationPeriod(IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null, IQueryable<LedgerTransaction> ledgerTransactions = null)
+         public List<ExternalReconciliationPeriod> MappingTransactionToExternalReconciliationPeriod(IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null, IQueryable<LedgerTransaction> ledgerTransactions = null, IQueryable<LedgerTransaction> TransferledgerTransactions = null)
          {
-            List<ExternalReconciliationPeriod> periods1 = null;
-            List<ExternalReconciliationPeriod> periods2 = null;
+          
             List<ExternalReconciliationPeriod> periodsResult = null;
             if (reconcileExternalPageLines!=null)
             {
-                periods1 = MappinReconcileExternalPageLineToPeriods(periods1, reconcileExternalPageLines);
-
-
+                periodsResult = MappinReconcileExternalPageLineToPeriods(reconcileExternalPageLines);
 
             }
             if (ledgerTransactions != null)
             {
-                periods2 = MappinLedgerTransactionToPeriods(periods2, ledgerTransactions);
+                periodsResult = periodsResult.Union(MappinLedgerTransactionToPeriods(ledgerTransactions)).ToList();
 
             }
-
-            if (periods1!=null && periods2!=null)
+            if (TransferledgerTransactions != null)
             {
-                periodsResult = periods1.Union(periods2).ToList();
+                periodsResult = periodsResult.Union(MappinLedgerTransactionToPeriods(TransferledgerTransactions, true)).ToList();
 
             }
-            else if (periods1 != null)
-            {
-                periodsResult = periods1;
 
-            }
-            else if (periods2 != null)
-            {
-                periodsResult = periods2;
-            }
             if (periodsResult!=null)
             {
                 foreach (ExternalReconciliationPeriod period in periodsResult)
                 {
+                    if (!string.IsNullOrEmpty(period.EntitySource))
+                    {
+                        period.EntitySource = AccountingEntities.getEntityIcon(period.EntitySource);
+                    }
+
                     if (period.ExternalPageLineId!=null && periodsResult.Where(s => s.ExternalPageLineId == period.ExternalPageLineId).Count() > 1)
                     {
                         period.IsDuplicated = true;
@@ -273,73 +277,73 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
 
 
-        private List<ExternalReconciliationPeriod> MappinReconcileExternalPageLineToPeriods(List<ExternalReconciliationPeriod> periods1 , IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines)
+        private List<ExternalReconciliationPeriod> MappinReconcileExternalPageLineToPeriods( IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines)
         {
 
-            periods1 = (from a in reconcileExternalPageLines
-                        join BK in accountingContext.BankAccounts on a.ReconcileExternalPage.GLAccountId equals BK.GLAccountId  
-                        join Ex in accountingContext.ExternalReconciliationLines  on a.Id equals Ex.ExternalPageLineId into ReconcileExternalPageLinesJoinExternalReconciliation
-                        from Ex in ReconcileExternalPageLinesJoinExternalReconciliation.DefaultIfEmpty()
-                        where BK.Inactive == false && (Ex.ExternalReconciliation == null || Ex.ExternalReconciliation.IsCancelled == false)
-                        select new ExternalReconciliationPeriod()
-                        {
-                            EnglishType = "Bank", //BankDepositLine.F.Bank 
-                            LocalType = "בנק",
-                            BankAccountId = BK.Id,
-                            Number = BK.AccountNumber,
-                            Amount = a.CreditAmount != 0 ? a.CreditAmount*-1 : a.DebitAmount,
-                            ReferenceDate = a.ReferenceDate,
-                            EntitySource = null,
-                            EntityType = a.ReconcileExternalPage.PageNo.ToString(),  
-                            IsRecomncile = a.IsReconciled,
-                            LocalBoolean = a.IsReconciled == true ? "כן" : "לא",
-                            EnglishBoolean = a.IsReconciled == true ? "True" : "False",
-                            Note =a.Notes,
-                            ReconcileNumber = Ex.ReconciliationId == null ? null : Ex.ExternalReconciliation.ReconciliationNumber,
-                            Ref1 = a.Reference,
-                            Ref2 = null,
-                            ExternalPageLineId = Ex.ExternalPageLineId,
+            List<ExternalReconciliationPeriod> periods = (from a in reconcileExternalPageLines
+                                                          join BK in accountingContext.BankAccounts on a.ReconcileExternalPage.GLAccountId equals BK.GLAccountId
+                                                          join Ex in accountingContext.ExternalReconciliationLines on a.Id equals Ex.ExternalPageLineId into ReconcileExternalPageLinesJoinExternalReconciliation
+                                                          from Ex in ReconcileExternalPageLinesJoinExternalReconciliation.DefaultIfEmpty()
+                                                          where BK.Inactive == false //&& (Ex.ExternalReconciliation == null || Ex.ExternalReconciliation.IsCancelled == false)
+                                                          select new ExternalReconciliationPeriod()
+                                                          {
+                                                              EnglishType = "Bank",
+                                                              LocalType = "בנק",
+                                                              BankAccountId = BK.Id,
+                                                              Number = BK.AccountNumber,
+                                                              Amount = a.CreditAmount != 0 ? a.CreditAmount * -1 : a.DebitAmount,
+                                                              ReferenceDate = a.ReferenceDate,
+                                                              EntitySource = null,
+                                                              EntityType = a.ReconcileExternalPage.PageNo.ToString(),
+                                                              IsRecomncile = a.IsReconciled,
+                                                              LocalBoolean = a.IsReconciled == true ? "כן" : "לא",
+                                                              EnglishBoolean = a.IsReconciled == true ? "True" : "False",
+                                                              Note = a.Notes,
+                                                              ReconcileNumber = Ex.ReconciliationId == null ? null : Ex.ExternalReconciliation.ReconciliationNumber,
+                                                              Ref1 = a.Reference,
+                                                              Ref2 = null,
+                                                              ExternalPageLineId = Ex.ExternalPageLineId,
 
-                        }).ToList();
+                                                          }).ToList();
 
 
-            return periods1;
+            return periods;
         }
 
-        private List<ExternalReconciliationPeriod> MappinLedgerTransactionToPeriods(List<ExternalReconciliationPeriod> periods2, IQueryable<LedgerTransaction> ledgerTransactions)
+        private List<ExternalReconciliationPeriod> MappinLedgerTransactionToPeriods(IQueryable<LedgerTransaction> ledgerTransactions,bool IsTransfer=false)
         {
 
-            periods2 = (from a  in ledgerTransactions
-                        join BK in accountingContext.BankAccounts on a.AccountId equals BK.GLAccountId
-                        join Ex in accountingContext.ExternalReconciliationLines  on a.Id equals Ex.LedgerTransactionId into LedgerTransactionJoinExternalReconciliation
-                        from Ex in LedgerTransactionJoinExternalReconciliation.DefaultIfEmpty()
-                        where BK.Inactive == false && (Ex.ExternalReconciliation==null || Ex.ExternalReconciliation.IsCancelled == false)
-                        select new ExternalReconciliationPeriod()
-                        {
-                            EnglishType = "GLAccount",  //GLAccount.O.GLAccount
-                            LocalType = "מזהה פנימי לכרטיס",
-                            Number = a.Account.DisplayNumber,
-                            BankAccountId = BK.Id,
-                            Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit*-1 : a.ForeignAmountDebit,
-                            ReferenceDate = a.DocumentDate,
-                            EntitySource = a.JournalLine.Journal.AccountingEntityReference,
-                            EntityType = a.JournalLine.Journal.AccountingEntity.Code,
-                            IsRecomncile = a.IsExternalReconcile,
-                            LocalBoolean = a.IsExternalReconcile == true ? "כן" : "לא",
-                            EnglishBoolean = a.IsExternalReconcile == true ? "True" : "False",
-                            Note =a.Notes,
-                            ReconcileNumber = Ex.ReconciliationId  == null ? null : Ex.ExternalReconciliation.ReconciliationNumber,
-                            Ref1 = a.Reference1,
-                            Ref2 = a.Reference2,
-                            ExternalPageLineId = null,
+            List<ExternalReconciliationPeriod> periods = (from a in ledgerTransactions
+                                                          join BK in accountingContext.BankAccounts on a.AccountId equals IsTransfer ==true ? BK.TransferGLAcccountId : BK.GLAccountId
+                                                          join Ex in accountingContext.ExternalReconciliationLines on a.Id equals Ex.LedgerTransactionId into LedgerTransactionJoinExternalReconciliation
+                                                          from Ex in LedgerTransactionJoinExternalReconciliation.DefaultIfEmpty()
+                                                          where BK.Inactive == false //&& (Ex.ExternalReconciliation==null || Ex.ExternalReconciliation.IsCancelled == false)
+                                                          select new ExternalReconciliationPeriod()
+                                                          {
+                                                              EnglishType = "GLAccount",  //GLAccount.O.GLAccount
+                                                              LocalType = "מזהה פנימי לכרטיס",
+                                                              Number = a.Account.DisplayNumber,
+                                                              BankAccountId = BK.Id,
+                                                              Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit * -1 : a.ForeignAmountDebit,
+                                                              ReferenceDate = a.DocumentDate,
+                                                              EntitySource = a.JournalLine.Journal.AccountingEntityCode,
+                                                              EntityType = a.JournalLine.Journal.AccountingEntityReference,
+                                                              IsRecomncile = a.IsExternalReconcile,
+                                                              LocalBoolean = a.IsExternalReconcile == true ? "כן" : "לא",
+                                                              EnglishBoolean = a.IsExternalReconcile == true ? "True" : "False",
+                                                              Note = a.Notes,
+                                                              ReconcileNumber = Ex.ReconciliationId == null ? null : Ex.ExternalReconciliation.ReconciliationNumber,
+                                                              Ref1 = a.Reference1,
+                                                              Ref2 = a.Reference2,
+                                                              ExternalPageLineId = null,
 
-                        }).ToList();
+                                                          }).ToList();
 
 
-            return periods2;
+            return periods;
         }
 
-        private IQueryable<LedgerTransaction> GetAllTransactionsForGLAccountByFilter(IQueryable<LedgerTransaction> ledgerTransactions , List<BankAccountPM> AllBankAccounts)
+        private IQueryable<LedgerTransaction> GetAllTransactionsForGLAccountByFilter(IQueryable<LedgerTransaction> ledgerTransactions , List<BankAccountPM> AllBankAccounts,bool IsTransfer=false)
         {
 
             if (ExternalReconciliationNumber!=null)
@@ -352,26 +356,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             
 
-            ledgerTransactions = ApplyFiltersForLedgerTransactions(ledgerTransactions, AllBankAccounts);
+            ledgerTransactions = ApplyFiltersForLedgerTransactions(ledgerTransactions, AllBankAccounts, IsTransfer);
 
             return ledgerTransactions;
 
         }
 
-        private IQueryable<LedgerTransaction> ApplyFiltersForLedgerTransactions(IQueryable<LedgerTransaction> ledgerTransactions, List<BankAccountPM> AllBankAccounts)
+        private IQueryable<LedgerTransaction> ApplyFiltersForLedgerTransactions(IQueryable<LedgerTransaction> ledgerTransactions, List<BankAccountPM> AllBankAccounts,bool IsTransfer)
         {
             if (ExternalReconciliationNumber == null)
             {
-                List<string> AllGlAccountId = AllBankAccounts.Select(a => a.GLAccountId).ToList();
+               
+                IQueryable<LedgerTransaction> TransferledgerTransactions = null;
+                IQueryable<LedgerTransaction> MainledgerTransactions = null;
 
-
-                if (this.IncludesTransferGlaccount == true)
+                if (IsTransfer == true)
                 {
                     List<string> AllTransferGlAccountId = AllBankAccounts.Select(a => a.TransferGLAcccountId).ToList();
-                    ledgerTransactions = ledgerTransactions.Where(s => AllGlAccountId.Contains(s.AccountId) || AllTransferGlAccountId.Contains(s.AccountId));
+                    ledgerTransactions = ledgerTransactions.Where(s =>  AllTransferGlAccountId.Contains(s.AccountId));
                 }
                 else
                 {
+                    List<string> AllGlAccountId = AllBankAccounts.Select(a => a.GLAccountId).ToList();
                     ledgerTransactions = ledgerTransactions.Where(s => AllGlAccountId.Contains(s.AccountId));
                 }
 
@@ -554,6 +560,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
+
+      
 
     }
 
