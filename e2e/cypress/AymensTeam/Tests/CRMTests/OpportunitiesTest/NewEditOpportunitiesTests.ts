@@ -11,5 +11,5 @@ describe('Opportunities', () => {
     });
     it('Test New Opportunites', () => {
         scenarios.RunScenario();
-  
+    });
 });
