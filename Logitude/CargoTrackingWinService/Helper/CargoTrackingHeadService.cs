@@ -98,8 +98,24 @@ namespace CargoTrackingWinService.Helper
             RecordUpdated RecordUpdatedNumber = new RecordUpdated();
             foreach (CargoTable table in CargoTableLists)
             {
-
-                RecordUpdatedNumber = UpdateCargoDataBase(table);
+                try
+                {
+                    RecordUpdatedNumber = UpdateCargoDataBase(table);
+                }
+                catch(Exception e)
+                {
+                    string ErrorsLog  ="Table Name: " +table.CT_TableName+Environment.NewLine +"Erros: "+ e.Message+ Environment.NewLine+ "Stack Trace: " + e.StackTrace;
+                    if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
+                    {
+                        ApplicationInfo.ErrorLogs += ErrorsLog;
+                    }
+                    if (ApplicationInfo.ErrorLogs.Length > 4000)
+                    {
+                        ApplicationInfo.ErrorLogs.Substring(0, 4000);
+                    }
+                    
+                }
+                
                 UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
 
             }

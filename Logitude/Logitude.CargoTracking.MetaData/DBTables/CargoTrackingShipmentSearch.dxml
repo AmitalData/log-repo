@@ -32,12 +32,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SecurityKey"
+    Name="ShipmentId"
     Type="varchar"
-    Size="40">
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPublic"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>
   <Index
-    Columns="Tenant,ShipmentDate,SearchFields" />
+    Columns="Tenant,SearchFields,IsPublic" />
 </Table>
