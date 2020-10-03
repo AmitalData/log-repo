@@ -413,7 +413,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
 
             SqlCommand commandSourceData = new SqlCommand(cmd, sourceConnection);
-
+            commandSourceData.CommandTimeout = (int)timeOut;
             SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
 
             return reader;
@@ -600,7 +600,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         SqlCommand commandSourceData = new SqlCommand(
                        "SELECT  TableName" +
                        " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CT_TableName + "'", SourceConnection);
-
+                        commandSourceData.CommandTimeout = (int)timeOut;
                         SqlDataReader reader = commandSourceData.ExecuteReader();
                         if (!reader.HasRows)
                         {
