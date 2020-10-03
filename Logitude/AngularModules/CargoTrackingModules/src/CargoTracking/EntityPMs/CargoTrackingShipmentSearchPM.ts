@@ -44,9 +44,14 @@ export class CargoTrackingShipmentSearchPM {
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private securityKey: string;
-    public get SecurityKey() { return this.securityKey; }
-    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
+    private isPublic: boolean;
+    public get IsPublic() { return this.isPublic; }
+    public set IsPublic(newValue: boolean) { if (this.isPublic != newValue) { this.isPublic = newValue; this.MarkAsDirty("IsPublic"); } }
        
 	 
 

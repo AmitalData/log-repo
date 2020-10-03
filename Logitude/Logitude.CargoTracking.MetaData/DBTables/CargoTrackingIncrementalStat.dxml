@@ -61,9 +61,16 @@
   <Column
     Name="Id"
     Type="int"
-	Identity="true">
+    Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
+  </Column>
+  <Column
+    Name="ErrorLog"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

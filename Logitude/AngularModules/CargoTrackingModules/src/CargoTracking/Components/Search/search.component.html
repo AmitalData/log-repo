@@ -1,6 +1,10 @@
 <div class="search-wrapper" [style.height]="Shipments.length>0 ? '100%' : ''">
     <div class="vertical-center" [class.vertical-center-withdata]="Shipments.length>0">
         <h1 class="page-title">Track Shipment</h1>
+ 
+        <router-outlet ></router-outlet>
+
+
         <div class=" ">
             <div>
                 <form [formGroup]="searchForm" (ngSubmit)="Search()">
@@ -17,7 +21,7 @@
 
                     </div>
 
-                    <button class="search-button hide-mobile" type="submit">Search</button>
+                    <button class="search-button hide-mobile" type="submit">{{isLoading?'Loading...': 'Search'}}</button>
                 </form>
             </div>
         </div>
@@ -39,7 +43,11 @@
 
 
 
-            <div class="result-count dark-gray" *ngIf="Shipments.length>0">{{Shipments.length}} results</div>
+            <div class="result-count dark-gray" *ngIf="Shipments.length>0">
+                {{Shipments.length}} 
+                <span *ngIf="Shipments.length==1">result</span>
+                <span *ngIf="Shipments.length>1">results</span>       
+            </div>
 
 
 

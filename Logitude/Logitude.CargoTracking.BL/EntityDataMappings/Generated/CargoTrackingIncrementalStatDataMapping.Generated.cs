@@ -31,7 +31,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         TransportModes, 
 	         ShipmentComputedFields, 
 	         ShipmentMasterDatas, 
-	         Id,
+	         Id, 
+	         ErrorLog,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         TransportModes, 
 	         ShipmentComputedFields, 
 	         ShipmentMasterDatas, 
-	         Id,
+	         Id, 
+	         ErrorLog,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +101,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentMasterDatas))
             {
 				entityPOCO.ShipmentMasterDatas = entityPM.ShipmentMasterDatas;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorLog))
+            {
+				entityPOCO.ErrorLog = entityPM.ErrorLog;
 			}
 			}
 
@@ -155,6 +162,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ErrorLog))
+            {
+					entityPM.ErrorLog = entityPOCO.ErrorLog;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingIncrementalStatPM entityPM, CargoTrackingIncrementalStatPM oldEntityPM)
@@ -206,6 +218,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ShipmentMasterDatas = entityPM.ShipmentMasterDatas;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorLog))
+            {
+                oldEntityPM.ErrorLog = entityPM.ErrorLog;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingIncrementalStatPM entityPM)
@@ -214,6 +231,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ErrorLog)) //T4 find type == nText 
+            {
+                entityPM.ErrorLog = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ErrorLog));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
