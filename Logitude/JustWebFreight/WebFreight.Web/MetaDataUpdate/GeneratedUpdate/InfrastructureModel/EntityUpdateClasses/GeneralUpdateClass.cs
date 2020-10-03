@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "0a8a1f304bc9a40dfa53464b4f4286b4";
+		public const string HashString = "e0bc5fb44b82ea395c0a6d0b9ed90cf2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,6 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "General",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Generals",
+			      				    OldDBTableName =  "Generals",
 			      				    ObjectTableSingular =  "General",
 			      				    ObjectTablePlural =  "Generals",
 			      				    HasCustomFilter =  false,
@@ -118,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "b061",
+			      				    Code =  "485a",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2215,7 +2216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralFromDateMustBeLTT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.FromDateMustBeLTT", DefaultText = "From date'' field must be less than or equal to ''To date'' field  ",LocalDefaultText = @"מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = "To date''  field must be greater than or equal to ''From date'' field",LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = "''To date''  field must be greater than or equal to ''From date'' field",LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersTariffProducts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.TariffProducts", DefaultText = "Tariff Products",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
