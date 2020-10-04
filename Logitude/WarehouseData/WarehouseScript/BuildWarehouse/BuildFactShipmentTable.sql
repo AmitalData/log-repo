@@ -245,6 +245,7 @@
  declare @ArrivalNoticeSent as datetime
 
  declare @ContainersNumbersAndTypesArray as nvarchar(1000)
+ declare @UnNumber as  VARCHAR(4) 
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
@@ -268,7 +269,7 @@
     ShipmentPayableStatuses.Name, ShipmentReceivableStatuses.Name, dw_Shipments.CarrierLastStatusDate, dw_Shipments.AWBPrint, dw_Shipments.ExceptionDescription, dw_Shipments.HasException, dw_Shipments.ExceptionResolvedDescription, dw_Shipments.LastExceptionDescription, dw_Shipments.RegistryDate, dw_Shipments.GrossWeightPerTon, dw_Shipments.NextETA, dw_Shipments.NextETD,
     dw_ShipmentComputedFields.Commodity, dw_ShipmentMasterDatas.TrailerNumber, dw_ShipmentMasterDatas.MainCarriageFromAddressId, dw_ShipmentMasterDatas.MainCarriageToAddressId,
 	fisrtPickupTruckerPartners.Id_Number,dw_ShipmentComputedFields.PickupTruckerNumber,dw_ShipmentComputedFields.PickupDriver,dw_ShipmentComputedFields.PickupTrailerNumber,dw_ShipmentComputedFields.PickupNotes,finalDeliveryTruckerIdPartners.Id_Number, dw_ShipmentComputedFields.DeliveryTruckerNumber,dw_ShipmentComputedFields.DeliveryDriver,dw_ShipmentComputedFields.DeliveryTrailerNumber,dw_ShipmentComputedFields.DeliveryNotes ,dw_ShipmentMasterDatas.DocumentsClosingDate,dw_ShipmentComputedFields.DeliveryDate,dw_ShipmentComputedFields.OnHandDate,dw_ShipmentComputedFields.PODDate,dw_Shipments.WarehouseLegActualEntryDate, dw_ShipmentComputedFields.BookingConfirmationSent, dw_ShipmentComputedFields.PreAlertSent, dw_ShipmentComputedFields.DeliveryNoticeSent, dw_ShipmentComputedFields.ExpectedArrivalNoticeSent, dw_ShipmentComputedFields.T1Received, dw_ShipmentComputedFields.ArrivalNoticeSent, dw_ShipmentComputedFields.ContainersNumbersAndTypesArray
-	,NewDIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate
+	,NewDIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate, dw_Shipments.DangerousUnNumber
 
 	 
 
@@ -361,7 +362,7 @@
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
     @PayableStatus, @ReceivableStatus, @CarrierLastStatusDate, @AWBPrint, @ExceptionDescription, @HasException, @ExceptionResolvedDescription, @LastExceptionDescription, @RegistryDate, @GrossWeightPerTon, @NextETA, @NextETD,
     @Commodity, @TrailerNumber, @FromLocation, @ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate, @BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ComputedStatus , @ComputedStatusDate
+	,@ComputedStatus , @ComputedStatusDate, @UnNumber
 
 
 
@@ -496,8 +497,9 @@
 	  ,[Consignee Not Importer],[Issuing Carrier Agent],[On Carriage Transport Mode],[First AR Invoice Approval Date],[Order Confirmation Notes],[Order Confirmed By]
 	  ,[Number of Deliveries] , [Operational Closed By],[Last Pickup ATA],[Last Pickup ETA],[Delivery To Port],[Last Pickup ETD],[Last Pickup ATD],[Delivery From],[Delivery To],[Pickup From],[Pickup To],[Freight Release]
       ,[Payable Status],[Receivable Status],[Carrier Last Status Date],[AWB Print],[Exception Description],[Has Exception],[Exception Resolved Description],[Last Exception Description],[Registry Date],[Gross Weight Per Ton],[Next ETA],[Next ETD]
-      ,[Commodity], [Trailer Number], [From Location], [To Location],
-	  [First Pickup Trucker], [First Pickup Trucker Number], [First Pickup Driver],[First Pickup Trailer Number], [First Pickup Notes],[Final Delivery Trucker], [Final Delivery Trucker Number], [Final Delivery Driver],[Final Delivery Trailer Number], [Final Delivery Notes],[Document Closing Date],[Order Gross Weight in Ton],[Delivery Date],[On Hand Date],[POD Date],[In Warehouse Date],[Booking Confirmation Sent],[Pre Alert Sent],[Delivery Notice Sent],[Expected Arrival Notice Sent],[T1 Received],[Arrival Notice Sent],[Containers Numbers and Types Array] 
+      ,[Commodity], [Trailer Number], [From Location], [To Location]
+	  ,[First Pickup Trucker], [First Pickup Trucker Number], [First Pickup Driver],[First Pickup Trailer Number], [First Pickup Notes],[Final Delivery Trucker], [Final Delivery Trucker Number], [Final Delivery Driver],[Final Delivery Trailer Number], [Final Delivery Notes],[Document Closing Date],[Order Gross Weight in Ton],[Delivery Date],[On Hand Date],[POD Date],[In Warehouse Date],[Booking Confirmation Sent],[Pre Alert Sent],[Delivery Notice Sent],[Expected Arrival Notice Sent],[T1 Received],[Arrival Notice Sent],[Containers Numbers and Types Array]
+	  ,[Un Number]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -506,7 +508,7 @@
 	  @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,
 	   @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
        @PayableStatus,@ReceivableStatus,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,dbo.GetDateFormateAsNumber(@RegistryDate),@GrossWeightPerTon,@NextETA,@NextETD,
-       @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@OrderGrossWeightinTon,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray )
+       @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@OrderGrossWeightinTon,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray, @UnNumber)
 	END TRY 
 BEGIN CATCH  
 
@@ -536,7 +538,7 @@ END CATCH
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
     @PayableStatus,@ReceivableStatus,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,@RegistryDate,@GrossWeightPerTon,@NextETA,@NextETD,
     @Commodity,@TrailerNumber,@FromLocation,@ToLocation,@FirstPickupTruckerId, @FirstPickupTruckerNumber, @FirstPickupDriver, @FirstPickupTrailerNumber, @FirstPickupNotes,@FinalDeliveryTruckerId, @FinalDeliveryTruckerNumber, @FinalDeliveryDriver, @FinalDeliveryTrailerNumber, @FinalDeliveryNotes,@DocumentsClosingDate,@DeliveryDate,@OnHandDate,@PODDate,@InWarehouseDate,@BookingConfirmationSent, @PreAlertSent, @DeliveryNoticeSent, @ExpectedArrivalNoticeSent, @T1Received, @ArrivalNoticeSent, @ContainersNumbersAndTypesArray
-	,@ComputedStatus , @ComputedStatusDate
+	,@ComputedStatus , @ComputedStatusDate, @UnNumber
 
 
 		End
