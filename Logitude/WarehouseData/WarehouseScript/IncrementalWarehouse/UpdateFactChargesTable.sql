@@ -227,9 +227,9 @@
    declare @IsOpenPayable as bit = 0
 
 
-     declare @RecordType as varchar(100)
-		set @RecordType = 'Master';
-		if(@DirectHouse = 'House' or @DirectHouse = 'Direct') begin  set @RecordType = 'Shipment'; end
+  --   declare @RecordType as varchar(100)
+		--set @RecordType = 'Master';
+		--if(@DirectHouse = 'House' or @DirectHouse = 'Direct') begin  set @RecordType = 'Shipment'; end
 
 	--------------Long Master Number------------------
 	 if(@TransportModeId = 'A' and @Master is not null and @AirlinePrefix is not null)
@@ -307,14 +307,14 @@
 	  ,[Salesman],[Account Manager],[Status],[MainCarriage From Port],[MainCarriage To Port],[Shipment Create Date],  [Shipment Create Date Time] , [Agent Ref1],[Agent Ref2],[Customer Ref1],[Customer Ref2] , [Shipment Created By]
 	  ,[Carrier] , [First Operational Close Date],     [Special Services] , [Master Shipment Number] , [Main Carriage ATA] , [Main Carriage ATD] , [Shipment Operational Date] , [Shipment Operationally Closed] , [Shipment Accounting Closed]
 	  ,[Charges Type],[Invoice Number] ,[Invoice Currency] , [Invoice Exchange Rate] ,[Open Payables in Local],[Open Payables in Profit] , [Accounted Payables in Local],[Accounted Payables in Profit],[Open Receivables in Local] ,[Open Receivables in Profit],[Accounted Receivables in Local],[Accounted Receivables in Profit], [Is Open Receivable],[Is Open Payable],[VAT amount in Invoice Currency],[Payable Id],[Receivable Id],[Bill To] , [Vendor] , [Invoice Id]
-	  ,[Operational Close Date],[Accounting Close Date],[Registry Date],[Project#],[Shipper],[Consignee],[Routing],[Incoterm],[Record Type]) 
+	  ,[Operational Close Date],[Accounting Close Date],[Registry Date],[Project#],[Shipper],[Consignee],[Routing],[Incoterm]) 
 
 	
       values(@ShipmentId, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master ,  @Agent,@Customer,
 	  @Salesman , @AccountManager ,    @ComputedStatus, @MainCarriageFromPort ,@MainCarriageToPort , dbo.GetDateFormateAsNumber(@ShipmentCreateDate) ,@ShipmentCreateDate  ,@AgentReference1, @AgentReference2,@CustomerReference1, @CustomerReference2, @ShipmentCreatedBy,
       @Carrier ,   dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate), @SpecialServices , @MasterShipmentNumber, @MainCarriageATA, @MainCarriageATD, dbo.GetDateFormateAsNumber(@ShipmentOperationalDate), @ShipmentOperationallyClosed, @ShipmentAccountingClosed,
      @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedReceivablesinProfit, @IsOpenReceivable,@IsOpenPayable, @VATamountinInvoiceCurrency , @PayableId,@ReceivableId,@BillTo , @Vendor , @InvoiceId,
-	 dbo.GetDateFormateAsNumber(@OperationalCloseDate), dbo.GetDateFormateAsNumber(@AccountingCloseDate), dbo.GetDateFormateAsNumber(@RegistryDate), @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm,@RecordType)
+	 dbo.GetDateFormateAsNumber(@OperationalCloseDate), dbo.GetDateFormateAsNumber(@AccountingCloseDate), dbo.GetDateFormateAsNumber(@RegistryDate), @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm)
 
 	END TRY 
 BEGIN CATCH  

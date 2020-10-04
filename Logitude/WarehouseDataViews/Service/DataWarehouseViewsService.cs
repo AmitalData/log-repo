@@ -71,9 +71,43 @@ namespace WarehouseDataViews.Service
             warehouseView.SqlString = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
             warehouseView.SqlString +=((warehouseView.IsHaveCustomFields ? ",@CustomFields":"") +  " FROM " + factCode);
 
-            warehouseView.SqlString += " where [Record Type] = '" + recordType + "'";
+
+            List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(recordType);
+            if(shipmentLevelLists.Count() > 0)
+            {
+                string recordTypeCondation = " where [DirectHouse] in ( ";
+                foreach (string shipmentType in shipmentLevelLists)
+                {
+                    recordTypeCondation += "'" + shipmentType + "' ,";
+                }
+                recordTypeCondation = recordTypeCondation.Remove(recordTypeCondation.Length - 1);
+                recordTypeCondation += ") ";
+
+                warehouseView.SqlString += recordTypeCondation;
+            }
+
             DataWarehouseViewLists.Add(warehouseView);
         }
+
+        private List<string> GetShipmentLevelListsByRecordType(string recordType)
+        {
+            var result = new List<string>();
+            if (!string.IsNullOrEmpty(recordType))
+            {
+                if (recordType == "Master")
+                {
+                    result.Add("Consol");
+                    result.Add("Direct");
+                }
+                else if (recordType == "Shipment")
+                {
+                    result.Add("Direct");
+                    result.Add("House");
+                }
+            }
+            return result;
+        }
+
 
         private void CreateDimensionDataView(DWObjectFieldItem field)
         {
