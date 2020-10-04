@@ -748,6 +748,9 @@ namespace Simplog.Data.QuoteModel.Mapping
               .HasMaxLength(15)
               .IsUnicode(false);
 
+            this.Property(t => t.PageNumberingTextDesignId)
+              .HasMaxLength(15)
+              .IsUnicode(false);
 
             this.Property(t => t.TotalPerContainersCurrencyType)
               .HasMaxLength(10)
@@ -1019,7 +1022,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShowVATTypeContainers).HasColumnName("ShowVATTypeContainers");
             this.Property(t => t.ShowVATPercentagePackages).HasColumnName("ShowVATPercentagePackages");
             this.Property(t => t.ShowVATPercentageContainers).HasColumnName("ShowVATPercentageContainers");
-
+            this.Property(t => t.HidePageNumber).HasColumnName("HidePageNumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -1063,6 +1066,7 @@ namespace Simplog.Data.QuoteModel.Mapping
                 this.Property(t => t.ShowTitleTotalPerContainersTable).HasColumnName("ShowTitleTotalPerContainers");
                 this.Property(t => t.ShowTotalPerChargeGroupPackages).HasColumnName("ShowTotalPerChargeGroupPacks");
                 this.Property(t => t.ShowTotalPerChargeGroupContainers).HasColumnName("ShowTotalPerChargeGroupConts");
+                this.Property(t => t.PageNumberingTextDesignId).HasColumnName("PageNumberingTextDesignId");
 
             }
 
@@ -1110,6 +1114,7 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             this.Property(t => t.ShowHeaderLabelsPackages).HasColumnName("ShowHeaderLabelsPackages");
            this.Property(t => t.ShowHeaderLabelsContainers).HasColumnName("ShowHeaderLabelsContainers");
+                this.Property(t => t.PageNumberingTextDesignId).HasColumnName("PageNumberingTextDesignId");
             }
 
 
@@ -1316,6 +1321,9 @@ namespace Simplog.Data.QuoteModel.Mapping
                 .HasForeignKey(d => d.TotalPerContainersTableDesignId);
 
 
+            this.HasOptional(t => t.PageNumberingTextDesign)
+                 .WithMany()
+                .HasForeignKey(d => d.PageNumberingTextDesignId);
 
 
             this.HasOptional(t => t.TotalPerContainersAdditionalTextDesign)

@@ -184,5 +184,7 @@ export class QuoteTemplateSettingList {
 		ShowVATTypeContainers: boolean;
 		ShowVATPercentagePackages: boolean;
 		ShowVATPercentageContainers: boolean;
+		HidePageNumber: boolean;
+		PageNumberingTextDesignId: string;
 	
 }

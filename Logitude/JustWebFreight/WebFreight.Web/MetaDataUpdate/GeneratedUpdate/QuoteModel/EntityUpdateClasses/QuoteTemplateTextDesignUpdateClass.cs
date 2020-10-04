@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateTextDesignUpdateClass
    {  		
-		public const string HashString = "17e83bfa83dc56ec752fdeb6d11d58c9";
+		public const string HashString = "d233d26bd7bde404c176f4dd748b24ea";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTemplateTextDesign",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteTemplateTextDesigns",
-			      				    OldDBTableName =  "QuoteTemplateTextDesigns",
 			      				    ObjectTableSingular =  "Quote Template Text Design",
 			      				    ObjectTablePlural =  "Quote Template Text Designs",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Template Text Design",
-			      				    Code =  "134b",
+			      				    Code =  "aa58",
 			      				    Name =  "QuoteTemplateTextDesign",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Title",
-					  						OldFieldName =  "Title",
 					  						ObjectTableName =  "QuoteTemplateTextDesign",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -201,7 +199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "TextValue",
-					  						OldFieldName =  "TextValue",
 					  						ObjectTableName =  "QuoteTemplateTextDesign",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -258,7 +255,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "HideAlignment",
-					  						OldFieldName =  "HideAlignment",
 					  						ObjectTableName =  "QuoteTemplateTextDesign",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
