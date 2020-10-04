@@ -120,6 +120,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string AEOImporter  { get; set; }
        [DataMember]
        public DateTime? FileOpenDate  { get; set; }
+       [DataMember]
+       public string StorageSiteName  { get; set; }
+       [DataMember]
+       public string ImporterName  { get; set; }
+       [DataMember]
+       public string ProcedureCurrentName  { get; set; }
    }
 
 }
