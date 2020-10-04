@@ -1259,10 +1259,10 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.CurrencyCode = value.Code;
                  if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId) {
-                   this.IsCurrencyEnabled= false;
+                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
                     this.ForeignAmount = this.LocalAmount;
                     }
-                    else this.IsCurrencyEnabled =true;
+                 else this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
                   
                 } else {
                 this.CurrencyCode = null;
