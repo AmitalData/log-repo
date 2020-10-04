@@ -97,7 +97,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  AEOImporter=d.Importer.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
                                                                  FileOpenDate=a.FileOpenDate,
-
+                                                                 ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
+                                                                 StorageSiteName=d.StorageSiteName,
+                                                                 ImporterName = d.Importer != null ? d.Importer.FullName : d.ImporterName,
 
                                                              }) ;
                                                                 

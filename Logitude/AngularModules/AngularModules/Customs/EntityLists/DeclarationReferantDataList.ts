@@ -61,6 +61,9 @@ export class DeclarationReferantDataList {
 	ImporterFile: string;
 	AEOImporter: string;
 	FileOpenDate: Date;
+	StorageSiteName: string;
+	ImporterName: string;
+	ProcedureCurrentName: string;
 	
 }
  
