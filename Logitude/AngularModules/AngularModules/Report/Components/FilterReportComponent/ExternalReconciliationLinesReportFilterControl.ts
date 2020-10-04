@@ -129,6 +129,9 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
    
     RunReport() {
         this.ValidationErrorsList = [];
+        // this.REFFromDate.setHours(0,0,0,);
+        // this.REFToDate.setHours(0,0,0,);
+  
         var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (this.REFFromDate == null) {
             var REFFromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("LedgerTransaction.O.REFFrom"));
@@ -140,10 +143,14 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
             this.ValidationErrorsList.push(REFToDateValidation);
         }
 
-        if (this.REFFromDate > this.REFToDate) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+        if(this.REFFromDate != null && this.REFToDate != null){
+            var FromDate = new Date(this.REFFromDate.getUTCFullYear(),this.REFFromDate.getUTCMonth(),this.REFFromDate.getUTCDate(),0,0,0,0);
+            var ToDate = new Date(this.REFToDate.getUTCFullYear(),this.REFToDate.getUTCMonth(),this.REFToDate.getUTCDate(),0,0,0,0);
+            if (FromDate > ToDate) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
         }
-
+      
         if (this.ValidationErrorsList.length == 0) {
 
            this.BuildReport();
