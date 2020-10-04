@@ -1569,7 +1569,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CUSTOMAGENT)
                     .HasColumnName(@"CUSTOM_AGENT")
-                    .HasMaxLength(4)
+                    .HasMaxLength(5)
                     .HasColumnType("char");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.IMPORTERID)
