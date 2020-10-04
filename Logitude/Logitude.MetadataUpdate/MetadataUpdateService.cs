@@ -69,14 +69,15 @@ namespace Logitude.MetadataUpdate
             //if (LogitudeSettings.IsCostomsDeploy) 
             LogitudeSettings.ABMProductId = setting.ABMProductId;
             LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-            //if (LogitudeSettings.IsCostomsDeploy)
-            {
-                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+            if (LogitudeSettings.IsCostomsDeploy)
+            { 
+                LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+
             }
 
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
 
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }

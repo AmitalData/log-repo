@@ -552,7 +552,7 @@ export class AmitalGatewayUtil {
         //CloseEditWindow(false, false);
     }
 
-    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean) {
+    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
 
         //Response.InvoiceAction
         let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
@@ -560,7 +560,8 @@ export class AmitalGatewayUtil {
         this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
         this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
         
-        
+        this._LastUnifreightMessageM.Requset.push(["Remark", remark]);
+        this._LastUnifreightMessageM.Response.push(["Remark", remark]);
 
         this.SendRequestToUnifreightAsync(
             "UnifreightMassageHandler.CreateInvoiceCommandUnifreightCallBack",
@@ -1402,6 +1403,15 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
         };
         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+        //logWindow.ShowCloseButton = true;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice, comp.Remarks);
+
+            });
+        });
         logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
@@ -1409,7 +1419,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
             //'./CustomsModules/CustomsMaintenance/Components/InvoiceQueueComponent'
             './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
         );
-
+        /*
         logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
             //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -1419,7 +1429,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
             AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice);
             
         });
-
+        */
     }
    
 }

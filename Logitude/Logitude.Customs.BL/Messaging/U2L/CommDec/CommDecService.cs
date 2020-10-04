@@ -54,6 +54,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private bool _IsBuildItemsUnit = false;
 
         public bool IsAutonomy = false;
+        private decimal _SupplierInvoiceAmount;
 
         public CommDecService()
             : base(
@@ -622,13 +623,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void UpdateNoIdUnder150()
         {
-            if (currentDeclarationCourierStatusPM == null)
-            {
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-            }
-
-            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150 && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+            if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 if (_CourierMasterPM != null)
                 {
@@ -640,13 +635,27 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
                         if (defValue == "Y")
                         {
-                            this._MyDeclarationPM.ImporterCode = null;
+                            if(this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
+                            {
+                                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+                                declarationUpdateService.Update(this._MyDeclarationPM, true);
+                                _context = CustomContext.GetContext(ResolvedTenant());
+                                var myQueryService = new DeclarationQueryService(_context);
+                                this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                            }
+                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+                            {
+                                this._MyDeclarationPM.ImporterCode = null;
+                            }
                         }
                     }
                 }
             }
         }
-        
+
 
         private void CheckMasterToUpdate(string MoreParams)
         {
@@ -1146,9 +1155,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 AppendLogLine("Update Invoice..");
                 this._MySupplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault();
                 this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                this._SupplierInvoiceAmount = this._MySupplierInvoicePM.InvoiceAmount.GetValueOrDefault();
             }
             else
             {
+                this._SupplierInvoiceAmount = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault();
                 AppendLogLine("Unknown state of Invoice update, Invoice will not be Updated..");
                 return;
             }

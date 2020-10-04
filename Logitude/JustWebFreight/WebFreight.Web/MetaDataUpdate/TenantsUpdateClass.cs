@@ -553,11 +553,24 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateCustomsRelatedModels(IWebFreightContext context)
         {
+            WriteLogMessage("Starting Customs Related Modules Update ...");
+
+            WriteLogMessage("Initializing Infrastructure Module ...");
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+
+            WriteLogMessage("Initializing System Logs Module ...");
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+
+            WriteLogMessage("Initializing Common Module ...");
             CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+
+            WriteLogMessage("Initializing Global Module ...");
             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+
+            WriteLogMessage("Initializing Business Infrastructure Module ...");
             InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+
+            WriteLogMessage("Initializing Customs Module ...");
             CustomsUpdateClass customUpdate = new CustomsUpdateClass();
             MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
             if (runOldUpdateCode)
@@ -572,36 +585,56 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             else
             {
+                WriteLogMessage("Updating Infrastructure Module ...");
                 inframodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+
+                WriteLogMessage("Updating System Logs Module ...");
                 systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+
+                WriteLogMessage("Updating Common Module ...");
                 commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+
+                WriteLogMessage("Updating Global Module ...");
                 globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+
+                WriteLogMessage("Updating Business Infrastructure Module ...");
                 businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+
+                WriteLogMessage("Loading object tables for other modules ...");
                 metaDataUpdateClass.LoadUpdateTenantZero(context, false);
+
+                WriteLogMessage("Loading object tables for customs modules ...");
                 customUpdate.LoadObjectTablesMetadata(context, true);
                 performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
 
             }
 
+            WriteLogMessage("Loading cuorier tables ...");
             ForCourier();
 
 
             CustomUpdate updateClass = new CustomUpdate();
-
+            WriteLogMessage("Loading closed tables ...");
             updateClass.UpgradeClosedTablesForTenantZero();
+
+            WriteLogMessage("Loading object tables ...");
             updateClass.LoadUpdateTenantZero(context);
             //updateClass.LoadOtherFields(context);
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
+            WriteLogMessage("Loading object table helper controls ...");
             updateClass.LoadObjectTableHelperControls();
+
+            WriteLogMessage("Loading menus tables ...");
             updateClass.LoadMenustables();
             // updateClass.LoadEventTypes();
+            WriteLogMessage("Loading transport mode & remaining closed tables ...");
             updateClass.FillTransportModeTable();
             updateClass.FillTapagTypeTable();
 
