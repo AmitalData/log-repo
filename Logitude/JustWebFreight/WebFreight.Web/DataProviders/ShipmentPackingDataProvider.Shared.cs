@@ -29,6 +29,20 @@ namespace WebFreight.Web.DataProviders
         public string ContainerSize { get; set; }
         public string ContainerNumber { get; set; }
         public double? GrossWeight { get; set; }
+        public string HorseName { get; set; }
+        public int? HorseYearOfBirth { get; set; }
+        public string HorseColor { get; set; }
+        public string HorseGender { get; set; }
+        public string HorseBreed { get; set; }
+        public string HorseDiscipline { get; set; }
+        public string HorseTravelBehavior { get; set; }
+        public string HorseMicochipNumber { get; set; }
+        public string HorsePassportNumber { get; set; }
+        public string HorseCountryOfBirthName { get; set; }
+        public string HorseCurrentStable { get; set; }
+        public string HorseOwner { get; set; }
+        public string HorseRemarks { get; set; }
+
         public List<PackageItemProvider> PackageItems { get; set; }
     }
 
