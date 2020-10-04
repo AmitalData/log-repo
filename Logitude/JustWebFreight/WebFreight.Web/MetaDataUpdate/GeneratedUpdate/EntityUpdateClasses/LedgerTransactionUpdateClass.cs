@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "0e937c33ec7936f6ce6624a940c447ad";
+		public const string HashString = "736c882320669cdb3d162af3d18420d9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,6 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "LedgerTransaction",
 			      				    IsNew =  false,
 			      				    DBTableName =  "LedgerTransactions",
+			      				    OldDBTableName =  "LedgerTransactions",
 			      				    ObjectTableSingular =  "LedgerTransaction",
 			      				    ObjectTablePlural =  "LedgerTransactions",
 			      				    HasCustomFilter =  false,
@@ -119,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ledger Transaction",
-			      				    Code =  "d3d0",
+			      				    Code =  "5df2",
 			      				    Name =  "LedgerTransaction Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -143,6 +144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalId",
+					  						OldFieldName =  "JournalId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -205,6 +207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalLineNumber",
+					  						OldFieldName =  "JournalLineNumber",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -267,6 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
+					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -329,6 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ControlAccountId",
+					  						OldFieldName =  "ControlAccountId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -392,6 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountId",
+					  						OldFieldName =  "AccountId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -455,6 +461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingDate",
+					  						OldFieldName =  "AccountingDate",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -517,6 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DocumentDate",
+					  						OldFieldName =  "DocumentDate",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -578,6 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DueDate",
+					  						OldFieldName =  "DueDate",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -639,6 +648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalAmountDebit",
+					  						OldFieldName =  "LocalAmountDebit",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -702,6 +712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalAmountCredit",
+					  						OldFieldName =  "LocalAmountCredit",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -765,6 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyId",
+					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -828,6 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignAmountDebit",
+					  						OldFieldName =  "ForeignAmountDebit",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -891,6 +904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignAmountCredit",
+					  						OldFieldName =  "ForeignAmountCredit",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -954,6 +968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExchangeRate",
+					  						OldFieldName =  "ExchangeRate",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1017,6 +1032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference1",
+					  						OldFieldName =  "Reference1",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1078,6 +1094,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference2",
+					  						OldFieldName =  "Reference2",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1139,6 +1156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference3",
+					  						OldFieldName =  "Reference3",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1200,6 +1218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenAmount",
+					  						OldFieldName =  "OpenAmount",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1263,6 +1282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OppositeAccountId",
+					  						OldFieldName =  "OppositeAccountId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -1326,6 +1346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1387,6 +1408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalNumber",
+					  						OldFieldName =  "JournalNumber",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1448,6 +1470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
+					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1510,6 +1533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Source",
+					  						OldFieldName =  "Source",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1571,6 +1595,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SourceType",
+					  						OldFieldName =  "SourceType",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1632,6 +1657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenAmountCurrencyId",
+					  						OldFieldName =  "OpenAmountCurrencyId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -1695,6 +1721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
+					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1756,6 +1783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CumulativeLocalAmount",
+					  						OldFieldName =  "CumulativeLocalAmount",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1819,6 +1847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CumulativeForeignAmount",
+					  						OldFieldName =  "CumulativeForeignAmount",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1882,6 +1911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmountToReconcile",
+					  						OldFieldName =  "AmountToReconcile",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1945,6 +1975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Mark",
+					  						OldFieldName =  "Mark",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2007,6 +2038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenAmountCurrencyCode",
+					  						OldFieldName =  "OpenAmountCurrencyCode",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2069,6 +2101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsReconciled",
+					  						OldFieldName =  "IsReconciled",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2131,6 +2164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SourceId",
+					  						OldFieldName =  "SourceId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2189,6 +2223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SourceNumber",
+					  						OldFieldName =  "SourceNumber",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2248,6 +2283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SourceTypeCode",
+					  						OldFieldName =  "SourceTypeCode",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2306,6 +2342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SelectCheckBox",
+					  						OldFieldName =  "SelectCheckBox",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2364,6 +2401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencySign",
+					  						OldFieldName =  "CurrencySign",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2425,6 +2463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenAmountCurrencySign",
+					  						OldFieldName =  "OpenAmountCurrencySign",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2486,6 +2525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GroupHash",
+					  						OldFieldName =  "GroupHash",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2544,6 +2584,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsExternalReconcile",
+					  						OldFieldName =  "IsExternalReconcile",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2605,6 +2646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InReconcileProgress",
+					  						OldFieldName =  "InReconcileProgress",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2666,6 +2708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignAmount",
+					  						OldFieldName =  "ForeignAmount",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2729,6 +2772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconcileRemarks",
+					  						OldFieldName =  "ReconcileRemarks",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2790,6 +2834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginalJournalId",
+					  						OldFieldName =  "OriginalJournalId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2848,6 +2893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OppositeAccountEnglishName",
+					  						OldFieldName =  "OppositeAccountEnglishName",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2909,6 +2955,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OppositeAccountLocalName",
+					  						OldFieldName =  "OppositeAccountLocalName",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2970,6 +3017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OppositeAccountDisplayNumber",
+					  						OldFieldName =  "OppositeAccountDisplayNumber",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3031,6 +3079,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RecoNumber",
+					  						OldFieldName =  "RecoNumber",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3087,6 +3136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconciliationId",
+					  						OldFieldName =  "ReconciliationId",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3143,6 +3193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentReconciledAmount",
+					  						OldFieldName =  "PaymentReconciledAmount",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3200,6 +3251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InProgressExternalReconcile",
+					  						OldFieldName =  "InProgressExternalReconcile",
 					  						ObjectTableName =  "LedgerTransaction",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3357,6 +3409,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeChildAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeChildAccounts", DefaultText = "Include Child Accounts",LocalDefaultText = @"לכלול כרטיסים מקושרים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"יש להגדיר מספר חודשי גיול בהגדרות מערכת", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "REF From",LocalDefaultText = @"מתאריך", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "REF To",LocalDefaultText = @"עד", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"בנק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.All", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Open", DefaultText = "Open",LocalDefaultText = @"פתוחות", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Close", DefaultText = "Close",LocalDefaultText = @"סגורות ", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBankOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.BankOnly", DefaultText = "Bank",LocalDefaultText = @"דפי בנק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOGlaccountOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.GlaccountOnly", DefaultText = "Glaccount",LocalDefaultText = @"כרטיס עוש", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"מספר התאמה", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Amount", DefaultText = "Amount",LocalDefaultText = @"סכום", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Type", DefaultText = "Type",LocalDefaultText = @"סוּג", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludesTransferGlaccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludesTransferGlaccount", DefaultText = "Include Transfer Glaccount",LocalDefaultText = @"כולל כרטיס דחויים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
