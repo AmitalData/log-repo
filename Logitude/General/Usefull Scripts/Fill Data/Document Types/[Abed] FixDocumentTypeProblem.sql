@@ -9,10 +9,17 @@ update doc set doc.ObjectTableId = (select ObjectTableId from DocumentTypes wher
 
 
 
---UPDATE DocumentOuts set DocumentTemplateId = (select DocumentTypeDefaultReportTemplateId from DocumentTypes where id = DocumentsFilings.DocumentTypeId and Tenant = DocumentsFilings.Tenant)
---from DocumentOuts
---inner join DocumentsFilings on DocumentOuts.Id = DocumentsFilings.Id
---WHERE DocumentOuts.DocumentTemplateId not in (select DocumentTypeDefaultReportTemplateId from Documenttypes where Id =DocumentsFilings.DocumentTypeId) and DocumentOuts.Tenant = DocumentsFilings.Tenant   AND DocumentsFilings.DirectionCode = 'O' AND DocumentsFilings.DocumentTypeId IS NOT NULL
+UPDATE DocumentOuts set DocumentTemplateId = (select DocumentTypeDefaultReportTemplateId from DocumentTypes where id = DocumentsFilings.DocumentTypeId and Tenant = DocumentsFilings.Tenant)
+from DocumentOuts
+inner join DocumentsFilings on DocumentOuts.Id = DocumentsFilings.Id
+WHERE DocumentOuts.DocumentTemplateId not in (select DocumentTypeDefaultReportTemplateId from Documenttypes where Id =DocumentsFilings.DocumentTypeId) and DocumentOuts.Tenant = DocumentsFilings.Tenant   AND DocumentsFilings.DirectionCode = 'O' AND DocumentsFilings.DocumentTypeId IS NOT NULL
+
+
+
+UPDATE DocumentOuts set EmailTemplateId = (select DocumentTypeDefaultHTMLTemplateId from DocumentTypes where id = DocumentsFilings.DocumentTypeId and Tenant = DocumentsFilings.Tenant)
+from DocumentOuts
+inner join DocumentsFilings on DocumentOuts.Id = DocumentsFilings.Id
+WHERE DocumentOuts.EmailTemplateId not in (select DocumentTypeDefaultHTMLTemplateId from Documenttypes where Id =DocumentsFilings.DocumentTypeId) and DocumentOuts.Tenant = DocumentsFilings.Tenant   AND DocumentsFilings.DirectionCode = 'O' AND DocumentsFilings.DocumentTypeId IS NOT NULL
 
 
 
