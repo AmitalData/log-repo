@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
                     string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
                     var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
-                   // return GetInvoice();
+                    // return GetInvoice();
                     return StatusItemlist;
 
 
@@ -92,16 +92,16 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <ServiceCode>56</ServiceCode>
   <ServiceName/>
   <PayType>L</PayType>
-  <AmountNIS>100</AmountNIS>
+  <AmountNIS>-100</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>100</AmountForeign>
+  <AmountForeign></AmountForeign>
   <Wip>N</Wip>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>COM</ServiceCode>
   <ServiceName>עמלה</ServiceName>
   <PayType>L</PayType>
-  <AmountNIS>344</AmountNIS>
+  <AmountNIS>-344</AmountNIS>
   <Currency>NIS</Currency>
   <AmountForeign>344</AmountForeign>
   <Wip>N</Wip>
@@ -128,9 +128,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <ServiceCode>TAX</ServiceCode>
   <ServiceName>מס</ServiceName>
   <PayType>L</PayType>
-  <AmountNIS>207144</AmountNIS>
+  <AmountNIS>-207144</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>207144</AmountForeign>
+  <AmountForeign>-207144</AmountForeign>
   <Wip>Y</Wip>
  </InvoiceLine>
 </InvoiceLines>
@@ -152,9 +152,6 @@ namespace Logitude.Customs.BL.Messaging.Amital
 <MessagesData>
 <E>אריק בדיקה 1</E>
 </MessagesData>
-<MessagesData>
-  <W>שגיאה1</W>
- </MessagesData>
 <MessagesData>
 <W>אריק שגיאה1</W>
 </MessagesData>
@@ -218,6 +215,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string PayType { get; set; }
             public string AmountNIS { get; set; }
             public string AmountForeign { get; set; }
+            public string Wip { get; set; }
             public string Currency { get; set; }
 
 

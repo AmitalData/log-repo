@@ -141,7 +141,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (dirtyDeclarationPM.AmendmentDontDisplayInList == true)
+            if (dirtyDeclarationPM.IsAmendment==true)
             {
                 var eventContextTagModel2 = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                 if (eventContextTagModel2 != null)

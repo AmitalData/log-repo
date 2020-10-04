@@ -24,6 +24,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public bool IsRelevantGoodsItem  { get; set; }
+       [DataMember]
+       public bool IsRelevantInvoice  { get; set; }
    }
 
 }

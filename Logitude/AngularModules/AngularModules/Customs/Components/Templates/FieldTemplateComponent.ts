@@ -587,8 +587,8 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
+                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
                 });
-                this.OnBackFromEdit(this.Entity.DeclarationId, event)
             });
     }
 
