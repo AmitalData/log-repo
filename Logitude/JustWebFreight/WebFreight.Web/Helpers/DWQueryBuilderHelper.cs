@@ -675,7 +675,24 @@ namespace WebFreight.Web.Helpers
             }
 
 
-            string recordTypeCondation = !string.IsNullOrEmpty(dWObjectTablePM.RecordType) ? (" " +Fact +".[Record Type] = @RecordType") : "" ;
+
+
+            string recordTypeCondation = "";
+            List<string>shipmentLevelLists = GetShipmentLevelListsByRecordType(dWObjectTablePM.RecordType);
+            if (shipmentLevelLists.Count() > 0)
+            {
+
+                recordTypeCondation = (" " + Fact + ".[DirectHouse] in (");
+                foreach (string shipmentType in shipmentLevelLists)
+                {
+                    string parameterTenantName = "@ShipmentLevel" + shipmentType.ToString();
+                    recordTypeCondation += parameterTenantName + ",";
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = shipmentType.ToString() });
+                }
+                recordTypeCondation = recordTypeCondation.Remove(recordTypeCondation.Length - 1);
+                recordTypeCondation += ") ";
+            }
+
             if (FinalQuery.Contains("where"))
             {
 
@@ -717,6 +734,25 @@ namespace WebFreight.Web.Helpers
             sqlCommandDefinition.SQLString = FinalQuery + PagingString + offsetPagingString;
 
             return sqlCommandDefinition;
+        }
+
+        private List<string> GetShipmentLevelListsByRecordType(string recordType)
+        {
+            var result = new List<string>();
+            if (!string.IsNullOrEmpty(recordType))
+            {
+                if (recordType == "Master")
+                {
+                    result.Add("Consol");
+                    result.Add("Direct");
+                }
+                else if (recordType == "Shipment")
+                {
+                    result.Add("Direct");
+                    result.Add("House");
+                }
+            }
+            return result;
         }
 
         private string GetChargesTypeConditions(List<DWObjectFieldsDetails> columns,string pivotTableNickname, int columnIndex)
