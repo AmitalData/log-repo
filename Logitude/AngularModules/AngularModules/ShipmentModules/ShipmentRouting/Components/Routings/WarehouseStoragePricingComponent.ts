@@ -228,7 +228,6 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                     storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
                     storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
 
-
                     if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
                         storageReceivable.Rate = 1;
                     }
@@ -259,6 +258,8 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                     else {
                         storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
                     }
+
+                    this.CurrentSession.FireEvent("StorageReceivableCurrencyChanged");
                 }
             }
         });        
@@ -328,7 +329,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
     private myCloner: Cloner;
     private Clone() {
-        this.myCloner = new Cloner(this);
+        this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('ChargeStorageCurrencyId');
         this.myCloner.AddField('WeightMeasurementCode');
         this.myCloner.AddField('WeightRoundingCode');

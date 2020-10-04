@@ -122,7 +122,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
 
-                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved") {
+                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved" || s == "StorageReceivableCurrencyChanged") {
                     this.BuildItemsSource();
                 }
             });
@@ -2611,8 +2611,6 @@ export class ShipmentReceivableItem extends BaseComponent {
                     else {
                         this.EntityPM.AmountInProfitCurrency = (this.EntityPM.TotalAmountLocal / this.EntityPM.ProfitCurrencyExchangeRate);
                     }
-
-                    this.SetUIProperties_AmountProfit();
                 }
             });
         });
