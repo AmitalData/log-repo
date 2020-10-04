@@ -77,7 +77,12 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
             case"AC":{
               this.GLAccountCurrencyFilterItems.addAdditionalFilter("AccountTypeCode", "3", "2","1" ,"Equals", false, false, false, "string", false, true);
               break;
-          }
+            }
+            case null: {
+                this.GLAccountCurrencyFilterItems.addAdditionalFilter("AccountTypeCode", this.entityPM.AccountTypeCode, null, null, "Equals", false, false, false, "string", false, true);
+
+                break;
+            }
           default:{
               this.GLAccountCurrencyFilterItems.addAdditionalFilter("AccountTypeCode", "3", null, null, "Equals", false, false, false, "string", false, true);
               break;
