@@ -662,7 +662,7 @@ class JournalLineModel extends BaseComponent {
             this.accDay = date.getDate();
         }
         
-        if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+        if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
         this.ratesTableExtendedListService = new RatesTableExtendedListService();
         this._GLAccountExtendedListService = new GLAccountExtendedListService();
 
