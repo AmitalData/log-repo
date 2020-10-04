@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnDestroy}  from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, OnInit}  from '@angular/core';
 import {PackageList} from '../../../Common/EntityLists/PackageList';
 import {UserList} from '../../../Common/EntityLists/UserList';
 import {UserExtendedListService, UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExtendedListService';
@@ -18,7 +18,7 @@ import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/Tenan
     templateUrl: './LicensesManagementComponent.html',
 })
 
-export class LicensesManagementComponent implements OnDestroy {
+export class LicensesManagementComponent implements OnInit, OnDestroy {
   public Items: any[] = [];
 
     @Output() SearchFieldChangeEvent = new EventEmitter();
@@ -46,6 +46,13 @@ export class LicensesManagementComponent implements OnDestroy {
         });        
     }
 
+    ngOnInit() {
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            this.searchFields = this.searchText;
+            this.SearchTextChanged(this.searchText);
+        }
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.ListenEvent);
         this.ListenEvent = null
@@ -53,15 +60,19 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public AllUserLicenses: UserLicensePM[];
     public AllPackages: PackageList[];
-    private ActiveNotAdditionalUsersCount: number = 0;    
+    private ActiveNotAdditionalUsersCount: number = 0;
+    private searchText = null;
+
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
         this.ActiveNotAdditionalUsersCount = args.ActiveNotAdditionalUsersCount;
         this.dirtyItem = null;
 
-        if (!AppTool.IsNullOrEmpty(args.SearchField)) {
-            this.SearchTextChanged(args.SearchField);
-        }
+        this.searchText = args.SearchField;
+        //if (!AppTool.IsNullOrEmpty(args.SearchField)) {
+        //    this.searchFields = args.SearchField;
+        //    this.SearchTextChanged(args.SearchField);
+        //}
 
         this.InitColumns();
         this.LoadUserLicenses();
@@ -236,10 +247,18 @@ export class LicensesManagementComponent implements OnDestroy {
         this.DataLoaded = true;
     }
 
-    public SearchFields: string;
+    private searchFields: string = null;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(value: string) {
+        if (this.searchFields != value) {
+            this.searchFields = value;
+        }
+    }
+
+    //public SearchFields: string;
     SearchTextChanged(searchText: string) {
-        this.SearchFields = searchText;
-        this.SearchFieldChangeEvent.emit(this.SearchFields);
+        //this.SearchFields = searchText;
+        this.SearchFieldChangeEvent.emit(searchText);
     }
 
     public Add(user: UserExtendedList, myPackageCode: string) {
