@@ -643,6 +643,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                                 _context = CustomContext.GetContext(ResolvedTenant());
                                 var myQueryService = new DeclarationQueryService(_context);
                                 this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+                                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                             }
