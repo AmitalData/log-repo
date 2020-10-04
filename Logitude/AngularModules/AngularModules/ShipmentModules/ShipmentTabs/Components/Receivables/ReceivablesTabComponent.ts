@@ -2611,6 +2611,8 @@ export class ShipmentReceivableItem extends BaseComponent {
                     else {
                         this.EntityPM.AmountInProfitCurrency = (this.EntityPM.TotalAmountLocal / this.EntityPM.ProfitCurrencyExchangeRate);
                     }
+
+                    this.SetUIProperties_AmountProfit();
                 }
             });
         });

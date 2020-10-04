@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
@@ -11,6 +11,8 @@ import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/Shipmen
 import { ShipmentTool } from '../../../../Shipment/Tools';
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { LastRate, CurrencyRatesService } from '../../../../Common/Services/CurrencyRatesService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './WarehouseStoragePricingComponent.html',
@@ -204,11 +206,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 }
             });
 
-            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-            if (storageReceivable) {
-                storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
-                storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
-            }
+            this.UpdateReceivable();            
 
             var emitMessage: string = "ok";
             if (this.PricesChanged) {
@@ -217,6 +215,53 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
             this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
         }
+    }
+    UpdateReceivable() {
+        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+        var myCurrencyRatesService = new CurrencyRatesService();
+        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
+            if (!myResponse2.HasError) {
+                var allRates: LastRate[] = myResponse2.Result;
+
+                var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                if (storageReceivable) {
+                    storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
+                    storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
+
+
+                    if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
+                        storageReceivable.Rate = 1;
+                    }
+                    else {
+                        var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
+                        if (lastRate != null) {
+                            storageReceivable.Rate = lastRate.Rate;
+                        }
+                    }
+
+                    if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                        storageReceivable.ProfitCurrencyExchangeRate = 1;
+                    }
+
+                    else {
+                        var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
+                        if (myLastRate != null) {
+                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                        }
+                    }
+
+                    storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                    if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                    }
+
+                    else {
+                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                    }
+                }
+            }
+        });        
     }
 
     private ValidateSteps(myItems: PricingItem[]) {
