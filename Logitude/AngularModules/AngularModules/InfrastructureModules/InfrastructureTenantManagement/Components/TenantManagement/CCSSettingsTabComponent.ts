@@ -292,7 +292,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
         var list: TenantManagementAirlineItem[] = [];
 
         this.myZeroTenantAirlines.forEach(tenantZeroItem => {
-            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code == tenantZeroItem.Code)[0];
+            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code.toLowerCase() == tenantZeroItem.Code.toLowerCase())[0];
             list.push(new TenantManagementAirlineItem(myTenantItem, tenantZeroItem, this.EntityPM));
         });
 
