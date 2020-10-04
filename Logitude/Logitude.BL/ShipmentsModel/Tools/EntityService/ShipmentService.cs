@@ -334,7 +334,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-                shipmentBehaviourFacade.Trace(shipmentTracing);
+                //shipmentBehaviourFacade.Trace(shipmentTracing);
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -540,7 +540,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
-                    shipmentBehaviourFacade.Trace(shipmentTracing);
+                    //shipmentBehaviourFacade.Trace(shipmentTracing);
 
                     if(shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                     {
