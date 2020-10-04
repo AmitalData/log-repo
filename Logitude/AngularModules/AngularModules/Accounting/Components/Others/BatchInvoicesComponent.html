@@ -110,8 +110,12 @@
                     <td style="width: 85%">
                         <div></div>
                     </td>
+                    <td style="width:auto">
+                        <button class="RedButton" (click)="CloseWithoutInvoice()">{{CloseWithoutInvoiceText}}</button>
+                    </td>
+
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="CheckNumberOfInterestReportInvoicingWithoutInvoice()">{{CreateInvoiceText}}</button>
+                        <button class="GreenButton" (click)="CheckNumberOfInterestReportInvoicingWithoutInvoice()">{{CreateInvoiceText}}</button>
                     </td>
 
                 </tr>
