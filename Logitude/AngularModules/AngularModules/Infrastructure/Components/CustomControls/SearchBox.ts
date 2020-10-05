@@ -1,4 +1,4 @@
-﻿declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -218,6 +218,8 @@ export class SearchBox implements OnInit {
     set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
+
+            this.emitText = true;
             this.SetControlDisplay();
             this.OnSearchTextChanged();
         }

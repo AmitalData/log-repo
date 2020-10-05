@@ -160,6 +160,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "API,API Update", 
                 Name = "API Update", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LIC", 
+                Name = "License Management", 
+                SearchFields = "LIC,License Management", 
+			});
+
 			
             return all;
        }

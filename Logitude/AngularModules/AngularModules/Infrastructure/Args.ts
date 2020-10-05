@@ -32,5 +32,6 @@ export class UserArgs {
 export class UserLicenseArgs {
     public AllUserLicenses: any[];
     public AllPackages: any[];
-    public ActiveNotAdditionalUsersCount: number
+    public ActiveNotAdditionalUsersCount: number;
+    public SearchField: string;
 }
