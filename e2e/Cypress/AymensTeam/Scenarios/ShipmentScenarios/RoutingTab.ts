@@ -11,31 +11,56 @@ export class RoutingTab {
     private GoToRoutingTab() {
         cy.get('#ShipmentTHRoutings').click();
     }
-    private FillDates() {
-        Resolvers.DatePickerResolver.Selector('#date_Quote_ETD').Type('.');
-        Resolvers.DatePickerResolver.Selector('#date_Quote_ETA').Type('.');
-    }
+   
     private AddPickupDeilvery() {
-        this.addRoute('P');
-        this.addRoute('D');
+        this.AddRoute('P');
+        this.AddRoute('D');
 
     }
-    private addRoute(routeName: string) {
-        let routeId: string = null;
-        switch (routeName) {
-            case "P": { routeId = '#Add-PickUp'; break; } // Pickup
-            case "D": { routeId = '#Add-Delivery'; break; } // Delivery 
+    private AddRoute(typeName: string) {
+        let typeId: string = null;
+        switch (typeName) {
+            case "P": { typeId = '#Add-PickUp'; break; } // Pickup
+            case "D": { typeId = '#Add-Delivery'; break; } // Delivery 
         }
-        Resolvers.ButtonResolver.Selector(routeId).Click();
+
+        Resolvers.ButtonResolver.Selector(typeId).Click();
+
+        
         Resolvers.ButtonResolver.Selector('#CloseBtn').Click();
         Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();
 
-        
-        //cy.get('logcheckbox')
-        //    .find('.CheckBox')
-        //    .within(() => {
-        //        cy.get(routeId).click({ force: true });
-        //    });
     }
+    private FillFromAddress(PickupDeliveryTypeCode: string) {
 
+        if (PickupDeliveryTypeCode == 'PART') {
+            Resolvers.RadioButtonResolver.Selector('#Partner_FromRadio').Select();
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPartnerCardId').Type('raza');
+
+        } else if (PickupDeliveryTypeCode == 'Port') {
+            Resolvers.RadioButtonResolver.Selector('#Port_FromRadio').Select();
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPortId').Type('ez');
+
+        } else {
+            Resolvers.RadioButtonResolver.Selector('#CasualAddress_FromRadio').Select();
+            Resolvers.TextBoxResolver.Selector('#ShipmentPickUpDelivery_FromAddressCity').Type('Albania');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromAddressCountryId').Type('Albania');
+        }
+    }
+    private FillToAddress(PickupDeliveryTypeCode: string) {
+
+        if (PickupDeliveryTypeCode == 'PART') {
+            Resolvers.RadioButtonResolver.Selector('#Partner_FromRadio').Select();
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPartnerCardId').Type('raza');
+
+        } else if (PickupDeliveryTypeCode == 'Port') {
+            Resolvers.RadioButtonResolver.Selector('#Port_FromRadio').Select();
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPortId').Type('ez');
+
+        } else {
+            Resolvers.RadioButtonResolver.Selector('#CasualAddress_FromRadio').Select();
+            Resolvers.TextBoxResolver.Selector('#ShipmentPickUpDelivery_FromAddressCity').Type('Albania');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromAddressCountryId').Type('Albania');
+        }
+    }
 }
