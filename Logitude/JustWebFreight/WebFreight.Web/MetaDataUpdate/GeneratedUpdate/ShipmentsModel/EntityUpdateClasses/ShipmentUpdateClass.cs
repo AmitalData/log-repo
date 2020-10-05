@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "cb95408c567c2a41197408eb54912568";
+		public const string HashString = "86bfd2a40d0b4097cf87778dd5efe252";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -40835,7 +40835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsBondedWarehouse",
 					  						DefaultText =  "Is Bonded",
-					  						HelpTextCode =  "IsCFSWarehouse",
+					  						HelpTextCode =  "IsBondedWarehouse",
 					  						HelpTextDefaultText =  "Limited to one cross dock entry and one cross dock release.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
