@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using Oracle.DataAccess.Client;
+
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Reflection;
 using System.Xml;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
