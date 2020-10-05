@@ -29,6 +29,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("IsRelevantGoodsItem")]
+	    public bool IsRelevantGoodsItem { get; set; }
+        [Column("IsRelevantInvoice")]
+	    public bool IsRelevantInvoice { get; set; }
     }
 }
 	 

@@ -254,7 +254,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                             );
                     }
                     break;
-                    
+                case "1416":
+                case "ModificationAndDiscountType":
+                    {
+
+                        closedTableService = new Update1416ModificationAndDiscountType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 ModificationAndDiscountTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new ModificationAndDiscountTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<ModificationAndDiscountTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 default:
 
                     break;

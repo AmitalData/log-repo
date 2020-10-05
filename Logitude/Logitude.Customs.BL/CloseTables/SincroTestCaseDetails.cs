@@ -82,7 +82,7 @@ MainInterfaceCode ="5002"
                     IsDCA= true,
                     Entity="Declaration",
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content33"" :""5"" , 
-                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""2020-07-13T07:15:56.514148+03:00"",
+                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""10/01/2020 16:30:30"",
                                  ""DeclarationStatusID"" :""13"" , ""ProceduralFaultMsg "" :""false"" ,
                               ""RequiredDocumentDetails "" :""false""  }",
 

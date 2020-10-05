@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                             AdditionalInformation.Add(new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation
                             {
                                 StatementTypeCode = 37,
-                                Content = "2020-07-13T07:15:56"
+                                Content = data.Content37.ToString()
                             }
                         );
 

@@ -32,7 +32,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
                                                           KeywordsList = a.KeywordsList, 
                                                            SearchByFieldCode = a.SearchByFieldCode,
-                                                            SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ? "תאור טובין" : "שם יבואן") :null
+                                                            SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ?
+                                                            "תאור טובין"//"תאור טובין" 
+                                                            :
+                                                            "שם יבואן"///"שם יבואן"
+                                                            ) :null
 
                                                       });
             return query;
