@@ -19,35 +19,46 @@ END CATCH;
 -- Change Type From varchar To nvarchar For Column InvoiceFailureReason
 ALTER TABLE [dbo].[InterestReports] ALTER COLUMN [InvoiceFailureReason] NVARCHAR(1024);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a89070f6-f2f3-4742-9e3d-0bf4fe355c52', 'InterestReport.dxml', 'InterestReports', 'InvoiceFailureReason', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column InvoiceFailureReasonALTER TABLE [dbo].[InterestReports] ALTER COLUMN [InvoiceFailureReason] NVARCHAR(1024);');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('469c0d17-ac7b-4b2e-9345-ca92be4f5620', 'InterestReport.dxml', 'InterestReports', 'InvoiceFailureReason', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column InvoiceFailureReasonALTER TABLE [dbo].[InterestReports] ALTER COLUMN [InvoiceFailureReason] NVARCHAR(1024);');
 
 
 -- Add New Column With Name SearchFields
 ALTER TABLE [dbo].[TicketEscalations] ADD [SearchFields] NVARCHAR(1000) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3f4adee8-599d-4bef-9aee-00c6efb3db0c', 'TicketEscalation.dxml', 'TicketEscalations', 'SearchFields', 'Add Column', GETDATE(), '-- Add New Column With Name SearchFieldsALTER TABLE [dbo].[TicketEscalations] ADD [SearchFields] NVARCHAR(1000) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c609b0fd-4c36-478d-b260-fec2affd5ea5', 'TicketEscalation.dxml', 'TicketEscalations', 'SearchFields', 'Add Column', GETDATE(), '-- Add New Column With Name SearchFieldsALTER TABLE [dbo].[TicketEscalations] ADD [SearchFields] NVARCHAR(1000) NULL;');
 
 
 -- Create Index On CardSearches Table
 EXEC('CREATE NONCLUSTERED INDEX [IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight] ON [dbo].[CardSearches]([Tenant],[InActive],[Keyword],[PartnerTypeId],[Weight]) INCLUDE([CardId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b53392d7-558a-4e10-88b5-22091164b7c4', 'CardSearch.dxml', 'CardSearches', 'Tenant,InActive,Keyword,PartnerTypeId,Weight', 'Create Index', GETDATE(), '-- Create Index On CardSearches TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight] ON [dbo].[CardSearches]([Tenant],[InActive],[Keyword],[PartnerTypeId],[Weight]) INCLUDE([CardId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('fd42c57e-1668-4608-8110-9a4c0177b6f1', 'CardSearch.dxml', 'CardSearches', 'Tenant,InActive,Keyword,PartnerTypeId,Weight', 'Create Index', GETDATE(), '-- Create Index On CardSearches TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight] ON [dbo].[CardSearches]([Tenant],[InActive],[Keyword],[PartnerTypeId],[Weight]) INCLUDE([CardId])'');');
+
+
+-- Change Type From varchar To nvarchar For Column DescriptionOfGoods
+ALTER TABLE [dbo].[Quotes] ALTER COLUMN [DescriptionOfGoods] NVARCHAR(512);
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2ef187b1-9a44-4726-9872-9178550952ab', 'Quote.dxml', 'Quotes', 'DescriptionOfGoods', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column DescriptionOfGoodsALTER TABLE [dbo].[Quotes] ALTER COLUMN [DescriptionOfGoods] NVARCHAR(512);');
+
+-- Add New Column With Name DescriptionRightToLeft
+ALTER TABLE [dbo].[Quotes] ADD [DescriptionRightToLeft] BIT DEFAULT(0) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c1deaec6-eb15-4ff6-bd98-1d58230e2da0', 'Quote.dxml', 'Quotes', 'DescriptionRightToLeft', 'Add Column', GETDATE(), '-- Add New Column With Name DescriptionRightToLeftALTER TABLE [dbo].[Quotes] ADD [DescriptionRightToLeft] BIT DEFAULT(0) NOT NULL;');
 
 
 -- Add New Column With Name IsCFSWarehouse
 ALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouse] BIT DEFAULT(0) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('68790f15-9b23-4256-be10-a5fecc248b7b', 'Shipment.dxml', 'Shipments', 'IsCFSWarehouse', 'Add Column', GETDATE(), '-- Add New Column With Name IsCFSWarehouseALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouse] BIT DEFAULT(0) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3d231179-33c6-4f0d-b623-e328da45351a', 'Shipment.dxml', 'Shipments', 'IsCFSWarehouse', 'Add Column', GETDATE(), '-- Add New Column With Name IsCFSWarehouseALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouse] BIT DEFAULT(0) NOT NULL;');
 
 -- Add New Column With Name IsCFSWarehouseChanged
 ALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouseChanged] BIT DEFAULT(0) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('cb036f48-395b-4b0d-a99b-26ba3bd2b829', 'Shipment.dxml', 'Shipments', 'IsCFSWarehouseChanged', 'Add Column', GETDATE(), '-- Add New Column With Name IsCFSWarehouseChangedALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouseChanged] BIT DEFAULT(0) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c70db3ae-8a4d-4d4f-9556-bfa89029f1de', 'Shipment.dxml', 'Shipments', 'IsCFSWarehouseChanged', 'Add Column', GETDATE(), '-- Add New Column With Name IsCFSWarehouseChangedALTER TABLE [dbo].[Shipments] ADD [IsCFSWarehouseChanged] BIT DEFAULT(0) NOT NULL;');
 
 -- Create Index On Shipments Table
 EXEC('CREATE NONCLUSTERED INDEX [IX_Shipments_Tenant_ComputedStatusDate] ON [dbo].[Shipments]([Tenant],[ComputedStatusDate])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('eb7563d8-56fb-407f-95a0-cd3776c96bb2', 'Shipment.dxml', 'Shipments', 'Tenant,ComputedStatusDate', 'Create Index', GETDATE(), '-- Create Index On Shipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Shipments_Tenant_ComputedStatusDate] ON [dbo].[Shipments]([Tenant],[ComputedStatusDate])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('22137cea-a326-4916-8a50-fbc1f59b562a', 'Shipment.dxml', 'Shipments', 'Tenant,ComputedStatusDate', 'Create Index', GETDATE(), '-- Create Index On Shipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Shipments_Tenant_ComputedStatusDate] ON [dbo].[Shipments]([Tenant],[ComputedStatusDate])'');');
 
 
 -- DataView Script From ShipmentDataView.dxml
@@ -477,64 +488,6 @@ delete from APPayments where Tenant = @Tenant
 END');
 
 
--- Procedure Script From usp_DeleteCustomerRecords.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_DeleteCustomerRecords]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_DeleteCustomerRecords] END');
-EXEC('Create PROCEDURE [dbo].usp_DeleteCustomerRecords
-(
-@Tenant int
-)
-AS
-BEGIN
-declare @DeletedContactIdTable table
-(
-Id varchar(15) not null
-)
-update Tickets set CompanyId = NULL where Tenant = @Tenant
-update MAWBStacks set AssignedToId = null where Tenant = @Tenant
-update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO'')
-insert into @DeletedContactIdTable SELECT ContactId From CardContacts
-Where Tenant = @Tenant  and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO''))
-delete from CardContacts where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO''))
-declare @ContactId as varchar(15)
-BEGIN
-DECLARE DeleteContactCursor CURSOR READ_ONLY
-FOR
-SELECT Id
-FROM @DeletedContactIdTable
-OPEN DeleteContactCursor FETCH NEXT FROM DeleteContactCursor INTO @ContactId
-WHILE @@FETCH_STATUS = 0
-BEGIN
-if not exists (select * from CardContacts where ContactId = @ContactId)
-BEGIN
-delete from ContactTenants where ContactId = @ContactId
-delete from Contacts where Id = @ContactId
-END
-FETCH NEXT FROM DeleteContactCursor INTO @ContactId
-END
-CLOSE DeleteContactCursor
-DEALLOCATE DeleteContactCursor
-END
-delete from Addresses where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO''))
-delete from CardSearches where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO''))
-delete from CustomerProductLocations where Tenant = @Tenant
-delete from CustomerProducts where Tenant = @Tenant
-delete from CustomerProductLocationActualDatas where Tenant = @Tenant
-delete from CustomerProductActualDatas where Tenant = @Tenant
-delete from CustomerCompetitorProducts where Tenant = @Tenant
-delete from CustomerCompetitors where Tenant = @Tenant
-delete from CustomerAdditionalServices where Tenant = @Tenant
-delete from CustomerSalesNote where Tenant = @Tenant
-delete from CustomerSalesmanByProducts where Tenant = @Tenant
-delete from CustomerAccountManagerByProducts where Tenant = @Tenant
-delete from CustomerCustomsAgentByProducts where Tenant = @Tenant
-delete from CustomerForwarderByProducts where Tenant = @Tenant
-delete from CustomerMediatorByProducts where Tenant = @Tenant
-delete from CardExternalCodeByCurrencies where Tenant = @Tenant
-delete from Customers where Tenant = @Tenant
-delete from Cards where Tenant = @Tenant and (PartnerTypeId = ''CS'' or PartnerTypeId = ''PO'')
-END');
-
-
 -- Procedure Script From usp_UpdateCustomerActualData.dxml
 EXEC('IF (OBJECT_ID(''[dbo].[usp_UpdateCustomerActualData]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_UpdateCustomerActualData] END');
 EXEC('create PROCEDURE [dbo].[usp_UpdateCustomerActualData]
@@ -912,14 +865,237 @@ DEALLOCATE DataCursor4
 END');
 
 
--- General Script From 202009152200_FixHorseEventTypes.sxml File
+-- General Script From BuildSearchKeywordFunction.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
 DECLARE @EndTime datetime
 SELECT @StartTime = GETDATE()
+IF EXISTS (SELECT *
+FROM   sys.objects
+WHERE  object_id = OBJECT_ID(N'[dbo].[BuildSearchKeywordFunction]'))
+DROP FUNCTION [dbo].[BuildSearchKeywordFunction]
+declare @dateString as varchar(3000)
+set @dateString = 'CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit nvarchar(MAX)  , @firstweight int , @Secondweight int)
+RETURNS
+@returnList TABLE ([Keyword] [nvarchar] (500), [weight] int )
+AS
+BEGIN
+set @stringToSplit =  RTrim(@stringToSplit)
+DECLARE @IsFirstTime bit
+set @IsFirstTime = 1;
+DECLARE @name nvarchar(MAX)
+DECLARE @pos INT
+if(@stringToSplit!='' '') begin INSERT INTO @returnList  SELECT @stringToSplit ,@firstweight end
+WHILE CHARINDEX('' '', @stringToSplit) > 0
+BEGIN
+SELECT @pos  = CHARINDEX('' '', @stringToSplit)
+SELECT @name = SUBSTRING(@stringToSplit, 1, @pos-1)
+if(@IsFirstTime= 0 and @name!='' '')   begin INSERT INTO @returnList  SELECT @stringToSplit ,@Secondweight end
+SELECT @stringToSplit = SUBSTRING(@stringToSplit, @pos+1, LEN(@stringToSplit)-@pos)
+set @IsFirstTime = 0;
+END
+if(@IsFirstTime= 0 and @stringToSplit!='' '')begin INSERT INTO @returnList SELECT @stringToSplit ,@Secondweight
+end
+RETURN
+END'
+EXEC(@dateString)
 SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202009152200_FixHorseEventTypes.sxml', GETDATE(), 'NULL', DATEDIFF(MS,@StartTime,@EndTime), '7e78f7d51eff615c7260a02110990a6e', 2);
+UPDATE [dbo].[DBScriptsHistory] SET [ExecutionDate] = GETDATE(), [ScriptBody] = 'IF EXISTS (SELECT *
+FROM   sys.objects
+WHERE  object_id = OBJECT_ID(N''[dbo].[BuildSearchKeywordFunction]''))
+DROP FUNCTION [dbo].[BuildSearchKeywordFunction]
+declare @dateString as varchar(3000)
+set @dateString = ''CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit nvarchar(MAX)  , @firstweight int , @Secondweight int)
+RETURNS
+@returnList TABLE ([Keyword] [nvarchar] (500), [weight] int )
+AS
+BEGIN
+set @stringToSplit =  RTrim(@stringToSplit)
+DECLARE @IsFirstTime bit
+set @IsFirstTime = 1;
+DECLARE @name nvarchar(MAX)
+DECLARE @pos INT
+if(@stringToSplit!='''' '''') begin INSERT INTO @returnList  SELECT @stringToSplit ,@firstweight end
+WHILE CHARINDEX('''' '''', @stringToSplit) > 0
+BEGIN
+SELECT @pos  = CHARINDEX('''' '''', @stringToSplit)
+SELECT @name = SUBSTRING(@stringToSplit, 1, @pos-1)
+if(@IsFirstTime= 0 and @name!='''' '''')   begin INSERT INTO @returnList  SELECT @stringToSplit ,@Secondweight end
+SELECT @stringToSplit = SUBSTRING(@stringToSplit, @pos+1, LEN(@stringToSplit)-@pos)
+set @IsFirstTime = 0;
+END
+if(@IsFirstTime= 0 and @stringToSplit!='''' '''')begin INSERT INTO @returnList SELECT @stringToSplit ,@Secondweight
+end
+RETURN
+END''
+EXEC(@dateString)', [ElapsedTimeInMs] = DATEDIFF(MS,@StartTime,@EndTime), [HashValue] = '598fa43f8677d92057a73ea7ffba534c', [Version] = 2 WHERE [SxmlFileName] = 'BuildSearchKeywordFunction.sxml';
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202007051322_UpdateNotAirShipmentsSubType.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+-- If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+--      Begin
+--        Drop Table #tempTable
+--      End
+--      If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+--      Begin
+--        Drop Table #temp_Shipments
+--      End
+--CREATE TABLE #temp_Shipments (
+--	Id varchar(15) not null ,
+--    ShipmentSubTypeId varchar(15)  null,
+--	ShipmentTypeId varchar(15)  null
+--    )
+--	select
+--	Id,
+--	Tenant,
+--	TransportModeId,
+--	ShipmentTypeId,
+--	(
+--		CASE
+--			WHEN TransportModeId = 'O' and ShipmentTypeId = 'FCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FCL' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = 'O' and ShipmentTypeId = 'LCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LCL' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = 'O' and ShipmentTypeId = 'MyGO' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGO' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = 'I' and ShipmentTypeId = 'FTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FTL' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = 'I' and ShipmentTypeId = 'LTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LTL' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = 'I' and ShipmentTypeId = 'MyGI' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGI' and Tenant = Shipments.Tenant)
+--		END
+--	 ) as ShipmentSubTypeId
+--	into #tempTable
+--	FROM Shipments where TransportModeId <> 'A'
+--	  declare @Tenant as int
+--      declare @EntityId as varchar(15)
+--	  declare @ShipmentTypeId as varchar(4)
+--	  declare @TransportModeId as varchar(4)
+--	  declare @ShipmentSubTypeId as varchar(15)
+--	  declare @Count as int
+--      set @Count = 0;
+--    BEGIN
+--       DECLARE DataCursor CURSOR READ_ONLY
+--       FOR
+--       SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
+--       FROM #tempTable
+--       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+--       WHILE @@FETCH_STATUS = 0
+--       BEGIN
+--       		insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
+--			set @Count = @Count + 1;
+--			if(@Count = 4000)
+--			begin
+--				update Shipments
+--				set
+--				ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+--				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+--				FROM Shipments
+--				INNER JOIN #temp_Shipments
+--				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+--				truncate table #temp_Shipments
+--				set @Count = 0
+--			end
+--       FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+--       END
+--       CLOSE DataCursor
+--       DEALLOCATE DataCursor
+--    END
+--	if (@Count > 0)
+--	begin
+--				update Shipments
+--				set
+--				ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+--				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+--				FROM Shipments
+--				INNER JOIN #temp_Shipments
+--				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+--	end
+--	  drop table #tempTable
+--      drop table #temp_Shipments
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202007051322_UpdateNotAirShipmentsSubType.sxml', GETDATE(), '-- If(OBJECT_ID(''tempdb..#tempTable'') Is Not Null)
+--      Begin
+--        Drop Table #tempTable
+--      End
+--      If(OBJECT_ID(''tempdb..#temp_Shipments'') Is Not Null)
+--      Begin
+--        Drop Table #temp_Shipments
+--      End
+--CREATE TABLE #temp_Shipments (
+--	Id varchar(15) not null ,
+--    ShipmentSubTypeId varchar(15)  null,
+--	ShipmentTypeId varchar(15)  null
+--    )
+--	select
+--	Id,
+--	Tenant,
+--	TransportModeId,
+--	ShipmentTypeId,
+--	(
+--		CASE
+--			WHEN TransportModeId = ''O'' and ShipmentTypeId = ''FCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = ''O'' and ShipmentTypeId = ''LCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = ''O'' and ShipmentTypeId = ''MyGO'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGO'' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = ''I'' and ShipmentTypeId = ''FTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = ''I'' and ShipmentTypeId = ''LTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = Shipments.Tenant)
+--			WHEN TransportModeId = ''I'' and ShipmentTypeId = ''MyGI'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGI'' and Tenant = Shipments.Tenant)
+--		END
+--	 ) as ShipmentSubTypeId
+--	into #tempTable
+--	FROM Shipments where TransportModeId <> ''A''
+--	  declare @Tenant as int
+--      declare @EntityId as varchar(15)
+--	  declare @ShipmentTypeId as varchar(4)
+--	  declare @TransportModeId as varchar(4)
+--	  declare @ShipmentSubTypeId as varchar(15)
+--	  declare @Count as int
+--      set @Count = 0;
+--    BEGIN
+--       DECLARE DataCursor CURSOR READ_ONLY
+--       FOR
+--       SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
+--       FROM #tempTable
+--       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+--       WHILE @@FETCH_STATUS = 0
+--       BEGIN
+--       		insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
+--			set @Count = @Count + 1;
+--			if(@Count = 4000)
+--			begin
+--				update Shipments
+--				set
+--				ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+--				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+--				FROM Shipments
+--				INNER JOIN #temp_Shipments
+--				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+--				truncate table #temp_Shipments
+--				set @Count = 0
+--			end
+--       FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+--       END
+--       CLOSE DataCursor
+--       DEALLOCATE DataCursor
+--    END
+--	if (@Count > 0)
+--	begin
+--				update Shipments
+--				set
+--				ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+--				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+--				FROM Shipments
+--				INNER JOIN #temp_Shipments
+--				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+--	end
+--	  drop table #tempTable
+--      drop table #temp_Shipments', DATEDIFF(MS,@StartTime,@EndTime), 'aa0b6efe01efd811137af38dc287e4ad', 2);
 COMMIT TRAN
 END TRY
 BEGIN CATCH
