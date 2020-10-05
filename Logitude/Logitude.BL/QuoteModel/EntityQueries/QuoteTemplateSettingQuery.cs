@@ -258,7 +258,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowVATPercentagePackages = a.ShowVATPercentagePackages, 
                                                   ShowVATTypeContainers =a.ShowVATTypeContainers,
                                                   ShowVATTypePackages =a.ShowVATTypePackages,
-
+                                                  PageNumberingTextDesignId = a.PageNumberingTextDesignId,
+                                                  HidePageNumber = a.HidePageNumber,
                                               }).FirstOrDefault();
 
             return entity;
@@ -486,6 +487,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowVATPercentagePackages = a.ShowVATPercentagePackages,
                                                        ShowVATTypeContainers = a.ShowVATTypeContainers,
                                                        ShowVATTypePackages = a.ShowVATTypePackages,
+                                                       PageNumberingTextDesignId = a.PageNumberingTextDesignId,
+                                                       HidePageNumber = a.HidePageNumber,
 
                                                                       };
             return qUoteTemplateSetting;
@@ -707,6 +710,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowVATPercentagePackages = quoteTemplateSetting.ShowVATPercentagePackages,
                                                     ShowVATTypeContainers = quoteTemplateSetting.ShowVATTypeContainers,
                                                     ShowVATTypePackages = quoteTemplateSetting.ShowVATTypePackages,
+                                                    PageNumberingTextDesignId = quoteTemplateSetting.PageNumberingTextDesignId,
+                                                    HidePageNumber = quoteTemplateSetting.HidePageNumber,
                                                           };
             return result;
         }

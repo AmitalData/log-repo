@@ -34,6 +34,13 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "TM,Terminal", 
                 Name = "Terminal", 
 			});
+			 
+            all.Add(new WarehouseTypeDetails()
+            {    
+                Code = "CFS", 
+                Name = "CFS", 
+                SearchFields = "CFS,CFS", 
+			});
 			
             return all;
        }

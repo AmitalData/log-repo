@@ -498,10 +498,12 @@
 
        function onChange() {
 
-            
-           //var combobox = $("#cmbCountries").data("kendoComboBox");
-           //var selectedItem = combobox.dataSource.view()[combobox._current.index()];
-           //selectedcompany = selectedItem;
+           //var currentValue = $('#cmbCountries').data('kendoComboBox').dataItem();
+           //if (currentValue) {
+           //    Country = currentValue.Code;
+           //}
+
+       
            var CurrentCountry = $('#cmbCountries').data('kendoComboBox').value();
            Country = CurrentCountry;
 
@@ -552,6 +554,6 @@
        });
 
 
-       </script>
+    </script>
 </body>
 </html>

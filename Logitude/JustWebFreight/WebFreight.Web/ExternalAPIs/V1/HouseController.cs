@@ -620,34 +620,44 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);                    
-                    ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-
-                    if (HousePM != null)
+                    if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
-                        if (HousePM.IsOperationalClosed)
+                        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
+                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+
+                        if (HousePM != null)
                         {
-                            throw new ApplicationException("Can't update operationally closed shipments");
+                            HousePM.ConcurrencyGUID = entity.ConcurrencyGUID;
+
+                            if (HousePM.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Can't update operationally closed shipments");
+                            }
+
+                            if (HousePM.IsCancelled)
+                            {
+                                throw new ApplicationException("Can't update cancelled shipments");
+                            }
+
+                            if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))
+                            {
+                                throw new ApplicationException("Can't update house connected to master");
+                            }
+
+                            ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
+                            service.Update(true);
                         }
 
-                        if (HousePM.IsCancelled)
-                        {
-                            throw new ApplicationException("Can't update operationally cancelled shipments");
-                        }
+                        var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
+                        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, result);
+                    }
 
-                        if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))
-                        {
-                            throw new ApplicationException("Can't update house connected to master");
-                        }
-
-                        ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
-                        service.Update(true);
-                    }                    
-
-                    var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                    else
+                    {
+                        throw new ApplicationException("Update is not allowed");
+                    }
                 }
 
                 catch (Exception ex)

@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private bool isNewEntity;
 
         public bool ReceivablePricingUpdated { get; set; }
+        public bool DatesFromCrossDocsUpdated { get; set; }
 
         public UpdateShipmentComputedFieldsBehaviour(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentComputedFields shipmentComputedFields, bool isNewEntity)
         {

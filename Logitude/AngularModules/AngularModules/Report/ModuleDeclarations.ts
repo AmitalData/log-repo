@@ -56,6 +56,7 @@ import { ShipmentsStocksFiltersComponent } from './Components/FilterReportCompon
 import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent';
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
 import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
+import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -164,7 +165,8 @@ export const Components =
         ShipperReturnsReportFilterComponent,
         FlightBookingsManifestFilterComponent,
         RacingQuotesComponent,
-        BluesnapPaymentsReportFilterComponent
+        BluesnapPaymentsReportFilterComponent,
+        ExternalReconciliationLinesReportFilterControl
     ];
 
 export class ModuleDeclarations {
@@ -246,6 +248,8 @@ export class ModuleDeclarations {
             case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }
             case "RacingQuotesComponent": { myResult = RacingQuotesComponent; break; }
             case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
+            case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
+
         }
 
         return myResult;

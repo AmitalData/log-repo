@@ -208,27 +208,38 @@ namespace WebFreight.Web.Helpers
         {
             string objectTableeName = GetObjectTableName(automation);
             string emailBody = GetAutomationNotifyBackEmailBody(automation.Name, objectTableeName, notifyBackPartners);
-            StringBuilder HtmlTemplate = new StringBuilder();
-            HtmlTemplate.Append("<div style='text-align:left;'>");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(emailBody);
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("<br /><br />");
+            StringBuilder HtmlTemplate = BuildHtmlTemplateWithBody(emailBody);
+
+            string fromEmail = "no-reply@LogitudeWorld.com";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(automation.Tenant);
+                fromEmail = tenantManagementQuery.GetSystemDomain(automation.Tenant);
+                scope.Complete();
+            }
 
             string emailbody = HtmlTemplate.ToString();
             EmailCommunicationParams emailParams = new EmailCommunicationParams()
             {
-                From = "no-replay@LogitudeWorld.com",
-                To = NotifyBackEmails,
-                CC = "",
-                BCC = "",
-                Subject = "Automation " + automation.Name + "Failed",
+                From = fromEmail,
+                To = NotifyBackEmails, CC = "", BCC = "",
+                Subject = "Automation " + automation.Name + " Failed",
                 EmailBody = emailbody,
                 Tenant = automation.Tenant,
             };
             return emailParams;
         }
+        private StringBuilder BuildHtmlTemplateWithBody(string emailBody)
+        {
+            StringBuilder HtmlTemplate = new StringBuilder();
 
+            HtmlTemplate.Append("<div style='text-align:left;'>");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append(emailBody);
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("<br /><br />");
+            return HtmlTemplate;
+        }
         private string GetObjectTableName(Automation automation)
         {
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(automation.Tenant);
@@ -240,10 +251,26 @@ namespace WebFreight.Web.Helpers
         private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableeName, List<string> notifyBackPartners)
         {
             string emailString = "";
+            bool isMoreThanOnePartner = notifyBackPartners.Count > 1;
             emailString += "Automation " + automationName + " failed to be sent to the following ";
-            emailString += "partner" + (notifyBackPartners.Count > 1 ? "s " : " ") + string.Join(",", notifyBackPartners.ToArray());
-            emailString += " since they are not defined in " + objectTableeName + " level ";
+            emailString += "partner" + (isMoreThanOnePartner ? "s " : " ") + string.Join(",", notifyBackPartners.ToArray());
+            if (isMoreThanOnePartner)
+            {
+                emailString = ReplaceLastOccurrence(emailString, ",", " and ");
+            }
+            emailString += " since "+ (isMoreThanOnePartner ? "they are" : "it is") +" not defined in " + objectTableeName + " level ";
             return emailString;
+        }
+
+        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        {
+            int place = Source.LastIndexOf(Find);
+
+            if (place == -1)
+                return Source;
+
+            string result = Source.Remove(place, Find.Length).Insert(place, Replace);
+            return result;
         }
 
         public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc, string bcc, string subject, string objectTableName = null)

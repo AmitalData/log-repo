@@ -81,8 +81,8 @@
                                                 <RowDefinition Height="28" />
                                                <RowDefinition Height="28" />
                                                <RowDefinition Height="28" />
-
-
+                                               <RowDefinition Height="28" />
+                                               <RowDefinition Height="28" />
 
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Code:" />
@@ -118,6 +118,16 @@
 
                                         <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Fact Foreign Key:" Visibility="{Binding IsFactTable}" />
                                         <TextBox Grid.Row="9" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalFactForeignKey, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
+
+                                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Parent Fact:" Visibility="{Binding IsFactTable}" />
+                                        <TextBox Grid.Row="10" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ParentFactCode, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
+
+                                        <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Record Type:" Visibility="{Binding IsFactTable}" />
+                                        <TextBox Grid.Row="11" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding RecordType , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
+
+                                        <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Display Name:" Visibility="{Binding IsFactTable}" />
+                                        <TextBox Grid.Row="12" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DisplayName , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
+
 
                                     </Grid>
 

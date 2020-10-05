@@ -128,6 +128,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  TenantName = tenantmanagements.Name,
                                                                  AmountToPay = tenantmanagements.TotalPaymentamount,
                                                                  ShopperId = tenantmanagements.BluesnapAccount,
+                                                                 IsParentTenant = tenantmanagements.IsParentTenant,
+                                                                 ParentTenantId = tenantmanagements.ParentTenantId,
+                                                                 NoPaymentForChildTenants = tenantmanagements.NoPaymentForChildTenants,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
@@ -152,10 +155,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         {
             otherTenantsTransactions = new List<BlusnapTransactionsList>();
             var otherTenantTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant != 0).ToList();
+
             foreach (var item in otherTenantTransactions_List)
             {
-                AddToBlueSnapTransactionList(item);
+                bool isAddingTenant = true;
+                if(item.ParentTenantId != null)
+                {
+                    var parentTenant = (from a in iQueryable_JoinTenantBluesnapTransaction where a.Tenant == item.ParentTenantId select a).FirstOrDefault();
+                    if(parentTenant != null)
+                    {
+                        if (parentTenant.NoPaymentForChildTenants)
+                        {
+                            isAddingTenant = false;
+                        }
+                    }
+                }
+
+                if (isAddingTenant)
+                {
+                    AddToBlueSnapTransactionList(item);
+                }
             }
+
             this.iDataProvider.BlusnapTransactionsList.AddRange(otherTenantsTransactions);
             this.BuildTenantZeroData();
         }
@@ -276,7 +297,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                         {
                             double result = 0;
                             Double.TryParse(queryParameters["taxAmountUSD"], out result);
-                            totalPayments += result;
+                            totalPayments -= result;
                         }
                     }
                 }
@@ -337,6 +358,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public string TenantName { get; set; }
         public string ShopperId { get; set; }
         public double? AmountToPay { get; set; }
+        public bool IsParentTenant { get; set; }
+        public int? ParentTenantId { get; set; }
+        public bool NoPaymentForChildTenants { get; set; }
         public List<BluesnapTransactionItem> Transactions { get; set; }
     }
 

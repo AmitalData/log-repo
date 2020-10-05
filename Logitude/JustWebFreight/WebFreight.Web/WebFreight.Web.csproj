@@ -999,6 +999,7 @@
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
@@ -1015,6 +1016,7 @@
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="DataProviders\ExternalReconciliationLinesReportDataProvider.cs" />
     <Compile Include="FileNotFound.aspx.designer.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
     </Compile>
@@ -2211,7 +2213,6 @@
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
-    <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\HtmlTemplateClass.cs" />
     <Compile Include="DataContracts\ScreenLayoutArgs.cs" />
     <Compile Include="DataContracts\PickListGeneralEntitiesArgs.cs" />
@@ -2463,7 +2464,6 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\MoveTypeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectFieldController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\TraceEventController.Generated.cs" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBChargesCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBCustomsInformationViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBInformationViewsController.Generated.cs" />
@@ -2555,7 +2555,6 @@
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
-    <Compile Include="Helpers\BuildDocsOutService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
@@ -2588,7 +2587,6 @@
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
     <Compile Include="Helpers\DataWarehouseHelper.cs" />
     <Compile Include="Helpers\DepositionRequestHelper.cs" />
-    <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\EntityUpdateReflectorService.cs" />
     <Compile Include="Helpers\ExportToExcelHelper.DataTable.cs" />
@@ -3274,6 +3272,7 @@
     <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
     <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
+    <Content Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx" />
     <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxQueue.aspx" />
     <Content Include="Monitoring\DropBoxCommunicationLogs.aspx" />
@@ -5411,6 +5410,13 @@
     <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.designer.cs">
       <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.cs">
+      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.designer.cs">
+      <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\LogBoxShipmentQueue.aspx.cs">
       <DependentUpon>LogBoxShipmentQueue.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5608,6 +5614,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\InterestReportLoader.cs" />

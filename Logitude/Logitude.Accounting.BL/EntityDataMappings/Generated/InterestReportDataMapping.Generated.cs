@@ -81,7 +81,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsCreatedFromBatch, 
 	         BatchReportUserEmail, 
 	         RecalculateData, 
-	         IsUpdatedFromBatch,
+	         IsUpdatedFromBatch, 
+	         CanRecalculate, 
+	         InvoiceDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -389,6 +391,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InvoiceFailureReason)) //T4 find type == nText 
+            {
+                entityPM.InvoiceFailureReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoiceFailureReason));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

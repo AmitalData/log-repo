@@ -176,6 +176,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     var factTableCode: string = myResult.Result.Code;
+                    var parentFactCode: string = myResult.Result.ParentFactCode;
                     this.FillGroupChargesValues(myResult);
                     this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(factTableCode).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
@@ -250,11 +251,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
                     //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
-                    if (factTableCode == "Fact_Shipments" && window.DWObjectFields) {
+                    if ((factTableCode == "Fact_Shipments" || parentFactCode == "Fact_Shipments") && window.DWObjectFields) {
                         this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields);//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
                         //this.StopFiltersBusyIndicator();
                     }
-                    else if (factTableCode == "Fact_Charges" && window.DWObjectFields_Charges) {
+                    else if ((factTableCode == "Fact_Charges" || parentFactCode == "Fact_Charges") && window.DWObjectFields_Charges) {
                         this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields_Charges);
                     }
 

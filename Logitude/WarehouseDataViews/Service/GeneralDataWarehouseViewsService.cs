@@ -103,5 +103,12 @@ namespace WarehouseDataViews.Service
             return sqlFieldtype;
         }
 
+
+        public string BuildConnectionString(string catalog, string userName, string password, string server)
+        {
+            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+
     }
 }

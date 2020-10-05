@@ -518,14 +518,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
+        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode , string recordType)
         {
 
 
             List<DWObjectFieldPM> results = (from aa in repository.webFreightContext.DWObjectFieldCategories
                                              join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
                                              join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
-                                             where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && aa.DWObjectTableCode == dwotCode
+                                             where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && aa.DWObjectTableCode == dwotCode && (string.IsNullOrEmpty(a.RecordType) || (!string.IsNullOrEmpty(a.RecordType) && a.RecordType== recordType))
                                              select new DWObjectFieldPM()
                                              {
                                                  Id = a.Id,

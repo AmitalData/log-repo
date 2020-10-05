@@ -140,10 +140,11 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.AveragePrice = entityPM.AveragePrice;
             entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
-           entityPM.MainColor =(entityPM.MainColor != null && entityPM.MainColor.Length > 7) ?  "#" + entityPM.MainColor.Substring(3, 6):entityPM.MainColor;
-            entityPM.SecondaryColor = (entityPM.SecondaryColor != null && entityPM.SecondaryColor.Length > 7) ? "#" + entityPM.SecondaryColor.Substring(3, 6) : entityPM.SecondaryColor;
-
+            entityPM.MainColor = (entityPM.MainColor != null && entityPM.MainColor.Length > 7) ? "#" + entityPM.MainColor.Substring(3, 6) : entityPM.MainColor;
+            entityPM.SecondaryColor = (entityPM.SecondaryColor != null && entityPM.SecondaryColor.Length > 7) ? "#" + entityPM.SecondaryColor.Substring(3, 6) : entityPM.SecondaryColor;          
             entityPOCO.BackgroundId = entityPM.BackgroundId;
+            entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;
+
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -154,7 +155,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
                 LogBoxTenantSetting LBtenantsetting = LBtenantsettingRepository.GetSingleLBTenant(entityPM.Id);
 
-              
+
 
                 if (tenant != null)
                 {
@@ -178,7 +179,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 }
 
                 Package package = packageRepository.GetSinglePackage(entityPM.PackageCode);
-                if(package != null)
+                if (package != null)
                 {
                     packageName = package.Name;
                 }

@@ -1528,8 +1528,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ChargeStorageCurrencyId = shipment.ChargeStorageCurrencyId;
             shipmentPM.WeightMeasurementCode = shipment.WeightMeasurementCode;
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
-            shipmentPM.IsBondedWarehouse = shipment.IsBondedWarehouse;
-            shipmentPM.IsBondedWarehouseChanged = shipment.IsBondedWarehouseChanged;
+            shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
+            shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -10807,7 +10807,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipmentTypeName = shipment.ShipmentType != null ? shipment.ShipmentType.Name : null,
                      MainCarriageFinalDestinationETA = m.MainCarriageFinalDestinationETA,
                      MasterNumber = m.Master,
-                     Vessel_Voyage = m.MainCarriageCarrierNumber,
+                     Voyage = m.MainCarriageCarrierNumber,
                      StatusName = shipment.EntityStatus.Name,
                      AgentReference1 = shipment.AgentReference1,
                      AgentReference2 = shipment.AgentReference2,
@@ -11909,6 +11909,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ImportManifest = f.ImportManifest,
                                IsDangerous = f.IsDangerous,
                                DangerousUnNumber = f.DangerousUnNumber,
+                               ComputedStatusId = f.ComputedStatusId,
+                               ComputedStatusDate = f.ComputedStatusDate,
                            };
             return myResult;
         }
@@ -13068,6 +13070,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentShipmentLists;
         }
 
+        public bool CheckIsCFSShipmentById(string shipmentId, int tenant)
+        {
+            bool isCFS = (from a in repository.context.Shipments
+                             where a.Tenant == tenant && a.Id == shipmentId
+                             select a.IsCFSWarehouse).FirstOrDefault();
+
+            return isCFS;
+        }
 
     }
 

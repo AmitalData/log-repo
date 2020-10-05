@@ -336,7 +336,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     DataSource = {
         pageSize: 20,
         rowCount: null,
-        //sortingCol: "StatusDate",
+        //sortingCol: "ComputedStatusDate",
         //sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -434,7 +434,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
             if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
                 this.columns.push({
-                    FieldName: 'StatusDate',
+                    FieldName: 'ComputedStatusDate',
                     DataTypeCode: 'String',
                     Display: 'Status Date',
                     Styles: { width: '125px' },
@@ -442,9 +442,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
                     IsCustomTemplate: true,
                     ServerSideSortable: true,
-                    SortByName: "StatusDate"
+                    SortByName: "ComputedStatusDate"
                 });
-                this.QueryColumns.push(this.GetQueryColumn("StatusDate", 'DateTime', 'Status Date' ));
+                this.QueryColumns.push(this.GetQueryColumn("ComputedStatusDate", 'DateTime', 'Status Date' ));
 
             }
             else {
@@ -567,7 +567,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         //if (filters == null) {
         filters = new ApiQueryFilters();
-        filters.SortBy = "StatusDate";
+        filters.SortBy = "ComputedStatusDate";
         filters.SortDirection = "Descending";
         //}
         if (!AppTool.IsNullOrEmpty(searchfields)) {
@@ -760,7 +760,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
                 //}
                 //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, true, false, "Boolean");
-                this.filterAgrs.SortBy = "StatusDate";
+                this.filterAgrs.SortBy = "ComputedStatusDate";
                 this.filterAgrs.SortDirection = "Descending";
 
             }
@@ -806,7 +806,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 //this.filterAgrs.SortDirection = "Descending"; 
             }
             else if (this.SelectedFilter == "All Shipments") {
-                this.filterAgrs.SortBy = "StatusDate";
+                this.filterAgrs.SortBy = "ComputedStatusDate";
                 this.filterAgrs.SortDirection = "Descending";
             }
             else if (this.SelectedFilter == "My Shipments") {
@@ -817,14 +817,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ForwarderShipmentsFilter');
                 }
                 this.filterAgrs.addAdditionalFilter("NotForwarderShipmentsFilter", "null", null, null, "Equals", true, true, false, "String");
-                this.filterAgrs.SortBy = "StatusDate";
+                this.filterAgrs.SortBy = "ComputedStatusDate";
                 this.filterAgrs.SortDirection = "Descending";
 
             }
         }
         else {
             this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
-            this.filterAgrs.SortBy = "StatusDate";
+            this.filterAgrs.SortBy = "ComputedStatusDate";
             this.filterAgrs.SortDirection = "Descending";
 
         }

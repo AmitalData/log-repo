@@ -52,7 +52,7 @@ namespace CargoTrackingWinService.Helper
 
         public static void AddRecordToCargoTrackingIncrementalStats(string destinationConnectionString)
         {
-            string cmd = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,Shipments,Cards,Ports,Countries,TransportModes,ShipmentComputedFields,ShipmentMasterDatas) values ('" + ApplicationInfo.StartDate+ "','"+ ApplicationInfo.EndDate+ "',"+ ApplicationInfo.Shipments+ ","+ ApplicationInfo .Cards+ ","+ ApplicationInfo .Ports+ ","+ ApplicationInfo .Countries+ ","+ ApplicationInfo .TransportModes+","+ ApplicationInfo.ShipmentComputedFields + ","+ ApplicationInfo.ShipmentMasterDatas+");";
+            string cmd = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,Shipments,Cards,Ports,Countries,TransportModes,ShipmentComputedFields,ShipmentMasterDatas,ErrorLog) values ('" + ApplicationInfo.StartDate+ "','"+ ApplicationInfo.EndDate+ "',"+ ApplicationInfo.Shipments+ ","+ ApplicationInfo .Cards+ ","+ ApplicationInfo .Ports+ ","+ ApplicationInfo .Countries+ ","+ ApplicationInfo .TransportModes+","+ ApplicationInfo.ShipmentComputedFields + ","+ ApplicationInfo.ShipmentMasterDatas+ "," + ApplicationInfo.ErrorLogs + ");";
             RunScript(cmd, destinationConnectionString);
         }
 

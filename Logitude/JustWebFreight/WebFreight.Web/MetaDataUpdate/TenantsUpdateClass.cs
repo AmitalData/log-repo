@@ -893,12 +893,8 @@ namespace WebFreight.Web.MetaDataUpdate
         }
         private static void UpdateCargoTrackingModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
-            CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
-            //if (runOldUpdateCode)
-            //    modelUpdateClass.LoadObjectsTenantZero(context);
-            //else
-                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
-
+            CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();          
+            modelUpdateClass.CreateAllClosedTables();
             performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
         }
 

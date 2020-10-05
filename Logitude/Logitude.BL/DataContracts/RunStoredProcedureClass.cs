@@ -385,10 +385,10 @@ namespace Logitude.BL.DataContracts
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-
+                scope.Complete();
             }
+
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
@@ -400,7 +400,7 @@ namespace Logitude.BL.DataContracts
 
         public static void RunEreaseTenantData(int tenant, string procedureName)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 string strConnString = GetConnection(tenant);
                 using (SqlConnection cn = new SqlConnection(strConnString))

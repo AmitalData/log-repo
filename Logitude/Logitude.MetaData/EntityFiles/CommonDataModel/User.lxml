@@ -17,6 +17,8 @@
   IsEditable="true"
   IsNewWizard="true"
   LookUp1="&quot;EnglishName&quot;"
+  CodeField="&quot;Email&quot;"
+  NameField="&quot;EnglishName&quot;"
   DependencyFilter1="&quot;BusinessUnitId&quot;"
   DependencyFilter2="&quot;EmployeeGroupCustomFilter&quot;"
   DependencyFilter3="&quot;IsSalesman&quot;"
@@ -55,7 +57,7 @@
   HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
-  AllowedForComputingPartners="false"
+  AllowedForComputingPartners="true"
   Code1="&quot;5515&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -6057,6 +6059,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;3846244e-a4ae-4711-bb6e-cd10e0bfe48b&quot;"
+    FieldName="&quot;PartnerCode&quot;"
+    OldNames="PartnerCode"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;User&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="200"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="200"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;PartnerCode&quot;"
+    ListPropertyPath="&quot;PartnerCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;PartnerCode&quot;"
+    DefaultText="&quot;PartnerCode&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;ActiveUsers&quot;"
     TextCode="&quot;Active Users&quot;"
@@ -6500,7 +6571,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -6514,7 +6586,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -6528,7 +6601,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ExternalCode&quot;"
         DCVersion="&quot;&quot;"
@@ -6543,7 +6617,23 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Email&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PartnerCode&quot;"
         FieldName="&quot;Email&quot;"
@@ -6557,7 +6647,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -6687,101 +6778,101 @@
     <Feature
       Code="&quot;PRODUCTS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;User.Features.Products&quot;"
+      FeatureDefaultText="&quot;Products&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.Products&quot;"
-      FeatureDefaultText="&quot;Products&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;NEWUSER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;User.Features.NewUser&quot;"
+      FeatureDefaultText="&quot;New User&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.NewUser&quot;"
-      FeatureDefaultText="&quot;New User&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;User.Feature.CustomRoles&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.CustomRoles&quot;"
+      FeatureDefaultText="&quot;Create &amp; Edit custom roles&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.CustomRoles&quot;"
-      FeatureDefaultText="&quot;Create &amp; Edit custom roles&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;PERSONALID&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;User.Features.PersonalId&quot;"
+      FeatureDefaultText="&quot;User Personal Id&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.PersonalId&quot;"
-      FeatureDefaultText="&quot;User Personal Id&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;User.Feature.LicensesManagment&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.LicensesManagment&quot;"
+      FeatureDefaultText="&quot;Licenses Managment&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.LicensesManagment&quot;"
-      FeatureDefaultText="&quot;Licenses Managment&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;TECHNOLOGY&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;User.Features.Technology&quot;"
+      FeatureDefaultText="&quot;Technology&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.Technology&quot;"
-      FeatureDefaultText="&quot;Technology&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SETANGULARASDEFAULT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;User.Features.SetAngularAsDefault&quot;"
+      FeatureDefaultText="&quot;Set Angular As Default&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.SetAngularAsDefault&quot;"
-      FeatureDefaultText="&quot;Set Angular As Default&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;User.Feature.ViewsSharing&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.ENABLESHAEDVIEWS&quot;"
+      FeatureDefaultText="&quot;Views Sharing &quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.ENABLESHAEDVIEWS&quot;"
-      FeatureDefaultText="&quot;Views Sharing &quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;User.Feature.EditSharedViews&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.User.Feature.EditSharedViews&quot;"
+      FeatureDefaultText="&quot;Edit Shared Views&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.User.Feature.EditSharedViews&quot;"
-      FeatureDefaultText="&quot;Edit Shared Views&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;LYDR&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.LYDR&quot;"
+      FeatureDefaultText="&quot;Layout Direction&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.LYDR&quot;"
-      FeatureDefaultText="&quot;Layout Direction&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DontShowLocalLabels&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;User.Features.DontShowLocalLabels&quot;"
+      FeatureDefaultText="&quot;Dont Show Local Labels&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;User.Features.DontShowLocalLabels&quot;"
-      FeatureDefaultText="&quot;Dont Show Local Labels&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

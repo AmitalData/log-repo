@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BIReportUpdateClass
    {  		
-		public const string HashString = "59f72f5c7f9d315e3d95a2ac19360915";
+		public const string HashString = "4d34c202f42f638d65bc1185f151b974";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1305,6 +1305,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BIReportFeature_BIReport_Fact_Shipments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.Shipments", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.Shipments", NameTextCodeDefaultText = @"Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
 		   Feature BIReportFeature_BIReport_Fact_ShipmentCharges = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.ShipmentCharges", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.ShipmentCharges", NameTextCodeDefaultText = @"Shipment Charges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_Masters = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.Masters", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.Masters", NameTextCodeDefaultText = @"Masters" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_MasterCharges = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.MasterCharges", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.MasterCharges", NameTextCodeDefaultText = @"Master Charges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReportDownload = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportDownload", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportDownload", NameTextCodeDefaultText = @"Download" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
    
 	    

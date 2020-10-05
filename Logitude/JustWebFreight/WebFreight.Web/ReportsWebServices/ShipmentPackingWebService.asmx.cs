@@ -243,6 +243,41 @@ namespace WebFreight.Web.ReportsWebServices
                             shipmentPackageProvider.ContainerNumber = string.IsNullOrEmpty(shipmentPackage.ContainerNumber) ? "" : shipmentPackage.ContainerNumber;
                             shipmentPackageProvider.GrossWeight = shipmentPackage.Weight;
 
+                            if (!string.IsNullOrEmpty(shipmentPackage.HorseId))
+                            {
+                                Horse horse = (from pa in commonContext.Horses
+                                               where pa.Id == shipmentPackage.HorseId
+                                               select pa).FirstOrDefault();
+
+                                if (horse != null)
+                                {
+                                    shipmentPackageProvider.HorseName = horse.Name;
+                                    shipmentPackageProvider.HorseYearOfBirth = horse.YearOfBirth;
+                                    shipmentPackageProvider.HorseColor = horse.Color;
+                                    shipmentPackageProvider.HorseGender = horse.Gender;
+                                    shipmentPackageProvider.HorseBreed = horse.Breed;
+                                    shipmentPackageProvider.HorseDiscipline = horse.Discipline;
+                                    shipmentPackageProvider.HorseTravelBehavior = horse.TravelBehavior;
+                                    shipmentPackageProvider.HorseMicochipNumber = horse.MicochipNumber;
+                                    shipmentPackageProvider.HorsePassportNumber = horse.PassportNumber;
+                                    shipmentPackageProvider.HorseCurrentStable = horse.CurrentStable;
+                                    shipmentPackageProvider.HorseOwner = horse.Owner;
+                                    shipmentPackageProvider.HorseRemarks = horse.Remarks;
+
+                                    if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                                    {
+                                        Country country = (from pa in commonContext.Countries
+                                                           where pa.Id == horse.CountryOfBirthId
+                                                           select pa).FirstOrDefault();
+
+                                        if (country != null)
+                                        {
+                                            shipmentPackageProvider.HorseCountryOfBirthName = country.EnglishName;
+                                        }
+                                    }
+                                }
+                            }
+
                             PackageType packageType = packageTypeRepository.GetSinglePackageType(shipmentPackage.PackageTypeId, tenant);
                             if (packageType != null)
                             {

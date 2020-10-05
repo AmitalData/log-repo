@@ -11,6 +11,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -45,6 +46,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         private InterestReportQueryService interestReportQueryService;
         private UserPM userPM;
         private BatchTaskExecutionPM BatchTaskExecution;
+        private string InterestReportObjectTableId;
+        private string ARInvoiceObjectTableId;
+        private int Tenant; 
         public BatchInterestReportInvoiceService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
             BatchTaskExecution = batchTaskExecution;
@@ -56,6 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             try
             {
                 InterestReportArguments interestReportArgs = GetInterestReportArgs();
+                this.Tenant = interestReportArgs.Tenant;
                 interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
                 UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
                 userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
@@ -67,7 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             catch (Exception e)
             {
-                throw new Exception("\n" + e.Message + "\n" + e.StackTrace);
+                throw new Exception("\n" + e.Message);
             }
         }
 
@@ -78,6 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
             args.InvoiceDate = interestReportArguments.InvoiceDate;
+
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
@@ -158,8 +164,36 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
                 invoiceService.Create(aRInvoicePM);
+                BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
+        }
+
+        private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
+        {
+            string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
+            BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference);
+            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber);
+        }
+        private void BuildDocument(string EntityId,string DocumentCode,string ObjecTableId,string ChildEntityReference)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)Tenant);
+            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, (int)Tenant);
+            BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
+            BuildDocsOutArgs buildDocsOutArgs = new BuildDocsOutArgs()
+            {
+                EntityId = EntityId,
+                Tenant = Tenant,
+                ChildEntityId = null,
+                LoggedUserId = userPM.Id,
+                ChildEntityReference = ChildEntityReference,
+                ChildObjectTableId = null,
+                ObjectTableId = ObjecTableId,
+                DocumentTypeId = documentTypeId,
+            };
+
+            buildDocsOutService.BuildDocsOut(buildDocsOutArgs);
+
         }
         private void CheckVatNumber(int Tenant, ARInvoicePM aRInvoicePM)
         {
@@ -228,14 +262,15 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatType(interestReportArgs.Tenant, chargesType.VatTypeId).ToList()[0];
 
 
-            string ObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
+            InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
+            ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
             string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
             AuthenticationUtil.AuthenticatedUserEmail = email;
 
             InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
             ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
             aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
-            ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, ObjectTableId);
+            ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, InterestReportObjectTableId);
             ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
 
             aRInvoicePM.InvoiceEntities.Add(aRInvoiceEntityPM);

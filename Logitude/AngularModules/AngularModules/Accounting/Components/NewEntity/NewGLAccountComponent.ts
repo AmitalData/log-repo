@@ -87,10 +87,10 @@ export class NewGLAccountComponent extends BaseComponent {
             if (args.AccountType == "2") { // customer
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
                
-                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
-                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-                }
-                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
+                // if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                    // this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                // }
+                // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.AccountTypeCode = args.AccountType;
                 
             }
@@ -98,10 +98,10 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
               
                 this.AccountTypeCode = args.AccountType;
-                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
-                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-                }
-                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
+                // if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                //     this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                // }
+                // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 
             }
                
@@ -112,7 +112,7 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.EntityPM.NewGLAccountCardId = args.CardId;
                 this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
                 this.InitLOVFilters();
-        this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
+        // this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
     }
 
     //#region Properties

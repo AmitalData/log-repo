@@ -272,16 +272,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // Full Accounting - Tax Fields Work 
             this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
-
+           
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant , EntityId = entityPM.Id});
             entityAutomationService.RunAutomation();
 
-
+            SetPrintNotesForInterestInvoice(entityPM);
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -301,6 +301,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
+                
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
@@ -308,6 +309,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        private void SetPrintNotesForInterestInvoice(ARInvoicePM invoice)
+        {
+            if (invoice.ARInvoiceTypeCode == "IT")
+            {
+                ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(invoice.Tenant);
+                List<ChargesTypePM> chargesTypes = chargesTypeQuery.GetChargesTypesByCode("INT", invoice.Tenant);
+                if (chargesTypes.Count > 0)
+                {
+                    ChargesTypePM chargesType = chargesTypes.FirstOrDefault();
+                    ARInvoiceLinePM interestInvoiceLine = invoice.InvoiceLines.Where(d => d.ChargesTypeId == chargesType.Id).FirstOrDefault();
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    if (interestInvoiceLine != null)
+                        entityPM.PrintNotes = entityPM.PrintNotes + " " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description);
+                }
+            }
+        }
 
         private void UpdateInterestReportsConnectedInvoice()
         {
@@ -325,8 +342,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
-            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency , theEntityPM.InvoiceEntities[0].EntityId);
- 
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId);
+
         }
 
         private void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
@@ -527,7 +544,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant , EntityId = entityPM.Id });
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);

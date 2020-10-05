@@ -34,19 +34,19 @@ export class WarehouseHelper {
             if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId)) {
                 if (shipmentPM.DirectionId != "C" && (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "H")) {
                     shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
-                    this.SetIsBondedWarehouseProperities(shipmentPM, warehouseEntity.WarehouseId);
+                    this.SetIsCFSWarehouseProperities(shipmentPM, warehouseEntity.WarehouseId);
                 }
             }
         }
     }
 
-    SetIsBondedWarehouseProperities(shipmentPM: ShipmentPM, WarehouseLegWarehouseId) {
+    SetIsCFSWarehouseProperities(shipmentPM: ShipmentPM, WarehouseLegWarehouseId) {
         this.warehouseExtendedListService.GetWarehouseTypeById(WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
             var warehouseType = serviceResponse.Result;
-            if (warehouseType == "BO") {
-                shipmentPM.IsBondedWarehouse = true;
+            if (warehouseType == "CFS") {
+                shipmentPM.IsCFSWarehouse = true;
             }
-            shipmentPM.IsBondedWarehouseChanged = true;
+            shipmentPM.IsCFSWarehouseChanged = true;
             shipmentPM.IsUpdateWarehouseLegData = true;
             this.SaveChanges();
             this.CurrentSession.FireEvent("RefreshWareHouseLeg");

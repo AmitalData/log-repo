@@ -38,6 +38,7 @@ using System.Reflection;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using WebFreight.Web;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.CRMModel.DomainServices;
@@ -104,26 +105,33 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ICommonDataContext objectContext = CommonDataContext.GetContext(authToken.Tenant);
                 CardContactRepository cardContactRepository = new CardContactRepository(objectContext);
 
-                CardContact cardContact = new CardContact()
-                {
-                    CardId = companyId,
-                    ContactId = contactId,
-                    Id = IdCounter.GetNumber("CardContact", authToken.Tenant).ToString(),
-                    Tenant = authToken.Tenant,
-                };
-                cardContactRepository.Add(cardContact);
+                companyId = this.FixFilter(companyId);
+                contactId = this.FixFilter(contactId);
 
-                IQueryable<Contact> myContacts = cardContactRepository.GetContactsByCardId(companyId);
-                if (myContacts == null || (myContacts != null && myContacts.Count() == 0))
+                if (!string.IsNullOrEmpty(companyId) && !string.IsNullOrEmpty(contactId))
                 {
-                    CardQuery cardQuery = new CardQuery(authToken.Tenant);
-                    CardPM card = cardQuery.GetSinglePM(companyId, authToken.Tenant);
-                    card.PrimaryContactId = contactId;
-                    CardService cardService = new CardService(objectContext, card);
-                    cardService.Update();
+                    CardContact cardContact = new CardContact()
+                    {
+                        CardId = companyId,
+                        ContactId = contactId,
+                        Id = IdCounter.GetNumber("CardContact", authToken.Tenant).ToString(),
+                        Tenant = authToken.Tenant,
+                    };
+                    cardContactRepository.Add(cardContact);
+
+                    IQueryable<Contact> myContacts = cardContactRepository.GetContactsByCardId(companyId);
+                    if (myContacts == null || (myContacts != null && myContacts.Count() == 0))
+                    {
+                        CardQuery cardQuery = new CardQuery(authToken.Tenant);
+                        CardPM card = cardQuery.GetSinglePM(companyId, authToken.Tenant);
+                        card.PrimaryContactId = contactId;
+                        CardService cardService = new CardService(objectContext, card);
+                        cardService.Update();
+                    }
+
+                    objectContext.SaveChanges();
                 }
 
-                objectContext.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 

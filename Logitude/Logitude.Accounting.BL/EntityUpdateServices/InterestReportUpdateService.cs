@@ -72,6 +72,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
             {
+                if (entityPM.RecalculateData) 
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
                 if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
                 {
                     
@@ -82,6 +86,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
+
             }
 
         }
@@ -148,7 +153,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                
                 if (entityPoco.InterestReportStatusCode == "2")
                 {
-                    CreateautoCreditInvoice(EntityPOCO);
+                    CreateautoCreditInvoice(entityPM);
                 }                
             }
         }
@@ -184,7 +189,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 interestTransactionUpdateService.Update(transaction, true);
             }
         }
-        private ARInvoicePM MapautoCreditInvoice(ARInvoicePM autoCreditInvoice,ARInvoicePM aRInvoice)
+        private ARInvoicePM MapautoCreditInvoice(ARInvoicePM autoCreditInvoice,ARInvoicePM aRInvoice, InterestReportPM interestReport)
         {
             autoCreditInvoice.SetApproved = true;
             autoCreditInvoice.StatusCode = "AC";
@@ -207,7 +212,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             autoCreditInvoice.CreatedByUserId = aRInvoice.CreatedByUserId;
             autoCreditInvoice.IssuedByUserId = aRInvoice.IssuedByUserId;
             autoCreditInvoice.PrintByUserId = aRInvoice.PrintByUserId;
-            autoCreditInvoice.InvoiceDate = DateTime.Now;// AutoCreditDate != null ?  AutoCreditDate : DateTool.GetCurrentDateAsUtc();
+            autoCreditInvoice.InvoiceDate = interestReport.InvoiceDate  != null? interestReport.InvoiceDate: DateTime.Now;// AutoCreditDate != null ?  AutoCreditDate : DateTool.GetCurrentDateAsUtc();
             autoCreditInvoice.DueDate = aRInvoice.DueDate;
             autoCreditInvoice.PrintDate = aRInvoice.PrintDate;
             autoCreditInvoice.Sent = aRInvoice.Sent;
@@ -254,21 +259,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             aRInvoice.AmountDueInProfitCurrency = 0;
             invoiceService.Update(aRInvoice, true);
         }
-        private void CreateautoCreditInvoice(InterestReport interestReport)
+        private void CreateautoCreditInvoice(InterestReportPM interestReport)
         {
            
             ARInvoicePM aRInvoice = GetInteresReportARInvoice(interestReport);
             if (aRInvoice != null)
             {
                 ARInvoicePM autoCreditInvoice = new ARInvoicePM();
-                autoCreditInvoice = MapautoCreditInvoice(autoCreditInvoice,aRInvoice);
+                autoCreditInvoice = MapautoCreditInvoice(autoCreditInvoice,aRInvoice, interestReport);
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(aRInvoice.Tenant);
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, aRInvoice.Tenant);
                 invoiceService.Create(autoCreditInvoice);
                 UpdateCreditedInvoice(aRInvoice, autoCreditInvoice, invoiceService);             
             }
         }
-        private ARInvoicePM GetInteresReportARInvoice(InterestReport interestReport)
+        private ARInvoicePM GetInteresReportARInvoice(InterestReportPM interestReport)
         {
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
            return aRInvoiceQuery.GetSinglePM(interestReport.ARinvoiceId, Tenant);

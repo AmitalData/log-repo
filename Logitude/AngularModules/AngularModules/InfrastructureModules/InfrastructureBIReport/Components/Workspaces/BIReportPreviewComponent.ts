@@ -64,6 +64,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public BIReportXMLData: BIReportXMLData = null;
     public HasDeletionFeature = false;
     public HasCopyFeature = false;
+    public HasDownloadFeature = false;
     public columnTypes;
     public context;
     public CountText: string;
@@ -88,6 +89,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         else {
             this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
             this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
+            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload");
             this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.DWQueryData = myResult.Result;

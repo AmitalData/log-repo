@@ -61,7 +61,9 @@ namespace WebFreight.Web.Helpers
         QuoteTemplateTextDesign headerDesignTotalPerContainersTable = null;
         QuoteTemplateTextDesign linesDesignTotalPerContainersTable  = null;
         QuoteTemplateTextDesign groupByDesignHeaderTotalPerContainersTable = null;
-
+        QuoteTemplateTextDesign headerDesignPageNumberingTable = null;
+        QuoteTemplateTextDesign linesDesignPageNumberingTable = null;
+        QuoteTemplateTextDesign groupByDesignHeaderPageNumberingTable = null;
 
         //TableDesign
         QuoteTemplateTableDesign packagesTableDesign = null;
@@ -69,6 +71,7 @@ namespace WebFreight.Web.Helpers
         QuoteTemplateTableDesign headerTableDesign = null;
         QuoteTemplateTableDesign detailsTableDesign = null;
         QuoteTemplateTableDesign totalPerContainersTableDesign = null;
+        QuoteTemplateTableDesign pageNumberingTableDesign = null;
 
 
         QuoteTemplateSetting quoteTemplateSetting = null;
@@ -145,6 +148,9 @@ namespace WebFreight.Web.Helpers
             headerDesignTotalPerContainersTable = GetNewQuoteTemplateTextDesign();
             linesDesignTotalPerContainersTable = GetNewQuoteTemplateTextDesign();
             groupByDesignHeaderTotalPerContainersTable = GetNewQuoteTemplateTextDesign();
+            headerDesignPageNumberingTable = GetNewQuoteTemplateTextDesign();
+            linesDesignPageNumberingTable = GetNewQuoteTemplateTextDesign();
+            groupByDesignHeaderPageNumberingTable = GetNewQuoteTemplateTextDesign();
 
             quoteTemplateTextDesignRepository.Add(headerDesignPackagesTableDesign);
             quoteTemplateTextDesignRepository.Add(linesDesignPackagesTableDesign);
@@ -179,7 +185,9 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextDesignRepository.Add(headerDesignTotalPerContainersTable);
             quoteTemplateTextDesignRepository.Add(linesDesignTotalPerContainersTable);
             quoteTemplateTextDesignRepository.Add(groupByDesignHeaderTotalPerContainersTable);
-            
+            quoteTemplateTextDesignRepository.Add(headerDesignPageNumberingTable);
+            quoteTemplateTextDesignRepository.Add(linesDesignPageNumberingTable);
+            quoteTemplateTextDesignRepository.Add(groupByDesignHeaderPageNumberingTable);
             quoteTemplateTextDesignRepository.SubmitChanges();
 
 
@@ -194,12 +202,14 @@ namespace WebFreight.Web.Helpers
             headerTableDesign = GetNewQuoteTemplateTableDesign(headerDesignHeaderTableDesign.Id, linesDesignHeaderTableDesign.Id, groupByDesignHeaderTableDesign.Id);
             detailsTableDesign = GetNewQuoteTemplateTableDesign(headerDesignDetailsTableDesign.Id, linesDesignDetailsTableDesign.Id, headerDesignDetailsTableDesign.Id);
             totalPerContainersTableDesign = GetNewQuoteTemplateTableDesign(headerDesignTotalPerContainersTable.Id, linesDesignTotalPerContainersTable.Id, groupByDesignHeaderTotalPerContainersTable.Id);
+            pageNumberingTableDesign = GetNewQuoteTemplateTableDesign(headerDesignPageNumberingTable.Id, linesDesignPageNumberingTable.Id, groupByDesignHeaderPageNumberingTable.Id);
 
             quoteTemplateTableDesignRepository.Add(packagesTableDesign);
             quoteTemplateTableDesignRepository.Add(containersTableDesign);
             quoteTemplateTableDesignRepository.Add(headerTableDesign);
             quoteTemplateTableDesignRepository.Add(detailsTableDesign);
             quoteTemplateTableDesignRepository.Add(totalPerContainersTableDesign);
+            quoteTemplateTableDesignRepository.Add(pageNumberingTableDesign);
             quoteTemplateTableDesignRepository.SubmitChanges();
         }
 
@@ -345,13 +355,15 @@ namespace WebFreight.Web.Helpers
                 ShowSaleMaxMinAmountPackages = true,
                 ShowHeaderLabelsContainers = true,
                 ShowHeaderLabelsPackages = true,
-                SpaceLinesBeforeContainers =1,
+                SpaceLinesBeforeContainers = 1,
                 SpaceLinesBeforeFooters = 1,
-                SpaceLinesBeforeHeaders =1,
-                SpaceLinesBeforePackages =1,
-                SpaceLinesBeforeQuoteDetails =1,
-                SpaceLinesBeforeQuoteHeaders =1,
-                SpaceLinesBeforePerContainers=1,
+                SpaceLinesBeforeHeaders = 1,
+                SpaceLinesBeforePackages = 1,
+                SpaceLinesBeforeQuoteDetails = 1,
+                SpaceLinesBeforeQuoteHeaders = 1,
+                SpaceLinesBeforePerContainers = 1,
+                HidePageNumber = false,
+                PageNumberingTextDesignId = pageNumberingTableDesign.Id,
 
             };
 
@@ -818,6 +830,8 @@ namespace WebFreight.Web.Helpers
                     ShowVATPercentagePackages = setting.ShowVATPercentagePackages,
                     ShowVATTypeContainers = setting.ShowVATTypeContainers,
                     ShowVATTypePackages = setting.ShowVATTypePackages,
+                    PageNumberingTextDesignId = !string.IsNullOrEmpty(setting.PageNumberingTextDesignId) ? CopyQuoteTemplateTableDesignPM(setting.PageNumberingTextDesignId, (int)orginalTenant) : "",
+                    HidePageNumber = setting.HidePageNumber,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

@@ -1,5 +1,7 @@
 
-
+h1{
+    margin: 0;
+  }
 .nav-block {
     /* background-color: red; */
     height: 50px;
@@ -296,7 +298,7 @@ li a {
     top: calc(50% - 9px);
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1300px) {
     .path-image {
         float: right;
         z-index: 99;
@@ -304,7 +306,7 @@ li a {
         right: 50px;
     }
     .vertical-center {
-        padding: 0 20px;
+        padding: 10 20px;
         width: calc(100% - 40px);
     }
 }
@@ -326,7 +328,7 @@ li a {
         /* padding: 15px; */
     }
     .scrollable-table>.table {
-        min-width: 800px;
+        min-width: 725px;
     }
     .col-md-1 {
         display: inline-block;
@@ -527,5 +529,11 @@ li a {
     .no-result-div h1 {
         font-size: 18px;
         line-height: 24px;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .no-result-div {
+        padding-top: 50px;
     }
 }

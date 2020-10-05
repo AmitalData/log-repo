@@ -14,6 +14,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWObjectTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/DWObjectTableExtendedListService';
 import { BIReportFolderExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportFolderExtendedListService';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     
@@ -39,9 +40,8 @@ export class NewBIReport extends BaseComponent {
     public IsOneRowSelected: boolean = false;
     public HasCopyFeature: boolean = false;
     public CopyFromTitle: string;
-    public FactTables: string[] = [];
+    public FactTables: CodeNameClass[] = [];
     public BIReportFolders: string[] = [];
-    public SelectdFactTableName: string;
     public SelectdBIReportFolder: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -109,51 +109,21 @@ export class NewBIReport extends BaseComponent {
     }
 
     FillFactTableNamesList() {
-        this.SelectdFactTableName = "";
+        this.FactTableName = "";
+        this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
-            var factTablesNames: string[] = response.Result;
-            factTablesNames.forEach((factTable: string) => {
-                switch (factTable) {
-                    case "Fact_Shipments":
-                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.Shipments"))
-                            this.FactTables.push("Shipments");
-                        break;
-
-                    case "Fact_Charges":
-                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.ShipmentCharges"))
-                            this.FactTables.push("Shipment Charges");
-                        break;
-                }
+            var factTablesNames = response.Result;
+            factTablesNames.forEach((factTable) => {
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact." + factTable.DisplayName.replace(' ', '')))
+                    this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName));
             });
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
-                this.FactTableSelectionChanged("");
+                this.SelectdFactTable = null;
             }
             else {
-                this.FactTableSelectionChanged(this.EntityPM.FactTableName);
+                this.SelectdFactTable = this.FactTables.filter(fact => fact.Code == this.EntityPM.FactTableName)[0];
             }
         });
-    }
-
-    FactTableSelectionChanged(selectControl: any) {
-        this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
-
-        switch (selectControl) {
-            case "Shipments":
-            case "Fact_Shipments":
-                this.FactTableName = "Fact_Shipments";
-                this.SelectdFactTableName = "Shipments";
-                break;
-
-            case "Shipment Charges":
-            case "Fact_Charges":
-                this.FactTableName = "Fact_Charges";
-                this.SelectdFactTableName = "Shipment Charges";
-                break;
-            default:
-                this.FactTableName = "";
-                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
-                break;
-        }
     }
 
     FillBIReportFolderNamesList() {
@@ -284,7 +254,24 @@ export class NewBIReport extends BaseComponent {
         this.IsCopy = true;
         this.IsOneRowSelected = true;
         if (this.EntityPM.FactTableName)
-          this.FactTableSelectionChanged(this.EntityPM.FactTableName);
+            this.SelectdFactTable = this.FactTables.filter(fact => fact.Code == this.EntityPM.FactTableName)[0];
+    }
+
+    private selectdFactTable: CodeNameClass;
+    get SelectdFactTable() { return this.selectdFactTable; }
+    set SelectdFactTable(value: CodeNameClass) {
+        if (this.selectdFactTable != value) {
+            this.selectdFactTable = value;
+            if (!AppTool.IsNullOrEmpty(value)) {
+                this.FactTableName = this.selectdFactTable.Code;
+                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
+            }
+            else {
+                this.FactTableName = "";
+                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
+            }
+
+        }
     }
 
     get Name() { return this.EntityPM.Name; }

@@ -3,6 +3,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -27,7 +28,7 @@ namespace Logitude.BL.ExternalService
         private int tenant;
         private string automationType = string.Empty;
         private object oldEntityPM = null;
-        private EntityChangeHelper entityChangeHelper = null;
+        private string entityId = string.Empty;
         public EntityAutomationService(EntityAutomationArgs args)
         {
             this.entityPM = args.EntityPM;
@@ -35,7 +36,7 @@ namespace Logitude.BL.ExternalService
             this.tenant = args.Tenant;
             this.objectTableName = args.ObjectTableName;
             this.automationType = args.AutomationType;
-            entityChangeHelper = new EntityChangeHelper();
+            this.entityId = args.EntityId;
 
             if (automationType != "OnCreate")
             {
@@ -50,7 +51,10 @@ namespace Logitude.BL.ExternalService
         public void RunAutomation()
         {
             string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
-            entityChangeHelper.AddEntityChange(entityPM, oldEntityPM, automationType, entityChangeFieldXml, objectTableName, DateTime.Now);
+
+            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now });
+            mainEntityChangeService.AddEntityChange();
+
         }
 
 
@@ -172,6 +176,7 @@ namespace Logitude.BL.ExternalService
         public string AutomationType { get; set; }
         public string ObjectTableName { get; set; }
         public int Tenant { get; set; }
+        public string EntityId { get; set; }
 
 
 

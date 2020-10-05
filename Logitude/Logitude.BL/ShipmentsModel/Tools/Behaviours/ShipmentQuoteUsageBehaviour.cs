@@ -1,13 +1,15 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Simplog.Data.Helpers;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.ShipmentsModel.Tools.Initializers
+namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
     public class ShipmentQuoteUsageBehaviour : IServiceBehaviour
     {

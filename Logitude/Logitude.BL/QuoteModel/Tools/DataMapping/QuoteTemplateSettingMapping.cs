@@ -270,7 +270,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowVATPercentagePackages = itemPM.ShowVATPercentagePackages;
             itemPoco.ShowVATTypeContainers = itemPM.ShowVATTypeContainers;
             itemPoco.ShowVATTypePackages = itemPM.ShowVATTypePackages;
-
+            itemPoco.PageNumberingTextDesignId = itemPM.PageNumberingTextDesignId;
+            itemPoco.HidePageNumber = itemPM.HidePageNumber;
         }
     }
 }

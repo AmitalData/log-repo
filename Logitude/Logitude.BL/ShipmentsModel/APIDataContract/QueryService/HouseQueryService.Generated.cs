@@ -324,7 +324,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.SalesmanUserId != null)
 				   {
 					   UserQueryService UserService18 = new UserQueryService(Tenant);
-					   					   temp.SalesmanUser = UserService18.GetUserById(MyEntityPM.SalesmanUserId,Tenant); 
+					   					   temp.Salesman = UserService18.GetUserById(MyEntityPM.SalesmanUserId,Tenant); 
 			       
 					   				   }
 				    
@@ -333,7 +333,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.AccountManagerUserId != null)
 				   {
 					   UserQueryService UserService19 = new UserQueryService(Tenant);
-					   					   temp.AccountManagerUser = UserService19.GetUserById(MyEntityPM.AccountManagerUserId,Tenant); 
+					   					   temp.AccountManager = UserService19.GetUserById(MyEntityPM.AccountManagerUserId,Tenant); 
 			       
 					   				   }
 				    
@@ -391,7 +391,8 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.Ratio = MyEntityPM.Ratio;					
+				   temp.Ratio = MyEntityPM.Ratio;
+				   temp.ConcurrencyGUID = MyEntityPM.ConcurrencyGUID;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1088,16 +1089,16 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-					UserQueryService SalesmanUserUserService = new UserQueryService(Tenant);
-					if(MyEntity.SalesmanUser != null)
+					UserQueryService SalesmanUserService = new UserQueryService(Tenant);
+					if(MyEntity.Salesman != null)
 					{
-						var mySalesmanUserPM = SalesmanUserUserService.UserDataMappingAndValidatin(MyEntity.SalesmanUser,Tenant,ComputingPartnerName);
+						var mySalesmanPM = SalesmanUserService.UserDataMappingAndValidatin(MyEntity.Salesman,Tenant,ComputingPartnerName);
 						
-						if(mySalesmanUserPM != null)
+						if(mySalesmanPM != null)
 						{ 
 
-						 								//throw new ApplicationException("SalesmanUser Can't be update"); 
-								temp.SalesmanUserId = mySalesmanUserPM.Id;
+						 								//throw new ApplicationException("Salesman Can't be update"); 
+								temp.SalesmanUserId = mySalesmanPM.Id;
 						  
 
 							
@@ -1106,16 +1107,16 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-					UserQueryService AccountManagerUserUserService = new UserQueryService(Tenant);
-					if(MyEntity.AccountManagerUser != null)
+					UserQueryService AccountManagerUserService = new UserQueryService(Tenant);
+					if(MyEntity.AccountManager != null)
 					{
-						var myAccountManagerUserPM = AccountManagerUserUserService.UserDataMappingAndValidatin(MyEntity.AccountManagerUser,Tenant,ComputingPartnerName);
+						var myAccountManagerPM = AccountManagerUserService.UserDataMappingAndValidatin(MyEntity.AccountManager,Tenant,ComputingPartnerName);
 						
-						if(myAccountManagerUserPM != null)
+						if(myAccountManagerPM != null)
 						{ 
 
-						 								//throw new ApplicationException("AccountManagerUser Can't be update"); 
-								temp.AccountManagerUserId = myAccountManagerUserPM.Id;
+						 								//throw new ApplicationException("AccountManager Can't be update"); 
+								temp.AccountManagerUserId = myAccountManagerPM.Id;
 						  
 
 							
@@ -1236,6 +1237,14 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)// && MyEntity.Ratio != null)
 					{							//throw new ApplicationException("Ratio Can't be update"); 
 							temp.Ratio = MyEntity.Ratio;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConcurrencyGUID))
+					{							//throw new ApplicationException("ConcurrencyGUID Can't be update"); 
+							temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
 
 										}  
 

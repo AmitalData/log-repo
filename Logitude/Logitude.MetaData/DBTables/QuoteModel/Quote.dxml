@@ -455,7 +455,7 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="varchar"
+    Type="nvarchar"
     Size="512">
     <Constraints
       Nullable="true" />
@@ -1236,6 +1236,12 @@
     Type="float">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="DescriptionRightToLeft"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"

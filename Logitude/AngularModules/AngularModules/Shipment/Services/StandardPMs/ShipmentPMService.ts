@@ -82,6 +82,19 @@ export class ShipmentPMService {
         */
     }
 
+    CheckIsCFSShipmentById(shipmentId: string) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/CheckIsCFSShipmentById?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var isCFS = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = isCFS;
+                return pmresponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     getSingleByForwarderShipmentNumber(ForwarderShipmentNumber: string) {
 
         var callTime = new Date();

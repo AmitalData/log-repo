@@ -120,7 +120,7 @@
                                 </td>
 
                                 <td>
-                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="IsMultiCurrencyCheckboxEnabled"></CheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'IsMultiCurrency'" [Checked]="IsMultiCurrency" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!IsMultiCurrencyCheckboxEnabled"></LogCheckBox>
                                 </td>
                                 <td><div></div></td>
                             </tr>

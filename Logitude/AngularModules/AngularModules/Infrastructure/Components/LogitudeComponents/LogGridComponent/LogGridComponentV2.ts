@@ -703,9 +703,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
     filterChanged(filters) {
         var LogGridIdPostFex = this.LogGridId.replace('LogGrid_', '');
-        //if (LogGridIdPostFex != filters.ListComponentPostFex) {
-        //    return;
-        //}
+        if (LogGridIdPostFex != filters.ListComponentPostFex) {
+            return;
+        }
         this.SearchFieldChanged = false;
         if (this.Filters == null) {
             this.Filters = new ApiQueryFilters();

@@ -177,7 +177,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      MainColor = a.MainColor,// != null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
-                                                     BackgroundId = a.BackgroundId
+                                                     BackgroundId = a.BackgroundId,
+                                                     NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -358,7 +359,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   MainColor = a.MainColor ,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
-                                                  BackgroundId = a.BackgroundId
+                                                  BackgroundId = a.BackgroundId,
+                                                  NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -536,6 +538,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         TotalFreeUsers = a.TotalFreeUsers,
                         AveragePrice = a.AveragePrice,
                         TotalPaymentamount = a.TotalPaymentamount,
+                        NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -663,6 +666,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     IsINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo,
                     MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                     TotalPrice = entity.TotalPrice,
+                    NoPaymentForChildTenants = entity.NoPaymentForChildTenants,
                 };
             }
 
@@ -789,6 +793,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                        TotalPrice = a.TotalPrice,
+                       NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                    };
         }
 
@@ -1052,6 +1057,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              TotalFreeUsers = a.TotalFreeUsers,
                                              AveragePrice = a.AveragePrice,
                                              TotalPaymentamount = a.TotalPaymentamount,
+                                             NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                          }).FirstOrDefault();
 
             return tenant;
@@ -1170,6 +1176,40 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             }
 
             return tenantManagementLicensePM != null ? true : false;
+        }
+
+        public string GetSystemDomain(int id)
+        {
+            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
+            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
+            string fromEmail = "no-reply@" + (workEnvironment == "cloud" 
+                ? "amital.co.il" : deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2")
+                ? GetLogboxDomain(id) : "LogitudeWorld.com");
+
+            return fromEmail;
+        }
+
+        private string GetLogboxDomain(int tenantId)
+        {
+            string privateLabelId = (from a in repository.context.GlobalTenants
+                                     where a.Id == tenantId
+                                     select a.PrivateLabelId).FirstOrDefault();
+
+
+            if (!string.IsNullOrEmpty(privateLabelId))
+            {
+                string privateLabelUrl = (from a in repository.context.TenantManagmentPrivateLabels
+                                          where a.Id == privateLabelId
+                                          select a.PrivateLabelUrl).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(privateLabelUrl))
+                {
+                    privateLabelUrl = privateLabelUrl.Replace("system.", "");
+                    return privateLabelUrl;
+                }
+
+            }
+            return "logbox.co.il";
         }
     }
 }

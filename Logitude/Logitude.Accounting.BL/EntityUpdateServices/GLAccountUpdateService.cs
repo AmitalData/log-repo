@@ -2121,6 +2121,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
+            CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)
@@ -2205,6 +2206,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CheckAccountTransactions(entityPM);
                 CheckSplittedGLAccount(entityPM);
             }
+        }
+        private void CheckReconcileMethodChange(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            if (
+                (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
+                && (entityPOCO.ReconcileMethodCode != entityPM.ReconcileMethodCode)
+                )
+            {
+                List<LedgerTransactionList> openTransactions = GetAccountTransactions(entityPM);
+                if (openTransactions.Count > 0)
+                {
+                    var tenant = entityPM.Tenant;
+                    var msg = TextCodesTranslator.TranslateText("GLAccount.O.CantChangeRecoMethod", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+                    throw new ApplicationException(msg);
+                }
+
+            }
+        }
+
+        private static List<LedgerTransactionList> GetAccountTransactions(GLAccountPM entityPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(MyContext);
+            List<LedgerTransactionList> openTransactions = transactionListQuery.GetByAccountId(entityPM.Id, entityPM.Tenant);
+            return openTransactions;
         }
 
         private void CheckAccountTransactions(GLAccountPM entityPM)

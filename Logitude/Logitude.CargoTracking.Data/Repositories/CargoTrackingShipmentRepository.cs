@@ -42,6 +42,8 @@ namespace Logitude.CargoTracking.Data.Repositories
                                                                      || shipmentsIsNotMain.Select(s => s.CustomsShipmentHeaderId).Contains(shipment.EntityId))
                                                            select shipment);
 
+
+
             return shipments;
         }
 

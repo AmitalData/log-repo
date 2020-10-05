@@ -2510,14 +2510,13 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.CustomerReferenceNumber = shipment.ConsigneeReference1 != null ? shipment.ConsigneeReference1 : "";
                     }
 
-                    CustomerRepository customerRepository = new CustomerRepository(tenant);
-                    Customer customer = customerRepository.GetSingleCustomer(shipment.CustomerId, tenant, false);
+                    Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
                     if (customer != null)
                     {
-                        myDataProvider.CustomerVat = customer.Card.VatNumber;
-                        myDataProvider.IRSPlace = customer.Card.IRSPlace;
-                        myDataProvider.IRSNumber = customer.Card.IRSNumber;
-                        myDataProvider.CustomerName = customer.Card.EnglishName;
+                        myDataProvider.CustomerVat = customer.VatNumber;
+                        myDataProvider.IRSPlace = customer.IRSPlace;
+                        myDataProvider.IRSNumber = customer.IRSNumber;
+                        myDataProvider.CustomerName = customer.EnglishName;
                     }
 
                     Address customerAddress = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
@@ -3315,7 +3314,7 @@ namespace WebFreight.Web.WebServices
                         newItem.Notes = pickup.Notes;
                         newItem.TransportMode = pickup.TransportModeName;
                         newItem.Weight = pickup.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
-                        myServicHelper.GetPickUpFromAddress(pickup, newItem, addressRepository, tenant);
+                        myServicHelper.GetPickUpAddresses(pickup, newItem, addressRepository, tenant);
 
                         foreach (ShipmentPickUpDeliveryPackagePM package in pickup.ShipmentPickUpDeliveryPackages)
                         {

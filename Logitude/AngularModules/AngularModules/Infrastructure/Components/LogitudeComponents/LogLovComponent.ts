@@ -27,7 +27,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     selector: 'LogLov_Old',
     templateUrl: './LogLovComponent.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath' ,
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive"],        
 })

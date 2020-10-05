@@ -251,6 +251,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<IGrouping<string, MyPageLine>> GetGroupedPageLinesByReference()
         {
             return externalPageLines
+                .Where(d=>d.Reference != null)
                 .GroupBy(d => d.Reference.Trim(' '))
                 .Where(d => d.Count() > 1 && d.Key != null).ToList();
         }
@@ -553,7 +554,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
                     ).ToList();
             else
-                return null;
+                return new List<MyLedgerTransaction>();
         }
         private void AddMatchedTransaction(int groupNumberCounter, MyLedgerTransaction transaction)
         {

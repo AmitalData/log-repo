@@ -176,10 +176,10 @@ namespace Logitude.Accounting.BL.InterestService
                     foreach (DocumentOutCopy copy in copies)
                     {
                         includeInPrint = true;
-                        if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
-                        {
-                            includeInPrint = false;
-                        }
+                        //if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
+                        //{
+                        //    includeInPrint = false;
+                        //}
 
                         if (includeInPrint)
                         {

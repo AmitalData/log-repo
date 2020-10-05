@@ -5,7 +5,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ConsoleShipmentPM} from '../../../../Shipment/EntityPMs/ConsoleShipmentPM';
 import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
 import {ShipmentListService} from '../../../../Shipment/Services/StandardLists/ShipmentListService';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../Shipment/Tools';
@@ -14,6 +14,8 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
+import { ShipmentSubTypeList } from '../../../../shipment/EntityLists/ShipmentSubTypeList';
 
 @Component({
     
@@ -45,6 +47,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.InitializeComponent();
         this.SetUIProperties();
         this.LoadAllHouses();
+        this.LoadShipmentSubTypes();
         this.Listen();
     }
     
@@ -116,6 +119,18 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    private allShipmentSubTypes: ShipmentSubTypeList[] = [];
+    LoadShipmentSubTypes() {
+        this.allShipmentSubTypes = [];
+
+        var myShipmentSubTypeListService: ShipmentSubTypeListService = new ShipmentSubTypeListService();
+        myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.allShipmentSubTypes = myResponse.Result;                
+            }
+        });
     }
 
     public FromLabel: string = null;
@@ -440,14 +455,24 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         logWindow.ComponentLoaded.subscribe(cmp => {
 
             var myShipmentTypeId = this.EntityPM.ShipmentTypeId;
+            var myShipmentSubTypeId = this.EntityPM.ShipmentSubTypeId;
+            var subTypeCode: string = null;
+
             if (this.EntityPM.ShipmentTypeName) {
                 if (this.EntityPM.ShipmentTypeName.toLowerCase().indexOf("my groupage") > -1) {
                     if (this.EntityPM.TransportModeId == "O") {
                         myShipmentTypeId = "LCLD"
+                        subTypeCode = "LCL"; 
                     }
 
                     else {
-                        myShipmentTypeId = "LTL"
+                        myShipmentTypeId = "LTL";
+                        subTypeCode = "LTL"; 
+                    }
+
+                    var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
+                    if (subType) {
+                        myShipmentSubTypeId = subType.Id;
                     }
                 }
             }
@@ -463,7 +488,8 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             cmp.EntityPM.MasterShipmentDataId = this.EntityPM.MasterShipmentDataId;
             cmp.EntityPM.CutoffDate = this.EntityPM.CutoffDate;
             cmp.EntityPM.SCI = this.EntityPM.SCI;
-            cmp.EntityPM.ShipmentSubTypeId = this.EntityPM.ShipmentSubTypeId;
+            cmp.EntityPM.ShipmentSubTypeId = myShipmentSubTypeId;
+
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.isLoadHousesRequested = true;

@@ -1,12 +1,14 @@
-﻿using Logitude.Server.Tools.Helpers;
+﻿using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.ShipmentsModel.Tools.Initializers
+namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
     public class ShipmentNumberCounterBehaviour: IServiceBehaviour
     {

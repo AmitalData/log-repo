@@ -49,7 +49,8 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "FocusOnMe",
         "IsFreeValue",
         "ForceSubscribe",
-        "RefreshMe"
+        "RefreshMe",
+        "IsDisabled",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -378,7 +379,7 @@ export class LogDatePickerComponent
                 this.HandleUIPropertyChanged(value);
             });
             
-            if(this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties){
+            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties){
                 const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
                 pmuiProperty?.UIPropertyChanged.subscribe((value) => {
                     this.HandleUIPropertyChanged(value);

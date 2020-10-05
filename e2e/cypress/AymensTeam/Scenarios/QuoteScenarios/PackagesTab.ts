@@ -25,7 +25,7 @@ export class PackagesTab {
         Resolvers.ButtonResolver.Selector('#AddPackage').Click();
       
         Resolvers.TextBoxResolver.Selector('#QuotePackage_Quantity').Type(quantity);
-        if (this.shipmentType == 'LCL' || this.shipmentType == 'LTL') {
+        if (this.shipmentType.toLowerCase() == 'lcl' || this.shipmentType.toUpperCase() == 'ltl') {
             Resolvers.LOVResolver.Selector('#QuotePackage_PackageTypeId').Type(packageType);
         }
         if (volume == null) {

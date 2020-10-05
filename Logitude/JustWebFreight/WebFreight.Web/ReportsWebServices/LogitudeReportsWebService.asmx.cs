@@ -78,6 +78,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -6531,7 +6532,6 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
-
             #region Report Filters
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -6685,7 +6685,15 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(ShipmentLevel))
             {
-                iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == ShipmentLevel);
+                if(ShipmentLevel.ToLower() == "shipments")
+                {
+                    iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "C");
+                }
             }
 
             #endregion
@@ -10932,7 +10940,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.GLAccountNumber + "-" + item.GLAccountName,
 
                         ParentId = item.ChartOfAccountId,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     GLAccountParents.Add(record.ParentId);
@@ -10970,7 +10978,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
                         Number = null,
                         ParentId = item.ChartOfAcount4,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
 
@@ -10997,7 +11005,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
                         Number = null,
                         ParentId = item.ChartOfAcount3,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     if (record.Balance == null)
@@ -11035,7 +11043,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
                         Number = null,
                         ParentId = item.ChartOfAcount2,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
                     if (record.Balance == null)
                     {
@@ -11073,7 +11081,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
                         Number = null,
                         ParentId = item.ChartOfAcount1,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
 
                     if (record.Balance == null)
@@ -11111,7 +11119,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
                         Number = null,
                         ParentId = item.ChartOfAcountType,
-                        Balance = item.LocalCloseBalance,
+                        Balance = item.LocalCloseBalancePeriod1,
                     };
                     if (record.Balance == null)
                     {
@@ -11149,7 +11157,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Name = item.ChartOfAcountType == "1" ? "1-הכנסות" : "2-הוצאות",
                     Number = null,
                     ParentId = null,
-                    Balance = item.LocalCloseBalance,
+                    Balance = item.LocalCloseBalancePeriod1,
                 };
 
                 totalData.ResultList.Add(record);
@@ -11163,13 +11171,13 @@ namespace WebFreight.Web.ReportsWebServices
             decimal? totalRevenues = null;
             if (revenues != null)
             {
-                totalRevenues = revenues.LocalCloseBalance;
+                totalRevenues = revenues.LocalCloseBalancePeriod1;
             }
             var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
             decimal? totalExpenses = null;
             if (expenses != null)
             {
-                totalExpenses = expenses.LocalCloseBalance;
+                totalExpenses = expenses.LocalCloseBalancePeriod1;
             }
 
 
@@ -11980,8 +11988,8 @@ namespace WebFreight.Web.ReportsWebServices
                 var list = servce.Execute();
                 servce.Dispose();
 
-
-
+                List<CurrencyPM> currencies = GetCurrenciesByTenant(tenant);
+                List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
 
 
                 #region Fill Report Data
@@ -12010,7 +12018,11 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
+                            ChartofAccountCode = item.ChartOfAcountCode1,
+                            ChartofAccountLocalName = item.ChartOfAcountName1,
+                            ChartofAccountTypeCode = item.ChartOfAcountType,
+                            ChartofAccountTypeLocalName = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().LocalName : null,
+                            CurrencyCode = item.CurrencyId != null ? currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault().Code : "Multi",
 
 
 
@@ -12084,6 +12096,18 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             return totalData;
+        }
+        private List<CurrencyPM> GetCurrenciesByTenant(int tenant)
+        {
+            CurrencyQuery currencyQuery= new CurrencyQuery(tenant);
+            List<CurrencyPM> currencies = currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
+            return currencies;
+        }
+        private List<ChartOfAccountsTypePM> GetChartOfAccountTypes(int tenant)
+        {
+            ChartOfAccountsTypeQueryService chartOfAccountsTypeQueryService = new ChartOfAccountsTypeQueryService(tenant);
+            return chartOfAccountsTypeQueryService.GetAllChartOfAccounts();
+
         }
         private void RecalculateParentTotals(ResultList record,  RevenueExpenseDataProvider  totalData)
         {
@@ -12315,10 +12339,6 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1 != null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null select d).ToList();
                 List<Card> CardList = commonContext.Cards.Where(d => d.Tenant == tenant).ToList();
 
-
-
-
-
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
                 {
@@ -12397,10 +12417,54 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
+
+                    shipment.CustomerName = Item.CustomerName;
+                    shipment.Notify1Name = Item.Notify1Name;
+                    shipment.Notify2Name = Item.Notify2Name;
+                    shipment.ConsigneeNotImporterName = Item.ConsigneeNotImporterName;
+                    shipment.ShipperNotExporterName = Item.ShipperNotExporterName;
+
+                    if(!string.IsNullOrEmpty(Item.Notify1Id))
+                    {
+                        Card myCard = CardList.Where(d => d.Id == Item.Notify1Id).FirstOrDefault();
+                        if(myCard != null)
+                        {
+                            shipment.Notify1ReceivablesAccountingCard = myCard.ReceivablesAccountingCard;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(Item.Notify2Id))
+                    {
+                        Card myCard = CardList.Where(d => d.Id == Item.Notify2Id).FirstOrDefault();
+                        if (myCard != null)
+                        {
+                            shipment.Notify2ReceivablesAccountingCard = myCard.ReceivablesAccountingCard;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(Item.ConsigneeId))
+                    {
+                        Card myCard = CardList.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
+                        if (myCard != null)
+                        {
+                            shipment.ConsigneeReceivablesAccountingCard = myCard.ReceivablesAccountingCard;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(Item.ShipperId))
+                    {
+                        Card myCard = CardList.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
+                        if (myCard != null)
+                        {
+                            shipment.ShipperReceivablesAccountingCard = myCard.ReceivablesAccountingCard;
+                        }
+                    }
+
                     if (Item.ShipmentNumber == "E9069")
                     {
                         var test = "z";
                     }
+
                     if (Item.DirectionId == "D" && Item.TransportModeId == "I")
                     {
                         if (!string.IsNullOrEmpty(Item.MainCarriageToAddressId))
@@ -12412,7 +12476,6 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
-
                     else
                     {
                         if (myLastDelivery != null)
@@ -12543,23 +12606,11 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-
-                    //  Item.FinalDistenationPortId = Item.Transshipment3ToPortId != null ? Item.Transshipment3ToPortId : Item.Transshipment2ToPortId != null ? Item.Transshipment2ToPortId : Item.Transshipment1ToPortId != null ? Item.Transshipment1ToPortId : Item.MainCarriageToPortId;
-                    //   shipment.FinalCountryofDestination = Item.LastFinalDestination;
-
-
-
-
-
-
-
-
-
                     if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
                     {
                         shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
-
                     }
+
                     if (!string.IsNullOrEmpty(Item.MasterShipmentDataId))
                     {
                         if (!string.IsNullOrEmpty(Item.ShipmentMasterDataStatusId))
@@ -12579,7 +12630,6 @@ namespace WebFreight.Web.ReportsWebServices
                         shipment.Status = Item.ShipmentStatusName;
 
                     }
-
 
                     shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
                     shipment.Branch = Item.BranchName;

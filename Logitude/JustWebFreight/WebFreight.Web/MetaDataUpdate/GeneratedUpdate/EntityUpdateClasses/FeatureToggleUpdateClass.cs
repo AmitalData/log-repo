@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FeatureToggleUpdateClass
    {  		
-		public const string HashString = "f45e5986c02eed0febf1dde3deaaf928";
+		public const string HashString = "15d9b33769142725816c1e8995c712ed";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "FeatureToggle",
 			      				    IsNew =  true,
 			      				    DBTableName =  "FeatureToggles",
-			      				    OldDBTableName =  "FeatureToggles",
 			      				    ObjectTableSingular =  "Feature Toggle",
 			      				    ObjectTablePlural =  "Feature Toggles",
 			      				    HasCustomFilter =  false,
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -193,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -204,7 +203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -250,6 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -261,7 +260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -309,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -320,7 +319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -366,6 +364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -377,7 +376,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -425,6 +423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -436,7 +435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TenantNumber",
-					  						OldFieldName =  "TenantNumber",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -485,6 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -496,7 +495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -545,6 +543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -556,7 +555,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToggleCode",
-					  						OldFieldName =  "ToggleCode",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Toggle",
@@ -602,6 +600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -613,7 +612,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToggleName",
-					  						OldFieldName =  "ToggleName",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -661,6 +659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -672,7 +671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUser",
-					  						OldFieldName =  "CreatedByUser",
 					  						ObjectTableName =  "FeatureToggle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -720,6 +718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -753,6 +752,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode FeatureToggleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FeatureToggle.Q.AllFeatureToggles", DefaultText = @"Feature Toggles",LocalDefaultText = "Feature Toggles", ObjectTableId = FeatureToggleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature FeatureToggleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FeatureToggle.Q.AllFeatureToggles", ObjectTableId = FeatureToggleObjectTable.Id, Tenant = 0, NameTextCodeCode = "FeatureToggleFeatures.AllFeatureToggles", NameTextCodeDefaultText = "AllFeatureToggles", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,FeatureToggleObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode FeatureToggleTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FeatureToggle.Q.InactiveFeatureToggles", DefaultText = @"Inactive Feature Toggles",LocalDefaultText = "Inactive Feature Toggles", ObjectTableId = FeatureToggleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature FeatureToggleFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FeatureToggle.Q.InactiveFeatureToggles", ObjectTableId = FeatureToggleObjectTable.Id, Tenant = 0, NameTextCodeCode = "FeatureToggleFeatures.InactiveFeatureToggles", NameTextCodeDefaultText = "InactiveFeatureToggles", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,FeatureToggleObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -767,6 +770,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllFeatureTogglesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FeatureToggle.ToggleName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn AllFeatureTogglesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FeatureToggle.TenantNumber" , ColumnWidth = 150 }, addedQueryColumns);
+  
+	      
+
+			  Query InactiveFeatureTogglesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FeatureToggleTextCode_1.Id, NameTextCodeCode = FeatureToggleTextCode_1.Code, ObjectTableName = "FeatureToggle", Code = "InactiveFeatureToggles",  QueryGroupCode = "f4de", IndexOrder = 1, Tenant = 0, ObjectTableId = FeatureToggleObjectTable.Id, QuerySection = "FeatureToggle", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = FeatureToggleFeature_1.Id,FeatureUniqeCode= FeatureToggleFeature_1.FeatureUniqeCode, DefaultSortName = "TenantNumber", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InactiveFeatureTogglesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FeatureToggle.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InactiveFeatureTogglesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FeatureToggle.CreatedByUser" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InactiveFeatureTogglesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FeatureToggle.ToggleName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InactiveFeatureTogglesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FeatureToggle.TenantNumber" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InactiveFeatureTogglesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "FeatureToggle.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter InactiveFeatureTogglesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "FeatureToggle.Inactive", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

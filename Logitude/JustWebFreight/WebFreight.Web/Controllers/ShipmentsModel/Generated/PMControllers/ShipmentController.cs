@@ -819,7 +819,26 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage CheckIsCFSShipmentById(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                bool isBonded = shipmentQuery.CheckIsCFSShipmentById(shipmentId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, isBonded);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

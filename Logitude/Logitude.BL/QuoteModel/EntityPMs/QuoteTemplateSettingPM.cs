@@ -283,9 +283,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool ShowVATPercentagePackages { get; set; }
         public bool ShowVATPercentageContainers { get; set; }
 
+        public bool HidePageNumber { get; set; }
 
-
-
+        public string PageNumberingTextDesignId { get; set; }
 
     }
 }

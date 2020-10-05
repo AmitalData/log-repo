@@ -58,17 +58,17 @@ export class SearchComponent implements AfterViewInit
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
       
 
-        var tenant = this.route.snapshot.paramMap.get('Tenant');
+        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
         if(tenant!=null && tenant!=""){
            this._Tenant = Number(tenant);
          }
          else{
-             if(searchKey!=null && searchKey!=""){
-                this.router.navigate([1,'search',searchKey]);
-             }
-             else{
-                this.router.navigate([1,'search']);
-             }
+            //  if(searchKey!=null && searchKey!=""){
+            //     this.router.navigate([1,'search',searchKey]);
+            //  }
+            //  else{
+            //     this.router.navigate([1,'search']);
+            //  }
             
          }
     }
@@ -167,7 +167,7 @@ export class SearchComponent implements AfterViewInit
     }
     Search()
     {
-        if(this._Tenant){
+        if(this._Tenant && this.SearchText){
             this.router.navigate([this._Tenant,'search', this.SearchText]);
             // this.FilterItems();
             this.LoadShipments();
@@ -203,7 +203,8 @@ export class SearchComponent implements AfterViewInit
     {   var selection = window.getSelection();
         if(selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
-            this.router.navigate([this._Tenant,'shipment', SecurityKey]);
+
+        this.router.navigate([this._Tenant,'search','shipment', SecurityKey]);
         }
     }
     LoadShipments()

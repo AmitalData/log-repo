@@ -12,7 +12,6 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         public IQueryable<FeatureToggleList> GetIqueryableList(IQueryable<FeatureToggle> iQueryable)
         {
             IQueryable<FeatureToggleList> query = (from a in iQueryable.Include("Toggle").Include("CreatedByUser")
-                                                   where !a.Inactive
                                                    select new FeatureToggleList() 
                                                    {
                                                        Id = a.Id,

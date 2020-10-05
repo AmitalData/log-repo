@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;f1b6&quot;"
+  Code="&quot;970d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -56,6 +56,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;3c31&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -383,7 +384,7 @@
       Code="&quot;STR&quot;"
       SearchFields="&quot;STR,Storage Pricing&quot;"
       Name="&quot;Storage Pricing&quot;" />
-	   <Record
+    <Record
       Code="&quot;OI2&quot;"
       Name="&quot;OceanInsightsV2&quot;"
       SearchFields="&quot;OI2,OceanInsightsV2&quot;" />
@@ -395,6 +396,10 @@
       Code="&quot;AMS&quot;"
       Name="&quot;AMS in Export&quot;"
       SearchFields="&quot;AMS,AMS in Export&quot;" />
+    <Record
+      Code="&quot;API&quot;"
+      SearchFields="&quot;API,API Update&quot;"
+      Name="&quot;API Update&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

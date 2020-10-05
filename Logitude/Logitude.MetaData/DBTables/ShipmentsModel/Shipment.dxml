@@ -2999,6 +2999,18 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="IsCFSWarehouse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCFSWarehouseChanged"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="PreAlertSentDate"
     Type="datetime">
     <Constraints
@@ -3762,6 +3774,8 @@
     Columns="Tenant,ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,ComputedStatusDate" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint
