@@ -43,7 +43,7 @@ export class QuoteActions {
             }
         }).as('SaveQuote')
 
-        Resolvers.ButtonResolver.IsMoreMenu().Selector('#QuoteBCancelQuote').Click();
+        Resolvers.ButtonResolver.Selector('#MenuButtons').Click();
         Resolvers.ButtonResolver.Selector('#QuoteBCancelQuote').Click();
         Resolvers.ButtonResolver.Selector('#ConfrimApproved').Click();
 
@@ -139,7 +139,6 @@ export class QuoteActions {
 
 
         Resolvers.ButtonResolver.Selector('#QuoteBBuildShipment').Click();
-
         cy.get("#ShipmentLevelRadio_0D").click({ force: true });
         Resolvers.ButtonResolver.Selector('#ShipmentCreatebtn').Click();
 
