@@ -60,7 +60,7 @@ export class LicensesManagementComponent implements OnDestroy {
         this.dirtyItem = null;
 
         if (!AppTool.IsNullOrEmpty(args.SearchField)) {
-            this.SearchTextChanged(args.SearchField);
+            this.SearchFields = args.SearchField;
         }
 
         this.InitColumns();
@@ -237,8 +237,8 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     public SearchFields: string;
-    SearchTextChanged(searchText: string) {
-        this.SearchFields = searchText;
+    SearchTextChanged(text: string) {
+        this.SearchFields = text;
         this.SearchFieldChangeEvent.emit(this.SearchFields);
     }
 
