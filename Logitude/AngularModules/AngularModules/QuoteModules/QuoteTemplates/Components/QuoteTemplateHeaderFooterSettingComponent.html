@@ -19,7 +19,7 @@
                                 </div>
                             </li>
 
-                            <li [class.Selected]="SelectedTabCode == 'QPN'" (click)="SelectedTabCode = 'QPN'">
+                            <li *ngIf="QuoteTemplateSectionTypeName == 'Footer'" [class.Selected]="SelectedTabCode == 'QPN'" (click)="SelectedTabCode = 'QPN'">
                                 <div class="InnerChild" style="color:black;width:110px">
 
                                     <div style="width:110px;text-align:left;font-size:11px;color:black" class="InnerChild">
