@@ -42,6 +42,19 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ShipmentMasterDatas).HasColumnName("ShipmentMasterDatas").IsRequired();
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ErrorLog).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.ErrorLog).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.ErrorLog).HasColumnName("ErrorLog").IsUnicode(true);
         }
     }
 }

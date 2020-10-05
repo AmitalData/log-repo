@@ -1767,7 +1767,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             }
         }
-        private void TraceTerminalData()
+        public void TraceTerminalData()
         {
             if (this.entityPM.DirectionId == "I")
             {

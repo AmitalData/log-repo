@@ -7,6 +7,7 @@ import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/opera
 import { FormBuilder } from '@angular/forms';
 import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 
 
 @Component({
@@ -57,17 +58,17 @@ export class SearchComponent implements AfterViewInit
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
       
 
-        var tenant = this.route.snapshot.paramMap.get('Tenant');
+        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
         if(tenant!=null && tenant!=""){
            this._Tenant = Number(tenant);
          }
          else{
-             if(searchKey!=null && searchKey!=""){
-                this.router.navigate([1,'search',searchKey]);
-             }
-             else{
-                this.router.navigate([1,'search']);
-             }
+            //  if(searchKey!=null && searchKey!=""){
+            //     this.router.navigate([1,'search',searchKey]);
+            //  }
+            //  else{
+            //     this.router.navigate([1,'search']);
+            //  }
             
          }
     }
@@ -166,7 +167,7 @@ export class SearchComponent implements AfterViewInit
     }
     Search()
     {
-        if(this._Tenant){
+        if(this._Tenant && this.SearchText){
             this.router.navigate([this._Tenant,'search', this.SearchText]);
             // this.FilterItems();
             this.LoadShipments();
@@ -199,21 +200,25 @@ export class SearchComponent implements AfterViewInit
     }
 
     ItemClicked(item)
-    {
-        var SecurityKey = item.SecurityKey;
+    {   var selection = window.getSelection();
+        if(selection.toString().length === 0) {
+            var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
-
+        this.router.navigate([this._Tenant,'search','shipment', SecurityKey]);
+        }
     }
     LoadShipments()
     {
+
+     
 
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
             this.isLoading = true;
+            RootContext.StartBusyIndicatorLoading();
             this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {
+            {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
                 console.log("[getShipments]", result);
                 this.Shipments = result;

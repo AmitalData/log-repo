@@ -1663,6 +1663,11 @@ export class QuotePM {
     public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
        
 	 
+    private descriptionRightToLeft: boolean;
+    public get DescriptionRightToLeft() { return this.descriptionRightToLeft; }
+    public set DescriptionRightToLeft(newValue: boolean) { if (this.descriptionRightToLeft != newValue) { this.descriptionRightToLeft = newValue; this.MarkAsDirty("DescriptionRightToLeft"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		

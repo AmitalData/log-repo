@@ -23,6 +23,8 @@ namespace CargoTrackingWinService.Helper
         public static int TransportModes { get; set; }
         public static int ShipmentComputedFields { get; set; }
         public static int ShipmentMasterDatas { get; set; }
+        public static string ErrorLogs { get; set; }
+
 
     }
 }

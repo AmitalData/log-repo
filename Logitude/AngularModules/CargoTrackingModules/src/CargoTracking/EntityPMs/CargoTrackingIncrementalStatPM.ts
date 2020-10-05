@@ -74,6 +74,11 @@ export class CargoTrackingIncrementalStatPM {
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private errorLog: string;
+    public get ErrorLog() { return this.errorLog; }
+    public set ErrorLog(newValue: string) { if (this.errorLog != newValue) { this.errorLog = newValue; this.MarkAsDirty("ErrorLog"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingIncrementalStatPM;
 		

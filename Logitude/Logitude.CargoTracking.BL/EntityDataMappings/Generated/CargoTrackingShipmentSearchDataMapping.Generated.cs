@@ -26,7 +26,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SearchFields, 
 	         ShipmentDate, 
 	         Id, 
-	         SecurityKey,
+	         ShipmentId, 
+	         IsPublic,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SearchFields, 
 	         ShipmentDate, 
 	         Id, 
-	         SecurityKey,
+	         ShipmentId, 
+	         IsPublic,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -61,9 +63,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.ShipmentDate = entityPM.ShipmentDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
-				entityPOCO.SecurityKey = entityPM.SecurityKey;
+				entityPOCO.ShipmentId = entityPM.ShipmentId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPublic))
+            {
+				entityPOCO.IsPublic = entityPM.IsPublic;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -92,9 +99,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecurityKey))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentId))
             {
-					entityPM.SecurityKey = entityPOCO.SecurityKey;
+					entityPM.ShipmentId = entityPOCO.ShipmentId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPublic))
+            {
+					entityPM.IsPublic = entityPOCO.IsPublic;
             }
 
 		}
@@ -118,9 +130,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ShipmentDate = entityPM.ShipmentDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
-                oldEntityPM.SecurityKey = entityPM.SecurityKey;
+                oldEntityPM.ShipmentId = entityPM.ShipmentId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPublic))
+            {
+                oldEntityPM.IsPublic = entityPM.IsPublic;
             }
 			
 		}

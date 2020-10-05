@@ -83994,7 +83994,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsBondedWarehouse&quot;"
     DefaultText="&quot;Is Bonded&quot;"
-    HelpTextCode="&quot;IsCFSWarehouse&quot;"
+    HelpTextCode="&quot;IsBondedWarehouse&quot;"
     HelpTextDefaultText="&quot;Limited to one cross dock entry and one cross dock release.&quot;"
     IsNullable="false"
     IsForeignKey="false"

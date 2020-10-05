@@ -65,6 +65,12 @@ namespace WebFreight.Web.DataProviders
         public decimal? ForeignCredit { get; set; }
 
         public decimal? ForeignCloseBalance { get; set; }
+        public string ChartofAccountCode { get; set; }
+        public string ChartofAccountLocalName { get; set; }
+        public string ChartofAccountTypeCode { get; set; }
+        public string ChartofAccountTypeLocalName { get; set; }
+        public string CurrencyCode { get; set; }
+
 
     }
     public class ExpenseList
