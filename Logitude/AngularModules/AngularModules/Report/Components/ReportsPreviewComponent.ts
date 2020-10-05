@@ -59,7 +59,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = false;
+  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -82,7 +82,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.ReportsTemplateLists = reportTemplateLists;
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
-        this.ReportsRunUsingWR = false;
+        this.ReportsRunUsingWR = true;
         this.RunComponent();
     }
 
@@ -325,7 +325,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.IsRunReportFailed = false;
 
         if (!this.Report.DisablePreview) {
-            this.StartBusyIndicator("Generating...");
             this.ReportFliter = this.FillReportFilter(filter);
             this.ValiditySelectedTemplate();
             this.NumberOfRequests += 1;
@@ -455,12 +454,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
-        if (isUsedWorkerRoleAlalways) {
-            this.StartBusyIndicator("Generating...");
-            this.StartTimerChangeBusyIndicatorMessageAfter50Sec();
-        } else {
-            this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
-        }
+        this.StartBusyIndicator("Generating...");
+
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
@@ -527,11 +522,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
-
-                                    // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
-                                    //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
-                                    // }
                                     messageWindow.Show(result.ExceptionMessage);
+                                }
+
+                                else if (result.StatusCode == "P") {
+                                    this.StartBusyIndicator("Report is in progress");
                                 }
                                 else if (result.StatusCode == "D") {
                                     this.ReportFliter.ProcessType = "ReportsRunUsingWR";
@@ -619,7 +614,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
 
             if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
-                this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+                this.StartBusyIndicator("Generating...");
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
                 this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
             }
