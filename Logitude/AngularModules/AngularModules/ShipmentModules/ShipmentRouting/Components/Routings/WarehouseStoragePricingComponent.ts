@@ -28,6 +28,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public MaxLineNumber = 0;
     public IsResourcesReady: boolean = false;
     public PricesChanged: boolean = false;
+    public CurrencyChanged: boolean = false;
     public WeightLabel: string;
     constructor() {
         super();
@@ -97,7 +98,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set ChargeStorageCurrencyId(newValue: string) {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
-            //this.PricesChanged = true;
+            this.CurrencyChanged = true;
         }
     }
 
@@ -206,63 +207,23 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 }
             });
 
-            this.UpdateReceivable();            
-
             var emitMessage: string = "ok";
             if (this.PricesChanged) {
                 emitMessage = "PricesChanged";
             }
 
-            this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
-        }
-    }
-    UpdateReceivable() {
-        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-        var myCurrencyRatesService = new CurrencyRatesService();
-        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
-            if (!myResponse2.HasError) {
-                var allRates: LastRate[] = myResponse2.Result;
+            if (this.CurrencyChanged) {
+                if (emitMessage == "ok") {
+                    emitMessage = "CurrencyChanged";
+                }
 
-                var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                if (storageReceivable) {
-                    storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
-                    storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
-
-                    if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
-                        storageReceivable.Rate = 1;
-                    }
-                    else {
-                        var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
-                        if (lastRate != null) {
-                            storageReceivable.Rate = lastRate.Rate;
-                        }
-                    }
-
-                    if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                        storageReceivable.ProfitCurrencyExchangeRate = 1;
-                    }
-
-                    else {
-                        var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
-                        if (myLastRate != null) {
-                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
-                        }
-                    }
-
-                    storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-                    if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-                    }
-
-                    else {
-                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-                    }
-
-                    this.CurrentSession.FireEvent("StorageReceivableCurrencyChanged");
+                else {
+                    emitMessage = "PricesChanged+CurrencyChanged";
                 }
             }
-        });        
+
+            this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
+        }
     }
 
     private ValidateSteps(myItems: PricingItem[]) {

@@ -601,7 +601,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
-                if (s == "PricesChanged") {
+                if (s.indexOf('PricesChanged') > -1) {
                     this.PricesChanged = true;
                     this.CheckStorageProperties();                    
                 }
