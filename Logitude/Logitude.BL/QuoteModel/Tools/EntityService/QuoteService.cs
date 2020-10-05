@@ -36,6 +36,8 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -1318,6 +1320,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 Id = itemPM.Id,
             };
 
+            if (!string.IsNullOrEmpty(itemPM.TariffId))
+            {
+                this.UpdateTariffUsedDate(itemPM.TariffId);
+            }
+
             QuoteMapping.MapQuoteCharge(itemPM, itemPoco, true, this.entityPM);
             quoteChargeRepository.Add(itemPoco);
 
@@ -1337,46 +1344,54 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void UpdateQuoteChargeUp(QuoteChargePM itemPM)
         {
             QuoteCharge itemPoco = quoteChargeRepository.GetSingleQuoteReceivable(itemPM.Id, tenant);
-            QuoteMapping.MapQuoteCharge(itemPM, itemPoco, false, this.entityPM);
-            quoteChargeRepository.Update(itemPoco);
-
-            if (itemPM.QuoteChargePriceStepsChangeSet != null)
+            if (itemPoco != null)
             {
-                if (!itemPM.IsChargeBySteps)
+                if (!string.IsNullOrEmpty(itemPM.TariffId) && string.IsNullOrEmpty(itemPoco.TariffId))
                 {
-                    foreach (QuotePriceStepsPM insideItemPM in itemPM.QuoteChargePriceStepsChangeSet)
-                    {
-                        this.DeleteQuotePriceSteps(insideItemPM);
-                    }
+                    this.UpdateTariffUsedDate(itemPM.TariffId);
                 }
 
-                else
+                QuoteMapping.MapQuoteCharge(itemPM, itemPoco, false, this.entityPM);
+                quoteChargeRepository.Update(itemPoco);
+
+                if (itemPM.QuoteChargePriceStepsChangeSet != null)
                 {
-                    foreach (QuotePriceStepsPM insideItemPM in itemPM.QuoteChargePriceStepsChangeSet)
+                    if (!itemPM.IsChargeBySteps)
                     {
-                        switch (insideItemPM.ChangeSetOp)
+                        foreach (QuotePriceStepsPM insideItemPM in itemPM.QuoteChargePriceStepsChangeSet)
                         {
-                            case ChangeSetOperation.Insert:
-                                {
-                                    insideItemPM.QuoteId = entityPM.Id;
-                                    insideItemPM.QuoteChargeId = itemPM.Id;
-                                    this.CreateQuotePriceSteps(insideItemPM);
-                                    break;
-                                }
+                            this.DeleteQuotePriceSteps(insideItemPM);
+                        }
+                    }
 
-                            case ChangeSetOperation.Update:
-                                {
-                                    this.UpdateQuotePriceSteps(insideItemPM);
-                                    break;
-                                }
+                    else
+                    {
+                        foreach (QuotePriceStepsPM insideItemPM in itemPM.QuoteChargePriceStepsChangeSet)
+                        {
+                            switch (insideItemPM.ChangeSetOp)
+                            {
+                                case ChangeSetOperation.Insert:
+                                    {
+                                        insideItemPM.QuoteId = entityPM.Id;
+                                        insideItemPM.QuoteChargeId = itemPM.Id;
+                                        this.CreateQuotePriceSteps(insideItemPM);
+                                        break;
+                                    }
 
-                            case ChangeSetOperation.Delete:
-                                {
-                                    this.DeleteQuotePriceSteps(insideItemPM);
-                                    break;
-                                }
+                                case ChangeSetOperation.Update:
+                                    {
+                                        this.UpdateQuotePriceSteps(insideItemPM);
+                                        break;
+                                    }
 
-                            default: { break; }
+                                case ChangeSetOperation.Delete:
+                                    {
+                                        this.DeleteQuotePriceSteps(insideItemPM);
+                                        break;
+                                    }
+
+                                default: { break; }
+                            }
                         }
                     }
                 }
@@ -2059,6 +2074,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             //        throw new Exception("Wrong Estimate Profit");
             //    }
             //}
+        }
+
+        private void UpdateTariffUsedDate(string tariffId)
+        {
+            TariffRepository tariffRepository = new TariffRepository(tenant);
+            Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+            if (tariff != null)
+            {
+                tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                tariffRepository.Update(tariff);
+                tariffRepository.SubmitChanges();
+            }
         }
     }
     public class QuoteTotalsClass
