@@ -414,7 +414,10 @@ namespace Logitude.DBMigrations.Models
             {
                 if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
                 {
-                    BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                    if (!(ToolConfigurations.DatabaseType.ToLower() == "oracle" && !ToolArguments.IsArgumentProvided(Arguments.ALLOWDROP)))
+                    {
+                        BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                    }
                 }
             }
             else
@@ -497,7 +500,10 @@ namespace Logitude.DBMigrations.Models
                 BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
             }
 
-            BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            if (!(ToolConfigurations.DatabaseType.ToLower() == "oracle" && !ToolArguments.IsArgumentProvided(Arguments.ALLOWDROP)))
+            {
+                BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            }
 
             BuildAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
         }
