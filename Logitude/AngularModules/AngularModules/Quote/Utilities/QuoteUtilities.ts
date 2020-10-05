@@ -206,9 +206,9 @@ export class QuoteUtilities {
         entityPM.IsByKG = copiedEntityPM.IsByKG;
         entityPM.IsByContainer = copiedEntityPM.IsByContainer;
         entityPM.BaseShipmentNumber = copiedEntityPM.QuoteNumber;
-        entityPM.IsAutomaticallyClosed = copiedEntityPM.IsAutomaticallyClosed;
-        entityPM.AutomaticallyCloseDate = copiedEntityPM.AutomaticallyCloseDate;
-        entityPM.AutomaticallyCloseDays = copiedEntityPM.AutomaticallyCloseDays;
+        //entityPM.IsAutomaticallyClosed = copiedEntityPM.IsAutomaticallyClosed;
+        //entityPM.AutomaticallyCloseDate = copiedEntityPM.AutomaticallyCloseDate;
+        //entityPM.AutomaticallyCloseDays = copiedEntityPM.AutomaticallyCloseDays;
         entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
         entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
         entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
