@@ -220,7 +220,8 @@
   <Column
     Name="SearchWindowFiltersIndex"
     OldName="DisplayInSearchWindowFiltersIndex"
-    Type="int">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
