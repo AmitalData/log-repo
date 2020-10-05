@@ -1523,7 +1523,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
 
-                if (glaAccount.IsMultiCurrency.Value)
+                if (glaAccount!=null && glaAccount.IsMultiCurrency.Value)
                 {
                   string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, entityPM.PaymentCurrencyId);
                     glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
