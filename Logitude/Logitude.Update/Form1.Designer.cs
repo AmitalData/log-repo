@@ -165,7 +165,7 @@
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
             this.button49 = new System.Windows.Forms.Button();
             this.btnCallOldUpdate = new System.Windows.Forms.Button();
-            this.button50 = new System.Windows.Forms.Button();
+            
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -1559,13 +1559,13 @@
             // 
             // button50
             // 
-            this.button50.Location = new System.Drawing.Point(543, 313);
-            this.button50.Name = "button49";
-            this.button50.Size = new System.Drawing.Size(184, 36);
-            this.button50.TabIndex = 85;
-            this.button50.Text = "Load Closed Tables";
-            this.button50.UseVisualStyleBackColor = true;
-            this.button50.Click += new System.EventHandler(this.button50_Click);
+            //this.button50.Location = new System.Drawing.Point(543, 313);
+            //this.button50.Name = "button49";
+            //this.button50.Size = new System.Drawing.Size(184, 36);
+            //this.button50.TabIndex = 85;
+            //this.button50.Text = "Load Closed Tables";
+            //this.button50.UseVisualStyleBackColor = true;
+            //this.button50.Click += new System.EventHandler(this.button50_Click);
             // 
             // btnCallOldUpdate
             // 
