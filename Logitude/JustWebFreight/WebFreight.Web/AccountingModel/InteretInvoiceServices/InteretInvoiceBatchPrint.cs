@@ -168,7 +168,10 @@ namespace Logitude.Accounting.BL.InterestService
                     tenant = doucmentOut.Tenant;
 
                     List<DocumentOutCopy> copies = (from a in commonContext.DocumentOutCopies
-                                                    where a.DocumentOutId == documentOutId && tenant == (int)tenant
+                                                    join Copy in commonContext.DocumentTypeCopies on a.DocumentTypeCopyId equals Copy.Id
+                                                    where a.DocumentOutId == documentOutId 
+                                                          && tenant == (int)tenant
+                                                          && Copy.Code == DocumentCode
                                                     select a).OrderBy(d => d.DocumentTypeCopy.IndexOrder).ToList();
 
                     Uploader up = new Uploader();
