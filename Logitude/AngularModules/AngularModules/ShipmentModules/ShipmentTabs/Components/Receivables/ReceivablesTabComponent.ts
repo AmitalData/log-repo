@@ -122,7 +122,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
 
-                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved") {
+                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved" || s == "StorageReceivableCurrencyChanged") {
                     this.BuildItemsSource();
                 }
             });
