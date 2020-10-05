@@ -279,10 +279,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<ExternalReconciliationPeriod> MappinReconcileExternalPageLineToPeriods( IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines)
         {
-
+            IQueryable<ExternalReconciliationLine> ExternalReconciliationLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.IsCancelled == false select a);
             List<ExternalReconciliationPeriod> periods = (from a in reconcileExternalPageLines
                                                           join BK in accountingContext.BankAccounts on a.ReconcileExternalPage.GLAccountId equals BK.GLAccountId
-                                                          join Ex in accountingContext.ExternalReconciliationLines on a.Id equals Ex.ExternalPageLineId into ReconcileExternalPageLinesJoinExternalReconciliation
+                                                          join Ex in ExternalReconciliationLines on a.Id equals Ex.ExternalPageLineId into ReconcileExternalPageLinesJoinExternalReconciliation
                                                           from Ex in ReconcileExternalPageLinesJoinExternalReconciliation.DefaultIfEmpty()
                                                           where BK.Inactive == false //&& (Ex.ExternalReconciliation == null || Ex.ExternalReconciliation.IsCancelled == false)
                                                           select new ExternalReconciliationPeriod()
@@ -312,10 +312,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<ExternalReconciliationPeriod> MappinLedgerTransactionToPeriods(IQueryable<LedgerTransaction> ledgerTransactions,bool IsTransfer=false)
         {
-
+            IQueryable<ExternalReconciliationLine> ExternalReconciliationLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.IsCancelled == false select a);
             List<ExternalReconciliationPeriod> periods = (from a in ledgerTransactions
                                                           join BK in accountingContext.BankAccounts on a.AccountId equals IsTransfer ==true ? BK.TransferGLAcccountId : BK.GLAccountId
-                                                          join Ex in accountingContext.ExternalReconciliationLines on a.Id equals Ex.LedgerTransactionId into LedgerTransactionJoinExternalReconciliation
+                                                          join Ex in ExternalReconciliationLines on a.Id equals Ex.LedgerTransactionId into LedgerTransactionJoinExternalReconciliation
                                                           from Ex in LedgerTransactionJoinExternalReconciliation.DefaultIfEmpty()
                                                           where BK.Inactive == false //&& (Ex.ExternalReconciliation==null || Ex.ExternalReconciliation.IsCancelled == false)
                                                           select new ExternalReconciliationPeriod()
