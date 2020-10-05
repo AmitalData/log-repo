@@ -948,10 +948,12 @@ namespace Logitude.XSD.INTTRA_Booking
 
         private void BuildMessageDetails_GoodsDetails()
         {
+            string descriptionOfGoods = FormatHelper.FormatString(this.ShipmentPM.DescriptionOfGoods, FormatHelper.PatternType.NatureAndQuantityOfGoods);
+
             INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
             {
                 LineNumber = "1",
-                GoodDescription = this.iNTTRAGeneralMethods.GetStringList(this.ShipmentPM.DescriptionOfGoods, 2, 1024).FirstOrDefault(),
+                GoodDescription = !string.IsNullOrEmpty(descriptionOfGoods) ? this.iNTTRAGeneralMethods.GetStringList(descriptionOfGoods, 2, 1024).FirstOrDefault(): null,
                 PackageDetail = new PackageDetailType()
                 {
                     OuterPack = new OuterPackType(),
