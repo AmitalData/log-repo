@@ -119,7 +119,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     }
-
+                    table.LastUpdateDate = DateTime.Now;
                     table.StatusCode = "3";
                     closedTableRep.Update(table);
                     closedTableRep.SubmitChanges();
