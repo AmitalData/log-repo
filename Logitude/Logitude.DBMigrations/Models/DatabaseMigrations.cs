@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,6 +8,8 @@ namespace Logitude.DBMigrations.Models
 {
     public abstract class DatabaseMigrations
     {
+        protected readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+
         protected TableDefinition DXMLTable;
         protected TableDefinition CurrentTable;
         protected TableMigrations TableMigrations;
@@ -23,6 +26,7 @@ namespace Logitude.DBMigrations.Models
         protected string MissingIndexesWarnings = "";
 
         protected bool IsBasicArgumentProvided;
+        protected bool IsAllowDropArgumentProvided;
 
 
         public string GetScript()
@@ -403,7 +407,10 @@ namespace Logitude.DBMigrations.Models
             }
             else if (IsNotInDXMLTable(dxmlTableColumn))
             {
-                BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                if(!(DatabaseType.ToLower() == "oracle" && !IsAllowDropArgumentProvided))
+                {
+                    BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                }
             }
             else
             {
@@ -479,7 +486,10 @@ namespace Logitude.DBMigrations.Models
                 BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
             }
 
-            BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            if (!(DatabaseType.ToLower() == "oracle" && !IsAllowDropArgumentProvided))
+            {
+                BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            }
 
             BuildAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
         }
