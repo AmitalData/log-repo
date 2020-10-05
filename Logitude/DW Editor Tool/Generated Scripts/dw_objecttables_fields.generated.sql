@@ -894,7 +894,7 @@ insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,Ha
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType) Values(@Fact_ShipmentsNewId,0,'Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Shipment')  
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType,DisplayName) Values(@Fact_ShipmentsNewId,0,'Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Shipment','Shipments')  
 --Fields --
 declare @Fact_ShipmentsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsId_NumberNewId OUTPUT,'DWObjectField' 
