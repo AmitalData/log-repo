@@ -60,7 +60,7 @@ export class ObjectsLocator {
     public static IsDemoTenant(value: any): boolean {
         var isDemoTenant = false;
 
-        var demoTenants = this.GlobalSetting.LogitudeDemoTenants.split(",");
+        var demoTenants = this.GlobalSetting.LogitudeDemoTenants?.split(",");
         if (demoTenants && demoTenants.indexOf(value) !== -1) {
             isDemoTenant = true;
         }
