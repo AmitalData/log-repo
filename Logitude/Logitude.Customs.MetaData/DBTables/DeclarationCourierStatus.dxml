@@ -163,6 +163,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Delivered"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -171,21 +177,17 @@
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"
-    ReferencedColumn="Code"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="StorageSiteStatusCode"
     ReferencedTable="MamanStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  
-  <!--ecargo--> 
   <Index
     Columns="CourierPendingReasonList" />
   <Index
     Columns="IsCourierMissingClassification" />
-
   <Index
-  Columns="IsClosedForFollowUp" />
-
+    Columns="IsClosedForFollowUp" />
 </Table>

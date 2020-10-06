@@ -354,6 +354,11 @@ export class DeclarationCourierStatusPM {
     public set SortedCourierDeclarationStatus(newValue: string) { if (this.sortedCourierDeclarationStatus != newValue) { this.sortedCourierDeclarationStatus = newValue; this.MarkAsDirty("SortedCourierDeclarationStatus"); } }
        
 	 
+    private delivered: boolean;
+    public get Delivered() { return this.delivered; }
+    public set Delivered(newValue: boolean) { if (this.delivered != newValue) { this.delivered = newValue; this.MarkAsDirty("Delivered"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
