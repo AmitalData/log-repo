@@ -215,7 +215,7 @@ namespace WebFreight.Web.WcfApi
                         }
                         else
                         {
-                           // response.HasError = true;
+                            // response.HasError = true;
                             //response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
                             //return response;
                             //response.HasError = true;
@@ -439,48 +439,9 @@ namespace WebFreight.Web.WcfApi
                     entityPM.IsHybrid = true;
                     Customer entity = customerRepository.GetSingleCustomerByCodeForHybrid(entityPM.Code, entityPM.Tenant, false);
 
-                    if (entity == null)
+                    if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
                     {
-                        if (!string.IsNullOrEmpty(entityPM.VatNumber))
-                        {
-                            Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                            if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
-                            {
-                                entity = customer;
-                            }
-                            else
-                            {
-                                if (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady)
-                                {
-                                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                }
-                                else
-                                {
-                                    if (tenantEntity.VatUniqueTypeCode == "UFA")
-                                    {
-                                        entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                    }
-                                    else if (tenantEntity.VatUniqueTypeCode == "USC")
-                                    {
-                                        Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
-                                        if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
-                                        {
-                                            entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                            if(entity != null && (entity.Card.Code != entityPM.Code))
-                                            {
-                                                response.HasError = true;
-                                                response.ErrorMessage = "A customer with the same vat and different code already exists.";
-                                                return response;
-                                            }
-                                        }
-                                    }
-
-                                }
-
-                            }
-                        }
-
-
+                        entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -494,7 +455,7 @@ namespace WebFreight.Web.WcfApi
                         bool exist = SecurityUtility.CheckFeature("Customer", "EDITCREDITAMOUNT", entity.Tenant);
                         if (exist)
                         {
-                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
+                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;
                         }
 
 
@@ -527,8 +488,8 @@ namespace WebFreight.Web.WcfApi
                             }
                         }
 
-                        
-                       
+
+
 
                         CustomerAccountManagerByProductQuery customerAccountManagerByProductQuery = new CustomerAccountManagerByProductQuery(customerAccountManagerByProductRepository);
                         List<CustomerAccountManagerByProductPM> CustomerAccountManagerByProducts = customerAccountManagerByProductQuery.GetCustomerAccountManagerByProductPMs(entity.Tenant, entity.Id);
@@ -597,6 +558,13 @@ namespace WebFreight.Web.WcfApi
 
                 return response;
             }
+            catch (ApplicationException ex)
+            {
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+                return response;
+            }
             catch (Exception ex)
             {
                 response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
@@ -610,8 +578,64 @@ namespace WebFreight.Web.WcfApi
                 return response;
             }
 
+
+
         }
 
+        private Customer GetCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
+        {
+            Customer entity = null;
+            if (tenantEntity.VatUniqueTypeCode == "UFA")
+            {
+                entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
+            }
+            if (tenantEntity.VatUniqueTypeCode == "USC")
+            {
+                Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
+                if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
+                {
+                    entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
+                    //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                    if (entity != null && (entity.Card.Code != entityPM.Code))
+                    {
+                        throw new ApplicationException("A customer with the same vat and different code already exists.");
+                        //response.HasError = true;
+                        //response.ErrorMessage = "A customer with the same vat and different code already exists.";
+                        //return response;
+                    }
+                }
+            }
+
+            return entity;
+        }
+
+        private Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)
+        {
+            Customer entity = null;
+            bool isPotentialCustomer = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
+            if (tenantEntity.VatUniquePartnerTypeCode == "ALL" || string.IsNullOrEmpty(tenantEntity.VatUniquePartnerTypeCode))
+            {
+                if (isPotentialCustomer)
+                {
+                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                }
+                else
+                {
+                    entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
+                }
+            }
+            else if (tenantEntity.VatUniquePartnerTypeCode == "CS" && (entityPM.CustomerStatusCode == "ACT" || entityPM.SetActivated))
+            {
+                entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
+            }
+            else if (tenantEntity.VatUniquePartnerTypeCode == "POT" && isPotentialCustomer)
+            {
+                entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+
+            }
+
+            return entity;
+        }
 
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
         {
@@ -699,7 +723,7 @@ namespace WebFreight.Web.WcfApi
                             if (!result.Where(c => c.Id == card.Id && c.Tenant == card.Tenant).Any())
                             {
                                 CustomerList customerList = (from customer in commoncontext.Customers.Include("Rank")//.Include("AccountManagerUser.Contact").Include("SalesmanUser.Contact").Include("Card.SharedLogisticsInvitationStatus")
-															 where customer.Tenant == tenant && customer.Id == card.Id
+                                                             where customer.Tenant == tenant && customer.Id == card.Id
                                                              select new CustomerList()
                                                              {
                                                                  Code = customer.Card.Code,
@@ -806,7 +830,7 @@ namespace WebFreight.Web.WcfApi
 
         public CustomerPM GetCustomerPM(DataContracts.CustomerApiFilters filters, int tenant, ref Response response)
         {
-           // return null;
+            // return null;
             //throw new Exception("not WOrk at 17r02 ");
             try
             {
@@ -1225,7 +1249,7 @@ namespace WebFreight.Web.WcfApi
                     {
                         currentIP = HttpContext.Current.Request.UserHostAddress;
                     }
-                    
+
                     AzureLog.SaveLogsInStorage("Message retreived from activation queue (Tenant:" + tenant + ")", "L", DateTime.Now, "", "", 0, loggedContact.Id, loggedContact.EnglishName, currentIP);
 
                     if (message.Properties["CustomerId"] != null)
@@ -1482,7 +1506,7 @@ namespace WebFreight.Web.WcfApi
                     currentIP = HttpContext.Current.Request.UserHostAddress;
                 }
 
-                AzureLog.SaveLogsInStorage("Error while getting customer from activation queue (Tenant:" + tenant + ")", "E", DateTime.Now, ex.Message, ex.StackTrace, 0, loggedContact.Id, loggedContact.EnglishName,currentIP );
+                AzureLog.SaveLogsInStorage("Error while getting customer from activation queue (Tenant:" + tenant + ")", "E", DateTime.Now, ex.Message, ex.StackTrace, 0, loggedContact.Id, loggedContact.EnglishName, currentIP);
 
                 response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
                 response.HasError = true;
@@ -1547,7 +1571,7 @@ namespace WebFreight.Web.WcfApi
 
 
 
-        public string GetActivationQuestionnaireAnswers(string QuestionnaireId, int tenant, string tableId, string entityId,string customername)
+        public string GetActivationQuestionnaireAnswers(string QuestionnaireId, int tenant, string tableId, string entityId, string customername)
         {
             StringBuilder HtmlTemplate = new StringBuilder();
             ICRMContext context = CRMContext.GetContext(tenant);
@@ -1584,10 +1608,10 @@ namespace WebFreight.Web.WcfApi
                     {
 
 
-                        if (entityPM.RightToLeft)  HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
+                        if (entityPM.RightToLeft) HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
 
                         else HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
-                    
+
                         HtmlTemplate.Append("<div style ='width:100%'>");
 
                         HtmlTemplate.Append("<Div  style='font-weight:bold;margin-top:10px;margin-bottom:20px;height:auto;display:block;font-size:20px;'" + " width='auto%' " + ">"); HtmlTemplate.Append("Customer : " + customername + "</Div>");
@@ -1619,10 +1643,10 @@ namespace WebFreight.Web.WcfApi
                     {
                         //HasTwoColumn
 
-                        if (entityPM.RightToLeft)  HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
-                
-                        else  HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
-                   
+                        if (entityPM.RightToLeft) HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
+
+                        else HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
+
                         HtmlTemplate.Append("<Div  style='font-weight:bold;margin-top:10px;margin-bottom:20px;height:auto;display:block;font-size:20px;'" + " width='auto%' " + ">"); HtmlTemplate.Append("Customer : " + customername + "</Div>");
 
 
@@ -1661,7 +1685,7 @@ namespace WebFreight.Web.WcfApi
                                     }
 
                                     foreach (QuestionnaireQuestionPM item in QuestionnaireQuestionsList2) QuestionnaireQuestionsList1.Remove(item);
-                                 
+
                                     HtmlTemplate.Append("</tr>");
                                 }
 

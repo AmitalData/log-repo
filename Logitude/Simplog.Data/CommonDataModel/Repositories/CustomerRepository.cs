@@ -165,7 +165,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             entity = (from a in context.Customers.Include("Card")
-                                      where a.Tenant == tenant && a.Card.VatNumber == vat
+                                      where a.Tenant == tenant && a.Card.VatNumber == vat && a.Card.InActive == false
                                       select a).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -183,7 +183,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                    entity = (from record in context.Customers.Include("Card") where record.Card.VatNumber == vat && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Customers.Include("Card") where record.Card.VatNumber == vat && record.Tenant == tenant && record.Card.InActive == false select record).FirstOrDefault();
                 }
                 return entity;
             }
@@ -226,7 +226,42 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null; 
         }
 
+        public Customer GetSingleCustomerByVatAndStatusForHybrid(string vat,string  statusCode, int tenant, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(vat))
+            {
+                string entityName = "Customer" + vat + tenant;
+                Customer entity;
+                if (getFromCache)
+                {
 
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        entity = (from a in context.Customers.Include("Card")
+                                  where a.Tenant == tenant && a.CustomerStatusCode == statusCode && a.Card.VatNumber == vat && a.Card.InActive == false
+                                  select a).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+
+                    }
+                    else
+                    {
+                        entity = (Customer)CacheManager.CacheWrapper.Get(entityName);
+                    }
+
+
+                }
+                else
+                {
+                    entity = (from record in context.Customers.Include("Card") where record.Card.VatNumber == vat && record.Tenant == tenant && record.CustomerStatusCode == statusCode && record.Card.InActive == false select record).FirstOrDefault();
+                }
+                return entity;
+            }
+            return null;
+        }
         public Customer GetSingleCustomerWithCardOnly(string id, int tenant, bool getFromCache = false)
         {
             if (!string.IsNullOrEmpty(id))
