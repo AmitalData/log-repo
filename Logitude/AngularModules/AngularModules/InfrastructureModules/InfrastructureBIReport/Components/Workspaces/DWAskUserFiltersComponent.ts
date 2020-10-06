@@ -53,13 +53,6 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
     }
     set SelectedFiltersDataSource(value: DWObjectFieldsDetails[]) {
 
-        var index = 0;
-        value.forEach(dwField => {
-            if (dwField.DimensionTableCode == "DIM_Partners") {
-                value[index].Code = "[Name]";
-            }
-            index += 1;
-        });
         this.selectedFiltersDataSource = value;
         this.SelectedDynamicFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
         this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
