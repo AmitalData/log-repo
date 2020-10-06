@@ -439,48 +439,9 @@ namespace WebFreight.Web.WcfApi
                     entityPM.IsHybrid = true;
                     Customer entity = customerRepository.GetSingleCustomerByCodeForHybrid(entityPM.Code, entityPM.Tenant, false);
 
-                    if (entity == null)
+                    if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
                     {
-                        if (!string.IsNullOrEmpty(entityPM.VatNumber))
-                        {
-                            Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                            if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
-                            {
-                                entity = customer;
-                            }
-                            else
-                            {
-                                if (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady)
-                                {
-                                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                }
-                                else
-                                {
-                                    if (tenantEntity.VatUniqueTypeCode == "UFA")
-                                    {
-                                        entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                    }
-                                    else if (tenantEntity.VatUniqueTypeCode == "USC")
-                                    {
-                                        Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
-                                        if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
-                                        {
-                                            entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                            if(entity != null && (entity.Card.Code != entityPM.Code))
-                                            {
-                                                response.HasError = true;
-                                                response.ErrorMessage = "A customer with the same vat and different code already exists.";
-                                                return response;
-                                            }
-                                        }
-                                    }
-
-                                }
-
-                            }
-                        }
-
-
+                        entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -597,6 +558,13 @@ namespace WebFreight.Web.WcfApi
 
                 return response;
             }
+            catch (ApplicationException ex)
+            {
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+                return response;
+            }
             catch (Exception ex)
             {
                 response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
@@ -610,8 +578,64 @@ namespace WebFreight.Web.WcfApi
                 return response;
             }
 
+            
+
         }
 
+        private static Customer GetCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
+        {
+            Customer entity = null;
+            if (tenantEntity.VatUniqueTypeCode == "UFA")
+            {
+                entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
+            }
+            if (tenantEntity.VatUniqueTypeCode == "USC")
+            {
+                Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
+                if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
+                {
+                    entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
+                    //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                    if (entity != null && (entity.Card.Code != entityPM.Code))
+                    {
+                        throw new ApplicationException("A customer with the same vat and different code already exists.");
+                        //response.HasError = true;
+                        //response.ErrorMessage = "A customer with the same vat and different code already exists.";
+                        //return response;
+                    }
+                }
+            }
+
+            return entity;
+        }
+
+        private static Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)
+        {
+            Customer entity = null;
+            bool isPotentialCustomer = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
+            if (tenantEntity.VatUniquePartnerTypeCode == "ALL" || string.IsNullOrEmpty(tenantEntity.VatUniquePartnerTypeCode))
+            {
+                if (isPotentialCustomer)
+                {
+                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                }
+                else
+                {
+                    entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
+                }
+            }
+            else if (tenantEntity.VatUniquePartnerTypeCode == "CS" && (entityPM.CustomerStatusCode == "ACT" || entityPM.SetActivated))
+            {
+                entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
+            }
+            else if (tenantEntity.VatUniquePartnerTypeCode == "POT" && isPotentialCustomer)
+            {
+                entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+
+            }
+
+            return entity;
+        }
 
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
         {
