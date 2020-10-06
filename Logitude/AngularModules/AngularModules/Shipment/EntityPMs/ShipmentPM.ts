@@ -4620,6 +4620,10 @@ export class ShipmentPM {
     public get ChargeStorageCurrencyId() { return this.chargeStorageCurrencyId; }
     public set ChargeStorageCurrencyId(newValue: string) { if (this.chargeStorageCurrencyId != newValue) { this.chargeStorageCurrencyId = newValue; this.MarkAsDirty("ChargeStorageCurrencyId"); } }
 
+    private chargeStorageCurrencyCode: string;
+    public get ChargeStorageCurrencyCode() { return this.chargeStorageCurrencyCode; }
+    public set ChargeStorageCurrencyCode(newValue: string) { if (this.chargeStorageCurrencyCode != newValue) { this.chargeStorageCurrencyCode = newValue; this.MarkAsDirty("ChargeStorageCurrencyCode"); } }
+
     private weightMeasurementCode: string;
     public get WeightMeasurementCode() { return this.weightMeasurementCode; }
     public set WeightMeasurementCode(newValue: string) { if (this.weightMeasurementCode != newValue) { this.weightMeasurementCode = newValue; this.MarkAsDirty("WeightMeasurementCode"); } }

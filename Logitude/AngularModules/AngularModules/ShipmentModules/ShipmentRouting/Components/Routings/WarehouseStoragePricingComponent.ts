@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { LastRate, CurrencyRatesService } from '../../../../Common/Services/CurrencyRatesService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './WarehouseStoragePricingComponent.html',
@@ -25,6 +28,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public MaxLineNumber = 0;
     public IsResourcesReady: boolean = false;
     public PricesChanged: boolean = false;
+    public CurrencyChanged: boolean = false;
     public WeightLabel: string;
     constructor() {
         super();
@@ -34,11 +38,23 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
 
+        this.SetUIProperties();
         this.BuildPricingItems();
         this.CopyPricings();
         this.MaxLineNumber = ArrayTool.Max(this.PricingItemsList.Collection, "LineNumber");
         this.ComputeWeightLabel();
         this.Clone();
+    }
+
+    private SetUIProperties() {
+        var isCurrencyEnabled: boolean = true;
+
+        var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+        if (invoicedStorageReceivable) {
+            isCurrencyEnabled = false;
+        }
+
+        this.UIProperties.SetEnabled("ChargeStorageCurrencyId", this.ObjectTableName, isCurrencyEnabled);
     }
 
     BuildPricingItems() {
@@ -82,7 +98,22 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set ChargeStorageCurrencyId(newValue: string) {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
-            this.PricesChanged = true;
+            this.CurrencyChanged = true;
+        }
+    }
+
+    private chargeStorageCurrency: CurrencyList;
+    get ChargeStorageCurrency() { return this.chargeStorageCurrency; }
+    set ChargeStorageCurrency(value: CurrencyList) {
+        if (this.chargeStorageCurrency != value) {
+            this.chargeStorageCurrency = value;
+        }
+
+        if (value != null) {
+            this.EntityPM.ChargeStorageCurrencyCode = value.Code;
+        }
+        else {
+            this.EntityPM.ChargeStorageCurrencyCode = null;
         }
     }
 
@@ -181,6 +212,16 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 emitMessage = "PricesChanged";
             }
 
+            if (this.CurrencyChanged) {
+                if (emitMessage == "ok") {
+                    emitMessage = "CurrencyChanged";
+                }
+
+                else {
+                    emitMessage = "PricesChanged+CurrencyChanged";
+                }
+            }
+
             this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
         }
     }
@@ -249,7 +290,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
     private myCloner: Cloner;
     private Clone() {
-        this.myCloner = new Cloner(this);
+        this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('ChargeStorageCurrencyId');
         this.myCloner.AddField('WeightMeasurementCode');
         this.myCloner.AddField('WeightRoundingCode');
