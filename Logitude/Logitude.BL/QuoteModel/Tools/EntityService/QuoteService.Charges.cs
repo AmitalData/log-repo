@@ -116,8 +116,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     MarkUpTypeCode = "F",
                                     MarkUpValue = 0,
                                     QuoteTypeCode = entityPM.QuoteTypeCode,
-                                    SaleCurrencyId = entityPM.SaleCurrencyId,
-                                    SaleExchangeRate = entityPM.ExchangeRate,
                                     ChangeSetOp = ChangeSetOperation.Insert,
                                     IsBackToBack = chargesType.IsBackToBack,
                                 };
@@ -170,6 +168,17 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
+                                if (entityPM.IsSaleCurrencySameAsCost)
+                                {
+                                    quoteChargePM.SaleCurrencyId = quoteChargePM.CostCurrencyId;
+                                    quoteChargePM.SaleExchangeRate = quoteChargePM.CostExchangeRate;
+                                }
+
+                                else
+                                {
+                                    quoteChargePM.SaleCurrencyId = entityPM.SaleCurrencyId;
+                                    quoteChargePM.SaleExchangeRate = entityPM.ExchangeRate;
+                                }
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
@@ -268,8 +277,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     ContainerType4MarkUpValue = 0,
                                     ContainerType5MarkUpValue = 0,
                                     QuoteTypeCode = entityPM.QuoteTypeCode,
-                                    SaleCurrencyId = entityPM.SaleCurrencyId,
-                                    SaleExchangeRate = entityPM.ExchangeRate,
                                     ChangeSetOp = ChangeSetOperation.Insert,
                                     IsBackToBack = item.IsBackToBack,
                                 };
@@ -328,6 +335,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     {
                                         itemPM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
                                     }
+                                }
+
+                                if (entityPM.IsSaleCurrencySameAsCost)
+                                {
+                                    itemPM.SaleCurrencyId = itemPM.CostCurrencyId;
+                                    itemPM.SaleExchangeRate = itemPM.CostExchangeRate;
+                                }
+
+                                else
+                                {
+                                    itemPM.SaleCurrencyId = entityPM.SaleCurrencyId;
+                                    itemPM.SaleExchangeRate = entityPM.ExchangeRate;
                                 }
 
                                 if (entityPM.QuoteTypeCode == "A")
