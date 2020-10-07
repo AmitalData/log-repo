@@ -105,7 +105,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("IsAutomaticManifestSent")]
 	    public bool IsAutomaticManifestSent { get; set; }
         [Column("PackageQuantityInMAWB")]
-	    public int PackageQuantityInMAWB { get; set; }
+	    public int? PackageQuantityInMAWB { get; set; }
     }
 }
 	 

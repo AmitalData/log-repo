@@ -1216,12 +1216,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int packageQuantityInMAWB ;
+	  private int? packageQuantityInMAWB ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int PackageQuantityInMAWB  
+       public int? PackageQuantityInMAWB  
 	   {
 	    
 	     get
@@ -1232,7 +1232,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(packageQuantityInMAWB != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantityInMAWB",OldValue=packageQuantityInMAWB,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantityInMAWB",OldValue=packageQuantityInMAWB,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   packageQuantityInMAWB=value;
 		   }
