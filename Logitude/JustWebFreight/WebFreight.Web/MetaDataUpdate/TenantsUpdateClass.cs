@@ -1580,6 +1580,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static byte[] CompressionFileData(string fileName, byte[] fileData)
         {
+            if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
+                ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
             MemoryStream outputMemStream = new MemoryStream();
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
