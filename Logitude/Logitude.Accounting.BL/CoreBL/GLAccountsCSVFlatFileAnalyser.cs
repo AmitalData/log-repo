@@ -1,32 +1,24 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.SqlServer;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class GLAccountsCSVFlatFileAnalyser
     {
         private Opening_LineDTO Opening_Line = null;
-        private Closing_LineDTO Closing_Line = null;
+       // private Closing_LineDTO Closing_Line = null;
         private List<GLAccountSrcLineDTO> _GLAccountSrcLinesDTO;
         private FullAccountingSettingPM _FullAccountingSettingPM;
         private IAccountingContext accountingContext;
@@ -41,9 +33,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
-                FileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
+                string fileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
-
+                FileContent = fileContent.Replace("\"", "");
                 _GLAccountSrcLinesDTO = CreateGLAccountSrcLinesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
                 if (tenantFromPage4Tester.HasValue)
@@ -68,14 +60,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(25)))
                 {
                     int count = 0;
-                    bool errors = false;
+                    bool global_errors = false;
                     string text;
                     string text_44;
                     string text_2;
+                    List<GLAccountPM> newOrUpdLines = new List<GLAccountPM>();
                     foreach (GLAccountSrcLineDTO accLineDTO in _GLAccountSrcLinesDTO)
                     {
                         count++;
-
+                        bool errors = false;
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
                         GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
@@ -87,6 +80,19 @@ namespace Logitude.Accounting.BL.CoreBL
                                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                 Tenant = tenant,
                                 InternalNumber = accLineDTO.InternalNumber,
+                                //Id = "get",
+                                //RevenueExpenseType = "get",
+                                //ExcludeFromDeductionReport = false,
+                                //CreateDate = DateTime.Now,
+                                //UpdateDate = DateTime.Now,
+                                //AllowEditChequePayToName = false,
+                                //ActiveForInterest = false,
+                                //ActiveForInterestCreditInvoice = false,
+                                //Smallcashbook = false,
+                                //DeductionTypeId = "get",
+                                //DeductionFileTypeId = "get",
+                                //AssessingOfficeCode = "get",
+                                //CreatedByUserId = _resolveLoggingUserId,
                             };
                         }
                         else
@@ -94,6 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         }
                         gLAccountPM.DisplayNumber = accLineDTO.DisplayNumber;
+                        gLAccountPM.ExternalDisplayNumber = accLineDTO.DisplayNumber;
                         if (gLAccountPM.IsMultiCurrency.HasValue)
                         {
                             gLAccountPM.OldIsMultiCurrency = gLAccountPM.IsMultiCurrency.Value;
@@ -101,12 +108,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         gLAccountPM.IsMultiCurrency = accLineDTO.IsMulti;
                         if (!accLineDTO.IsMulti)
                         {
-                            gLAccountPM.CurrencyCode = "";
+                            gLAccountPM.CurrencyCode = accLineDTO.CurrencyCode;
                             gLAccountPM.CurrencyId = "";
                         }
                         else
                         {
-                            gLAccountPM.CurrencyCode = accLineDTO.CurrencyCode;
+                            gLAccountPM.CurrencyCode = "";
                             gLAccountPM.CurrencyId = "";
                         }
 
@@ -118,6 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
                             text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartCode", 0, useLocal);
                             this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
+                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
                             errors = true;
                         }
                         else
@@ -129,6 +137,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.WrongM", 0, useLocal);
                                 text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartType", 0, useLocal);
                                 this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
+                                gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
                                 errors = true;
                             }
                             else
@@ -137,11 +146,34 @@ namespace Logitude.Accounting.BL.CoreBL
                                 gLAccountPM.ChartOfAccountsTypeCode = chart.TypeCode;
                                 switch (chart.TypeCode)
                                 {
-                                    case "1":
-                                        gLAccountPM.AccountTypeCode = "1";
+                                    case "3":
+                                        gLAccountPM.AccountTypeCode = "2";
+                                        break;
+
+                                    case "4":
+                                        gLAccountPM.AccountTypeCode = "3";
+                                        break;
+
+                                    case "6":
+                                        gLAccountPM.AccountTypeCode = "4";
                                         break;
 
                                     default:
+                                        gLAccountPM.AccountTypeCode = "1";
+                                        break;
+                                }
+                                switch (chart.TypeCode)
+                                {
+                                    case "1":
+                                        gLAccountPM.RevenueExpenseType = "1";
+                                        break;
+
+                                    case "2":
+                                        gLAccountPM.RevenueExpenseType = "2";
+                                        break;
+
+                                    default:
+                                        gLAccountPM.RevenueExpenseType = "3";
                                         break;
                                 }
                             }
@@ -154,46 +186,59 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             gLAccountPM.EnglishName = accLineDTO.EnglishName;
                         }
-                    //    var taxReportLine = new GLAccountSrcLinePM()
-                    //    {
-                    //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    //        Tenant = tenant,
-                    //        GLAccountSrcId = taxReportId,
-                    //        Line = nextLine,
-                    //        IsExternalLine = true,
-                    //        LineTypeCode = accLineDTO.LineTypeCode,
-                    //        Reference = accLineDTO.Reference,
-                    //        ReferenceDate = accLineDTO.ReferenceDate,
-                    //        VatNumber = accLineDTO.VatNumber,
-                    //        VatableInvoiceAmount = accLineDTO.VatableInvoiceAmount,
-                    //        VatAmount = accLineDTO.VatAmount,
-                    //        TotalInvoiceAmount = accLineDTO.VatableInvoiceAmount + accLineDTO.VatAmount,
-                    //        OutputOrInput = accLineDTO.OutputOrInput,
-                    //        ReferecneGroup = accLineDTO.ReferenceGroup,
-                    //        UpdatedByUserId = _contact.Id,
-                    //        //JournalId = "1-1027720",
-                    //        TransmitStatusCode = "1",
-                    //        IsEquipment = false,
-                    //        LastUpdateDateTime = DateTime.Now,
-                    //        GLAccountSrcDate = MyGLAccountSrcPM.GLAccountSrcMonth,
-                    //    };
-                    //    newLines.Add(taxReportLine);
+                        if (!errors)
+                        {
+                            gLAccountPM.IsVATExempt = accLineDTO.IsExempt;
+                            gLAccountPM.ReconcileMethodCode = accLineDTO.RecoMethod;
+
+                        }
+
+                        //    var taxReportLine = new GLAccountSrcLinePM()
+                        //    {
+                        //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        //        Tenant = tenant,
+                        //        GLAccountSrcId = taxReportId,
+                        //        Line = nextLine,
+                        //        IsExternalLine = true,
+                        //        LineTypeCode = accLineDTO.LineTypeCode,
+                        //        Reference = accLineDTO.Reference,
+                        //        ReferenceDate = accLineDTO.ReferenceDate,
+                        //        VatNumber = accLineDTO.VatNumber,
+                        //        VatableInvoiceAmount = accLineDTO.VatableInvoiceAmount,
+                        //        VatAmount = accLineDTO.VatAmount,
+                        //        TotalInvoiceAmount = accLineDTO.VatableInvoiceAmount + accLineDTO.VatAmount,
+                        //        OutputOrInput = accLineDTO.OutputOrInput,
+                        //        ReferecneGroup = accLineDTO.ReferenceGroup,
+                        //        UpdatedByUserId = _contact.Id,
+                        //        //JournalId = "1-1027720",
+                        //        TransmitStatusCode = "1",
+                        //        IsEquipment = false,
+                        //        LastUpdateDateTime = DateTime.Now,
+                        //        GLAccountSrcDate = MyGLAccountSrcPM.GLAccountSrcMonth,
+                        //    };
+
+                        if (!errors)
+                        {
+                            newOrUpdLines.Add(gLAccountPM);
+                        }
+                        else
+                        {
+                            global_errors = true;
+                        }
                     }
 
-                    //if (newLines.Count == 0)
-                    //{
-                    //    string text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
-                    //    throw new Exception($"{text_44}");
-                    //}
-                    //GLAccountSrcLineQueryService taxReportLineQueryService = new GLAccountSrcLineQueryService(MyContext);
-                    //List<GLAccountSrcLinePM> externalLines = taxReportLineQueryService.GetAllExternalLines(tenant, taxReportId);
-                    //if (externalLines != null && externalLines.Count > 0)
-                    //{
-                    //    externalLines.ForEach(line => { line.ChangeSetOp = ChangeSetOperation.Delete; });
-                    //}
+                    if (newOrUpdLines.Count == 0)
+                    {
+                        text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
+                        throw new Exception($"{text_44}");
+                    }
 
-                    //GLAccountSrcLineUpdateService taxReportLineUpdateService = new GLAccountSrcLineUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                    //taxReportLineUpdateService.UpdateMulti(newLines, externalLines, MyGLAccountSrcPM, true);
+                    GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                    //updateService.UpdateMulti(newOrUpdLines, null, null, true);
+                    newOrUpdLines.ForEach(accPM =>
+                        {
+                            updateService.Update(accPM, true);
+                        });
 
 
 
@@ -291,9 +336,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!reading_Lines)
                             {
 
-                                string text_3 = TranslateTextsClassTranslate("GLAccountsCSV.O.TaxLineRowType", 0, useLocal);
+                                string text_3 = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLine", 0, useLocal);
                                 string text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.AppearsBefore", 0, useLocal);
-                                string text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowType", 0, useLocal);
+                                string text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.HeaderType", 0, useLocal);
                                 throw new Exception($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO.RowType} ");
                             }
                             GLAccountSrcLineDTO taxLine = GLAccountSrcLineDTO.Create(rawLine);
@@ -476,10 +521,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
     public class CSVFlatFileLoadResult
     {
-        public List<string> SuccessTaxLineList = new List<string>();
-        public List<string> ExceptionTaxLineList = new List<string>();
+        public List<string> SuccessAccountLineList = new List<string>();
+        public List<string> ExceptionAccountLineList = new List<string>();
         public List<string> ErrorRowList = new List<string>();
-        public List<string> ValidateTaxLineLineAgainstDBErrors = new List<string>();
+        public List<string> ValidateAccountLineLineAgainstDBErrors = new List<string>();
     }
 
 
@@ -591,8 +636,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public string RecoMethod { get; private set; }
         public string Exempt { get; private set; }
         public bool IsExempt { get; private set; }
-        public string Cancelled { get; private set; }
-        public bool IsCancelled { get; private set; }
+       // public string Cancelled { get; private set; }
+       // public bool IsCancelled { get; private set; }
 
         internal static GLAccountSrcLineDTO Create(string rawLine)
         {
@@ -635,11 +680,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 rec.Exempt = values[9];
                 rec.IsExempt = (rec.Exempt == "1" || rec.Exempt == "Y" || rec.Exempt == "y");
             }
-            if (count > 10) 
-            {
-                rec.Cancelled = values[10]; 
-                rec.IsCancelled = (rec.Cancelled == "1" || rec.Cancelled == "Y" || rec.Cancelled == "y");
-            }
+            //if (count > 10) 
+            //{
+            //    rec.Cancelled = values[10]; 
+            //    rec.IsCancelled = (rec.Cancelled == "1" || rec.Cancelled == "Y" || rec.Cancelled == "y");
+            //}
 
 
             //string txtDateTime = rawLine.Substring(11 - 1, 8);
