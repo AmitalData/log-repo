@@ -203,7 +203,7 @@
     Name="PackageQuantityInMAWB"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

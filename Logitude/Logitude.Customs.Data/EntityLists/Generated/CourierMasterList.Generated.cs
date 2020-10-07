@@ -117,7 +117,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EstimatedArrivalColor  { get; set; }
        [DataMember]
-       public int PackageQuantityInMAWB  { get; set; }
+       public int? PackageQuantityInMAWB  { get; set; }
    }
 
 }
