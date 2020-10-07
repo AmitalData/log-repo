@@ -507,16 +507,44 @@ export class LoginComponent implements OnInit {
                     //2
                 });
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
-                        this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe((response: any) => {
+                this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
+
+                    // Accounting - Abdullah
+                    if (InfraSettings.TenantPM) {
+
+
+                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+
+                    }
+
+                    //
+
+                    ObjectsLocator.UpdateGlobalSetting(myResult);
+
+                    CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
+                        this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
+                            if(ObjectsLocator.GlobalSetting.WorkEnvironment=="customs"){
+                            this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe((response: any) => {
+                                this.generalTableResourcesIsLoaded = true
+                                this.IncreaseProgressBar("General Resources");
+                                //26
+                            });
+                        }
+                        else{
                             this.generalTableResourcesIsLoaded = true
                             this.IncreaseProgressBar("General Resources");
-                            //26
+                        }
+
                         });
+                       
                     });
-                   
+
+                    this.IncreaseProgressBar();
+                    Environment.SetFavIconAndTitle();
+                    //20
                 });
+
+                
 
                 this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
 
@@ -693,23 +721,7 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
-
-                    // Accounting - Abdullah
-                    if (InfraSettings.TenantPM) {
-
-
-                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
-
-                    }
-
-                    //
-
-                    ObjectsLocator.UpdateGlobalSetting(myResult);
-                    this.IncreaseProgressBar();
-                    Environment.SetFavIconAndTitle();
-                    //20
-                });
+          
 
                 this.loginService.GetTenantSetting().subscribe((myResult: any) => {
                     SessionLocator.TenantSettings = myResult;
@@ -934,7 +946,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 39;
+            this.TotalNumberOfLoads = 37;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
