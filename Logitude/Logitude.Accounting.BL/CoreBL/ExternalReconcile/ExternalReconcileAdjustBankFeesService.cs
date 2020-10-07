@@ -129,8 +129,35 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes, DateTime accountingDate, List<LedgerTransactionPM> ledgerTransactionList)
         {
             CreateJournalHeader(tenant, accountingDate);
-            CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
-            CreateFromLedger(adjustGLAccountId, bankGLAccountList, accountingCurrencyId, screenNotes, ledgerTransactionList);
+
+
+           
+            bool accumalateV2 = true;
+            if (accumalateV2)
+            {
+                decimal PageLineForeignAmount = listOfpageLineList.Sum(r => r.DebitAmount - r.CreditAmount);
+                decimal PageLineLocalAmount = Convert2LocalAmountFast(tenant, PageLineForeignAmount, bankGLAccountList.CurrencyId, accountingCurrencyId, listOfpageLineList.First().ReferenceDate);
+                var ledgerForeignAmount = ledgerTransactionList.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit);
+                var ledgerLocalAmountDebit = ledgerTransactionList.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit);
+                bool creditTheBank = (ledgerForeignAmount + PageLineForeignAmount > 0);
+                var firstJL=GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+
+                var LstJL = GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+                LstJL.Line = 2;
+                LstJL.ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+
+                //int line = TheNewJournal.JournalLines.Max(r => r.Line);
+                TheNewJournal.JournalLines.Add(firstJL);
+                TheNewJournal.JournalLines.Add(LstJL); 
+
+                
+            }
+            else
+            {
+                CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
+                CreateFromLedger(adjustGLAccountId, bankGLAccountList, accountingCurrencyId, screenNotes, ledgerTransactionList);
+
+            }
 
 
 
@@ -142,9 +169,61 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.JournalExternalReconciles = listOfpageLineList.Select(r => GetJournalExternalReconcile(r, ref line)).ToList();
 
             TheNewJournal.JournalExternalReconciles.AddRange(GetJournalExternalReconcileFromLedger(ledgerTransactionList));
-            CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
+            
+            if (!accumalateV2)
+            {
+                CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
+                Accumalation2jounrnalLine();
+            }
+            
+        }
 
-            Accumalation2jounrnalLine();
+        private JournalLinePM GetFirstJournalLine(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal PageLineForeignAmount, decimal PageLineLocalAmount, decimal ledgerForeignAmount, decimal ledgerLocalAmountDebit, bool creditTheBank)
+        {
+            /*
+             *צד הלדג'ר (GLACCOUNT בצד) כל תנועה  בקרדיט
+מכפילים במינוס 1
+מחברים את כל התנועות (גם הדביט וגם הקרדיט
++ 
+צד דפי הבנק כל תנועה  בקרדיט
+מכפיל ב מינוס 1
+מחבר את כל התונעות_גם הדביט וגם הקרדיט) 
+
+ 
+
+
+אם התוצאה קטנה מאפס יש להכפילה במינוס אחד ולחייב את צד הלדג'ר
+אחרת
+נזכה את צד הלדג'ר בתוצאה
+             */
+            return
+new JournalLinePM()
+{
+    Tenant = tenant,
+    JournalId = TheNewJournal.Id,
+    Line = 1,
+
+
+    DocumentDate = listOfpageLineList.First().ReferenceDate,
+    DueDate = listOfpageLineList.First().ReferenceDate,
+    AccountingDate = TheNewJournal.AccountingDate,
+
+
+
+    CurrencyId = bankGLAccountList.CurrencyId,
+
+    
+
+    ///if r.DebitAmount != 0 then credit else debit 
+    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
+    DebitAccountId = creditTheBank ?  adjustGLAccountId: bankGLAccountList.Id,
+    LocalAmount = creditTheBank? (PageLineLocalAmount + ledgerLocalAmountDebit) : -1* (PageLineLocalAmount + ledgerLocalAmountDebit),
+    ForeignAmount = creditTheBank ? (PageLineForeignAmount + ledgerForeignAmount):-1* (PageLineForeignAmount + ledgerForeignAmount),
+    Notes = screenNotes + Environment.NewLine + listOfpageLineList.First().Notes,
+    Reference1 = listOfpageLineList.First().Reference,
+    ChangeSetOp = ChangeSetOperation.Insert
+};
         }
 
         private void Accumalation2jounrnalLine()
@@ -211,6 +290,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private int CreateFromLedger(string adjustGLAccountId, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes, List<LedgerTransactionPM> ledgerTransactionList)
         {
+
+
             int line = TheNewJournal.JournalLines.Max(r => r.Line);
             TheNewJournal.JournalLines.AddRange(
                 
@@ -372,6 +453,20 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 return foreignAmount;
             }
             var rate =_ExternalReconcileDataProvider.GetLastRateByValueDate(r.Tenant, currencyId, accountingCurrencyId, r.ReferenceDate);
+            rate = rate ?? new Logitude.BL.DataContracts.LastRate() { Rate = 1 };
+            double? itemCurrencyRateRounded = MethodHelper.Round(rate.Rate, 5);
+            itemCurrencyRateRounded = itemCurrencyRateRounded ?? 1;
+            decimal local = foreignAmount * (decimal)itemCurrencyRateRounded.GetValueOrDefault();
+            return local;
+        }
+        private decimal Convert2LocalAmountFast(int tenant,decimal foreignAmount ,string currencyId, string accountingCurrencyId, DateTime ReferenceDate)
+        {
+            //decimal foreignAmount = r.DebitAmount != 0 ? r.DebitAmount : r.CreditAmount;
+            if (currencyId == accountingCurrencyId)
+            {
+                return foreignAmount;
+            }
+            var rate = _ExternalReconcileDataProvider.GetLastRateByValueDate(tenant, currencyId, accountingCurrencyId, ReferenceDate);
             rate = rate ?? new Logitude.BL.DataContracts.LastRate() { Rate = 1 };
             double? itemCurrencyRateRounded = MethodHelper.Round(rate.Rate, 5);
             itemCurrencyRateRounded = itemCurrencyRateRounded ?? 1;

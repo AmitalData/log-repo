@@ -209,6 +209,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             journalLine.CurrencyId = this.Currency.Id;
             this.EntityPM.AddJournalLine(journalLine);
             var line = new JournalLineModel(journalLine, this);
+            line.Currency = this.Currency;
             this.JournalLines.Insert(line);
 
         }
@@ -443,6 +444,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         line.Reference1 = this.reference1;
         line.Reference2 = this.reference2;
         line.Reference3 = this.reference3;
+        line.Currency = this.Currency;
         line.DocumentDate = this.DocumentDate != null ? this.DocumentDate : null;
         line.DueDate = this.DueDate != null ? this.DueDate : null;
         line.Notes = this.notes;
@@ -649,7 +651,7 @@ class JournalLineModel extends BaseComponent {
         super();
         this.EntityPM = this.parent.EntityPM;
         this.JournalLinePM = journalLine;
-        this.Currency = this.parent.Currency;
+       // this.Currency = this.parent.Currency;
         if (this.JournalLinePM.AccountingDate) {
 
         } else {
@@ -662,7 +664,12 @@ class JournalLineModel extends BaseComponent {
             this.accDay = date.getDate();
         }
         
-        if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+        //if (this.Currency.Id == SessionLocator.TenantPM.CurrencyId) {
+        //    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+        //}
         this.ratesTableExtendedListService = new RatesTableExtendedListService();
         this._GLAccountExtendedListService = new GLAccountExtendedListService();
 
@@ -810,7 +817,7 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.parent.currency))
             {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
-                    this.IsCurrencyEnabled= true;
+                    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
                     this.ratesTableExtendedListService.getClosestRate(this.parent.currency.Id, value).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse != null) {
                             if (!myResponse.HasError) {
@@ -847,7 +854,7 @@ class JournalLineModel extends BaseComponent {
                     // Local Currency
                     this.isRateManualy = false;
                     this.currencyRate = 1;
-                   this.IsCurrencyEnabled= false;
+                    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
                     if (this.LocalAmount) {
                         this.isRateCoverted = true;
                         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
@@ -1252,10 +1259,10 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.CurrencyCode = value.Code;
                  if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId) {
-                   this.IsCurrencyEnabled= false;
+                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
                     this.ForeignAmount = this.LocalAmount;
                     }
-                    else this.IsCurrencyEnabled =true;
+                 else this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
                   
                 } else {
                 this.CurrencyCode = null;

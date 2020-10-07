@@ -601,14 +601,76 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
-                if (s == "PricesChanged") {
+                if (s.indexOf('+') > -1) {
                     this.PricesChanged = true;
-                    this.CheckStorageProperties();                    
+                    this.CheckStorageProperties();
+                    this.UpdateCurrency();
                 }
+
+                else {
+                    if (s == "PricesChanged") {
+                        this.PricesChanged = true;
+                        this.CheckStorageProperties();
+                    }
+
+                    else if (s == "CurrencyChanged") {
+                        this.UpdateCurrency();
+                    }
+                }               
+
             });
         });
     }
-    
+
+    private UpdateCurrency() {
+        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+        if (storageReceivable) {
+            storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
+            storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
+
+            var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+            var myCurrencyRatesService = new CurrencyRatesService();
+            myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
+                if (!myResponse2.HasError) {
+                    var allRates: LastRate[] = myResponse2.Result;
+
+                    if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
+                        storageReceivable.Rate = 1;
+                    }
+                    else {
+                        var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
+                        if (lastRate != null) {
+                            storageReceivable.Rate = lastRate.Rate;
+                        }
+                    }
+
+                    if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                        storageReceivable.ProfitCurrencyExchangeRate = 1;
+                    }
+
+                    else {
+                        var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
+                        if (myLastRate != null) {
+                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                        }
+                    }
+
+                    storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                    if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                    }
+
+                    else {
+                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                    }
+
+                    this.CurrentSession.FireEvent("StorageReceivableCurrencyChanged");
+                }
+            });            
+        }
+    }
     private SetLastFreeDate() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
             var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
@@ -775,7 +837,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
     private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
         var amount: number = this.ComputeReceivableAmount();
-
+       
         storageReceivable.TotalAmount = amount;
         storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
 

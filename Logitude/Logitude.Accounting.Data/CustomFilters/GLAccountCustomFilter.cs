@@ -151,7 +151,7 @@ namespace Logitude.Accounting.Data.CustomFilters
             {
                 GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
                 List<String> GLAccountCurrencyIds = gLAccountCurrencyRepository.GetAll(tenant).Select(s=>s.GLAccountId).ToList();
-                queryableData = queryableData.Where(c => GLAccountCurrencyIds.Contains(c.Id) == false  && c.IsMultiCurrency ==false && c.CurrencyId !=(string)queryFilterItem.FieldValue);
+                queryableData = queryableData.Where(c => GLAccountCurrencyIds.Contains(c.Id) == false  && c.IsMultiCurrency ==false );
 
             }
             return queryableData;

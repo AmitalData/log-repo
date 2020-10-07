@@ -1347,6 +1347,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 RequestDate = entityPOCO.RequestDate,
                 RegionalTaxId = entityPOCO.RegionalTaxId,
                 RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
+                DescriptionRightToLeft = entityPOCO.DescriptionRightToLeft,
             };
 
             int tenant = entityPOCO.Tenant;

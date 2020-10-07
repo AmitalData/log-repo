@@ -38,6 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL
     {
 
         public const string K_AccountingJournalApproveWR = "AccountingJournalApproveWR";
+        public const string K_AccountingConversionJournalApproveWR = "AccountingConversionJournalApproveWR";
         public const string ApproveMethod = "JournalApproveService";
 
         public const string QP_JournalTenant = "JournalTenant";
@@ -661,7 +662,13 @@ namespace Logitude.Accounting.BL.CoreBL
         public static void EnqueueDB(JournalPM entityPM)
         {
             var queueService = new DbQueueService();
-            queueService.InitializeQueue(JournalApproveService.K_AccountingJournalApproveWR, entityPM.Tenant);
+            string queueCode = JournalApproveService.K_AccountingJournalApproveWR;
+            if (entityPM.ConversionJournal)
+            {
+                queueCode = JournalApproveService.K_AccountingConversionJournalApproveWR;
+
+            }
+            queueService.InitializeQueue(queueCode, entityPM.Tenant);
             Dictionary<string, string> messageProperties = new Dictionary<string, string>();
 
             messageProperties.Add(QP_JournalTenant, entityPM.Tenant.ToString());
@@ -955,8 +962,9 @@ namespace Logitude.Accounting.BL.CoreBL
             public Action LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
-            public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null)
+            public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null,string selectedQueue=null)
             {
+                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null; 
                 if (timeSpan!=null)
                 {
@@ -979,7 +987,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
 
                         // string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(myClass);
-                        queueservice = new DbQueueService(JournalApproveService.K_AccountingJournalApproveWR, 0);
+                        queueservice = new DbQueueService(selectedQueue, 0);
 
                         response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
 
@@ -1007,24 +1015,28 @@ namespace Logitude.Accounting.BL.CoreBL
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
-
-                try
+                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveWR)
                 {
-                    if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+
+
+                    try
                     {
-                        if (DateTime.Now < new DateTime(2021, 06, 01))
+                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                            CreateBatchAccountingIntegrityCheck();
+                            if (DateTime.Now < new DateTime(2021, 06, 01))
+                            {
+                                CreateBatchAccountingIntegrityCheck();
+                            }
+                            _NextDueDoneAt = DateTime.UtcNow.Date;
+                            var myDueLocalBalanceService = new DueLocalBalanceService();
+                            myDueLocalBalanceService.RunAllTenants();
                         }
-                        _NextDueDoneAt = DateTime.UtcNow.Date;
-                        var myDueLocalBalanceService = new DueLocalBalanceService();
-                        myDueLocalBalanceService.RunAllTenants();
                     }
-                }
-                catch (Exception)
-                {
+                    catch (Exception)
+                    {
 
-                    throw;
+                        throw;
+                    }
                 }
 
             }

@@ -125,6 +125,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
    public MyParentClass: any;
     public BaseDWObjectField: any;
     public FilterChanged: EventEmitter<any>;// = new EventEmitter();
+    public MultiSelectedDisplayName: string;
+
     constructor(DWObjectField: any = null, ParentClass: any = null) {
         super();
         this.BaseDWObjectField = DWObjectField;
@@ -368,10 +370,41 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
     public set MultiSelectedValueLists(newValue: MultiSelectedValue[]) {
         this.multiSelectedValueLists = newValue;
-
+        this.MultiSelectedDisplayName = this.GetMultiSelectedDisplayName();
     }
 
+    private GetMultiSelectedDisplayName() {
+        let textValue = "";
+        let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
+        let headerName = dimensionTableCode == "DIM_Partners" ? "Local Name" : this.Code.substring(1, this.Code.length - 1);
+        if (this.multiSelectedValueLists && this.multiSelectedValueLists.length > 0) {
+            this.multiSelectedValueLists.forEach((field) => {
+                textValue += this.ResolveValue(field, headerName) + ";";
+            });
 
+            textValue += "@@";
+            textValue = textValue.replace(";@@", "");
+            textValue = textValue.replace("@@", "");
+        }
+        return textValue;
+    }
+
+    private ResolveValue(Values: MultiSelectedValue, header: string) {
+        var i = "";
+        var j = 0;
+        var result = "";
+        while (Values["Value" + i]) {
+            if (Values["Value" + i].Header == header) {
+                result = Values["Value" + i].Row;
+                return result;
+            }
+
+            j += 1;
+            i = j.toString();
+        }
+
+        return result;
+    }
 
     private operationName: string;
     public get OperationName() { return this.operationName; }

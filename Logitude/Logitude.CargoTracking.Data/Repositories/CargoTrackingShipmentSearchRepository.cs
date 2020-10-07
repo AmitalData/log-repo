@@ -25,8 +25,10 @@ namespace Logitude.CargoTracking.Data.Repositories
         {
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
                          where 
-                            searchEntity.SearchFields == searchField
-                            && searchEntity.Tenant == tenant
+                            
+                            searchEntity.Tenant == tenant &&
+                            searchEntity.SearchFields == searchField &&
+                            searchEntity.IsPublic == true
                             orderby searchEntity.ShipmentDate descending
                             select searchEntity
                             
@@ -35,11 +37,11 @@ namespace Logitude.CargoTracking.Data.Repositories
             return shipmentsSearchEntities;
         }
 
-        public List<CargoTrackingShipmentSearch> GetShipmentSearchBySecurityKeys(string securityKey, int tenant)
+        public List<CargoTrackingShipmentSearch> GetShipmentSearchBySecurityKeys(string ShipmentId, int tenant)
         {
             List<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
                                                                                where
-                                                                                  searchEntity.SecurityKey == securityKey
+                                                                                  searchEntity.ShipmentId == ShipmentId
                                                                                   && searchEntity.Tenant == tenant
                                                                                orderby searchEntity.ShipmentDate descending
                                                                                select searchEntity  ).ToList();

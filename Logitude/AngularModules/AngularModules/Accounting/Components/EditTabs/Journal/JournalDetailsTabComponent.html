@@ -563,7 +563,7 @@
                   <!-- Currency -->
                   <log-column [header]="'JournalLine.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CurrencyId'">
                     <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.IsCurrencyEnabled">
+                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                           <span>{{item.CurrencyCode}}</span>
                         </div>

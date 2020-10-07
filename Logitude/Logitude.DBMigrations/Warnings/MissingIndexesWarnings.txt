@@ -1,1 +1,5 @@
+Warning: Missing Index In DXML File CargoTrackingShipmentSearch.dxml, The Found Index On DB Is IX_CargoTrackingShipmentSearches_Tenant_ShipmentDate_SearchFields, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Keyword_Tenant_PartnerTypeId_InActive, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_RecordDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File Quote.dxml, The Found Index On DB Is IX_QuoteClosingReasonCode, The Index Should Added To The DXML File

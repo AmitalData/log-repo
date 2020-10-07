@@ -93,8 +93,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         {
             this.IsCustomerAccount = true;
             this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+            // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
+            // this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
         }
          if (this.EntityPM.AccountTypeCode == "3") {
           this.IsVendor = true;

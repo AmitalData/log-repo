@@ -39,6 +39,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
      [Key]
         [Column("Id")]
 	    public int Id { get; set; }
+        [Column("ErrorLog")]
+	    public string ErrorLog { get; set; }
     }
 }
 	 

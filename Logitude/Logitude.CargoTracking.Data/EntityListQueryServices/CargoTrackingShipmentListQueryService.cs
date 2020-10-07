@@ -33,7 +33,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                  });
             IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
                                                            join tp in ports on a.ToPortId equals tp.Id
-                                                           join s in context.CargoTrackingShipmentSearches  on a.SecurityKey equals s.SecurityKey 
+                                                           join s in context.CargoTrackingShipmentSearches  on a.EntityId equals s.ShipmentId 
                                                            join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code into lm
                                                            from m in lm.DefaultIfEmpty()
                                                            join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
@@ -230,20 +230,20 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsSecurityKeies, int tenant)
+        public List<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
-            IQueryable<CargoTrackingShipment> shipments = repo.GetBySecurityKeies(shipmentsSecurityKeies, tenant);
+            IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
 
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
             
-            foreach (var key in shipmentsSecurityKeies)
+            foreach (var Id in ShipmentIds)
             {
 
-                string[] references = shipmetsLists.Where(d => d.SecurityKey == key).Select(d => d.SearchReferences).ToArray();
-            //  List< CargoTrackingShipmentList> shipmetsList = shipmetsLists.ToList();
-                shipmetsLists.Where(d => d.SecurityKey == key).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
-                shipmetsLists = shipmetsLists.GroupBy(p =>  p.SecurityKey ).Select(g => g.Last()).ToList();
+                string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
+                shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
+                shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
+               
             }
             return shipmetsLists;
         }
@@ -251,16 +251,17 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public List<Milestone> GetMilestonesFieldsFromCargoTrackingShipment( CargoTrackingShipmentList  Shipment)
         {
             List<Milestone> milestones = new List<Milestone>();
-            milestones.Add(new Milestone() { Code= "Pickup", Name= "Pickup", Date= Shipment.PickupDate,EstimationDate= Shipment.PickupEstimationDate, Done= Shipment.PickupDone, Notes= null,IsCurrent=false,IsEstimation= Shipment.PickupDone==true? false : true });
-            milestones.Add(new Milestone() { Code = "FromWarehouse", Name = "From Warehouse", Date = Shipment.FromWarehouseDate, EstimationDate = Shipment.FromWarehouseEstimationDate, Done = Shipment.FromWarehouseDone, Notes = Shipment.FromWarehouseNotes, IsCurrent = false, IsEstimation = Shipment.FromWarehouseDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "ToWarehouse", Name = "To Warehouse", Date = Shipment.ToWarehouseDate, EstimationDate = Shipment.ToWarehouseEstimationDate, Done = Shipment.ToWarehouseDone, Notes = Shipment.ToWarehouseNotes, IsCurrent = false, IsEstimation = Shipment.ToWarehouseDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "Departure", Name = "Departure", Date = Shipment.DepartureDate, EstimationDate = Shipment.DepartureEstimationDate, Done = Shipment.DepartureDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DepartureDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "Arrival", Name = "Arrival", Date = Shipment.ArrivalDate, EstimationDate = Shipment.ArrivalEstimationDate, Done = Shipment.ArrivalDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.ArrivalDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "CustomsPayment", Name = "Customs Payment", Date = Shipment.CustomsPaymentDate, EstimationDate = null, Done = Shipment.CustomsPaymentDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.CustomsPaymentDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "Clearance", Name = "Clearance", Date = Shipment.ClearanceDate, EstimationDate = null, Done = Shipment.ClearanceDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.ClearanceDone == true ? false : true });
-            milestones.Add(new Milestone() { Code = "Delivered", Name = "Delivered", Date = Shipment.DeliveredDate, EstimationDate = Shipment.DeliveredEstimationDate, Done = Shipment.DeliveredDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DeliveredDone == true ? false : true });
-            milestones = milestones.OrderByDescending(s=>s.IsEstimation==true? s.EstimationDate : s.Date).ToList();
-            string CurrentMilestoneCode = milestones.Where(s=>s.IsEstimation==false).OrderByDescending(s => s.Date).Select(s => s.Code).FirstOrDefault();
+
+            milestones.Add(new Milestone() {Id = 2, Code= "Pickup", Name= "Pickup", Date= Shipment.PickupDate,EstimationDate= Shipment.PickupEstimationDate, Done= Shipment.PickupDone, Notes= null,IsCurrent=false,IsEstimation= Shipment.PickupDone==true? false : true });
+            milestones.Add(new Milestone() {Id = 3, Code = "FromWarehouse", Name = "From Warehouse", Date = Shipment.FromWarehouseDate, EstimationDate = Shipment.FromWarehouseEstimationDate, Done = Shipment.FromWarehouseDone, Notes = Shipment.FromWarehouseNotes, IsCurrent = false, IsEstimation = Shipment.FromWarehouseDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 6, Code = "ToWarehouse", Name = "To Warehouse", Date = Shipment.ToWarehouseDate, EstimationDate = Shipment.ToWarehouseEstimationDate, Done = Shipment.ToWarehouseDone, Notes = Shipment.ToWarehouseNotes, IsCurrent = false, IsEstimation = Shipment.ToWarehouseDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 4, Code = "Departure", Name = "Departure", Date = Shipment.DepartureDate, EstimationDate = Shipment.DepartureEstimationDate, Done = Shipment.DepartureDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DepartureDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 5, Code = "Arrival", Name = "Arrival", Date = Shipment.ArrivalDate, EstimationDate = Shipment.ArrivalEstimationDate, Done = Shipment.ArrivalDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.ArrivalDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 8, Code = "CustomsPayment", Name = "Customs Payment", Date = Shipment.CustomsPaymentDate, EstimationDate = null, Done = Shipment.CustomsPaymentDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.CustomsPaymentDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 9, Code = "Clearance", Name = "Clearance", Date = Shipment.ClearanceDate, EstimationDate = null, Done = Shipment.ClearanceDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.ClearanceDone == true ? false : true });
+            milestones.Add(new Milestone() {Id = 11, Code = "Delivered", Name = "Delivered", Date = Shipment.DeliveredDate, EstimationDate = Shipment.DeliveredEstimationDate, Done = Shipment.DeliveredDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DeliveredDone == true ? false : true });
+            milestones = milestones.OrderByDescending(s=>s.IsEstimation==true? s.EstimationDate : s.Date).ThenByDescending(s => s.Id).ToList();
+            string CurrentMilestoneCode = milestones.Where(s=>s.IsEstimation==false).OrderByDescending(s => s.Date).ThenByDescending(s=>s.Id).Select(s => s.Code).FirstOrDefault();
             for (int i=0; i < milestones.Count; i++)
             {
                 if (milestones[i].Code == CurrentMilestoneCode)
@@ -287,6 +288,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
     public class Milestone
     {
+        public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Notes { get; set; }

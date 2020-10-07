@@ -213,6 +213,15 @@ namespace WebFreight.Web.ReportsWebServices
                 Address customerAddress = addressRepository.GetSingleAddress(shipmentpm.CustomerAddressId, tenant);
                 prealertDataProvider.ContactDetails = DataProviders.General.GetAddress(customerAddress);
 
+                if (customerAddress != null)
+                {
+                    prealertDataProvider.CustomerAddress = DataProviders.General.GetAddress(customerAddress);
+
+                    if (customerAddress.PhoneNumber != null || customerAddress.FaxNumber != null)
+                    {
+                        prealertDataProvider.CustomerAddress = prealertDataProvider.CustomerAddress + Environment.NewLine + (customerAddress.PhoneNumber != null ? "Tel: " + customerAddress.PhoneNumber + " " : "") + (customerAddress.FaxNumber != null ? "Fax: " + customerAddress.FaxNumber + " " : "");
+                    }
+                }
                 prealertDataProvider.ChargeableWeightUnitCode = shipmentpm.ChargeableWeightUnitCode != null ? shipmentpm.ChargeableWeightUnitCode : "";
                 prealertDataProvider.ChargeableWeight = shipmentpm.ChargeableWeight != null ? shipmentpm.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", shipmentpm.ChargeableWeight)) : "" : "";
                 prealertDataProvider.MainIncoterm = shipmentpm.IncotermName;

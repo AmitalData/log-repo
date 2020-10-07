@@ -1517,7 +1517,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
 
-                if (glaAccount.IsMultiCurrency.Value)
+                if (glaAccount!=null && glaAccount.IsMultiCurrency.Value)
                 {
                   string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, entityPM.PaymentCurrencyId);
                     glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
@@ -1944,6 +1944,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Full Accounting
         public void CreateReconciliationForARPayment(ARPaymentPM paymentPM)
         {
+            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
+                return;
+
             IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
             ReconciliationPM _reco = new ReconciliationPM();
             _reco.ChangeSetOp = ChangeSetOperation.Insert;
@@ -1975,8 +1978,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
-            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
-                return;
+            
 
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);

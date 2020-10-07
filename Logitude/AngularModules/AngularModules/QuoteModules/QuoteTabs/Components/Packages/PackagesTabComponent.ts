@@ -52,12 +52,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsResourcesReady = true;
             });
 
+            this.GetDescriptionFlowDirection();
             this.SetLabels();
             this.SetUIProperties();
             this.BuildItemsSource();
-            //if (this.EntityPM.QuoteTypeCode == "P") {
-            //    this.SetUIPropertiesToRoutingRatesType();
-            //}
         }
     }
 
@@ -1206,6 +1204,47 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.ComputeTotals();
             }
         });
+    }
+
+    get DescriptionRightToLeft() { return this.EntityPM.DescriptionRightToLeft; }
+    set DescriptionRightToLeft(value: boolean) {
+        if (this.EntityPM.DescriptionRightToLeft != value) {
+            this.EntityPM.DescriptionRightToLeft = value;
+        }
+    }
+
+    get IsDescriptionRightToLeftEnabled() {
+        var myResult = false;
+        if (SessionLocator.TenantPM.IsNotesRightToLeftEnabled) {
+            myResult = true;
+        }
+        return myResult;
+    }
+
+    public DescriptionFlowDirection: string = "ltr";
+    private GetDescriptionFlowDirection() {
+        var myResult = "ltr";
+        if (SessionLocator.TenantPM.IsNotesRightToLeftEnabled) {
+            myResult = "rtl";
+
+            if (this.DescriptionRightToLeft) {
+                myResult = "rtl";
+            }
+            else {
+                myResult = "ltr";
+            }
+        }
+
+        this.DescriptionFlowDirection = myResult;
+    }
+
+    public AlignDescriptionLeftClicked() {
+        this.DescriptionRightToLeft = false;
+        this.GetDescriptionFlowDirection();
+    }
+    public AlignDescriptionRightClicked() {
+        this.DescriptionRightToLeft = true;
+        this.GetDescriptionFlowDirection();
     }
 }
 export class QuotePackageItem extends BaseComponent {
