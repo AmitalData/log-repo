@@ -180,6 +180,22 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private JournalLinePM GetFirstJournalLine(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal PageLineForeignAmount, decimal PageLineLocalAmount, decimal ledgerForeignAmount, decimal ledgerLocalAmountDebit, bool creditTheBank)
         {
+            /*
+             *צד הלדג'ר (GLACCOUNT בצד) כל תנועה  בקרדיט
+מכפילים במינוס 1
+מחברים את כל התנועות (גם הדביט וגם הקרדיט
++ 
+צד דפי הבנק כל תנועה  בקרדיט
+מכפיל ב מינוס 1
+מחבר את כל התונעות_גם הדביט וגם הקרדיט) 
+
+ 
+
+
+אם התוצאה קטנה מאפס יש להכפילה במינוס אחד ולחייב את צד הלדג'ר
+אחרת
+נזכה את צד הלדג'ר בתוצאה
+             */
             return
 new JournalLinePM()
 {
@@ -196,13 +212,14 @@ new JournalLinePM()
 
     CurrencyId = bankGLAccountList.CurrencyId,
 
-    ForeignAmount = PageLineForeignAmount + ledgerForeignAmount,
+    
 
     ///if r.DebitAmount != 0 then credit else debit 
     ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ?  adjustGLAccountId: bankGLAccountList.Id,
-    LocalAmount = PageLineLocalAmount + ledgerLocalAmountDebit,
+    LocalAmount = creditTheBank? (PageLineLocalAmount + ledgerLocalAmountDebit) : -1* (PageLineLocalAmount + ledgerLocalAmountDebit),
+    ForeignAmount = creditTheBank ? (PageLineForeignAmount + ledgerForeignAmount):-1* (PageLineForeignAmount + ledgerForeignAmount),
     Notes = screenNotes + Environment.NewLine + listOfpageLineList.First().Notes,
     Reference1 = listOfpageLineList.First().Reference,
     ChangeSetOp = ChangeSetOperation.Insert
