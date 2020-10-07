@@ -35,6 +35,10 @@ namespace Logitude.Accounting.Def.EntityPMs
         }
 
         public string LineCreditAccountId { get; set; }
+
+        public bool ConversionJournal { get; set; }
+
+        
     }
 
 }

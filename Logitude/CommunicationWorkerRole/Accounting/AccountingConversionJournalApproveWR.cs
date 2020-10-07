@@ -10,41 +10,30 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-//using CustomsWorkerRole.Queue;
-using UnifreightIIG.Common.Utils;
-using Logitude.Server.Tools;
-//using Logitude.CustomsMessaging.MessagingServices;
-using Microsoft.Practices.Unity;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Customs.BL.Messaging.Customs;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
-//using CustomsWorkerRole.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.BL.Utils;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.BL.EntityQueryServices;
+
+using Logitude.Accounting.Def.EntityPMs;
+using System.Diagnostics;
+using Logitude.Accounting.BL.CoreBL;
+using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.QueueService;
+using System.Web;
 
 namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
 {
-    public class RevaluationWorkerRole : WorkerEntryPoint
+    public class AccountingConversionJournalApproveWR : WorkerEntryPoint
     {
         bool _OnStartDone = false;
-        //QueueDescription _QueueDescription;
-        //QueueClient _QueueClient;
+        int _SleepM = 100;
+        private QueueClient _QueueClient;
         //private QueueClient _DeadletterQueueClient;
-
-
         DateTime _LastGC = DateTime.MinValue;
+        //private bool _UseQueue = true;
         private DbQueueService _DbQueueService;
-
-        public const string K_RevaluationWorkerRole = "RevaluationWorkerRole";
-        public const string QP_Tenant = "Tenant";
-        public const string QP_JournalId = "JournalId";
-
-
         public override void Run()
         {
 
@@ -69,7 +58,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 }
                 catch (Exception e)
                 {
-                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "RevaluationWorkerRole : Run() Method", null);
+                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "AccountingConversionJournalApproveWR : Run() Method", null);
                     Thread.Sleep(10000);
                 }
 
@@ -85,9 +74,9 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 _OnStartDone = true;
 
 
-               
 
-                _DbQueueService = new DbQueueService(RevaluationWorkerRole.K_RevaluationWorkerRole, 0);
+
+                _DbQueueService = new DbQueueService(JournalApproveService.K_AccountingConversionJournalApproveWR, 0);
 
 
             }
@@ -142,8 +131,12 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 }
 
                 OnStart();
-                var myWorker = new RevaluationBatch.RevaluationWorkerRole();
-                myWorker.WorkUntilQEmptyQueueDB();
+
+                var myWorker = new JournalApproveService.JournalApproveWorker();
+                myWorker.SetLastActivate = () => { this.LastActivity = DateTime.UtcNow; };
+                myWorker.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
+                myWorker.WorkUntilQEmptyQueueDB(timeSpan:null, selectedQueue: JournalApproveService.K_AccountingConversionJournalApproveWR);
+
 
 
             }
@@ -155,10 +148,11 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
             }
 
         }
+        public int? SeedTenant { get; set; }// worker role per tenant /Should inject from base 
 
-    
 
-      
+
+
 
     }
 }
