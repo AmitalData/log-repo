@@ -1,8 +1,6 @@
 ﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-
-
 
 IF EXISTS (SELECT *
            FROM   sys.objects
@@ -11,7 +9,7 @@ IF EXISTS (SELECT *
   DROP FUNCTION [dbo].[BuildSearchKeywordFunction]
 
  declare @dateString as varchar(3000)
- set @dateString = 'CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit VARCHAR(MAX)  , @firstweight int , @Secondweight int)
+ set @dateString = 'CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit nvarchar(MAX)  , @firstweight int , @Secondweight int)
 RETURNS
  @returnList TABLE ([Keyword] [nvarchar] (500), [weight] int )
 AS
@@ -20,7 +18,7 @@ BEGIN
    set @stringToSplit =  RTrim(@stringToSplit)
    DECLARE @IsFirstTime bit
    set @IsFirstTime = 1;
- DECLARE @name NVARCHAR(255)
+ DECLARE @name nvarchar(MAX)
  DECLARE @pos INT 
 
  if(@stringToSplit!='' '') begin INSERT INTO @returnList  SELECT @stringToSplit ,@firstweight end

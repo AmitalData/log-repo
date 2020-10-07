@@ -20,7 +20,8 @@
                                     [SelectedValue]="ChargeStorageCurrencyId"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
-                                    [LookUpTableName]="'Currency'">
+                                    [LookUpTableName]="'Currency'"
+                                    (SelectedItemChanged)="ChargeStorageCurrency = $event">
                             </LogLov>
                         </td>
 

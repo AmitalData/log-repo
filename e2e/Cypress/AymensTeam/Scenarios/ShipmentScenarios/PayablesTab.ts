@@ -1,8 +1,8 @@
 import { Resolvers } from "../../Resolvers/Resolvers";
 
-export class ChargesTab {
+export class PayablesTab {
 
-    public RunChargesTabScenarios() {
+    public RunPayablesTabScenarios() {
         this.GoToChargesTab();
         this.AddChargeType()
     }

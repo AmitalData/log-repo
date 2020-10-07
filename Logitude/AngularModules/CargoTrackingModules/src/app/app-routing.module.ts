@@ -30,12 +30,14 @@ const routes: Routes = [
             { path: "", component: SearchComponent }, 
             { path: "shipment", component: ShipmentComponent },
             { path: "shipment/:SecurityKey", component: ShipmentComponent },
-            { path: ":searchKey", component: SearchComponent }, 
+            { path: ":searchKey", component: SearchComponent },
+            {path: '**', redirectTo: '1/search', pathMatch: 'full' }, 
         ]
     },
     {path: 'search', redirectTo: '1/search', pathMatch: 'full'},
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
     {path: '', redirectTo: '1/search', pathMatch: 'full' },
+    {path: '**', redirectTo: '1/search', pathMatch: 'full' },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  

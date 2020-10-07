@@ -61,7 +61,12 @@
 
             </div>
 
+            <div class="path-image hide-mobile " *ngIf="noResult">
+                <img class="path " src="./assets/images/misc/dot-path.svg " alt=" " />
+                <img class="end " src="./assets/images/misc/path-end.svg " alt=" " />
+                <img class="start " src="./assets/images/misc/path-start.svg " alt=" " />
 
+            </div>
 
 
             <div *ngIf="Shipments.length>0" class="scrollable-table">

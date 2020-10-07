@@ -32,7 +32,7 @@ export class LOVResolver extends AbstractResolver implements IResolver {
                 .parents('loglov')
                 .eq(0)
                 .within(() => {
-                    cy.get('input').type(value).then(() => {
+                    cy.get('input').clear().type(value).then(() => {
                         cy.get('ul.DropDownList').find(itemSelector).eq(0).click({ force: true });
                     });
                 });
