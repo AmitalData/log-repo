@@ -50,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IntegratorCode, 
 	         IsReadyForInvoice, 
 	         NoOfCourierHawb, 
-	         IsAutomaticManifestSent,
+	         IsAutomaticManifestSent, 
+	         PackageQuantityInMAWB,
 	      }
 
 
@@ -108,7 +109,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CalcPending900, 
 	         CalcSuspendedDeclarations, 
 	         NoOfCourierHawb, 
-	         IsAutomaticManifestSent,
+	         IsAutomaticManifestSent, 
+	         PackageQuantityInMAWB,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -255,6 +257,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAutomaticManifestSent))
             {
 				entityPOCO.IsAutomaticManifestSent = entityPM.IsAutomaticManifestSent;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantityInMAWB))
+            {
+				entityPOCO.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -408,6 +415,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsAutomaticManifestSent = entityPOCO.IsAutomaticManifestSent;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageQuantityInMAWB))
+            {
+					entityPM.PackageQuantityInMAWB = entityPOCO.PackageQuantityInMAWB;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -552,6 +564,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAutomaticManifestSent))
             {
                 oldEntityPM.IsAutomaticManifestSent = entityPM.IsAutomaticManifestSent;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantityInMAWB))
+            {
+                oldEntityPM.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
             }
 			
 		}
