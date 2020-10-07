@@ -33,7 +33,7 @@
                                         <div></div>
                                     </td>
 
-                                    <td [style.width.px]="UpdateQuantitiesMessageWidth + 70" *ngIf="IsUpdateQuantitiesVisible">
+                                    <td [style.width.px]="UpdateQuantitiesMessageWidth + 70" [style.min-width.px]="UpdateQuantitiesMessageWidth + 70" *ngIf="IsUpdateQuantitiesVisible">
                                         <div class="MediaFill">
                                             <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
                                                 <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateQuantitiesMessage}}</div>
