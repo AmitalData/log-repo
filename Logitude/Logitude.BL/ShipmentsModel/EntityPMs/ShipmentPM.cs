@@ -2493,6 +2493,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ChargeStorageCurrencyId { get; set; }
+        public string ChargeStorageCurrencyCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string WeightMeasurementCode { get; set; }

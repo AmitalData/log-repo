@@ -1,9 +1,7 @@
 declare var window: any;
-import {Component, OnInit, ComponentRef, Output, EventEmitter}  from '@angular/core';
-import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
+import { Component, OnInit, ComponentRef, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -27,7 +25,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
     providers: [UserExtendedPMService]
 })
 
-export class UserWorkspaceComponent implements OnInit {
+export class UserWorkspaceComponent implements OnInit, OnDestroy {
     public ComponentRef: ComponentRef<UserWorkspaceComponent>;
     filterAgrs: ApiQueryFilters;
     private _entityResourceService: EntityResourceService;
@@ -35,10 +33,24 @@ export class UserWorkspaceComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _userExtendedPMService: UserExtendedPMService) {
         this._entityResourceService = new EntityResourceService();
+        this.Listen();
     }
 
     ngOnInit() {
 
+    }
+
+    private SessionEvent: any = null;
+    private Listen() {
+
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "RefreshUserWorkspace") {
+                this.LoadAllData();
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public BackButtonText = "Maintenance";

@@ -144,7 +144,7 @@ namespace Logitude.Server.Tools.Helpers
                         ObjectTableId = objectTable.Id,
                         LogDateTime = args.LogDateTime.Value,
                         EventDateTime = args.EventDateTime.Value,
-                        ExternalId = args.ExternalId,
+                        ExternalId = !string.IsNullOrEmpty(args.ExternalId) ? args.ExternalId.Trim():"",
                         IsAddedManually = args.IsAddedManually,
                         UserId = myUserId,
                         CustomerCareUserEmail = myCustomerCareUserEmail,
@@ -244,7 +244,7 @@ namespace Logitude.Server.Tools.Helpers
                 traceEvent.Tenant = traceEventParams.Tenant;
                 traceEvent.ObjectTableId = objectTable.Id;
                 traceEvent.EventTypeId = eventType.Id;
-                traceEvent.ExternalId = traceEventParams.ExternalId;
+                traceEvent.ExternalId = traceEventParams.ExternalId?.Trim();
 
                 if (traceEventParams.Manually)
                 {

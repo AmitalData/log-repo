@@ -38,16 +38,18 @@ export class PublicGateComponent
         this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: ServiceResponse) =>
         { 
  
-            // CargoTrackingBrandingData.MainColor = response.Result.MainColor;
-            // if(CargoTrackingBrandingData.MainColor) {
+            CargoTrackingBrandingData.MainColor = response.Result.MainColor;
+            if(CargoTrackingBrandingData.MainColor) {
 
-            //     CargoTrackingBrandingData.MainColor = this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
+                CargoTrackingBrandingData.MainColor = this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
     
-            //     document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
-            //     document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
-            //     document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
-            //     document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
-            // }
+                document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+                document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+                document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
+                document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
+                document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
+
+            }
             this.IsBrandingDataLoaded = true;
 
             this.listenToRouterEvents();

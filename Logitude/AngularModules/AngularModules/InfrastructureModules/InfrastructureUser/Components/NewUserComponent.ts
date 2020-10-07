@@ -15,6 +15,12 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { UserLicenseArgs } from '../../../Infrastructure/Args';
+import { PackageListService } from '../../../Common/Services/StandardLists/PackageListService';
+import { PackageList } from '../../../Common/EntityLists/PackageList';
+import { UserLicensePM } from '../../../Common/EntityPMs/UserLicensePM';
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     
@@ -153,10 +159,9 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             if (this.NewUserPM.Password) {
                 Password = this.NewUserPM.Password.trim();
             }
+
             else {
-
                 this.ValidationErrorsList.push("Please fill the password field!");
-
             }
 
             if (this.ReTypePassword) {
@@ -164,12 +169,10 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
 
             if (this.ObsList.filter(d => d.IsActive).length == 0) {
-
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.AddRoleToUser"));
             }
 
             if (Password != this.ReTypePassword) {
-
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
             }
 
@@ -178,41 +181,78 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
 
             if (this.ValidationErrorsList.length == 0) {
-
                 this.ValidationErrorsList = [];
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                this.userPMService.insert(this.NewUserPM).subscribe((myResult:any) => {
-                    if (myResult) {
 
+                this.userPMService.insert(this.NewUserPM).subscribe((myResult: any) => {
+                    if (myResult) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (myResult.HasError) {
-
                             myResult.ErrorsArray.forEach((item) => {
                                 this.ValidationErrorsList.push(item);
                             });
                         }
+
                         else {
                             var newUserPM: UserPM = myResult.Result;
                             this.CurrentSession.CloseCurrentWindowEmit(newUserPM.Id);
+
+                            this.OpenLicenseManagementScreen();
                         }
-
                     }
-
-
                 }, error => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var dd: any = error;
                     console.log(dd.text);
-                })
-
-
-
-
-
+                });
             }
+        }
+    }
 
+    private OpenLicenseManagementScreen() {
+        var LicenseToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LIC" && d.TenantNumber == SessionLocator.Tenant)[0];
+
+        if (SessionLocator.TenantManagementJS.IsMultiPackage && FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment") && LicenseToggle != null) {
+            var service: PackageListService = new PackageListService();
+            service.getAllFromCache().subscribe((result: any) => {
+                var allPackages: PackageList[] = result.Result;
+
+                var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
+                userExtendedPMService.GetUserLicenses().subscribe((myResult: any) => {
+                    if (myResult) {
+                        var myResponse: ServiceResponse = myResult;
+                        if (!myResponse.HasError) {
+                            var allUserLicenses: UserLicensePM[] = myResponse.Result;
+
+                            userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+                                var pmResponse: ServiceResponse = res;
+                                if (!pmResponse.HasError) {
+                                    var myResult = pmResponse.Result;
+                                    if (myResult) {
+                                        var args: UserLicenseArgs = new UserLicenseArgs();
+                                        args.AllPackages = allPackages;
+                                        args.AllUserLicenses = allUserLicenses;
+                                        args.ActiveNotAdditionalUsersCount = myResult.ActiveNotAdditionalUsersCount;
+                                        args.SearchField = this.NewUserPM.Email;
+
+                                        var logitudeWindow = new LogitudeWindow();
+                                        logitudeWindow.Width = 960;
+                                        logitudeWindow.Height = 570;
+                                        logitudeWindow.Title = "Licenses Management";
+                                        logitudeWindow.WindowArgs = args;
+                                        logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/LicensesManagementComponent');
+                                        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                                            this.CurrentSession.FireEvent("RefreshUserWorkspace");
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
         }
     }
 

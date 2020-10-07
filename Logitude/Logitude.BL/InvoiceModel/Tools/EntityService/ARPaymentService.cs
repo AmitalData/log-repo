@@ -778,7 +778,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!string.IsNullOrEmpty(myInvoiceId))
             {
-                ARInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(this.invoiceRepository);
+                ARInvoicePM invoice = aRInvoiceQuery.GetSinglePM(myInvoiceId, tenant);
+
+                //ARInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
 
                 if (invoice != null)
                 {
@@ -875,15 +878,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             throw new Exception("The Amount due is not suitable to the total amount paid!!");
                         }
                         
-                        this.UpdateInvoicePaidDate(invoice, allConnectedItems);
-                        invoiceRepository.Update(invoice);
+                        this.UpdateInvoicePaidDate(invoice);
+
+
+                        //invoiceRepository.Update(invoice);
+                        ARInvoiceService aRInvoiceService = new ARInvoiceService(this.objectContext, this.tenant);
+                        aRInvoiceService.Update(invoice);
                         #endregion
                     }
                 }
             }
         }
-
-        private void UpdateInvoicePaidDate(ARInvoice invoice, List<ARInvoicePayment> allConnectedItems)
+        private void UpdateInvoicePaidDate(ARInvoicePM invoice)
         {
             if (invoice.AmountDue != 0)
             {
@@ -1517,7 +1523,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
 
-                if (glaAccount.IsMultiCurrency.Value)
+                if (glaAccount!=null && glaAccount.IsMultiCurrency.Value)
                 {
                   string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, entityPM.PaymentCurrencyId);
                     glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
@@ -1944,6 +1950,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Full Accounting
         public void CreateReconciliationForARPayment(ARPaymentPM paymentPM)
         {
+            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
+                return;
+
             IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
             ReconciliationPM _reco = new ReconciliationPM();
             _reco.ChangeSetOp = ChangeSetOperation.Insert;
@@ -1975,8 +1984,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
-            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
-                return;
+            
 
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);

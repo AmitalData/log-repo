@@ -482,7 +482,9 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceLinesBehavior.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceTotalVatsBehavior.cs" />
     <Compile Include="ExternalService\EntityAutomationService.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
+    <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
     <Compile Include="QuoteModel\APIDataContract\QueryService\QuotePriceStepsQueryService.Generated.cs" />
     <Compile Include="QuoteModel\APIDataContract\QuotePriceSteps.Generated.cs" />

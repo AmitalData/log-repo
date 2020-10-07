@@ -115,7 +115,6 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-    DisplayTextNgModel: string;
 
     private  searchTextNgModel:string = "";
     public get SearchTextNgModel() {
@@ -124,22 +123,24 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     public set SearchTextNgModel(newValue: any) {
         if (this.searchTextNgModel != newValue) {
             this.searchTextNgModel = newValue;
-            this.DisplayTextNgModel = "";
-            if (this.searchTextNgModel) {
-                this.searchTextNgModel.split(";;").forEach((item) => {
-                    this.DisplayTextNgModel += (item + "; ");
-                });
-
-                this.DisplayTextNgModel += "@@";
-                this.DisplayTextNgModel = this.DisplayTextNgModel.replace("; @@", "").replace("@@","");
-            }
+            
          
         }
     }
 
 
-
-
+    displayTextNgModel: string;
+    public get DisplayTextNgModel() {
+        if (this.DataContext) {
+            this.displayTextNgModel = this.DataContext.MultiSelectedDisplayName;
+        }
+        return this.displayTextNgModel;
+    }
+    public set DisplayTextNgModel(newValue: string) {
+        if (this.displayTextNgModel != newValue) {
+            this.displayTextNgModel = newValue;
+        }
+    }
 
 
     @Input() RunToggleMode: boolean;
