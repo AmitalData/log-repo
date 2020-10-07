@@ -1,0 +1,156 @@
+
+
+<style>
+
+    .Link:hover {
+        cursor: pointer;
+        color: #1C59FC;
+    }
+
+    .Link {
+        cursor: pointer;
+        font-size: 13px;
+        color: #0094ff;
+        height: 21px;
+        white-space: nowrap;
+    }
+
+</style>
+
+<table style="background-color:white">
+
+    <tr style="height:10px"><td></td></tr>
+
+    <tr style="height:45%;vertical-align:top">
+
+
+        <td style="height:45%" class="CellStretch">
+            <div class="SimpleGridView">
+
+                <div style="margin-left:3px;">Docs Out Document Types :</div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr style="border:0px" class="SimpleGridViewRow RowHover" *ngFor="let item of DocOutAttachmentLists">
+                                        <td>
+                                            <table>
+                                                <tr style="height:25px;border:0px" >
+
+                                                    <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;border:0px">
+                                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;border:0px">
+                                                        {{item.Name}}
+                                                    </td>
+                                                </tr>
+                                                <tr><td colspan="5"></td></tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </td>
+
+
+
+    </tr>
+
+    <tr style="height:10px"><td></td></tr>
+
+    <tr style="height:50%;vertical-align:top;background-color:blue">
+
+
+        <td style="height:50%" class="CellStretch">
+            <div class="SimpleGridView">
+
+                <div style="margin-left:3px;">Docs In Document Types :</div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr style="border:0px" class="SimpleGridViewRow RowHover" *ngFor="let item of DocInAttachmentLists">
+                                        <td>
+                                            <table>
+                                                <tr style="height:25px;border:0px">
+
+                                                    <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;border:0px">
+                                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;border:0px">
+                                                        {{item.Name}}
+                                                    </td>
+                                                </tr>
+                                                <tr><td colspan="5"></td></tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </td>
+
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

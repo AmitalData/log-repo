@@ -114,8 +114,19 @@ export class DocumentTypeListExtendedService {
    }
 
    
+    GetDocumentTypeCopyLists(objectTableId: string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/GetDocumentTypeCopyLists/?' + 'objectTableId=' + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
   
 
 

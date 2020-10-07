@@ -1105,6 +1105,22 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         }
     }
 
+
+    public SelectDefultAttachments() {
+
+        var windowArgs: any = {};
+        var tableName: string = "";
+        var tableId: string = !AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId;
+        windowArgs.ObjectTableId = tableId;
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Available Documents";
+        logWindow.Width = 800;
+        logWindow.Height = 600;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentDefultAttachmentsComponent");
+
+    }
+
 }
 
 
