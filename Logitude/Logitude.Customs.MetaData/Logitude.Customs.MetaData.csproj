@@ -305,6 +305,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
@@ -461,6 +462,7 @@
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
