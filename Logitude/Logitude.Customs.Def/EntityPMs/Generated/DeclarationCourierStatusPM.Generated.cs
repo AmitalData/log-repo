@@ -1412,6 +1412,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool delivered ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Delivered  
+	   {
+	    
+	     get
+		{
+		   return delivered;
+		 }
+		 set
+		 {
+		   if(delivered != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Delivered",OldValue=delivered,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   delivered=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

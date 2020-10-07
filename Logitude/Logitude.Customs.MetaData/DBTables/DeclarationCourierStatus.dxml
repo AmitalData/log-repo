@@ -163,6 +163,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Delivered"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
