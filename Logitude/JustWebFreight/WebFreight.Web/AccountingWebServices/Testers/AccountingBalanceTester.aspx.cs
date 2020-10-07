@@ -809,6 +809,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 workerrolename_Options = "production,development,staging",
                 workerrolename = "production",
                 TimeOutinSec = 30,
+                ConversionJournal=false,
                 //YYYY = 2016,
                 //CheckControlAccountMode=false
             };
@@ -830,7 +831,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var myWorker = new JournalApproveService.JournalApproveWorker();
                 var sw = Stopwatch.StartNew();
                 HttpContext.Current.Items["workerrolename"] = (string)param.workerrolename;
-                myWorker.WorkUntilQEmptyQueueDB( TimeSpan.FromSeconds((int)param.TimeOutinSec));
+                string selectedQueue = null;
+                if ((bool)param.ConversionJournal)
+                {
+                    selectedQueue = JournalApproveService.K_AccountingConversionJournalApproveWR;
+                }
+                myWorker.WorkUntilQEmptyQueueDB( TimeSpan.FromSeconds((int)param.TimeOutinSec), selectedQueue);
                 sw.Stop();
                 _LabelLog.Text = $"Tot:{sw.Elapsed}" + LogMessagingUtil.Instance.ToString();
 

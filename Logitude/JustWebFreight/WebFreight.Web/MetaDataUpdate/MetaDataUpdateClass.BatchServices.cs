@@ -141,6 +141,9 @@ namespace WebFreight.Web.MetaDataUpdate
            
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AccountingJournalApproveWR", ClassName = "AccountingJournalApproveWR", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
 
+            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AccountingConversionJournalApproveWR", ClassName = "AccountingConversionJournalApproveWR", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);//ExternalSystem
+
+
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "RevaluationWorkerRole", ClassName = "RevaluationWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
 
 
