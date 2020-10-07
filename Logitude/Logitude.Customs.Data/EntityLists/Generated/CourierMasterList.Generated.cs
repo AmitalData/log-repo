@@ -116,6 +116,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsEstimatedArrivalToDay  { get; set; }
        [DataMember]
        public string EstimatedArrivalColor  { get; set; }
+       [DataMember]
+       public int PackageQuantityInMAWB  { get; set; }
    }
 
 }

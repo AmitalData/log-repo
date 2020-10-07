@@ -59,6 +59,7 @@ export class CourierMasterList {
 	IsAutomaticManifestSent: boolean;
 	IsEstimatedArrivalToDay: boolean;
 	EstimatedArrivalColor: string;
+	PackageQuantityInMAWB: number;
 	
 }
  
