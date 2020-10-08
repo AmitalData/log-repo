@@ -79,10 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-
-
-		public const string HashString = "b29e27b4f7d666565bee4d26c084571a";
-
+		public const string HashString = "3fab2ff2396c343cd706a0429e07b061";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2422,8 +2419,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"Interest Report",LocalDefaultText = "דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"All Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode InterestReportTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.DraftReports", DefaultText = @"Draft Reports",LocalDefaultText = "דוחות טיוטה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InterestReportFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.DraftReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.DraftReports", NameTextCodeDefaultText = "DraftReports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode InterestReportTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InvoicedReports", DefaultText = @"Invoiced Reports",LocalDefaultText = "דוחות עם חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InterestReportFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InvoicedReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InvoicedReports", NameTextCodeDefaultText = "InvoicedReports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode InterestReportTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", DefaultText = @"Closed Without Invoice",LocalDefaultText = "דוחות שנסגרו ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InterestReportFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.ClosedWithoutInvoice", NameTextCodeDefaultText = "ClosedWithoutInvoice", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -2450,6 +2459,87 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn InterestReportQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "InterestReport.InvoiceAmount" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn InterestReportQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
+  
+	      
+
+			  Query DraftReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_1.Id, NameTextCodeCode = InterestReportTextCode_1.Code, ObjectTableName = "InterestReport", Code = "DraftReports",  QueryGroupCode = "25a2", IndexOrder = 1, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_1.Id,FeatureUniqeCode= InterestReportFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn DraftReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestReport.ReportNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestReport.CreateDateTime" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestReport.CreatedByLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InterestReport.GLAccountDisplayNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InterestReport.GLAccountLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InterestReport.InterestReportStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "InterestReport.TotalAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "InterestReport.ARInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "InterestReport.InvoiceAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn DraftReportsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter DraftReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query InvoicedReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_2.Id, NameTextCodeCode = InterestReportTextCode_2.Code, ObjectTableName = "InterestReport", Code = "InvoicedReports",  QueryGroupCode = "25a2", IndexOrder = 2, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_2.Id,FeatureUniqeCode= InterestReportFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InvoicedReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestReport.ReportNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestReport.CreateDateTime" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestReport.CreatedByLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InterestReport.GLAccountDisplayNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InterestReport.GLAccountLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InterestReport.InterestReportStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "InterestReport.TotalAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "InterestReport.ARInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "InterestReport.InvoiceAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InvoicedReportsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter InvoicedReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ClosedWithoutInvoiceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_3.Id, NameTextCodeCode = InterestReportTextCode_3.Code, ObjectTableName = "InterestReport", Code = "ClosedWithoutInvoice",  QueryGroupCode = "25a2", IndexOrder = 3, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_3.Id,FeatureUniqeCode= InterestReportFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestReport.ReportNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestReport.CreateDateTime" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestReport.CreatedByLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InterestReport.GLAccountDisplayNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InterestReport.GLAccountLocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InterestReport.InterestReportStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "InterestReport.TotalAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "InterestReport.ARInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "InterestReport.InvoiceAmount" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedWithoutInvoiceQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter ClosedWithoutInvoiceQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "4",PredefinedValue2 = null, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -2938,6 +3028,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportORequiedCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.RequiedCreditInvoiceDate", DefaultText = "The credit invoice date is required",LocalDefaultText = @"חובה להקליד תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreditInvoiceDate", DefaultText = "Credit Invoice Date",LocalDefaultText = @" תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOInterestReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestReports", DefaultText = "Interest Report",LocalDefaultText = @"דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
