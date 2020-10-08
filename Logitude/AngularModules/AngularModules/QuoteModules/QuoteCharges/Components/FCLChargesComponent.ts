@@ -1297,6 +1297,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                                 item.SaleTotalAmountLocal = 0;
                             }
 
+                            if (AppTool.IsNullOrEmpty(item.SaleAmountInSaleCurrency)) {
+                                item.SaleAmountInSaleCurrency = 0;
+                            }
+
                             if (!lineVatType.IsMultiPercentage) {
                                 if (item.VatPercentage != null) {
                                     var myQroupItem = new QuoteTotalVATPM(null);
@@ -1307,11 +1311,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                                     myQroupItem.VatPercent = item.VatPercentage;
                                     myQroupItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                     myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                                    myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                    myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                     myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
 
                                     if (item.IsRegionalTax) {
-                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount + item.SaleTotalAmount * (this.RegionalTaxPercentage / 100);
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency + item.SaleAmountInSaleCurrency * (this.RegionalTaxPercentage / 100);
                                         myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (this.RegionalTaxPercentage / 100);
 
                                         var regionalTaxItem = new QuoteTotalVATPM(null);
@@ -1322,7 +1326,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                                         regionalTaxItem.VatPercent = this.RegionalTaxPercentage;
                                         regionalTaxItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                         regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                                        regionalTaxItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        regionalTaxItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                         regionalTaxItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
                                         group_Source.push(regionalTaxItem);
                                     }
@@ -1348,7 +1352,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                                         myQroupItem.VatPercent = this.GetVatTypePercentage(itemGroup.SingleVATTypeId);
                                         myQroupItem.ExternalVATCard = lineSingleVatType.ReceivablesExternalId;
                                         myQroupItem.ExternalTAXItemId = lineSingleVatType.ExternalTAXItemId;
-                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                         myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
                                         group_Source.push(myQroupItem);
                                     }
@@ -3277,6 +3281,15 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         this.EntityPM.SaleTotalAmount = AppTool.Round(myTotalAmount, 2);
         this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(myTotalAmount) ? null : AppTool.Round(myTotalAmount * this.SaleExchangeRate, 2);
+        this.EntityPM.SaleAmountInSaleCurrency = AppTool.IsNullOrEmpty(this.EntityPM.SaleTotalAmountLocal) ? null : AppTool.Round(this.EntityPM.SaleTotalAmountLocal / this.QuotePM.ExchangeRate, 2);
+
+        this.EntityPM.SaleUnitPriceInSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleUnitPrice);
+        this.EntityPM.SaleUnitPrice1InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType1UnitPrice);
+        this.EntityPM.SaleUnitPrice2InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType2UnitPrice);
+        this.EntityPM.SaleUnitPrice3InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType3UnitPrice);
+        this.EntityPM.SaleUnitPrice4InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType4UnitPrice);
+        this.EntityPM.SaleUnitPrice5InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType5UnitPrice);
+
         this.SetUIProperties_CellsColors();
 
         if (this.ChargesGroupCode == "FRT") {
@@ -3431,6 +3444,23 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.SaleContainerType5UnitPrice = myResult;
         }
+    }
+
+    GetSalePriceInSaleCurrency(saleUnitPrice: number): number {
+
+        var output: number = null;
+
+        if (!AppTool.IsNullOrZero(saleUnitPrice)) {
+            if (this.EntityPM.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                output = saleUnitPrice;
+            }
+
+            else {
+                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 2);
+            }
+        }
+
+        return output;
     }
 
     private mySaleUnitPriceString: string = null;
