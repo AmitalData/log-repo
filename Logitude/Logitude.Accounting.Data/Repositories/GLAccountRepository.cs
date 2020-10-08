@@ -1079,23 +1079,25 @@ namespace Logitude.Accounting.Data.Repositories
 
             IQueryable<InterestReportCustomerData> gLAccounts = (from GLAccount in context.GLAccounts
                                                                  where GLAccount.Tenant == tenant && GLAccount.ActiveForInterest == true
+                                                                 && (GLAccount.Inactive != null && !GLAccount.Inactive.Value)
                                                                  join Card in context.Cards on GLAccount.Id equals Card.GLAccountId
-                                                                 where Card.PartnerTypeId == "CS"
+                                                                 where Card.PartnerTypeId == "CS" && !Card.InActive
                                                                  select new { GLAccount = GLAccount, Card = Card }).GroupBy(x => x.GLAccount.Id)
-                                                                .Select(x => new InterestReportCustomerData()
-                                                                {
-                                                                    GLAccountId = x.FirstOrDefault().GLAccount.Id,
-                                                                    ActiveForInterest = x.FirstOrDefault().GLAccount.ActiveForInterest,
-                                                                    EnglishName = x.FirstOrDefault().GLAccount.EnglishName,
-                                                                    InterestCalculationStartDate = x.FirstOrDefault().GLAccount.InterestCalculationStartDate,
-                                                                    InterestCreditLimit = x.FirstOrDefault().GLAccount.InterestCreditLimit,
-                                                                    LocalName = x.FirstOrDefault().GLAccount.LocalName,
-                                                                    MinimumInterestInvoiceBilling = x.FirstOrDefault().GLAccount.MinimumInterestInvoiceBilling,
-                                                                    Tenant = x.FirstOrDefault().GLAccount.Tenant,
-                                                                    CustomerId = x.FirstOrDefault().Card.Id,
+                                                                           .Select(x => new InterestReportCustomerData()
+                                                                           {
+                                                                               GLAccountId = x.FirstOrDefault().GLAccount.Id,
+                                                                               ActiveForInterest = x.FirstOrDefault().GLAccount.ActiveForInterest,
+                                                                               EnglishName = x.FirstOrDefault().GLAccount.EnglishName,
+                                                                               InterestCalculationStartDate = x.FirstOrDefault().GLAccount.InterestCalculationStartDate,
+                                                                               InterestCreditLimit = x.FirstOrDefault().GLAccount.InterestCreditLimit,
+                                                                               LocalName = x.FirstOrDefault().GLAccount.LocalName,
+                                                                               MinimumInterestInvoiceBilling = x.FirstOrDefault().GLAccount.MinimumInterestInvoiceBilling,
+                                                                               Tenant = x.FirstOrDefault().GLAccount.Tenant,
+                                                                               CustomerId = x.FirstOrDefault().Card.Id,
 
-                                                                });
+                                                                           });
             return gLAccounts;
+
 
         }
     }
