@@ -1021,9 +1021,14 @@ namespace WebFreight.Web.Security
 
 
             HttpContext context = HttpContext.Current;
+            string IsSecureConnection = context.Request.IsSecureConnection.ToString();
+            if (context.Request.Headers.AllKeys.Contains("X-IsSecure"))
+            {
+                IsSecureConnection = context.Request.Headers["X-IsSecure"];
+            }
             if (LogitudeSettings.ForceHttps || redirect)
             {
-                if (!context.Request.IsSecureConnection)
+                if (IsSecureConnection != "true")
                 {
 
                     string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:");
