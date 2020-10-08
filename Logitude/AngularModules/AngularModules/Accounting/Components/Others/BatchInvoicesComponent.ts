@@ -384,8 +384,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     }
     IsCloseWithoutInvoice: boolean = false;
     CloseWithoutInvoice() {
-        this.IsCloseWithoutInvoice = true;
-        this.UpdateInterestReportsStatuses();
+        this.ConfirmClosingWithoutInvoice();
+      
     }
     CreateInvoiceButtonClicked() {
         this.IsCloseWithoutInvoice = false;;
@@ -515,7 +515,22 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     date.setUTCMilliseconds(0);
 
     return date;
-}
+    }
+
+    ConfirmClosingWithoutInvoice() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 390;
+        var NumberIdsSelected: number = 0;
+       
+        confirmWindow.Show( TextCodeTranslator.Translate("InterestReport.O.CloseAllSelectedWithoutInvoice"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.IsCloseWithoutInvoice = true;
+                this.UpdateInterestReportsStatuses();                
+                
+            }
+        });
+    }
 ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
@@ -542,16 +557,16 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
           }
       });
 }  
- public CloseWithoutInvoiceText: string = "Close without invoice";
+    public CloseWithoutInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice");
   
 SetCreateInvoiceButtonText(){
 if (this.SelectedItemsCount > 0) {
     this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";
-    this.CloseWithoutInvoiceText = "Close without invoice" + "(" + this.SelectedItemsCount + ")";
+    this.CloseWithoutInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice")+ "(" + this.SelectedItemsCount + ")";
  }
 else{
     this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
-    this.CloseWithoutInvoiceText = "Close without invoice"; 
+    this.CloseWithoutInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice");
 }
 }
   FillInterestReportArgs() {

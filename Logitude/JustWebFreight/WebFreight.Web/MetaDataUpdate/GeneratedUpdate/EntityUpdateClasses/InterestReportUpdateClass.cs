@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-
-		public const string HashString = "e5f2c668bcb18a1c06f7fb9619b28fb6";
+		public const string HashString = "6d75a17439075258802349a113cf85f6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2936,6 +2935,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportORequiedCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.RequiedCreditInvoiceDate", DefaultText = "The credit invoice date is required",LocalDefaultText = @"חובה להקליד תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreditInvoiceDate", DefaultText = "Credit Invoice Date",LocalDefaultText = @" תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOCloseAllSelectedWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseAllSelectedWithoutInvoice", DefaultText = "Confirm closing all selected reports without invoices.",LocalDefaultText = @"אישור סגירת כל הדוחות המסומנים ללא חשבוניות ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOCloseWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseWithoutInvoice", DefaultText = "Close Without Invoice",LocalDefaultText = @"סגירה ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
