@@ -14,6 +14,7 @@ import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashb
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
 import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
+import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favor
         DashboardComponent,
         DashboardShipmentsComponent,
         FavoritesComponent,
+        ShipmentDetailsComponent,
         
     ],
     imports: [

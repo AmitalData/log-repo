@@ -1,0 +1,70 @@
+<!-- <h1>Shipment Details</h1> -->
+<div *ngIf="isLoading"> <br>  Loading...</div>
+
+<div *ngIf="Shipment" class="shipment-header">
+
+    <!-- icon -->
+    <div>
+        <div class="icon hide-mobile">
+            <div class="circle-image">
+                <img class="path " [attr.src]="GetModeIcon()" alt=" " />
+            </div>
+        </div>
+    </div>
+
+    <!-- References -->
+    <div>
+        <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
+        <ul *ngIf="showMoreReferences">
+            <li *ngFor="let ref of CustomersReferences, let i = index">{{ref}}</li>
+        </ul>
+        <ul *ngIf="!showMoreReferences">
+            <li *ngFor="let ref of CustomersReferences.slice(0,2), let i = index">{{ref}}</li>
+        </ul>
+    </div>
+
+    <div>
+        <div class="title">Customs Broker Ref.</div>
+        <ul>
+            <li>5689974987132</li>
+        </ul>
+    </div>
+
+    <div>
+        <div class="title">Routing</div>
+        <ul>
+            <li>US-BOS to USD-NYC</li>
+        </ul>
+    </div>
+
+</div>
+
+<div #SliderWrapper  class="slider-wrapper">
+
+    <div class="pager" [class.dim]="sliderMarginLeft==0" (click)="MoveSlider('right')">
+        <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png"  alt="" />
+    </div>
+
+    <div class="slider" [style.width.px]="sliderVisibleCardsWidth">
+        <div class="cards" [style.margin-left.px]="sliderMarginLeft" >
+
+            <div class="card" 
+                *ngFor="let card of SliderCards" 
+                [class.active]="card.IsActive"
+                [class.dim]="card.IsDimmed"
+                [class.warning]="card.HasWarning">
+                <div class="code">{{card.Code}}</div>
+                <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
+                <div class="title">{{card.Title}}</div>
+                <div class="desc">{{card.Description}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pager" (click)="MoveSlider('left')" 
+    [class.dim]="((sliderMarginCardCount+sliderVisibleCardsCount)>=SliderCards.length) || (sliderVisibleCardsCount >= SliderCards.length)"
+    >
+        <img src="./assets/images/icons/right-arrow@2x.png"  alt="" />
+    </div>
+
+</div>

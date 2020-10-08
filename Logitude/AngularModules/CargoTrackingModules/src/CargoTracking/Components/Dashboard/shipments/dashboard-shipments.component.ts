@@ -32,7 +32,7 @@ export class DashboardShipmentsComponent
         this.GetVariablesFromURI();
         // this.listenToRouterEvents();
         this.InitForm();
-        this.SearchText = '1000x';
+        this.SearchText = '1000';
         this.Search();
 
     }
@@ -94,7 +94,7 @@ export class DashboardShipmentsComponent
     {
         var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this.tenant, 'search', 'shipment', SecurityKey]);
+        this.router.navigate([this.tenant, 'dashboard', 'shipment', SecurityKey]);
 
     }
     LoadShipments()
