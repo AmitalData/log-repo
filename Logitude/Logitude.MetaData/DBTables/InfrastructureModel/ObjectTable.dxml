@@ -413,9 +413,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <!--try fix-->
   <Column
     Name="AllowedInTicket"
-    OldNames="AllowedInQueues"
+    
     Type="bit">
     <Constraints
       Nullable="false" />

@@ -880,7 +880,10 @@ User/Pass",
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;
 
-
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return;
+            }
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
 
             
