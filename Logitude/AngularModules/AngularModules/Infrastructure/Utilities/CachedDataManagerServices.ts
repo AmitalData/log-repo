@@ -229,13 +229,12 @@ export class CachedDataManagerServices {
             case "Customs.AmountTypeListService": { myResult = new AmountTypeListService(); break; }
             case "Customs.PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
             case "Customs.NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
-            case "Customs.CustomerRoleTypeListService ": { myResult = new CustomerRoleTypeListService (); break; }
-            case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService(); break; }
+            case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService() ; break; }
+            case "Customs.AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
             case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService(); break; }
-         //   case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService (); break; }
             case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
-            case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService();; break; }
+            case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
  

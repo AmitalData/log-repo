@@ -153,6 +153,7 @@
     <None Include="DBTables\AttachmentType.dxml" />
     <None Include="DBTables\Authority.dxml" />
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
+    <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -459,6 +460,7 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
