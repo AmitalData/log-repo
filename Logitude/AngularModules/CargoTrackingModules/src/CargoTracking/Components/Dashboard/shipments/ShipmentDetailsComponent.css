@@ -40,6 +40,7 @@ h1{
 .slider-wrapper{
   padding: 10px 0 50px 0;
   background: RGB(242,244,247);
+  margin-bottom: 40px;
 }
 .shipment-header{
   padding: 40px 90px 20px 90px;
@@ -183,3 +184,54 @@ h1{
   font-size: 13px;
   line-height: 18px;
 }
+
+
+
+    .data-cards::after, .data-cards::before{
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .data-cards > div{
+        width: 180px;
+        min-height: 60px;
+        line-height: 24px;
+        margin: 10px;
+        float: left;
+        font-size: 16px;
+    }
+
+    .data-cards .title{
+        font-size: 12px;
+        color: var(--MainColor);
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+
+    .PanelsNavigator{
+        margin: 25px 75px;
+    }
+    .PanelsNavigator button{
+        padding: 8px 20px;
+        border-radius: 25px;
+        box-shadow: 0px 0px 8px 0px #00000025;
+        color: rgb(66, 66, 66);
+        background: white;
+        border: none;
+        cursor: pointer;
+        margin-right: 20px;
+
+    }
+        .PanelsNavigator button:hover{
+            box-shadow: 0px 0px 8px 0px #00000040;
+        }
+        .PanelsNavigator button:active{
+            border: none;
+            outline: none;
+            transform: scale(0.96);
+        }
+        .PanelsNavigator button:focus{
+            border: none;
+            outline: none;
+        }

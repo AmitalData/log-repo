@@ -1,0 +1,24 @@
+
+<div class="panel" [attr.id]="Name" >
+
+    <div class="header">
+        <div class="title">
+            {{Title}}
+            <a *ngIf="HeaderLinkText" (click)="HeaderLinkClicked()" href="javascript:;">{{HeaderLinkText}}</a>
+        </div>
+        <div class="buttons">
+            <button *ngIf="HaveDetailsSection" (click)="ShowMoreDetails()">{{ShowDetailsSection?'Show less':'Show more'}}</button>
+        </div>
+    </div>
+
+    <div class="body">
+        <ng-content select="[body]"></ng-content>
+    </div>
+
+    <div *ngIf="ShowDetailsSection" class="details">
+        <div class="title">{{DetailsTitle}}</div>
+        <ng-content select="[details]"></ng-content>
+    </div>
+
+</div>
+ 

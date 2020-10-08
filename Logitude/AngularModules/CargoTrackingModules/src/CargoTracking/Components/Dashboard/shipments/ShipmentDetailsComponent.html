@@ -39,7 +39,7 @@
 
 </div>
 
-<div #SliderWrapper  class="slider-wrapper">
+<div #SliderWrapper  class="slider-wrapper" (wheel)="onMousewheel($event)" (pan)="logPan($event)">
 
     <div class="pager" [class.dim]="sliderMarginLeft==0" (click)="MoveSlider('right')">
         <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png"  alt="" />
@@ -68,3 +68,232 @@
     </div>
 
 </div>
+
+
+<div class="PanelsNavigator">
+    <button (click)="PanelsNavigatorClicked('Overview')">Overview</button>
+    <button (click)="PanelsNavigatorClicked('Cargo')">Cargo Info</button>
+    <button (click)="PanelsNavigatorClicked('CustomsDataPanel')">Customs Data</button>
+    <button (click)="PanelsNavigatorClicked('Routing')">Routing</button>
+    <button (click)="PanelsNavigatorClicked('Documents')">Documents</button>
+    <button (click)="PanelsNavigatorClicked('Partners')">Partners</button>
+</div>
+
+<panel  [Title]="'Order Overview'"
+        [Name]="'Overview'">
+
+    <div body>
+        <div class="data-cards">
+            <div>
+                <div class="title">Incoterms</div>
+                <div class="description">Dolar sit</div>
+            </div>
+            <div>
+                <div class="title">Atd</div>
+                <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+            </div>
+            <div>
+                <div class="title">eta</div>
+                <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+            </div>
+            <div>
+                <div class="title">customer</div>
+                <div class="description">Lorem dolar</div>
+            </div>
+            <div>
+                <div class="title">shipper</div>
+                <div class="description">Sit Amet dol</div>
+            </div>
+            <div>
+                <div class="title">quantity</div>
+                <div class="description">400 units</div>
+            </div>
+            <div>
+                <div class="title">weight</div>
+                <div class="description">3 Tons</div>
+            </div>
+            <div>
+                <div class="title">total value nis</div>
+                <div class="description">500 ₪</div>
+            </div>
+            <div>
+                <div class="title">total taxes</div>
+                <div class="description">1,600 ₪</div>
+            </div>
+            <div>
+                <div class="title">declaration status</div>
+                <div class="description">Lorem Ipsum dolar</div>
+            </div>
+           
+        </div>
+    </div>
+
+</panel>
+
+<panel  [Title]="'Cargo Info'"
+        [Name]="'Cargo'"
+        [HaveDetailsSection]="true"
+        [DetailsTitle]="'Container List'">
+
+    <div body>
+        <div class="data-cards">
+            <div>
+                <div class="title">Pack Type</div>
+                <div class="description">Lorem ipsum</div>
+            </div>
+            <div>
+                <div class="title">fcl / lcl</div>
+                <div class="description">Full Container</div>
+            </div>
+            <div>
+                <div class="title">quantity</div>
+                <div class="description">400 unit</div>
+            </div>
+            <div>
+                <div class="title">weight</div>
+                <div class="description">3 tons</div>
+            </div>
+            <div>
+                <div class="title">volume</div>
+                <div class="description">528</div>
+            </div>
+            <div>
+                <div class="title">storage site</div>
+                <div class="description">
+                    Mamman
+                    <br>
+                    SwissPort
+                    <br>
+                    Ashdod bonded
+                </div>
+            </div>
+            <div>
+                <div class="title">containers</div>
+                <div class="description">
+                    Medu2134541, Medu2134541
+                    <br>
+                    Medu2134541
+                    <br>
+                    Medu2134541
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div details>
+        Details
+
+        <br>
+
+        table
+
+
+    </div>
+
+</panel>
+
+<panel  [Title]="'Customs Data'"
+        [Name]="'CustomsDataPanel'"
+        [HaveDetailsSection]="true"
+        [DetailsTitle]="'Tax Details'">
+
+    <div body>
+        <div class="data-cards">
+            <div>
+                <div class="title">Declaration #</div>
+                <div class="description">454565751</div>
+            </div>
+            <div>
+                <div class="title">Declaration Status</div>
+                <div class="description">parcel departed</div>
+            </div>
+            <div>
+                <div class="title">Import VAT</div>
+                <div class="description">3,547</div>
+            </div>
+            <div>
+                <div class="title">total value nis</div>
+                <div class="description">45,245 ₪</div>
+            </div>
+            <div>
+                <div class="title">total value usd</div>
+                <div class="description">15,456 $</div>
+            </div>
+            <div>
+                <div class="title">consignment #</div>
+                <div class="description">89754358887</div>
+            </div>
+            <div>
+                <div class="title">goods description</div>
+                <div class="description">parcel damaged</div>
+            </div>
+            <div>
+                <div class="title">total taxes</div>
+                <div class="description">585,100 ₪</div>
+            </div>
+            
+           
+        </div>
+    </div>
+
+    <div details>
+        Details
+
+        <br>
+
+        table
+
+
+    </div>
+
+</panel>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

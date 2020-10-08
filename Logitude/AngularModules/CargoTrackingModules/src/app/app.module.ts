@@ -16,6 +16,7 @@ import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashbo
 import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
 
+import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/PanelComponent";
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,6 +30,9 @@ import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard
         DashboardShipmentsComponent,
         FavoritesComponent,
         ShipmentDetailsComponent,
+
+        // Infra
+        PanelComponent,
         
     ],
     imports: [

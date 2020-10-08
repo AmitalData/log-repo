@@ -52,6 +52,20 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.InitSlider();
     }
 
+    onMousewheel(event: WheelEvent) {
+        event.preventDefault();
+        if(event.deltaY>0){
+            this.MoveSlider('left');
+        }
+        if(event.deltaY<0){
+            this.MoveSlider('right');
+        }
+      }
+
+      logPan(i){
+          console.log(i);
+          
+      }
     InitSlider()
     {
 
@@ -178,4 +192,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
+    PanelsNavigatorClicked(panelName: string){
+
+        var element = document.getElementById(panelName) as HTMLElement;
+        if(element)
+            element.scrollIntoView();
+    }
 }
