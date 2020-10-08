@@ -219,6 +219,7 @@ namespace CustomsWorkerRole
 
                 
             }
+            CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 LogitudeSettings.ProductInfo = ProductInfo;
@@ -234,13 +235,16 @@ namespace CustomsWorkerRole
                     Logger.LogMe(mess, err, suffix);
                 });
 
-                
+                LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
+
+                LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName ?? "production";
             }
            // string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
+           
 
-            
+
         }
 
         public override void OnStop()
