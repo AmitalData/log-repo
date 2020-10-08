@@ -374,11 +374,11 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
-	<TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />	
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
-	<Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />	
-	<TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
+    <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
+    <TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
     <Content Include="CRMModules\CRMActivity\Components\EditTabs\ActivityGeneralTabComponent.html" />
@@ -1437,6 +1437,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TreatmentWayListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UpdateCodeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\AutonomyRegionTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CargoSealIdentifierPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierDeclarationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
