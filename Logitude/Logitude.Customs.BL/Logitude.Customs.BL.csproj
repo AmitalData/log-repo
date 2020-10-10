@@ -290,6 +290,7 @@
     <Compile Include="EntityDataMappings\AttachmentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AuthorityDataMapping.cs" />
     <Compile Include="EntityDataMappings\AuthorizedSignerPermitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutonomyRegionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutonomyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationReasonRequestTypeDataMapping.cs" />
@@ -471,6 +472,7 @@
     <Compile Include="EntityDataMappings\Generated\AttachmentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AuthorityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AuthorizedSignerPermitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutonomyRegionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutonomyTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationReasonRequestTypeDataMapping.Generated.cs" />
@@ -945,6 +947,7 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
