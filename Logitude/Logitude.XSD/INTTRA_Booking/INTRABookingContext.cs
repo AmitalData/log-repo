@@ -245,6 +245,11 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.Errors.Add("Shipment Order Packages or Shipment Packages are required");
             }
+
+            else if (this.ShipmentOrderPackages.Where(d => d.GrossWeight == null || d.GrossWeight == 0).Any() && this.ShipmentPackages.Where(d => d.Weight == null || d.Weight == 0).Any())
+            {
+                this.Errors.Add("All Containers should have Gross Weight");
+            }
         }
 
         private Address ShipperAddress;
@@ -845,14 +850,16 @@ namespace Logitude.XSD.INTTRA_Booking
                         {
                             EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType"),
                         },
-
                         NumberOfEquipment = item.Quantity + "",
-
                         ImportExportHaulage = new ImportExportHaulageType()
                         {
                             HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
                             CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
                             CargoMovementTypeSpecified = true,
+                        }, 
+                        EquipmentGrossWeight = new GrossWeightType() {
+                            UOM = INTTRA_Booking.WeightUOMValues.KGM,
+                            Value = this.GetWeightInKG(item.Weight),
                         }
                     };
 
@@ -938,7 +945,7 @@ namespace Logitude.XSD.INTTRA_Booking
                             HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
                             CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
                             CargoMovementTypeSpecified = true,
-                        }
+                        },
                     };
 
                     this.EquipmentDetails.Add(itemDetails);
@@ -1025,6 +1032,31 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.Errors.Add("Out Settings is required");
             }
+        }
+        private decimal GetWeightInKG(double? weight)
+        {
+            decimal myResult = 0;
+
+            if (weight != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(this.GrossWeightUnitCode))
+                {
+                    switch (this.GrossWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }     // 1 LB = 0.45359237 KG
+                        case "MT": { factorOfConvert = 1000; break; }           // 1 mt = 1000 KG
+                    }
+                }
+
+                double? myComputedField = MethodHelper.Round(weight * factorOfConvert, 3);
+
+                myResult = (decimal)myComputedField.Value;
+            }
+
+            return myResult;
         }
     }
 }
