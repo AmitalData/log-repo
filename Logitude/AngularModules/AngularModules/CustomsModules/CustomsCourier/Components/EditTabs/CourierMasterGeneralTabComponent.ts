@@ -34,6 +34,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs) {
         super();
+        debugger;
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
@@ -47,6 +48,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
+
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
             SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
@@ -131,6 +133,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     set IsOpen(value: boolean) {
         if (this.EntityPM.IsOpen != value) {
             this.EntityPM.IsOpen = value;
+        }
+    }
+
+    get PackageQuantityInMAWB() { return this.EntityPM.PackageQuantityInMAWB; }
+    set PackageQuantityInMAWB(value: number) {
+        if (this.EntityPM.PackageQuantityInMAWB != value) { 
+            this.EntityPM.PackageQuantityInMAWB = value;
         }
     }
 

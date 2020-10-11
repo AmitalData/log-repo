@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.NoOfCourierHawb).HasColumnName("NoOfCourierHawb").HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.IsAutomaticManifestSent).HasColumnName("IsAutomaticManifestSent");
+
+            this.Property(t => t.PackageQuantityInMAWB).HasColumnName("PackageQuantityInMAWB");
         }
     }
 }
