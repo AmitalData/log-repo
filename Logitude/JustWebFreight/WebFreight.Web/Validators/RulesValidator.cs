@@ -332,92 +332,9 @@ namespace WebFreight.Web.Validators
                     if (enableRun)
                     {
                         string methodName = "Get" + objectTableName + "FiltersCount";
-
-                        object context = null;
-                        if (commonDataDomainService == null)
-                        {
-                            commonDataDomainService = new CommonDataDomainService(CommonDataContext.GetContext(tenant));
-                        }
-
-                        MethodInfo insideMethodInfo = commonDataDomainService.GetType().GetMethod(methodName);
-
-                        if (insideMethodInfo != null)
-                        {
-                            context = commonDataDomainService;
-                        }
-
-                        if (generalService == null)
-                        {
-                            generalService = new GeneralDomainService(WebFreightContext.GetContext(tenant));
-                        }
-
-                        if (insideMethodInfo == null)
-                        {
-                            insideMethodInfo = generalService.GetType().GetMethod(methodName);
-
-                            if (insideMethodInfo != null)
-                            {
-                                context = generalService;
-                            }
-                        }
-
-                        if (webFreightDomainService == null)
-                        {
-                            webFreightDomainService = new WebFreightDomainService(WebFreightContext.GetContext(tenant));
-                        }
-
-                        if (insideMethodInfo == null)
-                        {
-                            insideMethodInfo = webFreightDomainService.GetType().GetMethod(methodName);
-
-                            if (insideMethodInfo != null)
-                            {
-                                context = webFreightDomainService;
-                            }
-                        }
-
-                        if (quotesDomainService == null)
-                        {
-                            quotesDomainService = new QuotesDomainService();
-                        }
-
-                        if (insideMethodInfo == null)
-                        {
-                            insideMethodInfo = quotesDomainService.GetType().GetMethod(methodName);
-
-                            if (insideMethodInfo != null)
-                            {
-                                context = quotesDomainService;
-                            }
-                        }
-
-                        if (shipmentsDomainService == null)
-                        {
-                            shipmentsDomainService = new ShipmentsDomainService(ShipmentsContext.GetContext(tenant));
-                        }
-                        if (insideMethodInfo == null)
-                        {
-                            insideMethodInfo = shipmentsDomainService.GetType().GetMethod(methodName);
-
-                            if (insideMethodInfo != null)
-                            {
-                                context = shipmentsDomainService;
-                            }
-                        }
-
-                        if (invoiceDomainService == null)
-                        {
-                            invoiceDomainService = new InvoiceDomainService();
-                        }
-                        if (insideMethodInfo == null)
-                        {
-                            insideMethodInfo = invoiceDomainService.GetType().GetMethod(methodName);
-
-                            if (insideMethodInfo != null)
-                            {
-                                context = invoiceDomainService;
-                            }
-                        }
+                        var entityMethodInfo = GetEntityMethodInfo(methodName, tenant);
+                        object context = entityMethodInfo.Context;
+                        MethodInfo insideMethodInfo = entityMethodInfo.MethodInfo;
 
                         if (insideMethodInfo != null)
                         {
@@ -499,6 +416,97 @@ namespace WebFreight.Web.Validators
             }
 
             return isValid;
+        }
+
+        private EntityMethodInfo GetEntityMethodInfo(string methodName, int tenant)
+        {
+            object context = null;
+            MethodInfo insideMethodInfo = null;
+            if (commonDataDomainService == null)
+            {
+                commonDataDomainService = new CommonDataDomainService(CommonDataContext.GetContext(tenant));
+            }
+
+            insideMethodInfo = commonDataDomainService.GetType().GetMethod(methodName);
+            if (insideMethodInfo != null)
+            {
+                context = commonDataDomainService;
+            }
+
+            if (generalService == null)
+            {
+                generalService = new GeneralDomainService(WebFreightContext.GetContext(tenant));
+            }
+
+            if (insideMethodInfo == null)
+            {
+                insideMethodInfo = generalService.GetType().GetMethod(methodName);
+
+                if (insideMethodInfo != null)
+                {
+                    context = generalService;
+                }
+            }
+
+            if (webFreightDomainService == null)
+            {
+                webFreightDomainService = new WebFreightDomainService(WebFreightContext.GetContext(tenant));
+            }
+
+            if (insideMethodInfo == null)
+            {
+                insideMethodInfo = webFreightDomainService.GetType().GetMethod(methodName);
+
+                if (insideMethodInfo != null)
+                {
+                    context = webFreightDomainService;
+                }
+            }
+
+            if (quotesDomainService == null)
+            {
+                quotesDomainService = new QuotesDomainService();
+            }
+
+            if (insideMethodInfo == null)
+            {
+                insideMethodInfo = quotesDomainService.GetType().GetMethod(methodName);
+
+                if (insideMethodInfo != null)
+                {
+                    context = quotesDomainService;
+                }
+            }
+
+            if (shipmentsDomainService == null)
+            {
+                shipmentsDomainService = new ShipmentsDomainService(ShipmentsContext.GetContext(tenant));
+            }
+            if (insideMethodInfo == null)
+            {
+                insideMethodInfo = shipmentsDomainService.GetType().GetMethod(methodName);
+
+                if (insideMethodInfo != null)
+                {
+                    context = shipmentsDomainService;
+                }
+            }
+
+            if (invoiceDomainService == null)
+            {
+                invoiceDomainService = new InvoiceDomainService();
+            }
+            if (insideMethodInfo == null)
+            {
+                insideMethodInfo = invoiceDomainService.GetType().GetMethod(methodName);
+
+                if (insideMethodInfo != null)
+                {
+                    context = invoiceDomainService;
+                }
+            }
+
+            return new EntityMethodInfo() { Context = context, MethodInfo = insideMethodInfo };
         }
 
         #endregion
@@ -929,6 +937,14 @@ namespace WebFreight.Web.Validators
         #endregion
 
 
+    }
+
+    public class EntityMethodInfo
+    {
+        public object Context { get; set; }
+        public MethodInfo MethodInfo { get; set; }
+
+       
     }
 }
  
