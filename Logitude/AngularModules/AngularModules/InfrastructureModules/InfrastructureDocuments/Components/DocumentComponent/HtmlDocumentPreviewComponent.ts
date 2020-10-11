@@ -107,13 +107,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     IsOpenHeaderAndFooter: boolean = false;
     OldDataTemplateByte: any = null;
     ngAfterViewInit() {
-        if (this.IsFillData && this.template) {
-            //if (this.froalaEditorSetting.froalaEditorComponent) {
-            //    this.froalaEditorSetting.froalaEditorComponent.ResourcesLoaded.subscribe(s => {
-            //        //this.OldDataTemplateByte = StringToBase64(this.froalaEditorSetting.froalaEditorComponent.getHtml());
-            //    });
-            //}
-        }
+        
     }
 
 
@@ -167,9 +161,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
+    IsShowDefultAttachment: boolean = false;
 
 
     Run(args: any) {
+
 
 
         this.froalaEditorSetting.PageType = "HtmlDocumentPreview";
@@ -206,6 +202,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.froalaEditorSetting.Height = window.innerHeight - 310;
                 this.IsShowButtonSaveAs = false;
                 this.Mode = "Edit";
+                this.IsShowDefultAttachment = true;
+
                 this.IsShowUploadAndDownloadButtons = true;
             }
             else if (this.PageType == "Send" || this.PageType == "ManageTemplate") {
@@ -214,6 +212,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
           
                 this.Mode = "Edit";
                 this.IsShowUploadAndDownloadButtons = true;
+                this.IsShowDefultAttachment = true;
             }
 
                  // Signature
@@ -1112,6 +1111,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         var tableName: string = "";
         var tableId: string = !AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId;
         windowArgs.ObjectTableId = tableId;
+        windowArgs.DocumentTypeTemplatePM = this.template;
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Available Documents";
         logWindow.Width = 800;

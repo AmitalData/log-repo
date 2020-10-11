@@ -319,6 +319,7 @@
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Horse\HorseGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Horse\NewHorseComponent.ts" />
+    <TypeScriptCompile Include="Common\DataContracts\DocumentDefultAttachment.ts" />
     <TypeScriptCompile Include="Common\EntityLists\HorseList.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HorsePM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />

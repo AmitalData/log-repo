@@ -1,24 +1,12 @@
--- Add New Column With Name DisplayName
-ALTER TABLE [dbo].[DWObjectTables] ADD [DisplayName] VARCHAR(100) NULL;
+-- Drop Column DefultAttachmentsXML
+EXEC SP_RENAME 'dbo.DocumentTypes.DefultAttachmentsXML', 'Drop_DefultAttachmentsXML', 'COLUMN';
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('daf5abe0-b8a0-405b-9bef-249c17589afe', 'DWObjectTable.dxml', 'DWObjectTables', 'DisplayName', 'Add Column', GETDATE(), '-- Add New Column With Name DisplayNameALTER TABLE [dbo].[DWObjectTables] ADD [DisplayName] VARCHAR(100) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a655fd19-4192-45ee-ad20-a1808f51b78c', 'DocumentType.dxml', 'DocumentTypes', 'DefultAttachmentsXML', 'Drop Column', GETDATE(), '-- Drop Column DefultAttachmentsXMLEXEC SP_RENAME ''dbo.DocumentTypes.DefultAttachmentsXML'', ''Drop_DefultAttachmentsXML'', ''COLUMN'';');
 
 
--- General Script From 202009281700_MapValuesFromIsBondedToIsCFS.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-update Shipments set IsCFSWarehouse = IsBondedWarehouse, IsCFSWarehouseChanged = IsBondedWarehouseChanged
-where IsBondedWarehouse = 1
-SELECT @EndTime = GETDATE()
-UPDATE [dbo].[DBScriptsHistory] SET [ExecutionDate] = GETDATE(), [ScriptBody] = 'update Shipments set IsCFSWarehouse = IsBondedWarehouse, IsCFSWarehouseChanged = IsBondedWarehouseChanged
-where IsBondedWarehouse = 1', [ElapsedTimeInMs] = DATEDIFF(MS,@StartTime,@EndTime), [HashValue] = '65f6bddc686b4dc02b7b0ad7d82ce96d', [Version] = 3 WHERE [SxmlFileName] = '202009281700_MapValuesFromIsBondedToIsCFS.sxml';
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+-- Add New Column With Name DefultAttachmentsXML
+ALTER TABLE [dbo].[DocumentTypeTemplates] ADD [DefultAttachmentsXML] NVARCHAR(MAX) NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('fc598053-9dab-4cd4-80e3-8d20931d5240', 'DocumentTypeTemplate.dxml', 'DocumentTypeTemplates', 'DefultAttachmentsXML', 'Add Column', GETDATE(), '-- Add New Column With Name DefultAttachmentsXMLALTER TABLE [dbo].[DocumentTypeTemplates] ADD [DefultAttachmentsXML] NVARCHAR(MAX) NULL;');
+
 

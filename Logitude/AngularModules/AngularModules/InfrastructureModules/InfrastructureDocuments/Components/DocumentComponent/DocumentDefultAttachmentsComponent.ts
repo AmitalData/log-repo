@@ -1,4 +1,4 @@
-/// <reference path="../../../../common/entitylists/documenttypecopylist.ts" />
+
 import { Component, OnInit } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
@@ -10,6 +10,11 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
 import { DocumentTypeListExtendedService } from '../../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
 
+import { DocumentDefultAttachment } from '../../../../Common/DataContracts/DocumentDefultAttachment';
+import { DocumentTypeTemplatePM } from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
+
+
+
 @Component({
 
     selector: 'DocumentDefultAttachmentsComponent',
@@ -20,20 +25,20 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
     public DocumentTypeCopyLists: DocumentTypeCopyList[];
     public DocumentTypeLists: DocumentTypeList[];
     DataContext: any;
+    DocOutAttachmentLists: DocumentDefultAttachmentItem[] = [];
+    DocInAttachmentLists: DocumentDefultAttachmentItem[] = [];
+    DocumentDefultAttachments: DocumentDefultAttachment[] = [];
 
-    DocOutAttachmentLists: DocumentDefultAttachmentClass[] = [];
-    DocInAttachmentLists: DocumentDefultAttachmentClass[] = [];
-
-
-
-
-
+    DocumentTypeTemplatePM: DocumentTypeTemplatePM;
     ObjectTableId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    IsLoadDocumentInDocument: boolean = false;
+    IsLoadDocumentOutDocument: boolean = false;
+    IsReady: boolean = false;
     constructor() {
         this.DocOutAttachmentLists = [];
         this.DocInAttachmentLists = [];
-
     }
 
     ngOnInit(
@@ -42,19 +47,20 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
     ) {
 
 
-
-
-
     }
 
-
     SetWindowArgs(args: any) {
+        this.CurrentSession.StartBusyIndicator("Loading...");
 
+        this.DocumentTypeTemplatePM = args.DocumentTypeTemplatePM;
         this.ObjectTableId = args.ObjectTableId;
+        this.DocumentDefultAttachments = this.DocumentTypeTemplatePM.DocumentDefultAttachments;
         this.LoadData();
 
     }
 
+
+ 
 
 
     public LoadData() {
@@ -64,6 +70,8 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
 
     }
 
+
+
     LoadDocumentOut() {
         var _documentTypeListService: DocumentTypeListExtendedService = new DocumentTypeListExtendedService();
         _documentTypeListService.GetDocumentTypeCopyLists(this.ObjectTableId).subscribe((res: any) => {
@@ -71,11 +79,19 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var documentTypeCopyLists: DocumentTypeCopyList[] = pmResponse.Result;
-
                 documentTypeCopyLists.forEach((doc) => {
-                    this.DocOutAttachmentLists.push(new DocumentDefultAttachmentClass(doc.Id, "DocOut", doc.Name));
+                    var item = new DocumentDefultAttachmentItem(doc.DocumentTypeId, "DocOut", doc.Name, doc.Id)
+                    if (this.DocumentDefultAttachments.filter(d => d.Id == item.Id && d.Type == "DocOut")[0]) {
+                        item.IsChecked = true;
+                    }
+                    this.DocOutAttachmentLists.push(item);
                 });
             }
+
+
+            this.IsLoadDocumentOutDocument = true;
+            this.LoadComplete();
+
         });
     }
 
@@ -89,14 +105,34 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                var documentTypeList: DocumentTypeList[] = pmResponse.Result;
 
+                var documentTypeList: DocumentTypeList[] = pmResponse.Result;
                 documentTypeList.filter(d => d.ObjectTableId == this.ObjectTableId && d.IsDocIn == true).forEach((doc) => {
-                    this.DocInAttachmentLists.push(new DocumentDefultAttachmentClass(doc.Id, "DocIn", doc.Name));
+                    var item = new DocumentDefultAttachmentItem(doc.Id, "DocIn", doc.Name);
+                    if (this.DocumentDefultAttachments.filter(d => d.Id == item.Id && d.Type == "DocIn")[0]) {
+                        item.IsChecked = true;
+                    }
+                    this.DocInAttachmentLists.push(item);
                 });
+
+
             }
+
+            this.IsLoadDocumentInDocument = true;
+            this.LoadComplete();
         });
     }
+
+
+
+    LoadComplete() {
+
+        if (this.IsLoadDocumentOutDocument && this.IsLoadDocumentInDocument) {
+            this.CurrentSession.StopBusyIndicator();
+            this.IsReady = true;
+        }
+    }
+
 
     CloseButtonClicked() {
    
@@ -104,67 +140,59 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
     }
 
 
+    GetDocumentDefultAttachment(doc: DocumentDefultAttachmentItem) {
+
+        var item = new DocumentDefultAttachment();
+        item.DocumentTypeId = doc.DocumentTypeId;
+        item.DocumentTypeCopyId = doc.DocumentTypeCopyId;
+
+        item.Type = doc.Type;
+        item.DocumentTypeName = doc.DocumentTypeName;
+        return item;
+    }
+
 
     SaveButtonClicked() {
-        let attachmentLists: DocumentDefultAttachmentClass[] = [];
 
-        this.DocOutAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
-            attachmentLists.push(doc);
-        });
-
-
-        this.DocInAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
-            attachmentLists.push(doc);
-        });
-
-
-
-
-
+        this.DocumentTypeTemplatePM.IsDefultAttachmentsXMLChanged = true;
+        this.DocumentTypeTemplatePM.DocumentDefultAttachments = this.BuildDocumentDefultAttachmentLists();
         this.CloseButtonClicked();
+
     }
 
 
-    //IsSelect: boolean;
-    //public CheckboxClick(item: DocumentOutCopyViewModel) {
-
-    //    var selectitem = this.SelectedDocumentsList.filter(d => d.Id == item.Id)[0];
-    //    if (!item.IsAttachSelect) {
-    //        if (selectitem == null) {
-    //            this.SelectedDocumentsList.push(item);
-    //        }
-    //        item.IsAttachSelect = true;
-
-    //    }
-    //    else {
-    //        if (selectitem != null) {
-    //            this.SelectedDocumentsList = this.SelectedDocumentsList.filter(d => d.Id != selectitem.Id);
-    //        }
-    //        item.IsAttachSelect = false;
-    //    }
-
-
-
-
-    //}
-
+    private BuildDocumentDefultAttachmentLists() {
+        var documentDefultAttachments = new Array<DocumentDefultAttachment>();
+        this.DocOutAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
+            documentDefultAttachments.push(this.GetDocumentDefultAttachment(doc));
+        });
+        this.DocInAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
+            documentDefultAttachments.push(this.GetDocumentDefultAttachment(doc));
+        });
+        return documentDefultAttachments;
+    }
 }
 
 
+export class DocumentDefultAttachmentItem {
+    public DocumentTypeId: string;
+    public DocumentTypeName: string;
+    public DocumentTypeCopyId: string;
+    public Type: string;
+    public IsChecked: boolean;
+    constructor(id: string,  type: string, name: string , copyId:string = null) {
+        this.DocumentTypeId = id;
+        this.DocumentTypeCopyId = copyId;
 
-export class DocumentDefultAttachmentClass {
-
-    constructor(id:string , type:string , name:string) {
-        this.Id = id;
         this.Type = type;
-
-        this.Name = name;
+        this.DocumentTypeName = name;
 
     }
 
 
-    Id: string;
-    Type: string;
-    Name: string;
-    IsChecked: boolean;
+
 }
+
+
+
+

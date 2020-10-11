@@ -1316,33 +1316,27 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public setArguments(item: DocsOutDataViewModel) {
 
-        this._exportDocumentService.GetIsRunStimulDocumentViaWorkerRole().subscribe((res: any) => {
-
-            var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = false;
-
-            this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response: any) => {
+        this.IsBuildDocumentViaWorkerRole = true;
+        this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response: any) => {
 
 
-                if (!item.DocumentTypePM) {
-                    this.CurrentSession.StartBusyIndicator("Loading...");
+            if (!item.DocumentTypePM) {
+                this.CurrentSession.StartBusyIndicator("Loading...");
 
-                    this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe((res: any) => {
+                this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe((res: any) => {
 
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            item.DocumentTypePM = pmResponse.Result;
-                        }
-                        this.CurrentSession.StopBusyIndicator();
-                        this.Start(item);
-                    });
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        item.DocumentTypePM = pmResponse.Result;
+                    }
+                    this.CurrentSession.StopBusyIndicator();
+                    this.Start(item);
+                });
 
-                }
-                else this.Start(item);
+            }
+            else this.Start(item);
 
-            });
         });
-
     }
 
     ChildEntityId: string;
