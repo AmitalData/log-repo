@@ -718,7 +718,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            if (entityPM.ImporterName != entityPOCO.ImporterName)
+            {
 
+                {
+                    UpdatePendingByKeyWordsByImporterName(entityPM, false);
+                }
+            }
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
