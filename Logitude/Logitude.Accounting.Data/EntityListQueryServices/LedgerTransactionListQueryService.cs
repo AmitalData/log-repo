@@ -899,7 +899,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             q = query.ToList<LedgerTransaction>();
             string long_text = "";
-            q.ForEach(item => long_text += item.DueDate.ToString("dd.MM.yyyy") + " : " + item.OpenAmount.ToString() + "   ");
+            int ctr = 1;
+            q.ForEach(item => long_text += "#" + ctr++ +  ","+ item.DueDate.ToString("dd.MM.yyyy") + ","  + item.Id + "," + item.OpenAmount.ToString() + "\n");
             List<LedgerTransaction> result = new List<LedgerTransaction>();
             bool next_set = false;
 
@@ -920,7 +921,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 int negativeCount = 0;
                 decimal maxPositive = 0m;
                 decimal maxNegative = 0m;
+                int maxPositiveIndex = -1;
+                int maxNegativeIndex = -1;
                 decimal sum = 0.00m;
+                int firstOpposite = 0;
+                int lastOpposite = 0;
+
                 int j = 0;
                 List<int> goodList = new List<int>();
                 // init = sum getNexrGroupArgs.MIN first elements
@@ -928,7 +934,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 while (cont)
                 {
                     cont = false;
-                    int fistOpposite = 0;
+                    firstOpposite = 0;
+                    lastOpposite = 0;
+                    maxPositiveIndex = -1;
+                    maxNegativeIndex = -1;
 
                     while (j < getNextGroupArgs.MaxPageSize && j < count) //getNextGroupArgs.LT_LinesMaximum && j < count)
                     {
@@ -938,42 +947,56 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         {
                             positiveCount++;
                             if (q1.ElementAt(j).OpenAmount > maxPositive)
+                            {
                                 maxPositive = q1.ElementAt(j).OpenAmount;
+                                maxPositiveIndex = j;
+                            }
                         }
                         if (q1.ElementAt(j).OpenAmount < 0m)
                         {
                             negativeCount++;
                             if (q1.ElementAt(j).OpenAmount < maxNegative)
+                            { 
                                 maxNegative = q1.ElementAt(j).OpenAmount;
+                                maxNegativeIndex = j;
+                            }
+
+                        }
+                        if (q1.ElementAt(0).OpenAmount > 0m)
+                        {
+                            if (j > 0 && q1.ElementAt(j).OpenAmount < 0m && firstOpposite == 0)
+                                firstOpposite = j;
+                            if (j > 0 && q1.ElementAt(j).OpenAmount < 0m)
+                                lastOpposite = j;
+                        }
+                        if (q1.ElementAt(0).OpenAmount < 0m)
+                        {
+                            if (j > 0 && q1.ElementAt(j).OpenAmount > 0m && firstOpposite == 0)
+                                firstOpposite = j;
+                            if (j > 0 && q1.ElementAt(j).OpenAmount > 0m)
+                                lastOpposite = j;
                         }
                         if (lineCount > 1 && ((positiveCount > 0 && negativeCount > 0) || (positiveCount == 0 && negativeCount == 0)))
                         {
-                            if ((sum > 0m && sum < maxPositive) || (sum < 0m && sum > maxNegative) || (sum == 0m))
+                            if ((sum > 0m && sum < maxPositive && !(maxPositiveIndex >= 0 && (firstOpposite - maxPositiveIndex > 1)))
+                                || (sum < 0m && sum > maxNegative && !(maxNegativeIndex >= 0 && (firstOpposite - maxNegativeIndex > 1))) 
+                                || (sum == 0m))
                             {
                                 if (j + 1 >= getNextGroupArgs.LT_LinesMaximum)
                                     break; // while j
                                 goodList.Add(j);
                             }
                         }
-                        if (q1.ElementAt(0).OpenAmount > 0m)
-                        {
-                            if (j > 0 && q1.ElementAt(j).OpenAmount < 0m && fistOpposite == 0)
-                                fistOpposite = j;
-                        }
-                        if (q1.ElementAt(0).OpenAmount < 0m)
-                        {
-                            if (j > 0 && q1.ElementAt(j).OpenAmount > 0m && fistOpposite == 0)
-                                fistOpposite = j;
-                        }
+
                         j++;
                     }
-                    if (goodList.Count == 0 && fistOpposite > 1) // because fistOpposite>0 would be too tight 
+                    //   if (goodList.Count == 0 && fistOpposite > 1) // because fistOpposite>0 would be too tight 
+                    if (goodList.Count == 0 && lastOpposite > 1) // because fistOpposite>0 would be too tight 
                     {
-                        for (int i = fistOpposite - 1; i > 0; i--)
+                        //   for (int i = fistOpposite - 1; i > 0; i--)
+                        for (int i = lastOpposite - 1; i > 0; i--)
                         {
-
-
-                            if (q1.ElementAt(i).OpenAmount != 0m)
+                            if (q1.ElementAt(i).OpenAmount != 0m && ((q1.ElementAt(0).OpenAmount > 0m && q1.ElementAt(i).OpenAmount > 0m) || (q1.ElementAt(0).OpenAmount < 0m && q1.ElementAt(i).OpenAmount < 0m)))
                             {
                                 q1.RemoveAt(i);
                                 count = q1.Count;

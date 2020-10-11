@@ -21,8 +21,8 @@ export class WarningApprovePaymentComponent {
 
     SetWindowArgs(args: any) {
         if (args) {
-            //this.RTL = args.RTL;
-            if (ObjectsLocator.GlobalSetting) this.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            this.RTL = args.RTL;
+            //if (ObjectsLocator.GlobalSetting) this.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
             this.tax1Amount = args.tax1Amount;
             this.tax16Amount = args.tax16Amount;
             if (this.RTL) this.SetWarningMessage(args.WarningCode);
