@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -13,9 +13,9 @@ export class CargoTrackingBrandingDataExtendedService {
     private http: HttpClient;
     private _apiUrl: string;
     private httpHeaders: HttpHeaders;
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient,@Inject('BASE_URL') baseUrl: string) {
         this.httpHeaders = ServiceHelper.GetHeaders();
-        this._apiUrl = ServiceHelper.GetAppURL() + 'api/CargoTrackingBranding';
+        this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/CargoTrackingBranding';
     }
    
     get(tenant:number) {
