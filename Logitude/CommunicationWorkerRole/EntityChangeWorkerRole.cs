@@ -178,7 +178,7 @@ namespace CommunicationWorkerRole
                                         if (validateResult.Type == "Delayed")
                                         {
                                             IsEntityChageContainAnyDelay = true;
-                                            generalAutomationResultService.AddDelayedAutomationQueue(entityChange.Id, type, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityChange.EntityId);
+                                            generalAutomationResultService.AddDelayedAutomationQueue(entityChange.Id, type, automation.Tenant, automation.Id, validateResult, AutomationConditionFieldLists, entityChange.EntityId);
                                         }
                                         else
                                         {

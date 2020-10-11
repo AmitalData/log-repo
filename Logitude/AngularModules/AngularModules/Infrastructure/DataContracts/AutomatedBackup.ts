@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
@@ -17,6 +17,8 @@ export class AutomatedBackup {
     public ResultCode: string;
     public Description: string;
     public Delaytime: number;
+    public DelaytimeOp: string;
+    public SelectedDelaytimeFieldCode: string;
     public DelaytimeIndicator: string;
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;

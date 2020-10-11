@@ -46,6 +46,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
+
 @Component({
     
     selector: 'AddEditAutomationsComponent',
@@ -84,6 +85,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     DocumentTypetTemplateSelected: DocumentTypeTemplateViewModel;
 
     DelayTime: number;
+    DelayTimeOp: string;
+    SelectedDelaytimeFieldCode: string;
     IsEnableAddTemplate: boolean = false;
     IsEnableEditTemplate: boolean = false;    
     CountDocumentSelection: string;
@@ -134,7 +137,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
   
     public FollowDateEscalationTime: number;
     public FollowDateEscalationActionTimeIndicatorCode: string = "";
-
+    public TimeUnits: CodeNameClass[] = [];
+    public TimeUnitOps: CodeNameClass[] = [];
+    public DelayTimeObjectFields: ObjectFieldPM[] = [];
     FollowUpNote: string = "";
     Code: string;
     IsShowAutomationCodeField: boolean = false;
@@ -177,7 +182,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.SLAHeaderLists = [];
         this.AutomationItemClass = this.DataViewModel.AutomationItemClass;
         this.BuildQueuedTaskFilters();
-
+        this.FillTimeUnits();
             
         var myService = new EventTypeListService();
         myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
@@ -225,6 +230,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.AutomatedBackupClass.DelaytimeIndicator = "OO";
              
                 this.AutomatedBackupClass.Delaytime = 0;
+                this.AutomatedBackupClass.DelaytimeOp = null;
+                this.AutomatedBackupClass.SelectedDelaytimeFieldCode = null;
                 this.AutomatedBackupClass.ResultCode = "EMAIL";
                 this.Start();
             }
@@ -236,6 +243,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         
 }
 
+
+    FillTimeUnits() {
+        this.TimeUnits.push(new CodeNameClass("II", "Minutes"));
+        this.TimeUnits.push(new CodeNameClass("OO", "Hours"));
+        this.TimeUnits.push(new CodeNameClass("DD", "Days"));
+        this.TimeUnitOps.push(new CodeNameClass("BF", "Before"));
+        this.TimeUnitOps.push(new CodeNameClass("AF", "After"));
+    }
 
     private myUsersList: UserList[] = [];
     private LoadUsers() {
@@ -611,7 +626,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     Start() {
         if (this.AutomatedBackupClass) {
             this.SelectedTabCode = "DET";
-            this.DelaytimeIndicator = this.AutomatedBackupClass.DelaytimeIndicator;
+            this.DelaytimeIndicator = this.TimeUnits.filter(timeUnit => timeUnit.Code == this.AutomatedBackupClass.DelaytimeIndicator)[0];
+            this.DelaytimeOpIndicator = this.TimeUnitOps.filter(timeUnitOp => timeUnitOp.Code == this.AutomatedBackupClass.DelaytimeOp)[0];
             this.ResultCodeList = [];
             this.AutomationSetValuebjectFieldLists = [];
             this.AutomationEmailRecipientFieldLists = [];
@@ -746,6 +762,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
             this.Code = this.CurrentEntityPM.Code;
             this.FillObjectField();
+            this.DelayTimeObjectFieldsIndicator = this.DelayTimeObjectFields.filter(delayTimeObjectFields => delayTimeObjectFields.FieldCode == this.AutomatedBackupClass.SelectedDelaytimeFieldCode)[0];
             this.LoadAutomationHistory();
             this.LoadDocumentType();
             this.LoadNotifyBack();
@@ -761,11 +778,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
-    private delaytimeIndicator: string;
+    private delaytimeIndicator: CodeNameClass;
     get DelaytimeIndicator() {
         return this.delaytimeIndicator;
     }
-    set DelaytimeIndicator(value:string) {
+    set DelaytimeIndicator(value: CodeNameClass) {
 
         if (value != this.delaytimeIndicator) {
 
@@ -775,8 +792,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             else {
                 var delayTime = this.DelayTime;
                 var numOfMinutes = 1 * 60;
-                if (this.delaytimeIndicator != "OO" && value == "OO" && this.DelayTime >= 60) delayTime = (this.DelayTime / numOfMinutes);
-                else if (this.delaytimeIndicator != "II" && value == "II") delayTime = (this.DelayTime * numOfMinutes);
+                var numOfhours = 1 * 24;
+                if (this.delaytimeIndicator.Code == "II") {
+                    if (value.Code == "OO" && this.DelayTime >= numOfMinutes) delayTime = (this.DelayTime / numOfMinutes);
+                    else if (value.Code == "DD" && this.DelayTime >= numOfMinutes * numOfhours) delayTime = (this.DelayTime / (numOfMinutes * numOfhours));
+                }
+                else if (this.delaytimeIndicator.Code == "OO") {
+                    if (value.Code == "II") delayTime = (this.DelayTime * numOfMinutes);
+                    else if (value.Code == "DD" && this.DelayTime >= 24) delayTime = (this.DelayTime / numOfhours);
+                }
+                else if (this.delaytimeIndicator.Code == "DD") {
+                    if (value.Code == "OO") delayTime = (this.DelayTime * numOfhours);
+                    else if (value.Code == "II") delayTime = (this.DelayTime * numOfhours * numOfMinutes);
+                }
                 this.DelayTime = delayTime;
                 this.delaytimeIndicator = value;
                 this.IsChangeAutomation = true;
@@ -784,7 +812,27 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    private delaytimeOpIndicator: CodeNameClass;
+    get DelaytimeOpIndicator() {
+        return this.delaytimeOpIndicator;
+    }
+    set DelaytimeOpIndicator(value: CodeNameClass) {
+        if (value != this.delaytimeOpIndicator) {
+            this.delaytimeOpIndicator = value;
+            this.DelayTimeOp = value.Code;
+        }
+    }
 
+    private delayTimeObjectFieldsIndicator: ObjectFieldPM;
+    get DelayTimeObjectFieldsIndicator() {
+        return this.delayTimeObjectFieldsIndicator;
+    }
+    set DelayTimeObjectFieldsIndicator(value: ObjectFieldPM) {
+        if (value != this.delayTimeObjectFieldsIndicator) {
+            this.delayTimeObjectFieldsIndicator = value;
+            this.SelectedDelaytimeFieldCode = value.FieldCode;
+        }
+    }
     
     SelectDocumentTypes() {
         var logWindow = new LogitudeWindow();
@@ -836,6 +884,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (objectField.FieldName == "MainCarriageETD" || objectField.FieldName == "MainCarriageATD" || objectField.FieldName == "MainCarriageFinalDestinationETA" || objectField.FieldName == "MainCarriageFinalDestinationATA") {
                 this.FollowUpDateObjectFieldLists.push(objectField);
+            }
+
+            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && objectField.AllowedinAutomationConditions) {
+                this.DelayTimeObjectFields.push(objectField);
             }
 
             if (this.ObjectTableName == "Ticket") {
@@ -1026,6 +1078,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
             this.DelayTime = 0;
+            this.DelayTimeOp = null;
+            this.SelectedDelaytimeFieldCode = null;
         }
     }
     
@@ -1051,6 +1105,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
             this.DelayTime = 0;
+            this.DelayTimeOp = null;
+            this.SelectedDelaytimeFieldCode = null;
             this.IsChangeAutomation = true;
         }
 
@@ -1230,7 +1286,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomatedBackupClass.Delaytime != this.DelayTime) {
             this.IsChangeAutomation = true;
         }
-
+        if (this.AutomatedBackupClass.DelaytimeOp != this.DelayTimeOp) {
+            this.IsChangeAutomation = true;
+        }
+        if (this.AutomatedBackupClass.SelectedDelaytimeFieldCode != this.SelectedDelaytimeFieldCode) {
+            this.IsChangeAutomation = true;
+        }
         if (this.CurrentEntityPM.ResultCode == "QUEUE") {
             if (AppTool.IsNullOrEmpty(this.QueueId)) {
                 this.ValidationErrorsList.push("Queue field is required");
@@ -1440,7 +1501,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             automationConditionList.push(item.CurrentEntityPM);
         });
 
-
         if (this.CurrentEntityPM.ResultCode == "FIELDSET") {
             this.AutomationSetValueLists.forEach((item) => {
                 automationSetValuelist.push(item.CurrentEntityPM);
@@ -1458,7 +1518,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.Version = this.CurrentEntityPM.Version;
         automatedBackup.UpdateDate = this.CurrentEntityPM.UpdateDate;
         automatedBackup.Delaytime = this.DelayTime;
-        automatedBackup.DelaytimeIndicator = this.DelaytimeIndicator;
+        automatedBackup.DelaytimeOp = this.DelayTimeOp;
+        automatedBackup.SelectedDelaytimeFieldCode = this.SelectedDelaytimeFieldCode;
+        automatedBackup.DelaytimeIndicator = this.DelaytimeIndicator.Code;
         automatedBackup.Type = this.AutomatedBackupClass.Type;
         automatedBackup.DelayAautomationConditionLists = this.AutomatedBackupClass.DelayAautomationConditionLists;
         automatedBackup.AautomationConditionLists = automationConditionList;
