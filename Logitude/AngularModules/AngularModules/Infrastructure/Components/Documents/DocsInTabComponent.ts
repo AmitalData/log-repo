@@ -30,6 +30,7 @@ import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 
 @Component({
     
@@ -59,6 +60,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public IsClickToUpload: boolean = false;
     public DownloadAllVisibile: boolean = false;
     public HasDocuments: boolean = false;
+    public IsRTL: boolean = false;
     ObjectTableName: string;
     IsShowFollowColum: boolean;
     DocumentsList: DocsInDataViewModel[];
@@ -83,7 +85,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.TabHeaderTextCode = "DocsIn.O.DocsIn"; // entityArgs.ObjectTableName + ".TH.DocsIn";
-
+        if (ObjectsLocator.GlobalSetting) this.IsRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (this.documentsFilingPMService == null) {
             this.documentsFilingPMService = new DocumentsFilingPMService();
 
