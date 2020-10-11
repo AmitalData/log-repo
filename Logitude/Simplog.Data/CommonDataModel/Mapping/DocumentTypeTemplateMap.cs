@@ -82,6 +82,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo)
            .HasMaxLength(500)
            .IsUnicode(true);
+
+
+            this.Property(t => t.DefultAttachmentsXML)
+                .IsMaxLength()
+                .IsUnicode(true);
+
+
+
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
             if (dbms == "oracle")
@@ -103,10 +112,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.BCC)
              .HasMaxLength(4000)
              .IsUnicode(true);
+            }
 
-            this.Property(t => t.DefultAttachmentsXML)
-     .IsMaxLength()
-     .IsUnicode(true);
+
+
 
            
 
