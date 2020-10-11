@@ -489,7 +489,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "IsOperationalClosed"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Operational Closed' ));
+        this.QueryColumns.push(this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Archived' ));
 
 
         if (this.SelectedFilter == "My Shipments") {
