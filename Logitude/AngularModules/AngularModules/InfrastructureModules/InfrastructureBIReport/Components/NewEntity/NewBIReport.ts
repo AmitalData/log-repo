@@ -287,10 +287,19 @@ export class NewBIReport extends BaseComponent {
           this.FactTableSelectionChanged(this.EntityPM.FactTableName);
     }
 
+    omit_special_char(value: string) {
+        this.ValidationErrorsList = [];
+        let format = /[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?~]/;
+        if (format.test(value)) {
+            this.ValidationErrorsList.push("Name field can't contain the following special characters # &")
+        }
+    }
+
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {
         if (this.EntityPM.Name != newValue) {
             this.EntityPM.Name = newValue;
+            //this.omit_special_char(newValue);
         }
     }
 
@@ -367,7 +376,10 @@ export class NewBIReport extends BaseComponent {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.EntityPM.Name)) {
             this.ValidationErrorsList.push("Name Field is Required");
-            
+
+        }
+        else {
+            this.omit_special_char(this.EntityPM.Name);
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
