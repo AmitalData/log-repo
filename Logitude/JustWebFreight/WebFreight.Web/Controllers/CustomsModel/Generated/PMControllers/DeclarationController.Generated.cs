@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.Declaration", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Declaration", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         DeclarationUpdateService service = new DeclarationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.Declaration", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Declaration", entityPM.Tenant, authToken.Tenant);
 	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         DeclarationUpdateService service = new DeclarationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

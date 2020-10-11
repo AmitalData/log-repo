@@ -1,0 +1,419 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DeficitDecisionPM : EntityPM
+   {
+   	  private string deficitId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeficitId  
+	   {
+	    
+	     get
+		{
+		   return deficitId;
+		 }
+		 set
+		 {
+		   if(deficitId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeficitId",OldValue=deficitId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deficitId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? requestDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RequestDate  
+	   {
+	    
+	     get
+		{
+		   return requestDate;
+		 }
+		 set
+		 {
+		   if(requestDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestDate",OldValue=requestDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   requestDate=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private string requestID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestID  
+	   {
+	    
+	     get
+		{
+		   return requestID;
+		 }
+		 set
+		 {
+		   if(requestID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestID",OldValue=requestID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestID=value;
+		   }
+			
+		 }
+	   }
+	  private string requestTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestTypeCode  
+	   {
+	    
+	     get
+		{
+		   return requestTypeCode;
+		 }
+		 set
+		 {
+		   if(requestTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestTypeCode",OldValue=requestTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string requestTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestTypeName  
+	   {
+	    
+	     get
+		{
+		   return requestTypeName;
+		 }
+		 set
+		 {
+		   if(requestTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestTypeName",OldValue=requestTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string approvedProfessionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedProfessionCode  
+	   {
+	    
+	     get
+		{
+		   return approvedProfessionCode;
+		 }
+		 set
+		 {
+		   if(approvedProfessionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedProfessionCode",OldValue=approvedProfessionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvedProfessionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string approvedProfessionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedProfessionName  
+	   {
+	    
+	     get
+		{
+		   return approvedProfessionName;
+		 }
+		 set
+		 {
+		   if(approvedProfessionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedProfessionName",OldValue=approvedProfessionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvedProfessionName=value;
+		   }
+			
+		 }
+	   }
+	  private string decisionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionCode  
+	   {
+	    
+	     get
+		{
+		   return decisionCode;
+		 }
+		 set
+		 {
+		   if(decisionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionCode",OldValue=decisionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string decisionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionName  
+	   {
+	    
+	     get
+		{
+		   return decisionName;
+		 }
+		 set
+		 {
+		   if(decisionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionName",OldValue=decisionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionName=value;
+		   }
+			
+		 }
+	   }
+	  private string decisionNoteForLetter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionNoteForLetter  
+	   {
+	    
+	     get
+		{
+		   return decisionNoteForLetter;
+		 }
+		 set
+		 {
+		   if(decisionNoteForLetter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionNoteForLetter",OldValue=decisionNoteForLetter,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionNoteForLetter=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalComponentAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalComponentAmount  
+	   {
+	    
+	     get
+		{
+		   return totalComponentAmount;
+		 }
+		 set
+		 {
+		   if(totalComponentAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalComponentAmount",OldValue=totalComponentAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalComponentAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalEstimatedAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalEstimatedAmount  
+	   {
+	    
+	     get
+		{
+		   return totalEstimatedAmount;
+		 }
+		 set
+		 {
+		   if(totalEstimatedAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalEstimatedAmount",OldValue=totalEstimatedAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalEstimatedAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalFinancialPenaltyAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalFinancialPenaltyAmount  
+	   {
+	    
+	     get
+		{
+		   return totalFinancialPenaltyAmount;
+		 }
+		 set
+		 {
+		   if(totalFinancialPenaltyAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalFinancialPenaltyAmount",OldValue=totalFinancialPenaltyAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalFinancialPenaltyAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalInterestAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalInterestAmount  
+	   {
+	    
+	     get
+		{
+		   return totalInterestAmount;
+		 }
+		 set
+		 {
+		   if(totalInterestAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInterestAmount",OldValue=totalInterestAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalInterestAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalLinkingAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalLinkingAmount  
+	   {
+	    
+	     get
+		{
+		   return totalLinkingAmount;
+		 }
+		 set
+		 {
+		   if(totalLinkingAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalLinkingAmount",OldValue=totalLinkingAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalLinkingAmount=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

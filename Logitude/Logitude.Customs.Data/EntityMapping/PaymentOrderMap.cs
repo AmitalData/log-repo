@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.PaymentNumber).HasColumnName("PaymentNumber").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.TotalSumToPay).HasColumnName("TotalSumToPay");
+            this.Property(t => t.TotalSumToPay).HasColumnName("TotalSumToPay").HasPrecision(18, 2);
 
             this.Property(t => t.LastPayDate).HasColumnName("LastPayDate");
 

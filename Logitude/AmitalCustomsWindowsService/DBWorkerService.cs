@@ -16,6 +16,9 @@ using Simplog.Global.Data.GlobalModel;
 using System.Configuration;
 using Devart.Data.Oracle;
 using CustomsWorkerRole;
+using Logitude.Customs.BL.PatchDistribution;
+using System.Diagnostics;
+using CommunicationWorkerRole;
 
 namespace AmitalCustomsWindowsService
 {
@@ -60,7 +63,7 @@ namespace AmitalCustomsWindowsService
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            if (!HaveDB())
+            if (!HaveDB() || IsOldDB())
             {
                 StopThreads();
                 return;
@@ -75,6 +78,61 @@ namespace AmitalCustomsWindowsService
             AllThreadsAreAlive();
 
             
+        }
+
+        public static bool IsOldDB()
+        {
+            try
+            {
+
+                //var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
+                //myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
+
+                var _PatchDistributionManager = new PatchDistributionManager();
+                _PatchDistributionManager.Check_PatchDistributionListAreValid();
+
+
+
+                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
+                var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
+                
+
+
+                var patchDistributionMatch = new PatchDistributionMatch();
+                var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+                
+                Debug.WriteLine(_PatchDistributionMatchModel.Message);
+
+                if (assemblyVersion == "1.0.0.0" || _PatchDistributionMatchModel.LastClosed_DBMigration == null)
+                {
+                    return false;
+                }
+                Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
+                Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+                Debug.WriteLine($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+                //Debug.WriteLine($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}");
+                if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
+                {
+                    Logger.LogMe($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB", true);
+                    return true;
+
+                }
+                if (
+                    _PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion 
+                    > 
+                    _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
+                {
+                    Logger.LogMe($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion }> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", true);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ee )
+            {
+                Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
+                return true;
+            }
         }
 
         private void AllThreadsAreAlive()
@@ -172,8 +230,20 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            
+            bool testCustomsSchedularWR = false;
+            if (testCustomsSchedularWR)
+            {
+                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
+            }
+            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
 
+
+
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Discard.DownloadDcaMessageSheetWR")))
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
+            }
+            
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)

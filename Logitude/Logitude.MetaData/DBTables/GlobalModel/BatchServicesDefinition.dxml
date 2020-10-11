@@ -3,11 +3,11 @@
   Name="BatchServicesDefinitions"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="Code"
     Type="varchar"
-    Size="40">
+    Size="50">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

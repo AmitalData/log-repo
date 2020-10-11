@@ -24,60 +24,60 @@ export class NotificationExtendedListService{
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationListExtended';
     }
 
-  getByFilters(filters: ApiQueryFilters) {
+    getByFilters(filters: ApiQueryFilters) {
 
-    var urlparameters = '/getbyfilters?';
-    var mykeys = Object.keys(filters);
-    var addtionalFiltersValues = null;
-    for (var i in mykeys) {
-      var propName = mykeys[i];
-      var propValue = filters[propName];
+        var urlparameters = '/getbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
 
-      var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
-      if (urlparameters != "?") {
-        urlparameters = urlparameters.concat('&');
-      }
-      if (!ignoreFilter) {
-        propValue = encodeURIComponent(propValue);
-        urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-      }
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
-      if (propName == "AdditionalFilters" && propValue.length > 0)
-        addtionalFiltersValues = JSON.stringify(propValue);
-
-
-    }
-    if (addtionalFiltersValues) {
-      urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-    }
-
-    var authHeader = new Headers();
-    authHeader.append('Token', SessionInfo.Token);
-    var callUrl = this._apiUrl.concat(urlparameters);//
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
 
 
-    return defer(() => {
-      return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-        var _mappedListsArray: Array<NotificationList> = [];
-        if (response) {
-          for (var key in response) {
-
-            var entity: NotificationList;
-            entity = this.MapJsonToEntityList(response[key]);
-            _mappedListsArray.push(entity);
-
-          }
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var serviceResponse: ServiceResponse = new ServiceResponse();
-        serviceResponse.Result = _mappedListsArray;
-        return serviceResponse;
-      }), catchError(ServiceHelper.HandleServiceError));
-    });
-  }
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response;
+                var _mappedListsArray: Array<NotificationList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: NotificationList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
 
     getCountByFilters(filters: ApiQueryFilters) {
@@ -114,7 +114,7 @@ export class NotificationExtendedListService{
 
 
         return defer(() => {
-          return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -145,7 +145,8 @@ export class NotificationExtendedListService{
 
           
 
-          return this._http.put(this._apiUrl + '/PutNotificationsStatus/', JSON.stringify(notification), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + '/PutNotificationsStatus/', JSON.stringify(notification),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     if (pm) {
                        
@@ -181,7 +182,8 @@ export class NotificationExtendedListService{
 
 
 
-          return this._http.put(this._apiUrl + '/PutNotificationBadjCount/', JSON.stringify(notification), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + '/PutNotificationBadjCount/', JSON.stringify(notification),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     if (pm) {
 
@@ -205,7 +207,7 @@ export class NotificationExtendedListService{
         var url = this._apiUrl + '/GetTopTenNotifications';
 
         return defer(() => {
-          return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -236,7 +238,7 @@ export class NotificationExtendedListService{
         return defer(() => {
             var callURL = this._apiUrl + '/GetOpenNotificationsCount?' + 'userId=' + userId;
 
-          return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -286,7 +288,8 @@ export class NotificationExtendedListService{
 
 
 
-      return this._http.put(this._apiUrl + '/PutNotificationStatus/', JSON.stringify(selectedNotifications), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+        return this._http.put(this._apiUrl + '/PutNotificationStatus/', JSON.stringify(selectedNotifications),
+            ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = res;
                 var _mappedListsArray: Array<NotificationPM> = [];

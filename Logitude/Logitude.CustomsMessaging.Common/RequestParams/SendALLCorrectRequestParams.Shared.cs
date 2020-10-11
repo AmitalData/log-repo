@@ -18,6 +18,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string SelectedStatusValue { get; set; }
         public string SelectedAvailableValue { get; set; }
         public string SelectedTotalInvoiceValue { get; set; }
-
+        public string SelectedFastIndividualProcessValue { get; set; }
+        public string SelectedCustomStatusValue { get; set; }
     }
 }

@@ -228,6 +228,16 @@ export class AppTool {
 
         return myResult;
     }
+    public static ToNumber(currencyformat :string) {
+        var myResult: number = null;
+
+        if (!this.IsNullOrEmpty(currencyformat)) {
+            let numberformat= currencyformat.replace(/[^0-9.-]+/g, '')
+            myResult = +numberformat;
+        }
+
+        return myResult;
+    }
 
     public static GetNewGuid() {
 
@@ -1976,6 +1986,9 @@ export class DateTool {
             return true;
         }
         if (myDate.valueOf() == DateTool.GetMinDateTime().valueOf()) {
+            return true;
+        }
+        if (myDate.toString() == "0001-01-01T00:00:00") {
             return true;
         }
         return false;

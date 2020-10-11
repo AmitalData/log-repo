@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {DeficitDecisionPM} from './DeficitDecisionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -169,7 +170,41 @@ export class DeficitPM {
     public set TapagId(newValue: string) { if (this.tapagId != newValue) { this.tapagId = newValue; this.MarkAsDirty("TapagId"); } }
        
 	 
+     
+	private deficitDecisions: DeficitDecisionPM[];
+    get  DeficitDecisions() {
+        if (this.deficitDecisions == null) {
+            this.deficitDecisions = [];
+        }
 
+        return this.deficitDecisions;
+    }
+    set  DeficitDecisions(newValue: DeficitDecisionPM[]) {
+        if (this.deficitDecisions != newValue) {
+            this.deficitDecisions = newValue;
+        }
+    }
+    public AddDeficitDecision(item: DeficitDecisionPM) {
+        if (item != null) {
+            var index = this. DeficitDecisions.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeficitDecisions.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeficitDecision(item: DeficitDecisionPM) {
+        if (item != null) {
+            var index = this. DeficitDecisions.indexOf(item);
+            if (index > -1) {
+                this. DeficitDecisions.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeficitDecisions: Array<DeficitDecisionPM>= [];
+ 
     public OldEntityPM: DeficitPM;
 		
     public IsDirty: boolean;

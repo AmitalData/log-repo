@@ -303,67 +303,90 @@ SELECT TOP 1000 [Id]
                 Debug.WriteLine(ex.ToString());
             }
         }
-        public static void TestLockTab()
+
+        public static void MultiProccessTestLockTab()
         {
             int nTasks = 0;
             object o = nTasks;
             List<Task> tasks = new List<Task>();
             IDisposable processLockReleaseToken = null;
-            try
+
+
+            int counter = 1;
+            string myKey = "Key," + counter.ToString();
+            using (var tran = TransactionFactory.GetTransaction())
             {
-                int counter = 1;
-                string myKey = "Key," + counter.ToString();
-                processLockReleaseToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla");
-
-
-                for (int ctr = 0; ctr < 3; ctr++)
-                    tasks.Add(Task.Run(() =>
-                    { // Instead of doing some work, just sleep.
-                        Thread.Sleep(250);
-                        // Increment the number of tasks.
-                        if (ctr > 1)
-                        {
-                            counter++;
-                        }
-                        myKey = "Key," + counter.ToString();
-                        try
-                        {
-                            using (var processLockReleaseToken1 = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla"))
-                            {
-                                Thread.Sleep(25);
-
-                            }
-                        }
-                        catch (Exception eeee)
-                        {
-
-                            Console.WriteLine(eeee.ToString());
-                        }
-
-
-
-                    }));
-                Task.WaitAll(tasks.ToArray());
-                Console.WriteLine("{0} tasks started and executed.", nTasks);
-            }
-            catch (AggregateException e)
-            {
-                String msg = String.Empty;
-                foreach (var ie in e.InnerExceptions)
+                using (processLockReleaseToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(1, true, myKey, "blabla"))
                 {
-                    Console.WriteLine("{0}", ie.GetType().Name);
-                    if (!msg.Contains(ie.Message))
-                        msg += ie.Message + Environment.NewLine;
+                    Thread.Sleep(TimeSpan.FromSeconds(30));
+
+                    Console.WriteLine("{0} tasks started and executed.", nTasks);
                 }
-                Console.WriteLine("\nException Message(s):");
-                Console.WriteLine(msg);
-            }
-            finally
-            {
-                processLockReleaseToken.Dispose();
+
             }
 
         }
+        //public static void TestLockTab()
+        //{
+        //    int nTasks = 0;
+        //    object o = nTasks;
+        //    List<Task> tasks = new List<Task>();
+        //    IDisposable processLockReleaseToken = null;
+        //    try
+        //    {
+        //        int counter = 1;
+        //        string myKey = "Key," + counter.ToString();
+        //        processLockReleaseToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla");
+
+
+        //        for (int ctr = 0; ctr < 3; ctr++)
+        //            tasks.Add(Task.Run(() =>
+        //            { // Instead of doing some work, just sleep.
+        //                Thread.Sleep(250);
+        //                // Increment the number of tasks.
+        //                if (ctr > 1)
+        //                {
+        //                    counter++;
+        //                }
+        //                myKey = "Key," + counter.ToString();
+        //                try
+        //                {
+        //                    using (var processLockReleaseToken1 = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla"))
+        //                    {
+        //                        Thread.Sleep(25);
+
+        //                    }
+        //                }
+        //                catch (Exception eeee)
+        //                {
+
+        //                    Console.WriteLine(eeee.ToString());
+        //                }
+
+
+
+        //            }));
+        //        Task.WaitAll(tasks.ToArray());
+        //        Console.WriteLine("{0} tasks started and executed.", nTasks);
+        //    }
+        //    catch (AggregateException e)
+        //    {
+        //        String msg = String.Empty;
+        //        foreach (var ie in e.InnerExceptions)
+        //        {
+        //            Console.WriteLine("{0}", ie.GetType().Name);
+        //            if (!msg.Contains(ie.Message))
+        //                msg += ie.Message + Environment.NewLine;
+        //        }
+        //        Console.WriteLine("\nException Message(s):");
+        //        Console.WriteLine(msg);
+        //    }
+        //    finally
+        //    {
+        //        processLockReleaseToken.Dispose();
+        //    }
+
+        //}
 
         public void RestoreAlDec()
         {

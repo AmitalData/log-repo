@@ -34,6 +34,10 @@ using System.Net.Http;
 using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+using System.Web;
 
 namespace CustomsWorkerRole
 {
@@ -94,12 +98,12 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-                
+                DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
                 var myClass = this.GetType().Name;
 
-                
+
 
 
             }
@@ -159,8 +163,11 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                         break;
                     }
+                    if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                    {
+                        _IQueueService.CompleteAsFailed();
+                    }
 
-                    
                     ProccessReceivedMessage();
                     scope.Complete();
                 }
@@ -180,15 +187,15 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             LogMessagingUtil.Instance
                 .AppendLine("ProccessReceivedMessage()")
-                .AppendLine("QUEUEMessageId:"+_ReceivedBrokeredMessage.MessageId)
+                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
                 .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
-                .AppendLine("CommunicationLogId:"+_CommunicationLogId)
-                .AppendLine(",Tenant"+_Tenant);
+                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
+                .AppendLine(",Tenant" + _Tenant);
 
             _Context = CommonDataContext.GetContext(_Tenant);
             _CommunicationLogRep = new CommunicationLogRepository(_Context);
-            
-            
+
+
             _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
             if (_WaitingCommLog == null)
             {
@@ -199,32 +206,12 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 return;
             }
 
-            
-            
+
+
             try
             {
-                if (_ReceivedBrokeredMessage.RetryNumber < 5)
-                {
+                SentWAPIComm();
 
-                    LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
-                    
-                    PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
-
-                    _IQueueService.Complete();
-                    this.LogDoneItemInMemory();
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
-                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
-                    _IQueueService.Complete();
-                }
-                LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
-                _CommunicationLogRep.Update(_WaitingCommLog);
-                _CommunicationLogRep.SubmitChanges();
-                                
-
-                
             }
             catch (Exception exc)
             {
@@ -243,9 +230,34 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
-       
+        private void SentWAPIComm(bool forceRetryFromTester=false)
+        {
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 2)
+            {
+                LastActivity = DateTime.UtcNow;
+                LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
 
-        private bool PostWebAPIAnalyzeAndSaveCommDone( )
+                PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
+                if (!forceRetryFromTester)
+                {
+                    _IQueueService.Complete();
+                }
+                
+                this.LogDoneItemInMemory();
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                _IQueueService.Complete();
+            }
+            LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
+            _CommunicationLogRep.Update(_WaitingCommLog);
+            _CommunicationLogRep.SubmitChanges();
+        }
+
+
+        private bool PostWebAPIAnalyzeAndSaveCommDone()
         {
             try
             {
@@ -278,17 +290,38 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
                 }
                 var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                var courier2MamanCommSettings = JsonConvert.DeserializeObject<Courier2MamanCommSettings>(_WaitingCommLog.LogSettings);
+                var courier2MamanCommSettings = JsonConvert.DeserializeObject<CourierWEBAPICommSettings>(_WaitingCommLog.LogSettings);
                 if (courier2MamanCommSettings == null)
                 {
                     throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
                 }
                 LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
                 GWMessageECTHRData responeGWMessageECTHRData = null;
-                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIBaldarCreateECTHRMessgae}");
+                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIMethod}");
                 string webAPIResultString = null;
-                var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
-                webAPIResultString = service.PostIt(dataJson);
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+
+                switch (@intrface.WEBAPICredentialType)
+                {
+                 
+                    case CourierWEBAPICredentialType.Bearer:
+                        {
+                            var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    case CourierWEBAPICredentialType.NetworkCredential:
+                        {
+                            var service = new WebAPINetworkCredentialMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    default:
+                        throw new Exception("@PostWebAPIAnalyzeAndSaveCommDone():intrface.WEBAPICredentialType IS UNKNOWN");
+                        break;
+                }
+                
                 LogMessagingUtil.Instance.AppendLine("webAPIResultString:" + webAPIResultString);
 
 
@@ -296,29 +329,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
                 IWebAPIMessage2MamanAnalyzer analyzer = null;
-                switch (courier2MamanCommSettings.MessageCode)
+                
+
+
+                
+                if (!string.IsNullOrWhiteSpace(@intrface.ResponseCode))
                 {
-                    case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
-                        {
-                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
-                        }
-                        break;
-                    case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
-                        {
-                            analyzer = new CourierGWMessageECSpclMamanResponseService();
-                        }
-                        break;
-                    default:
-                        throw new Exception("Please register  ");
-                        break;
+                    courier2MamanCommSettings.RqstCommLogID = _WaitingCommLog.Id;
+                    analyzer = new SetInAnalyzeQResponseService();
+                }
+                else
+                {
+                    throw new Exception("All send web api must have @intrface.ResponseCode ");
+                    ///analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
                 }
 
-
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
-                
-
-                
-
 
 
 
@@ -334,17 +360,27 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception e)
             {
-               
+
 
                 throw;
             }
             return true;
         }
 
-        
+        public void DebugStep(string communicationLogId, string @interface, int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                _Tenant = tenant;
+                _CommunicationLogId = communicationLogId;
+                _Context = CommonDataContext.GetContext(_Tenant);
+                _CommunicationLogRep = new CommunicationLogRepository(_Context);
 
-      
-
+                _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
+                SentWAPIComm(true);
+                scope.Complete();
+            }
+        }
     }
 
     public class WebAPI2BearerMamanMessage
@@ -353,9 +389,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         const string BEARER_TOKEN = "Bearer";
         const string agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
         //StringBuilder _StringBuilder = new StringBuilder();
-        private Courier2MamanCommSettings _CourierHawbMamanCommunicationLogSettings;
+        private CourierWEBAPICommSettings _CourierHawbMamanCommunicationLogSettings;
 
-        public WebAPI2BearerMamanMessage(Courier2MamanCommSettings courierHawbMamanCommunicationLogSettings)
+        public WebAPI2BearerMamanMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
         {
             this._CourierHawbMamanCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
         }
@@ -366,7 +402,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             string access_token = "";
             string token_type = "";
-            
+
             try
             {
 
@@ -381,7 +417,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     //var tokenUri = new Uri(new Uri(host), relativeUriToken);
                     //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
                     string tokenReq = "grant_type=password&username=f_moshe&Password=******";
-                    tokenReq = $"grant_type=password&username={_CourierHawbMamanCommunicationLogSettings.username}&Password={_CourierHawbMamanCommunicationLogSettings.password}";
+                    tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
+                    
                     var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
                     LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
                     var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
@@ -410,7 +447,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
                     client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
                     LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
-                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae, content);
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
                     Wait4Finsh(task, 1);
                     myResultString = task.Result.Content.ReadAsStringAsync().Result;
                     LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString }");
@@ -452,7 +489,234 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
-        
     }
 
+
+
+
+    public class WebAPINetworkCredentialMessage
+    {
+        private CourierWEBAPICommSettings _CourierCommunicationLogSettings;
+
+        public WebAPINetworkCredentialMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
+        {
+            this._CourierCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
+        }
+
+        public string PostIt(string dataJson)
+        {
+            string myResultString = "";
+
+            string access_token = "";
+            string token_type = "";
+
+            try
+            {
+
+
+               
+                {
+                    //שם המשתמש: ovrs\crmamital
+                    //סיסמה: Amital123456
+
+                    var myCredentials = new NetworkCredential("", "", "");
+                    myCredentials.UserName = _CourierCommunicationLogSettings.username;//  @"ovrs\crmamital";
+                    myCredentials.Password = _CourierCommunicationLogSettings.password;// "Amital123456";
+
+
+                    
+                    using (var client = new WebClient())
+                    {
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = myCredentials;
+                        client.Encoding = System.Text.Encoding.UTF8;
+
+                        var dataString = dataJson;
+                        //client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=UTF-8");
+                        client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+
+                        myResultString =
+                        client.UploadString(
+                            new Uri(_CourierCommunicationLogSettings.URIMethod /*@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"*/), 
+                            "POST", 
+                            dataString);
+
+                        Console.WriteLine("success");
+                    }
+
+
+                }
+
+
+
+                return myResultString;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+       
+        public static void OVSUpdateHawbStatusTester()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
+
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+
+
+            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99994668068"",""CourierHawbDate"":""2019-02-12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018-12-24T20:00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
+
+            using (var client = new WebClient())
+            {
+                client.UseDefaultCredentials = false;
+                client.Credentials = myCredentials;
+                var url = //"http://localhost:93/Api/Test";
+                    @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+                //var json = client.DownloadString(url);
+
+                var dataString = postData;//JsonConvert.SerializeObject(vm);
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.UploadString(new Uri(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"), "POST", dataString);
+
+                Console.WriteLine("success");
+            }
+
+
+        }
+
+        public static void OVSUpdateHawbStatusTesterNotWork()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
+
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+            //using (var client = new WebClient())
+            //{
+            //    client.UseDefaultCredentials = false;
+            //    client.Credentials = myCredentials;
+            //    var url = //"http://localhost:93/Api/Test";
+            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+            //    var json = client.DownloadString(url);
+            //    Console.WriteLine("success");
+            //}
+
+
+
+
+
+
+
+            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus");
+
+            request.Method = "POST";
+            request.UseDefaultCredentials = false;
+            request.PreAuthenticate = true;
+            request.Credentials = myCredentials;
+
+            // Create POST data and convert it to a byte array.
+            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99376529290"",""CourierHawbDate"":""2019 - 02 - 12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018 - 12 - 24T20: 00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            // Set the ContentType property of the WebRequest.
+            request.ContentType = "application/x-www-form-urlencoded";
+            // Set the ContentLength property of the WebRequest.
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.
+            Stream dataStream = request.GetRequestStream();
+            // Write the data to the request stream.
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.
+            dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            //Console.WriteLine(responseFromServer);
+            // Clean up the streams.
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+
+
+
+        }
+
+        public static void OVSSpecialActionReportingTester()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
+
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+            //using (var client = new WebClient())
+            //{
+            //    client.UseDefaultCredentials = false;
+            //    client.Credentials = myCredentials;
+            //    var url = //"http://localhost:93/Api/Test";
+            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+            //    var json = client.DownloadString(url);
+            //    Console.WriteLine("success");
+            //}
+
+
+
+
+
+
+
+            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/SpecialActionReporting");
+
+            request.Method = "POST";
+            request.UseDefaultCredentials = false;
+            request.PreAuthenticate = true;
+            request.Credentials = myCredentials;
+
+            // Create POST data and convert it to a byte array.
+            var postData = @"{""MessageType"":""C"",""CourierCompanyVat"":""61340333"",""CourierHawbNumber"":""514193408"",""CourierHawbDate"":""2019 - 01 - 31T00: 00:00"",""SpecialActionCode"":""2"",""LabelText1"":"""",""LabelText2"":"""",""LabelText3"":"""",""LabelText4"":"""",""LabelText5"":""""}";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            // Set the ContentType property of the WebRequest.
+            request.ContentType = "application/x-www-form-urlencoded";
+            // Set the ContentLength property of the WebRequest.
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.
+            Stream dataStream = request.GetRequestStream();
+            // Write the data to the request stream.
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.
+            dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            //Console.WriteLine(responseFromServer);
+            // Clean up the streams.
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+
+
+
+        }
+
+    }
 }

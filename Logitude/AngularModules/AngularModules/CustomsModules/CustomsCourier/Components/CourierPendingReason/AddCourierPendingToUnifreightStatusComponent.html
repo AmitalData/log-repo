@@ -55,7 +55,8 @@
                                         <!-- PaymentType -->
                                         <log-column [header]="'Customs.CourierPendingReason.F.Code' | TextCodeTranslationPipe"
                                                     [width]="'200'" [Alignment]="'right'" [binding]="'PendingCode'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.PendingLocalName}}</span>
                                                 </div>
@@ -70,14 +71,17 @@
                                                     </LogLov>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Delete Button-->
                                         <log-column [width]="'50'" [Alignment]="'right'">
-                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteCommand(item)"
+                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeletePendingCommand(item)"
                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

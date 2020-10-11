@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,32 +15,32 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class ModificationAndDiscountTypeListQueryService
     {
-	    private IQueryable<ModificationAndDiscountTypeList> GetIqueryableList(IQueryable<ModificationAndDiscountType> iQueryable)
+        private IQueryable<ModificationAndDiscountTypeList> GetIqueryableList(IQueryable<ModificationAndDiscountType> iQueryable)
         {
             IQueryable<ModificationAndDiscountTypeList> query = (from a in iQueryable
                                                                  where a.Code != "67" && a.Code != "144"
                                                                  select new ModificationAndDiscountTypeList()
-                                                 {
-                                                     Code = a.Code,
-                                                     EnglishName = a.EnglishName,
-                                                     LocalName = a.LocalName,
-                                                     SearchFields = a.SearchFields,
-                                                     Inactive = a.Inactive
-
-                                                 });
+                                                                 {
+                                                                     Code = a.Code,
+                                                                     EnglishName = a.EnglishName,
+                                                                     LocalName = a.LocalName,
+                                                                     SearchFields = a.SearchFields,
+                                                                     Inactive = a.Inactive,
+                                                                     IsRelevantGoodsItem = a.IsRelevantGoodsItem,
+                                                                     IsRelevantInvoice = a.IsRelevantInvoice
+                                                                 });
             return query;
-		}
+        }
 
         private IQueryable<ModificationAndDiscountType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ModificationAndDiscountType> iQueryable)
         {
             return iQueryable;
         }
-	}
+    }
 
 
 }
-	

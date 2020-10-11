@@ -20,17 +20,53 @@ namespace Logitude.Customs.BL
    {
        public List<VehicleTecnologyTypeDetails> GetAll()
        {
-		    var all = new List<VehicleTecnologyTypeDetails>(); 
+		    var all = new List<VehicleTecnologyTypeDetails>();  
+            all.Add(new VehicleTecnologyTypeDetails()
+            {    
+                Code = "0", 
+                SearchFields = "0,הנעה רגילה", 
+                Inactive = false, 
+                LocalName = "הנעה רגילה", 
+			});
+			 
+            all.Add(new VehicleTecnologyTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,היברידי רגיל", 
+                Inactive = false, 
+                LocalName = "היברידי רגיל", 
+			});
+			 
+            all.Add(new VehicleTecnologyTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,Plug in (סוג של היברידי, מנוע בערה + חשמלי)", 
+                Inactive = false, 
+                LocalName = "Plug in (סוג של היברידי, מנוע בערה + חשמלי)", 
+			});
+			 
+            all.Add(new VehicleTecnologyTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,חשמלי", 
+                Inactive = false, 
+                LocalName = "חשמלי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(VehicleTecnologyType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(VehicleTecnologyType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

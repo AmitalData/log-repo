@@ -20,17 +20,49 @@ namespace Logitude.Customs.BL
    {
        public List<InterfaceSendOptionDetails> GetAll()
        {
-		    var all = new List<InterfaceSendOptionDetails>(); 
+		    var all = new List<InterfaceSendOptionDetails>();  
+            all.Add(new InterfaceSendOptionDetails()
+            {    
+                Code = "D", 
+                EnglishName = "DCA Out", 
+                SearchFields = "d,dca out,כספת", 
+                Inactive = false, 
+                LocalName = "כספת", 
+			});
+			 
+            all.Add(new InterfaceSendOptionDetails()
+            {    
+                Code = "WB", 
+                EnglishName = "Asynchronous Web Service", 
+                SearchFields = "wb,asynchronous web service,שליחה ברקע", 
+                Inactive = false, 
+                LocalName = "שליחה ברקע", 
+			});
+			 
+            all.Add(new InterfaceSendOptionDetails()
+            {    
+                Code = "WI", 
+                EnglishName = "Interactive Web Service", 
+                SearchFields = "wi,interactive web service,אינטרקטיבי", 
+                Inactive = false, 
+                LocalName = "אינטרקטיבי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(InterfaceSendOption newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(InterfaceSendOption rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

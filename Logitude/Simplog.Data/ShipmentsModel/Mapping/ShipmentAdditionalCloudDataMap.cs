@@ -35,8 +35,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
               .IsUnicode(true);
 
             this.Property(t => t.DeclarationXmlData).IsMaxLength();
-            this.Property(t => t.DenyReason).HasColumnType("nvarchar").HasMaxLength(1024);
-            this.Property(t => t.ShipmentAddtionalDataXML).HasColumnType("nvarchar");
+            this.Property(t => t.DenyReason).HasMaxLength(1024);
+            this.Property(t => t.ShipmentAddtionalDataXML);
 
             this.Property(t => t.PaymentRequestXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.IsPaymentRequired).IsRequired();

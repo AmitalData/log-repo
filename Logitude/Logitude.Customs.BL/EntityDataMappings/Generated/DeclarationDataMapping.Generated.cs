@@ -120,12 +120,47 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
 	         CourierSuspentionCode, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         IsPaymentProtested, 
+	         AmendmentRequestNumber, 
+	         AmendmentStatus, 
+	         AmendmentissueDate, 
+	         AmendmentRemarks, 
+	         AmendmentDeficitInitiated, 
+	         AmendDeficitInitiatedReasTo, 
+	         AmendmentCorrectedByUserId, 
+	         AmendmentRejectionReason, 
+	         IsAmendment, 
+	         AmendmentOriginalDeclartation, 
+	         IsDiamondDeclaration, 
+	         AmendmentDontDisplayInList, 
+	         IsMissMandatoryDiamond, 
+	         IsValidTicketsDiamond, 
+	         AvailabilityDate, 
+	         LoadingDateTime, 
+	         ShipCode, 
+	         IsExporterConfirmation, 
+	         Direction, 
+	         AgentRoleCode, 
+	         ExportFile, 
+	         DestinationCountryCode, 
+	         ExportAutonomyRegionTypeCode, 
+	         DeclarationTypeCode, 
+	         CancelRequestReasonCode, 
+	         CancelRequestReasonExplanation, 
+	         CancelRequestNumber, 
+	         CustomCancelRequestRemarks, 
+	         CancelRequestStatusCode, 
+	         CancelRequestRejectionReason, 
+	         CancelRequestApproveDate, 
+	         IsClaimable, 
+	         ReplacingRepairRequest, 
+	         AmendmentErrorXml, 
+	         FOBValueNIS, 
+	         FOBValueDollar,
 	      }
 
 
@@ -277,15 +312,75 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
-	         MamanStatusName, 
 	         AcceptanceStatusName, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         CourierMasterId, 
+	         IsClosedForFollowUp, 
+	         FastIndividualProcessCode, 
+	         TotalInvoiceAmountInUSD, 
+	         IsPending902, 
+	         IsCourierMissingClassification, 
+	         MAWB, 
+	         IsPending900, 
+	         CourierPendingReasonList, 
+	         CargoDescription, 
+	         IsPaymentProtested, 
+	         FastIndividualProcessName, 
+	         AmendmentRequestNumber, 
+	         AmendmentStatus, 
+	         AmendmentissueDate, 
+	         AmendmentRemarks, 
+	         AmendmentDeficitInitiated, 
+	         AmendDeficitInitiatedReasTo, 
+	         AmendmentCorrectedByUserId, 
+	         AmendmentRejectionReason, 
+	         IsAmendment, 
+	         AmendmentOriginalDeclartation, 
+	         AmendmentCorrectedByUserName, 
+	         AmendmentStatusName, 
+	         CourierManifestStatusCode, 
+	         CourierPaymentStatusCode, 
+	         IsPendingNotNull, 
+	         IsDiamondDeclaration, 
+	         AmendmentDontDisplayInList, 
+	         AmendmentMessage, 
+	         IsAmendmentDisplayOnly, 
+	         IsMissMandatoryDiamond, 
+	         IsValidTicketsDiamond, 
+	         CustomFileAmendment, 
+	         DeclarationNoAmendment, 
+	         AvailabilityDate, 
+	         AmendmentNumber, 
+	         CourierPendingReasonName, 
+	         AutomaticPayment, 
+	         LoadingDateTime, 
+	         ShipCode, 
+	         IsExporterConfirmation, 
+	         ShipName, 
+	         DestinationCountryName, 
+	         Direction, 
+	         AgentRoleCode, 
+	         ExportFile, 
+	         DestinationCountryCode, 
+	         ExportAutonomyRegionTypeCode, 
+	         DeclarationTypeCode, 
+	         CancelRequestReasonCode, 
+	         CancelRequestReasonExplanation, 
+	         CancelRequestNumber, 
+	         CustomCancelRequestRemarks, 
+	         CancelRequestStatusCode, 
+	         CancelRequestRejectionReason, 
+	         CancelRequestApproveDate, 
+	         IsClaimable, 
+	         CancelRequestStatusName, 
+	         ReplacingRepairRequest, 
+	         AmendmentErrorXml, 
+	         FOBValueNIS, 
+	         FOBValueDollar,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -779,16 +874,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterContact = entityPM.CasualImporterContact;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-				entityPOCO.MamanStatusCode = entityPM.MamanStatusCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-				entityPOCO.MamanErrorXml = entityPM.MamanErrorXml;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))
             {
 				entityPOCO.ItemsProcessTypesList = entityPM.ItemsProcessTypesList;
@@ -807,6 +892,191 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+				entityPOCO.IsPaymentProtested = entityPM.IsPaymentProtested;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRequestNumber))
+            {
+				entityPOCO.AmendmentRequestNumber = entityPM.AmendmentRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentStatus))
+            {
+				entityPOCO.AmendmentStatus = entityPM.AmendmentStatus;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentissueDate))
+            {
+				entityPOCO.AmendmentissueDate = entityPM.AmendmentissueDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRemarks))
+            {
+				entityPOCO.AmendmentRemarks = entityPM.AmendmentRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDeficitInitiated))
+            {
+				entityPOCO.AmendmentDeficitInitiated = entityPM.AmendmentDeficitInitiated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+				entityPOCO.AmendDeficitInitiatedReasTo = entityPM.AmendDeficitInitiatedReasTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentCorrectedByUserId))
+            {
+				entityPOCO.AmendmentCorrectedByUserId = entityPM.AmendmentCorrectedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRejectionReason))
+            {
+				entityPOCO.AmendmentRejectionReason = entityPM.AmendmentRejectionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAmendment))
+            {
+				entityPOCO.IsAmendment = entityPM.IsAmendment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
+            {
+				entityPOCO.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+				entityPOCO.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
+            {
+				entityPOCO.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+				entityPOCO.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+				entityPOCO.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadingDateTime))
+            {
+				entityPOCO.LoadingDateTime = entityPM.LoadingDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipCode))
+            {
+				entityPOCO.ShipCode = entityPM.ShipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExporterConfirmation))
+            {
+				entityPOCO.IsExporterConfirmation = entityPM.IsExporterConfirmation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+				entityPOCO.Direction = entityPM.Direction;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
+            {
+				entityPOCO.AgentRoleCode = entityPM.AgentRoleCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+				entityPOCO.ExportFile = entityPM.ExportFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
+            {
+				entityPOCO.DestinationCountryCode = entityPM.DestinationCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+				entityPOCO.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonCode))
+            {
+				entityPOCO.CancelRequestReasonCode = entityPM.CancelRequestReasonCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonExplanation))
+            {
+				entityPOCO.CancelRequestReasonExplanation = entityPM.CancelRequestReasonExplanation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
+            {
+				entityPOCO.CancelRequestNumber = entityPM.CancelRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
+            {
+				entityPOCO.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestStatusCode))
+            {
+				entityPOCO.CancelRequestStatusCode = entityPM.CancelRequestStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestRejectionReason))
+            {
+				entityPOCO.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+				entityPOCO.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
+            {
+				entityPOCO.IsClaimable = entityPM.IsClaimable;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReplacingRepairRequest))
+            {
+				entityPOCO.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
+            {
+				entityPOCO.AmendmentErrorXml = entityPM.AmendmentErrorXml;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueNIS))
+            {
+				entityPOCO.FOBValueNIS = entityPM.FOBValueNIS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
+            {
+				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1305,16 +1575,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterContact = entityPOCO.CasualImporterContact;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanStatusCode))
-            {
-					entityPM.MamanStatusCode = entityPOCO.MamanStatusCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanErrorXml))
-            {
-					entityPM.MamanErrorXml = entityPOCO.MamanErrorXml;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemsProcessTypesList))
             {
 					entityPM.ItemsProcessTypesList = entityPOCO.ItemsProcessTypesList;
@@ -1333,6 +1593,191 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositionStatusCode))
             {
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentProtested))
+            {
+					entityPM.IsPaymentProtested = entityPOCO.IsPaymentProtested;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRequestNumber))
+            {
+					entityPM.AmendmentRequestNumber = entityPOCO.AmendmentRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentStatus))
+            {
+					entityPM.AmendmentStatus = entityPOCO.AmendmentStatus;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentissueDate))
+            {
+					entityPM.AmendmentissueDate = entityPOCO.AmendmentissueDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRemarks))
+            {
+					entityPM.AmendmentRemarks = entityPOCO.AmendmentRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDeficitInitiated))
+            {
+					entityPM.AmendmentDeficitInitiated = entityPOCO.AmendmentDeficitInitiated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+					entityPM.AmendDeficitInitiatedReasTo = entityPOCO.AmendDeficitInitiatedReasTo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentCorrectedByUserId))
+            {
+					entityPM.AmendmentCorrectedByUserId = entityPOCO.AmendmentCorrectedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRejectionReason))
+            {
+					entityPM.AmendmentRejectionReason = entityPOCO.AmendmentRejectionReason;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAmendment))
+            {
+					entityPM.IsAmendment = entityPOCO.IsAmendment;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentOriginalDeclartation))
+            {
+					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDontDisplayInList))
+            {
+					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMissMandatoryDiamond))
+            {
+					entityPM.IsMissMandatoryDiamond = entityPOCO.IsMissMandatoryDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsValidTicketsDiamond))
+            {
+					entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AvailabilityDate))
+            {
+					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LoadingDateTime))
+            {
+					entityPM.LoadingDateTime = entityPOCO.LoadingDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipCode))
+            {
+					entityPM.ShipCode = entityPOCO.ShipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExporterConfirmation))
+            {
+					entityPM.IsExporterConfirmation = entityPOCO.IsExporterConfirmation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Direction))
+            {
+					entityPM.Direction = entityPOCO.Direction;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AgentRoleCode))
+            {
+					entityPM.AgentRoleCode = entityPOCO.AgentRoleCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFile))
+            {
+					entityPM.ExportFile = entityPOCO.ExportFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationCountryCode))
+            {
+					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+					entityPM.ExportAutonomyRegionTypeCode = entityPOCO.ExportAutonomyRegionTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
+            {
+					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestReasonCode))
+            {
+					entityPM.CancelRequestReasonCode = entityPOCO.CancelRequestReasonCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestReasonExplanation))
+            {
+					entityPM.CancelRequestReasonExplanation = entityPOCO.CancelRequestReasonExplanation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestNumber))
+            {
+					entityPM.CancelRequestNumber = entityPOCO.CancelRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomCancelRequestRemarks))
+            {
+					entityPM.CustomCancelRequestRemarks = entityPOCO.CustomCancelRequestRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestStatusCode))
+            {
+					entityPM.CancelRequestStatusCode = entityPOCO.CancelRequestStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestRejectionReason))
+            {
+					entityPM.CancelRequestRejectionReason = entityPOCO.CancelRequestRejectionReason;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestApproveDate))
+            {
+					entityPM.CancelRequestApproveDate = entityPOCO.CancelRequestApproveDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsClaimable))
+            {
+					entityPM.IsClaimable = entityPOCO.IsClaimable;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReplacingRepairRequest))
+            {
+					entityPM.ReplacingRepairRequest = entityPOCO.ReplacingRepairRequest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentErrorXml))
+            {
+					entityPM.AmendmentErrorXml = entityPOCO.AmendmentErrorXml;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FOBValueNIS))
+            {
+					entityPM.FOBValueNIS = entityPOCO.FOBValueNIS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FOBValueDollar))
+            {
+					entityPM.FOBValueDollar = entityPOCO.FOBValueDollar;
             }
 
 		}
@@ -1826,16 +2271,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CasualImporterContact = entityPM.CasualImporterContact;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-                oldEntityPM.MamanStatusCode = entityPM.MamanStatusCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-                oldEntityPM.MamanErrorXml = entityPM.MamanErrorXml;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))
             {
                 oldEntityPM.ItemsProcessTypesList = entityPM.ItemsProcessTypesList;
@@ -1854,6 +2289,191 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+                oldEntityPM.IsPaymentProtested = entityPM.IsPaymentProtested;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRequestNumber))
+            {
+                oldEntityPM.AmendmentRequestNumber = entityPM.AmendmentRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentStatus))
+            {
+                oldEntityPM.AmendmentStatus = entityPM.AmendmentStatus;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentissueDate))
+            {
+                oldEntityPM.AmendmentissueDate = entityPM.AmendmentissueDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRemarks))
+            {
+                oldEntityPM.AmendmentRemarks = entityPM.AmendmentRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDeficitInitiated))
+            {
+                oldEntityPM.AmendmentDeficitInitiated = entityPM.AmendmentDeficitInitiated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+                oldEntityPM.AmendDeficitInitiatedReasTo = entityPM.AmendDeficitInitiatedReasTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentCorrectedByUserId))
+            {
+                oldEntityPM.AmendmentCorrectedByUserId = entityPM.AmendmentCorrectedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRejectionReason))
+            {
+                oldEntityPM.AmendmentRejectionReason = entityPM.AmendmentRejectionReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAmendment))
+            {
+                oldEntityPM.IsAmendment = entityPM.IsAmendment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
+            {
+                oldEntityPM.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+                oldEntityPM.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
+            {
+                oldEntityPM.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+                oldEntityPM.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+                oldEntityPM.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+                oldEntityPM.AvailabilityDate = entityPM.AvailabilityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadingDateTime))
+            {
+                oldEntityPM.LoadingDateTime = entityPM.LoadingDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipCode))
+            {
+                oldEntityPM.ShipCode = entityPM.ShipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExporterConfirmation))
+            {
+                oldEntityPM.IsExporterConfirmation = entityPM.IsExporterConfirmation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+                oldEntityPM.Direction = entityPM.Direction;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
+            {
+                oldEntityPM.AgentRoleCode = entityPM.AgentRoleCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+                oldEntityPM.ExportFile = entityPM.ExportFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
+            {
+                oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+                oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonCode))
+            {
+                oldEntityPM.CancelRequestReasonCode = entityPM.CancelRequestReasonCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonExplanation))
+            {
+                oldEntityPM.CancelRequestReasonExplanation = entityPM.CancelRequestReasonExplanation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
+            {
+                oldEntityPM.CancelRequestNumber = entityPM.CancelRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
+            {
+                oldEntityPM.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestStatusCode))
+            {
+                oldEntityPM.CancelRequestStatusCode = entityPM.CancelRequestStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestRejectionReason))
+            {
+                oldEntityPM.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+                oldEntityPM.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
+            {
+                oldEntityPM.IsClaimable = entityPM.IsClaimable;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReplacingRepairRequest))
+            {
+                oldEntityPM.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
+            {
+                oldEntityPM.AmendmentErrorXml = entityPM.AmendmentErrorXml;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueNIS))
+            {
+                oldEntityPM.FOBValueNIS = entityPM.FOBValueNIS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
+            {
+                oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
 		}
@@ -1936,6 +2556,34 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CasualImporterContact)) //T4 find type == nText 
             {
                 entityPM.CasualImporterContact = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualImporterContact));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRemarks)) //T4 find type == nText 
+            {
+                entityPM.AmendmentRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendDeficitInitiatedReasTo)) //T4 find type == nText 
+            {
+                entityPM.AmendDeficitInitiatedReasTo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendDeficitInitiatedReasTo));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
+            {
+                entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestReasonExplanation)) //T4 find type == nText 
+            {
+                entityPM.CancelRequestReasonExplanation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestReasonExplanation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomCancelRequestRemarks)) //T4 find type == nText 
+            {
+                entityPM.CustomCancelRequestRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomCancelRequestRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestRejectionReason)) //T4 find type == nText 
+            {
+                entityPM.CancelRequestRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestRejectionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
+            {
+                entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

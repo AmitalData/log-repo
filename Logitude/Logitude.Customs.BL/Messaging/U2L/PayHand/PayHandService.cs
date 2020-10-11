@@ -35,6 +35,10 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.AmitalMessaging.Customs.CustomFile;
 
 namespace Logitude.Customs.BL.Messaging.U2L.PayHand
 {
@@ -48,6 +52,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
         private DeclarationPaymentPM declarationPaymentPM;
+        private DbContextBase _AmitalContext;
 
         public PayHandService()
             : base(
@@ -335,8 +340,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
                     RequestName = "send declaration payment request",
                     ResponseName = "send declaration payment response",
                     RequestVIA = SendRequestVIA.WebServiceBatch,
-                //ForcePersonalSign = _ForcePersonalSign,
-            };
+                    //ForcePersonalSign = _ForcePersonalSign,
+                };
                 SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
 
             }
@@ -396,15 +401,113 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
 
         private CustomBankList GetBank()
         {
+            Boolean BlockAgentBankForMasabDefaultValue = false;
+            string defValue = GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", ResolvedTenant());
+            if (defValue == "Y")
+            {
+                BlockAgentBankForMasabDefaultValue = true;
+            }
             CustomBankQueryService customBankQueryService = new CustomBankQueryService(_context);
+            CustomBankListQueryService customBankListQueryService = new CustomBankListQueryService(_context);
             List<CustomBankList> customBanksList = new List<CustomBankList>();
-            CustomBankList customBankList = new CustomBankList();
-            customBanksList = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId,_MyDeclarationPM.Tenant);
-            if (customBanksList != null && customBanksList.Count() > 0) customBankList = customBanksList.Where(d => !d.InActive).FirstOrDefault();
-
+            CustomBankList customBankList = null;
+            customBanksList = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
+            if (customBanksList != null && customBanksList.Count() == 1) customBankList = customBanksList.Where(d => !d.InActive).FirstOrDefault();
+            if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+            {
+                if(!BlockAgentBankForMasabDefaultValue)
+                {
+                    customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.PayerTypeCode == "3" && !r.InActive).ToList();
+                    if (customBanksList != null && customBanksList.Count() == 1)
+                    {
+                        customBankList = customBanksList.FirstOrDefault();
+                    }
+                }
+            }
+            if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+            {
+                Boolean credit = false;
+                if(credit)customBankList = GetBankFromCreditCheck(customBankListQueryService, customBanksList);
+                if (customBankList == null || string.IsNullOrWhiteSpace(customBankList.BankCode))
+                {
+                    if (!string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomerCode))
+                    {
+                        string bank = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
+                        if (!String.IsNullOrWhiteSpace(bank))
+                        {
+                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == bank && !r.InActive).ToList();
+                            customBankList = customBanksList.FirstOrDefault();
+                        }
+                    }
+                }
+            }
+                //customBanksList = customBanksList.Where(r => !r.InActive && r.PayerTypeCode == "3");
             return customBankList;
         }
-        
+
+        private CustomBankList GetBankFromCreditCheck(CustomBankListQueryService customBankListQueryService, List<CustomBankList> customBanksList)
+        {
+            using (_AmitalContext = AmitalContext.GetContext(this._MyDeclarationPM.Tenant))
+            {
+                CustomBankList customBankList = new CustomBankList();
+                using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
+                {
+                    try
+                    {
+                        string user = this.MyCommunicationsParams.LoggingUserId;
+                        if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+                        CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+                        {
+                            Tenant = _MyDeclarationPM.Tenant,
+                            AppicationId = declarationPaymentPM.DeclarationId,
+                            LoggingEnabled = true,
+                            LoggingEntityId = _MyDeclarationPM.Id,
+                            InterfaceTypeCode = "2755",
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            LoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                            LoggingUserId = user,
+                            RequestName = "Send Credit to Get Bank Request",
+                            ResponseName = "Get Credit to Get Bank Response",
+                            Mode = "GetBank",
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                        };
+                        var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+                        CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+                        if (creditResponseData.CustomFileCredit != null && !String.IsNullOrWhiteSpace(creditResponseData.CustomFileCredit[0].BankCode))
+                        {
+                            customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == creditResponseData.CustomFileCredit[0].BankCode && !r.InActive).ToList();
+                            customBankList = customBanksList.FirstOrDefault();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update: " + e.ToString());
+                        LogMessagingUtil.Instance.AppendLine(logger.ToString(2040));
+                        // throw;
+                    }
+                }
+                return customBankList;
+            }
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
         void DeserilazeObject(string xmlLOGIPAYHAND)
         {
 

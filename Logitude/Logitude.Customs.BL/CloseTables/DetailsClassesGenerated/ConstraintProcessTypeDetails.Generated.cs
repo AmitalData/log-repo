@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<ConstraintProcessTypeDetails> GetAll()
        {
-		    var all = new List<ConstraintProcessTypeDetails>(); 
+		    var all = new List<ConstraintProcessTypeDetails>();  
+            all.Add(new ConstraintProcessTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,הגשה", 
+                Inactive = false, 
+                LocalName = "הגשה", 
+			});
+			 
+            all.Add(new ConstraintProcessTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,התרה", 
+                Inactive = false, 
+                LocalName = "התרה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ConstraintProcessType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ConstraintProcessType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -93,10 +93,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string AcceptanceStatusCode  { get; set; }
        [DataMember]
-       public string MamanStatusCode  { get; set; }
-       [DataMember]
-       public string MamanErrorXml  { get; set; }
-       [DataMember]
        public string CourierSuspentionCode  { get; set; }
        [DataMember]
        public string CourierSuspentionName  { get; set; }
@@ -104,6 +100,58 @@ namespace Logitude.Customs.Data.EntityLists
        public string SpecialActionStatus  { get; set; }
        [DataMember]
        public string SpecialActionsErrorXml  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonErrorPlace  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessCode  { get; set; }
+       [DataMember]
+       public string ManualProcessCode  { get; set; }
+       [DataMember]
+       public string TerminalSuspentionNumber  { get; set; }
+       [DataMember]
+       public string LastMileStatusCode  { get; set; }
+       [DataMember]
+       public DateTime? LastMileStatusDate  { get; set; }
+       [DataMember]
+       public string LastMileStatusRemarks  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusCode  { get; set; }
+       [DataMember]
+       public string StorageSiteErrorText  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusName  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonList  { get; set; }
+       [DataMember]
+       public string AirlineId  { get; set; }
+       [DataMember]
+       public string MAWB  { get; set; }
+       [DataMember]
+       public decimal? MasterGrossMassMeasure  { get; set; }
+       [DataMember]
+       public int? MasterPackageQuantity  { get; set; }
+       [DataMember]
+       public DateTime? MasterCreateDateTime  { get; set; }
+       [DataMember]
+       public string MasterGatewayPortCode  { get; set; }
+       [DataMember]
+       public DateTime? MasterEstimatedArrivalDate  { get; set; }
+       [DataMember]
+       public string MasterStorageSiteCode  { get; set; }
+       [DataMember]
+       public string MasterHAWB  { get; set; }
+       [DataMember]
+       public string LastMileStatusName  { get; set; }
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+       [DataMember]
+       public string SortedImporterCode  { get; set; }
+       [DataMember]
+       public string SortedDocumentStatusCode  { get; set; }
+       [DataMember]
+       public string SortedCourierManifestStatus  { get; set; }
+       [DataMember]
+       public string SortedCourierDeclarationStatus  { get; set; }
    }
 
 }

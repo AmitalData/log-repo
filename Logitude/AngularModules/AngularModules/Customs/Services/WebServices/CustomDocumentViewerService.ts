@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -18,7 +19,7 @@ export class CustomDocumentViewerService {
 
     }
 
-    GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean) {
+    GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean,angle: number=0) {
 
         return defer(() => {
 
@@ -31,9 +32,7 @@ export class CustomDocumentViewerService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni + '&angle=' +angle, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var json = response;
 

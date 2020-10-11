@@ -20,17 +20,261 @@ namespace Logitude.Customs.BL
    {
        public List<CargoIdentifireTypeDetails> GetAll()
        {
-		    var all = new List<CargoIdentifireTypeDetails>(); 
+		    var all = new List<CargoIdentifireTypeDetails>();  
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,שטר מטען אווירי", 
+                Inactive = false, 
+                LocalName = "שטר מטען אווירי", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,מ'ר 30 משהב''ט", 
+                Inactive = false, 
+                LocalName = "מ'ר 30 משהב''ט", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,מזהה עסקה ימי", 
+                Inactive = false, 
+                LocalName = "מזהה עסקה ימי", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,תעודת אחסנה מסופית", 
+                Inactive = false, 
+                LocalName = "תעודת אחסנה מסופית", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,תעודת אחסנה נמלית", 
+                Inactive = false, 
+                LocalName = "תעודת אחסנה נמלית", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,סב''ן", 
+                Inactive = false, 
+                LocalName = "סב''ן", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,מספר חשבונית", 
+                Inactive = false, 
+                LocalName = "מספר חשבונית", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,שטר מטען אווירי יצוא", 
+                Inactive = false, 
+                LocalName = "שטר מטען אווירי יצוא", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,שטר מטען בלדר יבוא", 
+                Inactive = false, 
+                LocalName = "שטר מטען בלדר יבוא", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,שטר מטען בלדר יצוא/שטעון", 
+                Inactive = false, 
+                LocalName = "שטר מטען בלדר יצוא/שטעון", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,מספר בקשת שינוע", 
+                Inactive = false, 
+                LocalName = "מספר בקשת שינוע", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,חבילות דואר רגילה", 
+                Inactive = false, 
+                LocalName = "חבילות דואר רגילה", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,מזהה עסקה יבשתי", 
+                Inactive = false, 
+                LocalName = "מזהה עסקה יבשתי", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,מזהה עסקה ימי יצוא", 
+                Inactive = false, 
+                LocalName = "מזהה עסקה ימי יצוא", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,מכולה ריקה", 
+                Inactive = false, 
+                LocalName = "מכולה ריקה", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,מצהר מלא", 
+                Inactive = false, 
+                LocalName = "מצהר מלא", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,מטען ימי מפוצל", 
+                Inactive = false, 
+                LocalName = "מטען ימי מפוצל", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "25", 
+                SearchFields = "25,מטען אווירי מפוצל", 
+                Inactive = false, 
+                LocalName = "מטען אווירי מפוצל", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,מטען יבשתי מפוצל", 
+                Inactive = false, 
+                LocalName = "מטען יבשתי מפוצל", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "27", 
+                SearchFields = "27,מטען מכס", 
+                Inactive = false, 
+                LocalName = "מטען מכס", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "28", 
+                SearchFields = "28,מטען בליווי נוסע", 
+                Inactive = false, 
+                LocalName = "מטען בליווי נוסע", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,חבילות דואר EMS", 
+                Inactive = false, 
+                LocalName = "חבילות דואר EMS", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,צרור רשום", 
+                Inactive = false, 
+                LocalName = "צרור רשום", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,צרור לא רשום רגיל", 
+                Inactive = false, 
+                LocalName = "צרור לא רשום רגיל", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,צרור אקספרס", 
+                Inactive = false, 
+                LocalName = "צרור אקספרס", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,תעודת עיכוב", 
+                Inactive = false, 
+                LocalName = "תעודת עיכוב", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,הצהרת אחסנה", 
+                Inactive = false, 
+                LocalName = "הצהרת אחסנה", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,אב''ת", 
+                Inactive = false, 
+                LocalName = "אב''ת", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "998", 
+                SearchFields = "998,בקשת העברה יצוא מנמל אחר -  הסבות", 
+                Inactive = false, 
+                LocalName = "בקשת העברה יצוא מנמל אחר -  הסבות", 
+			});
+			 
+            all.Add(new CargoIdentifireTypeDetails()
+            {    
+                Code = "999", 
+                SearchFields = "999,יצוא מאוטונומיה - הסבות", 
+                Inactive = false, 
+                LocalName = "יצוא מאוטונומיה - הסבות", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CargoIdentifireType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CargoIdentifireType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -158,102 +158,7 @@ namespace CommunicationWorkerRole
 
                 if (!General.IsUpdating())
                 {
-                    try
-                    {
-                        Tenant = 0;
-                        queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("SchedularQueue", Tenant);
-                        var message = queueservice.Receive();
-                        LastActivity = DateTime.UtcNow;
-                        if (message != null && message.MessageValues != null)
-                        {
-
-                            try
-                            {
-                                string Id = message.MessageValues["TaskId"].ToString();
-                                Tenant = int.Parse(message.MessageValues["Tenant"]);
-                                int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
-                                int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
-                                if (!string.IsNullOrEmpty(Id))
-                                {
-                                    var objectContext = WebFreightContext.GetContext(Tenant);
-                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
-                                    TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
-                                    TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
-                                    TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
-                                    Task.Retries = Retries;
-                                    Task.LastRunStartTime = TenantServerConfigration.GetCurrentDateTime(Task.Tenant);
-                                    Task.LastRunStartTimeUTC = DateTime.UtcNow;
-                                    if (Task != null)
-                                    {
-                                        if (Task.InActive)
-                                        {
-                                            queueservice.Complete();
-                                        }
-                                        else
-                                        {
-                                            if (Version >= Task.Version)
-                                            {
-                                                List<object> args = new List<object>();
-                                                if (!string.IsNullOrEmpty(Task.Id))
-                                                {
-                                                    args.Add(Task.Id);
-                                                }
-                                                args.Add(Task.Tenant);
-
-
-                                                object[] ArrArgs = args.ToArray();
-                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
-                                                Task.Status = "In progress";
-                                                WRItem.Task = Task;
-                                                WRItem.queueservice = queueservice;
-                                                WRItem.RetryNumber = message.RetryNumber;
-                                                WRItem.MessageId = message.MessageId;
-                                                Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
-                                                //Task.Status = "In progress";
-                                                service.Update(Task);
-                                                var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                                                if (CurThread != null)
-                                                {
-                                                    TasksThreads.Remove(CurThread);
-                                                }
-                                                thread.Start();
-                                                TasksThreads.Add(thread);
-                                                //queueservice.Complete();
-                                                //AddSchedulerQueue(Task);// need to be Moved
-                                            }
-
-                                            queueservice.Complete();
-                                        }
-                                      
-
-
-                                    }
-
-
-                                    //queueservice.Complete();
-
-                                    // Add New Queue for the executed WR
-                                }
-
-                                //queueservice.Complete();
-                                LogDoneItemInMemory();
-                            }
-                            catch (Exception ex)
-                            {
-
-                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
-                                queueservice.CompleteAsFailed();
-                            }
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular worker role start", null, null);
-                        Thread.Sleep(10000);
-                    }
+                    ReceiveOnce();
 
                 }
                 else
@@ -262,6 +167,115 @@ namespace CommunicationWorkerRole
                 }
             }
         }
+
+        public void ReceiveOnce()
+        {
+            try
+            {
+                Tenant = 0;
+                queueservice = new DbQueueService();
+                queueservice.InitializeQueue("SchedularQueue", Tenant);
+                var message = queueservice.Receive();
+                LastActivity = DateTime.UtcNow;
+                if (message != null && message.MessageValues != null)
+                {
+
+                    try
+                    {
+                        string Id = message.MessageValues["TaskId"].ToString();
+                        Tenant = int.Parse(message.MessageValues["Tenant"]);
+                        int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
+                        int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
+                        if (!string.IsNullOrEmpty(Id))
+                        {
+                            var objectContext = WebFreightContext.GetContext(Tenant);
+                            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
+                            TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
+                            TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
+                            TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
+                            Task.Retries = Retries;
+                            Task.LastRunStartTime = TenantServerConfigration.GetCurrentDateTime(Task.Tenant);
+                            Task.LastRunStartTimeUTC = DateTime.UtcNow;
+                            if (Task != null)
+                            {
+                                if (Task.InActive)
+                                {
+                                    queueservice.Complete();
+                                }
+                                else
+                                {
+                                    if (Version >= Task.Version)
+                                    {
+                                        List<object> args = new List<object>();
+                                        if (!string.IsNullOrEmpty(Task.Id))
+                                        {
+                                            args.Add(Task.Id);
+                                        }
+                                        args.Add(Task.Tenant);
+
+
+                                        object[] ArrArgs = args.ToArray();
+                                        var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
+                                        Task.Status = "In progress";
+                                        WRItem.Task = Task;
+                                        WRItem.queueservice = queueservice;
+                                        WRItem.RetryNumber = message.RetryNumber;
+                                        WRItem.MessageId = message.MessageId;
+                                        Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
+                                        //Task.Status = "In progress";
+                                        service.Update(Task);
+                                        var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                        if (CurThread != null)
+                                        {
+                                            TasksThreads.Remove(CurThread);
+                                        }
+                                        thread.Start();
+                                        TasksThreads.Add(thread);
+                                        bool testOnCurrentThread = false;
+                                        if (testOnCurrentThread)// tester !!
+                                        {
+                                            thread.Join();
+                                        }
+
+                                        //queueservice.Complete();
+                                        //AddSchedulerQueue(Task);// need to be Moved
+                                    }
+
+                                    queueservice.Complete();
+                                }
+
+
+
+                            }
+
+
+                            //queueservice.Complete();
+
+                            // Add New Queue for the executed WR
+                        }
+
+                        //queueservice.Complete();
+                        LogDoneItemInMemory();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
+                        queueservice.CompleteAsFailed();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular worker role start", null, null);
+                Thread.Sleep(10000);
+            }
+        }
+
+              
+
         //private void AddSchedulerQueue(TasksSchedulerPM task)
         //{
         //    var queueservice = new DbQueueService();
@@ -408,6 +422,39 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular Worker Role start", null, null);
             }
+        }
+    }
+
+
+
+    /// <summary>
+    /// Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('CustomsSchedularWR','CustomsSchedularWR');
+    //  Insert into BATCHSERVICESDEFINITIONMODS(CODE, INACTIVE, NUMBEROFTHREADS) values('CustomsSchedularWR',0,1);
+    /// </summary>
+    public class CustomsSchedularWR
+    : Logitude.Server.Tools.WorkerEntryPointDoneLog
+    {
+        SchedularWorkerRole _SchedularWorkerRole;
+        public CustomsSchedularWR()
+        {
+            _SchedularWorkerRole = new SchedularWorkerRole();
+        }
+        public override void StartMe()
+        {
+            
+        }
+
+        bool _Start = false;
+        public override void WorkOnce()
+        {
+            if (!_Start)
+            {
+                _SchedularWorkerRole.OnStart();
+                _Start = true;
+            }
+            _SchedularWorkerRole.ReceiveOnce();
+
+
         }
     }
 }

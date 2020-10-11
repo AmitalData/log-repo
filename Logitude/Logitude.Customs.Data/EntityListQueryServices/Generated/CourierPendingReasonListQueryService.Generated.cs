@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Code);
+                                query2 = query2.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Code);
+                query2 = query2.OrderBy(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CourierPendingReasonList GetSingle(string code)
+        public CourierPendingReasonList GetSingle(string id)
         {
             IQueryable<CourierPendingReason> CourierPendingReasonQuery = (from a in context.CourierPendingReasons
-                                                       where a.Code == code
+                                                       where a.Id == id
                                                        select a);
 
              

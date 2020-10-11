@@ -1,4 +1,5 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             return null;
         }
         public bool ToCancelSheetAfterGetRequest { protected set; get; }
+
+        public virtual void OnRequestFail(TRequestParams requestParams)
+        {
+            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentKey((requestParams as RequestParamsBase));
+
+        }
 
     }
 }

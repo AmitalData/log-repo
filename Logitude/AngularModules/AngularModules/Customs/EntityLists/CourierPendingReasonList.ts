@@ -8,6 +8,7 @@
 
 export class CourierPendingReasonList {
    
+	Id: string;
 	Code: string;
 	LocalName: string;
 	SearchFields: string;

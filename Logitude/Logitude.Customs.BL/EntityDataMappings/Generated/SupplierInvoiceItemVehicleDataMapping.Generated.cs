@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RichbitFileNumber, 
 	         VehicleId, 
 	         Tenant, 
-	         ExcludeFromInterface,
+	         ExcludeFromInterface, 
+	         IdentifierID,
 	      }
 
 
@@ -50,7 +51,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VehicleId, 
 	         Tenant, 
 	         RichbitFileStatus, 
-	         ExcludeFromInterface,
+	         ExcludeFromInterface, 
+	         IdentifierID, 
+	         VehicleTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +95,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromInterface))
             {
 				entityPOCO.ExcludeFromInterface = entityPM.ExcludeFromInterface;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IdentifierID))
+            {
+				entityPOCO.IdentifierID = entityPM.IdentifierID;
 			}
 			}
 
@@ -153,6 +161,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExcludeFromInterface = entityPOCO.ExcludeFromInterface;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IdentifierID))
+            {
+					entityPM.IdentifierID = entityPOCO.IdentifierID;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemVehiclePM entityPM, SupplierInvoiceItemVehiclePM oldEntityPM)
@@ -194,6 +207,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ExcludeFromInterface = entityPM.ExcludeFromInterface;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IdentifierID))
+            {
+                oldEntityPM.IdentifierID = entityPM.IdentifierID;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(SupplierInvoiceItemVehiclePM entityPM)
@@ -202,6 +220,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.IdentifierID)) //T4 find type == nText 
+            {
+                entityPM.IdentifierID = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.IdentifierID));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -135,6 +135,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string objectfieldCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectfieldCode  
+	   {
+	    
+	     get
+		{
+		   return objectfieldCode;
+		 }
+		 set
+		 {
+		   if(objectfieldCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectfieldCode",OldValue=objectfieldCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   objectfieldCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isImport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsImport  
+	   {
+	    
+	     get
+		{
+		   return isImport;
+		 }
+		 set
+		 {
+		   if(isImport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsImport",OldValue=isImport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isImport=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsExport  
+	   {
+	    
+	     get
+		{
+		   return isExport;
+		 }
+		 set
+		 {
+		   if(isExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExport",OldValue=isExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

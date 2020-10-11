@@ -5,6 +5,7 @@ import {ServiceArgs} from '../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import { defer, of } from 'rxjs';
+
 @Injectable()
 
 export class EntityLastActivityService {

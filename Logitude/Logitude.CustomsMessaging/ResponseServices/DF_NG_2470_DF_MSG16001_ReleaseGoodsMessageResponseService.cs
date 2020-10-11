@@ -50,7 +50,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    
                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
                     //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "2470ResponseService.Update"))
-                    disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                    disposableToken =
+                        ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant,true, key, "2470ResponseService.Update");
                 }
                 {
 
@@ -97,7 +99,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
-                            declarationPM.CourierCustomStatusCode = "1";
+                            if(declarationPM.IsCourierDeclaration)
+                            {
+                                declarationPM.CourierCustomStatusCode = "1";
+
+                                LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
+                                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id,true,true);
+                                declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationCourierStatusPM.IsClosedForFollowUp = true;
+                                declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+                            }
                             declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
@@ -142,7 +155,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     declarationUpdateService.Update(declarationPM, true);
-                    LogMessagingUtil.Instance.AppendLine("declarationUpdateService.UpdateD");
+                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
 
                     MyRequestSheetParam.EntityId1 = declarationPM.Id;
                     if (declarationPM.IsConvertedDeclaration)
@@ -189,6 +202,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 return;
             }
+            var consignment1st = declarationPM.Consignments.FirstOrDefault() ?? new ConsignmentPM();
+            LogMessagingUtil.Instance.AppendLine("2470 consignment1st.StorageSiteCode=" + consignment1st.StorageSiteCode ?? "none");
+            if (consignment1st.StorageSiteCode != "ILMMN")
+            {
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("send 2470 2 ILMMN");
+
             var customsResponseXml = XmlGenericUtil<DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage>.SerializeObject(customResponse);
             var customsResponseBytes = System.Text.UTF8Encoding.UTF8.GetBytes(customsResponseXml);
             var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
@@ -237,7 +258,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
                         if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0)
                         {
-                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault()./*TimeOfDay.*/ToString("hh:mm") + "   " + MyResponseData.releaseDate;
                         }
                     }
 

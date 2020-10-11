@@ -245,6 +245,9 @@ export class EditComponent implements OnDestroy {
             this.entityArgs.EditComponent = this;
             this.SendActivityLog();
             this.BuildComponent();
+            if (this.IsSplitComponentOpened) {
+                this.LoadSplitComponent();
+            }
         }
         else {
             this.StopBusyIndicator();
@@ -704,8 +707,7 @@ export class EditComponent implements OnDestroy {
         allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-
-        for (var i = 0; i < allTabs.length; i++) {
+         for (var i = 0; i < allTabs.length; i++) {
             var tab = allTabs[i];
 
             if (tab.ControlPath != null) {
@@ -722,6 +724,8 @@ export class EditComponent implements OnDestroy {
                         continue;
                     }
                 }
+
+
 
 
                 //if (tab.ControlPath.indexOf("WarehouseConnectionsTabComponent") != -1) {
@@ -900,16 +904,7 @@ export class EditComponent implements OnDestroy {
                 break;
             }
 
-            case "Customs.Declaration": {
-                //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
-                //if (customsSetting != null) {
-                //    if (customsSetting.IsConnectedToUniFreight) {
-                //        tabItem = objectTableTabs.Where(t => t.Code == "DCMF").FirstOrDefault();
-                //        objectTableTabs.Remove(tabItem);
-                //    }
-                //}
-                break;
-            }
+          
             case "ARPayment": {
 
                 if (this.EntityPM.IsFullAccounting) {
@@ -925,7 +920,10 @@ export class EditComponent implements OnDestroy {
                 break;
             }
         }
-
+        this.EditComponentController.FilterTabs(allTabs);
+          
+          
+          
         return allTabs;
     }
     private OnEntityCreated() {
@@ -1664,7 +1662,7 @@ export class EditComponent implements OnDestroy {
 
     LoadSplitComponent() {
 
-
+       
         let locs = this.AllLocations.toArray();
         let myLocation: LocationDirective = locs.filter(f => f.Code == 'SplitComponentLocation')[0];
 
@@ -1674,7 +1672,7 @@ export class EditComponent implements OnDestroy {
             //this.myLocation.clear();
             var splitComponentPath = this.ObjectTable.SplitComponentPath;
             //var splitComponentPath = "./Customs/AngularModules/AngularModules/Customs/Components/Declaration/DeclarationSplitComponent";
-
+            myLocation.viewContainerRef.clear();
             SessionLocator.DynamicLoader.Load(splitComponentPath, myLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.SetComponentArgs({ EntityPM: this.EntityPM });
@@ -1692,6 +1690,7 @@ export class EditComponent implements OnDestroy {
         // state: opened / closed
         var defaultFilterCode: string = LastFilterClass.GetFilterValue("DeclarationEditControl", this.EntityPM.Id);
         if (defaultFilterCode == "true") {
+            if(!this.IsSplitComponentOpened)
             this.SplitButtonClicked(); // open split section
         }
 
@@ -1743,10 +1742,10 @@ export class EditComponent implements OnDestroy {
     nextPreviousTimerToken: any;
     LoadNextPreviousEntity() {
 
-
-        this.NextButtonDisabled = true;
-        this.PreviousButtonDisabled = true;
-        this.cd.detectChanges();
+     var selectedTab=this.PreSelectedTabCode;
+     this.NextButtonDisabled = true;
+     this.PreviousButtonDisabled = true;
+     this.cd.detectChanges();
 
         this.TabsItemsSource = [];
         this.LoadedTabsList.forEach((tab) => {
@@ -1770,12 +1769,13 @@ export class EditComponent implements OnDestroy {
 
 
 
-        var args: any = {};
-        args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
-        args.ObjectTableName = this.ObjectTableName;
-        args.BackButtonLabel = this.BackButtonLabel;
-        args.NavigationIds = this.NavigationIds;
-        this.Run(args);
+     var args: any = {};
+     args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
+     args.ObjectTableName = this.ObjectTableName;
+     args.BackButtonLabel = this.BackButtonLabel;
+     args.NavigationIds = this.NavigationIds;
+     args.SelectedTabCode=selectedTab;
+     this.Run(args);
 
     }
 
@@ -1877,6 +1877,10 @@ export class EditComponentDefaultController implements IEditComponentController 
     IsDisabled(itemTabCode: string): boolean {
         return false;
     }
+    FilterTabs(allTabs: any[]) {
+
+    }
+
 }
 export interface IEditComponentController {
     OnFirstTimeAfterSingleDataLoaded(CurrentEntity): Promise<boolean>;
@@ -1891,5 +1895,6 @@ export interface IEditComponentController {
     IsInBatchRequest: boolean;
     ResetMustRefresh(): void;
     IsDisabled(itemTabCode: string): boolean;
+    FilterTabs(allTabs: any[]);
 }
 

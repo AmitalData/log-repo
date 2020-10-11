@@ -118,6 +118,28 @@ namespace Logitude.Customs.Data.EntityLists
        public string ClasifiedRemarks  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string MarksAndNumbers  { get; set; }
+       [DataMember]
+       public int? PackageQuantity  { get; set; }
+       [DataMember]
+       public decimal? Weight  { get; set; }
+       [DataMember]
+       public string ClassificationTypeCode  { get; set; }
+       [DataMember]
+       public string TransactionNatureCode  { get; set; }
+       [DataMember]
+       public string ClaimReasonCode  { get; set; }
+       [DataMember]
+       public string ClassificationTypeName  { get; set; }
+       [DataMember]
+       public string TransactionNatureName  { get; set; }
+       [DataMember]
+       public string ClaimReasonName  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountForeign  { get; set; }
+       [DataMember]
+       public decimal? ItemFOBAmountNIS  { get; set; }
    }
 
 }

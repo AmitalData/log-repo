@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentTypeDetails> GetAll()
        {
-		    var all = new List<PaymentTypeDetails>(); 
+		    var all = new List<PaymentTypeDetails>();  
+            all.Add(new PaymentTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,מזומן", 
+                Inactive = false, 
+                LocalName = "מזומן", 
+			});
+			 
+            all.Add(new PaymentTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,אשראי", 
+                Inactive = false, 
+                LocalName = "אשראי", 
+			});
+			 
+            all.Add(new PaymentTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,כתב התחייבות", 
+                Inactive = false, 
+                LocalName = "כתב התחייבות", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

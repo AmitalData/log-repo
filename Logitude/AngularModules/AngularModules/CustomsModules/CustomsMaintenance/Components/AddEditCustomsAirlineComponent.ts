@@ -74,7 +74,7 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
                 this._CustomsAirlineExtendedPMService
                     .GetSingleCustomsAirlineByCodeAndPrefix
                     (this._CustomsAirlineList.AirlineCode, this._CustomsAirlineList.AirlinePrefix)
-                    .subscribe(rsp => {
+                    .subscribe((rsp:any) => {
                         this.EntityPM = rsp.Result;
                         this.CurrentSession.StopBusyIndicator();
                     });

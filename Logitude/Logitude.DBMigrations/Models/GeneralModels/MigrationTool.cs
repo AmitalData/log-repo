@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using Oracle.DataAccess.Client;
+
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Reflection;
 using System.Xml;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -74,6 +75,7 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Preparing Required Data ...");
 
+            GetIncludedModulesFromArguments();
             GetIncludedModulesFromDB();
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
@@ -457,6 +459,21 @@ namespace Logitude.DBMigrations.Models
             if (indexOfRootArgument < ToolArguments.Arguments.Length && indexOfRootArgument >= 0)
             {
                 string root = ToolArguments.Arguments[indexOfRootArgument];
+                return root;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected string GetModulesFromArguments(string modulesArgument)
+        {
+            string[] arguments = Array.ConvertAll(ToolArguments.Arguments, a => a.ToLower());
+            int indexOfArgument = Array.IndexOf(arguments, modulesArgument) + 1;
+            if (indexOfArgument < ToolArguments.Arguments.Length && indexOfArgument >= 0)
+            {
+                string root = ToolArguments.Arguments[indexOfArgument];
                 return root;
             }
             else
@@ -1708,89 +1725,123 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected void GetIncludedModulesFromArguments()
+        {
+            bool isIncludeModulesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.INCLUDEMODULES);
+            bool isExcludeModulesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXCLUDEMODULES);
+
+            if (isIncludeModulesArgumentProvided || isExcludeModulesArgumentProvided)
+            {
+                string modules;
+                string mode;
+                if (isIncludeModulesArgumentProvided)
+                {
+                    modules = GetModulesFromArguments(Arguments.INCLUDEMODULES);
+                    mode = "include";
+                }
+                else
+                {
+                    modules = GetModulesFromArguments(Arguments.EXCLUDEMODULES);
+                    mode = "exclude";
+                }
+
+                if (!String.IsNullOrEmpty(modules))
+                {
+                    IncludedModules = new IncludedModules
+                    {
+                        Include = mode == "include",
+                        Modules = modules.ToLower().Split(',').ToList()
+                    };
+                }
+            }
+        }
+
         protected void GetIncludedModulesFromDB()
         {
-            string connectionString = ToolConfigurations.GetConnectionString("Main");
-
-            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            if(IncludedModules == null)
             {
-                string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
+                string connectionString = ToolConfigurations.GetConnectionString("Main");
 
-                OracleDataReader reader = null;
-                OracleConnection connection = new OracleConnection(connectionString);
-                OracleCommand command = new OracleCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
+                if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
+                    string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
 
-                    reader.Read();
+                    OracleDataReader reader = null;
+                    OracleConnection connection = new OracleConnection(connectionString);
+                    OracleCommand command = new OracleCommand(queryString, connection);
 
-                    if (reader.HasRows)
+                    IncludedModules includedModules = null;
+
+                    try
                     {
-                        includedModules = new IncludedModules
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
                         {
-                            Include = reader["MODE"].ToString().ToLower() == "include",
-                            Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
-                        };
-                    }
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["MODE"].ToString().ToLower() == "include",
+                                Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
 
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    if (reader != null)
-                    {
                         reader.Close();
+                        connection.Close();
                     }
-                    connection.Close();
-                }
-
-                IncludedModules = includedModules;
-            }
-            else
-            {
-                string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
-
-                SqlDataReader reader = null;
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    reader.Read();
-
-                    if (reader.HasRows)
+                    catch (Exception)
                     {
-                        includedModules = new IncludedModules
+                        if (reader != null)
                         {
-                            Include = reader["Mode"].ToString().ToLower() == "include",
-                            Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
-                        };
+                            reader.Close();
+                        }
+                        connection.Close();
                     }
 
-                    reader.Close();
-                    connection.Close();
+                    IncludedModules = includedModules;
                 }
-                catch (Exception)
+                else
                 {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    connection.Close();
-                }
+                    string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
 
-                IncludedModules = includedModules;
+                    SqlDataReader reader = null;
+                    SqlConnection connection = new SqlConnection(connectionString);
+                    SqlCommand command = new SqlCommand(queryString, connection);
+
+                    IncludedModules includedModules = null;
+
+                    try
+                    {
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
+                        {
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["Mode"].ToString().ToLower() == "include",
+                                Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
+
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (Exception)
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+                        }
+                        connection.Close();
+                    }
+
+                    IncludedModules = includedModules;
+                }
             }
         }
 

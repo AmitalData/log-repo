@@ -16,7 +16,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QueryId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.QueryCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.QueryCode).HasMaxLength(200).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("SharedUserQueries");

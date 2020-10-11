@@ -22,9 +22,9 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
     templateUrl: './CustomsDocumentsDefinitionComponent.html',
 })
 
-export class CustomsDocumentsDefinitionComponent
-    extends BaseComponent
-    implements OnInit {
+export class CustomsDocumentsDefinitionComponent extends BaseComponent implements OnInit {
+  public IsDisplayOnly: boolean = false;
+
     Search: any;
     public DataContext: CustomsDocumentsDefinitionComponent = this;
     public EntityPM: CustomsDocumentsDefinitionPM = new CustomsDocumentsDefinitionPM();
@@ -42,8 +42,13 @@ export class CustomsDocumentsDefinitionComponent
     public DeleteDocumentsDefinitionList: ObservableCollection; 
     public DocumentTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
+    public PreceduralFilterItems: ApiQueryFilters;
+
     constructor() {
         super();
+        this.PreceduralFilterItems = new ApiQueryFilters();
+        this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
+
         this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
         this.DocumentsDefinitionResultList = new ObservableCollection([]);
         this.DeleteDocumentsDefinitionList = new ObservableCollection([]);
@@ -185,7 +190,7 @@ export class CustomsDocumentsDefinitionComponent
                 this.DocumentsDefinitionResultList.Collection.forEach((item: DocumentsDefinitionComponent) => {
 
                     if (item.IsNew == true) {
-                        item.entityPM.Tenant = 1; // ????
+                        item.entityPM.Tenant = SessionLocator.Tenant; // ????
                         this._EntityPMService.insert(item.entityPM).subscribe((response:any) => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
@@ -251,11 +256,11 @@ export class CustomsDocumentsDefinitionComponent
         });
     }
 
-    private AddDocumentsDefinitionCommand() {
+    AddDocumentsDefinitionCommand() {
         this.DocumentsDefinitionResultList.Insert(new DocumentsDefinitionComponent(new CustomsDocumentsDefinitionPM(), true));
     }
 
-    private DeleteDocumentsDefinitionCommand(item: DocumentsDefinitionComponent) {
+    DeleteDocumentsDefinitionCommand(item: DocumentsDefinitionComponent) {
         this.DocumentsDefinitionResultList.Remove(item);
         if (item.IsNew == false) {
             this.DeleteDocumentsDefinitionList.Insert(item);

@@ -20,17 +20,77 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentProtestTypeDetails> GetAll()
        {
-		    var all = new List<PaymentProtestTypeDetails>(); 
+		    var all = new List<PaymentProtestTypeDetails>();  
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,שינוי סיווג", 
+                Inactive = false, 
+                LocalName = "שינוי סיווג", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,פסילת ערך עיסקה", 
+                Inactive = false, 
+                LocalName = "פסילת ערך עיסקה", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,פסילת מסמכי העדפה", 
+                Inactive = false, 
+                LocalName = "פסילת מסמכי העדפה", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,תשלום היטל/ הפקדת ערובה", 
+                Inactive = false, 
+                LocalName = "תשלום היטל/ הפקדת ערובה", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,טיפול ממושך במחלוקת", 
+                Inactive = false, 
+                LocalName = "טיפול ממושך במחלוקת", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,עד למתן החלטה בבית משפט", 
+                Inactive = false, 
+                LocalName = "עד למתן החלטה בבית משפט", 
+			});
+			 
+            all.Add(new PaymentProtestTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,אחר", 
+                Inactive = false, 
+                LocalName = "אחר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentProtestType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentProtestType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -20,9 +20,9 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
         public class GeneralDetails
         {
             public string customOfficeName { get; set; }
-            public int customOfficeNumber { get; set; }
-            public int declerationStatus { get; set; }
-            public int? externalID { get; set; }
+            public string customOfficeNumber { get; set; }
+            public string declerationStatus { get; set; }
+            public string externalID { get; set; }
             public bool externalIDSpecified { get; set; }
             public string name { get; set; }
             public string statusName { get; set; }
@@ -35,15 +35,15 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
             public string agentName { get; set; }
             public decimal? claimAmount { get; set; }
             public bool claimAmountSpecified { get; set; }
-            public DateTime? closeDate { get; set; }
+            public string closeDate { get; set; }
             public bool closeDateSpecified { get; set; }
-            public DateTime createDate { get; set; }
+            public string createDate { get; set; }
             public string displayFileNumber { get; set; }
             public string fileNumber { get; set; }
-            public int Numeral { get; set; }
+            public string Numeral { get; set; }
             public int status { get; set; }
             public string statusName { get; set; }
-            public decimal? totalRefundAmount { get; set; }
+            public string totalRefundAmount { get; set; }
             public bool totalRefundAmountSpecified { get; set; }
         }
 
@@ -52,17 +52,17 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
             public int? agentExternalID { get; set; }
             public bool agentExternalIDSpecified { get; set; }
             public string agentName { get; set; }
-            public DateTime? closeDate { get; set; }
+            public string closeDate { get; set; }
             public bool closeDateSpecified { get; set; }
             public string displayFileNumber { get; set; }
-            public decimal estimatedBalance { get; set; }
+            public string estimatedBalance { get; set; }
             public string fileNumber { get; set; }
-            public int Numeral { get; set; }
-            public DateTime? productionDate { get; set; }
+            public string Numeral { get; set; }
+            public string productionDate { get; set; }
             public bool productionDateSpecified { get; set; }
             public int status { get; set; }
             public string statusName { get; set; }
-            public decimal? totalRefundAmount { get; set; }
+            public string totalRefundAmount { get; set; }
             public bool totalRefundAmountSpecified { get; set; }
         }
 

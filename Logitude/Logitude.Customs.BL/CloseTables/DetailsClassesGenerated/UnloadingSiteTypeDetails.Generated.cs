@@ -20,17 +20,294 @@ namespace Logitude.Customs.BL
    {
        public List<UnloadingSiteTypeDetails> GetAll()
        {
-		    var all = new List<UnloadingSiteTypeDetails>(); 
+		    var all = new List<UnloadingSiteTypeDetails>();  
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13086", 
+                SearchFields = "13086,אלנבי", 
+                Inactive = false, 
+                LocalName = "אלנבי", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13087", 
+                SearchFields = "13087,ניצנה", 
+                Inactive = false, 
+                LocalName = "ניצנה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13089", 
+                SearchFields = "13089,קונטרה", 
+                Inactive = false, 
+                LocalName = "קונטרה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13090", 
+                SearchFields = "13090,אולם 18", 
+                Inactive = false, 
+                LocalName = "אולם 18", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13091", 
+                SearchFields = "13091,אולם 16", 
+                Inactive = false, 
+                LocalName = "אולם 16", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13092", 
+                SearchFields = "13092,אולם 15", 
+                Inactive = false, 
+                LocalName = "אולם 15", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13093", 
+                SearchFields = "13093,אולם 14", 
+                Inactive = false, 
+                LocalName = "אולם 14", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13094", 
+                SearchFields = "13094,שיקוף מכולות", 
+                Inactive = false, 
+                LocalName = "שיקוף מכולות", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13095", 
+                SearchFields = "13095,תפזורות", 
+                Inactive = false, 
+                LocalName = "תפזורות", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13096", 
+                SearchFields = "13096,מלט במשאבות", 
+                Inactive = false, 
+                LocalName = "מלט במשאבות", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13097", 
+                SearchFields = "13097,טובין חריגים", 
+                Inactive = false, 
+                LocalName = "טובין חריגים", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13098", 
+                SearchFields = "13098,חומרים מסוכנים", 
+                Inactive = false, 
+                LocalName = "חומרים מסוכנים", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13099", 
+                SearchFields = "13099,אגף רכב", 
+                Inactive = false, 
+                LocalName = "אגף רכב", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13100", 
+                SearchFields = "13100,רמפה בידוק", 
+                Inactive = false, 
+                LocalName = "רמפה בידוק", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13101", 
+                SearchFields = "13101,סככה בידוק", 
+                Inactive = false, 
+                LocalName = "סככה בידוק", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13106", 
+                SearchFields = "13106,מעבר גבול טאבה", 
+                Inactive = false, 
+                LocalName = "מעבר גבול טאבה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "13226", 
+                SearchFields = "13226,מעבר גבול ע''ש יצחק רבין", 
+                Inactive = false, 
+                LocalName = "מעבר גבול ע''ש יצחק רבין", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "265", 
+                SearchFields = "265,שדה תעופה אילת", 
+                Inactive = false, 
+                LocalName = "שדה תעופה אילת", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "273", 
+                SearchFields = "273,שדה תעופה חיפה", 
+                Inactive = false, 
+                LocalName = "שדה תעופה חיפה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "Code", 
+                EnglishName = "EnglishName", 
+                SearchFields = "SearchFields", 
+                Inactive = true, 
+                LocalName = "LocalName", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILALN", 
+                SearchFields = "ILALN,מעבר גבול אלנבי", 
+                Inactive = false, 
+                LocalName = "מעבר גבול אלנבי", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILARV", 
+                SearchFields = "ILARV,מעבר גבול רבין (ערבה)", 
+                Inactive = false, 
+                LocalName = "מעבר גבול רבין (ערבה)", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILASB", 
+                SearchFields = "ILASB,אשדוד בונדד- אוירי", 
+                Inactive = false, 
+                LocalName = "אשדוד בונדד- אוירי", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILASH", 
+                SearchFields = "ILASH,נמל אשדוד", 
+                Inactive = false, 
+                LocalName = "נמל אשדוד", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILBGA", 
+                SearchFields = "ILBGA,נמל תעופה בן גוריון", 
+                Inactive = false, 
+                LocalName = "נמל תעופה בן גוריון", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILETH", 
+                SearchFields = "ILETH,נמל אילת", 
+                Inactive = false, 
+                LocalName = "נמל אילת", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILHFA", 
+                SearchFields = "ILHFA,נמל חיפה", 
+                Inactive = false, 
+                LocalName = "נמל חיפה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILJOR", 
+                SearchFields = "ILJOR,מעבר גבול גשר נהר הירדן", 
+                Inactive = false, 
+                LocalName = "מעבר גבול גשר נהר הירדן", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILKRM", 
+                SearchFields = "ILKRM,כרם שלום", 
+                Inactive = false, 
+                LocalName = "כרם שלום", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILMMN", 
+                SearchFields = "ILMMN,ממן מסופי מטען וניטול בעמ", 
+                Inactive = false, 
+                LocalName = "ממן מסופי מטען וניטול בעמ", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILMSP", 
+                SearchFields = "ILMSP,מספנות ישראל", 
+                Inactive = false, 
+                LocalName = "מספנות ישראל", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILNZN", 
+                SearchFields = "ILNZN,מעבר גבול ניצנה", 
+                Inactive = false, 
+                LocalName = "מעבר גבול ניצנה", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILSWS", 
+                SearchFields = "ILSWS,סוויספורט", 
+                Inactive = false, 
+                LocalName = "סוויספורט", 
+			});
+			 
+            all.Add(new UnloadingSiteTypeDetails()
+            {    
+                Code = "ILVDA", 
+                SearchFields = "ILVDA,אולם נוסעים עובדה", 
+                Inactive = false, 
+                LocalName = "אולם נוסעים עובדה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(UnloadingSiteType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(UnloadingSiteType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

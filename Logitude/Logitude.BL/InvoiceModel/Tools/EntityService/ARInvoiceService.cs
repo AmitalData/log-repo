@@ -113,6 +113,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
             this.GetAccountingSystem();
         }
+        string loggedUserEmail;
         public ARInvoiceService(IInvoiceContext objectContext, int tenant, string loggedUserEmail)
         {
             this.tenant = tenant;
@@ -120,7 +121,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myShipmentContext = ShipmentsContext.GetContext(tenant);
-
+            this.loggedUserEmail = loggedUserEmail;
             this.invoiceRepository = new ARInvoiceRepository(objectContext);
             this.invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new ARInvoiceTotalVATRepository(objectContext);
@@ -319,13 +320,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ChargesTypePM chargesType = chargesTypes.FirstOrDefault();
                     ARInvoiceLinePM interestInvoiceLine = invoice.InvoiceLines.Where(d => d.ChargesTypeId == chargesType.Id).FirstOrDefault();
-                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    UserPM userPM = GetLoggedUser(invoice.Tenant);                  
+                    bool showLocal = !userPM.DontShowLocalLabels;
                     if (interestInvoiceLine != null)
-                        entityPM.PrintNotes = entityPM.PrintNotes + " " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description);
+                        entityPM.PrintNotes =string.IsNullOrEmpty(entityPM.PrintNotes)? entityPM.PrintNotes + " " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description) : entityPM.PrintNotes + ", " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description);
                 }
             }
         }
-
+        private UserPM GetLoggedUser(int tenant)
+        {
+            UserQuery userQuery = new UserQuery(tenant);
+            UserPM userPM = userQuery.GetSinglePMByEmail(loggedUserEmail, tenant);
+            if (userPM == null)
+            {
+                userPM = userQuery.GetSinglePMByEmail(loggedUserEmail, 0);
+            }
+            return userPM;
+        }
         private void UpdateInterestReportsConnectedInvoice()
         {
 

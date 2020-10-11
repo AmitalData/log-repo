@@ -124,7 +124,7 @@ export class DeclarationReshimonConversionComponent
 
 
 
-    private DeclarationNumberTextChanged(DeclarationNumberText) {
+    DeclarationNumberTextChanged(DeclarationNumberText) {
         this.ValidationErrorsList = [];
 
         if (DeclarationNumberText == this.ReshimonNumberLast) {

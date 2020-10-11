@@ -3,7 +3,7 @@
   Name="PaymentCurrencies"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="Code"
     Type="varchar"

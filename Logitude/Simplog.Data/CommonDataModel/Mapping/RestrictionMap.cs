@@ -38,7 +38,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ObjectFieldCode)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
 

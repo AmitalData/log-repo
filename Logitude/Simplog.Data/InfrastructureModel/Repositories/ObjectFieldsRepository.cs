@@ -387,6 +387,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public ObjectField GetSingleObjectFieldByObjectFieldCode(string objectFieldCode)
+        {
+            return (from a in context.ObjectFields
+                    where a.FieldCode == objectFieldCode
+                    select a).FirstOrDefault();
+        }
+
         public ObjectFieldModification GetObjectFieldModificationByObjectField(string objectfieldCode, int tenant)
         {
             return (from a in context.ObjectFieldModifications

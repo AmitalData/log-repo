@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return DepositId+'_'+DepositConditionCode;
+                 return DepositId+'_'+DepositConditionCode ;
+                 
       }
 
       public override string GetEntityPMName()

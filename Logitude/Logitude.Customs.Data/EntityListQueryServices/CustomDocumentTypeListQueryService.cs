@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             PointerLevel = a.PointerLevel,
                                                             PointerLevelName = a.Pointer.LocalName != null ? a.Pointer.LocalName : null,
                                                             AutoSetOriginalDocumentTrue = a.AutoSetOriginalDocumentTrue,
+                                                            IsCourierManadatory= a.IsCourierManadatory,
+                                                            IsDiamondManadatory= a.IsDiamondManadatory
                                                         });
 
             return query;

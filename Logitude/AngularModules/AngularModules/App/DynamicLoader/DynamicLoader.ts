@@ -6,7 +6,6 @@ export class DynamicLoader {
   public static LazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> };
   public static ModulesBank: ModuleProfile[] = [];
   public static Load(myPath: string, location: ViewContainerRef): Promise<ComponentRef<any>> {
-
     if (!myPath || !location) {
       alert("Invalid DynamicLoader Load arguments");
     }
@@ -77,7 +76,7 @@ export class DynamicLoader {
   }
 
   private static GetWidgetModuleName(myComponentPath: string) {
-    var myResult: string;
+    var output: string;
 
     var iPathParts: string[] = myComponentPath.split("/");
 
@@ -89,18 +88,24 @@ export class DynamicLoader {
       case "CommonModules":
       case "InvoiceModules":
       case "CRMModules":
+      case "CustomsModules":
         {
-          myResult = iPathParts[2];
+          output = iPathParts[2];
+
+          if (output == "CustomsDeclarationModules") {
+            output = iPathParts[3];
+          }
+
           break;
         }
 
       default: {
-        myResult = iPathParts[1];
+        output = iPathParts[1];
         break;
       }
     }
 
-    return myResult;
+    return output;
   }
 
   private static async GetModuleProfile(iModuleName: string) {

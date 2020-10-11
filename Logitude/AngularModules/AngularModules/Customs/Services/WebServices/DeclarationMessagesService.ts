@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -20,6 +21,8 @@ import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/
 import { ExportDeclarationDataRequestParams } from '../../DataContract/RequestParams/ExportDeclarationDataRequestParams';
 import { StorageEntranceUnloadingRequestParams } from '../../DataContract/RequestParams/StorageEntranceUnloadingRequestParams';
 import {CargoSplitRequestParams} from '../../DataContract/RequestParams/CargoSplitRequestParams';
+import { CargoSealsRequestParams } from '../../DataContract/RequestParams/CargoSealsRequestParams';
+
 
 @Injectable()
 
@@ -49,7 +52,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationRequest/',
                 JSON.stringify(entity),
-                    { headers: authHeader }).map((res) => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                   
                         serviceResponse.Result = res;
 
@@ -76,7 +79,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationStatusRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -102,7 +105,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostWarehouseBlockBalanceRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -128,7 +131,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostPrintRequestRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -156,7 +159,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendDeclarationConstraint/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -184,7 +187,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendCollateralAnswers/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -212,7 +215,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendDeclarationConstraintAgentObjection/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -240,7 +243,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendPaymentWithCheckCustomFileCredit/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -268,7 +271,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendTransferRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -296,7 +299,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCheckCustomFileCreditOnly/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -324,7 +327,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendPaymentOnly/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -350,7 +353,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostExportDeclarationDataRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
                     return serviceResponse;
@@ -372,7 +375,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostStorageEntranceUnloadingRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
                     return serviceResponse;
@@ -396,7 +399,7 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendCargoSplit/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
                     serviceResponse.Result = res;
 
@@ -407,4 +410,6 @@ export class DeclarationMessagesService {
 
         );
     }
+
+
 }

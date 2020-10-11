@@ -770,7 +770,7 @@
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
-            defaultParam.MaxPageSize = 500;
+            defaultParam.MaxPageSize = 1000;
 
             if (!_ResponseToken) {
                 getToken();
@@ -848,7 +848,7 @@
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
-            defaultParam.MaxPageSize = 500;
+            defaultParam.MaxPageSize = 1000;
             if (!_ResponseToken) {
                 getToken();
             }
@@ -1477,6 +1477,9 @@ div#two {
             <asp:Button ID="ButtonGetSystem1000" runat="server" Text="Get System 1000(Tenant)" OnClick="ButtonGetSystem1000_Click" />        
             <asp:Button ID="ButtonLoadSystem1000" runat="server" Text="Load System 1000(Tenant)" OnClick="ButtonLoadSystem1000_Click" />        
             <asp:Button ID="ButtonLoadConsolTaxRep" runat="server" Text="Load Consol. Tax Rep.(Tenant)" OnClick="ButtonLoadConsolTaxRep_Click" />        
+                </li>
+                <li>
+            <asp:Button ID="ButtonLoadGLAccountsCSV" runat="server" Text="Load GLAccounts from .csv (Tenant)" OnClick="ButtonLoadGLAccountsCSV_Click" />        
                 </li>
             </ul>
             

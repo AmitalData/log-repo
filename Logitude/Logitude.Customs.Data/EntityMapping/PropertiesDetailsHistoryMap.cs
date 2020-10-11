@@ -27,9 +27,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ID).HasColumnName("ID").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.StartDate).HasColumnName("StartDate");
+            this.Property(t => t.StartDate).HasColumnName("StartDate").IsRequired();
 
-            this.Property(t => t.EndDate).HasColumnName("EndDate");
+            this.Property(t => t.EndDate).HasColumnName("EndDate").IsRequired();
 
             this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID");
 

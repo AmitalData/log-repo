@@ -19,6 +19,8 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimImporterDeclAP3LoisComponent = this;
     public EntityPM: ClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
     public ObjectTableName: string = "Customs.ClaimImporterDeclarsP3Loi";

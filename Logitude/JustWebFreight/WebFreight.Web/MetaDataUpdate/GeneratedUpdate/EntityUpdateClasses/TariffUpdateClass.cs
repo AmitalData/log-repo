@@ -4596,7 +4596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton TariffMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "Tariff.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -4608,6 +4608,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "More",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TariffMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -4625,6 +4627,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TariffFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "Inactive",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TariffFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -4643,6 +4647,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TariffFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "Reactivate",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TariffFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -4661,6 +4667,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TariffFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = "Edit Price Steps",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TariffFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

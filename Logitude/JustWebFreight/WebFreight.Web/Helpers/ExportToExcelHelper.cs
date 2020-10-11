@@ -35,7 +35,8 @@ using System.Drawing;
 
 namespace WebFreight.Web.Helpers
 {
-    public class ExportToExcelHelper
+    //public class ExportToExcelHelper
+    public partial class ExportToExcelHelper
     {
         public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {

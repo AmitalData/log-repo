@@ -28,6 +28,7 @@ using Logitude.Customs.Data.Repsitories;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using System.Configuration;
 
 namespace Logitude.CustomsMessaging.U2L.Sivug
 {
@@ -37,14 +38,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private SIVUG _SIVUG;
         private Logitude.Customs.Def.EntityPMs.SupplierInvoicePM _MySupplierInvoicePM;
         private ICustomContext _context;
-
+        private AmitalContext amitalContext;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Sivug.SivugUpsertService.Upsert()";
         private INVOICE _INVOICE;
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
         private string mode;
+        private string messageType;
         List<LineToSequenceNumeric> lineToSequence;
         private int? lastSequenceNumeric = 0;
+        private bool isNewHandleDocSIPointer = false;
 
         private bool _IsBuildItemsUnit = false;
 
@@ -117,7 +120,15 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
                 AppendLogLine("mode: " + mode);
-                if (mode == "UMS2L") mode = "INSERT_ONLY";
+                if (mode == "UMS2L")
+                {
+                    mode = "INSERT_UPDATE_DELETE";
+                    messageType = "UMS2L";
+                }
+                else
+                {
+                    messageType = "US2L";
+                }
             }
 
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -140,14 +151,17 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
+            //if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20200220HD341093.isNewHandleDocSIPointer"])) isNewHandleDocSIPointer = true;
+            isNewHandleDocSIPointer = true;
             int minute = DateTime.Now.Minute;
+            
             if (this.RequestParams != null)
             {
                 this.RequestParams.CFIFILEMFileNo = this._MyDeclarationPM.CustomFileNo;
                 this.RequestParams.DeclarationId = this._MyDeclarationPM.Id;
             }
 
-            if (mode != "UPDATE_ONLY" && mode != "INSERT_ONLY")
+            if (mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE")
             {
                 var fast = true;
                 //if (minute % 2 == 0)
@@ -173,14 +187,14 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             else
             {
-                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.Count() > 0)lastSequenceNumeric = _MyDeclarationPM.SupplierInvoices.Max(m => m.SequenceNumeric);
+                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.Count() > 0) lastSequenceNumeric = _MyDeclarationPM.SupplierInvoices.Max(m => m.SequenceNumeric);
             }
 
             if (this._SIVUG.INVOICE != null) //Yuval Chalup 07.10.2015 AMI-54402 (ADD the IF only)
             {
                 if (this._SIVUG.INVOICE.Count() > 0) //Yuval Chalup 07.10.2015 AMI-54402 (ADD the IF only)
                 {
-                    if ((mode != "UPDATE_ONLY" && mode != "INSERT_ONLY") || this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() < 1)
+                    if ((mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE") || this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() < 1)
                     {
                         this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>(); // moran 18.3.15 - Task 11540
                     }
@@ -211,10 +225,30 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
                     }
-                    AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                    if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
+                    Boolean markChangeSetOperationDeleteOnly = false;
+                    if (mode == "INSERT_UPDATE_DELETE")
                     {
-                        this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().IsPrimarySupplierInvoice = true;
+                        foreach (var supplierInvoice in this._MyDeclarationPM.SupplierInvoices)
+                        {
+                            if (supplierInvoice.ChangeSetOp != ChangeSetOperation.Insert && supplierInvoice.ChangeSetOp != ChangeSetOperation.Update && String.IsNullOrWhiteSpace(supplierInvoice.ChangeInSupplierInvoice))
+                            {
+                                if (lineToSequence == null || lineToSequence.Where(d => d.sequenceNumeric == supplierInvoice.SequenceNumeric).FirstOrDefault() == null)
+                                {
+                                    supplierInvoice.ChangeSetOp = ChangeSetOperation.Delete;
+                                    markChangeSetOperationDeleteOnly = true;
+                                }
+                            }
+                        }
+                    }
+                    if (markChangeSetOperationDeleteOnly)
+                    {
+                        DeclarationUpdateService.markChangeSetOperationDeleteOnly = true;
+                        DeclarationUpdateService.MarkToDeleteSupplierInvoice(_MyDeclarationPM);
+                    }
+                    AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count() > 0) // moran 8.10.15 - Task 16452
+                    {
+                        this._MyDeclarationPM.SupplierInvoices.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).FirstOrDefault().IsPrimarySupplierInvoice = true;
                         //this._MyDeclarationPM.PrimaryInvoiceCounterKey = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCounterKey.ToString();
                     }
                     _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
@@ -222,8 +256,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     AppendLogLine("Update:InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     MyGenericResponseObj.Stage = "Done All ";
 
+                    MyGenericResponseObj.Stage = "GetSingle - after update";
+                    this._MyDeclarationPM = myQueryService.GetSingle(this._SIVUG.LOGITUDEFILE, true, false);
+                    if (this._MyDeclarationPM == null)
+                    {
+                        throw new BusinessErrorException("LOGITUDEFILE is " + this._SIVUG.LOGITUDEFILE + " but not found");
+                    }
+
                 }
             }
+
 
 
             if (this._SIVUG.CustomsDocuments != null && this._SIVUG.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
@@ -277,19 +319,40 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 customsDocumentPointerPM.ParentEntityId = _MyDeclarationPM.Id;
                                 if (customsDocument.Entname == "SI")
                                 {
-                                    if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
+
+                                    if (isNewHandleDocSIPointer && !string.IsNullOrWhiteSpace(customsDocument.UNFINVOICEKEY))
+                                    {
+                                        if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0)
+                                        {
+                                            if (this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault() != null)
+                                            {
+                                                if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString()))
+                                                {
+                                                    customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                                    customsDocumentPointerPM.Child1EntityId = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString();
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
                                     {
                                         if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
                                         {
-                                            customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                                            customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
-                                            if (mode == "INSERT_ONLY")
+                                            if (!string.IsNullOrWhiteSpace(customsDocument.SerialNum))
                                             {
-                                                int int1,int2;
-                                                if (int.TryParse(customsDocument.SerialNum, out int1))
+                                                customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                                customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
+                                                if (mode == "INSERT_UPDATE_DELETE")
                                                 {
-                                                    int2 = lineToSequence.Where(d => d.line == int1).FirstOrDefault().sequenceNumeric;
-                                                    if(int2 > 0)customsDocumentPointerPM.Child1EntityId = int2.ToString();
+                                                    int int1, int2;
+                                                    if (int.TryParse(customsDocument.SerialNum, out int1))
+                                                    {
+                                                        if (lineToSequence != null && lineToSequence.Count() > 0)
+                                                        {
+                                                            int2 = lineToSequence.Where(d => d.line == int1).FirstOrDefault().sequenceNumeric;
+                                                            if (int2 > 0) customsDocumentPointerPM.Child1EntityId = int2.ToString();
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -303,7 +366,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 if (customsDocument.Entname == "CI")
                                 {
                                     customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
-                                    customsDocumentPointerPM.Child2EntityId = "1"; 
+                                    customsDocumentPointerPM.Child2EntityId = "1";
                                 }
                                 //customsDocumentPointerPM.DocumentStatusCode = "3";
                                 customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
@@ -311,29 +374,55 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             }
                             else
                             {
-                                if (mode == "INSERT_ONLY")
+                                if (mode == "INSERT_UPDATE_DELETE")
                                 {
                                     if (customsDocument.Entname == "SI")
                                     {
-                                        int int1, int2;
-                                        if (int.TryParse(customsDocument.SerialNum, out int1))
+                                        if (isNewHandleDocSIPointer && !string.IsNullOrWhiteSpace(customsDocument.UNFINVOICEKEY))
                                         {
-                                            int2 = lineToSequence.Where(d => d.line == int1).FirstOrDefault().sequenceNumeric;
-                                            if (int2 > 0)
+                                            if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0)
                                             {
-                                                customsDocumentPointerPM = customsDocumentPointerListPM.FirstOrDefault();
-                                                if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != int2.ToString())
+                                                if (this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault() != null)
                                                 {
-                                                    customsDocumentPointerPM.Child1EntityId = int2.ToString();
-                                                    customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Update;
-                                                    myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+                                                    var sequenceNumeric = this._MyDeclarationPM.SupplierInvoices.Where(d => d.UnfInvoiceCounterKey == customsDocument.UNFINVOICEKEY).FirstOrDefault().SequenceNumeric.ToString();
+                                                    if (!string.IsNullOrWhiteSpace(sequenceNumeric))
+                                                    {
+                                                        customsDocumentPointerPM = customsDocumentPointerListPM.FirstOrDefault();
+                                                        if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != sequenceNumeric)
+                                                        {
+                                                            customsDocumentPointerPM.Child1EntityId = sequenceNumeric;
+                                                            customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Update;
+                                                            myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            int int1, int2;
+                                            if (int.TryParse(customsDocument.SerialNum, out int1))
+                                            {
+                                                if (lineToSequence != null && lineToSequence.Count() > 0)
+                                                {
+                                                    int2 = lineToSequence.Where(d => d.line == int1).FirstOrDefault().sequenceNumeric;
+                                                    if (int2 > 0)
+                                                    {
+                                                        customsDocumentPointerPM = customsDocumentPointerListPM.FirstOrDefault();
+                                                        if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != int2.ToString())
+                                                        {
+                                                            customsDocumentPointerPM.Child1EntityId = int2.ToString();
+                                                            customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Update;
+                                                            myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                            
+
                             var myDocumentId = myCustomsDocumentQueryService.GetSingle(customsDocument.COM_ID, true, false);
                             if (myDocumentId == null)
                             {
@@ -486,6 +575,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private void InvoiceInsert()
         {
             //CheckExist();
+            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
 
             var myQueryService = new CustomsVendorQueryService(this._context);
 
@@ -495,34 +586,82 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             AppendLogLine("Insert Invoice..");
 
             MyGenericResponseObj.Stage = "GetContext";
-            if (mode != "UPDATE_ONLY" && mode != "INSERT_ONLY")
+            if (mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE")
             {
                 this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                 this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
             }
             else
             {
-                if (_MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault() == null)
+                this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
+                if (this._MySupplierInvoicePM == null)
                 {
                     this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
-                else if (mode == "INSERT_ONLY")
+                else if (mode == "INSERT_UPDATE_DELETE" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice))
                 {
-                    if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                    if (this._INVOICE.QUE_TYPE == "OCR")
                     {
-                        if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
-                        var lineToSequenceNumeric = new LineToSequenceNumeric();
-                        lineToSequenceNumeric.line = int1;
-                        lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
-                        lineToSequence.Add(lineToSequenceNumeric);
+                        if (isNewHandleDocSIPointer)
+                        {
+                            
+                        }
+                        else
+                        {
+                            if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                            {
+                                if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
+                                var lineToSequenceNumeric = new LineToSequenceNumeric();
+                                lineToSequenceNumeric.line = int1;
+                                lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
+                                lineToSequence.Add(lineToSequenceNumeric);
+                                if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                                {
+                                    this._MySupplierInvoicePM.SequenceNumeric = int1;
+                                    this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                                }
+                            }
+                        }
+                        if (this._INVOICE.ChangeInSupplierInvoice == "2")
+                        {
+                            this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
+                            this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+
+                        return;
                     }
-                    return;
+                    else if(this._INVOICE.QUE_TYPE == "SYS")
+                    {
+                        if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                        {
+                            if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
+                            var lineToSequenceNumeric = new LineToSequenceNumeric();
+                            lineToSequenceNumeric.line = int1;
+                            lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
+                            lineToSequence.Add(lineToSequenceNumeric);
+                            if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                            {
+                                this._MySupplierInvoicePM.SequenceNumeric = int1;
+                            }
+                        }
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                        UpdateClassificationCodeOnly(this._INVOICE);
+                        return;
+                    }
                 }
                 else
                 {
-                    this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
-                    this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (mode == "INSERT_UPDATE_DELETE")
+                    {
+                        this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                    else
+                    {
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                     
                 }
             }
 
@@ -538,7 +677,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             */
             if (String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.DeclarationId)) this._MySupplierInvoicePM.DeclarationId = this._MyDeclarationPM.Id;
-            if ((mode != "UPDATE_ONLY" && mode != "INSERT_ONLY") || lastSequenceNumeric < 1)
+            if ((mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE") || lastSequenceNumeric < 1)
             {
                 if (!this._MySupplierInvoicePM.SequenceNumeric.HasValue)
                 {
@@ -562,15 +701,23 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     this._MySupplierInvoicePM.SequenceNumeric = lastSequenceNumeric;
                 }
             }
-            if (mode == "INSERT_ONLY")
+            if (mode == "INSERT_UPDATE_DELETE")
             {
-                if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                if (isNewHandleDocSIPointer)
                 {
-                    if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
-                    var lineToSequenceNumeric = new LineToSequenceNumeric();
-                    lineToSequenceNumeric.line = int1;
-                    lineToSequenceNumeric.sequenceNumeric = this._MySupplierInvoicePM.SequenceNumeric.Value;
-                    lineToSequence.Add(lineToSequenceNumeric);
+                    
+                }
+                else
+                {
+                    if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                    {
+                        if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
+                        var lineToSequenceNumeric = new LineToSequenceNumeric();
+                        lineToSequenceNumeric.line = int1;
+                        lineToSequenceNumeric.sequenceNumeric = this._MySupplierInvoicePM.SequenceNumeric.Value;
+                        lineToSequence.Add(lineToSequenceNumeric);
+                        if (this._MySupplierInvoicePM.SequenceNumeric != int1) this._MySupplierInvoicePM.SequenceNumeric = int1;
+                    }
                 }
             }
             if (!(!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.AccountTypeCode) && String.IsNullOrWhiteSpace(this._INVOICE.ACCOUNTTYPE)))
@@ -602,7 +749,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 if (decimal.TryParse(this._INVOICE.INVOICEAMOUNT, out decimal1))
                 {
-                    this._MySupplierInvoicePM.InvoiceAmount = decimal1;
+                    if (decimal1 > 0) this._MySupplierInvoicePM.InvoiceAmount = decimal1;
                 }
                 else
                 {
@@ -622,10 +769,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             VendorCommissionQueryService vendorCommissionQuery = new VendorCommissionQueryService(CustomContext.GetContext(ResolvedTenant()));
             VendorCommissionPM commisionPM = vendorCommissionQuery.GetSingleCommisionByVendorAndCustomer(this._MySupplierInvoicePM.VendorId, this._MyDeclarationPM.CustomerId, ResolvedTenant());
             if (commisionPM != null) this._MySupplierInvoicePM.VendorComissionPercentage = commisionPM.CommisionPercentage;
+            if (this._INVOICE.ChangeInSupplierInvoice == "2" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice)) this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
             if (this._INVOICE.INVOICEITEMS != null && this._INVOICE.INVOICEITEMS.Count() > 0)
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
             }
+            this._MySupplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModificationsPM(this._INVOICE);
             if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
             {
                 this._MySupplierInvoicePM.Tenant = ResolvedTenant();
@@ -639,6 +788,50 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 supplierInvoiceUpdateService.Update(this._MySupplierInvoicePM, true);
             }*/
         }
+
+        private void UpdateClassificationCodeOnly(INVOICE invoice)
+        {
+            foreach (var invoiceItem in invoice.INVOICEITEMS)
+            {
+                int int1 = 0;
+                SupplierInvoiceItemPM SupplierInvoiceItemPM;
+
+                if (int.TryParse(invoiceItem.LINE_ID, out int1))
+                {
+
+                }
+                else
+                {
+                    throw new BusinessErrorException("Error in parsing LINE_ID (" + invoiceItem.LINE_ID + ") into integer");
+                }
+                if (_MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault() != null &&
+                    _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SupplierInvoiceItems != null)
+                {
+                    SupplierInvoiceItemPM = _MyDeclarationPM.SupplierInvoices
+                        .Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER)
+                        .First()
+                        .SupplierInvoiceItems.Where(sii => sii.UnfInvoiceLine == int1)
+                        .FirstOrDefault();
+                    if (SupplierInvoiceItemPM != null)
+                    {
+                        if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                        if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
+                        {
+                            if ((String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE) || invoiceItem.TRADEAGREEMENTCODE == "1") && SupplierInvoiceItemPM.TradeAgreementCode != null)
+                            {
+                                SupplierInvoiceItemPM.TradeAgreementCode = null;
+                                SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                            else if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
+                            {
+                                SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(INVOICE invoice)
         {
@@ -710,14 +903,14 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 //SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
                 if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
                 {
-                    SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
+                    SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
                 }
                 // moran 18.3.15 - Task 11540 <--
                 if (invoiceItem.QUANTITY != null && !String.IsNullOrWhiteSpace(invoiceItem.QUANTITY))
                 {
                     if (decimal.TryParse(invoiceItem.QUANTITY, out decimal1))
                     {
-                        SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
                         //SupplierInvoiceItemPM.StatisticQuantity = decimal1; // moran 18.4.16 - AMI-56381 - commented
                     }
                     else
@@ -726,11 +919,23 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
 
+                if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
+                {
+                    if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
+                    {
+                        if(decimal1 > 0)SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing Statistic Quantity (" + invoiceItem.StatisticQuantity + ") into integer");
+                    }
+                }
+
                 if (invoiceItem.ITEMPRICE != null && !String.IsNullOrWhiteSpace(invoiceItem.ITEMPRICE))
                 {
                     if (decimal.TryParse(invoiceItem.ITEMPRICE, out decimal1))
                     {
-                        SupplierInvoiceItemPM.ItemPrice = decimal1;
+                        if(decimal1 > 0)SupplierInvoiceItemPM.ItemPrice = decimal1;
                     }
                     else
                     {
@@ -765,6 +970,49 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
+                
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
+                {
+                    SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                }
+
+                if (SupplierInvoiceItemPM.OcrPageNumber == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrPageNumber))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrPageNumber, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrPageNumber = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrPageNumber (" + invoiceItem.OcrPageNumber + ") into decimal");
+                    }
+                }
+                if (SupplierInvoiceItemPM.OcrTop == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrTop))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrTop, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrTop = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrTop (" + invoiceItem.OcrTop + ") into decimal");
+                    }
+                }
+                if (SupplierInvoiceItemPM.OcrHeight == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrHeight))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrHeight, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrHeight = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrHeight (" + invoiceItem.OcrHeight + ") into decimal");
+                    }
+                }
 
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
@@ -787,6 +1035,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     {
                         AppendLogLine("Check for IKEA Feature Failed, CERTIFICATES will not be built, Message: " + ex.Message);
                     }
+                }
+
+                if (invoiceItem.EXPENSES != null && invoiceItem.EXPENSES.Count() > 0)
+                {
+                    SupplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsModsPM(invoiceItem,SupplierInvoiceItemPM);
                 }
 
                 if (int.TryParse(invoiceItem.LINE_ID, out int1))
@@ -814,6 +1067,25 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
 
             return SupplierInvoiceItemPMList;
+        }
+
+
+        private string TranslateTaxExemptCode(string amitalTaxExemptCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTaxExemptCode))
+            {
+                AppendLogLine("amitalTaxExemptCode is null");
+                return null;
+            }
+            var taxExemptCode = new ValidCustomsItemQueryService(ResolvedTenant());
+            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode,false,true);
+            if (myTaxExemptCode == null)
+            {
+                AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " Translated to " + myTaxExemptCode.Code);
+            return myTaxExemptCode.Code;
         }
 
         public CustomsMessaging.Common.RequestParams.Unifreight_L2US01RequestParam RequestParams { get; set; }
@@ -871,6 +1143,246 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             return supplierInvoiceItemCertificatePMList;
         }
 
+
+        private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModificationsPM(INVOICE iNVOICE) 
+        {
+            var SupplierInvoiceModificationPMList = new List<SupplierInvoiceModificationPM>();
+            if (this._MySupplierInvoicePM.SupplierInvoiceModifications != null && this._MySupplierInvoicePM.SupplierInvoiceModifications.Count() > 0)
+            {
+                SupplierInvoiceModificationPMList = this._MySupplierInvoicePM.SupplierInvoiceModifications;
+            }
+            
+            decimal decimal1 = 0;
+
+            {
+                /*
+                if (iNVOICE.EXPENSES != null)
+                {
+
+                    foreach (var expense in iNVOICE.EXPENSES)
+                    {
+                        if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                        {
+                            if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault() != null)
+                            {
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expense.CurrencyTypeCode)
+                                    {
+                                        var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                        var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                        if (myexpenseCurrency == null)
+                                        {
+                                            string expenseCurrencyCode = "";
+                                            expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                            if (!string.IsNullOrWhiteSpace(expenseCurrencyCode) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expenseCurrencyCode)
+                                            {
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = expenseCurrencyCode;
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(myexpenseCurrency.Code) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != myexpenseCurrency.Code)
+                                            {
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = myexpenseCurrency.Code;
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount != decimal1)
+                                    {
+                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount = decimal1;
+                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                    }
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                            }
+                            else
+                            {
+                                var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    SupplierInvoiceModificationPM.Amount = decimal1;
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                    var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                    if (myexpenseCurrency == null)
+                                    {
+                                        string expenseCurrencyCode = "";
+                                        expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                        if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                    }
+                                    else
+                                    {
+                                        SupplierInvoiceModificationPM.CurrencyTypeCode = myexpenseCurrency.Code.ToString();
+                                    }
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                                {
+                                    var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
+                                    var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(expense.TypeCode);
+                                    if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
+                                    {
+                                        SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
+                                    }
+                                }
+                                SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                                if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                                SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                                SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                                SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                            }
+                        }
+                    }
+                }
+                */
+                return SupplierInvoiceModificationPMList;
+            }
+        }
+
+
+        private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsModsPM(INVOICEITEMS invoiceItem, SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+           
+            var SupplierInvoiceItemsModPMList = new List<SupplierInvoiceItemsModPM>();
+            if (supplierInvoiceItemPM.SupplierInvoiceItemsMods != null && supplierInvoiceItemPM.SupplierInvoiceItemsMods.Count() > 0)
+            {
+                SupplierInvoiceItemsModPMList = supplierInvoiceItemPM.SupplierInvoiceItemsMods;
+            }
+
+            decimal decimal1 = 0;
+
+            {
+                
+                if (invoiceItem.EXPENSES != null)
+                {
+
+                    foreach (var expense in invoiceItem.EXPENSES)
+                    {
+                        if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                        {
+                            if (SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault() != null)
+                            {
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    if (SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expense.CurrencyTypeCode)
+                                    {
+                                        var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                        var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                        if (myexpenseCurrency == null)
+                                        {
+                                            string expenseCurrencyCode = "";
+                                            expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                            if (!string.IsNullOrWhiteSpace(expenseCurrencyCode) && SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expenseCurrencyCode)
+                                            {
+                                                SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = expenseCurrencyCode;
+                                                SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(myexpenseCurrency.Code) && SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != myexpenseCurrency.Code)
+                                            {
+                                                SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = myexpenseCurrency.Code;
+                                                SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    if (SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount != decimal1)
+                                    {
+                                        SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount = decimal1;
+                                        SupplierInvoiceItemsModPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                    }
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                            }
+                            else
+                            {
+                                var supplierInvoiceItemsModPM = new SupplierInvoiceItemsModPM();
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    supplierInvoiceItemsModPM.Amount = decimal1;
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                    var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                    if (myexpenseCurrency == null)
+                                    {
+                                        string expenseCurrencyCode = "";
+                                        expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                        if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) supplierInvoiceItemsModPM.CurrencyTypeCode = expenseCurrencyCode;
+                                    }
+                                    else
+                                    {
+                                        supplierInvoiceItemsModPM.CurrencyTypeCode = myexpenseCurrency.Code.ToString();
+                                    }
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                                {
+                                    var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
+                                    var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(expense.TypeCode);
+                                    if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
+                                    {
+                                        supplierInvoiceItemsModPM.TypeCode = mymodificationAndDiscountType.Code;
+                                    }
+                                }
+                                supplierInvoiceItemsModPM.DeclarationId = supplierInvoiceItemPM.DeclarationId;
+                                supplierInvoiceItemsModPM.LineNumber = supplierInvoiceItemPM.LineNumber;
+                                if (supplierInvoiceItemPM.CounterKey > 0) supplierInvoiceItemsModPM.InvoiceCounterKey = supplierInvoiceItemPM.CounterKey;
+                                supplierInvoiceItemsModPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                                supplierInvoiceItemsModPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                                SupplierInvoiceItemsModPMList.Add(supplierInvoiceItemsModPM);
+                            }
+                        }
+                    }
+                }
+                
+                return SupplierInvoiceItemsModPMList;
+            }
+        }
+
+        public string GetTranslationL2P(string partnerID, string tableID, string localCode)
+        {
+            var rec = (from a in amitalContext.GTRTRANs
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       select a).FirstOrDefault();
+            if (rec == null)
+            {
+                return null;
+            }
+            return rec.PARTNERCODE;
+        }
+
         private string TranslateTermsOfSaleType(string amitalTermsOfSaleTypeCode)
         {
             if (String.IsNullOrWhiteSpace(amitalTermsOfSaleTypeCode))
@@ -905,6 +1417,33 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             AppendLogLine("amitalMeasurmentUnit = " + amitalMeasurmentUnit + " Translated to " + myMeasurmentUnit.Code);
             return myMeasurmentUnit.Code;
+        }
+
+        private string TranslateTradeAgreementCode(string tradeAgreementCode)
+        {
+
+            if (String.IsNullOrWhiteSpace(tradeAgreementCode))
+            {
+                AppendLogLine("tradeAgreementCode is null");
+                return null;
+            }
+            var tradeAgreement = new TradeAgreementRepository(ResolvedTenant());
+            var myTradeAgreement = tradeAgreement.GetSingle(tradeAgreementCode);
+            if (myTradeAgreement == null)
+            {
+                string TradeAgreementCode = "";
+                TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", tradeAgreementCode);
+
+                if (!string.IsNullOrWhiteSpace(TradeAgreementCode)) return TradeAgreementCode;
+            }
+            else
+            {
+                return myTradeAgreement.Code;
+            }
+
+            AppendLogLine("tradeAgreementCode = " + tradeAgreementCode + " could not translate to Logitude Id");
+            return null;
+
         }
 
         internal class LineToSequenceNumeric

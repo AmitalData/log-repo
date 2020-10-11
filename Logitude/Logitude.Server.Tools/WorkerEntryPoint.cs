@@ -1,22 +1,11 @@
 ﻿using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure;
 using System.Globalization;
 
 namespace Logitude.Server.Tools
@@ -197,6 +186,11 @@ namespace Logitude.Server.Tools
                 else
                 {
                     DoneItemsInRange.Add(doneDate, 1);
+                }
+                var donotwait500ms = LogitudeSettings.IsCostomsDeploy;//yaron !!
+                if (donotwait500ms)///Thread.Sleep(500);
+                {
+                    return;
                 }
                 System.Diagnostics.ProcessThreadCollection tx = default(System.Diagnostics.ProcessThreadCollection);
                 Int16 t = default(Int16);

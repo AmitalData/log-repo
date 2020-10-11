@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -45,7 +45,7 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
@@ -85,7 +85,7 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;

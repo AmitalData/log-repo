@@ -68,9 +68,21 @@ import {CustomBankListService} from '../../Customs/Services/StandardLists/Custom
 import {CustomsHouseTypeListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeListService'; 
 import {CustomsSettingListService} from '../../Customs/Services/StandardLists/CustomsSettingListService'; 
 import {CustomsHouseTypeAdditionalListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeAdditionalListService'; 
-import {GovernmentProcedureTypeListService} from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService'; 
+import { GovernmentProcedureTypeListService } from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService';
+import { CourierPendingReasonListService } from '../../Customs/Services/StandardLists/CourierPendingReasonListService';
+import { InterfaceTenantDefinitionListService } from '../../Customs/Services/StandardLists/InterfaceTenantDefinitionListService';
+import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
+import { CurrencyTypeListService } from '../../Customs/Services/StandardLists/CurrencyTypeListService';
 
-// Business Process 
+import { NbcDeclarationTypeListService } from '../../Customs/Services/StandardLists/NbcDeclarationTypeListService';
+import { PartyRelationshipTypeListService } from '../../Customs/Services/StandardLists/PartyRelationshipTypeListService';
+import { AmountTypeListService } from '../../Customs/Services/StandardLists/AmountTypeListService';
+import { ClaimReasonTypeListService } from '../../Customs/Services/StandardLists/ClaimReasonTypeListService';
+import { ClassificationTypeListService } from '../../Customs/Services/StandardLists/ClassificationTypeListService';
+import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
+//import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
+
+// Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
 import {BusinessProcessQueueListService } from '../Services/StandardLists/BusinessProcessQueueListService'; 
 import {TeamListService} from '../Services/StandardLists/TeamListService'; 
@@ -94,6 +106,15 @@ import { OccasionTypeListService } from '../../CRM/Services/StandardLists/Occasi
 
 import { AWBAdditionalHandlingInfoListService } from '../../Shipment/Services/StandardLists/AWBAdditionalHandlingInfoListService';
 import { ShipmentSubTypeListService } from '../../shipment/services/standardlists/shipmentsubtypelistservice';
+import { SessionLocator } from './SessionLocator';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import { AppTool } from '../Tools';
+import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
+import { CustomerRoleTypeListService } from '../../Customs/Services/StandardLists/CustomerRoleTypeListService';
+import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
+ import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
+import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
+import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
 
 
 export class CachedDataManagerServices {
@@ -177,11 +198,17 @@ export class CachedDataManagerServices {
             case "Customs.CustomsRequiredFieldListService": { myResult = new CustomsRequiredFieldListService(); break; }
             case "Customs.InterfaceManagementListService": { myResult = new InterfaceManagementListService(); break; }
             case "Customs.UIMessageAdditionalListService": { myResult = new UIMessageAdditionalListService(); break; }
+            case "Customs.InterfaceTenantDefinitionListService": { myResult = new InterfaceTenantDefinitionListService(); break; }
+            case "Customs.CustomsItemListService": { myResult = new CustomsItemListService(); break; }
+
             case "Customs.CustomBankListService": { myResult = new CustomBankListService(); break; }
             case "Customs.CustomsHouseTypeListService": { myResult = new CustomsHouseTypeListService(); break; }
+            case "Customs.CurrencyTypeListService": { myResult = new CurrencyTypeListService(); break; }
             case "Customs.CustomsSettingListService": { myResult = new CustomsSettingListService(); break; }
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
+            case "Customs.CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
+            case "Customs.ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }
@@ -196,13 +223,35 @@ export class CachedDataManagerServices {
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "Customs.TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
+            case "Customs.ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
+            case "Customs.ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
+            case "Customs.AmountTypeListService": { myResult = new AmountTypeListService(); break; }
+            case "Customs.PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "Customs.NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+            case "Customs.CustomerRoleTypeListService ": { myResult = new CustomerRoleTypeListService (); break; }
+            case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService(); break; }
+            case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService(); break; }
+         //   case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService (); break; }
+            case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
+            case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
+            case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService();; break; }
+
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
+ 
+            case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
 
             default: {
-                alert(name + " is not declared in CachedDataManagerServices");
+
+                if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                    console.error(name + " is not declared in CachedDataManagerServices")
+                } else {
+                    alert(name + " is not declared in CachedDataManagerServices");
+                }
                 break;
             }
         }

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="2">
+    <![CDATA[
+update DECLARATIONS set ISVALIDTICKETSDIAMOND=0 where  ISVALIDTICKETSDIAMOND is null;
+]]>
+  </Oracle>
+</Script>

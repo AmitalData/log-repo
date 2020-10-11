@@ -44,6 +44,14 @@ namespace Logitude.Customs.BL.Messaging.Customs
             where TRequestParams : RequestParamsBase
         {
 
+            if (requestParams is DeclarationStatusRequestParams)
+            {
+
+                LogitudeSettings.HandleLogMe(
+                    "DeclarationId:" + requestParams.LoggingEntityId + Environment.NewLine + Environment.StackTrace.ToString()
+                    , false, "8250", new DateTime(2021, 1, 1));
+            }
+
             CustomsRequestsSheetDomainModelService<TRequestParams> customsRequestsSheetService = null;
             var reqSheetDetials = CustomsRequestsSheetDomainModelService<TRequestParams>.GetSheetDetailsFromRequestParam(requestParams);
             string customsRequestsSheetId = null;
@@ -53,6 +61,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 var tenant = customsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
                 var InterfaceTypeCode = customsRequestsSheetService.MyCustomsRequestsSheetPM.InterfaceTypeCode;
                 var MyCustomsRequestsSheetPMId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
+                LogMessagingUtilWR.Instance.AppendLine($"SetCustomsRequestsSheetId({MyCustomsRequestsSheetPMId})");
                 if (LogitudeSettings.QueueServiceMode != "db" && Transaction.Current != null)
                 {
                     Transaction.Current.TransactionCompleted += (sender, e) =>
@@ -81,6 +90,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     customsRequestsSheetService.Dispose();
                 }
                 RequestSheetContext.Current.Dispose();
+                LogMessagingUtil.Instance.Clear();
             }
 
             return customsRequestsSheetId;

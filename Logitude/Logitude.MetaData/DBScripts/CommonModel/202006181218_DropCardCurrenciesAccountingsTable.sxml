@@ -16,4 +16,21 @@
      
     ]]>
   </Sql>
+  <Oracle Version="1">
+    <![CDATA[
+
+     if exists (SELECT * FROM sys.tables WHERE name='CardCurrenciesAccountings')
+     begin
+        drop table CardCurrenciesAccountings;
+     end   
+     
+        delete from Screens where ObjectTableId = (select id from ObjectTables where name = 'CardCurrenciesAccounting')
+        delete from ObjectFields where ObjectTableId = (select id from ObjectTables where name = 'CardCurrenciesAccounting')
+        delete from ObjectFields where MultiTableId = (select id from ObjectTables where name = 'CardCurrenciesAccounting')
+        delete from EventTypes where ObjectTableId = (select id from ObjectTables where name = 'CardCurrenciesAccounting')
+        delete from TextCodes where ObjectTableId = (select id from ObjectTables where name = 'CardCurrenciesAccounting')
+        delete from ObjectTables where name = 'CardCurrenciesAccounting' 
+     
+    ]]>
+  </Oracle>
 </Script>

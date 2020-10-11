@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DeclarationCourierStatuses"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CourierManifestStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierDeclarationStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierPaymentStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCourierMissingClassification"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsClosedForFollowUp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HighLowValue"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalInvoiceAmountInUSD"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierPendingReasonCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PendingRemarks"
+    Type="nvarchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SpecialActionStatus"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FastIndividualProcessCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManualProcessCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TerminalSuspentionNumber"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileStatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileStatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileStatusRemarks"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StorageSiteStatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StorageSiteErrorText"
+    Type="nvarchar"
+    Size="1200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CourierPendingReasonList"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileStatusName"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CourierPendingReasonCode"
+    ReferencedTable="CourierPendingReasons"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="StorageSiteStatusCode"
+    ReferencedTable="MamanStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Index
+    Columns="CourierPendingReasonList" />
+  <Index
+    Columns="IsCourierMissingClassification" />
+  <Index
+    Columns="IsClosedForFollowUp" />
+</Table>

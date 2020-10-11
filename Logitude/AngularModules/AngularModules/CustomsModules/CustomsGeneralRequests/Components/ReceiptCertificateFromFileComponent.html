@@ -1,0 +1,177 @@
+<!-- PrintRequestComponent view  -->
+<style>
+    .MessageBox {
+        width: 200px;
+        height: 30px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: green;
+        font-family: sans-serif;
+        font-size: 12px;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                                                        [IsShowCustomToolBar]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="height: 100px;padding-top: 10px;">
+                <!-- Request Fields -->
+                <tr class="FormFieldRow">
+                    <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">קובץ:</span></td>
+                    <td style="width:120px;">
+                        <LogTextBox [ObjectFieldName]="'FileName'" [Placeholder]="Placeholder" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:1%;"></td>
+                    <td style="width:60px;text-align:left">
+                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
+                        <input #myInput  accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                    </td>
+                    <td style="width:150px; background-color:white">
+                        <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
+                            <div style="height:16px;margin:1px;" id="myBar"></div>
+                        </div>
+                    </td>
+                    <td style="width:4px;"></td>
+                    <td style="width:30px;color:gray">{{ProgressBarPercentText}}</td>
+                    <td><div></div></td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">לקוח:</span></td>
+                    <td style="width:220px;text-align:left">
+                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="CustomerId"
+                                [DisplayMemberPath]="'LocalName'"
+                                [HideAddLink]="true"
+                                [LookUpTableName]="'Card'"
+                                [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
+                        </LogLov>
+                    </td>
+                    <td style="width:154px;"></td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td><div></div></td>
+                    <td><div></div></td>
+                    <td><div></div></td>
+                    <td><div></div></td>
+
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content">
+            <table style="width: 660px;height: 300px;padding-top: 10px;">
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ErrorsResultList">
+                                <log-column [header]="'שורה בבקשה'"
+                                            [width]="'80'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.ExcelRow}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'מספר תיק'"
+                                            [width]="'80'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CustomfileNr}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'מספר הצהרה'"
+                                            [width]="'100'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.DeclarationId}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'מספר חשבון ספק'"
+                                            [width]="'80'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.SupplierItemInvoice}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'דגם'"
+                                            [width]="'80'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.Model}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'הודעת שגיאה'"
+                                            [width]="'190'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.Errors}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="class-response-ToolBar" style="height:22px;">
+            <div style="float:left;">
+                <table>
+                    <tr>
+                        <td width="200px" *ngIf="UploadSuccess">
+                            <label style="        font-size: 16px; color: #1B90CB; font-weight: bold;" *ngIf="UploadSuccessLabel">הקובץ נקלט בהצלחה</label>
+                        </td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">נקה נתונים</button>
+                        </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                        <td width="57px">
+                            <button class="Button" [disabled]="!ExportAsExcelButtonIsEnabled" (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                        </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                        <td width="57px">
+                            <button class="Button" (click)="CancelButtonClicked()">סגור</button>
+                        </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                        <td width="57px">
+                            <button class="RedButton" [disabled]="UploadButtonIsEnabled ||  CustomerId==null" (click)="OkButtonClicked()">עיבוד נתונים</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </custom-message-wrapper>
+</div>

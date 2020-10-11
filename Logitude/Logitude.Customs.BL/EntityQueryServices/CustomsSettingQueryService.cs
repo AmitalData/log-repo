@@ -36,27 +36,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 throw new Exception("GetSettingByTenant(tenant) ==null");
             }
-            return  new LogitudeCustomsSettingsM(){
-                 UnfConnectionString =customsSettingPM.UnfConnectionString,
-                 OnPremiseFillingService = customsSettingPM.OnPremiseFillingService,
-                 IsConnectedToUniFreight = customsSettingPM.IsConnectedToUniFreight,
-                 
+            return new LogitudeCustomsSettingsM() {
+                UnfConnectionString = customsSettingPM.UnfConnectionString,
+                OnPremiseFillingService = customsSettingPM.OnPremiseFillingService,
+                IsConnectedToUniFreight = customsSettingPM.IsConnectedToUniFreight,
+
             };
         }
         public static CustomsSettingPM GetSettingByTenant(int tenant)
         {
             CustomsSettingPM settingPM = null;
-            
-            
-            string entityKeyString = "CustomsSettingQueryService:GetSettingByTenant" + "_" + tenant.ToString() ;
-            settingPM =CacheManager.GetOrInsertNewObject<CustomsSettingPM>(entityKeyString, () =>
-            {
-                var qs = new CustomsSettingQueryService(tenant);
-                var settingPoco = qs.repository.GetSettingByTenant(tenant);
-                settingPM = qs.GetEntityPM(settingPoco);
-             //   settingPM.IsConnectedToUniFreight = false;
-                return settingPM ;
-            });
+
+
+            string entityKeyString = "CustomsSettingQueryService:GetSettingByTenant" + "_" + tenant.ToString();
+            settingPM = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(entityKeyString, () =>
+             {
+                 var qs = new CustomsSettingQueryService(tenant);
+                 var settingPoco = qs.repository.GetSettingByTenant(tenant);
+                 settingPM = qs.GetEntityPM(settingPoco);
+                //   settingPM.IsConnectedToUniFreight = false;
+                return settingPM;
+             });
             //settingPM.IsConnectedToUniFreight = false;
             return settingPM ?? new CustomsSettingPM() { Tenant = tenant };
 
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 var qs = new CustomsSettingQueryService(tenant);
                 var settingPoco = qs.repository.GetSettingByTenant(tenant);
                 settingPM = qs.GetEntityPM(settingPoco);
-                
+
                 if (settingPM != null)
                 {
                     CacheManager.CacheWrapper.Insert(entityKeyString, settingPM);
@@ -85,21 +85,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache());
                 }
             }
-            
+
             return settingPM;
         }
 
-  
+
 
         public List<CustomsSettingPM> GetAll()
         {
-            var allPocos= repository.GetRealAll().ToList();
+            var allPocos = repository.GetRealAll().ToList();
             var allPMs = allPocos.Select(rec => GetEntityPM(rec)).ToList();
             return allPMs;
         }
 
-           
-          
+
+
         public List<CustomsSetting> GetAll(int tenant)
         {
             return repository.GetAll(tenant).ToList();
@@ -112,7 +112,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    Id = setting.Id,
             //    IsConnectedToUniFreight = setting.IsConnectedToUniFreight,
             //};
-            string entityKeyString = "GetSettingByTenantN," + tenant.ToString() ;
+            string entityKeyString = "GetSettingByTenantN," + tenant.ToString();
 
             var pm = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(
                 entityKeyString,
@@ -150,7 +150,56 @@ namespace Logitude.Customs.BL.EntityQueryServices
             });
             return pm;
         }
+
+
+        public List<TenantM> GetTenantDetailsMessagesPMs()
+        {
+            List<TenantM> tenantMs = new List<TenantM>();
+            var poco = repository.GetRealAll().ToList();
+            foreach (var item in poco)
+            {
+                TenantM tenantM = new TenantM();
+                tenantM.CustomsAgentId = item.CustomsAgentId;
+                tenantM.HaveFeature = item.IsMessagesPending;
+                tenantM.TenantId = item.Tenant;
+                tenantM.IIGServiceAddress = item.IIGServiceAddress;
+                tenantM.QtyFeedbackInPendingMessage =Convert.ToInt32( item.QtyFeedbackInPendingMessage);
+                tenantM.DCAPartnerVault = item.DCAPartnerVault;
+                tenantMs.Add(tenantM);
+            }
+            //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
+    
+            return tenantMs;
+
+        }
+
+
+        public DateTime? GetLastRunningDCAWS(int tenant)
+        {
+            var poco = repository.GetSettingByTenant(tenant);
+
+            return poco.LastRunningDCAWS;
+
+        }
+ 
+
+
     }
+
+
+    public class TenantM
+    {
+        public string CustomsAgentId { get; internal set; }
+        public bool? HaveFeature { get; internal set; }
+        public int TenantId { get; internal set; }
+        public int QtyFeedbackInPendingMessage { get; internal set; }
+        public string IIGServiceAddress { get; internal set; }
+        public string LastActionLog { get; set; }
+        public string DCADownloadFolder { get; internal set; }
+        public string DCAPartnerVault { get; internal set; }
+
+    }
+
 #if false
     public class CustomsSettingQService
     {

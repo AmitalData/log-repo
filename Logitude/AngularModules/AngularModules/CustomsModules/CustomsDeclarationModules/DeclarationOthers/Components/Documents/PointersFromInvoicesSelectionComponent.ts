@@ -71,7 +71,7 @@ export class PointersFromInvoicesSelectionComponent {
         });
 
         if (!AppTool.IsNullOrEmpty(connectedCounterKeys) && !AppTool.IsNullOrEmpty(connectedCounterKeys)) {
-            this.supplierInvoiceExtendedListService.GetSelectedSupplierInvoiceItemLists(this.DeclarationPM.Id, connectedCounterKeys, connectedLineNumbers).subscribe((response) => {
+            this.supplierInvoiceExtendedListService.GetSelectedSupplierInvoiceItemLists(this.DeclarationPM.Id, connectedCounterKeys, connectedLineNumbers).subscribe((response:any) => {
                 var resp = response.Result;
                 resp.forEach((item) => {
                     this.StaticSelectedInvoiceItems.Insert(item);

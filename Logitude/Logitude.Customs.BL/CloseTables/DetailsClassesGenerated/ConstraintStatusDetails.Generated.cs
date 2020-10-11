@@ -20,17 +20,77 @@ namespace Logitude.Customs.BL
    {
        public List<ConstraintStatusDetails> GetAll()
        {
-		    var all = new List<ConstraintStatusDetails>(); 
+		    var all = new List<ConstraintStatusDetails>();  
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,פוטנציאל", 
+                Inactive = false, 
+                LocalName = "פוטנציאל", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,ממתין לאישור אילוץ", 
+                Inactive = false, 
+                LocalName = "ממתין לאישור אילוץ", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,ממתין לקיום תנאי לאישור", 
+                Inactive = false, 
+                LocalName = "ממתין לקיום תנאי לאישור", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,דחייה ע''י גורם מוסמך", 
+                Inactive = false, 
+                LocalName = "דחייה ע''י גורם מוסמך", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,אושר ע''י גורם מוסמך", 
+                Inactive = false, 
+                LocalName = "אושר ע''י גורם מוסמך", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,נסגר ע''י טיפול בבעיה", 
+                Inactive = false, 
+                LocalName = "נסגר ע''י טיפול בבעיה", 
+			});
+			 
+            all.Add(new ConstraintStatusDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,נסגר בעקבות ביטול הצהרה", 
+                Inactive = false, 
+                LocalName = "נסגר בעקבות ביטול הצהרה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ConstraintStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ConstraintStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

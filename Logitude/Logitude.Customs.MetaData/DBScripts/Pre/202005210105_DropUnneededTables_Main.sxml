@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+    EXECUTE IMMEDIATE 'DROP TABLE NOTIFICATIONREPLIES CASCADE CONSTRAINTS';
+	EXECUTE IMMEDIATE 'DROP TABLE ACCOUNTINGSETTINGS CASCADE CONSTRAINTS';
+    ]]>
+  </Oracle>
+</Script>

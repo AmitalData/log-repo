@@ -29,7 +29,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "5110"; }
         }
+        protected override DEPO_NG_5110_MSG5_DepositRequestFulfillednfoMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
 
+            var MyFake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService = new Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService();
+            return MyFake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.GetFakeCustomsResponse(requestParamsData);
+
+        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DEPO_NG_5110_MSG5_DepositRequestFulfillednfoMsg customsResponse)
         {
             var tableName = "Customs.Deposit";

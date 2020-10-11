@@ -1,17 +1,8 @@
 ﻿using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Utils;
-using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Caching;
 
 namespace CustomsWorkerRole
@@ -42,7 +33,7 @@ namespace CustomsWorkerRole
             ThreadedRoleEntryPoint.StartStatic(BuildObjectTablesZipFilesDataAction, prodInfo);
             InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null);
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
-
+            
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //ContainerAccessor.InitContainer(storageServiceMode);
 

@@ -35,12 +35,14 @@
                                                                 <!-- InterfaceCodeName -->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.InterfaceName' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'InterfaceCodeName'" [Editable]="true">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div class="TextTrimming RightCenter">
                                                                             <span>{{item.InterfaceCodeName}}</span>
                                                                         </div>
 
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
 
@@ -49,19 +51,22 @@
                                                                 <!-- PartnerCode -->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.PartnerCode' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'PartnerCode'" [Editable]="true">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div class="TextTrimming RightCenter">
                                                                             <span>{{item.PartnerCode}}</span>
                                                                         </div>
 
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
 
                                                                 <!-- TypeCode -->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.TypeCode' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'TypeCode'" [Editable]="true">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div class="TextTrimming RightCenter">
                                                                             <span>{{item.TypeCode}}</span>
                                                                         </div>
@@ -73,13 +78,15 @@
                 </select>
             </div>-->
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
 
                                                                 <!--FileName-->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.FileName' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'FileName'" [Editable]="true">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div class="TextTrimming RightCenter">
                                                                             <span>{{item.FileName}}</span>
                                                                         </div>
@@ -91,11 +98,13 @@
             </div>-->
 
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
                                                                 <!--FileExt-->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.FileExt' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'FileExt'" [Editable]="true">
-                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                         <div class="TextTrimming RightCenter">
                                                                             <span>{{item.FileExt}}</span>
                                                                         </div>
@@ -108,6 +117,7 @@
             </div>-->
 
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
 
@@ -115,11 +125,13 @@
 
                                                                 <!-- Delete Button-->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                    <log-cell-template template="let item" [IgnoreMods]="true">
+                                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true">
 
                                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
 
                                                                     </log-cell-template>
+</ng-template>
 
 
 
@@ -127,11 +139,13 @@
                                                                 </log-column>
                                                                 <!-- Delete Button-->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                    <log-cell-template template="let item" [IgnoreMods]="true">
+                                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true">
 
 
                                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                                                     </log-cell-template>
+</ng-template>
                                                                 </log-column>
 
 
@@ -166,11 +180,12 @@
                                                         <LogLabel [ObjectFieldName]="'InterfaceName1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsPartnerFtp.F.InterfaceName'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlInterfaceName
                                                                 (change)="InterfaceNameChanged(selectControlInterfaceName)">
                                                             <option *ngFor="let c of _InterfaceNameItems" [value]="c.Key" [selected]="c.Key==InterfaceName">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+                                                        <ComboBox [ItemsSource]="_InterfaceNameItems" [Binding]="'Value'" [SelectedItem]="SelectedItemInterfaceName"  (SelectedItemChanged)="InterfaceNameChanged($event.Key)"></ComboBox>
 
                                                     </td>
 
@@ -192,11 +207,13 @@
                                                         <LogLabel [ObjectFieldName]="'PartnerCode1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"  [TextCode]="'Customs.CustomsPartnerFtp.F.PartnerCode'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlPartnerCode
                                                                 (change)="PartnerCodeChanged(selectControlPartnerCode)">
                                                             <option *ngFor="let c of _PartnerCodeItems" [value]="c.Key" [selected]="c.Key==PartnerCode">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+
+                                                        <ComboBox [ItemsSource]="_PartnerCodeItems" [SelectedItem]="SelectedItemPartnerCode"  [Binding]="'Value'" (SelectedItemChanged)="PartnerCodeChanged($event.Key)"></ComboBox>
                                                     </td>
 
                                                     <td style="width: 3px;"><div></div></td>
@@ -207,11 +224,12 @@
                                                         <LogLabel [ObjectFieldName]="'TypeCode1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"  [TextCode]="'Customs.CustomsPartnerFtp.F.TypeCode'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControl
                                                                 (change)="TypeCodeChanged(selectControl)">
                                                             <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==TypeCode">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+                                                        <ComboBox [ItemsSource]="_TypeCodeItems" [Binding]="'Value'"  [SelectedItem]="SelectedItemTypeCode" (SelectedItemChanged)="TypeCodeChanged($event.Key)"></ComboBox>
                                                     </td>
 
 

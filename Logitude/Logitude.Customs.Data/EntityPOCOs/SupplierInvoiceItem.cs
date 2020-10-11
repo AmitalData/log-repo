@@ -153,6 +153,37 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClasifiedRemarks { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("MarksAndNumbers")]
+	    public string MarksAndNumbers { get; set; }
+        [Column("PackageQuantity")]
+	    public int? PackageQuantity { get; set; }
+        [Column("Weight")]
+	    public decimal? Weight { get; set; }
+        [Column("OcrHeight")]
+	    public decimal OcrHeight { get; set; }
+        [Column("OcrTop")]
+	    public decimal OcrTop { get; set; }
+        [Column("OcrPageNumber")]
+	    public decimal OcrPageNumber { get; set; }
+        [ForeignKey("ClassificationType")]
+        [Column("ClassificationTypeCode")]
+	    public string ClassificationTypeCode { get; set; }
+	      
+        public virtual ClassificationType ClassificationType { get; set; }
+        [ForeignKey("TransactionNatureType")]
+        [Column("TransactionNatureCode")]
+	    public string TransactionNatureCode { get; set; }
+	      
+        public virtual TransactionNatureType TransactionNatureType { get; set; }
+        [ForeignKey("ClaimReasonType")]
+        [Column("ClaimReasonCode")]
+	    public string ClaimReasonCode { get; set; }
+	      
+        public virtual ClaimReasonType ClaimReasonType { get; set; }
+        [Column("ItemFOBAmountForeign")]
+	    public decimal? ItemFOBAmountForeign { get; set; }
+        [Column("ItemFOBAmountNIS")]
+	    public decimal? ItemFOBAmountNIS { get; set; }
     }
 }
 	 

@@ -35,10 +35,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            //this.Property(t => t.ObjectFieldCode)
+            //    .IsRequired()
+            //    .HasMaxLength(200)
+            //    .IsUnicode(false);
+
             this.Property(t => t.ObjectFieldCode)
-                .IsRequired()
-                .HasMaxLength(200)
-                .IsUnicode(false);
+               .HasMaxLength(200)
+               .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("RuleConditionFields");

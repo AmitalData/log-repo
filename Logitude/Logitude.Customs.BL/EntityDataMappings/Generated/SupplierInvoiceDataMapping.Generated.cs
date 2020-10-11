@@ -51,7 +51,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AccumalationStateCode, 
 	         UnfInvoiceCounterKey, 
 	         VendorComissionPercentage, 
-	         InvoiceAmountInUSD,
+	         InvoiceAmountInUSD, 
+	         ChangeInSupplierInvoice, 
+	         BuyerName, 
+	         BuyerAddress, 
+	         BuyerCountryCode, 
+	         BuyerRoleCode, 
+	         PartyRelationshipCode,
 	      }
 
 
@@ -99,7 +105,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnfInvoiceCounterKey, 
 	         VendorComissionPercentage, 
 	         IsValueForCustomsOnly, 
-	         InvoiceAmountInUSD,
+	         InvoiceAmountInUSD, 
+	         ChangeInSupplierInvoice, 
+	         InvoiceCurrencyTypeName, 
+	         BuyerName, 
+	         BuyerAddress, 
+	         BuyerCountryCode, 
+	         BuyerRoleCode, 
+	         PartyRelationshipCode, 
+	         PartyRelationshipName, 
+	         BuyerRoleName, 
+	         BuyerCountryName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -246,6 +262,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceAmountInUSD))
             {
 				entityPOCO.InvoiceAmountInUSD = entityPM.InvoiceAmountInUSD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeInSupplierInvoice))
+            {
+				entityPOCO.ChangeInSupplierInvoice = entityPM.ChangeInSupplierInvoice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerName))
+            {
+				entityPOCO.BuyerName = entityPM.BuyerName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerAddress))
+            {
+				entityPOCO.BuyerAddress = entityPM.BuyerAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerCountryCode))
+            {
+				entityPOCO.BuyerCountryCode = entityPM.BuyerCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerRoleCode))
+            {
+				entityPOCO.BuyerRoleCode = entityPM.BuyerRoleCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
+            {
+				entityPOCO.PartyRelationshipCode = entityPM.PartyRelationshipCode;
 			}
 			}
 
@@ -402,6 +448,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.InvoiceAmountInUSD = entityPOCO.InvoiceAmountInUSD;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChangeInSupplierInvoice))
+            {
+					entityPM.ChangeInSupplierInvoice = entityPOCO.ChangeInSupplierInvoice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BuyerName))
+            {
+					entityPM.BuyerName = entityPOCO.BuyerName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BuyerAddress))
+            {
+					entityPM.BuyerAddress = entityPOCO.BuyerAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BuyerCountryCode))
+            {
+					entityPM.BuyerCountryCode = entityPOCO.BuyerCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BuyerRoleCode))
+            {
+					entityPM.BuyerRoleCode = entityPOCO.BuyerRoleCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PartyRelationshipCode))
+            {
+					entityPM.PartyRelationshipCode = entityPOCO.PartyRelationshipCode;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoicePM entityPM, SupplierInvoicePM oldEntityPM)
@@ -548,6 +624,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.InvoiceAmountInUSD = entityPM.InvoiceAmountInUSD;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeInSupplierInvoice))
+            {
+                oldEntityPM.ChangeInSupplierInvoice = entityPM.ChangeInSupplierInvoice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerName))
+            {
+                oldEntityPM.BuyerName = entityPM.BuyerName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerAddress))
+            {
+                oldEntityPM.BuyerAddress = entityPM.BuyerAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerCountryCode))
+            {
+                oldEntityPM.BuyerCountryCode = entityPM.BuyerCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerRoleCode))
+            {
+                oldEntityPM.BuyerRoleCode = entityPM.BuyerRoleCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
+            {
+                oldEntityPM.PartyRelationshipCode = entityPM.PartyRelationshipCode;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(SupplierInvoicePM entityPM)
@@ -556,6 +662,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BuyerName)) //T4 find type == nText 
+            {
+                entityPM.BuyerName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BuyerName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BuyerAddress)) //T4 find type == nText 
+            {
+                entityPM.BuyerAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BuyerAddress));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

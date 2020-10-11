@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ClaimsRelatedEntitiesReasons"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ClaimId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNo"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ReasonListTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ClaimId,CounterKey"
+    ReferencedTable="ClaimsRelatedEntities"
+    ReferencedColumn="ClaimId,EntityCounterKey"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ReasonListTypeCode"
+    ReferencedTable="ProcessingReasons"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

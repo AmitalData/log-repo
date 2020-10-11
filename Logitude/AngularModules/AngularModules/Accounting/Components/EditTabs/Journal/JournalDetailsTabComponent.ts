@@ -818,39 +818,41 @@ class JournalLineModel extends BaseComponent {
             {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
-                    this.ratesTableExtendedListService.getClosestRate(this.parent.currency.Id, value).subscribe((myResponse: ServiceResponse) => {
-                        if (myResponse != null) {
-                            if (!myResponse.HasError) {
-                                if (myResponse.Result != undefined && myResponse.Result != null) {
-                                    this.isRateManualy = false;
+                    if (this.parent.currency.Id != value) {
+                        this.ratesTableExtendedListService.getClosestRate(this.parent.currency.Id, value).subscribe((myResponse: ServiceResponse) => {
+                            if (myResponse != null) {
+                                if (!myResponse.HasError) {
+                                    if (myResponse.Result != undefined && myResponse.Result != null) {
+                                        this.isRateManualy = false;
 
-                                    var rate = myResponse.Result;
-                                    this.currencyRate = rate.Rate;
+                                        var rate = myResponse.Result;
+                                        this.currencyRate = rate.Rate;
 
-                                    // Recalculate local amount
-                                    if (this.LocalAmount) {
-                                        this.isRateCoverted = true;
-                                        this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+                                        // Recalculate local amount
+                                        if (this.LocalAmount) {
+                                            this.isRateCoverted = true;
+                                            this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+                                        }
+                                        else if (this.ForeignAmount) {
+                                            this.isRateCoverted = true;
+                                            this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+                                        }
+
+                                        console.log(">Ex. Rate: ", this.currencyRate);
+                                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+
+                                    } else {
+                                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("The selected currency does not have Exchange Rate!");
+
+                                        this.LocalAmount = null;
+                                        this.ForeignAmount = null;
                                     }
-                                    else if (this.ForeignAmount) {
-                                        this.isRateCoverted = true;
-                                        this.LocalAmount = (this.ForeignAmount * this.currencyRate);
-                                    }
-
-                                    console.log(">Ex. Rate: ", this.currencyRate);
-                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-
-                                } else {
-                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("The selected currency does not have Exchange Rate!");
-
-                                    this.LocalAmount = null;
-                                    this.ForeignAmount = null;
                                 }
                             }
-                        }
-                    });
-                } else {
+                        });
+                    }
+                    } else {
                     // Local Currency
                     this.isRateManualy = false;
                     this.currencyRate = 1;

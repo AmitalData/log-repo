@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class DeclarationExportRecipientQueryService: EntityQueryService<DeclarationExportRecipient,DeclarationExportRecipientKeys,DeclarationExportRecipientPM,DeclarationPM,DeclarationKeys>
+   {
+   
+        DeclarationExportRecipientRepository repository;
+		ICustomContext  context;
+        public DeclarationExportRecipientQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new DeclarationExportRecipientRepository(context);
+            Repository = repository;
+            mapping = new DeclarationExportRecipientDataMapping();
+        }
+
+        public DeclarationExportRecipientQueryService(DeclarationExportRecipientRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new DeclarationExportRecipientDataMapping();
+        }
+
+        public DeclarationExportRecipientQueryService(ICustomContext context)
+        {
+            this.repository = new DeclarationExportRecipientRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new DeclarationExportRecipientDataMapping();
+        }
+		 
+		public  DeclarationExportRecipientPM GetSingle(string declarationid, int? linenumber,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new DeclarationExportRecipientKeys(){ DeclarationId = declarationid, LineNumber = linenumber };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(DeclarationExportRecipient entityPOCO)
+        {
+            DeclarationExportRecipientKeys entityKeys = new DeclarationExportRecipientKeys() { DeclarationId = entityPOCO.DeclarationId, LineNumber = entityPOCO.LineNumber,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

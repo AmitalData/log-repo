@@ -82,20 +82,33 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo)
            .HasMaxLength(500)
            .IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
-            this.Property(t => t.CC)
-                .HasMaxLength(4000)
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.CC)
+                .HasMaxLength(500)
                 .IsUnicode(true);
 
+                this.Property(t => t.BCC)
+             .HasMaxLength(500)
+             .IsUnicode(true);
 
-
-            this.Property(t => t.BCC)
+            }
+            else
+            {
+                this.Property(t => t.CC)
                 .HasMaxLength(4000)
                 .IsUnicode(true);
+                this.Property(t => t.BCC)
+             .HasMaxLength(4000)
+             .IsUnicode(true);
 
             this.Property(t => t.DefultAttachmentsXML)
      .IsMaxLength()
      .IsUnicode(true);
+
+           
 
 
             //OriginalTemplateId 
@@ -140,9 +153,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo).HasColumnName("ReplyTo");
             this.Property(t => t.CC).HasColumnName("CC");
             this.Property(t => t.BCC).HasColumnName("BCC");
-            this.Property(t => t.DefultAttachmentsXML).HasColumnName("DefultAttachmentsXML");
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            this.Property(t => t.DefultAttachmentsXML).HasColumnName("DefultAttachmentsXML");
 
             if (dbms == "oracle")
             {

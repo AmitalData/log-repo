@@ -46,6 +46,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 QueryGroup newQueryGroup = new QueryGroup() { Code = queryGroupDetails.Code, Name = queryGroupDetails.Name, IndexOrder = queryGroupDetails.IndexOrder };
                 queryGroupRepository.Add(newQueryGroup);
+                tenantQueryGroups.Add(newQueryGroup.Code, newQueryGroup);
                 return newQueryGroup;
             }
 

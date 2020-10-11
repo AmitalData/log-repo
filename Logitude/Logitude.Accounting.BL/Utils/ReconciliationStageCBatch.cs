@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.Utils
         long _counter = 0;
         public const int LT_LinesMaximum_MIN = 2;
         public const int LT_LinesMaximum_MAX = 200;
-        public const int MaxPageSize_MAX = 500;
+        public const int MaxPageSize_MAX = 1000;
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;

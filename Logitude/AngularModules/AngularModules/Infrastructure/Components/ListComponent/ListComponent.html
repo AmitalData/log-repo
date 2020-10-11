@@ -188,9 +188,7 @@
                             <div *ngIf="!HasActionBar()" ></div>
                         </td>
 
-                        <td style="width: 480px;">
-                            <div LocationDirective Code="MNH"></div>
-                        </td>
+                       
                     </tr>
                 </table>
             </td>
@@ -250,17 +248,14 @@
                         <td style="width: 10px;" *ngIf="HasExcelExportButton">
                             <div></div>
                         </td>
-
                         <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
                             <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
                         </td>
-
                         <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
                             <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">
                                 {{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
                             </p>
                         </td>
-
                         <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">
                             <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
                         </td>
@@ -270,7 +265,7 @@
                         </td>
 
                         <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                            <span *ngIf="ShowViews"> {{View}} :</span>
+                            <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
                         <td style="vertical-align: middle;">
@@ -305,7 +300,9 @@
                             <div></div>
                         </td>
 
-
+                        <td style="width: 650px; left:50PX;"> 
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>
@@ -391,7 +388,7 @@
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
                     <!--*ngIf="!DestroyMe" only in customs-->
-                    <logitude-grid *ngIf="!UsingLogGridV2" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid *ngIf="!UsingLogGridV2"  [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"

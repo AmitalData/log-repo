@@ -42,7 +42,8 @@
                                                         <!-- DescriptionOfGoods -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.DescriptionOfGoods' | TextCodeTranslationPipe"
                                                                     [width]="'150'" [Alignment]="'right'" [binding]="'DescriptionOfGoods'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DescriptionOfGoods}}</span>
                                                                 </div>
@@ -51,12 +52,14 @@
                                                                                 [FocusOnMe]="true" [DataContext]="item" [Text]="DescriptionOfGoods"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- SaleAmountBefore -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountBefore' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'SaleAmountBefore'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SaleAmountBefore | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -66,12 +69,14 @@
                                                                                 [DataContext]="item" [Text]="SaleAmountBefore"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- SaleAmountAfter -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountAfter' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'SaleAmountAfter'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SaleAmountAfter | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -81,12 +86,14 @@
                                                                                 [DataContext]="item" [Text]="SaleAmountAfter"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- SaleAmountClaim -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountClaim' | TextCodeTranslationPipe"
                                                                     [width]="'165'" [Alignment]="'right'" [binding]="'SaleAmountClaim'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SaleAmountClaim | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -96,12 +103,14 @@
                                                                                 [DataContext]="item" [Text]="SaleAmountClaim"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- InventoryAmount -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.InventoryAmount' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'InventoryAmount'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.InventoryAmount | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -111,12 +120,14 @@
                                                                                 [DataContext]="item" [Text]="InventoryAmount"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- SoldGoodsAmount -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SoldGoodsAmount' | TextCodeTranslationPipe"
                                                                     [width]="'100'" [Alignment]="'right'" [binding]="'SoldGoodsAmount'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SoldGoodsAmount | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -126,15 +137,18 @@
                                                                                 [DataContext]="item" [Text]="SoldGoodsAmount"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSaleDeclarCommand(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

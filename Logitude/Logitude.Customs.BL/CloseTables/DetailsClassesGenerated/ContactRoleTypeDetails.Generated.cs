@@ -20,17 +20,77 @@ namespace Logitude.Customs.BL
    {
        public List<ContactRoleTypeDetails> GetAll()
        {
-		    var all = new List<ContactRoleTypeDetails>(); 
+		    var all = new List<ContactRoleTypeDetails>();  
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,בעלים", 
+                Inactive = false, 
+                LocalName = "בעלים", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,מנכ''ל", 
+                Inactive = false, 
+                LocalName = "מנכ''ל", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,סמנכ''ל", 
+                Inactive = false, 
+                LocalName = "סמנכ''ל", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,עורך דין", 
+                Inactive = false, 
+                LocalName = "עורך דין", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,רואה חשבון", 
+                Inactive = false, 
+                LocalName = "רואה חשבון", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,אחר", 
+                Inactive = false, 
+                LocalName = "אחר", 
+			});
+			 
+            all.Add(new ContactRoleTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,מערכות מידע", 
+                Inactive = false, 
+                LocalName = "מערכות מידע", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ContactRoleType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ContactRoleType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

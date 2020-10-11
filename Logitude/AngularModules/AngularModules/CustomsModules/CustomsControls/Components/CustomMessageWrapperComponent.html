@@ -1,9 +1,15 @@
-﻿<!-- DeclarationRestoreComponent  view  -->
+<!-- DeclarationRestoreComponent  view  -->
 <style>
     .CustomResponseBorderClass {
         border: 1px solid #3BB3E2;
         /*padding: 1rem;*/
         padding: 2px;
+    }
+
+         .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
     }
 </style>
 <div class="ScrollViewer">
@@ -31,7 +37,7 @@
                             <td>
 
 
-                                <fieldset [disabled]="CustomRequestContentIsDisable">
+                                <fieldset [disabled]="CustomRequestContentIsDisable" [ngClass]="{'disabled' : CustomRequestContentIsDisable}">
                                     <div style="border: 1px solid #3BB3E2; padding: 1rem">
                                         <ng-content select=".class-request-content"></ng-content>
                                     </div>
@@ -60,7 +66,15 @@
                         </tr>
 
 
-
+                        <tr >
+                            <td>
+                                <fieldset >
+                                    <div >
+                                        <ng-content select=".class-footer-content"></ng-content>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
 
                         <!--  ToolBar  -->
                         <tr [ngStyle]="ShowCustomToolBar ?  { 'display': 'normal'} : {'display' : 'none' }"
@@ -78,7 +92,7 @@
                                         <td style="width: 57px;">
                                             <button *ngIf="" class="Button" (click)="MessageDisplayIsDisableToggle()">Disable temp</button>
 
-                                            <button class="Button"  style="background-color: white;width: 22px;margin-right:26px;" *ngIf="MyCustomsMenuItem?.CanExportExcel &&  (MyLastCustomsRequestSheetId != null || MyCommunicationLogId != null) " (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                            <button class="Button" style="background-color: white;width: 22px;margin-right:26px;" *ngIf="MyCustomsMenuItem?.CanExportExcel &&  (MyLastCustomsRequestSheetId != null || MyCommunicationLogId != null) " (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
 
                                         </td>
                                         <td style="width: 57px;">
@@ -91,10 +105,10 @@
 
                                             <!--
 
-                                            (SendButtonClicked)="OnCustomSendOptionsClick($event)
-                                                [IsDisabled]="CustomSendOptionsButtonIsDisable"
-                                                -->
-                                            <custom-send-options #MyCustomSendOptionsComponent
+                        (SendButtonClicked)="OnCustomSendOptionsClick($event)
+                            [IsDisabled]="CustomSendOptionsButtonIsDisable"
+                            -->
+                                            <custom-send-options #MyCustomSendOptionsComponent [IsDisabled]="CustomRequestContentIsDisable"
                                                                  [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"></custom-send-options>
 
                                         </td>

@@ -1,0 +1,61 @@
+﻿<Procedure DBType="Main" Name="Q_DelayMsgandChangeStatusTo0" Schema="dbo" Module="Customs">
+  <SqlScript>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+    create or replace PROCEDURE Q_DelayMsgandChangeStatusTo0
+  (
+     MessageId IN NUMBER,
+     DelaySeconds IN NUMBER
+  )
+AS 
+
+BEGIN
+
+declare
+  l_exst number(1);
+  QueueMsgId number;
+
+BEGIN
+  select case 
+           when exists (SELECT Id FROM QueueMessages  WHERE  ID = MessageId )
+           then 1
+           else 0
+           end into l_exst
+           
+           from dual;
+        if l_exst = 1 
+  then   
+
+BEGIN
+
+select Id into QueueMsgId from QueueMessages  WHERE  ID = MessageId FOR UPDATE;
+--QueueMsgId:=(SELECT Id FROM QueueMessages  WHERE  ID = MessageId );
+
+UPDATE QueueMessages
+SET  NextRunDateTime =  current_timestamp + numToDSInterval( DelaySeconds, 'second' )
+WHERE Id = MessageId and Status <> 0;
+
+UPDATE QueueMessages
+SET  Status = 0
+WHERE Id = MessageId and Status <> 0;
+
+UPDATE QueueMessageMoreDetails
+SET  NextRunDateTime = current_timestamp + numToDSInterval( DelaySeconds, 'second' )
+WHERE Id = MessageId and Status <> 0;
+
+UPDATE QueueMessageMoreDetails
+SET  Status = 0
+WHERE Id = MessageId and Status <> 0;
+
+END;
+
+END IF;
+END;
+
+end;
+	
+    ]]>
+  </OracleScript>
+</Procedure>

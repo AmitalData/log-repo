@@ -20,17 +20,61 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentOrderStatusDetails> GetAll()
        {
-		    var all = new List<PaymentOrderStatusDetails>(); 
+		    var all = new List<PaymentOrderStatusDetails>();  
+            all.Add(new PaymentOrderStatusDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,הוכן", 
+                Inactive = false, 
+                LocalName = "הוכן", 
+			});
+			 
+            all.Add(new PaymentOrderStatusDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,נבדק חלקית", 
+                Inactive = false, 
+                LocalName = "נבדק חלקית", 
+			});
+			 
+            all.Add(new PaymentOrderStatusDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,אושר", 
+                Inactive = false, 
+                LocalName = "אושר", 
+			});
+			 
+            all.Add(new PaymentOrderStatusDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,אושר חלקית", 
+                Inactive = false, 
+                LocalName = "אושר חלקית", 
+			});
+			 
+            all.Add(new PaymentOrderStatusDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,בוטל", 
+                Inactive = false, 
+                LocalName = "בוטל", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentOrderStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentOrderStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

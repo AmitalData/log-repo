@@ -140,6 +140,10 @@
 
         private string carrierPrefixField;
 
+        private string isAutonomyField;
+
+        private string siteCodeField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -701,6 +705,32 @@
                 this.carrierPrefixField = value;
             }
         }
+
+        /// <remarks/>
+        public string IsAutonomy
+        {
+            get
+            {
+                return this.isAutonomyField;
+            }
+            set
+            {
+                this.isAutonomyField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string SiteCode
+        {
+            get
+            {
+                return this.siteCodeField;
+            }
+            set
+            {
+                this.siteCodeField = value;
+            }
+        }
     }
 
     /// <remarks/>
@@ -1039,6 +1069,12 @@
 
         private string pREFERENCEDOCUMENTNUMBERField;
 
+        private string tAXEXEMPTCODEField;
+
+        private string pROCESSTYPEField;
+
+        private string statisticQuantityTypeField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private POINTERS[] pOINTERSField;
@@ -1224,6 +1260,45 @@
             set
             {
                 this.pREFERENCEDOCUMENTNUMBERField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string TAXEXEMPTCODE
+        {
+            get
+            {
+                return this.tAXEXEMPTCODEField;
+            }
+            set
+            {
+                this.tAXEXEMPTCODEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string PROCESSTYPE
+        {
+            get
+            {
+                return this.pROCESSTYPEField;
+            }
+            set
+            {
+                this.pROCESSTYPEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
             }
         }
 

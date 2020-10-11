@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #4b90cb;
@@ -45,61 +45,73 @@
 
                     <!-- ClaimEntityTypeCode -->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityTypeName' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="'right'" [binding]="'ClaimEntityTypeName'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [IgnoreMods]="true">
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ClaimEntityTypeName}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!-- ClaimEntityNumber -->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityNumber' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'ClaimEntityNumber'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ClaimEntityNumber}}</span>
                             </div>
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!-- TapagNumber -->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.TapagNumber' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'TapagNumber'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.TapagNumber}}</span>
                             </div>
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!-- IsFinancialRefundDemand -->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.IsFinancialRefundDemand' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'IsFinancialRefundDemand'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <img *ngIf="item.IsFinancialRefundDemand" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
                             </div>
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!-- ClaimAmount -->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimAmount' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'ClaimAmount'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ClaimAmount | NumbersPipe:'n2'}}</span>
                             </div>
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!--ContinuousMessagesTypeCode-->
                     <log-column [header]="'Customs.ClaimsRelatedEntity.F.ContinuousMessagesTypeCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'ContinuousMessagesTypeCode'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ContinuousMessagesTypeCode}}</span>
                             </div>
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
 

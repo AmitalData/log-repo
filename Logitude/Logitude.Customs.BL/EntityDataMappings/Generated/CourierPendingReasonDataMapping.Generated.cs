@@ -22,6 +22,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
+	         Id, 
 	         Code, 
 	         LocalName, 
 	         SearchFields, 
@@ -36,6 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
+	         Id, 
 	         Code, 
 	         LocalName, 
 	         SearchFields, 
@@ -53,6 +55,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+				entityPOCO.Code = entityPM.Code;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
 				entityPOCO.LocalName = entityPM.LocalName;
@@ -94,6 +101,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		public void POCOToPM(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
 			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
             {
 					entityPM.Code = entityPOCO.Code;
@@ -140,6 +152,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                oldEntityPM.Code = entityPM.Code;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
                 oldEntityPM.LocalName = entityPM.LocalName;

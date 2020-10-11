@@ -11,6 +11,7 @@ import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 //import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 
 import { CommunicationLogStepListService } from '../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 
 
@@ -34,6 +35,7 @@ export class CustomMessageWrapperComponent
 {
     
     private _ValidationErrorsList: string[] = [];
+    public MyGuid: string;
     @Input() get ValidationErrorsList() { return this._ValidationErrorsList; }
     set ValidationErrorsList(newValue: string[]) {
         this._ValidationErrorsList = newValue;
@@ -41,6 +43,13 @@ export class CustomMessageWrapperComponent
     }
     @Input()
     public CustomSendOptionsButtonCanForcePersonalSign: boolean = false;
+
+    @Input()
+    get CustomSendOptionsButtonAvoidDoubleClick() { return this.MyCustomSendOptionsComponent ? this.MyCustomSendOptionsComponent.AvoidDoubleClick : null; }
+    set CustomSendOptionsButtonAvoidDoubleClick(newValue: boolean) {
+        this.MyCustomSendOptionsComponent.AvoidDoubleClick = newValue;
+    }
+
     @Input()
     public IsShowCustomResponseContent: boolean = true;
     @Input()
@@ -54,8 +63,8 @@ export class CustomMessageWrapperComponent
     set CustomSendOptionsButtonIsDisable(newValue: boolean) {
         this.MyCustomSendOptionsComponent.IsDisabled= newValue;
     }
-    
-    
+
+    @Input()
     public  CustomRequestContentIsDisable: boolean;
     
     public  CustomResponseContentIsDisable: boolean;
@@ -78,6 +87,8 @@ export class CustomMessageWrapperComponent
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.MyGuid = Guid.newGuid();
+        console.log("CustomMessageWrapperComponent:" + this.MyGuid);
     }
     _AfterContentInit: boolean = false;
     ngAfterContentInit() {

@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct PassportTypeValues
     {   
+       public const string דרכון = "1";  
+       public const string תעודתמעבר = "2";  
     }
 }
 

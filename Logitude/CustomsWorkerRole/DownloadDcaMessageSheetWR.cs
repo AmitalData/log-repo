@@ -77,6 +77,7 @@ namespace CustomsWorkerRole
         {
             if (_OnStartDone) return true;
             _OnStartDone = true;
+            DoneItemsInRange = new Dictionary<DateTime, int>();
             MessagingServiceFactoryHelper.InitContainer();
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>("190"))
             {
@@ -125,7 +126,7 @@ namespace CustomsWorkerRole
             _LastActiveAt = DateTime.Now;
             if (DateTime.Now.Subtract(_LastReadAllCustomsSetting) > TimeSpan.FromMinutes(20))//cache 20 min
             {
-                CustomsWorkerRole.Utils.GenUtil.CollectGC();
+                //CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 _LastReadAllCustomsSetting = DateTime.Now;
                 ///_AllCustomsSetting.Clear();
                 _AllCustomsSetting = null;
@@ -156,7 +157,13 @@ namespace CustomsWorkerRole
             {
                 try
                 {
+                    LastActivity = DateTime.UtcNow;
                     var myDcaService = new DcaDownloadTenantService(costomSetting);
+
+                    myDcaService.SetLastActivity = () =>
+                    {
+                        this.LastActivity = DateTime.UtcNow;
+                    };
                     myDcaService.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
                     myDcaService.DownloadAll(debugIIGMessageId);
                 }
@@ -164,7 +171,7 @@ namespace CustomsWorkerRole
                 {
 
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR :DownloadAll" + costomSetting.DCAPartnerVault, null);
-
+                    Thread.Sleep(TimeSpan.FromMinutes(1));
                 }
 
             }

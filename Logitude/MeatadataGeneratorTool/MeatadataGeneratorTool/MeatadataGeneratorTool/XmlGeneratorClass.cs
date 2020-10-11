@@ -1794,6 +1794,14 @@ namespace MeatadataGeneratorTool
                     {
                         SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), MenuButtonElement, null);
                     }
+                    if (!string.IsNullOrEmpty(f.HtmlComponentPath))
+                    {
+                        SetAttribute("HtmlComponentPath", GetStringValue(f.HtmlComponentPath), MenuButtonElement, null);
+                    }
+                    if (f.Width != 0)
+                    {
+                        SetAttribute("Width", f.Width.ToString(), MenuButtonElement, null);
+                    }
                     if (f.MenuButtonItems != null)
                     {
                         foreach (var item in f.MenuButtonItems)
@@ -1828,6 +1836,14 @@ namespace MeatadataGeneratorTool
                             if (!string.IsNullOrEmpty(item.FeatureDefaultText))
                             {
                                 SetAttribute("FeatureDefaultText", GetStringValue(item.FeatureDefaultText), MenuItemElement, null);
+                            }
+                            if (!string.IsNullOrEmpty(item.HtmlComponentPath))
+                            {
+                                SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), MenuItemElement, null);
+                            }
+                            if (item.Width != 0)
+                            {
+                                SetAttribute("Width", item.Width.ToString(), MenuItemElement, null);
                             }
                         }
                     }
@@ -2003,7 +2019,9 @@ namespace MeatadataGeneratorTool
                     XmlDocument doc = new XmlDocument();
                     XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
 
-                    tableElement.SetAttribute("Name", table.DBTableName);
+                    string tableName = table.DBTableName.ToLower().StartsWith("customs.") ? table.DBTableName.Split('.')[1] : table.DBTableName;
+
+                    tableElement.SetAttribute("Name", tableName);
 
                     if (!string.IsNullOrEmpty(table.DBTableShortName))
                     {
@@ -2014,15 +2032,17 @@ namespace MeatadataGeneratorTool
 
                     if (!string.IsNullOrEmpty(table.DBTableOldNames))
                     {
-                        if (table.DBTableOldNames.Contains(","))
+                        string tableOldNames = string.Join(",", table.DBTableOldNames.Split(',').Select(n => n.ToLower().StartsWith("customs.") ? n.Split('.')[1] : n).ToArray());
+
+                        if (tableOldNames.Contains(","))
                         {
-                            var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
+                            var oldNamesExceptName = tableOldNames.Split(',').Where(x => x != tableName);
 
                             dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                         }
                         else
                         {
-                            dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
+                            dbTableOldNames = tableName == tableOldNames ? null : tableOldNames;
                         }
                     }
 
@@ -2463,7 +2483,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
@@ -2506,7 +2526,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };

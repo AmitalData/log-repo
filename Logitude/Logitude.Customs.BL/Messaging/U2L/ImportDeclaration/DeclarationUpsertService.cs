@@ -23,7 +23,11 @@ using System.Transactions;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Customs.Data.EntityPOCOs;
 //using Simplog.Infrastructure.SimplogUtilities;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -37,9 +41,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
+        private string mode;
+        public Boolean suppressNewTrans;
 
         private AmitalContext amitalContext;
-
+        private DeclarationReferantDataPM _DeclarationReferantDataPM;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService.Upsert()";
 
         public DeclarationUpsertService()
@@ -116,10 +122,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert()
+        private void Upsert(bool suppressNewTrans=false)
         {
             //CheckExist();
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+            using (TransactionScope scope =
+                suppressNewTrans? TransactionFactory.GetTransaction():TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
                 AppendLogLine("Upsert..");
 
@@ -297,17 +304,42 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.Message = "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
                     return;
                 }
-                if (this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'
+                if (mode == "UpdateNotEmpty" || this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'
                 {
-                    if (_AmitalCustomsFile.ImporterId.Length > 9)
+                    if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))
                     {
-                        this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
-                        this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
-                    }
-                    else
-                    {
-                        this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
-                        this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
+                        if (_AmitalCustomsFile.ImporterId.Substring(0, 2) == "P-")
+                        {
+                            this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(2);
+                            this._MyDeclarationPM.ImporterTypeCode = "2";
+                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId;
+                            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
+                            {
+                                string countryCode = "";
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2)
+                                {
+                                    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
+                                }
+                                else
+                                {
+                                    countryCode = _AmitalCustomsFile.CasualImporterCountry;
+                                }
+                                if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.ImporterPassCountryCode = countryCode;
+                            }
+                        }
+                        else
+                        {
+                            if (_AmitalCustomsFile.ImporterId.Length > 9)
+                            {
+                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
+                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
+                            }
+                            else
+                            {
+                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
+                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
+                            }
+                        }
                     }
                 }
                 this._MyDeclarationPM.TransportModeId = _AmitalCustomsFile.TransportModeId;
@@ -338,11 +370,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "DELETE")
                 {
                     this._MyDeclarationPM.IsCancelled = true;
                     this._MyDeclarationPM.CustomFileNo = null;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
@@ -371,7 +405,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "17")
                     {
-                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
                         this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWBDATE;
 
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.DealId) || !string.IsNullOrWhiteSpace(_AmitalCustomsFile.ManifestNumber))
@@ -429,15 +471,33 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
                         this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-                        this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                        this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        
                     }
                     else
                     {
                         if (this._MyDeclarationPM.TransportModeId == "A")
                         {
-                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            if (mode != "UpdateNotEmpty")
+                            {
+                                this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
                         }
                         else
                         {
@@ -452,7 +512,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         loadingPortCode = TranslateloadPort(_AmitalCustomsFile.LoadingPortCode);
                     }
-                    this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    if (mode != "UpdateNotEmpty")
+                    {
+                        this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
 
                     //this._MyDeclarationPM.Consignments[0].OriginCountryCode = TranslateCountry(_AmitalCustomsFile.OriginCountryCode);
                     // moran 2.4.14 - add handle in case of empty value -->
@@ -473,7 +540,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     else
                     {
-                        this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
+                        if (mode != "UpdateNotEmpty") this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                     }
                     // moran 2.4.14 - add handle in case of empty value <--
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _AmitalCustomsFile.CargoDescription;
@@ -559,12 +626,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = packageQuantity;
                     }
                     decimal GrossMassMeasure = 0;
+                    if(String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
+                    {
+                        this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+                    }
                     if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                     {
                         string isOverrideWeight = GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
                         if (isOverrideWeight == "Y" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
                         {
                             GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
+                        }
+                        decimal weight = Math.Truncate(GrossMassMeasure);
+                        if(weight > 99999999)
+                        {
+                            GrossMassMeasure = GrossMassMeasure / 1000;
+                            this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
+                        }
+                        else
+                        {
+                            if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode == "TNE")
+                            {
+                                this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+                            }
                         }
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = GrossMassMeasure;
                     }
@@ -574,6 +658,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
                     AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
                 }
+
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.VendorId))
                 {
                     if (false) //yaron !!!
@@ -596,6 +681,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if(!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode))_MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
                 MyGenericResponseObj.Stage = "Updating ";
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) && _AmitalCustomsFile.IsDiamondsDeclaration.ToLower() != "true"))
+                {
+                    _MyDeclarationPM.IsDiamondDeclaration = false;
+
+                }
+                else
+                {
+                    _MyDeclarationPM.IsDiamondDeclaration = true;
+                }
 
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
@@ -710,6 +805,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.Message = "Update return null";
                     return;
                 }
+
+                DeclarationReferantDataUpdate();
                 MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
                 MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
@@ -717,6 +814,112 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 scope.Complete();
 
             }
+        }
+        private void DeclarationReferantDataUpdate()
+        {
+            MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
+
+            var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
+            var myDeclarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+
+            MyGenericResponseObj.Stage = "GetSingle DeclarationReferantData";
+            this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+            /// Exist
+            bool isNew = false; 
+            if (_DeclarationReferantDataPM == null)
+            {
+                this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
+                this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+                this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
+                isNew = true;
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            }
+            decimal myGrossMassMeasure = 0;
+            if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out myGrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
+            {
+                this._DeclarationReferantDataPM.Weight = myGrossMassMeasure;
+            }
+            this._DeclarationReferantDataPM.ArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
+            this._DeclarationReferantDataPM.VendorId = TranslateVendor(_AmitalCustomsFile.VendorId);
+
+            this._DeclarationReferantDataPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
+            this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
+            if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
+            {
+                this._DeclarationReferantDataPM.WithPaper = false;
+
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.WithPaper = true;
+            }
+            if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) && _AmitalCustomsFile.NewFile.ToLower() != "true"))
+            {
+                this._DeclarationReferantDataPM.NewFile = false;
+
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.NewFile = true;
+            }
+            this._DeclarationReferantDataPM.ImporterFile = _AmitalCustomsFile.ImporterFile;
+            this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team);
+
+            this._DeclarationReferantDataPM.FileOpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.FileOpenDate, "AmitalCustomsFile.FileOpenDate");
+
+            this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
+            myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
+            
+        }
+
+        private string TranslateVendor(string amitalvendorId)
+        {
+            if (String.IsNullOrWhiteSpace(amitalvendorId))
+            {
+                AppendLogLine("amitalvendorId is null");
+                return null;
+
+            }
+            CustomsVendor myCustomsVendor = null;
+
+            var repository = new CustomsVendorRepository(ResolvedTenant());
+            myCustomsVendor = repository.GetVendorByNumber(amitalvendorId, ResolvedTenant());
+
+            if (myCustomsVendor != null)
+            {
+                return myCustomsVendor.Id;
+            }
+            AppendLogLine("No vendor found for vendorId " + amitalvendorId);
+            return null;
+        }
+
+
+        private string TranslateTeam(string amitalTeamId)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTeamId))
+            {
+                AppendLogLine("amitalTeamId is null");
+                return null;
+            }
+            string referantTeamCode = null;
+            ReferantTeamListQueryService ReferantTeamListQuery = new ReferantTeamListQueryService(_context);
+            ReferantTeamList ReferantTeam = ReferantTeamListQuery.GetSingle(amitalTeamId);
+            if (ReferantTeam != null && !ReferantTeam.Inactive)
+            {
+                referantTeamCode = ReferantTeam.Code;
+            }
+            else
+            {
+                AppendLogLine("amitalTeamId = " + amitalTeamId + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTeamId = " + amitalTeamId + " Translated to " + referantTeamCode);
+            return referantTeamCode;
+
+            
         }
 
         private string TranslateAirline(string airlineId)
@@ -1118,10 +1321,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 MyCommunicationsParams.Tenant = ResolvedTenant();
 
-
+                if(MoreParams == "CommDecService")
+                {
+                    mode = "UpdateNotEmpty";
+                }
 
                 MyGenericResponseObj.Stage = "Upsert";
-                Upsert();
+                Upsert(suppressNewTrans);
                 MyGenericResponseObj.Stage = "Done";
 
 

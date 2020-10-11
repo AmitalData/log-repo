@@ -39,6 +39,24 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             switch (tableName)
             {
 
+                case "1308":
+                case "CustomsShip":
+                    {
+
+                        closedTableService = new Update1308CustomsShip(customContext, entitySystemTables,
+                            (mycustomContext) => { return new CustomsShipUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant); },
+                            (mycustomContext) =>
+                            {
+                                var qs = new CustomsShipQueryService(mycustomContext);
+                                return qs as ICanGetAllClosedTable<CustomsShipPM>;
+                            }
+                            , tenant
+                            , false
+                            );
+                        ///xxxclosedTableService.SetAllDB();
+                    }
+                    break;
+
                 case "1118":
                 case "CustomsBranch":
                     {
@@ -236,7 +254,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                             );
                     }
                     break;
-                    
+                case "1416":
+                case "ModificationAndDiscountType":
+                    {
+
+                        closedTableService = new Update1416ModificationAndDiscountType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 ModificationAndDiscountTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new ModificationAndDiscountTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<ModificationAndDiscountTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 default:
 
                     break;

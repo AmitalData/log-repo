@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
 				courierPendingReasonQuery.InitializeSettings();
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(code,true,false);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CourierPendingReason", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CourierPendingReason", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CourierPendingReasonUpdateService service = new CourierPendingReasonUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -108,6 +109,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CourierPendingReason");
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -140,12 +142,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CourierPendingReason", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CourierPendingReason", entityPM.Tenant, authToken.Tenant);
 	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CourierPendingReasonUpdateService service = new CourierPendingReasonUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CourierPendingReason");
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CourierPendingReason", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;

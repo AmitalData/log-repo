@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.Utils;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         string DcaReceivedCustomResponseCorrelation(Logitude.Customs.Def.EntityPMs.InterfaceManagementPM messageDCA, int tenant,
             DCAFileModel selectedDCAFile, string fileContents //byte[] messageBytesbyte[] messageBytes
             , bool pseudo = false);
-
+        string CreateFakeDCA(GenericRequestParams requestParamsData);
 
         string DCAServerUploadStatus(
             int tenant,

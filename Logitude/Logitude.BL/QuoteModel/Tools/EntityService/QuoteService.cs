@@ -1846,7 +1846,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         Id = item.VatTypeId,
                                         VatTypeId = item.VatTypeId,
                                         VatTypePercentage = item.VatPercentage,
-                                        QuoteCurrencyAmount = item.SaleTotalAmount,
+                                        QuoteCurrencyAmount = item.SaleAmountInSaleCurrency,
                                         LocalCurrencyAmount = item.SaleTotalAmountLocal,
                                         ExternalVATCard = lineVatType.ReceivablesExternalId,
                                         ExternalTAXItemId = lineVatType.ExternalTAXItemId,
@@ -1854,7 +1854,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                     if (item.IsRegionalTax)
                                     {
-                                        newItem.QuoteCurrencyAmount = item.SaleTotalAmount + item.SaleTotalAmount * (entityPM.RegionalTaxPercentage / 100);
+                                        newItem.QuoteCurrencyAmount = item.SaleAmountInSaleCurrency + item.SaleAmountInSaleCurrency * (entityPM.RegionalTaxPercentage / 100);
                                         newItem.LocalCurrencyAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (entityPM.RegionalTaxPercentage / 100);
 
                                         QuoteTotalsClass newRegionalTaxItem = new QuoteTotalsClass()
@@ -1862,7 +1862,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                             Id = entityPM.RegionalTaxId,
                                             VatTypeId = entityPM.RegionalTaxId,
                                             VatTypePercentage = entityPM.RegionalTaxPercentage,
-                                            QuoteCurrencyAmount = item.SaleTotalAmount,
+                                            QuoteCurrencyAmount = item.SaleAmountInSaleCurrency,
                                             LocalCurrencyAmount = item.SaleTotalAmountLocal,
                                             ExternalVATCard = newItem.ExternalVATCard,
                                             ExternalTAXItemId = newItem.ExternalTAXItemId,
@@ -1884,7 +1884,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         {
                                             Id = itemGroup.SingleVATTypeId,
                                             VatTypeId = itemGroup.SingleVATTypeId,
-                                            QuoteCurrencyAmount = item.SaleTotalAmount,
+                                            QuoteCurrencyAmount = item.SaleAmountInSaleCurrency,
                                             LocalCurrencyAmount = item.SaleTotalAmountLocal,
                                         };
 

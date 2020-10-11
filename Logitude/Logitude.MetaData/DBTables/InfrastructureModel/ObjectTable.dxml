@@ -355,7 +355,7 @@
   <Column
     Name="SplitComponentPath"
     Type="nvarchar"
-    Size="-1">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>

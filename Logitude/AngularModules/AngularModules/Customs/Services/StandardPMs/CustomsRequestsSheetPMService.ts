@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,232 +24,219 @@ import {CustomsRequestsSheetPM} from '../../EntityPMs/CustomsRequestsSheetPM';
 @Injectable()
 
 export class CustomsRequestsSheetPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customsrequestssheets';      
-    }
+  private _http: HttpClient;
+  private _apiUrl: string;
+  constructor() {
+    this._http = ServiceHelper.HttpClient;
+    this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customsrequestssheets';
+  }
 
- get(id: string) {
-         
-         
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();		
-		 return defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response;
+  get(id: string) {
 
-                   
-					
-                    var entity: CustomsRequestsSheetPM;
-					if(pm)
-					{
-                      entity = this.MapJsonToEntityPM(pm);
-                    }
+    var callTime = new Date();
+    return defer(() => {
+      return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+        .pipe(
+          map((response: HttpResponse<any>) => {
+            var pm = response.body;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-              
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "GetSinglePM", 'id=' + id);
-				 
-                return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-            });                    
-    }
 
-	 insert(entityPM: CustomsRequestsSheetPM) {
- 
-        var callTime = new Date();        
-        return defer(() => {
-
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-                 
-                var errorsArray = validator.Validate("Customs.CustomsRequestsSheet", entityPM);
-                 
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: CustomsRequestsSheetPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
-
-                            var pm = response;
-							if(pm)
-							{
-                               var mappedResult:  CustomsRequestsSheetPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
-							}
-							
-
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "SaveChanges", "");                    
-												 
-                            
-                            return serviceResponse;
-
-                        }),catchError(ServiceHelper.HandleServiceError));
-                }
-                else {
-
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
-
-                    return of(serviceResponse);
-                   
-                }
+            var entity: CustomsRequestsSheetPM;
+            if (pm) {
+              entity = this.MapJsonToEntityPM(pm);
             }
 
-            );
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = entity;
+
+            var servertime = response.headers.get('ServerExecutionTime');
+            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "GetSinglePM", 'id=' + id);
+
+            return serviceResponse;
+
+          }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
+
+  insert(entityPM: CustomsRequestsSheetPM) {
+
+    var callTime = new Date();
+    return defer(() => {
+
+      var validator: ClassLevelValidator;
+
+      validator = new ClassLevelValidator();
+
+      var errorsArray = validator.Validate("Customs.CustomsRequestsSheet", entityPM);
+
+
+      var serviceResponse: ServiceResponse;
+      serviceResponse = new ServiceResponse();
+      if (errorsArray.length == 0) {
+        var mappedEntity: CustomsRequestsSheetPM;
+        mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+        return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+          .pipe(
+            map((response: HttpResponse<any>) => {
+
+              var pm = response.body;
+              if (pm) {
+                var mappedResult: CustomsRequestsSheetPM;
+                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                serviceResponse.Result = mappedResult;
+              }
+
+
+              var servertime = response.headers.get('ServerExecutionTime');
+              PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "SaveChanges", "");
+
+
+              return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+      }
+      else {
+
+        serviceResponse.HasError = true;
+        serviceResponse.ErrorsArray = errorsArray;
+
+        return of(serviceResponse);
+
+      }
     }
 
-    update(entityPM: CustomsRequestsSheetPM) {
+    );
+  }
 
-            var callTime = new Date();         
-            return defer(() => {
+  update(entityPM: CustomsRequestsSheetPM) {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+    var callTime = new Date();
+    return defer(() => {
 
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-               
-                var errorsArray = validator.Validate("Customs.CustomsRequestsSheet", entityPM);
-                 
+      var validator: ClassLevelValidator;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: CustomsRequestsSheetPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
-                 
+      validator = new ClassLevelValidator();
 
-                            var pm = response;
-							if(pm)
-							{
-                               var mappedResult:  CustomsRequestsSheetPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
-							 }
-							 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "SaveChanges", "");                    
-					                           
-                            return serviceResponse;
+      var errorsArray = validator.Validate("Customs.CustomsRequestsSheet", entityPM);
 
-                        }),catchError(ServiceHelper.HandleServiceError));
-                }
-                else {
 
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
+      var serviceResponse: ServiceResponse;
+      serviceResponse = new ServiceResponse();
+      if (errorsArray.length == 0) {
+        var mappedEntity: CustomsRequestsSheetPM;
+        mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                    return of(serviceResponse);
-                   
-                }
-            }
+        return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+          .pipe(
+            map((response: HttpResponse<any>) => {
 
-            );
 
+              var pm = response.body;
+              if (pm) {
+                var mappedResult: CustomsRequestsSheetPM;
+                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                serviceResponse.Result = mappedResult;
+              }
+
+              var servertime = response.headers.get('ServerExecutionTime');
+              PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequestsSheet", "SaveChanges", "");
+
+              return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+      }
+      else {
+
+        serviceResponse.HasError = true;
+        serviceResponse.ErrorsArray = errorsArray;
+
+        return of(serviceResponse);
+
+      }
     }
 
-   
+    );
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CustomsRequestsSheetPM = null) {
+  }
 
-         
-        if (!entityPM) {
-            
-            entityPM = new CustomsRequestsSheetPM();
+
+
+  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CustomsRequestsSheetPM = null) {
+
+
+    if (!entityPM) {
+
+      entityPM = new CustomsRequestsSheetPM();
+    }
+
+    var customFields: Array<string> = [];
+    for (var i = 1; i < 11; i++) {
+      customFields.push("Field" + i);
+    }
+    var jsonPMKeys = Object.keys(jsonPM);
+
+    for (var key in jsonPMKeys) {
+      if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+        continue;
+      }
+      var property = jsonPMKeys[key];
+
+      if (customFields.indexOf(property) > -1) {
+        if (jsonPM[property]) {
+          var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+          entityPM[property] = customFieldClass;
         }
+      }
+      else {
+        entityPM[property] = jsonPM[property];
+      }
 
-		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
-            customFields.push("Field" + i);
-        }
-            var jsonPMKeys = Object.keys(jsonPM);
-
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
-
-                continue;
-            }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
-                if (jsonPM[property]) {
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-                    entityPM[property] = customFieldClass;
-                }
-            }
-            else {
-                entityPM[property] = jsonPM[property];
-            }
-                 
-            }
-			
-			 
-            
-
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-
-		}
-        else {
-
-            entityPM.OldEntityPM = null;
-        }
-		entityPM.IsDirty = false;
-        return entityPM;
     }
 
 
-	  public clone(jsonPM: any) {
-        var entityPM: any;
-        entityPM = {};
 
-        var jsonPMKeys = Object.keys(jsonPM);
-        for (var key in jsonPMKeys) {
-            
-            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
-                continue;
-            }
 
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
+    if (mapParent) {
+      entityPM.OldEntityPM = this.clone(entityPM);
 
-        }
-        return entityPM;
     }
+    else {
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: CustomsRequestsSheetPM;
-			entityPM = new CustomsRequestsSheetPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+      entityPM.OldEntityPM = null;
     }
-		 
+    entityPM.IsDirty = false;
+    return entityPM;
+  }
+
+
+  public clone(jsonPM: any) {
+    var entityPM: any;
+    entityPM = {};
+
+    var jsonPMKeys = Object.keys(jsonPM);
+    for (var key in jsonPMKeys) {
+
+      if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+        continue;
+      }
+
+      var property = jsonPMKeys[key];
+      entityPM[property] = jsonPM[property];
+
+    }
+    return entityPM;
+  }
+
+  public GetNewEntityPM() {
+    var entityPM: CustomsRequestsSheetPM;
+    entityPM = new CustomsRequestsSheetPM();
+    entityPM.Tenant = InfraSettings.TenantPM.Id;
+    return entityPM;
+  }
+
 
 }

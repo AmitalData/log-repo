@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct CargoIdentityQualifierValues
     {   
+       public const string CN = "CN";  
+       public const string zzz = "ZZZ";  
     }
 }
 

@@ -93,6 +93,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             
             entityPM.SearchFields = result.ToLower();
+            if (entityPM.SearchFields != null && entityPM.SearchFields.Length > 1999)
+            {
+                entityPM.SearchFields = entityPM.SearchFields.Substring(0, 1999);
+            }
             entityPOCO.SearchFields = entityPM.SearchFields;
         }
 

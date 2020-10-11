@@ -70,6 +70,7 @@ namespace CustomsWorkerRole
             {
                 if (_OnStartDone) return true ;
                 _OnStartDone =true ;
+                DoneItemsInRange = new Dictionary<DateTime, int>();
                 string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(SBQueueNames.SendDataToExternalServicesBQ.ToString()); //Amitalqueue
                 //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
                 //{
@@ -331,9 +332,10 @@ namespace CustomsWorkerRole
                         break;
                     }
 
-
+                    LastActivity = DateTime.UtcNow;
                     ProcessMessage_Db(receivedMessage);
                     scope.Complete();
+                    LogDoneItemInMemory();
                 }
             }        
         }

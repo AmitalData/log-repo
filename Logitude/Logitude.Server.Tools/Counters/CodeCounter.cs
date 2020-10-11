@@ -19,59 +19,60 @@ namespace Logitude.Server.Tools.Counters
         {
             int number = 0;
             string strConnString = GetConnection(tenant);
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            lock (thisLock)
             {
-
-                using (OracleConnection cn = new OracleConnection(strConnString))
+                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = cn;
-                    cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableCodeValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                        cmd.Connection.ConnectionString);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    /*
-                      v_pLastNumber OUT NUMBER,
---    v_pTableName IN NVARCHAR2,
---    v_pTenant    IN NUMBER )
-                     * */
-                    try
+
+                    using (OracleConnection cn = new OracleConnection(strConnString))
                     {
-                        OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.Number);
-                        OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
-                        OracleParameter tenantPar = new OracleParameter("v_pTenant", OracleDbType.Number);
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = cn;
+                        cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableCodeValue", LogitudeDBSchema.LOGITUDE_MAIN,
+                            cmd.Connection.ConnectionString);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        /*
+                          v_pLastNumber OUT NUMBER,
+    --    v_pTableName IN NVARCHAR2,
+    --    v_pTenant    IN NUMBER )
+                         * */
+                        try
+                        {
+                            OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.Number);
+                            OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
+                            OracleParameter tenantPar = new OracleParameter("v_pTenant", OracleDbType.Number);
 
 
-                        lastNumberPar.Direction = ParameterDirection.Output;
-                        tableNamePar.Direction = ParameterDirection.Input;
-                        tenantPar.Direction = ParameterDirection.Input;
+                            lastNumberPar.Direction = ParameterDirection.Output;
+                            tableNamePar.Direction = ParameterDirection.Input;
+                            tenantPar.Direction = ParameterDirection.Input;
 
-                        tenantPar.Value = tenant;
-                        tableNamePar.Value = tableName;
+                            tenantPar.Value = tenant;
+                            tableNamePar.Value = tableName;
 
-                        cmd.Parameters.Add(lastNumberPar);
-                        cmd.Parameters.Add(tableNamePar);
-                        cmd.Parameters.Add(tenantPar);
-                        cn.Open();
-                        cmd.ExecuteNonQuery();
+                            cmd.Parameters.Add(lastNumberPar);
+                            cmd.Parameters.Add(tableNamePar);
+                            cmd.Parameters.Add(tenantPar);
+                            cn.Open();
+                            cmd.ExecuteNonQuery();
+                            cn.Close();
+                            number = Convert.ToInt32(cmd.Parameters["v_pLastNumber"].Value);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine("Exception: {0}", ex.ToString());
+                            throw;
+                        }
+
                         cn.Close();
-                        number = Convert.ToInt32(cmd.Parameters["v_pLastNumber"].Value);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine("Exception: {0}", ex.ToString());
-                        throw;
                     }
 
-                    cn.Close();
+                    return number;
                 }
-
-                return number;
-            }
-            else
-            {
-                lock (thisLock)
+                else
                 {
+
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                     {
                         //using (TransactionScope scope = TransactionFactory.GetNewTransaction())

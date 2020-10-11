@@ -1,0 +1,23 @@
+﻿<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+    <![CDATA[ 
+    ]]>
+    
+  </Sql>
+  
+  <Oracle Version="1">
+    <![CDATA[ 
+    
+DECLARE
+    i INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO i FROM user_indexes WHERE index_name = 'UC_SCREENFIELDS_SRN_F';
+    IF i > 0 THEN
+        EXECUTE IMMEDIATE 'drop index UC_SCREENFIELDS_SRN_F';
+    END IF;
+END;
+
+    ]]>
+  </Oracle>
+  
+</Script>

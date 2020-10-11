@@ -97,10 +97,31 @@ namespace Logitude.Server.Tools.QueueService
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
                 string CId = "";
-                string BNo = ""; 
+                string BNo = "";
                 if (delayTime != null)
                 {
                     delaySeconds = (int)delayTime.Value.TotalSeconds;
+                }
+                else
+                {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        if (NextRunDate.HasValue)
+                        {
+                            if (DateTime.UtcNow > NextRunDate)
+                            {
+                                delaySeconds = 0;
+
+                            }
+                            else
+                            {
+                                var ts = NextRunDate.Value.Subtract(DateTime.UtcNow);
+                                delaySeconds = (int)ts.TotalSeconds;
+                            }
+                            NextRunDate = null;
+                        }
+                    }
+
                 }
                 if (CustomerId != null)
                 {
@@ -109,7 +130,7 @@ namespace Logitude.Server.Tools.QueueService
                 if (BatchNumber != null)
                 {
                     BNo = BatchNumber;
-                } 
+                }
                 if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
                     if (NextRunDate.HasValue)
@@ -197,7 +218,7 @@ namespace Logitude.Server.Tools.QueueService
                         cn.Close();
                     }
 
-                    
+
                 }
                 else
                 {
@@ -325,7 +346,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Connection = cn;
                             cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
-                             
+
                             OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
                             OracleParameter nextRunDelayInSecPar = new OracleParameter("v_NextRunDelayInSec", OracleDbType.Number);
 
@@ -818,7 +839,7 @@ namespace Logitude.Server.Tools.QueueService
 
                             OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
                             OracleParameter statusPar = new OracleParameter("Statud", OracleDbType.Number);
-                            
+
                             messageIdPar.Direction = ParameterDirection.Input;
                             statusPar.Direction = ParameterDirection.Input;
 
@@ -877,7 +898,7 @@ namespace Logitude.Server.Tools.QueueService
                 }
             }
         }
-        
+
         public void CompleteAsFailed()
         {
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
@@ -966,7 +987,7 @@ namespace Logitude.Server.Tools.QueueService
             this.Complete();
         }
 
-        public void DelayAndReturnBackToQueue(TimeSpan delayTime,string myMessageId)
+        public void DelayAndReturnBackToQueue(TimeSpan delayTime, string myMessageId)
         {
             if (!string.IsNullOrEmpty(myMessageId))
             {
@@ -984,11 +1005,11 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessageandChangeStatusTozero", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Q_DelayMsgandChangeStatusTo0", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
-                            OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
+                            OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number);
                             OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
 
                             messageIdPar.Direction = ParameterDirection.Input;

@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsLoaded">
+<table *ngIf="IsLoaded">
     <tr>
         <td>
             <div class="TableHolder">
@@ -38,6 +38,7 @@
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'Customs.GovernmentProcedureType'"
                                                         [HideLastColumn]="true"
+                                                        [QueryFilterItems]="PreceduralFilterItems"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </td>
@@ -133,7 +134,8 @@
                                                                     <!-- DocumentTypeCode -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.DocumentTypeCode' | TextCodeTranslationPipe"
                                                                                 [width]="'140'" [Alignment]="'right'" [binding]="'DocumentTypeCode'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                 <span>{{item.DocumentTypeName}}</span>
                                                                             </div>
@@ -149,12 +151,14 @@
                                                                                 </LogLov>
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- TransportationTypeCode -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.TransportationTypeCode' | TextCodeTranslationPipe"
                                                                                 [width]="'90'" [Alignment]="'right'" [binding]="'TransportationTypeCode'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                 <span>{{item.TransportationTypeName}}</span>
                                                                             </div>
@@ -170,12 +174,14 @@
                                                                                 </LogLov>
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- ProcessTypeCode -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.ProcessTypeCode' | TextCodeTranslationPipe"
                                                                                 [width]="'120'" [Alignment]="'right'" [binding]="'ProcessTypeCode'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                 <span>{{item.ProcessTypeName}}</span>
                                                                             </div>
@@ -191,12 +197,14 @@
                                                                                 </LogLov>
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- CargoTypeCode -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.CargoTypeCode' | TextCodeTranslationPipe"
                                                                                 [width]="'120'" [Alignment]="'right'" [binding]="'CargoTypeCode'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                 <span>{{item.CargoTypeName}}</span>
                                                                             </div>
@@ -212,22 +220,26 @@
                                                                                 </LogLov>
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- Mandatory -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.Mandatory' | TextCodeTranslationPipe"
                                                                                 [width]="'50'" [Alignment]="'right'" [binding]="'Mandatory'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <div style="width: 18px; height:20px;vertical-align:central">
                                                                                 <LogCheckBox [ObjectFieldName]="'Mandatory'" [Checked]="item.Mandatory" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogCheckBox>
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- Inactive -->
                                                                     <log-column [header]="'Customs.CustomsDocumentsDefinition.F.Inactive' | TextCodeTranslationPipe"
                                                                                 [width]="'50'" [Alignment]="'right'" [binding]="'Inactive'" [Editable]="true">
-                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                             <!--<div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                                 <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                                                             </div>-->
@@ -237,14 +249,17 @@
 
                                                                             </div>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
                                                                     <!-- Delete Button-->
                                                                     <log-column [width]="'40'" [Alignment]="'right'">
-                                                                        <log-cell-template template="let item" [IgnoreMods]="true">
+                                                                        <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true">
                                                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteDocumentsDefinitionCommand(item)"
                                                                                         style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                         </log-cell-template>
+</ng-template>
                                                                     </log-column>
 
 

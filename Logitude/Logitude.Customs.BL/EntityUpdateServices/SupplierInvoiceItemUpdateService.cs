@@ -102,6 +102,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceItemModVehicleUpdateService supplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             supplierInvoiceItemModVehicleUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemModVehicles, entityPM.DeletedSupplierInvoiceItemModVehicles, entityPM, false);
 
+            SuppInvoiceItemsAbachStatementUpdateService suppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            suppInvoiceItemsAbachStatementUpdateService.UpdateMulti(entityPM.SuppInvoiceItemsAbachStatements, entityPM.DeletedSuppInvoiceItemsAbachStatements, entityPM, false);
+
+            SupplierInvoiceItemsPriceUpdateService supplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            supplierInvoiceItemsPriceUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsPrices, entityPM.DeletedSupplierInvoiceItemsPrices, entityPM, false);
+
+
+
             base.UpdateComposition(entityPM);
         }
 
@@ -136,6 +144,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //        invoiceItemRepository.SubmitChanges();
             //    }
             //}
+        }
+
+        protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
+        {
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
+            {
+                var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
+                LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
+            }
+            base.OnUpdating(entityPM, entityPOCO);
         }
 
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM)
@@ -180,6 +201,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
+                if(!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks))
+                {
+                    DeclarationReferantDataUpdate(entityPM);
+                }
                 if (entityPM.IsItemChanged && !string.IsNullOrWhiteSpace(entityPM.ItemCode))
                 {
                     //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
@@ -316,6 +341,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 throw new BusinessErrorException("Tenant '" + entityPM.Tenant + "' Can't be less than 1 (OnUpdating)");
             }
+        }
+
+        private void DeclarationReferantDataUpdate(SupplierInvoiceItemPM entityPM)
+        {
+            if (string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)) return;
+
+            ICustomContext _context = this.MainContext as CustomContext;
+            var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
+            DeclarationReferantDataPM declarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(entityPM.DeclarationId, true, false);
+            
+            if (declarationReferantDataPM == null)return;
+
+            if(declarationReferantDataPM.IsClassificationRemarks) return;
+
+            var myDeclarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(_context, new Dictionary<string, IContext>(), entityPM.Tenant);
+            declarationReferantDataPM.IsClassificationRemarks = true;
+            declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            myDeclarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
+
         }
 
         private void UpsertCustomsPartnersItems(AmitalContext myAmitalContext, SupplierInvoiceItemPM supplierInvoiceItem)
@@ -476,6 +520,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
             mySupplierInvoiceItemUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
             //(Repository as Logitude.Customs.Data.Repsitories.SupplierInvoiceItemRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+            var supplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+            supplierInvoiceItemsPriceUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+
+            var suppInvoiceItemsAbachStatementUpdateService = new  SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+             suppInvoiceItemsAbachStatementUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+
         }
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)

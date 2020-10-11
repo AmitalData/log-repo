@@ -28,4 +28,5 @@
     update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EventType')
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

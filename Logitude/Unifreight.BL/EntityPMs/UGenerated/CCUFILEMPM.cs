@@ -169,5 +169,13 @@ namespace Unifreight.BL.EntityPMs
 
         public string DRAWNON { get; set; }
 
+        public string PRATMEHESLIST { get; set; }
+
+        public string ALLPRATMEHESLIST { get; set; }
+
+        public int? NOOFINVOICES { get; set; }
+
+        public int? TOTALINVOICELINESNO { get; set; }
+
     }
 }

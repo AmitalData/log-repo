@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -29,9 +29,7 @@ export class DeclarationCargoSplitWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDeclarationCargoSplitByDeclarationIdLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetDeclarationCargoSplitByDeclarationIdLists/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;

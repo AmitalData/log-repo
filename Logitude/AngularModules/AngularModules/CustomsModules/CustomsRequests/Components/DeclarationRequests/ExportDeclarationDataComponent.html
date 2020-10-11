@@ -1,4 +1,4 @@
-﻿<!-- ExportDeclarationDataComponent view  -->
+<!-- ExportDeclarationDataComponent view  -->
 <div>
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
@@ -41,7 +41,7 @@
         <div class="class-response-content" style="width: 650px;height: 440px;">
             <div class="ScrollViewer">
                 <div class="ScrollContent">
-                    <table style="width: 650px;height: 440px;padding-top: 10px;">
+                    <table style="width: 660px;height: 420px;padding-top: 10px;">
 
                         <!--General Details-->
                         <tr style="width: 100%">
@@ -124,44 +124,52 @@
                                         <log-column [width]="'60'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.SequenceNumber' | TextCodeTranslationPipe"
                                                     [binding]="'SequenceNumber'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.SequenceNumber}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ExternalID -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.ExternalID' | TextCodeTranslationPipe"
                                                     [binding]="'ExternalID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ExternalID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- InvoiceAmount -->
-                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                        <log-column [width]="'150'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.InvoiceAmount' | TextCodeTranslationPipe"
                                                     [binding]="'InvoiceAmount'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.InvoiceAmount }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- InvoiceCurrency -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.O.Currency' | TextCodeTranslationPipe"
                                                     [binding]="'InvoiceCurrency'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.InvoiceCurrency }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -184,71 +192,84 @@
                                         <log-column [width]="'60'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.SequenceNumber' | TextCodeTranslationPipe"
                                                     [binding]="'SequenceNumber'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.SequenceNumber}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CustomsItem -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.CustomsItem' | TextCodeTranslationPipe"
                                                     [binding]="'CustomsItem'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomsItem}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ValueQuantity -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.ValueQuantity' | TextCodeTranslationPipe"
                                                     [binding]="'ValueQuantity'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ValueQuantity}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ForeignAmount -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.ForeignAmount' | TextCodeTranslationPipe"
                                                     [binding]="'ForeignAmount'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ForeignAmount }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ForeignCurrency -->
-                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                        <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.O.Currency' | TextCodeTranslationPipe"
                                                     [binding]="'ForeignCurrency'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ForeignCurrency }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- OriginCountry -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.OriginCountry' | TextCodeTranslationPipe"
                                                     [binding]="'OriginCountryName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.OriginCountryName }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Buttons -->
                                         <log-column [width]="'60'" [Alignment]="'right'">
-                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
                                                             style="float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
@@ -259,6 +280,7 @@
                                                 </div>
 
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

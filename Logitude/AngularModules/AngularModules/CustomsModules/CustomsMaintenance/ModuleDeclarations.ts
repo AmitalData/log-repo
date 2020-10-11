@@ -7,14 +7,17 @@ import { InterfaceManagementComponent } from './Components/InterfaceManagementCo
 import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfaceManagementComponent';
 import { LoadTestComponent } from './Components/LoadTestComponent';
 import { SignStationsComponent } from './Components/SignStationsComponent';
+import { CourierSendStatusComponent } from './Components/CourierSendStatusComponent';
+
 import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
 import { GeneralLOVComponent } from './Components/GeneralLOVComponent';
 
 import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
+import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
-
+ 
 
 export const Components =
     [
@@ -27,12 +30,14 @@ export const Components =
         AddEditInterfaceManagementComponent,
         LoadTestComponent,
         SignStationsComponent,
+        CourierSendStatusComponent,
         DocumentTypeCustomsDataComponent,
         GeneralLOVComponent,
         CustomsDocumentsDefinitionComponent,
         AddEditCustomsAirlineComponent,
         CustomsPartnerFtpListComponent,
         //CustomsPartnerFtpEditComponent,
+        DeclarationRemarksComponent
     ];
 
 export class ModuleDeclarations {
@@ -50,14 +55,16 @@ export class ModuleDeclarations {
             case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
+            case "CourierSendStatusComponent": { myResult = CourierSendStatusComponent; break; }
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
             case "GeneralLOVComponent": { myResult = GeneralLOVComponent; break; }
                 
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
             case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
+            case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
-                
+            case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
 
         }
 

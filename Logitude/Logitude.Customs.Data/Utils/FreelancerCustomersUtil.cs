@@ -5,6 +5,7 @@ using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -72,7 +73,7 @@ namespace Logitude.Customs.Data.Utils
         private void CacheConnectedCustomers()
         {
             CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(user.Tenant);
-            CustomsSetting custSettings = custSettingsRepo.GetSettingByTenant(user.Tenant);
+            
             List<Customer> customersList = new List<Customer>();
             List<string> codesList = new List<string>();
 
@@ -82,7 +83,10 @@ namespace Logitude.Customs.Data.Utils
 
                 /// 1- Get customers codes 
                 //if (custSettings.IsConnectedToUniFreight)
-                if (!string.IsNullOrWhiteSpace(custSettings.UnfConnectionString))
+                CustomsSetting custSettings = null;
+                if (LogitudeSettings.WorkEnvironment == "Customs") { custSettings = custSettingsRepo.GetSettingByTenant(user.Tenant); }
+
+                if (custSettings != null && !string.IsNullOrWhiteSpace(custSettings.UnfConnectionString))
                 {
 
                     // (Amital)

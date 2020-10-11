@@ -1,32 +1,32 @@
-import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList, OnInit, ViewEncapsulation} from '@angular/core';
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {LocationDirective} from '../../../../../Infrastructure/Utilities/LocationDirective';
-import {ApiQueryFilters, FilterItem} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, ArrayTool, DateTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {Validator} from '../../../../../Infrastructure/Validators/Validator';
+import { Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList, OnInit, ViewEncapsulation } from '@angular/core';
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { LocationDirective } from '../../../../../Infrastructure/Utilities/LocationDirective';
+import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 declare var window: any;
-import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {DeclarationPaymentMethodPM} from '../../../../../Customs/EntityPMs/DeclarationPaymentMethodPM';
-import {DeclarationPaymentProtestPM} from '../../../../../Customs/EntityPMs/DeclarationPaymentProtestPM';
-import {DeclarationPaymentPM} from '../../../../../Customs/EntityPMs/DeclarationPaymentPM';
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { DeclarationPaymentMethodPM } from '../../../../../Customs/EntityPMs/DeclarationPaymentMethodPM';
+import { DeclarationPaymentProtestPM } from '../../../../../Customs/EntityPMs/DeclarationPaymentProtestPM';
+import { DeclarationPaymentPM } from '../../../../../Customs/EntityPMs/DeclarationPaymentPM';
 
-import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
-import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 
-import {CustomBanksCardPM} from '../../../../../Customs/EntityPMs/CustomBanksCardPM';
-import {CustomerActivityTypePM} from '../../../../../Customs/EntityPMs/CustomerActivityTypePM';
-import {UserList} from '../../../../../Common/EntityLists/UserList';
-import {CustomBankList} from '../../../../../Customs/EntityLists/CustomBankList';
+import { CustomBanksCardPM } from '../../../../../Customs/EntityPMs/CustomBanksCardPM';
+import { CustomerActivityTypePM } from '../../../../../Customs/EntityPMs/CustomerActivityTypePM';
+import { UserList } from '../../../../../Common/EntityLists/UserList';
+import { CustomBankList } from '../../../../../Customs/EntityLists/CustomBankList';
 import { AmitalGatewayUtil } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { UnifreightController } from '../../../../../Customs/Controller/UnifreightController';
 import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
@@ -35,37 +35,43 @@ import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTab
 import { CustomFileCreditRequestParams } from '../../../../../Customs/DataContract/RequestParams/CustomFileCreditRequestParams';
 import { CustomFileCreditResponseData } from '../../../../../Customs/DataContract/ResponseData/CustomFileCreditResponseData';
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomsRequiredFieldErrors } from '../../../../../Customs/DataContract/CustomsRequiredFieldErrors';
-import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
 
 // Services
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
-import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
-import {CustomBankListService} from '../../../../../Customs/Services/StandardLists/CustomBankListService';
-import {CustomBankCardExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { UserListService } from '../../../../../Common/Services/StandardLists/UserListService';
+import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomBankListService } from '../../../../../Customs/Services/StandardLists/CustomBankListService';
+import { CustomBankCardExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
 import { PaymentMethodTypeListService } from '../../../../../Customs/Services/StandardLists/PaymentMethodTypeListService';
 import { CustomerActivityTypeListService } from '../../../../../Customs/Services/StandardLists/CustomerActivityTypeListService';
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
+import { DeclarationMessagesService } from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import { DeclarationPaymentPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPaymentPMService';
-import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import {CustomsSettingExtendedListService} from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-
-import {ErrorLogPMFileLoggerService} from '../../../../../Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
-import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { ErrorLogPMFileLoggerService } from '../../../../../Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
+import { ErrorLogPM } from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
-
-
+import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { Observable } from 'rxjs';
+import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 @Component({
-    
+
     templateUrl: './DeclarationPaymentComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
+    public PayerActivityTypeCode: any;
+
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public paymentPM: DeclarationPaymentPM;
@@ -87,16 +93,23 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     customerActivityTypeListService: CustomerActivityTypeListService = new CustomerActivityTypeListService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     PaymentMethodsList: ObservableCollection;
     PaymentProtestsList: ObservableCollection;
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
-
+    IsDisplayOnlyAutomaticPayment: boolean;
+    BetweenMinAndMax: boolean=false;
+    sumBtl: any = 0.0;
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
+    IsDisplayMessage: boolean;
+    DisplayAutomaticPayment: boolean = true;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
-    private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    _CourierWorksheet: DeclarationCourierStatusList;
+    _TestCase: TestCase;
+    IsAutomaticPayment: boolean;
+    constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
         this.PaymentProtestsList = new ObservableCollection([]);
@@ -107,6 +120,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             .subscribe((response: ServiceResponse) => {
 
                 this._2LogBankList = response.Result.IsLogInOn;
+
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y") {
+                            this.IsAutomaticPayment = true;
+
+                        }
+                    }
+                });
             });
     }
 
@@ -114,6 +138,30 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     }
+
+
+
+    OnCheckedAutomaticPayment(event) {
+        if (event.target.checked && this.FuturePaymentDateTime != null) {
+            this.AutomaticPayment = 0;
+            event.preventDefault();
+            event.target.checked = false;
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+
+        }
+
+        else {
+            this.AutomaticPayment = Number(event.target.checked);
+            if (!this.AutomaticPayment) {
+                this.ErrorMessage = null;
+                this.IsDisplayMessage = false;
+                this.RefreshScreen()
+            }
+        }
+    }
+
+
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -128,10 +176,54 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                                     this.DeclarationPM = args.EntityPM;
 
-                                    this.LoadPayment();
+                                    if (this.DeclarationPM.IsCourierDeclaration) {
+                                        let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
-                                    this.CheckRequrierdFieldsForSend();
+                                        let filters = new ApiQueryFilters();
 
+                                        filters.addAdditionalFilter("DeclarationId", this.DeclarationPM.Id, null, null, "Equals", false, false, false, "string");
+                                        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+                                        filters.PageSize = 1;
+                                        myDeclarationCourierStatusListService.getByFilters(filters)
+                                            .subscribe((serviceResponse1: ServiceResponse) => {
+                                                let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                                                if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
+                                                    this._CourierWorksheet = mappedDeclarationCourierStatusList[0];
+                                                }
+
+                                            });
+
+                                    }
+                                    if ((this.DeclarationPM.ImporterEntitlementTypeCode == "17" || this.DeclarationPM.ImporterEntitlementTypeCode == "18") && FeatureLocator.HasFeaturePermession("Customs.Declaration", "BTPA")) {
+                                        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
+                                            invoices => {
+                                                if (invoices.Result != null) {
+                                                    this.sumBtl = 0.0;
+                                                    invoices.Result.forEach((el) => {
+                                                        if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
+                                                            el.SupplierInvoiceItems.forEach(si => {
+                                                                if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
+                                                                    si.SupplierInvoiceItemTaxes.forEach(it => {
+                                                                        if (it.TotalBtlCoverageNIS != null)
+                                                                            this.sumBtl += it.TotalBtlCoverageNIS;
+                                                                    })
+                                                                }
+                                                            })
+                                                        }
+
+                                                    });
+                                                }
+                                                this.LoadPayment();
+                                                this.CheckRequrierdFieldsForSend();
+                                            });
+                                    }
+
+                                    else {
+                                        this.LoadPayment();
+
+                                        this.CheckRequrierdFieldsForSend();
+                                    }
+                                   
 
                                 });
                             });
@@ -144,14 +236,24 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport = false;
+        if (this.DeclarationPM.Direction == 'E') {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationPayment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.DeclarationPayment', true);
             });
         });
@@ -218,33 +320,40 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
+    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public set AutomaticPayment(newValue: number) {
+        this.paymentPM.AutomaticPayment = newValue;
+    }
+
     _FuturePaymentTime: Date;
     public get FuturePaymentTime() { return this._FuturePaymentTime; }
     public set FuturePaymentTime(newValue: Date) {
-
-        if (newValue)
-        {
+        if (newValue) {
             var date: Date = this.FuturePaymentDateTime;
             if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
                 date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
             }
-           
+
             // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
             //else
             //    var date = this.GetTodaysDate();// new Date();
+            if (date != null && !this.AutomaticPayment) {
+                var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
+                this.FuturePaymentDateTime = datetime;
+                this._FuturePaymentTime = datetime;
+            }
+            else if (date == null && !this.AutomaticPayment) {
+                this._FuturePaymentTime = newValue;
+            }
 
-            var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
-            this.FuturePaymentDateTime = datetime;
-            this._FuturePaymentTime = datetime;
         }
-        else
-        {
+        else {
             this._FuturePaymentTime = newValue;
-        }
 
+        }
     }
 
-    private _GetCreditInternalBankId: string; 
+    private _GetCreditInternalBankId: string;
     get GetCreditInternalBankId() { return this._GetCreditInternalBankId; }
     set GetCreditInternalBankId(value: string) {
         this._GetCreditInternalBankId = value;
@@ -474,6 +583,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
             this.paymentPM = new DeclarationPaymentPM();
         }
+
+        this.IsDisplayOnlyAutomaticPayment = (this.DeclarationPM.AvailabilityDate != null && this.DeclarationPM.AvailabilityDate.toString() != '0001-01-01T00:00:00' && !this.paymentPM.AutomaticPayment);
         if (!AppTool.IsNullOrEmpty(this.paymentPM) && AppTool.IsNullOrEmpty(this.paymentPM.DeclarationId)) {
             this.paymentPM.DeclarationId = this.DeclarationPM.Id;
             this.paymentPM.Tenant = this.DeclarationPM.Tenant;
@@ -582,7 +693,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         searchParams.RequestVIA = SendRequestVIA.Default;
         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         myIIGGeneralMessagesService.PostCustomFileCredit(searchParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -590,13 +701,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result as CustomFileCreditResponseData;
                 var newDate = DateTool.GetCurrentDateTimeAsUtc();
                 var currentDate: Date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), newDate.getHours(), newDate.getMinutes(), 0); // last of today
-                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
+                var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
 
                 if (customFileCreditResponseData.PaymentDateTime == null) {
                     customFileCreditResponseData.PaymentDateTime = currentDate;
                 }
+                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
+
                 if (paymentDateTime <= currentDate) {
-                    this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
+                    if (paymentDate > currentDate) {
+                        this.PaymentDate = paymentDate;
+                    }
+                    else {
+                        this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
+                    }
                     this.FuturePaymentDateTime = null;
                     this.FuturePaymentTime = null;
                 }
@@ -605,8 +723,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
                     this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
                 }
-
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)){
+                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
                     var customBankListService: CustomBankListService = new CustomBankListService();
                     customBankListService.getAll().subscribe((response: ServiceResponse) => {
                         let allCustomBankList: CustomBankList[] = response.Result;
@@ -625,7 +742,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                     this.AutoFillPaymentScreenByDefault();
                 }
-                this.CurrentSession.StopBusyIndicator();
+
+                SessionLocator.SelectedSession.StopBusyIndicator();
             });
     }
 
@@ -638,18 +756,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 //.getSingleFromCache(this.DeclarationPM.SignedByUserId)
                 .getSingle(this.DeclarationPM.SignedByUserId)
                 .subscribe((response: ServiceResponse) => {
-                var user: UserList = response.Result;
-                console.log("[Response] userListService.getSingleFromCache: ", user);
+                    var user: UserList = response.Result;
+                    console.log("[Response] userListService.getSingleFromCache: ", user);
 
-                if (!AppTool.IsNullOrEmpty(user)) {
-                    if (user.PersonalId == this.DeclarationPM.SignerPersonalId) {
-                        this.paymentPM.CreatedByUserId = this.DeclarationPM.SignedByUserId;
-                        this.CreatedByUserId = this.DeclarationPM.SignedByUserId;
-                        
-                        
+                    if (!AppTool.IsNullOrEmpty(user)) {
+                        if (user.PersonalId == this.DeclarationPM.SignerPersonalId) {
+                            this.paymentPM.CreatedByUserId = this.DeclarationPM.SignedByUserId;
+                            this.CreatedByUserId = this.DeclarationPM.SignedByUserId;
+
+
+                        }
                     }
-                }
-            });
+                });
 
 
         }
@@ -658,26 +776,43 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (!this.IsDisplayOnly && this.DeclarationPM.SignerPersonalId) { //if payed -> its display only
             this.paymentPM.SignatoryIdentification = this.DeclarationPM.SignerPersonalId;
         }
+        //Only for Courier - Task 54622
+        if (AppTool.IsNullOrEmpty(this.paymentPM.SignatoryIdentification) && this.DeclarationPM.IsCourierDeclaration) {
+            //if (this.DeclarationPM.Consignments != null && this.DeclarationPM.Consignments.length > 0) {
+            //this.paymentPM.SignatoryIdentification = this.DeclarationPM.Consignments[0].SecondCargoID;
+            this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
+                var list = response.Result;
+                console.log("[response/customsSettingListService.getAll]", list);
+                if (!AppTool.IsNullOrEmpty(list)) {
+                    var customsSetting = list[0];
+                    this.paymentPM.SignatoryIdentification = customsSetting.CustomsAgentId;
+                    this.SignatoryIdentification = customsSetting.CustomsAgentId;
+                }
+            });
+        }
     }
-
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
-
-        if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
-            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                this.JustAutoFillPaymentScreen();
-                return;
-            }
+        if (this.sumBtl != null && this.sumBtl > 0) {
+            this.JustAutoFillPaymentScreen();
         }
+        else {
 
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
-            .subscribe((response: ServiceResponse) => {
+            if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
+                if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                    this.JustAutoFillPaymentScreen();
+                    return;
+                }
+            }
+
+            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
+                .subscribe((response: ServiceResponse) => {
                     let obj = response.Result;
                     if (obj) {
                         let DefaultValue = obj['DefaultValue'];
-                        if (DefaultValue == "Y") {
+                        if (!AppTool.IsNullOrEmpty(DefaultValue)) {
                             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                                this.JustAutoFillPaymentScreenCash();
+                                this.JustAutoFillPaymentScreenCash(DefaultValue);
                             }
                         }
                         else {
@@ -685,47 +820,109 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         }
                     }
                 });
-        
-    }
 
+
+        }
+
+
+    }
     AutoFillPaymentScreen() {
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {
+
                     let obj = response.Result;
                     if (obj) {
                         let DefaultValue = obj['DefaultValue'];
 
                         if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
                             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                                this.JustAutoFillPaymentScreen();
+                                var MinAndMax;
+                                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+                                    .subscribe(
+                                        (response: ServiceResponse) => {
+                                            let obj = response.Result;
+                                            if (obj) {
+                                                var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+                                                if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+                                                    let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+                                                    let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+                                                    let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
+                                                    if (min < this.TotalTax && max > this.TotalTax) {
+                                                        this.BetweenMinAndMax = true;
+                                                    }
+                                                }
+                                            }
+                                            this.JustAutoFillPaymentScreen();
+                                        });
+
                             }
                         }
+
                     }
                 });
     }
 
+   
     JustAutoFillPaymentScreen() {
-        for (let method of this.PaymentMethodsList.Collection) {
-            method.Amount = this.DeclarationPM.TotalTax;
-            method.MethodTypeCode = "1";
-            this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
-                method.MethodTypeName = response.Result.LocalName;
-            });
+
+        if (this.sumBtl != null && this.sumBtl > 0) {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
+                method.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+            }
+            this.NewMethodMethod(true);
+            this.PaymentMethodsList.Collection[this.PaymentMethodsList.Collection.length - 1].Amount = this.sumBtl;
+
+
+            //     this.PaymentMethodsList.Collection.push(method);
+         
+        }
+        else {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax;
+                method.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+            }
         }
     }
 
-    JustAutoFillPaymentScreenCash() {
-        for (let method of this.PaymentMethodsList.Collection) {
-            method.Amount = this.DeclarationPM.TotalTax;
-            method.MethodTypeCode = "2";
-            this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
-                method.MethodTypeName = response.Result.LocalName;
-            });
-            method.PayerActivityTypeCode = "0";
-            this.customerActivityTypeListService.getSingleFromCache("0").subscribe((response: ServiceResponse) => {
-                method.PayerActivityTypeName = response.Result.LocalName;
-            });
+
+    JustAutoFillPaymentScreenCash(defaultValue: string) {
+
+        if (this.sumBtl != null && this.sumBtl > 0) {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
+                method.MethodTypeCode = "2";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+                method.PayerActivityTypeCode = defaultValue;
+                this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
+                    method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
+            this.NewMethodMethod();
+            this.PaymentMethodsList.Collection[this.PaymentMethodsList.Collection.length - 1].Amount = this.sumBtl;
+
+        }
+        else {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax;
+                method.MethodTypeCode = "2";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+                method.PayerActivityTypeCode = defaultValue;
+                this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
+                    method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
         }
     }
 
@@ -784,11 +981,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     NewProtestMethod() {
         this.NewProtestClicked();
     }
-    NewMethodMethod() {
-        this.AddPaymentMethodClicked();
+    NewMethodMethod(isBtl = false) {
+        this.AddPaymentMethodClicked(isBtl);
     }
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     GetDeclarationStatusColor(statusCode: string) {
         var color = "#45494A";
@@ -796,9 +993,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (!AppTool.IsNullOrEmpty(statusCode)) {
 
             switch (statusCode) {
-                //case "הוגש, מאושר להתרה":
+                //case "הוגש, מםושר להתרה":
                 //case  "הותר":
-                //case "הותר ויצא מאתר בפיקוח המכס":
+                //case "הותר ויצם מםתר בפיקוח המכס":
                 //case "טיוטה תקינה, ממתין להגשה":
                 case "3":
                 case "7":
@@ -809,13 +1006,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         break;
                     }
 
-                //case "הוגש, ממתין לאישור אילוץ התרה":
+                //case "הוגש, ממתין לםישור םילוץ התרה":
                 //case "הוגש, ממתין להחלטת המכס":
                 //case "הוגש, ממתין להתרה":
-                //case "טיוטה הוגשה לתאריך עתידי":
-                //case "טיוטה ממתינה לאישור אילוץ הגשה":
-                //case "ממתין לאישור פיצול":
-                //case "ממתין לאישור בקשת אחסנה":
+                //case "טיוטה הוגשה לתםריך עתידי":
+                //case "טיוטה ממתינה לםישור םילוץ הגשה":
+                //case "ממתין לםישור פיצול":
+                //case "ממתין לםישור בקשת םחסנה":
                 case "4":
                 case "5":
                 case "6":
@@ -828,17 +1025,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         break;
                     }
 
-                //case "סטטוס לא ידוע":
+                //case "סטטוס לם ידוע":
                 //case "בוטל":
                 //case "הוגש, הצהרה שגויה":
                 //case "טיוטה בוטלה":
                 //case "טיוטה שגויה":
-                //case "יש להגיש את ההצהרה מחדש":
+                //case "יש להגיש םת ההצהרה מחדש":
                 //case "פוצל":
-                //case "אסור ביבוא":
+                //case "םסור ביבום":
                 //case "הסחורה נתפסה":
                 //case "הותר - הצהרה שגויה":
-                //case "הותר ויצא מאתר בפיקוח מכס - הצהרה שגויה":
+                //case "הותר ויצם מםתר בפיקוח מכס - הצהרה שגויה":
                 case "0":
                 case "1":
                 case "2":
@@ -900,7 +1097,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.FuturePayment");
         }
 
-        var controller = this.CurrentSession.CurrentEditComponent.EditComponentController;
+        var controller = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController;
         if (controller.InDisplayMode == true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
@@ -915,12 +1112,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.General.O.SubmitDeclarationAgain");
         }
 
+
         this.CheckTotals();
 
         //this.BuildMethods();
         //this.BuildProtest();
 
         this.DisplayOnlyCheck();
+
+
+        if (entityPM.AutomaticPayment && this.ErrorMessage != TextCodeTranslator.Translate("Customs.General.O.InAutomaticPayment")) {
+            this.OkButtonEnabled = true;
+            this.DisplayAutomaticPayment = false;
+
+        }
 
         this.SetScreenFieldsEditability();
     }
@@ -934,12 +1139,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.ShowStorageStatusMessage = false;
 
         //get declaration display only
-        declarationDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+            {
+                this.IsDisplayMessage = true;
+                this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+            }
+        }
 
-        if (declarationDisplayOnly)
-        {
+        else if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
-            this.ErrorMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(declarationDisplayOnly);
@@ -948,14 +1159,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
         }
-        else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage)
-        {
+        else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
         }
+
 
         //if is not display only => its not payed , so fill sign data
         if (!this.IsDisplayOnly)
@@ -976,8 +1187,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (declarationDisplayOnly2)
-            {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
+                {
+                    this.IsDisplayMessage = true;
+
+                    this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (declarationDisplayOnly2) {
                 this.IsDisplayOnly = true;
                 this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
@@ -985,10 +1204,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.OkButtonEnabled = false;
                 this.SendButtonEnabled = false;
             }
-            else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage)
-            {
+            else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -1017,6 +1235,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
 
+
+
+
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;
         this.UIProperties.SetEnabled("PaymentDate", this.ObjectTableName, enabled);
@@ -1035,14 +1256,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     IsPaymentMethodMessageVisible: boolean = false;
     newLine: boolean = false;
 
-    AddPaymentMethodClicked() {
+    AddPaymentMethodClicked(isBtl: boolean) {
 
         this.newLine = true;
         var line = 0;
         var seq = 0;
         var method: DeclarationPaymentMethodPM = null;
 
-        if (this.paymentPM.DeclarationPaymentMethods.length == 1) {
+        if (this.paymentPM.DeclarationPaymentMethods.length == 1 && !isBtl) {
             method = this.paymentPM.DeclarationPaymentMethods.find(d => d.PayerActivityTypeCode == null || d.MethodTypeCode == null || d.Amount == null);
         }
         if (!AppTool.IsNullOrEmpty(method)) {
@@ -1174,12 +1395,26 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     FuturePaymentDateTimeOnBlur(event) {
         // WI 32593
-        this.IsFuturePaymentDateValid();
-    }
-    IsFuturePaymentDateValid() {
+        this.IsFuturePaymentDateValid(null);
 
-        if (this.FuturePaymentDateTime)
-        {
+
+    }
+    FuturePaymentTimeOnBlur(event) {
+        // WI 32593
+        this.IsFuturePaymentDateValid(event);
+
+
+    }
+    IsFuturePaymentDateValid(event) {
+        if (this.AutomaticPayment && event != null) {
+            var myMessageWindow = new MessageWindow
+            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            this.FuturePaymentDateTime = null;
+            this.paymentPM.FuturePaymentDateTime = null;
+            this.FuturePaymentTime = null;
+            return false;
+        }
+        if (this.FuturePaymentDateTime && !this.AutomaticPayment) {
 
             var newDate = new Date();
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0);
@@ -1212,7 +1447,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
 
             if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
                 return false;
             } else {
                 this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
@@ -1228,35 +1463,133 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     OkButtonClicked() {
-
         if (!this.FuturePaymentTime && this.FuturePaymentDateTime) {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList.push("הזן זמן עתידי"); // Please enter a future time
             return;
         }
 
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
-        var isPaymentDateValid = this.IsPaymentDateValid(); 
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
+        var isPaymentDateValid = this.IsPaymentDateValid();
+        var isBlockTime = false;
+        if (!isFuturePaymentDateValid || !isPaymentDateValid) {
 
-        if (isFuturePaymentDateValid && isPaymentDateValid)
-        {
-            this.ValidationErrorsList = [];
-            this.ActivateUnifreightInstructionOK();
-        }
-        else
-        {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
+
         }
+        else {
+            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let timeCompany = obj['DefaultValue'];
+                    //timeCompany = "12:00 - 13:00";
+                    this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                        let obj = response.Result;
+                        if (obj) {
+                            let timeCustomer = obj['DefaultValue'];
+                            //   timeCustomer = "20:00 - 22:00";
+                            if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                                isBlockTime = false;
+                            }
+                            else {
+
+                                if (!this.AutomaticPayment) {
+                                    if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
+                                        if (!AppTool.IsNullOrEmpty(timeCompany)) {
+                                            if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                isBlockTime = true;
+                                            }
+
+                                        }
+                                        if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                    }
+
+                                    else {
+                                        if (!AppTool.IsNullOrEmpty(timeCompany)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                        if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                            if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                isBlockTime = true;
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+                            if (!isBlockTime) {
+                                this.ValidationErrorsList = [];
+                                this.ActivateUnifreightInstructionOK();
+                            }
+
+                        }
+
+
+
+
+                    });
+                }
+            });
+        }
+
+
+
+        //var isBlockTime: boolean;
+
+        //isBlockTime = this.CheckIfBlockTime();
+
+
+
+
+    }
+
+
+
+    CheckIdDateBetween2Times(times: any, date1: Date) {
+
+        if (times == null) return false;
+        var startTime = times.split("-")[0];
+        var endTime = times.split("-")[1];
+
+        if (startTime == null || endTime == null) return false;
+        var date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
+
+        var startDate = new Date(date.getTime());
+        startDate.setHours(startTime.split(":")[0]);
+        startDate.setMinutes(startTime.split(":")[1]);
+
+        var endDate = new Date(date.getTime());
+        endDate.setHours(endTime.split(":")[0]);
+        endDate.setMinutes(endTime.split(":")[1]);
+
+
+
+        return startDate < date && endDate > date
     }
 
     ActivateUnifreightInstructionOK() {
         //if (!AppTool.IsNullOrEmpty(this.DeclarationPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
-            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
             var myStoreViewUnifreightInstructionController
                 = new UnifreightController(this.DeclarationPM, "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
@@ -1269,11 +1602,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     }
                     else {
                         this.instructionCancelled = true;
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
                     //myStoreViewUnifreightInstructionController.DisposeUnifreightMassaging();
 
                 });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
             myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
         }
         else {
@@ -1313,7 +1647,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (!response.HasError && !this.instructionCancelled) {
             this.saving = true;
             this.RefreshDeclaration();
-            this.CurrentSession.CloseCurrentWindow();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         }
         else {
 
@@ -1344,7 +1678,47 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     Option: string;
     // Before send
     SendButtonClicked(event) {
+        if (event.TestCase) {
 
+            let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = "תרחשי DeclarationPayment";
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                        this._TestCase = new TestCase();
+                        this._TestCase.Code = comp._ScenarioCode;
+                        this._TestCase.Param1 = comp.Param1;
+                        this._TestCase.Param2 = comp.Param2;
+                        this.SendButtonClickedStart(event);
+
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+
+        }
+        this._TestCase = null;
+        this.SendButtonClickedStart(event);
+    }
+
+    SendButtonClickedStart(event) {
+        if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
+            var myMessageWindow = new MessageWindow
+            myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
+                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold"));
+            return;
+        }
         this.customSendOptions = event;
         this.Option = event.Option;
 
@@ -1357,70 +1731,136 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //#endregion
 
         //#region Validate dates
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
-        if (isFuturePaymentDateValid && isPaymentDateValid)
-        {
+        if (isFuturePaymentDateValid && isPaymentDateValid) {
             this.ValidationErrorsList = [];
         }
-        else
-        {
+        else {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
         }
         //#endregion
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        // Validate payment date with future date
-        if (this.FuturePaymentDateTime && this.PaymentDate)
-        {
+        var isBlockTime = false;
 
-            this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
-            this.FuturePaymentDateTime = new Date(Date.parse(this.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            let obj = response.Result;
+            if (obj) {
+                let timeCompany = obj['DefaultValue'];
+                //timeCompany = "12:00 - 13:00";
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let timeCustomer = obj['DefaultValue'];
+                        //   timeCustomer = "20:00 - 22:00";
+                        if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                            isBlockTime = false;
+                        }
+                        else {
 
-            var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
-            var futurePaymentDateTime = new Date(this.FuturePaymentDateTime.getFullYear(), this.FuturePaymentDateTime.getMonth(), this.FuturePaymentDateTime.getDate(), 0, 0, 0);
+                            if (!this.AutomaticPayment) {
+                                if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
+                                        }
 
-            if (futurePaymentDateTime > paymentDate)
-            {
-                //valid
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
-                confirmWindow.ShowCancelButton = false;
-                confirmWindow.ShowNoButton = true;
-                confirmWindow.WindowClosed.subscribe((event: any) =>
-                {
-                    if (confirmWindow.No) {
-                        console.log("[!] Send payment canceled");
-                        return;
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            isBlockTime = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+
+                        if (!isBlockTime) {
+                            // Validate payment date with future date
+                            if (this.FuturePaymentDateTime && this.PaymentDate) {
+
+                                this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
+                                this.FuturePaymentDateTime = new Date(Date.parse(this.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+
+                                var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
+                                var futurePaymentDateTime = new Date(this.FuturePaymentDateTime.getFullYear(), this.FuturePaymentDateTime.getMonth(), this.FuturePaymentDateTime.getDate(), 0, 0, 0);
+
+                                if (futurePaymentDateTime > paymentDate) {
+                                    //valid
+                                    var confirmWindow = new ConfirmWindow();
+                                    confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+                                    confirmWindow.ShowCancelButton = false;
+                                    confirmWindow.ShowNoButton = true;
+                                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                                        if (confirmWindow.No) {
+                                            console.log("[!] Send payment canceled");
+                                            return;
+                                        }
+                                        else if (confirmWindow.Yes) {
+                                            this.SendMethodStep1();
+                                        }
+
+                                    });
+                                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.paymentDateSmallerThanFuture"));
+
+                                }
+                                else {
+                                    this.SendMethodStep1();
+                                }
+                            }
+                            else {
+                                this.SendMethodStep1();
+                            }
+
+                        }
+
                     }
-                    else if (confirmWindow.Yes) {
-                        this.SendMethodStep1();
-                    }
+
+
+
 
                 });
-                confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.paymentDateSmallerThanFuture"));
+            }
+        });
 
-            }
-            else
-            {
-                this.SendMethodStep1();
-            }
-        }
-        else
-        {
-            this.SendMethodStep1();
-        }
+
+
+
+
 
 
     }
 
     SendMethodStep1() {
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
 
         if (this.entityCreated) {
             this.declarationPaymentPMService.insert(this.paymentPM).subscribe((response: ServiceResponse) => {
@@ -1432,7 +1872,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
                 } else {
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
             });
             this.entityCreated = false;
@@ -1446,7 +1886,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
                 } else {
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
 
             });
@@ -1460,7 +1900,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
             if (!AppTool.IsNullOrEmpty(customsRequiredFieldErrors)) {
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (customsRequiredFieldErrors.RequiredFields.length == 0) {
 
                     //If Last Declaration was NOT Signed
@@ -1481,7 +1921,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"), customsRequiredFieldErrors);
                 }
             } else {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
             }
 
         });
@@ -1495,7 +1935,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var customsSetting = list[0];
 
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var listCustomsAgentId: string[] = ["550221105", "511487241"];
                 if (SessionLocator.LoggedUserPM.IsCustomerCare
@@ -1546,7 +1986,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ActualSend();
             }
             else {
-                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
                 var myStoreViewUnifreightInstructionController = new UnifreightController(
                     this.DeclarationPM,
@@ -1558,11 +1998,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             this.ActualSend();
                         }
                         else {
-                            this.CurrentSession.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
 
                         }
                     });
-                this.CurrentSession.StartBusyIndicator("");
+                SessionLocator.SelectedSession.StartBusyIndicator("");
                 myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
 
             }
@@ -1592,6 +2032,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.Mode = "Check";
         params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
+        params.TestCase = this._TestCase;
         let splitRequest = true;
         if (splitRequest) {
             this.CheckCustomFileCreditThenSendPayment(params);
@@ -1606,16 +2047,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //this.declarationMessagesService.PostSendPaymentWithCheckCustomFileCredit(params)
         //    .subscribe((myServiceResponse: ServiceResponse) => {
         //        myCustomMessageProgressHelper.MessageArrived = true;
-        //        this.CurrentSession.StopBusyIndicator();
+        //        SessionLocator.SelectedSession.StopBusyIndicator();
         //        var result: CustomFileCreditResponseData = myServiceResponse.Result;
         //        if (!AppTool.IsNullOrEmpty(result)) {
         //            var mess :string = this.AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(result);
 
-        //            this.CurrentSession.StopBusyIndicator();
+        //            SessionLocator.SelectedSession.StopBusyIndicator();
         //            if (!AppTool.IsNullOrEmpty(mess)) {
         //                let messWindow = new MessageWindow();
 
-        //                this.CurrentSession.StopBusyIndicator();
+        //                SessionLocator.SelectedSession.StopBusyIndicator();
         //                messWindow.Show(mess);
         //                messWindow.WindowClosed.subscribe((event: any) => {
 
@@ -1624,8 +2065,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //                        this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
         //                    {
         //                        this.RefreshDeclaration();
-        //                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //                        if (this.CurrentSession.CurrentWindow != null) this.CurrentSession.CloseCurrentWindow()
+        //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        //                        if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
         //                    }
         //                });
 
@@ -1643,14 +2084,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //    this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
     //        .subscribe((myServiceResponse: ServiceResponse) => {
     //            myCustomMessageProgressHelper.MessageArrived = true;
-    //            this.CurrentSession.StopBusyIndicator();
+    //            SessionLocator.SelectedSession.StopBusyIndicator();
     //            let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
 
     //            if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
     //                if (customFileCreditResponseData.IsTRansGove) {
     //                    var confirmWindow = new ConfirmWindow();
     //                    confirmWindow.Show(customFileCreditResponseData.UserMessage);
-    //                    this.CurrentSession.StopBusyIndicator();
+    //                    SessionLocator.SelectedSession.StopBusyIndicator();
     //                    confirmWindow.WindowClosed.subscribe((event: any) => {
     //                        if (confirmWindow.Yes) {
     //                            this.ActualSendToTransfer();
@@ -1667,11 +2108,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //                    (params.PBId, "תחילת שליחה למכס- הגשת תשלום", false)
     //                    .then(res => {
 
-    //                        this.CurrentSession.StopBusyIndicator();//// let it be ...
+    //                        SessionLocator.SelectedSession.StopBusyIndicator();//// let it be ...
     //                        let myPaymentResponseData: CustomFileCreditResponseData = res;
 
     //                        this.RefreshDeclaration();
-    //                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
 
     //                        if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
     //                            //let mess = myPaymentResponseData.UserMessage || "Server return Error (Witout message????!!?!)";
@@ -1681,8 +2122,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //                            //    messWindow.WindowClosed.subscribe((event: any) => {
 
     //                            //        this.RefreshDeclaration();
-    //                            //        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    //                            //        //if (this.CurrentSession.CurrentWindow != null) this.CurrentSession.CloseCurrentWindow()
+    //                            //        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+    //                            //        //if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
 
     //                            //    });
 
@@ -1690,7 +2131,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     //                        } else {
 
-    //                            if (this.CurrentSession.CurrentWindow != null) this.CurrentSession.CloseCurrentWindow()
+    //                            if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
     //                        }
     //                    })
     //                    .catch(err => {
@@ -1719,14 +2160,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
 
                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
                     if (customFileCreditResponseData.IsTRansGove) {
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
                                 this.ActualSendToTransfer();
@@ -1738,7 +2179,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         var confirmWindow = new ConfirmWindow();
                         //confirmWindow.Width = 400;
                         confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
                                 this.ActualSendToReTransfer();
@@ -1756,65 +2197,80 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         return;
                         //////////////////////////////////////////////////////////////////////////
                     }
-                    let myShowProgressBarParams = new ShowProgressBarParams();
-                    myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
-                        (response: any) => {
 
-                            let myPaymentResponseData: CustomFileCreditResponseData = response;
-                            if (myPaymentResponseData) {
-                                if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
-                                    //do not close Win !!
 
-                                } else {
+                    if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
+                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
-                                    //if OK then  close Win !!
-                                    if (this.CurrentSession.CurrentWindow != null) this.CurrentSession.CloseCurrentWindow()
+                        var myStoreViewUnifreightInstructionController = new UnifreightController(
+                            this.DeclarationPM,
+                            "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
+                        myStoreViewUnifreightInstructionController.GetPromise()
+                            //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
+                            .then((e) => {
+                                if (e.UnifreightResponseStatus) {
+                                    this.Send2755(params);
                                 }
-                            }
+                                else {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
 
-                        };
-                    CustomMessageProgressComponent.ShowProgressBar
-                        //(PBId: string, Title: string, OnSuccessCloseWin: boolean
-                        //    , OnSuccessCloseWinMethod?: (response: any) => boolean)
-
-                        (params.PBId, "תחילת שליחה למכס- הגשת תשלום", false,
-                        myShowProgressBarParams
-                        ).then(res => {
-                            var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
-                            if (ResponseData && ResponseData.ContinueProcessInBackground) {
-                                this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                            }
-                            else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                                this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                            }
-                            this.CurrentSession.StopBusyIndicator();//// let it be ...
-                            let myPaymentResponseData: CustomFileCreditResponseData = res;
-
-                            this.RefreshDeclaration();
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-                        })
-                        .catch(err => {
-                            err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
-                            let messWindow = new MessageWindow();
-                            messWindow.Show(err);
-                            messWindow.WindowClosed.subscribe(() => {
-                                this.CurrentSession.CloseCurrentWindow();
+                                }
                             });
-
-                        });
-
-
-                    this.declarationMessagesService.PostSendPaymentOnly(params)
-                        .subscribe(res1 => {
-                        });
+                        SessionLocator.SelectedSession.StartBusyIndicator("");
+                        myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
 
 
+                    } else {
+                        this.Send2755(params);
+                    }
 
                 }
             });
 
     }
+    private Send2755(params: CustomFileCreditRequestParams) {
+        let myShowProgressBarParams = new ShowProgressBarParams();
+        myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+            (response: any) => {
+                let myPaymentResponseData: CustomFileCreditResponseData = response;
+                if (myPaymentResponseData) {
+                    if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
+                        //do not close Win !!
+                    }
+                    else {
+                        //if OK then  close Win !!
+                        if (SessionLocator.SelectedSession.CurrentWindow != null)
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                    }
+                }
+            };
+        CustomMessageProgressComponent.ShowProgressBar(params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+            var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
+            if (ResponseData && ResponseData.ContinueProcessInBackground) {
+                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+            }
+            else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
+                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+            }
+            SessionLocator.SelectedSession.StopBusyIndicator(); //// let it be ...
+            let myPaymentResponseData: CustomFileCreditResponseData = res;
+            this.RefreshDeclaration();
+            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        })
+            .catch(err => {
+                err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
+                let messWindow = new MessageWindow();
+                messWindow.Show(err);
+                messWindow.WindowClosed.subscribe(() => {
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                });
+            });
+        if (this.AutomaticPayment != 1)
+            this.declarationMessagesService.PostSendPaymentOnly(params)
+                .subscribe(res1 => {
+                });
+    }
+
     ActualSendToTransfer() {
 
         if (this.customSendOptions == null) {
@@ -1853,13 +2309,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.declarationMessagesService.PostSendTransferRequest(params)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var result: CustomFileCreditResponseData = myServiceResponse.Result;
                 if (!AppTool.IsNullOrEmpty(CustomMessageProgressComponent.CurrCustomMessageProgressHelper)) {
                     CustomMessageProgressComponent.CurrCustomMessageProgressHelper.MessageArrived = true;
                 }
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.AnalyzeActualSendToTransfer(result);
             });
 
@@ -1877,11 +2333,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
-                        if (this.CurrentSession.CurrentWindow != null) {
-                            this.CurrentSession.CloseCurrentWindow();; // moran 17.8.16 - AMI-57900 - add not null check
+                        if (SessionLocator.SelectedSession.CurrentWindow != null) {
+                            SessionLocator.SelectedSession.CloseCurrentWindow();; // moran 17.8.16 - AMI-57900 - add not null check
                         }
                     }
 
@@ -1931,7 +2387,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var result: CustomFileCreditResponseData = myServiceResponse.Result;
 
                 if (!AppTool.IsNullOrEmpty(result)) {
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     var mess = this.AnalyzeResponseMessageForsendToReTransfer(result);
                     if (!AppTool.IsNullOrEmpty(mess)) {
                         let messWindow = new MessageWindow();
@@ -1939,7 +2395,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         messWindow.WindowClosed.subscribe((event: any) => {
                             if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || this._IsCloseScreen == true) {
                                 this.RefreshDeclaration();
-                                if (this.CurrentSession.CurrentWindow != null) this.CurrentSession.CloseCurrentWindow();
+                                if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow();
                             }
                         });
                         //    _CustomMassagingProgressService.Dispose();
@@ -1991,7 +2447,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         logWindow.WindowArgs = windowArgs;
         //logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     _IsCloseScreen: boolean = false;
     AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(responseData: CustomFileCreditResponseData) {
@@ -2004,7 +2460,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show(responseData.UserMessage);
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.ActualSendToTransfer();
@@ -2051,7 +2507,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 //}
 
                 var confirmWindow = new ConfirmWindow();
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.Show(responseData.UserMessage);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
@@ -2138,10 +2594,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     initDates() {
         //Task 36380: Update Payment Date & Time when Entering Payment screen
         if (!this.IsDisplayOnly) {
-            this.paymentPM.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+            var currentDate: Date = DateTool.GetCurrentDateTimeAsUtc();
+            var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
+            if (paymentDate <= currentDate) {
+                this.paymentPM.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+            }
         }
     }
-
+     
 
 }
 
@@ -2154,7 +2614,7 @@ export class PaymentMethodModel extends BaseComponent {
         this._BanksList = val;
         this.LoggIt("PaymentMethodModel.SetBanksList");
     }
-    LoggIt(stack:string) {
+    LoggIt(stack: string) {
         if (!this.parent._2LogBankList) {
             return;
         }
@@ -2166,15 +2626,15 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.LogDate = DateTool.GetCurrentDateTimeAsUtc();
 
         let myBankList = this._BanksList.map(r => JSON.stringify({
-            'InternalBankId':r.Id, 'LocalName':r.LocalName, 'EnglishName':r.EnglishName
+            'InternalBankId': r.Id, 'LocalName': r.LocalName, 'EnglishName': r.EnglishName
         }));
 
         errorLogPM.Exception = "BanksList:";
-        errorLogPM.Exception += JSON.stringify(myBankList); 
-        errorLogPM.Exception += "\r\n"; 
+        errorLogPM.Exception += JSON.stringify(myBankList);
+        errorLogPM.Exception += "\r\n";
         errorLogPM.Exception += "SelectedBank:";
         errorLogPM.Exception += JSON.stringify(this.SelectedBank);
-        errorLogPM.Exception += "\r\n"; 
+        errorLogPM.Exception += "\r\n";
         errorLogPM.Exception += "DeclarationPaymentMethodPM:"
         errorLogPM.Exception += JSON.stringify({ 'DeclarationId': this.methodPM.DeclarationId, 'Line': this.methodPM.Line, 'SequenceNumeric': this.methodPM.SequenceNumeric });
 
@@ -2182,6 +2642,7 @@ export class PaymentMethodModel extends BaseComponent {
             .subscribe((response: ServiceResponse) => { });
 
     }
+    BankIsNull: boolean;
     agentBanks: CustomBankList[] = [];
     IsAmountButtonVisibile: boolean = false;
     customBankListService: CustomBankListService = new CustomBankListService();
@@ -2189,10 +2650,9 @@ export class PaymentMethodModel extends BaseComponent {
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     customBankCardExtendedPMService: CustomBankCardExtendedPMService = new CustomBankCardExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public methodPM: DeclarationPaymentMethodPM, public parent: DeclarationPaymentComponent) {
         super();
-
+        this.BankIsNull = false;
         if (methodPM.MethodTypeCode == "1") {
             this.BanksList = [];
             if (!AppTool.IsNullOrEmpty(methodPM.InternalBankId)) {
@@ -2203,193 +2663,197 @@ export class PaymentMethodModel extends BaseComponent {
                 });
 
             }
-            this.LoadBanks();
+            else {
+                this.LoadBanks();
+            }
         }
 
         if (parent.PaymentMethodsList.Length == 1) {
             this.IsAmountButtonVisibile = true;
         }
-
+    
     }
 
     LoadBanks() {
+            this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+                    let BlockAgentBankForMasabDefaultValue = "";
+                    var result = response.Result.filter(d => !d.InActive);
+                    console.log("[Response] GetCustomBanksForCard: ", result);
+                    if (!AppTool.IsNullOrEmpty(result)) {
+                        //this.BanksList = result;
+                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", SessionLocator.Tenant)
+                            .subscribe(
+                                (responseDefault: ServiceResponse) => {
+                                    let obj = responseDefault.Result;
+                                    if (obj) {
+                                        BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
 
+                                    }
 
-        this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+                                    this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                                        var list = response.Result;
 
-            let BlockAgentBankForMasabDefaultValue = "";
-            var result = response.Result.filter(d => !d.InActive);
-            console.log("[Response] GetCustomBanksForCard: ", result);
-            if (!AppTool.IsNullOrEmpty(result)) {
-                //this.BanksList = result;
-                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", SessionLocator.Tenant)
-                    .subscribe(
-                    (responseDefault: ServiceResponse) => {
-                        let obj = responseDefault.Result;
-                        if (obj) {
-                            BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
+                                        if (!AppTool.IsNullOrEmpty(list)) {
+                                            var customsSetting = list;
+                                            this.BanksList = result;
+                                            if (result.length == 0) {
+                                                this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
+                                                    if (response) {
+                                                        if (!response.HasError) {
 
-                        }
-
-                        this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
-                            var list = response.Result;
-
-                            if (!AppTool.IsNullOrEmpty(list)) {
-                                var customsSetting = list;
-                                this.BanksList = result;
-                                if (result.length == 0) {
-                                    this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
-                                        if (response) {
-                                            if (!response.HasError) {
-
-                                                this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                if (this.agentBanks.length == 1) {
-                                                    this.InternalBankId = this.agentBanks[0].Id;
-                                                    this.SelectedBank = this.agentBanks[0];
-                                                    this.BanksList = this.agentBanks;
-
-                                                }
-                                                else {
-                                                    if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                        this.SendCreditToGetBank();
+                                                            this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                            if (this.agentBanks.length == 1) {
+                                                                this.InternalBankId = this.agentBanks[0].Id;
+                                                                if (!this.BankIsNull) {
+                                                                    this.SelectedBank = this.agentBanks[0];
+                                                                    this.BanksList = this.agentBanks;
+                                                                }
+                                                            }
+                                                            else {
+                                                                if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                                    if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                        this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                                                    }
+                                                                    this.SendCreditToGetBank();
+                                                                }
+                                                                this.BanksList = this.agentBanks;
+                                                                if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                                    //   GetCustomBankDefaultForCard();
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                    this.BanksList = this.agentBanks;
-                                                    if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                        //   GetCustomBankDefaultForCard();
+                                                });
+                                            }
+                                            else {
+                                                if (customsSetting != null) {
+                                                    //this.InternalBankId = null;
+                                                    if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                        this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                                    }
+                                                    //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
+                                                    //if (customsSetting.BlockAgentBankForMasab) {
+
+                                                    //case: block Agent banks
+                                                    if (BlockAgentBankForMasabDefaultValue == "Y") {
+                                                        //if (result.length == 1)
+                                                        //{
+                                                        //    if (this.InternalBankId == null) {
+                                                        //        this.InternalBankId = this.BanksList[0].Id;
+                                                        //    }
+                                                        //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                        //    this.SelectedBank = bank;
+
+                                                        //}
+                                                        //else if (result.length > 1)
+                                                        //{
+                                                        //    if (this.InternalBankId != null) {
+                                                        //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                        //        this.SelectedBank = bank;
+                                                        //    }
+
+                                                        //}
+
+                                                        this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                            if (response) {
+                                                                if (!response.HasError) {
+                                                                    var agentBanks = [];
+                                                                    agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                    agentBanks = agentBanks.concat(this.BanksList);
+
+                                                                    if (result.length == 1) {
+                                                                        if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                            this.InternalBankId = this.BanksList[0].Id;
+                                                                        }
+                                                                        var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
+                                                                        this.SelectedBank = bank;
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                    //
+                                                    //case: do not block Agent banks
+                                                    else {
+                                                        //if no banks
+                                                        if (result.length == 0) {
+                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                                if (response) {
+                                                                    if (!response.HasError) {
+                                                                        this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                        if (this.agentBanks.length > 0) {
+                                                                            this.BanksList = this.agentBanks;
+                                                                            if (this.agentBanks.length == 1) {
+                                                                                if (this.InternalBankId == null) {
+                                                                                    this.InternalBankId = this.BanksList[0].Id;
+                                                                                }
+                                                                            }
+                                                                            else {
+                                                                                if (this.InternalBankId != null) {
+                                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                                    this.SelectedBank = bank;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                        //one bank
+                                                        else if (result.length == 1) {
+                                                            if (this.InternalBankId == null) {
+                                                                this.InternalBankId = this.BanksList[0].Id;
+                                                            }
+                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                                if (response) {
+                                                                    if (!response.HasError) {
+                                                                        var agentBanks = [];
+                                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                        this.BanksList = this.BanksList.concat(agentBanks);
+                                                                        if (this.InternalBankId != null) {
+                                                                            var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                            this.SelectedBank = bank;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+
+                                                        //two or more & dont block agent
+                                                        else if (result.length > 1) {
+                                                            var agentBanks = [];
+                                                            //fill connected banks
+                                                            var connectedBanks = result.filter(d => !d.InActive);
+
+                                                            //fill agent
+                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                                if (response) {
+                                                                    if (!response.HasError) {
+                                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                        //fill the LOV
+                                                                        this.BanksList = connectedBanks.concat(agentBanks);
+
+                                                                        //select bank
+                                                                        if (this.InternalBankId != null) {
+                                                                            var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                            this.SelectedBank = bank;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        }
+
                                                     }
                                                 }
                                             }
                                         }
                                     });
-                                }
-                                else {
-                                    if (customsSetting != null) {
-                                        //this.InternalBankId = null;
-                                        if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                            this.InternalBankId = this.parent.GetCreditInternalBankId;
-                                        }
-                                        //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
-                                        //if (customsSetting.BlockAgentBankForMasab) {
-
-                                        //case: block Agent banks
-                                        if (BlockAgentBankForMasabDefaultValue == "Y") {
-                                            //if (result.length == 1)
-                                            //{
-                                            //    if (this.InternalBankId == null) {
-                                            //        this.InternalBankId = this.BanksList[0].Id;
-                                            //    }
-                                            //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                            //    this.SelectedBank = bank;
-
-                                            //}
-                                            //else if (result.length > 1)
-                                            //{
-                                            //    if (this.InternalBankId != null) {
-                                            //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                            //        this.SelectedBank = bank;
-                                            //    }
-
-                                            //}
-
-                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                if (response) {
-                                                    if (!response.HasError) {
-                                                        var agentBanks = [];
-                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                        agentBanks = agentBanks.concat(this.BanksList);
-
-                                                        if (result.length == 1) {
-                                                            if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                                this.InternalBankId = this.BanksList[0].Id;
-                                                            }
-                                                            var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
-                                                            this.SelectedBank = bank;
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                        }
-                                        //
-                                        //case: do not block Agent banks
-                                        else {
-                                            //if no banks
-                                            if (result.length == 0) {
-                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                    if (response) {
-                                                        if (!response.HasError) {
-                                                            this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                            if (this.agentBanks.length > 0) {
-                                                                this.BanksList = this.agentBanks;
-                                                                if (this.agentBanks.length == 1) {
-                                                                    if (this.InternalBankId == null) {
-                                                                        this.InternalBankId = this.BanksList[0].Id;
-                                                                    }
-                                                                }
-                                                                else {
-                                                                    if (this.InternalBankId != null) {
-                                                                        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                        this.SelectedBank = bank;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                            //one bank
-                                            else if (result.length == 1) {
-                                                if (this.InternalBankId == null) {
-                                                    this.InternalBankId = this.BanksList[0].Id;
-                                                }
-                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                    if (response) {
-                                                        if (!response.HasError) {
-                                                            var agentBanks = [];
-                                                            agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                            this.BanksList = this.BanksList.concat(agentBanks);
-                                                            if (this.InternalBankId != null) {
-                                                                var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                this.SelectedBank = bank;
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                            }
-
-                                            //two or more & dont block agent
-                                            else if (result.length > 1) {
-                                                var agentBanks = [];
-                                                //fill connected banks
-                                                var connectedBanks = result.filter(d => !d.InActive);
-
-                                                //fill agent
-                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                    if (response) {
-                                                        if (!response.HasError) {
-                                                            agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                            //fill the LOV
-                                                            this.BanksList = connectedBanks.concat(agentBanks);
-
-                                                            //select bank
-                                                            if (this.InternalBankId != null) {
-                                                                var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                this.SelectedBank = bank;
-                                                            }
-                                                        }
-                                                    }
-                                                });
-
-                                            }
-
-                                        }
-                                    }
-                                }
-
-                            }
-                        });
-                    });
-            }
-        });
+                                });
+                    }
+                
+            });
+        
     }
 
 
@@ -2414,7 +2878,7 @@ export class PaymentMethodModel extends BaseComponent {
         //searchParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         //searchParams.RequestVIA = SendRequestVIA.WebServiceBatch;
         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
             let allCustomBankList: CustomBankList[] = response.Result;
 
@@ -2436,12 +2900,12 @@ export class PaymentMethodModel extends BaseComponent {
                                 //    this.InternalBankId = bank.Id;
                                 //}
                                 this.SetInternalBankId(allCustomBankList, myCIM_AGENT_BANK);
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                             });
 
 
                     } else {
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
 
                     //this.ResponseData = myServiceResponse.Result;
@@ -2454,7 +2918,7 @@ export class PaymentMethodModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(BankCode)) {
             let bank: CustomBankList = allCustomBankList
                 .filter(d => d.InternalCode == BankCode && !d.InActive)[0];
-                //.filter(d => d.BankCode == BankCode && !d.InActive)[0];
+            //.filter(d => d.BankCode == BankCode && !d.InActive)[0];
 
             if (!AppTool.IsNullOrEmpty(bank)) {
                 this.InternalBankId = bank.Id;
@@ -2605,94 +3069,105 @@ export class PaymentMethodModel extends BaseComponent {
         if (this.methodPM.InternalBankId != value) {
             this.methodPM.InternalBankId = value;
 
-            this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
-                if (response) {
-                    if (!response.HasError) {
-                        var customBank: CustomBankList = response.Result.filter(d => d.Id == value)[0];
+                this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+                    if (response) {
+                        if (!response.HasError) {
+                            if (!this.BankIsNull) {
+                                var customBank: CustomBankList = response.Result.filter(d => d.Id == value)[0];
 
-                        if (customBank == null && this.BanksList != null) {
-                            customBank = this.BanksList.filter(d => d.Id == value)[0];
-                        }
-                        if (customBank != null) {
-                            this.InternalBankName = customBank.LocalName != null ? customBank.LocalName : customBank.EnglishName;
-                            if (customBank.PayerTypeCode == "0") {
+                                if (customBank == null && this.BanksList != null) {
+                                    customBank = this.BanksList.filter(d => d.Id == value)[0];
+                                }
+                                if (customBank != null) {
+                                    this.InternalBankName = customBank.LocalName != null ? customBank.LocalName : customBank.EnglishName;
+                                    if (customBank.PayerTypeCode == "0") {
 
-                                this.customBankCardExtendedPMService.GetSingleCustomBanksCard(value, this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+                                        this.customBankCardExtendedPMService.GetSingleCustomBanksCard(value, this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
 
-                                    if (response) {
-                                        if (!response.HasError) {
-                                            var bankCard: CustomBanksCardPM = response.Result;
-                                            if (bankCard != null) {
-                                                this.methodPM.BankCode = customBank.BankCode;
+                                            if (response) {
+                                                if (!response.HasError) {
+                                                    var bankCard: CustomBanksCardPM = response.Result;
+                                                    if (bankCard != null) {
+                                                        this.methodPM.BankCode = customBank.BankCode;
 
-                                                this.methodPM.BranchCode = customBank.BranchCode;
-                                                this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
-                                                this.methodPM.AccountNumber = customBank.AccountNumber;
-                                                this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
-                                                this.PayerActivityTypeName = customBank.PayerTypeName;
+                                                        this.methodPM.BranchCode = customBank.BranchCode;
+                                                        this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
+                                                        this.methodPM.AccountNumber = customBank.AccountNumber;
+                                                        this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
+                                                        this.PayerActivityTypeName = customBank.PayerTypeName;
 
 
+                                                    }
+                                                    else {
+
+                                                        var messageWindow = new MessageWindow();
+
+                                                        messageWindow.Show(TextCodeTranslator.Translate("Customs.CustomBank.O.BankNotConnectedToCustomer"));
+
+
+
+                                                        this.InternalBankId = null;
+                                                        this.methodPM.InternalBankId = null;
+                                                        this.InternalBankName = null;
+                                                        this.SelectedBank = null;
+                                                        this.PayerActivityTypeCode = null;
+                                                        this.PayerActivityTypeName = null;
+                                                    }
+                                                }
                                             }
-                                            else {
 
-                                                var messageWindow = new MessageWindow();
+                                        });
 
-                                                messageWindow.Show(TextCodeTranslator.Translate("Customs.CustomBank.O.BankNotConnectedToCustomer"));
+                                    }
+                                    else {
+                                        this.methodPM.BankCode = customBank.BankCode;
+                                        this.methodPM.BranchCode = customBank.BranchCode;
+                                        this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
+                                        this.methodPM.AccountNumber = customBank.AccountNumber;
+                                        this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
+                                        this.PayerActivityTypeName = customBank.PayerTypeName;
 
 
-
-                                                this.InternalBankId = null;
-                                                this.methodPM.InternalBankId = null;
-                                                this.InternalBankName = null;
-                                                this.SelectedBank = null;
-                                                this.PayerActivityTypeCode = null;
-                                                this.PayerActivityTypeName = null;
-                                            }
-                                        }
                                     }
 
-                                });
 
+                                }
+
+                                if (customBank == null) {
+                                    this.methodPM.BankCode = null;
+                                    this.methodPM.BranchCode = null;
+                                    this.methodPM.CustomsBranchId = null;
+                                    this.methodPM.AccountNumber = null;
+                                    this.methodPM.PayerActivityTypeCode = null;
+
+
+
+                                }
+                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3") {
+                                    this.BankIsNull = true;
+                                    this.methodPM.MethodTypeCode = "2";
+                                    this.methodPM.PayerActivityTypeCode = "3";
+                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax ;
+                                    this.InternalBankName = null;
+                                    this.InternalBankId = null;
+                                    this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                                        this.methodPM.MethodTypeName = response.Result.LocalName;
+                                    });
+                                    this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                                        this.methodPM.PayerActivityTypeName = response.Result.LocalName;
+                                    });
+                                }
                             }
-                            else {
-                                this.methodPM.BankCode = customBank.BankCode;
-                                this.methodPM.BranchCode = customBank.BranchCode;
-                                this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
-                                this.methodPM.AccountNumber = customBank.AccountNumber;
-                                this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
-                                this.PayerActivityTypeName = customBank.PayerTypeName;
-
-
-                            }
-
-
                         }
-
-                        if (customBank == null) {
-                            this.methodPM.BankCode = null;
-                            this.methodPM.BranchCode = null;
-                            this.methodPM.CustomsBranchId = null;
-                            this.methodPM.AccountNumber = null;
-                            this.methodPM.PayerActivityTypeCode = null;
-
-
-
-                        }
-
                     }
-                }
 
 
 
-            });
-
-        }
-
-
+                });
+            }
+        
 
     }
-
-
 
     get InternalBankName() { return this.methodPM.InternalBankName; }
     set InternalBankName(value: string) {
@@ -2844,7 +3319,7 @@ export class PaymentProtestModel extends BaseComponent {
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SelectionCompleted($event));
 
-          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
         }
     }
 
@@ -2927,7 +3402,10 @@ export class PaymentProtestModel extends BaseComponent {
 
                             //    item.Tenant = this.protestPM.Tenant,
                             // item.DeclarationId = this.parent.DeclarationPM.Id;
-                            this.protestPM.Line = line;
+                            if (AppTool.IsNullOrEmpty(this.protestPM.Line)) { ///itzik :???
+                                this.protestPM.Line = line;
+                            }
+
                             this.protestPM.InvoiceNumber = invoice.InvoiceNumber;
                             this.protestPM.InvoiceCounterKey = invoice.InvoiceCounterKey;
                             this.protestPM.ProtestTypeName = paymentProtestType,

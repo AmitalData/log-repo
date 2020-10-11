@@ -18,6 +18,15 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class ClaimImporterDeclBCTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public FooterMethods: any;
+  public DescriptionOfGoods: any;
+  public SaleAmountBefore: any;
+  public SaleAmountAfter: any;
+  public SaleAmountClaim: any;
+  public InventoryAmount: any;
+  public SoldGoodsAmount: any;
+
     public DataContext: ClaimImporterDeclBCTabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
     public ObjectTableName: string = "Customs.Claim";

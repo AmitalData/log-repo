@@ -1,0 +1,46 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class GatepassRequestMap : EntityTypeConfiguration<GatepassRequest>
+    {
+	    string dbms;
+        public GatepassRequestMap()
+        { 
+			  this.ToTable("GatepassRequests", "Customs");
+		
+		    this.HasKey(t => new { t.MasterCourierId });
+	 
+            this.Property(t => t.MasterCourierId).HasColumnName("MasterCourierId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.GatepassNumber).HasColumnName("GatepassNumber");
+
+            this.Property(t => t.OriginSiteCode).HasColumnName("OriginSiteCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.UpdateCode).HasColumnName("UpdateCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DesignateSiteCode).HasColumnName("DesignateSiteCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.TransportationTypeCode).HasColumnName("TransportationTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.GatepassRequestStatus).HasColumnName("GatepassRequestStatus").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CustomsUpdateDateTime).HasColumnName("CustomsUpdateDateTime");
+        }
+    }
+}
+	 

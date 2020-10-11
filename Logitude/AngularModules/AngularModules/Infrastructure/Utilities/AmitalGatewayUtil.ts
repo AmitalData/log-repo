@@ -23,11 +23,15 @@ import { ClientPM } from '../../Customs/Entitypms/ClientPM';
 //import { DeclarationPMService } from '../../Customs/Services/StandardPMs/DeclarationPMService';                                       
 import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
-
+import { EntityResourceService } from '../Services/EntityResourceService';
+import { EntityPMService } from '../Services/EntityPMService';
+import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
 
 
 export class AmitalGatewayUtil {
-    private CurrentSession = SessionLocator.SelectedSession;
+    //private CurrentSession = SessionLocator.SelectedSession;
     //private constructor() { }
     private static _Instance: AmitalGatewayUtil;
     public static get Instance(): AmitalGatewayUtil {
@@ -68,6 +72,27 @@ export class AmitalGatewayUtil {
         unifreightMessageM.Response = [];
         return unifreightMessageM;
     }
+
+    public ShowCFIFILEMFUStatusScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+        ) {
+        //var unifreightMessageM = GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMFUStatusScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMFUStatusScreen",
+            unifreightMessageM,
+            " Feature 62838: מסך עבודה כניסה ל-F/U ביונפרייט");
+    }
+
+
     public ShowDeclarationCertificatesByGroups(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
@@ -84,7 +109,25 @@ export class AmitalGatewayUtil {
             "CFIHMAIN.LogitudeTask",
             "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
             unifreightMessageM,
-            " אישורים נדרשים");
+            " םישורים נדרשים");
+    }
+
+    public ShowDocumentsSharing(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string,
+        CustomerId: string) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "ShowDocumentsSharingUnifreightCallBack",
+            unifreightMessageM,
+            " שיתוף מסמכים");
     }
 
     public GetRihbitFromTransmissions(
@@ -104,6 +147,95 @@ export class AmitalGatewayUtil {
             unifreightMessageM,
             "קבצי רכבים");
     }
+ 
+    public ShowCFIFILEMMoveToQueueScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveToQueueScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveToQueueScreen",
+            unifreightMessageM,
+            " העברה לתור");
+    }
+
+    public ShowCFIFILEMMoveSIToOCRScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveSIToOCRScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveSIToOCRScreen",
+            unifreightMessageM,
+            " העברת חשבונות ספק ל-OCR");
+    }
+
+
+    public ShowCFIFILEMEnterRemarks(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMEnterRemarks",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMEnterRemarks",
+            unifreightMessageM,
+            " הזנת הערות לתור");
+    }
+    public ShowSharedDocuments(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowSharedDocuments",
+            "CFIHMAIN.LogitudeTask",
+            "ShowSharedDocuments",
+            unifreightMessageM,
+            "שיתוף מסמכים");
+    }
+
+    public NewCustomsFileScreen(
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage("", "", ViewModelName);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.NewCustomsFileScreen",
+            "CFIHMAIN.LogitudeTask",
+            "NewCustomsFileScreen",
+            unifreightMessageM,
+            "פתיחת תיק עמילות חדש");
+    }
+
+ 
 
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
@@ -166,13 +298,26 @@ export class AmitalGatewayUtil {
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
         this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
         switch (unifreightMessage.LogitudeCommandId) {
+            
+            case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
             case "this.CurrentSession.CurrentEditComponent.ReloadEntityPM()": {
-                if (this.CurrentSession.CurrentEditComponent) {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                 }
                 break;
             }
+            case "CreateInvoiceCommand": {
+                    //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
+
                 
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                let showInvoiceFromUrouter = new ShowInvoiceFromUrouterReturnCreateInvoiceCommand();
+                showInvoiceFromUrouter.Run(myParam);
+
+            }
+                break; 
             case "ShowDeclarationByIdReturnCloseSave": {
                 //change2EditTab();
                 //if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
@@ -193,14 +338,14 @@ export class AmitalGatewayUtil {
                 break;
             case "ShowClientReturnIfExist":
                 {
-                    this.CurrentSession.StartBusyIndicatorLoading();
+                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                     let clientAction = new ClientAction();
                     clientAction.Run(myParam);
                 }
                 break;
             case "MapDocumentTypeCustomsData":
                 {
-                    this.CurrentSession.StartBusyIndicatorLoading();
+                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                     this.SelectCustomsRequestMenu(MaintenanceMenu);
                     
                     let mapDocumentTypeCustomsData = new MapDocumentTypeCustomsData();
@@ -216,6 +361,15 @@ export class AmitalGatewayUtil {
                 mapGeneralLOV.Run(myParam);
             }
                 break;
+            case "MapExceptionReasonCodeData": {
+                {
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                    let mapExceptionReasonCodeData = new MapExceptionReasonCodeData();
+                    mapExceptionReasonCodeData.Run(myParam);
+                }
+            }
+                break;
             case "MapPendingReasonCodeData":
                 {
                     this.SelectCustomsRequestMenu(MaintenanceMenu);
@@ -228,13 +382,13 @@ export class AmitalGatewayUtil {
                 {
                     this.SelectCustomsRequestMenu();
 
-                    this.CurrentSession.StartBusyIndicator("");
+                    SessionLocator.SelectedSession.StartBusyIndicator("");
                     var servicelink = '../../Customs/Services/StandardPMs/DeclarationPMService';         //mohammad
                     servicelink = './Customs/Services/StandardPMs/DeclarationPMService';   //itzik !!
                     SessionLocator.DynamicLoader.GetInstance(servicelink).then((declarationPMService: any) => {
                         declarationPMService.get(this._LastUnifreightMessageM.LogitudeEntityNumber)
                             .subscribe((myDeclarationResponse) => {
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 let decList: DeclarationPM = myDeclarationResponse.Result;
                                 var servicelink = '../../Customs/Services/Others/CustomsRequestMenuService';
                                 servicelink = './Customs/Services/Others/CustomsRequestMenuService';
@@ -246,7 +400,7 @@ export class AmitalGatewayUtil {
                                     };
                                     service.WindowClosed.subscribe(
                                         (myarg) => {
-                                            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            //SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                                             AmitalGatewayUtil.Instance.
                                                 //ShowClientReturnIfExistUnifreightCallBack(false);
                                                 AmitalBackButtonClicked();
@@ -272,7 +426,7 @@ export class AmitalGatewayUtil {
                             //};
                             //customsRequestMenuService.WindowClosed.subscribe(
                             //    (myarg) => {
-                            //        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            //        //SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                             //        AmitalGatewayUtil.Instance.
                             //            //ShowClientReturnIfExistUnifreightCallBack(false);
                             //            AmitalBackButtonClicked();
@@ -290,14 +444,14 @@ export class AmitalGatewayUtil {
             case "ShowManifestQuery":   //..V_TEMP = "ShowManifestQuery"
                 {
                     this.SelectCustomsRequestMenu();
-                    this.CurrentSession.StartBusyIndicator("");
+                    SessionLocator.SelectedSession.StartBusyIndicator("");
 
                     var servicelink = '../../Customs/Services/StandardPMs/DeclarationPMService';
                     servicelink = './Customs/Services/StandardPMs/DeclarationPMService';
                     SessionLocator.DynamicLoader.GetInstance(servicelink).then((declarationPMService: any) => {
                         declarationPMService.get(this._LastUnifreightMessageM.LogitudeEntityNumber)
                             .subscribe((myDeclarationResponse) => {
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 let decList: DeclarationPM = myDeclarationResponse.Result;
                                 decList.Consignments[0];
 
@@ -313,7 +467,7 @@ export class AmitalGatewayUtil {
                                     };
                                     service.WindowClosed.subscribe(
                                         (myarg) => {
-                                            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            //SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                                             AmitalGatewayUtil.Instance.
                                                 //ShowClientReturnIfExistUnifreightCallBack(false);
                                                 AmitalBackButtonClicked();
@@ -339,7 +493,7 @@ export class AmitalGatewayUtil {
                             //};
                             //customsRequestMenuService.WindowClosed.subscribe(
                             //    (myarg) => {
-                            //        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            //        //SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                             //        AmitalGatewayUtil.Instance.
                             //            //ShowClientReturnIfExistUnifreightCallBack(false);
                             //            AmitalBackButtonClicked();
@@ -353,12 +507,18 @@ export class AmitalGatewayUtil {
 
                 }
                 break;
+
+            case "ShowCourierMasterByIdReturnCloseSave": {
+                this.ShowCourierMasterByIdReturnCloseSaveMethod(
+                    myParam, myEditTab, change2EditTab, change2CA23Tab);
+                break;
+            }
                  
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
                 this.UnifaceRequestArrived.emit(myParam)
                 //break;
-                //this.CurrentSession
+                //SessionLocator.SelectedSession
                 //SessionLocator.AllSessions[0].
             }
 
@@ -367,13 +527,13 @@ export class AmitalGatewayUtil {
     }
     SelectCustomsRequestMenu(menuCode: string = "General.MH.Customs") {
          
-        var mySelectedItem = this.CurrentSession.MainMenuComponent.MainMenuItems
+        var mySelectedItem = SessionLocator.SelectedSession.MainMenuComponent.MainMenuItems
             .filter(m => m.TextCode ==
                 //"General.MH.Customs"
                 menuCode
             )[0];
         if (mySelectedItem != null) {
-            this.CurrentSession.MainMenuComponent.SelectionChanged(mySelectedItem);
+            SessionLocator.SelectedSession.MainMenuComponent.SelectionChanged(mySelectedItem);
         }
     }
 
@@ -388,6 +548,27 @@ export class AmitalGatewayUtil {
             "ShowClientReturnIfExistUnifreightCallBack",
             this._LastUnifreightMessageM,
                 "Task ???");
+
+        //CloseEditWindow(false, false);
+    }
+
+    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
+
+        //Response.InvoiceAction
+        let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
+         
+        this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
+        this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
+        
+        this._LastUnifreightMessageM.Requset.push(["Remark", remark]);
+        this._LastUnifreightMessageM.Response.push(["Remark", remark]);
+
+        this.SendRequestToUnifreightAsync(
+            "UnifreightMassageHandler.CreateInvoiceCommandUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "CreateInvoiceCommand",
+            this._LastUnifreightMessageM,
+            "Task Feature 67646: תור חשבוניות - מסך הצגת נתוני חשבונית");
 
         //CloseEditWindow(false, false);
     }
@@ -423,24 +604,35 @@ export class AmitalGatewayUtil {
     
     ShowDeclarationByIdReturnCloseSave = class {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
-            //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
+            //BackButtonLabel: "הצהרות ללם התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', myEditTab.SessionComponent.viewContainerRef)
-                .then(cmpRef => {
-                    //this.SelectionChanged(myDeclarationEditTab);
+
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                //myEditTab.SessionComponent.viewContainerRef
+                SessionLocator.SelectedSession.SessionLocation.viewContainerRef
+                //SessionLocator.AllSessions[1].SessionLocation.viewContainerRef
+            )
+                .then((cmpRef:any) => {
+                     //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: unifreightMessage.LogitudeEntityNumber,//"1-103991"
-                        ObjectTableName: unifreightMessage.LogitudeEntity,//'Customs.Declaration'
-                        BackButtonLabel: BackButtonLabel
-                    });
+                    let myEditComponent: EditComponent = cmpRef.instance;
+                    let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
+                    this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
+                        cmpRef.instance.Run({
+                            EntityId: (data && data.Result) ? data.Result.Id : unifreightMessage.LogitudeEntityNumber, //unifreightMessage.LogitudeEntityNumber,//"1-103991"
+ 
+                            ObjectTableName: unifreightMessage.LogitudeEntity,//'Customs.Declaration'
+                            BackButtonLabel: BackButtonLabel
+ 
+                        });
+                     })
+                
 
                     let lockMess = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LockedMessage");
                     let unifreightJumpTo = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.JumpTo");
                     console.log(lockMess);
-                    let myEditComponent: EditComponent = cmpRef.instance;
-                    if (!AppTool.IsNullOrEmpty(lockMess)) {
+                     if (!AppTool.IsNullOrEmpty(lockMess)) {
 
 
 
@@ -448,7 +640,7 @@ export class AmitalGatewayUtil {
                         let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
                             (token1) => {
                                 sub.unsubscribe();
-                                let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
+                                  myDeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                                 if (AppTool.IsNullOrEmpty(myDeclarationEditComponentController)) {
                                     console.log("myDeclarationEditComponentController is null");
                                 } else {
@@ -498,7 +690,7 @@ export class AmitalGatewayUtil {
                                             mySelectedInvoiceItem.CounterKey,
                                             mySelectedInvoiceItem.LineNumber,
                                             mySelectedInvoiceItem.Tenant).subscribe(
-                                            serviceResponse => {
+                                            (serviceResponse:any) => {
                                                 let xmlSupplierInvoiceSelector: string
                                                     = serviceResponse.Result;
                                                 //xmlSupplierInvoiceSelector = serviceResponse.
@@ -574,7 +766,20 @@ export class AmitalGatewayUtil {
 
                     });
                 });
+ 
         }
+
+        static getEntity(LogitudeEntityNumber: string) {
+            var declarationWebService: DeclarationWebService = new DeclarationWebService();
+            return declarationWebService.GetAcceptDeclarationAmendment(LogitudeEntityNumber)
+ 
+                
+        }
+         
+    
+     	
+
+
 
         private static ShowSupplierInvoiceSelectorByDecIdUnifreightCallBack(
             SupplierInvoiceSelector: string, CancelButtonClick: boolean) {
@@ -631,6 +836,80 @@ export class AmitalGatewayUtil {
             myRequestWrapperM.SenderID = "UnifreightMassageHandler.ShowDeclarationByIdUnifreightCallBack";
             myRequestWrapperM.ReceiverID = "CFIHMAIN.LogitudeTask";
             myRequestWrapperM.MessageID = "ShowDeclarationByIdUnifreightCallBack";
+            myRequestWrapperM.UnifreightMessage = AmitalGatewayUtil.Instance._LastUnifreightMessageM;
+
+            AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
+        }
+    }
+
+    ShowCourierMasterByIdReturnCloseSaveMethod(
+        myParam,
+        myEditTab,
+        change2EditTab: () => void,
+        change2CA23Tab: () => void) {
+        change2EditTab();
+        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
+            setTimeout(() => { AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
+        } else {
+
+            AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
+        }
+    }
+
+    ShowCourierMasterById = class {
+        static _entityResourceService: EntityResourceService = new EntityResourceService();
+        static StartDoItForCourier(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
+            let isSaved: boolean = false;
+            let BackButtonLabel = "תיק עמילות"
+            var windowArgs: any = {};
+            let courierMasterService: CourierMasterPMService = new CourierMasterPMService();
+
+            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                        courierMasterService.get(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse.HasError) {
+                                    console.log("Error while getting EntityPM", myResponse);
+                                }
+                                else {
+                                    windowArgs.CurrentEntity = myResponse.Result;
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Width = 1500;
+                                    logWindow.Height = 1000;
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.ShowCloseButton = true;
+                                    //logWindow.IsHideHeader = true;
+                                    logWindow.IsFillScreen = true;
+                                    AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                                        this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                                        callback2TabZero();
+
+                                    });
+                                }
+                            });
+
+                        });
+                    });
+                });
+            }
+
+        private static ShowCourierMasterByIdReturnCloseSaveCallBack(save: boolean) {
+            if (AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack").length == 0) {
+                AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.push(["ShowCourierMasterByIdReturnCloseSaveCallBack", save.toString()]);
+            }
+            let tuple = AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack")[0];
+            tuple[1] = save.toString();
+
+
+            var myRequestWrapperM = new RequestWrapperM();
+
+
+            myRequestWrapperM.SenderID = "UnifreightMassageHandler.ShowCourierMasterByIdReturnCloseSaveCallBack";
+            myRequestWrapperM.ReceiverID = "CFIHMAIN.LogitudeTask";
+            myRequestWrapperM.MessageID = "ShowCourierMasterByIdReturnCloseSaveCallBack";
             myRequestWrapperM.UnifreightMessage = AmitalGatewayUtil.Instance._LastUnifreightMessageM;
 
             AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
@@ -715,7 +994,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinueMessage,
                 unifreightMessageM,
-                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבוא");
+                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבום");
         }
 
         public static RaiseCheckInsuranseReturnIsNeededAmount(
@@ -734,7 +1013,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "RaiseCheckInsuranseReturnIsNeededAmount",
                 unifreightMessageM,
-                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה האם נדרש לתיק ביטוח");
+                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה הםם נדרש לתיק ביטוח");
         }
 
         public static RaiseOpenNewBrowser(url: string) {
@@ -836,12 +1115,26 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
                 unifreightMessageM,
-                " אישורים נדרשים");
+                " םישורים נדרשים");
         }
+
+        public ShowDocumentsSharingUnifreightCallBack(
+            UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, CustomerId) {
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+                "CFIHMAIN.LogitudeTask",
+                "ShowDocumentsSharingUnifreightCallBack",
+                unifreightMessageM,
+                " שיתוף מסמכים");
+        }
+
     }
 }
 export class RequestWrapperM {
-    private CurrentSession = SessionLocator.SelectedSession;
+    ////////itzik : why Ayman1 add this line ?!?!?  private CurrentSession = SessionLocator.SelectedSession;
     //String SENDERID : In = "SessionViewModel"
     public SenderID: string;
     //String RECEIVERID : In = "GGGQWBLOGITUDE"
@@ -929,7 +1222,7 @@ export class ClientAction {
             service.GetSingleClientPMByCode(ImporterVat, false)
                 .subscribe((rsp) => {
                     var myClientPM: ClientPM = rsp.Result;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     if (AppTool.IsNullOrEmpty(myClientPM)) {
                         AmitalGatewayUtil.Instance.ShowClientReturnIfExistUnifreightCallBack(false);
 
@@ -943,7 +1236,7 @@ export class ClientAction {
         //clientExtendedPMService.GetSingleClientPMByCode(ImporterVat, false)
         //    .subscribe((rsp) => {
         //        var myClientPM: ClientPM = rsp.Result;
-        //        this.CurrentSession.StopBusyIndicator();
+        //        SessionLocator.SelectedSession.StopBusyIndicator();
         //        if (AppTool.IsNullOrEmpty(myClientPM)) {
         //            AmitalGatewayUtil.Instance.ShowClientReturnIfExistUnifreightCallBack(false);
 
@@ -976,7 +1269,7 @@ export class ShowGeneralLOVReturnSelected {
         let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
         //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
         //let formtitle: string=            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.formtitle");
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         let LOVText: string
             = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LOVText");
         var logWindow = new LogitudeWindow();
@@ -995,17 +1288,18 @@ export class ShowGeneralLOVReturnSelected {
             //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
             './CustomsModules/CustomsMaintenance/Components/GeneralLOVComponent'
         );
-
+        AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
         logWindow.WindowClosed.subscribe((event1: any) => {
             ///AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             if (event1 == "Cancel") {
 
             }
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
             AmitalGatewayUtil.Instance.ShowGeneralLOVReturnSelectedCallBack(event1);
 
 
-            //this.CurrentSession.StopBusyIndicator();
+            //SessionLocator.SelectedSession.StopBusyIndicator();
         });
 
     }
@@ -1038,7 +1332,7 @@ export class MapDocumentTypeCustomsData {
 
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         });
 
     }
@@ -1066,3 +1360,78 @@ export class MapPendingReasonCodeData {
     }
 
 }
+ 
+
+export class MapExceptionReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = 'קשר סטטוס לסיבת חריג';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddExceptionReasonToUnifreightStatusComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        });
+
+    }
+
+}
+
+
+export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
+    private CurrentSession = SessionLocator.SelectedSession;
+    public Run(unifreightMessage: UnifreightMessageM) {
+        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
+        let UnifaceNAME_HEB: string
+            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.UnifaceNAME_HEB");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1600; 
+        logWindow.Height = 800;
+        logWindow.Title = 'תור חשבונית';//TextCodeTranslator.Translate("Customs.Client.O.EditClient");// "Edit Client";
+        logWindow.WindowArgs = {
+            "unifreightMessage": unifreightMessage,
+           
+
+        };
+        AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+        //logWindow.ShowCloseButton = true;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice, comp.Remarks);
+
+            });
+        });
+        logWindow.ShowCloseButton = true;
+        logWindow.Show(
+            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            //'./CustomsModules/CustomsMaintenance/Components/InvoiceQueueComponent'
+            './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
+        );
+        /*
+        logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+            //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+
+            
+            AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice);
+            
+        });
+        */
+    }
+   
+}
+
+

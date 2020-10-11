@@ -98,7 +98,7 @@ export class CustomsClosedTablesComponent implements OnInit {
 
             FieldName: 'Id',
             DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.CustomsClosedTable.F.Id"),
+            Display: TextCodeTranslator.Translate("Customs.CustomsClosedTable.O.Id"),
             Styles: { width: '75px' },
             IsCustomTemplate: true
         });

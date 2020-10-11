@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct ProductIdentificationTypeValues
     {   
+       public const string דגםיצרן = "MN";  
+       public const string מספרקטלוגי = "SS";  
     }
 }
 

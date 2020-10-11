@@ -28,7 +28,10 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
-
+using Logitude.Customs.BL.Validators;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+using Logitude.Customs.Def.Messaging.Customs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -60,14 +63,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
               out string MessageOut)
         {
             MessageOut = "";
-            _Stopwatch = Stopwatch.StartNew();  
+            _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "SchedulerService ";
 
             DeserilazeObject(xmlLOGISCHEDULER);
-            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
-            
+            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
             CheckIntegrity();
-            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString());_Stopwatch.Restart(); 
+            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
             _context = CustomContext.GetContext(ResolvedTenant());
             AppendLogLine("GetContext:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -94,6 +97,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 case "8250":
                     SendDeclarationStatusRequest();
                     break;
+                case "DIAMONDS":
+                    DeclarationChecksForDiamonds();
+                    break;
+                case "DeletePending":
+                    DeletePending();
+                    break;
+                case "IsReferantAddOn":
+                    CheckIsReferantAddOn();
+                    break;
                 case "TEST":
                     SendGenericRequest();
                     break;
@@ -108,6 +120,80 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         }
 
+        private void DeletePending()
+        {
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    var declarationPendingCode = _LogitudeScheduler.Param2;
+                    MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+                    if (String.IsNullOrWhiteSpace(declarationPendingCode))
+                    {
+                        throw new BusinessErrorException("Pending code is missing");
+                    }
+
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+
+                    if (currentDeclarationCourierStatusPM != null)
+                    {
+                        CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+                        if (courierPendingReasonPM == null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+                            return;
+                        }
+                        LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+                        DeclarationPendingPM _declarationPendingPM = null;
+                        if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                        {
+                            _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
+                        }
+                        if (_declarationPendingPM == null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בהצהרה");
+                            return;
+                        }
+                        else if (_declarationPendingPM.Status != "A")
+                        {
+                            LogMessagingUtil.Instance.AppendLine(" Pending = " + declarationPendingCode + " לא פעיל");
+                            return;
+                        }
+                        _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                        _declarationPendingPM.Status = "S";
+                        LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code " + declarationPendingCode + " as Solved"); 
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+        }
+
         private void SendDeclarationStatusRequest()
         {
             string user = this.MyCommunicationsParams.LoggingUserId;
@@ -119,6 +205,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 if (_MyDeclarationPM == null)
                 {
                     throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
                 }
             }
             else
@@ -166,16 +265,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 {
                     throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
                 }
+                if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                {
+                    AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    return;
+                }
+                if (_MyDeclarationPM.IsClose)
+                {
+                    AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    return;
+                }
             }
 
-            if(_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
+            if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
             {
                 CargoTypeCode = _MyDeclarationPM.Consignments[0].CargoTypeCode;
                 ManifestNumber = _MyDeclarationPM.Consignments[0].ManifestNumber;
                 SecondCargoID = _MyDeclarationPM.Consignments[0].SecondCargoID;
                 ThirdCargoID = _MyDeclarationPM.Consignments[0].ThirdCargoID;
             }
-            
+
             if (string.IsNullOrEmpty(CargoTypeCode) || string.IsNullOrEmpty(ManifestNumber))
             {
                 string error = TranslateTextsClass.Translate("Customs.Declaration.O.CargoDataMissing", _MyDeclarationPM.Tenant);
@@ -244,13 +353,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             var logContext = CustomContext.GetContext(ResolvedTenant());
             var customsBookQueryService = new CustomsBookQueryService(logContext);
             CustomsBookPM dbCustomsBookPM = customsBookQueryService.GetCustomsBookData();
-            DateTime fromDate = DateTime.Now.AddDays(-30);
+            DateTime fromDate = DateTime.Now.AddDays(-7);
+            DateTime toDate= DateTime.Now;
             if (dbCustomsBookPM != null)
             {
-                fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-30) : (DateTime)dbCustomsBookPM.LastUpdateDate;
+                fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-7) : (DateTime)dbCustomsBookPM.LastUpdateDate;
+                toDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now : fromDate.AddDays(7);  
+
             }
-            DateTime toDate = fromDate.AddDays(29);
-            string fromDateString = fromDate.ToString("yyyyMMdd");
+             string fromDateString = fromDate.ToString("yyyyMMdd");
             string toDateString = toDate.ToString("yyyyMMdd");
 
             CustomsBookInRequestParams requestParams = new CustomsBookInRequestParams()
@@ -278,7 +389,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         private void SendCurrencyRateRequest()
         {
-           
+
             string user = this.MyCommunicationsParams.LoggingUserId;
             if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
 
@@ -314,7 +425,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("Request code is missing");
             }
 
-            if (_LogitudeScheduler.Request_Code == "2750") 
+            if (_LogitudeScheduler.Request_Code == "2750")
             {
                 requestName = "Declaration Request";
                 responseName = "Declaration Response";
@@ -333,12 +444,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             if (_LogitudeScheduler.Request_Code == "2750" && this._MyDeclarationPM != null && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomFileNo))
             {
                 ClearCCUFILEMdraftStatus();
-                if(changeDraftDate == true)
+                if (changeDraftDate == true)
                 {
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
                 }
-                if(this._MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
+                if (this._MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     UpdateDeclaration();
                 }
@@ -369,9 +480,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         private void UpdateDeclaration()
         {
-            
+
             MyGenericResponseObj.Stage = "Update Declaration";
-            
+
             TransactionScope scope = null;
             ICustomContext context;
 
@@ -487,7 +598,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("LOGITUDE FILE is missing");
             }
             var myQueryService = new DeclarationQueryService(_context);
-            
+
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(logitudeFile, true, false);
             if (this._MyDeclarationPM == null)
@@ -495,9 +606,182 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("LOGITUDE FILE is " + logitudeFile + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            
+
         }
-        
+
+
+        private void DeclarationChecksForDiamonds()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+
+            Boolean ticketValidStatus = DeclarationTicketsStatus(_MyDeclarationPM);
+
+            Boolean mandatoryFields = SendDeclarationMandatoryFields(_MyDeclarationPM);
+
+            bool mandatoryDoc = IsDocumentMissing(_MyDeclarationPM);
+
+            var responseXML = new diamonsResponseXML();
+            if(!ticketValidStatus)
+            {
+                responseXML.MISS_REFERENCE = "T";
+            }
+            if (!mandatoryFields)
+            {
+                responseXML.MAND_FIELDS = "T";
+            }
+
+            if (!mandatoryDoc)
+            {
+                responseXML.MAND_DOC = "T";
+
+            }
+            if (responseXML != null)
+            {
+                var xml = XmlGenericUtil<diamonsResponseXML>.SerializeObject(responseXML);
+                MyGenericResponseObj.ResponseXml = xml;
+            }
+            MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+        }
+
+
+        private void CheckIsReferantAddOn()
+        {
+            try
+            {
+                int tenant = ResolvedTenant();
+                string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    ContactRepository contactrep = new ContactRepository(tenant);
+                    var contact = contactrep.GetSingleContact(id, tenant);
+                    email = contact.Email;
+
+                }
+                InjectionUtil.Instance.CheckContactFeature("General", "CUSTOMREFERANT", tenant, email);
+
+                var responseXML = new isReferantAddOnResponseXML();
+                responseXML.isReferantAddOn = "T";
+                if (responseXML != null)
+                {
+                    var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
+                    MyGenericResponseObj.ResponseXml = xml;
+                }
+            }
+            catch (SecurityException ex)
+            {
+                AppendLogLine("Check for CUSTOMREFERANT Feature Failed, Referant related features will not be shown, Message: " + ex.Message);
+            }
+        }
+
+        private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+       //     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            return true;
+            }
+ 
+            
+                //foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
+                //{
+                //    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
+                //    if (docType.IsManadatory)
+                //    {
+                       
+                //}
+         
+
+            return false;
+
+        }
+        private bool SendDeclarationMandatoryFields(DeclarationPM myDeclarationPM)
+        {
+            Boolean sendDeclarationMandatory = true;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(myDeclarationPM.Id, myDeclarationPM.Tenant, myDeclarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                sendDeclarationMandatory = false;
+            }
+            return sendDeclarationMandatory;
+        }
+
+        private Boolean DeclarationTicketsStatus(DeclarationPM entityPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_context);
+            Boolean ticketValidStatus = true;
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityPM.Id, "", "", "", entityPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(_context);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, entityPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return ticketValidStatus;
+        }
+
+
         void DeserilazeObject(string xmlLOGISCHEDULER)
         {
 
@@ -545,7 +829,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         }
 
-        
+
 
         public override string GetAssemblyQualifiedName()
         {
@@ -584,5 +868,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 
     }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public class diamonsResponseXML
+    {
+        
+        public string MISS_REFERENCE;
+
+        public string MAND_FIELDS;
+        public string MAND_DOC;
+
+    }
+
+    public class isReferantAddOnResponseXML
+    {
+
+        public string isReferantAddOn;
+
+
+    }
+
 }
 

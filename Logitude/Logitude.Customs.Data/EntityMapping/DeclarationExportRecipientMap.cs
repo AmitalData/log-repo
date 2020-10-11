@@ -1,0 +1,40 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeclarationExportRecipientMap : EntityTypeConfiguration<DeclarationExportRecipient>
+    {
+	    string dbms;
+        public DeclarationExportRecipientMap()
+        { 
+			  this.ToTable("DeclarationExportRecipients", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.LineNumber });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.RecipientName).HasColumnName("RecipientName").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.RecipientAddress).HasColumnName("RecipientAddress").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.RecipientIssueCountryCode).HasColumnName("RecipientIssueCountryCode").HasMaxLength(2).IsUnicode(false);
+        }
+    }
+}
+	 

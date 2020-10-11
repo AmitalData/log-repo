@@ -15,6 +15,7 @@ export class GovernmentProcedureTypeList {
 	Inactive: boolean;
 	IsImport: boolean;
 	IndexOrder: number;
+	IsExport: boolean;
 	
 }
  

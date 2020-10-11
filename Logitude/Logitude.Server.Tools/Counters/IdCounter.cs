@@ -11,6 +11,9 @@ using System.Linq;
 using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
+using System.Diagnostics;
+using Logitude.Server.Tools.Helpers;
+
 namespace Logitude.Server.Tools.Counters
 {
     public class IdCounter //: IIdCounter
@@ -147,7 +150,7 @@ namespace Logitude.Server.Tools.Counters
                             OracleParameter endNumberPar = new OracleParameter("v_pEndNumber", OracleDbType.Integer);
                             OracleParameter dbStringNumber = new OracleParameter("v_DBStringNumber", OracleDbType.VarChar, 50);
                             OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
-                            OracleParameter numberOfIdsPar = new OracleParameter("v_pNumberOfId", OracleDbType.VarChar);
+                            OracleParameter numberOfIdsPar = new OracleParameter("v_pNumberOfIds", OracleDbType.Integer);
 
 
                             startNumberPar.Direction = ParameterDirection.Output;
@@ -205,7 +208,7 @@ namespace Logitude.Server.Tools.Counters
                                 SqlParameter endNumberPar = new SqlParameter("@pEndNumber", SqlDbType.Int);
                                 SqlParameter dbStringNumber = new SqlParameter("@DBStringNumber", SqlDbType.VarChar, 50);
                                 SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
-                                SqlParameter numberOfIdsPar = new SqlParameter("@pNumberOfIds", SqlDbType.VarChar);
+                                SqlParameter numberOfIdsPar = new SqlParameter("@pNumberOfIds", SqlDbType.Int);
 
 
                                 startNumberPar.Direction = ParameterDirection.Output;
@@ -270,6 +273,8 @@ namespace Logitude.Server.Tools.Counters
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
+                
+                var sw = Stopwatch.StartNew();
                 lock (thisLock)
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                     using (OracleConnection cn = new OracleConnection(strConnString))
@@ -312,6 +317,7 @@ namespace Logitude.Server.Tools.Counters
                         cn.Close();
                     }
 
+                LogMessagingUtil.Instance.AppendLine($"GetNumber({tableName}):took:{sw.Elapsed}");
                 return number;
             }
 

@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct InterfaceSendOptionValues
     {   
+       public const string כספת = "D";  
+       public const string שליחהברקע = "WB";  
+       public const string אינטרקטיבי = "WI";  
     }
 }
 

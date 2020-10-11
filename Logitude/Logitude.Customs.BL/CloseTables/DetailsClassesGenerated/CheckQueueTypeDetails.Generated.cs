@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<CheckQueueTypeDetails> GetAll()
        {
-		    var all = new List<CheckQueueTypeDetails>(); 
+		    var all = new List<CheckQueueTypeDetails>();  
+            all.Add(new CheckQueueTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,משקף", 
+                Inactive = false, 
+                LocalName = "משקף", 
+			});
+			 
+            all.Add(new CheckQueueTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,מכסי", 
+                Inactive = false, 
+                LocalName = "מכסי", 
+			});
+			 
+            all.Add(new CheckQueueTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,משקף + מכסי", 
+                Inactive = false, 
+                LocalName = "משקף + מכסי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CheckQueueType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CheckQueueType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

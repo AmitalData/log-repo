@@ -1,4 +1,4 @@
-﻿<!-- SpecialActivityRequestComponent view  -->
+<!-- SpecialActivityRequestComponent view  -->
 <style type="text/css">
     .NotesTextArea {
         padding: 2px;
@@ -93,8 +93,7 @@
                                                 <!--(ValueChanged)="ActivityRequestStartDateLostFocusMethod($event)"-->
                                             </td>
                                             <td style="width: 60px;">
-                                                <LogDatePicker 
-                                                               [ObjectFieldName]="'ActivityRequestStartTime'"
+                                                <LogDatePicker [ObjectFieldName]="'ActivityRequestStartTime'"
                                                                [ObjectTableName]="ObjectTableName"
                                                                [InputType]="'time'" [DataContext]="DataContext"
                                                                [TimeMode]="24" [SelectedDateValue]="ActivityRequestStartTime"
@@ -102,8 +101,8 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    
-                                    
+
+
                                 </td>
 
                                 <td style="width: 3px;"><div></div></td>
@@ -143,7 +142,7 @@
                                     <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'"[DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"
                                                 (LostFocus)="CustomFileNoTextChanged($event)"
                                                 [Text]="CustomFileNo"></LogTextBox>
@@ -320,7 +319,6 @@
                             </tr>
 
                             <!--<tr class="FormFieldRow"><td><div></div></td></tr>-->
-
                             <!-- IsGoodsDetailsData = 6 -->
                             <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
                                 <!-- Idemander Type -->
@@ -381,7 +379,7 @@
                                 <td><div></div></td>
                             </tr>
                             <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData"><td><div></div></td></tr>
-                            <!-- RepresentativeList -->                            
+                            <!-- RepresentativeList -->
                             <tr *ngIf="IsGoodsDetailsData">
                                 <td colspan="5" style="width: 400px; height:150px">
                                     <table>
@@ -403,11 +401,12 @@
                                             <td style="width: 400px ; height : 120px">
                                                 <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepresentativeList">
-                                                        
+
                                                         <!--RepresentativeNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeNumber' | TextCodeTranslationPipe"
                                                                     [width]="'60'" [Alignment]="'right'" [binding]="'RepresentativeNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepresentativeNumber}}</span>
                                                                 </div>
@@ -418,12 +417,14 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepresentativeName-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeName' | TextCodeTranslationPipe"
                                                                     [width]="'150'" [Alignment]="'right'" [binding]="'RepresentativeName'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepresentativeName}}</span>
                                                                 </div>
@@ -434,30 +435,35 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepresentativeID-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeID' | TextCodeTranslationPipe"
                                                                     [width]="'100'" [Alignment]="'right'" [binding]="'RepresentativeID'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepresentativeID}}</span>
                                                                 </div>
                                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item" 
+                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item"
                                                                                 [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
                                                                                 [Text]="item.RepresentativeID" [HideColumns]="true"></LogTextBox>
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'40'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepresentativeDetailsCommand(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -469,7 +475,7 @@
                                     </table>
                                 </td>
                             </tr>
-                                
+
 
                             <!-- IsRePackingApproval = 5-->
                             <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
@@ -540,7 +546,8 @@
                                                         <!--CurrentRePackingOldLineNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentRePackingOldLineNumber' | TextCodeTranslationPipe"
                                                                     [width]="'50'" [Alignment]="'right'" [binding]="'CurrentRePackingOldLineNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CurrentRePackingOldLineNumber}}</span>
                                                                 </div>
@@ -551,12 +558,14 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingCurrentPackageType-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageType' | TextCodeTranslationPipe"
                                                                     [width]="'130'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageType'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingCurrentPackageName}}</span>
                                                                 </div>
@@ -572,12 +581,14 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingCurrentPackageId-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageId' | TextCodeTranslationPipe"
                                                                     [width]="'110'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageId'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingCurrentPackageId}}</span>
                                                                 </div>
@@ -587,12 +598,14 @@
                                                                                 [Text]="item.RepackingCurrentPackageId" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingCurrentQuantity-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentQuantity' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentQuantity'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingCurrentQuantity}}</span>
                                                                 </div>
@@ -602,12 +615,14 @@
                                                                                 [Text]="item.RepackingCurrentQuantity" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingCurrentWeight-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentWeight' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentWeight'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingCurrentWeight}}</span>
                                                                 </div>
@@ -618,12 +633,14 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--CurrentPresentPackingStateContent-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'CurrentPresentPackingStateContent'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CurrentPresentPackingStateContent}}</span>
                                                                 </div>
@@ -633,14 +650,17 @@
                                                                                 [Text]="item.CurrentPresentPackingStateContent" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingCurrentItemCommand(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -678,7 +698,8 @@
                                                         <!--DesiredRePackingNewLineNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingNewLineNumber' | TextCodeTranslationPipe"
                                                                     [width]="'50'" [Alignment]="'right'" [binding]="'DesiredRePackingNewLineNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DesiredRePackingNewLineNumber}}</span>
                                                                 </div>
@@ -689,12 +710,14 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingDesiredPackage-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageType' | TextCodeTranslationPipe"
                                                                     [width]="'130'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageType'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingDesiredPackageName}}</span>
                                                                 </div>
@@ -710,12 +733,14 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingDesiredPackageId-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageId' | TextCodeTranslationPipe"
                                                                     [width]="'110'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageId'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingDesiredPackageId}}</span>
                                                                 </div>
@@ -725,12 +750,14 @@
                                                                                 [Text]="item.RepackingDesiredPackageId" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingDesiredQuantity-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredQuantity' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredQuantity'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingDesiredQuantity}}</span>
                                                                 </div>
@@ -740,12 +767,14 @@
                                                                                 [Text]="item.RepackingDesiredQuantity" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--RepackingDesiredWeight-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredWeight' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredWeight'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.RepackingDesiredWeight}}</span>
                                                                 </div>
@@ -755,12 +784,14 @@
                                                                                 [Text]="item.RepackingDesiredWeight" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--DesiredRePackingOldLineNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingOldLineNumber' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'DesiredRePackingOldLineNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DesiredRePackingOldLineNumber}}</span>
                                                                 </div>
@@ -770,14 +801,17 @@
                                                                                 [Text]="item.DesiredRePackingOldLineNumber" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingDesiredRequestDetailsCommand(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -817,7 +851,8 @@
                                                         <!--SampleRowNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.SampleRowNumber' | TextCodeTranslationPipe"
                                                                     [width]="'36'" [Alignment]="'right'" [binding]="'SampleRowNumber'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleRowNumber}}</span>
                                                                 </div>
@@ -827,12 +862,14 @@
                                                                                 [Text]="item.SampleRowNumber" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SampleReturnDate-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.SampleReturnDate' | TextCodeTranslationPipe"
                                                                     [width]="'101'" [Alignment]="'right'" [binding]="'SampleReturnDate'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleReturnDate | DateTimeToDatePipe}}</span>
                                                                 </div>
@@ -842,12 +879,14 @@
                                                                                    [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--CustomsItem-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItem' | TextCodeTranslationPipe"
                                                                     [width]="'81'" [Alignment]="'right'" [binding]="'CustomsItem'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CustomsItem}}</span>
                                                                 </div>
@@ -859,12 +898,14 @@
 
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--CustomsItemQuantity-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItemQuantity' | TextCodeTranslationPipe"
                                                                     [width]="'74'" [Alignment]="'right'" [binding]="'CustomsItemQuantity'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CustomsItemQuantity | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -874,12 +915,14 @@
                                                                                 [Text]="item.CustomsItemQuantity" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--CurrencyTypeCode-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.CurrencyTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'75'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CurrencyTypeName}}</span>
                                                                 </div>
@@ -895,12 +938,14 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SampleValue-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.SampleValue' | TextCodeTranslationPipe"
                                                                     [width]="'75'" [Alignment]="'right'" [binding]="'SampleValue'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleValue}}</span>
                                                                 </div>
@@ -910,12 +955,14 @@
                                                                                 [Text]="item.SampleValue" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SampleDescription-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.SampleDescription' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'SampleDescription'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleDescription}}</span>
                                                                 </div>
@@ -925,12 +972,14 @@
                                                                                 [Text]="item.SampleDescription" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SamplePackageType-->
                                                         <log-column [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageType'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SamplePackageName}}</span>
                                                                 </div>
@@ -946,12 +995,14 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SamplePackageId-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.PackageType' | TextCodeTranslationPipe"
                                                                     [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageId'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SamplePackageId}}</span>
                                                                 </div>
@@ -962,12 +1013,14 @@
                                                                                 [Text]="item.SamplePackageId" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SampleQuantity-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.Quantity' | TextCodeTranslationPipe"
                                                                     [width]="'44'" [Alignment]="'right'" [binding]="'SampleQuantity'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleQuantity | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -977,12 +1030,14 @@
                                                                                 [Text]="item.SampleQuantity" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!--SampleWeight-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.Weight' | TextCodeTranslationPipe"
                                                                     [width]="'50'" [Alignment]="'right'" [binding]="'SampleWeight'">
-                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SampleWeight | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -992,19 +1047,51 @@
                                                                                 [Text]="item.SampleWeight" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'28'" [Alignment]="'right'">
-                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSampleRequestDetailsCommand(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
+</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
                                                 </div>
                                             </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                      
+                            <!-- IsOtherActivity = 13 -->
+                            <tr class="FormFieldRow" *ngIf="IsOtherActivity">
+                                
+
+                                <td colspan="12" style="width: 860px; height:200px">
+                                    <table>
+                                        <tr style="width: 860px; height: 30px">
+                                            <td style="width: 127px;">
+                                                <LogLabel [ObjectFieldName]="'OtherActivityComment'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 433px;">
+                                                <LogTextBox [ObjectFieldName]="'OtherActivityComment'"
+                                                            [InputType]="'text'"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true"
+                                                            [Text]="OtherActivityComment"
+                                                            [IsMultiline]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
                                         </tr>
 
                                         <tr><td><div></div></td></tr>
@@ -1061,7 +1148,7 @@
                                     <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
                                 </td>
                                 <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'"[DataContext]="DataContext"> </LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
                                 </td>
 
                                 <td><div></div></td>
@@ -1070,8 +1157,46 @@
                     </td>
                 </tr>
                 <tr> <td><div></div></td> </tr>
+
+                <!--<tr class="FormFieldRow">
+                    <td colspan="2" style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td style="width:57px;">
+                                    <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
+
+                                </td>
+                                <td style="width:400px">
+                                    <div></div>
+                                </td>
+                                <td style="margin-left:5px">
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="10">
+                    </td>
+                </tr>-->
             </table>
         </div>
+        <div class="class-footer-content">
+            <table style="height: 22px; width:100%;" >
+                <tr>
+                    <td style="width:100%">
+                        <button class="Button" (click)="ViewDocumentsComponent()" style="width: 102px; margin-left: 60px;float: left;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
 
+                    </td>
+                    <td style="width:400px">
+                        <div></div>
+                    </td>
+                    <td style="margin-left:5px">
+                    </td>
+
+
+                </tr>
+            </table>
+        </div> 
     </custom-message-wrapper>
 </div>

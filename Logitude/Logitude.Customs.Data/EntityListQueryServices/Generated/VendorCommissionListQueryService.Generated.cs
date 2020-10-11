@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public VendorCommissionList GetSingle(string vendorid, string customerid)
+        public VendorCommissionList GetSingle(string vendorid, string customerid, string modificationstypecode)
         {
             IQueryable<VendorCommission> VendorCommissionQuery = (from a in context.VendorCommissions
-                                                       where a.VendorId == vendorid && a.CustomerId == customerid
+                                                       where a.VendorId == vendorid && a.CustomerId == customerid && a.ModificationsTypeCode == modificationstypecode
                                                        select a);
 
              

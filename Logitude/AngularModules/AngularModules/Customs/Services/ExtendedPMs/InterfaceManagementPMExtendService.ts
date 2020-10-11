@@ -70,9 +70,7 @@ export class InterfaceManagementPMExtendService {
                     .put(
                     this._apiUrl + '/PutInterfaceManagementPM/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
                         var pm = response;
                         serviceResponse.Result = pm;

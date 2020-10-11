@@ -36,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, 1, courierMasterId);
+                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, courierMasterId);
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
@@ -50,7 +50,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //string space = " ";
             courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : "";
             courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : "";
-            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : "";
+            if (!string.IsNullOrEmpty(_CourierMasterPM.ShortHAWB))
+            {
+                courierMasterMamanModel.HAWBShort = new String(_CourierMasterPM.ShortHAWB.Where(Char.IsDigit).ToArray());
+            }
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
@@ -76,6 +79,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);
+            //courierMasterMamanModel.MAWB = courierMasterMamanModel.MAWB ?? "";
+            //courierMasterMamanModel.AirlineId = courierMasterMamanModel.AirlineId ?? "";
+            courierMasterMamanModel.HAWBShort = courierMasterMamanModel.HAWBShort ?? "";
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
             messageToMaman.Append(courierMasterMamanModel.AirlineId.PadRight(3));
             messageToMaman.Append(courierMasterMamanModel.HAWBShort.PadLeft(8, '0'));

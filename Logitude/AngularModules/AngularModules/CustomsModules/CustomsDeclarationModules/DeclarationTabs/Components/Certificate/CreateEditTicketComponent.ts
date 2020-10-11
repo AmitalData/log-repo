@@ -19,6 +19,12 @@ import { CardList } from '../../../../../Common/EntityLists/CardList';
 import { ConfirmationTypeList } from '../../../../../Customs/EntityLists/ConfirmationTypeList';
 
 import { ConfirmationTypeListService } from '../../../../../Customs/Services/StandardLists/ConfirmationTypeListService';
+import { CustomsDocumentsTicketPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { RelatedEntityParams } from '../../../../CustomsDocuments/Components/CustomsDocumentsComponent';
+import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
+import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
 @Component({
     
     templateUrl: './CreateEditTicketComponent.html',
@@ -44,7 +50,11 @@ export class CreateEditTicketComponent extends BaseComponent {
     _CardListService: CardListService = new CardListService();
     _ConfirmationTypeListService: ConfirmationTypeListService = new ConfirmationTypeListService();
     public ValidationErrorsList: string[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CustomsDocumentsTicket: CustomsDocumentsTicketPM;
+    public documentsFilingPMService = new DocumentsFilingPMService();
+    public customsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+    documentFilingId: string;
+    documentTypeId: string;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -55,7 +65,9 @@ export class CreateEditTicketComponent extends BaseComponent {
     public FilterSelectedValue: string;
     ExemptionFilterSelectedValue: string = 'other';
     IsSearchIconVisibile: boolean;
+    private currentSession=SessionLocator.SelectedSession;
     SetWindowArgs(args: any) {
+
         this.IsSearchIconVisibile = false;
         this.connectedItems = [];
         this.Items = [];
@@ -70,7 +82,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(customsSetting)) {
                     if (customsSetting.UnifreightCertificateActivated) {
                         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        let myDec = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        let myDec = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
                         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {     //'Search Certificate Document' Icon Is Not Appearing - Certificate Multi Entry - Edit Declaration 
                             this.IsSearchIconVisibile = true;
@@ -95,6 +107,8 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.oldResConfirmation = this.ticket.ResConfirmationTypeCode;
         this.Parent = args.Parent;
         this.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
+
+
         if (!this.isNew) {
             this.FilterSelectedValue = this.ticket.AttachmentTypeCode;
      
@@ -316,10 +330,86 @@ export class CreateEditTicketComponent extends BaseComponent {
         }
     }
 
-    CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("no");
 
-       // this.CurrentSession.CloseCurrentWindow();
+ 
+
+    public GetGeneratedCustomTicketAndPointer(relatedEntityParams: RelatedEntityParams, documentTypeCode: string, documentsFilingId: string) {
+
+        if (documentsFilingId == "" || documentsFilingId == null)
+            return;
+
+        var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
+        this.documentsFilingPMService.get(documentsFilingId).subscribe((data:any) => {
+            if (data.Result == null) {
+
+                let msg = new MessageWindow();
+
+                msg.Width = 350;
+                msg.Show(`לאישור קושר מסמך שעדיין לא הוזרם להיבריד`);
+                return;
+            }
+             else {
+                newTicket.DocumentsFilingId = documentsFilingId;
+
+          
+        newTicket.DocumentTypeCode = documentTypeCode;
+        newTicket.Tenant = SessionLocator.Tenant;
+        newTicket.ConnectedInvoiceItemsSequences = relatedEntityParams.ChildEntity2Id;
+        newTicket.ConnectedInvoicesSequences = relatedEntityParams.ChildEntity1Id;
+         //newTicket.Id = "Generated: " + documentTypeCode;
+        var newCustomsDocumentPM: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(newTicket)
+
+        newCustomsDocumentPM.Tenant = SessionLocator.Tenant;
+        newCustomsDocumentPM.ParentEntityId = relatedEntityParams.ParentEntityId;
+        newCustomsDocumentPM.ParentEntityCode = relatedEntityParams.ParentEntityCode;
+        newCustomsDocumentPM.Child1EntityCode = relatedEntityParams.ChildEntity1Code;
+        newCustomsDocumentPM.Child2EntityCode = relatedEntityParams.ChildEntity2Code;
+        newCustomsDocumentPM.Child3EntityCode = relatedEntityParams.ChildEntity3Code;
+        newCustomsDocumentPM.Child1EntityId = relatedEntityParams.ChildEntity1Id;
+        newCustomsDocumentPM.Child2EntityId = relatedEntityParams.ChildEntity2Id;
+        newCustomsDocumentPM.Child3EntityId = relatedEntityParams.ChildEntity3Id;
+        newCustomsDocumentPM.DocumentTypeCode = documentTypeCode;
+
+        newTicket.AddCustomsDocumentPointer(newCustomsDocumentPM);
+                this.customsDocumentsTicketPMService.insert(newTicket).subscribe((myResp: ServiceResponse) => {
+                    if ( !myResp.HasError) {
+ 
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = myResp.ErrorsArray;
+                        }
+                        else {
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 400;
+                            messageWindow.Height = 200;
+                            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            if (myResp.ErrorsArray && myResp.ErrorsArray.length > 0) {
+                                messageWindow.Show(myResp.ErrorsArray[0]);
+                            }
+                            else {
+                                messageWindow.Show("Server Error");
+                            }
+                            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                messageWindow.Close();
+
+                            });
+                        }
+                    }
+                });
+
+            }
+          });
+        //return newTicket;
+
+
+    }
+
+
+    CancelButtonClicked() {
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("no");
+
+       // SessionLocator.SelectedSession.CloseCurrentWindow();
     }
     FIELD_IS_REQUIERD: string;
     GetRequierdFieldErrorText(fieldName) {
@@ -517,56 +607,66 @@ export class CreateEditTicketComponent extends BaseComponent {
 
     IsAllSelected: boolean;
     
-
+    public certificateTicke: CertificateTicket
     UpdateTicket() {
 
-        this.CurrentSession.StartBusyIndicator("");
-        var certificateTicket: CertificateTicket = new CertificateTicket();
-        certificateTicket.DeclarationId = this.declarationId;
-        certificateTicket.InvoiceNumber = null;
-        certificateTicket.AttachmentTypeCode = this.AttachmentTypeCode;
-        certificateTicket.CertificateNumber = this.CertificateNumber;
-        certificateTicket.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
-        certificateTicket.CertificateExemptionTypeCode = this.CertificateExemptionTypeCode;
-        certificateTicket.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
-        certificateTicket.oldAttachment = this.oldAttachment;
-        certificateTicket.oldCertificateExempt = this.oldCertificateExempt;
-        certificateTicket.oldCertificateNumber = this.oldCertificateNumber;
-        certificateTicket.oldResConfirmation = this.oldResConfirmation;
-        certificateTicket.IsAllSelected = this.IsAllSelected;
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        this.certificateTicke  = new CertificateTicket();
+        this.certificateTicke.DeclarationId = this.declarationId;
+        this.certificateTicke.InvoiceNumber = null;
+        this.certificateTicke.AttachmentTypeCode = this.AttachmentTypeCode;
+        this.certificateTicke.CertificateNumber = this.CertificateNumber;
+        this.certificateTicke.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
+        this.certificateTicke.CertificateExemptionTypeCode = this.CertificateExemptionTypeCode;
+        this.certificateTicke.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
+        this.certificateTicke.oldAttachment = this.oldAttachment;
+        this.certificateTicke.oldCertificateExempt = this.oldCertificateExempt;
+        this.certificateTicke.oldCertificateNumber = this.oldCertificateNumber;
+        this.certificateTicke.oldResConfirmation = this.oldResConfirmation;
+        this.certificateTicke.IsAllSelected = this.IsAllSelected;
 
-        certificateTicket.ExternalCertificatCode = this.ticket.ExternalCertificatCode;// Itzik :  Response.ExternalCertificatCode  from  UnifreightCertificateCallbackAction
+        this.certificateTicke.ExternalCertificatCode = this.ticket.ExternalCertificatCode;// Itzik :  Response.ExternalCertificatCode  from  UnifreightCertificateCallbackAction
 
-        certificateTicket.SelectedItems = [];
-        //if (!certificateTicket.IsAllSelected) {
+        this.certificateTicke.SelectedItems = [];
+        //if (!this.certificateTicke.IsAllSelected) {
         if (!AppTool.IsNullOrEmpty(this.connectedItems) && this.connectedItems.length > 0) {
 
-            certificateTicket.SelectedItems = this.connectedItems;
+            this.certificateTicke.SelectedItems = this.connectedItems;
 
-            //   certificateTicket.SelectedItems = this.Items;
+            //   this.certificateTicke.SelectedItems = this.Items;
 
-            certificateTicket.ConnectedItemsKeys = "";
-            if (certificateTicket.SelectedItems) {
-                certificateTicket.SelectedItems.forEach((item) => {
-                    certificateTicket.ConnectedItemsKeys = certificateTicket.ConnectedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
+            this.certificateTicke.ConnectedItemsKeys = "";
+            if (this.certificateTicke.SelectedItems) {
+                this.certificateTicke.SelectedItems.forEach((item) => {
+                    this.certificateTicke.ConnectedItemsKeys = this.certificateTicke.ConnectedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
                 });
-                certificateTicket.ConnectedItemsKeys = certificateTicket.ConnectedItemsKeys.substr(1, certificateTicket.ConnectedItemsKeys.length - 1);
+                this.certificateTicke.ConnectedItemsKeys = this.certificateTicke.ConnectedItemsKeys.substr(1, this.certificateTicke.ConnectedItemsKeys.length - 1);
             }
         }
     
-        certificateTicket.ExcludedItemsKeys = "";
+        this.certificateTicke.ExcludedItemsKeys = "";
         if (!AppTool.IsNullOrEmpty(this.ExcludedItems)) {
             this.ExcludedItems.forEach((item) => {
-                certificateTicket.ExcludedItemsKeys = certificateTicket.ExcludedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
+                this.certificateTicke.ExcludedItemsKeys = this.certificateTicke.ExcludedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
             });
-            certificateTicket.ExcludedItemsKeys = certificateTicket.ExcludedItemsKeys.substr(1, certificateTicket.ExcludedItemsKeys.length - 1);
+            this.certificateTicke.ExcludedItemsKeys = this.certificateTicke.ExcludedItemsKeys.substr(1, this.certificateTicke.ExcludedItemsKeys.length - 1);
         }
-        this.multiCertificatesService.PutCertificateTickets(certificateTicket)
+        this.multiCertificatesService.PutCertificateTickets(this.certificateTicke)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    //this.CurrentSession.CloseCurrentWindow();
+
+                    var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                    entityParams.ParentEntityCode = 'Declaration';
+                    entityParams.ParentEntityId = this.declarationId;
+
+                    this.GetGeneratedCustomTicketAndPointer(entityParams, this.documentTypeId, this.documentFilingId)
+
+
+
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+
+                    //SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             });
     }
@@ -581,14 +681,14 @@ export class CreateEditTicketComponent extends BaseComponent {
                     (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
                     myUnifreightMessageM.LogitudeEntityNumber == this.Parent.DeclarationPM.Id) {
                     sub.unsubscribe();
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     this.UnifreightCertificateCallbackAction(myUnifreightMessageM);
 
 
                 }
 
             });
-        this.CurrentSession.StartBusyIndicator("Loading ...");
+        SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._CardListService.getSingle(this.Parent.DeclarationPM.CustomerId)
             .subscribe((res:any) => {
@@ -630,6 +730,14 @@ export class CreateEditTicketComponent extends BaseComponent {
             UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.ExternalCertificatCode");
         //  SERIAL_NO
 
+          this.documentFilingId 
+            = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.DocumentFilingId");
+
+          this.documentTypeId 
+            = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.DocumentTypeId");
+
+
+
         if (AppTool.IsNullOrEmpty(sExternalCertificatCode)) {
             console.log("sExternalCertificatCode is null - u did not choose any Certificate")
             return;
@@ -656,11 +764,11 @@ export class CreateEditTicketComponent extends BaseComponent {
             funcSetTicketAndOkClick();
             return;
         }
-        this.CurrentSession.StartBusyIndicator("Loading ...");
+        SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();
@@ -671,6 +779,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                     return;
                 }
                 funcSetTicketAndOkClick();
+
                 //this.CertificateNumber = this.ticket.CertificateNumber = sCertificateNumber;
                 ////this.CertificateExemptionTypeCode =
                 //this.ResConfirmationTypeCode =this.ticket.ResConfirmationTypeCode = sResponseConfirmationTypeCode;

@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return DeclarationId+'_'+CourierMasterId;
+                 return DeclarationId+'_'+CourierMasterId ;
+                 
       }
 
       public override string GetEntityPMName()

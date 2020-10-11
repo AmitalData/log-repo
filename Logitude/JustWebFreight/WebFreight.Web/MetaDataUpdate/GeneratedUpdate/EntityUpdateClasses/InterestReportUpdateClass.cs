@@ -2727,13 +2727,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "הפק חשבונית",
 						FeatureUniqeCode = InterestReportFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton InterestReportMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "InterestReport.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -2745,6 +2747,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton InterestReportMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2762,6 +2766,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2780,6 +2786,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = "ביטול דוח",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2798,6 +2806,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB12.Id,
 						Style = null,
 						LocalDefaultText = "סגירה ללא חשבונית",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

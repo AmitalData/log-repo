@@ -678,6 +678,38 @@
     <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.Designer.cs">
       <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905210951283_missingMigrations2105.cs" />
+    <Compile Include="Migrations\201905210951283_missingMigrations2105.Designer.cs">
+      <DependentUpon>201905210951283_missingMigrations2105.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905061035125_VendorCommissionMigration.cs" />
+    <Compile Include="Migrations\201905061035125_VendorCommissionMigration.Designer.cs">
+      <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.cs" />
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.Designer.cs">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.cs" />
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.Designer.cs">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290957208_missingcustoms2905_3.cs" />
+    <Compile Include="Migrations\201905290957208_missingcustoms2905_3.Designer.cs">
+      <DependentUpon>201905290957208_missingcustoms2905_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291020154_missingcustoms2905_4.cs" />
+    <Compile Include="Migrations\201905291020154_missingcustoms2905_4.Designer.cs">
+      <DependentUpon>201905291020154_missingcustoms2905_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906120904323_missing1206.cs" />
+    <Compile Include="Migrations\201906120904323_missing1206.Designer.cs">
+      <DependentUpon>201906120904323_missing1206.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906301142484_Missing3006_Rabaia.cs" />
+    <Compile Include="Migrations\201906301142484_Missing3006_Rabaia.Designer.cs">
+      <DependentUpon>201906301142484_Missing3006_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs" />
     <Compile Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.Designer.cs">
       <DependentUpon>201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs</DependentUpon>
@@ -685,10 +717,6 @@
     <Compile Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs" />
     <Compile Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.Designer.cs">
       <DependentUpon>201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.cs" />
-    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
-      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs" />
     <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.Designer.cs">
@@ -2119,6 +2147,38 @@
     <Compile Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.Designer.cs">
       <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001201313247_snapshotmigration.cs" />
+    <Compile Include="Migrations\202001201313247_snapshotmigration.Designer.cs">
+      <DependentUpon>202001201313247_snapshotmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001221256270_lastbutnotleast.cs" />
+    <Compile Include="Migrations\202001221256270_lastbutnotleast.Designer.cs">
+      <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171001593_missingforcustoms.cs" />
+    <Compile Include="Migrations\202003171001593_missingforcustoms.Designer.cs">
+      <DependentUpon>202003171001593_missingforcustoms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171013160_missingcusoms22.cs" />
+    <Compile Include="Migrations\202003171013160_missingcusoms22.Designer.cs">
+      <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003290915454_screenNamelength.cs" />
+    <Compile Include="Migrations\202003290915454_screenNamelength.Designer.cs">
+      <DependentUpon>202003290915454_screenNamelength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003291252313_missingmigrations29032020.cs" />
+    <Compile Include="Migrations\202003291252313_missingmigrations29032020.Designer.cs">
+      <DependentUpon>202003291252313_missingmigrations29032020.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301401495_missingMigrations30032020.cs" />
+    <Compile Include="Migrations\202003301401495_missingMigrations30032020.Designer.cs">
+      <DependentUpon>202003301401495_missingMigrations30032020.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004011019348_missingmigrations01042020.cs" />
+    <Compile Include="Migrations\202004011019348_missingmigrations01042020.Designer.cs">
+      <DependentUpon>202004011019348_missingmigrations01042020.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.cs" />
     <Compile Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.Designer.cs">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
@@ -2331,6 +2391,10 @@
     <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.Designer.cs">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.cs" />
     <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.Designer.cs">
       <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
@@ -2516,6 +2580,14 @@
     <Compile Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs" />
     <Compile Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.Designer.cs">
       <DependentUpon>201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907301257220_newField_fullscreentext.cs" />
+    <Compile Include="Migrations\201907301257220_newField_fullscreentext.Designer.cs">
+      <DependentUpon>201907301257220_newField_fullscreentext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301437577_missingmigrationssqlserver.cs" />
+    <Compile Include="Migrations\201912301437577_missingmigrationssqlserver.Designer.cs">
+      <DependentUpon>201912301437577_missingmigrationssqlserver.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
@@ -2990,14 +3062,35 @@
     <EmbeddedResource Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.resx">
       <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905210951283_missingMigrations2105.resx">
+      <DependentUpon>201905210951283_missingMigrations2105.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905061035125_VendorCommissionMigration.resx">
+      <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290802314_missingcustoms2905.resx">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290831281_missingcustoms2905_2.resx">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290957208_missingcustoms2905_3.resx">
+      <DependentUpon>201905290957208_missingcustoms2905_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291020154_missingcustoms2905_4.resx">
+      <DependentUpon>201905291020154_missingcustoms2905_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906120904323_missing1206.resx">
+      <DependentUpon>201906120904323_missing1206.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906301142484_Missing3006_Rabaia.resx">
+      <DependentUpon>201906301142484_Missing3006_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.resx">
       <DependentUpon>201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.resx">
       <DependentUpon>201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
-      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.resx">
       <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
@@ -3647,6 +3740,9 @@
     <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
       <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -4152,6 +4248,36 @@
     <EmbeddedResource Include="Migrations\202003011111044_WesamAddEntityIdToTasksSchedulerTable.resx">
       <DependentUpon>202003011111044_WesamAddEntityIdToTasksSchedulerTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907301257220_newField_fullscreentext.resx">
+      <DependentUpon>201907301257220_newField_fullscreentext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301437577_missingmigrationssqlserver.resx">
+      <DependentUpon>201912301437577_missingmigrationssqlserver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201313247_snapshotmigration.resx">
+      <DependentUpon>202001201313247_snapshotmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001221256270_lastbutnotleast.resx">
+      <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171001593_missingforcustoms.resx">
+      <DependentUpon>202003171001593_missingforcustoms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171013160_missingcusoms22.resx">
+      <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290915454_screenNamelength.resx">
+      <DependentUpon>202003290915454_screenNamelength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003291252313_missingmigrations29032020.resx">
+      <DependentUpon>202003291252313_missingmigrations29032020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301401495_missingMigrations30032020.resx">
+      <DependentUpon>202003301401495_missingMigrations30032020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004011019348_missingmigrations01042020.resx">
+      <DependentUpon>202004011019348_missingmigrations01042020.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002240830018_AddSLACFieldToShipment_Samar.resx">
       <DependentUpon>202002240830018_AddSLACFieldToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
@@ -4313,6 +4439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.resx">
       <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004211002165_Update_DueDate_Nullable.resx">
       <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>

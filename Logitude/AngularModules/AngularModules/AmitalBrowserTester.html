@@ -210,9 +210,10 @@
         <button onclick="GetRihbitFromTransmissionsMessage()">GetRihbitFromTransmissionsMessage</button>
         <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
         <button onclick="MapPendingReasonCodeData()">MapPendingReasonCodeData</button>
+        <button onclick="MapExceptionReasonCodeData()">MapExceptionReasonCodeData</button>
         <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנאי מכר')">1426ShowGeneralLOVReturnSelected</button>
         <button onclick="ShowGeneralLOVReturnSelected('Customs.FreightPaymentMethod','PU','סוג תשלום')">1345ShowGeneralLOVReturnSelected</button>
-
+        <button onclick="JustReturn()">JustReturn(CFIUFILE)</button>
     </div>
 
     <!--<div  class="tabcontent">-->
@@ -269,27 +270,51 @@
             //562  CHANGEFRAMEWORK >> OPEN NEW SESSION >> COPY FROM NETWORK !!!
             ///data = '{"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":null,"IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"5.6.2-Next (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"20180513","Token":"DC07A1CB-B3E9-4370-A1DF-0B9BA2AD0FFD","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":{"$ref":"2"},"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
 
-            //58cOURIER 
-            data = '{ "AmitalBrowserInUse":true,  "$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"tenant1-58B (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"2018071702","Token":"mwU9WRxVcCkyQBNeCCiwFzkXJMoRy8tMRrg=","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"XY+S85V2GHQlNyP4xkc/WnLrRxWQLJ2l6bs=","IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
-
-
-
-            data.Name = "itzik.xxx@amital.co.il";
-            data.UserName = data.Name;
-            data.Token = "itzik.xxx@amital.co.il"; // 571
-            data.Token = "0208563c-37e9-4f47-80e1-42792837b693";//571 
-            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"odelia@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20170419","Token":"916FA154-E417-4CE6-BD66-56AB4D81821F","UserId":"1-10","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"odelia@amital.co.il","Roles":null}';
-            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7EF61F35-358E-46EB-984C-B66992F43824","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
-            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"sana@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7359E8CF-19AE-40C5-BFA4-740531F3079C","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"sana@amital.co.il","Roles":null}';
-            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"amitr@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"046F6AB1-ADFB-46EC-B797-8D40F52AD435","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"amitr@amital.co.il","Roles":null}';
-
+            
 
             //563 
             data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"yaronc@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20170419","Token":"8cc3c94b-d3d2-4986-b9c6-7b4bea430a0d","UserId":"1-7","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"yaronc@amital.co.il","Roles":null}';
             data.Token = "H6UPpoY6t7SHBHdGJfB9hw=="; // 563
 
+            //583
             
+            //data ='{"$id":"1","Id":"1-10","Tenant":1,"DepartmentId":"1-8","BranchId":"1-3","UserType":null,"IsSalesman":false,"LicencedUser":false,"InActive":false,"FacebookId":null,"Position":null,"EnglishName":"itzik 553","IsFreelancer":false,"FreelancerId":null,"FreelancerName":null,"LocalName":"itzik 553","ComputedLocalName":"itzik 553","SearchFields":"itzik.xxx@amital.co.il,itzik 553,itzik 553,056683642,ITZIK","IsBranchRestricted":false,"Code":"ITZIK","Email":"itzik.xxx@amital.co.il","InternetAccess":false,"Password":null,"BusinessPhone":"03555551","Mobile":"052666666","Fax":null,"Birthday":null,"Anniversary":null,"Notes":null,"SetAngularAsDefault":false,"RolePMLists":null,"Technology":null,"CardId":null,"SignupRole":false,"BranchName":null,"DepartmentName":null,"IsHybrid":false,"CreateDate":null,"DontShowLocal":false,"ExpirationDate":null,"ExpirationDaysLeft":0,"IsProductRestricted":false,"IsShowContactDetailsInTheMobileApp":false,"IsTwoFactorAuthenticationEnabled":false,"ProductTypeCode":null,"ProductTypeName":null,"RoleCode":null,"BusinessUnitId":"1","PersonalId":"056683642","Contact":null,"UserLastLogin":{"$id":"2","Id":"1-10","ComputerId":"91603aa6-e3cb-40d3-b853-fb562d2dd6d8","LoginDateTime":"2019-08-04T16:01:46.214365","Tenant":1,"UserId":null,"User":null},"Roles":[],"UserPermittedBranches":[],"UserPermittedProducts":[],"IsDistributor":false,"DistributorCode":null,"EntityChanged":false,"ActiveModified":0,"IsCustomerCare":false,"DisplayGettingStarted":false,"UserRolesNamesList":null,"UserRolesNamesList_db":null,"DocumentFilingInbox":null,"ShowLogBoxToolTip":false,"ShowInboxToolTip":false,"ShowLocalNameInLOV":false,"UserRoles":null,"AdditionalPackagesOnly":false}';
+            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1 - 10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"tenant1 - 583(1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1 - 10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"19080113","Token":"PGKvS315/2KuJq7YjOcGMvV2EQnDroeUahI=","UserId":"1 - 10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"22Q27 / zD92x3KD74xHCmgCJyoF2aa21iW4E=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2019 - 08 - 04T16: 05: 17.9954782","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}'
             data.AmitalBrowserInUse = true;
+
+
+            //572
+            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"yaronc@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"19082513","Token":"bwnYB2wyOTKm42paYruaHbGmP3F/X9N5PaE=","UserId":"1-7","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"Tu+r0a4Acpmf73AeGN+tzOUmWFsZ3Op1NGE=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2019-08-25T15:16:09.328293","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"yaronc@amital.co.il","Roles":null}';
+            data.AmitalBrowserInUse = true;
+
+
+            
+            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"57.1-Prod (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"19122610","Token":"9D966087-8254-460F-8329-A979B0391A6B","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":{"$ref":"2"},"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"q7mzO+6xQQ/Idg2RdCz00e5q5Iw5f1mE17g=","NumberOfRetries":0,"SessionTimeout":0.0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2019-12-26T11:21:47.0034123","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+
+            data.Token= "l3xu30OADQ8H5JdYiH6CrF+Sl8KzPxIIN88=";
+            data.AmitalBrowserInUse = true;
+
+
+            data.Token = "itzik.xxx@amital.co.il"; // 571
+            data.Token = "0208563c-37e9-4f47-80e1-42792837b693";//571 
+            data = //'{"AmitalBrowserInUse":true,"$id":"1","UserName":"odelia@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20170419","Token":"916FA154-E417-4CE6-BD66-56AB4D81821F","UserId":"1-10","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"odelia@amital.co.il","Roles":null}';
+                '{"AmitalBrowserInUse":true,"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"58.1-Prod (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"20020217","Token":"AemJDfIphlFVItLmWLU09VADTfTkfxaEewY=","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"uIG1AHa09ggUy/r7MFUiVfWL79wWtOgyJ90=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-02-02T13:28:57.7443928","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7EF61F35-358E-46EB-984C-B66992F43824","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"sana@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7359E8CF-19AE-40C5-BFA4-740531F3079C","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"sana@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"amitr@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"046F6AB1-ADFB-46EC-B797-8D40F52AD435","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"amitr@amital.co.il","Roles":null}';
+
+
+            //58cOURIER 
+            data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20021308","Token":"Ofh3FM0MN8FSmvf8Kv3dZaC5B9qx/Oqxx3g=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"J8WHHw+FeeDYtMItiOjOEVEk1AEJ2TAIBRw=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-02-13T11:57:39.8332964","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
+            //591
+            data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20052606","Token":"ig9SSJCcWrY+531uIP2lVynYTd0TKUmWLKk=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"HvVLMqSfqmpP169bB4ERH/DxSgNwd9Iwobs=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-05-25T13:35:42.2723227","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
+
+            //HOWTO - LOGIN http://localhost:9996/
+            // THEN DEVTOOLS >>SESSION STORAGE >> KEY >> USERDATA
+            //ADD AmitalBrowserInUse":true,
+
+            var userData = JSON.parse(data);// 4 TESTER
+
             window.sessionStorage.setItem("userdata", data);
             let myIframe = document.getElementById("myFrame");
             let myWin = myIframe.contentWindow;
@@ -303,7 +328,7 @@
         
 
         function ShowDeclarationByIdReturnCloseSave() {
-            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-204503" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבוא"}';
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-235456" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבוא"}';
             
             var objParams = JSON.parse(json);
             objParams.Requset = new Array();
@@ -400,7 +425,13 @@
             objParams.Requset = new Array();
             RaiseUnifaceRequestEvent(objParams);
         }
-
+            function MapExceptionReasonCodeData() {
+            var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.ExceptionReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapExceptionReasonCodeData" , "formtitle"  :  "חריגות רפרנט"}';
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
+            RaiseUnifaceRequestEvent(objParams);
+ 	
+        }
         function ShowClientReturnIfExist() {
             let objParams =
             {
@@ -544,7 +575,36 @@
                 alert("Wrong Number");
         }
         }
+        function JustReturn(toContinue) {
 
+            //=·; =
+                if (_JavascriptGateway.LastRequestFromAngular &&
+                    (_JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIUFILEFromDeclarationReferantData"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMFUStatusScreen"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMMoveToQueueScreen"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID =="ShowCustomFileOPCFromDeclaration"
+                )
+                ){
+                    if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                        _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                    }
+                     /*
+                    ....putitem/id P_RESPONSELIST, "Response.InstructionReturnCanIContinue", "false" 
+                    ....putitem/id P_RESPONSELIST, "Response.UnifreightResponseStatus", "false"
+                    */
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                    let myItem = ["Response.JustReturn", "11"];
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+
+                    RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                    //alert("u choose toContinue:" + toContinue + " !!!");
+
+                    
+                   
+                } else {
+                alert("Wrong Number");
+        }
+        }
         function GetRihbitFromTransmissionsMessage() {
             if (_JavascriptGateway.LastRequestFromAngular &&
                 _JavascriptGateway.LastRequestFromAngular.MessageID == "GetRihbitFromTransmissions") {

@@ -1,5 +1,5 @@
 ﻿<!ELEMENT LOGICOMMDEC (LogitudeCommDecFile*)>
-<!ELEMENT LogitudeCommDecFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, ISLASTRELEASEFROMWAREHOUS?, EntryFile?, OriginCountryId?, WarehouseId?, TransferImporterId?, ImporterEntitlementTypeCode?, INVOICE*, PACKAGES*, agent_fee?, agent_fee_currency?, CustomsDocuments*, TaxationDateTime?, CarrierPrefix?)>
+<!ELEMENT LogitudeCommDecFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, ISLASTRELEASEFROMWAREHOUS?, EntryFile?, OriginCountryId?, WarehouseId?, TransferImporterId?, ImporterEntitlementTypeCode?, INVOICE*, PACKAGES*, agent_fee?, agent_fee_currency?, CustomsDocuments*, TaxationDateTime?, CarrierPrefix?, IsAutonomy?, SiteCode?)>
 <!ELEMENT CustomFileNo (#PCDATA)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT DeclarationOfficeCode (#PCDATA)>
@@ -52,7 +52,7 @@
 <!ELEMENT INSURANCE_VALUE (#PCDATA)>
 <!ELEMENT INSURANCE_CURR (#PCDATA)>
 <!ELEMENT INCOTERM_ID (#PCDATA)>
-<!ELEMENT INVOICEITEMS (ITEMLINENO?, CLASSIFICATIONCODE?, TRADEAGREEMENTCODE?, QUANTITY?, UNIT?, QUANTITY_STS?, QUANTITY_TYPE?, ITEMPRICE?, ITEMORIGINCOUNTRY?, ITEMCODE?, ACTUALINVOICELINES?, CURRENCY?, ITEM_COUNTERKEY?, PREFERENCEDOCUMENTNUMBER?, CERTIFICATES*, POINTERS*, CARS*)>
+<!ELEMENT INVOICEITEMS (ITEMLINENO?, CLASSIFICATIONCODE?, TRADEAGREEMENTCODE?, QUANTITY?, UNIT?, QUANTITY_STS?, QUANTITY_TYPE?, ITEMPRICE?, ITEMORIGINCOUNTRY?, ITEMCODE?, ACTUALINVOICELINES?, CURRENCY?, ITEM_COUNTERKEY?, PREFERENCEDOCUMENTNUMBER?, TAXEXEMPTCODE?, PROCESSTYPE?, StatisticQuantityType?, CERTIFICATES*, POINTERS*, CARS*)>
 <!ELEMENT ITEMLINENO (#PCDATA)>
 <!ELEMENT CLASSIFICATIONCODE (#PCDATA)>
 <!ELEMENT TRADEAGREEMENTCODE (#PCDATA)>
@@ -67,6 +67,9 @@
 <!ELEMENT CURRENCY (#PCDATA)>
 <!ELEMENT ITEM_COUNTERKEY (#PCDATA)>
 <!ELEMENT PREFERENCEDOCUMENTNUMBER (#PCDATA)>
+<!ELEMENT TAXEXEMPTCODE (#PCDATA)>
+<!ELEMENT PROCESSTYPE (#PCDATA)>
+<!ELEMENT StatisticQuantityType (#PCDATA)>
 <!ELEMENT CERTIFICATES (SerialNo?, Ordinal?, ItemLine?, LineNo?, RESPONSECONFIRMATIONTYPECODE?, CERTIFICATENUMBER?, CERTIFICATEEXEMPTIONTYPE?, ATTACHMENTTYPECODE?, REQUESTCONFIRMATIONTYPECODE?, CUSTOMSATTACHMENTID?)>
 <!ELEMENT SerialNo (#PCDATA)>
 <!ELEMENT Ordinal (#PCDATA)>
@@ -119,3 +122,5 @@
 <!ELEMENT SerialNum (#PCDATA)>
 <!ELEMENT TaxationDateTime (#PCDATA)>
 <!ELEMENT CarrierPrefix (#PCDATA)>
+<!ELEMENT IsAutonomy (#PCDATA)>
+<!ELEMENT SiteCode (#PCDATA)>

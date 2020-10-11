@@ -139,6 +139,12 @@ export class SendPaymentOrderComponent {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.PaymentOrder.O.AccountingCustomFileMissing"));
             return false;
         }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.AccountingCustomFile) && this.EntityPM.AccountingCustomFile.startsWith("R")) {
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.PaymentOrder.O.NoPayWithRAccountingCard"));
+            return false;
+        }
+
         var sumOfPaymentMethods = 0;
         if (this.EntityPM.PaymentOrderMethods) {
             this.EntityPM.PaymentOrderMethods.forEach((itemLine) => {
@@ -168,7 +174,7 @@ export class SendPaymentOrderComponent {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
 
     OnAddEditWindowClosed(event) {

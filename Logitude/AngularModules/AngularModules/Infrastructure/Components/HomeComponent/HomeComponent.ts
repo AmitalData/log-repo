@@ -32,7 +32,6 @@ import { timeInterval } from 'rxjs/operators';
 })
 
 export class HomeComponent implements OnDestroy{
-    public ProductInfo: string = null;
     public Tenant: number;
     public DataContext = this;
     public Tabs: Array<SessionTabItem>;
@@ -113,7 +112,7 @@ export class HomeComponent implements OnDestroy{
 
         if (ObjectsLocator.GlobalSetting) {
           // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-          if (!ObjectsLocator.LoggedUserPM.DontShowLocal) {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }
@@ -132,6 +131,7 @@ export class HomeComponent implements OnDestroy{
     public EnvironmentSRC: string = null;
     public EnvironmentName: string = null;
     public Company: string;
+    public ProductInfo: string;
     public LoggedUser: string;
     public IsBellVisible: boolean = false;
     public IsCustomizationVisible: boolean = false;
@@ -151,6 +151,11 @@ export class HomeComponent implements OnDestroy{
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
         this.EnvironmentName = Environment.GetEnvironmentName();
         this.Company = SessionLocator.TenantPM.Company;
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting) && !AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductInfo)) {
+            this.ProductInfo = ObjectsLocator.GlobalSetting.ProductInfo;
+        } else {
+            this.ProductInfo = "";
+        }
         this.LoggedUser = SessionLocator.LoggedUserPM.EnglishName;
 
         if (SessionLocator.Tenant == 261) {
@@ -514,14 +519,26 @@ export class HomeComponent implements OnDestroy{
                                 this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
-
+                                this.ProductMessage();
                             });
                         }
                     }
                     else {
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
+                        this.ProductMessage();
                     }
                 }, 500);
+        }
+    }
+    ProductMessage() {
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
+
+            let myMessageWindow = new MessageWindow();
+            myMessageWindow.ShowErrorIcon = true;
+            myMessageWindow.Title = "Please Call Amital";
+            myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
+            
+
         }
     }
     public get IsAmitalBackButtonDisable() {
@@ -801,7 +818,18 @@ export class HomeComponent implements OnDestroy{
                                     });
                                 }
 
-                                else{
+                                else {
+                                    if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
+                                        cmpRef.instance.SessionInitialize.subscribe(s => {
+                                            let myMessageWindow = new MessageWindow();
+                                            myMessageWindow.ShowErrorIcon = true;
+                                            myMessageWindow.Title = "Please Call Amital";
+                                            myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
+
+                                        });
+
+                                    }
+
                                     this.AccountAndTenantExpiration();
                                 }
                             }                            

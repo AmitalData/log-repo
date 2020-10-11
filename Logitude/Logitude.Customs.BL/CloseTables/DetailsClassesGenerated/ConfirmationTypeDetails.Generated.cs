@@ -20,17 +20,997 @@ namespace Logitude.Customs.BL
    {
        public List<ConfirmationTypeDetails> GetAll()
        {
-		    var all = new List<ConfirmationTypeDetails>(); 
+		    var all = new List<ConfirmationTypeDetails>();  
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1001", 
+                SearchFields = "1001,אישור אגף ניהול משאבי תשתיות", 
+                Inactive = false, 
+                LocalName = "אישור אגף ניהול משאבי תשתיות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1002", 
+                SearchFields = "1002,רשיון ע''פ צו מתן רשיונות יבוא 1939 10", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 10", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "101", 
+                SearchFields = "101,אישור השירות הוטרינרי", 
+                Inactive = false, 
+                LocalName = "אישור השירות הוטרינרי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "102", 
+                SearchFields = "102,אישור הגנת הצומח", 
+                Inactive = false, 
+                LocalName = "אישור הגנת הצומח", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1020", 
+                SearchFields = "1020,אנרגיה אטומית", 
+                Inactive = false, 
+                LocalName = "אנרגיה אטומית", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1021", 
+                SearchFields = "1021,הממונה על צו הפיקוח על המצרכים", 
+                Inactive = false, 
+                LocalName = "הממונה על צו הפיקוח על המצרכים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1022", 
+                SearchFields = "1022,צו הפיקוח על היצוא בתחום הכימי", 
+                Inactive = false, 
+                LocalName = "צו הפיקוח על היצוא בתחום הכימי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "103", 
+                SearchFields = "103,אישור טיב מספוא", 
+                Inactive = false, 
+                LocalName = "אישור טיב מספוא", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "104", 
+                SearchFields = "104,אישור מיכון וטכנולוגיה", 
+                Inactive = false, 
+                LocalName = "אישור מיכון וטכנולוגיה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "105", 
+                SearchFields = "105,אישור אגף הדייג", 
+                Inactive = false, 
+                LocalName = "אישור אגף הדייג", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "106", 
+                SearchFields = "106,אישור המרכז סחר חוץ", 
+                Inactive = false, 
+                LocalName = "אישור המרכז סחר חוץ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "107", 
+                SearchFields = "107,אישור המנכ''ל", 
+                Inactive = false, 
+                LocalName = "אישור המנכ''ל", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "108", 
+                SearchFields = "108,אישור אחר", 
+                Inactive = false, 
+                LocalName = "אישור אחר", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "109", 
+                SearchFields = "109,רישיון המרכז לסחר חוץ", 
+                Inactive = false, 
+                LocalName = "רישיון המרכז לסחר חוץ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "110", 
+                SearchFields = "110,הרשות לתכנון חקלאות וכלכלה", 
+                Inactive = false, 
+                LocalName = "הרשות לתכנון חקלאות וכלכלה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1101", 
+                SearchFields = "1101,תעודת הכשר", 
+                Inactive = false, 
+                LocalName = "תעודת הכשר", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1102", 
+                SearchFields = "1102,רשיון ע''פ צו מתן רשיונות יבוא 1939 11", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 11", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "111", 
+                SearchFields = "111,רשיון ע''פ צי''ח 2(ד) מכסות", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צי''ח 2(ד) מכסות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "112", 
+                SearchFields = "112,רשיון אוטונומיה", 
+                Inactive = false, 
+                LocalName = "רשיון אוטונומיה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "113", 
+                SearchFields = "113,רשיון ע''פ צו מתן רשיונות יבוא 1939", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "120", 
+                SearchFields = "120,רשיון המרכז לסחר חוץ", 
+                Inactive = false, 
+                LocalName = "רשיון המרכז לסחר חוץ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1201", 
+                SearchFields = "1201,אישור ביטחון פנים", 
+                Inactive = false, 
+                LocalName = "אישור ביטחון פנים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1202", 
+                SearchFields = "1202,רשיון ע''פ צו מתן רשיונות יבוא 1939 12", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 12", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1203", 
+                SearchFields = "1203,רשיון אגף לפיקוח ורשוי כלי ירייה", 
+                Inactive = false, 
+                LocalName = "רשיון אגף לפיקוח ורשוי כלי ירייה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "121", 
+                SearchFields = "121,אישור שירותים וטרינריים", 
+                Inactive = false, 
+                LocalName = "אישור שירותים וטרינריים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "122", 
+                SearchFields = "122,אישור שירותים להגנת הצומח", 
+                Inactive = false, 
+                LocalName = "אישור שירותים להגנת הצומח", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "123", 
+                SearchFields = "123,רשיון המרכז סחר חוץ", 
+                Inactive = false, 
+                LocalName = "רשיון המרכז סחר חוץ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1301", 
+                SearchFields = "1301,אישור תקשורת", 
+                Inactive = false, 
+                LocalName = "אישור תקשורת", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1302", 
+                SearchFields = "1302,רשיון ע''פ צו מתן רשיונות יבוא 1939 13", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 13", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1402", 
+                SearchFields = "1402,רשיון ע''פ צו מתן רשיונות יבוא 1939 14", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 14", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1403", 
+                SearchFields = "1403,אישור מנכ''ל 2", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל 2", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1501", 
+                SearchFields = "1501,אישור מנכ''ל חינוך", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל חינוך", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1502", 
+                SearchFields = "1502,רשיון ע''פ צו מתן רשיונות יבוא 1939 15", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 15", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1601", 
+                SearchFields = "1601,אישור מנכ''ל המדע התרבות והספורט", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל המדע התרבות והספורט", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1602", 
+                SearchFields = "1602,אישור יבוא משרד התרבות והספורט", 
+                Inactive = false, 
+                LocalName = "אישור יבוא משרד התרבות והספורט", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1603", 
+                SearchFields = "1603,רשיון ע''פ צו מתן רשיונות יבוא 1939 16", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 16", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1801", 
+                SearchFields = "1801,אישור מנכ''ל בינוי ושיכון", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל בינוי ושיכון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1802", 
+                SearchFields = "1802,רשיון ע''פ צו מתן רשיונות יבוא 1939 17", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 17", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1901", 
+                SearchFields = "1901,רשיון יבוא", 
+                Inactive = false, 
+                LocalName = "רשיון יבוא", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "1902", 
+                SearchFields = "1902,רשיון ע''פ צו מתן רשיונות יבוא 1939 18", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 18", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "2001", 
+                SearchFields = "2001,אישור מנכ''ל 3", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל 3", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "201", 
+                SearchFields = "201,אישור אגף הרכב ושרותי תחזוקה - יבוא מסחרי", 
+                Inactive = false, 
+                LocalName = "אישור אגף הרכב ושרותי תחזוקה - יבוא מסחרי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "204", 
+                SearchFields = "204,מעבדה לרכב", 
+                Inactive = false, 
+                LocalName = "מעבדה לרכב", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "205", 
+                SearchFields = "205,מת''י מכוח תקנות", 
+                Inactive = false, 
+                LocalName = "מת''י מכוח תקנות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "206", 
+                SearchFields = "206,טכניון מכוח תקנות", 
+                Inactive = false, 
+                LocalName = "טכניון מכוח תקנות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "207", 
+                SearchFields = "207,אישור מנכ''ל תחבורה", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל תחבורה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "208", 
+                SearchFields = "208,2ג2 - פטור מרישיון", 
+                Inactive = false, 
+                LocalName = "2ג2 - פטור מרישיון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "209", 
+                SearchFields = "209,הועדה הבין משרדית להתקני תנועה", 
+                Inactive = false, 
+                LocalName = "הועדה הבין משרדית להתקני תנועה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "210", 
+                SearchFields = "210,רשיון אגף הרכב ושרותי תחזוקה - יבוא מסחרי", 
+                Inactive = false, 
+                LocalName = "רשיון אגף הרכב ושרותי תחזוקה - יבוא מסחרי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "2101", 
+                SearchFields = "2101,אישור רשות העתיקות", 
+                Inactive = false, 
+                LocalName = "אישור רשות העתיקות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "212", 
+                SearchFields = "212,רישיון לסחר במוצרי תעבורה", 
+                Inactive = false, 
+                LocalName = "רישיון לסחר במוצרי תעבורה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "2120", 
+                SearchFields = "2120,אישור יצוא", 
+                Inactive = false, 
+                LocalName = "אישור יצוא", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "213", 
+                SearchFields = "213,רישיון לסחר במערכות גפ''מ לרכב", 
+                Inactive = false, 
+                LocalName = "רישיון לסחר במערכות גפ''מ לרכב", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "214", 
+                SearchFields = "214,רישיון לסחר בצמיגים", 
+                Inactive = false, 
+                LocalName = "רישיון לסחר בצמיגים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "215", 
+                SearchFields = "215,רשיון אוטונומיה 2", 
+                Inactive = false, 
+                LocalName = "רשיון אוטונומיה 2", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "216", 
+                SearchFields = "216,רשיון ע''פ צו מתן רשיונות יבוא 1939 2", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 2", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "217", 
+                SearchFields = "217,רישיון אגף הרכב ושרותי תחזוקה - יבוא אישי", 
+                Inactive = false, 
+                LocalName = "רישיון אגף הרכב ושרותי תחזוקה - יבוא אישי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "218", 
+                SearchFields = "218,אישור אגף הרכב ושרותי תחזוקה - יבוא אישי", 
+                Inactive = false, 
+                LocalName = "אישור אגף הרכב ושרותי תחזוקה - יבוא אישי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "220", 
+                SearchFields = "220,רשיון יצוא (משרד התחבורה)", 
+                Inactive = false, 
+                LocalName = "רשיון יצוא (משרד התחבורה)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "221", 
+                SearchFields = "221,רשיון אגף הרכב ושירותי תחזוקה - צמ''ה", 
+                Inactive = false, 
+                LocalName = "רשיון אגף הרכב ושירותי תחזוקה - צמ''ה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "301", 
+                SearchFields = "301,אישור 2ג2", 
+                Inactive = false, 
+                LocalName = "אישור 2ג2", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "302", 
+                SearchFields = "302,אישור מידות ומשקלות", 
+                Inactive = false, 
+                LocalName = "אישור מידות ומשקלות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "303", 
+                SearchFields = "303,אישור מנכ''ל", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "304", 
+                SearchFields = "304,מ.ב 72", 
+                Inactive = false, 
+                LocalName = "מ.ב 72", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "305", 
+                SearchFields = "305,אישור תמ''ת", 
+                Inactive = false, 
+                LocalName = "אישור תמ''ת", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "307", 
+                SearchFields = "307,אישור המפקח על הילומים", 
+                Inactive = false, 
+                LocalName = "אישור המפקח על הילומים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "308", 
+                SearchFields = "308,רישיון צי''ח מנהל מוצרי צריכה", 
+                Inactive = false, 
+                LocalName = "רישיון צי''ח מנהל מוצרי צריכה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "309", 
+                SearchFields = "309,רישיון צי''ח מנהל היהלומים", 
+                Inactive = false, 
+                LocalName = "רישיון צי''ח מנהל היהלומים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "310", 
+                SearchFields = "310,רישיון צי''ח מחוז המרכז בתמ''ת", 
+                Inactive = false, 
+                LocalName = "רישיון צי''ח מחוז המרכז בתמ''ת", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "311", 
+                SearchFields = "311,רישיון מינהל סביבה ופיתוח בר קיימא", 
+                Inactive = false, 
+                LocalName = "רישיון מינהל סביבה ופיתוח בר קיימא", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "313", 
+                SearchFields = "313,2ג2 - פטור מרשיון", 
+                Inactive = false, 
+                LocalName = "2ג2 - פטור מרשיון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "314", 
+                SearchFields = "314,רשיון צי''ח 2 (ד) מכסות והטלי סחר", 
+                Inactive = false, 
+                LocalName = "רשיון צי''ח 2 (ד) מכסות והטלי סחר", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "315", 
+                SearchFields = "315,רישיון ארצות אסורות - פקודת המסחר עם האויב", 
+                Inactive = false, 
+                LocalName = "רישיון ארצות אסורות - פקודת המסחר עם האויב", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "316", 
+                SearchFields = "316,רשיון אוטונומיה 3", 
+                Inactive = false, 
+                LocalName = "רשיון אוטונומיה 3", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "317", 
+                SearchFields = "317,רשיון ע''פ צו מתן רשיונות יבוא 1939 3", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 3", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "318", 
+                SearchFields = "318,אישור מפקח", 
+                Inactive = false, 
+                LocalName = "אישור מפקח", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "320", 
+                SearchFields = "320,רשיון יצוא - מינהל סביבה ופיתוח בר קיימא", 
+                Inactive = false, 
+                LocalName = "רשיון יצוא - מינהל סביבה ופיתוח בר קיימא", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "321", 
+                SearchFields = "321,רשיון דו שימושי", 
+                Inactive = false, 
+                LocalName = "רשיון דו שימושי", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "322", 
+                SearchFields = "322,רשיון המפקח על היהלומים", 
+                Inactive = false, 
+                LocalName = "רשיון המפקח על היהלומים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "323", 
+                SearchFields = "323,רשיון תמ''ת MTCR", 
+                Inactive = false, 
+                LocalName = "רשיון תמ''ת MTCR", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "324", 
+                SearchFields = "324,רשיון תמ''ת אב''כ", 
+                Inactive = false, 
+                LocalName = "רשיון תמ''ת אב''כ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "325", 
+                SearchFields = "325,אישור המפקח על היהלומים", 
+                Inactive = false, 
+                LocalName = "אישור המפקח על היהלומים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "339", 
+                SearchFields = "339,אישור תמ''ת מיוחד", 
+                Inactive = false, 
+                LocalName = "אישור תמ''ת מיוחד", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "402", 
+                SearchFields = "402,אישור לשחרור", 
+                Inactive = false, 
+                LocalName = "אישור לשחרור", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "403", 
+                SearchFields = "403,אישור מפמ''כ", 
+                Inactive = false, 
+                LocalName = "אישור מפמ''כ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "404", 
+                SearchFields = "404,רשיון ע''פ צו מתן רשיונות יבוא 1939 4", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 4", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "420", 
+                SearchFields = "420,רשיון יצוא (מכון התקנים)", 
+                Inactive = false, 
+                LocalName = "רשיון יצוא (מכון התקנים)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "421", 
+                SearchFields = "421,רשיון הממונה על הקרינה (מכון התקנים)", 
+                Inactive = false, 
+                LocalName = "רשיון הממונה על הקרינה (מכון התקנים)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "501", 
+                SearchFields = "501,אישור מנהל", 
+                Inactive = false, 
+                LocalName = "אישור מנהל", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "502", 
+                SearchFields = "502,רשיון ע''פ צו מתן רשיונות יבוא 1939 5", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 5", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "503", 
+                SearchFields = "503,רישיון יבוא לפט''מ", 
+                Inactive = false, 
+                LocalName = "רישיון יבוא לפט''מ", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "504", 
+                SearchFields = "504,בדיקה", 
+                Inactive = false, 
+                LocalName = "בדיקה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "602", 
+                SearchFields = "602,אישור חומרים מסוכנים", 
+                Inactive = false, 
+                LocalName = "אישור חומרים מסוכנים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "603", 
+                SearchFields = "603,אישור ממונה על הקרינה", 
+                Inactive = false, 
+                LocalName = "אישור ממונה על הקרינה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "604", 
+                SearchFields = "604,ת.רשום ע''פ תקנות תכשרים להדברה", 
+                Inactive = false, 
+                LocalName = "ת.רשום ע''פ תקנות תכשרים להדברה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "605", 
+                SearchFields = "605,רשיון לתכשיר לפי צו תכשירים", 
+                Inactive = false, 
+                LocalName = "רשיון לתכשיר לפי צו תכשירים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "606", 
+                SearchFields = "606,רשיון ע''פ צו מתן רשיונות יבוא 1939 6", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 6", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "607", 
+                SearchFields = "607,אישור מנכ''ל משרד להגנת הסביבה", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל משרד להגנת הסביבה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "620", 
+                SearchFields = "620,רשיון הממונה על הקרינה (הגנת הסביבה)", 
+                Inactive = false, 
+                LocalName = "רשיון הממונה על הקרינה (הגנת הסביבה)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "701", 
+                SearchFields = "701,אישור שירות המזון", 
+                Inactive = false, 
+                LocalName = "אישור שירות המזון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "702", 
+                SearchFields = "702,אישור אגף הרוקחות", 
+                Inactive = false, 
+                LocalName = "אישור אגף הרוקחות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "703", 
+                SearchFields = "703,אישור אמ''ר", 
+                Inactive = false, 
+                LocalName = "אישור אמ''ר", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "704", 
+                SearchFields = "704,רשיון אגף הרוקחות", 
+                Inactive = false, 
+                LocalName = "רשיון אגף הרוקחות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "705", 
+                SearchFields = "705,אישור שחרור תחנת מעבר", 
+                Inactive = false, 
+                LocalName = "אישור שחרור תחנת מעבר", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "706", 
+                SearchFields = "706,אגף הרוקחות - רשיון ע''פ צו התמרוקים", 
+                Inactive = false, 
+                LocalName = "אגף הרוקחות - רשיון ע''פ צו התמרוקים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "708", 
+                SearchFields = "708,אישור מכשירי קרינה", 
+                Inactive = false, 
+                LocalName = "אישור מכשירי קרינה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "709", 
+                SearchFields = "709,אישור מנכ''ל בריאות", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל בריאות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "710", 
+                SearchFields = "710,אישור אגף הרוקחות - סמים", 
+                Inactive = false, 
+                LocalName = "אישור אגף הרוקחות - סמים", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "711", 
+                SearchFields = "711,רשיון יבוא מלשכת הבריאות בנפת רמלה", 
+                Inactive = false, 
+                LocalName = "רשיון יבוא מלשכת הבריאות בנפת רמלה", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "712", 
+                SearchFields = "712,רשיון ע''פ צו מתן רשיונות יבוא 1939 7", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 7", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "713", 
+                SearchFields = "713,אישור 2ג2 – אגף הרוקחות", 
+                Inactive = false, 
+                LocalName = "אישור 2ג2 – אגף הרוקחות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "714", 
+                SearchFields = "714,2ג2 – פטור מרישיון אגף הרוקחות", 
+                Inactive = false, 
+                LocalName = "2ג2 – פטור מרישיון אגף הרוקחות", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "801", 
+                SearchFields = "801,אישור ביטחון", 
+                Inactive = false, 
+                LocalName = "אישור ביטחון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "802", 
+                SearchFields = "802,אישור מנכ''ל ביטחון", 
+                Inactive = false, 
+                LocalName = "אישור מנכ''ל ביטחון", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "803", 
+                SearchFields = "803,רשיון ע''פ צו מתן רשיונות יבוא 1939 8", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 8", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "820", 
+                SearchFields = "820,רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד לחימה)", 
+                Inactive = false, 
+                LocalName = "רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד לחימה)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "821", 
+                SearchFields = "821,רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד MTCR)", 
+                Inactive = false, 
+                LocalName = "רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד MTCR)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "822", 
+                SearchFields = "822,רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח)", 
+                Inactive = false, 
+                LocalName = "רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "823", 
+                SearchFields = "823,רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח המועבר לשטחי האחריות האזרחית הפלשתינית)", 
+                Inactive = false, 
+                LocalName = "רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח המועבר לשטחי האחריות האזרחית הפלשתינית)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "824", 
+                SearchFields = "824,רשיון לפי צו הפיקוח על מצרכים ושירותים (עיסוק באמצעי הצפנה)", 
+                Inactive = false, 
+                LocalName = "רשיון לפי צו הפיקוח על מצרכים ושירותים (עיסוק באמצעי הצפנה)", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "901", 
+                SearchFields = "901,אישור וועדה לאנרגיה אטומית", 
+                Inactive = false, 
+                LocalName = "אישור וועדה לאנרגיה אטומית", 
+			});
+			 
+            all.Add(new ConfirmationTypeDetails()
+            {    
+                Code = "902", 
+                SearchFields = "902,רשיון ע''פ צו מתן רשיונות יבוא 1939 9", 
+                Inactive = false, 
+                LocalName = "רשיון ע''פ צו מתן רשיונות יבוא 1939 9", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ConfirmationType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ConfirmationType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

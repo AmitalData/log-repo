@@ -10,4 +10,10 @@ Writing file 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\LOGICUSTFILE.c
 C:\Program Files (x86)\Microsoft Visual Studio 11.0>
 xsd.exe C:\LogitudeWorld\main\Logitude.AmitalMessaging\Infrastructure\GenericResponse.xsd /c
 xsd.exe C:\LogitudeWorld\Amital\Logitude.AmitalMessaging\Customs\CustomFile\CFIPACKS.xsd /c
-xsd.exe C:\LW\Customs\Logitude.AmitalMessaging\Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd /c
+xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd /c
+xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\Sivug\LOGISIVUG.xsd /c
+xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\LOGICUSTFILE.xsd /c
+
+
+
+xsd.exe C:\LOG\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\CFIData.xsd /c

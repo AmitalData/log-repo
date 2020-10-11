@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct ConstraintApprovalDecisionValues
     {   
+       public const string נדחה = "1";  
+       public const string מאושר = "2";  
+       public const string מאושרבתנאי = "3";  
     }
 }
 

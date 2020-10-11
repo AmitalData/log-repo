@@ -40,6 +40,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -840,14 +841,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var requestData2 = "";
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
-
-                    if (myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString()))
+                    if (myEventContextTagModel != null)
                     {
-                        requestData2 = GetMyFUStatusXML("INR", "INR", "", "new", DateTime.Now, false);
-                    }
-                    if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
-                    {
-                        requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                        if (myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString()))
+                        {
+                            requestData2 = GetMyFUStatusXML("INR", "INR", "", "new", DateTime.Now, false);
+                        }
+                        if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                        {
+                            requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                        }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
                     //{
@@ -958,6 +961,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 myCFIDATA_DATA.CasualImporterEmail = _DirtyDeclarationPM.CasualImporterEmail;
                 myCFIDATA_DATA.CasualImportelTel = _DirtyDeclarationPM.CasualImporterTel;
                 myCFIDATA_DATA.CasualImporterContact = _DirtyDeclarationPM.CasualImporterContact;
+                if(_DirtyDeclarationPM.TotalInvoiceAmountInUSD != null)
+                {
+                    myCFIDATA_DATA.VALUE_IN_USD = _DirtyDeclarationPM.TotalInvoiceAmountInUSD.ToString();
+                }
 
                 if (_DirtyDeclarationPM.Consignments != null && _DirtyDeclarationPM.Consignments.Count() > 0)
                 {
@@ -969,7 +976,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        myCFIDATA_DATA.ThirdCargoID = "";
+                    //    myCFIDATA_DATA.ThirdCargoID = "";
                     }
                 }
                 if (courierMasterPM != null)
@@ -991,6 +998,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCFIDATA_DATA.MAWB = courierMasterPM.MAWB;
                     myCFIDATA_DATA.HAWB = courierMasterPM.HAWB;
                 }
+                
                 myCFIDATA_DATAList.Add(myCFIDATA_DATA);
                 _CFIDATA.CFIDATA_DATA = myCFIDATA_DATAList.ToArray();
             }
@@ -1029,32 +1037,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                 var eventContextTagModel = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                if (eventContextTagModel != null)
                 {
-
-                    Tenant = dirtyDeclarationPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = eventCode,
-                    notes = "",
-                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                    EntityId = dirtyDeclarationPM.Id,
-                    UserId = loggingUserId,
-                    CommunicationSubject = "FU Status" + statusCode + " from logitude",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
-                        entname = "CFIFILEM",
-                        primary_number = dirtyDeclarationPM.CustomFileNo,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = statusCode,
-                        status_DateTime = DateTime.Now,
-                        //status_save = "no_fail",
-                        comments = "",
-                    }
-                };
 
-                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + eventCode + "CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "  ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, doNotSendStatus);
+                        Tenant = dirtyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = eventCode,
+                        notes = "",
+                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                        EntityId = dirtyDeclarationPM.Id,
+                        UserId = loggingUserId,
+                        CommunicationSubject = "FU Status" + statusCode + " from logitude",
+                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                        {
+                            entname = "CFIFILEM",
+                            primary_number = dirtyDeclarationPM.CustomFileNo,
+                            status = "new",
+                            xml_status = "new",
+                            status_id = statusCode,
+                            status_DateTime = DateTime.Now,
+                            //status_save = "no_fail",
+                            comments = "",
+                        }
+                    };
+
+                    LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + eventCode + "CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "  ");
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, doNotSendStatus);
+                }
             }
             catch (Exception)
             {
@@ -1398,6 +1409,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (myUser != null)
                 {
                     _CCUFILEMPM.OPENBYUSER = myUser.Code;
+                    if(!String.IsNullOrWhiteSpace(myUser.BranchId))
+                    {
+                        BranchRepository branchRepository = new BranchRepository(_DirtyDeclarationPM.Tenant);
+                        Branch myBranch = branchRepository.GetSingleBranch(myUser.BranchId, _DirtyDeclarationPM.Tenant);
+                        if(myBranch != null && myBranch.Code != null)
+                        {
+                            _CCUFILEMPM.BRANCHID = myBranch.Code;
+                        }
+                    }
                 }
             }
             _CCUFILEMPM.CHANGE = (_DirtyDeclarationPM.IsChanged) ? "T" : "F";
@@ -2092,6 +2112,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             var stringDecimal = decConsignmentPackage.GrossMassMeasure.Value.ToString("0");
                             if (int.TryParse(stringDecimal, out myint))
                             {
+                                //marked code moved to Uniface...
+                                //if(decConsignmentPackage.GrossMassMeasureTypeCode == "TNE")
+                                //{
+                                    //myint = myint * 1000;
+                                //}
                                 cCUMSHGRPM.WEIGHT = cCUMSHGRPM.WEIGHT.GetValueOrDefault() + myint;
                             }
                         }
@@ -2198,7 +2223,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.INSURANCEPERCENT = 0;
             _CCUFILEMPM.INSURANCECURR = "";
             _CCUFILEMPM.INSURANCECURRN = "";
-            _TotalCCUTRANSPVALs = new List<CCUTRANSPVALPM>();
+
+
+    _TotalCCUTRANSPVALs = new List<CCUTRANSPVALPM>();
 
             //In case need to save fields from SupplierInvoices to CCUFILEM without saving SupplierInvoices
             if (_UpdateCCUFILEMFromSupplerInvoice)
@@ -2232,6 +2259,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+
+            _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
+            _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
+            _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
+            _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
+            if(_CCUFILEMPM.ALLPRATMEHESLIST.Length > 1024) _CCUFILEMPM.ALLPRATMEHESLIST = _CCUFILEMPM.ALLPRATMEHESLIST.Substring(0, 1024);
+
+
             CreateCCUTRANSPVAL();
 
             //<--- This is to be done in a full saving mode ONLY (Moved from befor the call to DoSupplierInvoices())
@@ -2241,6 +2276,43 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPMSupplierInvoiceModificationsI01;
             }
             //This is to be done in a full saving mode ONLY  --->
+        }
+
+        private int GetCountSupplierInvoicesItems()
+        {
+            int countInvoiceItems=0;
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices )
+            {
+                countInvoiceItems += invoice.SupplierInvoiceItems.Count();
+            }
+
+            return countInvoiceItems;
+        }
+
+        private string GetAllPratMehesList(int top = 0)
+        {
+            List<string> list = new List<string>();
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices)
+            {
+                //list.AddRange(invoice.SupplierInvoiceItems.Where(r=>r.ClassificationCode != null).Select(x=>x.ClassificationCode.Substring(0, Math.Min(8, x.ClassificationCode.Length)) + x.ClassificationCode.Substring(Math.Min(11, x.ClassificationCode.Length - 1), 1)));
+
+                var range = invoice.SupplierInvoiceItems
+                    .Where(r => !string.IsNullOrWhiteSpace(r.ClassificationCode))
+                    .Select(x =>
+                    x.ClassificationCode.Substring(0, Math.Min(8, x.ClassificationCode.Length))
+                    + x.ClassificationCode.Substring(Math.Min(11, x.ClassificationCode.Length - 1)
+                    , 1));
+                if (range.Count() > 0)
+                {
+                    list.AddRange(range);
+                }
+            }
+            list = list.Where(x => x != null).OrderBy(x => x).Distinct().ToList();
+            if (top != 0 && top < list.Count())
+            {
+                list = list.Take(top).ToList();
+            }//
+            return string.Join(",", list).TrimEnd(',');
         }
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
@@ -2365,8 +2437,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             supplierInvoicePM.COUNTRYID = GetTranslationP2L("IIGC", "CTBCOUNTRY", decSupplierInvoice.IssueCountryCode);
             supplierInvoicePM.INCOTERMID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
             supplierInvoicePM.CURRENCYID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
-
-            CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
+             CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
             supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + supplierInvoicePM.VALUE;
             _CCUFILEMPM.CHANGINGVALUE = _CCUFILEMPM.INDEXVALUE.ToNullableDouble("_CCUFILEMPM.INDEXVALUE");  // += supplierInvoicePM.CHANGINGVALUE; // moran 23.11.16 - Bug 21746 - change handle to get the same value as index
@@ -2562,7 +2633,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (decSupplierInvoice.IsAccumalated)
             ////if(false)
             {
-                _AccumulatedSupplierInvoice_105LastLineNo = 0;
+                //_AccumulatedSupplierInvoice_105LastLineNo = 0;
                 decSupplierInvoice = AddSupplierInvoiceAccumalated103(decSupplierInvoice);
             }
 

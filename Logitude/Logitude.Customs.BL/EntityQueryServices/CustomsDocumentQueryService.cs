@@ -93,7 +93,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 customsDocumentListPocos = customsDocumentListPocos.Where(r => string.IsNullOrWhiteSpace(r.CustomsDocId)).ToList();  // 1 min b4 deloy  - NO Custom REF!!!
 
 
-               var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
                 return customsDocumentListPMs;
             }
 
@@ -156,7 +156,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var q = this.repository.GetAll(tenant)
                 .Where(rec =>
                     rec.Tenant == tenant &&
-                    //rec.CreateDateTime.Value > lst30 &&
+                   //rec.CreateDateTime.Value > lst30 &&
                    rec.CustomRecievedDate.Value > lst30 &&
                     rec.DocumentRemarks == "LoadTest");
             if (keys != null)
@@ -169,7 +169,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                .ToList();
             return pmList;
 
-            
+
         }
         public List<CustomsDocumentPM> GetCustomsDocumentList(List<string> documentsFilingIdList, int tenant)
         {
@@ -192,9 +192,58 @@ namespace Logitude.Customs.BL.EntityQueryServices
                       select cd
                          );
 
-            q2 = q2.Distinct(); 
+            q2 = q2.Distinct();
             var customsDocumentListPocos = q2.ToList();
             var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+            return customsDocumentListPMs;
+        }
+
+        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(GetTicketsParams parameters, int tenant)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
+            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
+            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
+                     where  cdp.Child1EntityCode!= "DeclarationAmendment"
+                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+                     select cdt
+                        );
+            var q2 = (from cdt in q
+                       join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
+                      select cd
+                         );
+ 
+
+            q2 = q2.Distinct();
+            var customsDocumentListPocos = q2.ToList();
+            var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+            return customsDocumentListPMs;
+        }
+        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocParentOnly(GetTicketsParams parameters, int tenant, bool getComposition = false)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
+            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
+            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerListParentOnly(parameters, tenant)
+                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+                     select cdt
+                        );
+            var q2 = (from cdt in q
+                      where cdt.RequestedCustomsDocId == null
+                      join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
+                      select cd
+                         );
+
+            q2 = q2.Distinct();
+            var customsDocumentListPocos = q2.ToList();
+            var customsDocumentListPMs = customsDocumentListPocos.Select(poko =>
+            GetEntityPM(poko,
+                        getComposition,
+                        new CustomsDocumentKeys()
+                        {
+                            DocumentsFilingId = poko.DocumentsFilingId
+                        })
+                ).ToList();
             return customsDocumentListPMs;
         }
 

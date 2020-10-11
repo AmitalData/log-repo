@@ -24,7 +24,8 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return TapagId+'_'+DeclarationId;
+                 return TapagId+'_'+DeclarationId ;
+                 
       }
 
       public override string GetEntityPMName()

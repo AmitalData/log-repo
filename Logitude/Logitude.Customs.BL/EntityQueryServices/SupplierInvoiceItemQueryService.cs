@@ -357,9 +357,62 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         TaxExemptCode = a.TaxExemptCode,
                         WholeSaleItemPrice = a.WholeSaleItemPrice,
                         WholeSaleItemPriceCurrencyCode = a.WholeSaleItemPriceCurrencyCode,
+                        TransactionNatureCode= a.TransactionNatureCode,
+                        TransactionNatureName=a.TransactionNatureCode,
+                        ClaimReasonName=a.ClaimReasonCode,
+                        ClaimReasonCode=a.ClaimReasonCode,
                         AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
                         InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
                         StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
+                    }).ToList();
+        }
+        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByInvoiceNumber(int tenant, string declarationId, string ItemCode)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByInvoiceNumber(tenant,declarationId,ItemCode);
+            return (from a in supplierInvoiceItems
+                    select new SupplierInvoiceItemPM()
+                    {
+                        DeclarationId = a.DeclarationId,
+                        CounterKey = a.CounterKey,
+                        LineNumber = a.LineNumber,
+                        SequenceNumeric = a.SequenceNumeric,
+                        ItemCode = a.ItemCode,
+                        ClassificationCode = a.ClassificationCode,
+                        OriginCountryName = a.OriginCountry != null ? a.OriginCountry.LocalName : null,
+                        OriginCountryCode = a.OriginCountryCode,
+                        TradeAgreementCode = a.TradeAgreementCode,
+                        TradeAgreementName = a.TradeAgreement != null ? a.TradeAgreement.LocalName : null,
+                        ItemPrice = a.ItemPrice,
+                        InvoiceQuantity = a.InvoiceQuantity,
+                        AdditionalQuantity = a.AdditionalQuantity,
+                        AdditionalQuantityType = a.AdditionalQuantityType,
+                        CertificatesStatusCode = a.CertificatesStatusCode,
+                        CustomsBookTypeCode = a.CustomsBookTypeCode,
+                        DeferredCustomsTax = a.DeferredCustomsTax,
+                        DangerousClassificationCode = a.DangerousClassificationCode,
+                        DeferredPurchaseTax = a.DeferredPurchaseTax,
+                        InvoiceQuantityType = a.InvoiceQuantityType,
+                        ItemDescription = a.ItemDescription,
+                        ItemPriceCurrencyCode = a.ItemPriceCurrencyCode,
+                        ManufactureIdentifier = a.ManufactureIdentifier,
+                        DangerousPackingGroupTypeCode = a.DangerousPackingGroupTypeCode,
+                        OptionalTamaPercentage = a.OptionalTamaPercentage,
+                        IsUsed = a.IsUsed,
+                        NonCustomsItemPrice = a.NonCustomsItemPrice,
+                        NonCustomsItemPriceCurCode = a.NonCustomsItemPriceCurCode,
+                        PreferenceDocumentNumber = a.PreferenceDocumentNumber,
+                        SalesTaxExemptionTypeCode = a.SalesTaxExemptionTypeCode,
+                        StatisticQuantity = a.StatisticQuantity,
+                        StatisticQuantityType = a.StatisticQuantityType,
+                        TaxExemptCode = a.TaxExemptCode,
+                        WholeSaleItemPrice = a.WholeSaleItemPrice,
+                        WholeSaleItemPriceCurrencyCode = a.WholeSaleItemPriceCurrencyCode,
+                        AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
+                        InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
+                        StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
+                        Tenant=a.Tenant,
+                        IsParent=a.IsParent,
+                        ParentLineNumber=a.ParentLineNumber,
                     }).ToList();
         }
 

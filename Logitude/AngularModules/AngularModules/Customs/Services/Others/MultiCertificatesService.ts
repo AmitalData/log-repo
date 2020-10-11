@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -72,7 +73,7 @@ export class MultiCertificatesService {
             var jsonstr = JSON.stringify(mappedEntity);
             console.log(jsonstr);
             return this._http.post(this._apiUrl + '/PostCertificateTicket/', jsonstr,
-                    { headers: authHeader }).map((res) => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         if (pm) {
                             var mappedResult: CertificateTicket;
@@ -117,7 +118,7 @@ export class MultiCertificatesService {
                 + '&certificateNumber=' + certificateNumber
                 + '&certificateExemptionTypeCode=' + certificateExemptionTypeCode
                 + '&resConfirmationTypeCode=' + resConfirmationTypeCode,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result = response;
                 
@@ -217,9 +218,7 @@ export class MultiCertificatesService {
 
         return defer(() => {
             callUrl = callUrl + '&declarationId=' + declarationId + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&CertificateExemptionTypeCode=' + CertificateExemptionTypeCode + '&CertificateNumber=' + CertificateNumber + '&ResConfirmationTypeCode=' + ResConfirmationTypeCode;
-            return this._http.get(callUrl , {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;
@@ -275,9 +274,7 @@ export class MultiCertificatesService {
 
         return defer(() => {
             callUrl = callUrl + '&declarationId=' + declarationId + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&CertificateExemptionTypeCode=' + CertificateExemptionTypeCode + '&CertificateNumber=' + CertificateNumber + '&ResConfirmationTypeCode=' + ResConfirmationTypeCode;
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -318,7 +315,7 @@ export class MultiCertificatesService {
             mappedEntity = this.MapJsonToConnectedItem(certificateConnectedItem, false);
 
             return this._http.put(this._apiUrl + '/PutSupplierInvoiceItemCatalogNumber/', JSON.stringify(mappedEntity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     if (pm) {
                         var mappedResult: CertificateConnectedItem;

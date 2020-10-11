@@ -252,7 +252,7 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
         this.CurrencyRatesView.Clear();
         this._DeclarationExtendedListService.GetCurrenciesCodesForDeclaration(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe(
-            (res) => {
+            (res:any) => {
 
                 let aSupplierInvoiceCurrency = res.Result as SupplierInvoiceCurrency[];
                 this.CurrencyRatesView.InsertCollection(aSupplierInvoiceCurrency);

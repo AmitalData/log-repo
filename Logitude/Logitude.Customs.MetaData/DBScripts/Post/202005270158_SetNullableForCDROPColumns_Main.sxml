@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+begin
+  for c in (select 'alter table '||table_name||' modify '||column_name||' null' q from (select table_name, column_name from user_tab_columns where column_name like 'CDROP\_%' escape '\' and (nullable = 'N' or nullable = 'NO')))
+  loop
+    execute immediate c.q;
+  end loop;
+end;
+    ]]>
+  </Oracle>
+</Script>

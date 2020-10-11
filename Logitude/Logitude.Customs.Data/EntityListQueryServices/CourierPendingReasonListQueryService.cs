@@ -24,6 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<CourierPendingReasonList> query = (from a in iQueryable.Include("PendingErrorPlace")
                                                       select new CourierPendingReasonList()
 											{
+														  Id= a.Id,
 					                            Code = a.Code,
 					                            LocalName = a.LocalName,
 					                            EnglishName = a.EnglishName,

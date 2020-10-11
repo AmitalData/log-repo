@@ -21,6 +21,7 @@
   </Column>
   <Column
     Name="Index"
+    ShortName="CatIndex"
     Type="int">
     <Constraints
       Nullable="false" />

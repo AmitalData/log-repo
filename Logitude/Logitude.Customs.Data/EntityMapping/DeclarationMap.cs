@@ -97,9 +97,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ReferentUserId).HasColumnName("ReferentUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.PlatformFee).HasColumnName("PlatformFee");
+            this.Property(t => t.PlatformFee).HasColumnName("PlatformFee").HasPrecision(18, 2);
 
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
 
@@ -201,7 +201,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CourierSearchFields).HasColumnName("CourierSearchFields").HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.AcceptanceStatusCode).HasColumnName("AcceptanceStatusCode").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.AcceptanceStatusCode).HasColumnName("AcceptanceStatusCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.CasualImporterAddress1).HasColumnName("CasualImporterAddress1").HasMaxLength(35).IsUnicode(true);
 
@@ -219,10 +219,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CasualImporterContact).HasColumnName("CasualImporterContact").HasMaxLength(50).IsUnicode(true);
 
-            this.Property(t => t.MamanStatusCode).HasColumnName("MamanStatusCode").HasMaxLength(2).IsUnicode(false);
-
-            this.Property(t => t.MamanErrorXml).HasColumnName("MamanErrorXml").IsMaxLength().IsUnicode(false);
-
             this.Property(t => t.ItemsProcessTypesList).HasColumnName("ItemsProcessTypesList").IsMaxLength().IsUnicode(false);
 
             this.Property(t => t.IsClose).HasColumnName("IsClose");
@@ -230,6 +226,80 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CourierSuspentionCode).HasColumnName("CourierSuspentionCode").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.DepositionStatusCode).HasColumnName("DepositionStatusCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.IsPaymentProtested).HasColumnName("IsPaymentProtested");
+
+            this.Property(t => t.AmendmentRequestNumber).HasColumnName("AmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.AmendmentissueDate).HasColumnName("AmendmentissueDate");
+
+            this.Property(t => t.AmendmentRemarks).HasColumnName("AmendmentRemarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.AmendmentDeficitInitiated).HasColumnName("AmendmentDeficitInitiated");
+
+            this.Property(t => t.AmendDeficitInitiatedReasTo).HasColumnName("AmendDeficitInitiatedReasTo").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.AmendmentCorrectedByUserId).HasColumnName("AmendmentCorrectedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AmendmentRejectionReason).HasColumnName("AmendmentRejectionReason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.IsAmendment).HasColumnName("IsAmendment");
+
+            this.Property(t => t.AmendmentOriginalDeclartation).HasColumnName("AmendmentOriginalDeclartation").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsDiamondDeclaration).HasColumnName("IsDiamondDeclaration");
+
+            this.Property(t => t.AmendmentDontDisplayInList).HasColumnName("AmendmentDontDisplayInList");
+
+            this.Property(t => t.IsMissMandatoryDiamond).HasColumnName("IsMissMandatoryDiamond");
+
+            this.Property(t => t.IsValidTicketsDiamond).HasColumnName("IsValidTicketsDiamond");
+
+            this.Property(t => t.AvailabilityDate).HasColumnName("AvailabilityDate");
+
+            this.Property(t => t.LoadingDateTime).HasColumnName("LoadingDateTime");
+
+            this.Property(t => t.ShipCode).HasColumnName("ShipCode").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.IsExporterConfirmation).HasColumnName("IsExporterConfirmation");
+
+            this.Property(t => t.Direction).HasColumnName("Direction").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.AgentRoleCode).HasColumnName("AgentRoleCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.ExportFile).HasColumnName("ExportFile").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DestinationCountryCode).HasColumnName("DestinationCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ExportAutonomyRegionTypeCode).HasColumnName("ExportAutonomyRegionTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestReasonCode).HasColumnName("CancelRequestReasonCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CancelRequestNumber).HasColumnName("CancelRequestNumber");
+
+            this.Property(t => t.CustomCancelRequestRemarks).HasColumnName("CustomCancelRequestRemarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CancelRequestStatusCode).HasColumnName("CancelRequestStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestRejectionReason).HasColumnName("CancelRequestRejectionReason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CancelRequestApproveDate).HasColumnName("CancelRequestApproveDate");
+
+            this.Property(t => t.IsClaimable).HasColumnName("IsClaimable");
+
+            this.Property(t => t.ReplacingRepairRequest).HasColumnName("ReplacingRepairRequest").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.AmendmentErrorXml).HasColumnName("AmendmentErrorXml").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.FOBValueNIS).HasColumnName("FOBValueNIS").HasPrecision(16, 2);
+
+            this.Property(t => t.FOBValueDollar).HasColumnName("FOBValueDollar").HasPrecision(16, 2);
         }
     }
 }

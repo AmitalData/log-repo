@@ -171,8 +171,33 @@ export class NotificationBellComponent {
                                 case "70N":
                                 case "70C":
                                 case "60A":
+                                case "5117C":
+                                case "5117W":
+                                case "5117D":
+                                case "5117A":
+                                case "5117P":
                                     {
-                                        var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                      //  var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                        var tab;
+                                        var tabs = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId);
+                                        if (tabs.lenght > 0) {
+                                            tabs = tabs.sort((n1, n2) => {
+                                                if (n1.IndexOrder > n2.IndexOrder) {
+                                                    return 1;
+                                                }
+
+                                                if (n1.IndexOrder < n2.IndexOrder) {
+                                                    return -1;
+                                                }
+
+                                                return 0;
+                                            });
+
+                                            tab = tabs[0];
+                                        }
+                                        else {
+                                            tab = tabs;
+                                        }
 
                                         if (tab) {
                                             currentScreenCode = tab.Code;
@@ -186,6 +211,9 @@ export class NotificationBellComponent {
                                     }
 
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101E":
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -212,6 +240,9 @@ export class NotificationBellComponent {
                                 case "1812U":
                                 case "2020N":
                                 case "2000N":
+                                case "2753A":
+                                case "5110N":
+                                case "5108N":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
@@ -516,7 +547,7 @@ export class NotificationBellLine {
             this.IconeVisibility = false;
         }
 
-        if (this.entity.NotificationDefinitionCode == "5101N") {
+        if (this.entity.NotificationDefinitionCode == "5101N" || this.entity.NotificationDefinitionCode == "5101R" || this.entity.NotificationDefinitionCode == "5101A" || this.entity.NotificationDefinitionCode == "5101E") {
             this.BlueIconeVisibility = true;
             this.IconeVisibility = false;
 

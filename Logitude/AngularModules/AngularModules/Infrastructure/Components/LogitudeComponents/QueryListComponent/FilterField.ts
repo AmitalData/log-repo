@@ -12,7 +12,7 @@ import { FeatureLocator } from '../../../Utilities/FeatureLocator';
 
 export class FilterField extends BaseComponent {
     AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]
-    ParentClass: any; 
+    ParentClass: any;
     filters: ApiQueryFilters;
     iswidnowMode: boolean = false;
     QueryId: string;
@@ -151,7 +151,7 @@ export class FilterField extends BaseComponent {
             this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
         }
     }
-    
+
     private filterchangeevent: PubSubService;
     public get Filterchangeevent() { return this.filterchangeevent; }
     public set Filterchangeevent(newValue: PubSubService) { this.filterchangeevent = newValue; }
@@ -185,7 +185,12 @@ export class FilterField extends BaseComponent {
     public set IsPreDefined(newValue: boolean) { this.isPreDefined = newValue; }
 
     private exists: boolean;
-    public get Exists() { return this.exists; }
+    public get Exists() {
+        //if (this.IsPreDefined == true)
+        //    return true;
+        //else
+        return this.exists;
+    }
     public set Exists(newValue: boolean) {
         //if (this.ParentClass.SelectedObjectFields && (this.ParentClass.SelectedObjectFields.length) > 10 && newValue == true) {
         //    this.ParentClass.ValidationErrorsList = [];

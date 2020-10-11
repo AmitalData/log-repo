@@ -1,0 +1,121 @@
+
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
+    <table class="noselect" *ngIf="Loaded">
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <div class="DisbleBox">
+                    הזן סוג סיבה לסטטוס {{UnifreightStatusCode}}
+                </div>
+            </td>
+        </tr>
+
+        <!-- Exception  Reason -->
+        <tr style="height: 200px; width: 300px; top:0px">
+            <td style="height: 200px; width: 300px;">
+                <div style="height: 200px; width: 300px;">
+                    <table style="height: 230px; width: 300px;">
+                        <tr style="height: 30px">
+
+                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                <div>
+                                    <IconButton [IsSmall]="true"
+                                                [Name]="'Add'"
+                                                (click)="AddNewExceptionReasonCommand()"
+                                                style="float:left;"></IconButton>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="width: 300px; height: 170px; overflow: auto;">
+                            <td colspan="5">
+                                <div class="CellContent">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                        [ItemSource]="ExceptionReasonList">
+
+                                        <log-column [header]="'קוד'"
+                                                    [width]="'200'" [Alignment]="'right'">
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.ReasonLocalName}}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogLov [ObjectFieldName]="'Code'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="item"
+                                                            [LookUpTableName]="'Customs.ExceptionReason'"
+                                                            [HideColumns]="true"
+                                                            [FocusOnMe]="true"
+                                                            [SelectedValue]="Code">
+                                                    </LogLov>
+                                                </div>
+                                            </log-cell-template>
+</ng-template>
+                                        </log-column>
+
+                                        <!-- Delete Button-->
+                                        <log-column [width]="'50'" [Alignment]="'right'">
+                                            <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteExceptionCommand(item)"
+                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                            </log-cell-template>
+</ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        <tr></tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td colspan="3"></td>
+        </tr>
+
+
+        <!-- footer -->
+        <tr class="FormFieldRow">
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+

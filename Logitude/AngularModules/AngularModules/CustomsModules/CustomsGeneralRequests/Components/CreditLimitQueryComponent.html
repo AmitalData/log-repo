@@ -112,33 +112,39 @@
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditQueryResults.O.DailyCieling' | TextCodeTranslationPipe"
                                             [binding]="'TemporaryCeiling'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.TemporaryCeiling }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- UsedBalance -->
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditQueryResults.O.UsedBalance' | TextCodeTranslationPipe"
                                             [binding]="'UsedBalance'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.UsedBalance}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- FreeBalance -->
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditQueryResults.O.FreeBalance' | TextCodeTranslationPipe"
                                             [binding]="'FreeBalance'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.FreeBalance}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -161,22 +167,26 @@
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditQueryResults.O.BankAccount' | TextCodeTranslationPipe"
                                             [binding]="'BankAccount'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.BankAccount }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- UsedBalanceForBankAccount -->
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditQueryResults.O.UsedBalanceForBankAccount' | TextCodeTranslationPipe"
                                             [binding]="'UsedBalanceForBankAccount'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.UsedBalanceForBankAccount}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

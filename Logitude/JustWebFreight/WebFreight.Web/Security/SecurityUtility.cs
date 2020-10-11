@@ -279,7 +279,7 @@ namespace WebFreight.Web.Security
 
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
 
-                throw new Exception("Sorry! you have no permission to do this operation on " + objectTableName);
+                throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName);
             }
 
 
@@ -1021,9 +1021,14 @@ namespace WebFreight.Web.Security
 
 
             HttpContext context = HttpContext.Current;
+            string IsSecureConnection = context.Request.IsSecureConnection.ToString();
+            if (context.Request.Headers.AllKeys.Contains("X-IsSecure"))
+            {
+                IsSecureConnection = context.Request.Headers["X-IsSecure"];
+            }
             if (LogitudeSettings.ForceHttps || redirect)
             {
-                if (!context.Request.IsSecureConnection)
+                if (IsSecureConnection != "true")
                 {
 
                     string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:");

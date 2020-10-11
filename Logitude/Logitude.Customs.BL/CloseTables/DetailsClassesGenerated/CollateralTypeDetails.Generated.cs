@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<CollateralTypeDetails> GetAll()
        {
-		    var all = new List<CollateralTypeDetails>(); 
+		    var all = new List<CollateralTypeDetails>();  
+            all.Add(new CollateralTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,ערבות", 
+                Inactive = false, 
+                LocalName = "ערבות", 
+			});
+			 
+            all.Add(new CollateralTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,פיקדון", 
+                Inactive = false, 
+                LocalName = "פיקדון", 
+			});
+			 
+            all.Add(new CollateralTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,ערבות או פיקדון", 
+                Inactive = false, 
+                LocalName = "ערבות או פיקדון", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CollateralType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CollateralType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

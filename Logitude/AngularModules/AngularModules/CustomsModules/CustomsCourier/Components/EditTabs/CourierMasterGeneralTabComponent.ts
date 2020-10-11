@@ -1,4 +1,3 @@
-
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -8,7 +7,8 @@ import {CourierMasterValidator} from '../../../../Customs/Validators/CourierMast
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
     
@@ -24,36 +24,51 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     CourierMasterService: CourierMasterService = new CourierMasterService();
 
     public CurrentEditComponentId: string;
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CarrierDependencyProperty1: string;
+
+    public WeightValueFilterItems: ApiQueryFilters;
+
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+    timerToken: any;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.WeightValueFilterItems = new ApiQueryFilters();
+        this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
+        this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorName", this.ObjectTableName, false);
+        this.DisplayOnlyCheck();
+        this.CarrierDependencyProperty1 = "TR";
         this.Listen();
+
     }
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && SessionLocator.SelectedSession.CurrentEditComponent) {
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "COGN") {
-
+                            this.SetScreenFieldsEditability();
                         }
                     }
                 })
@@ -168,6 +183,35 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get StorageSiteCode() { return this.EntityPM.StorageSiteCode; }
+    set StorageSiteCode(value: string) {
+        if (this.EntityPM.StorageSiteCode != value) {
+            this.EntityPM.StorageSiteCode = value;
+        }
+    }
+
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(value: string) {
+        if (this.EntityPM.TruckerId != value) {
+            this.EntityPM.TruckerId = value;
+        }
+    }
+
+    get IntegratorCode() { return this.EntityPM.IntegratorCode; }
+    set IntegratorCode(value: string) {
+        if (this.EntityPM.IntegratorCode != value) {
+            this.EntityPM.IntegratorCode = value;
+        }
+    }
+
+    get IntegratorName() { return this.EntityPM.IntegratorName; }
+    set IntegratorName(value: string) {
+        if (this.EntityPM.IntegratorName != value) {
+            this.EntityPM.IntegratorName = value;
+
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe((Result:any) => {
@@ -177,7 +221,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         //            var errorMsg: string = "Already exist";
         //            this.UIProperties.SetValidity("AirlineId", "Customs.CourierMaster", false,"Already exist");
         //            //this.CourierMasterValidator.ValidationErrorMessageCodes.push(errorMsg);
-        //            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMsg);
+        //            //SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList.push(errorMsg);
         //        }
         //    }
         //});
@@ -188,6 +232,53 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     HAWBLostFocus(value: any) {
+    }
+
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
+        this.CourierMasterValidator.SetEntityPM(this.EntityPM);
+        this.CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.EntityPM.Tenant, "UCBCMSS", this.EntityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this.SetScreenFieldsEditability();
+
+                    this.timerToken = setTimeout(() => {
+                        this.SetScreenFieldsEditability();
+                        clearTimeout(this.timerToken);
+                        //this.CD.detectChanges();
+                    }, 900);
+                }
+            }
+        });
+    }
+
+    SetScreenFieldsEditability() {
+        this.UIProperties.SetEnabled("AirlineId", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("MAWB", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IsOpen", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("HAWB", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("GatewayPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("OriginPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FlightNumber", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DepartureDate", this.ObjectTableName, !this.IsDisplayOnly);
+        //this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EstimatedArrivalDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, !this.IsDisplayOnly);
+    }
+
+    RefreshEntity() {
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        this.DisplayOnlyCheck();
     }
 
 }

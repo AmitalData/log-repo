@@ -144,7 +144,7 @@ namespace Logitude.Server.Tools.Helpers
                         ObjectTableId = objectTable.Id,
                         LogDateTime = args.LogDateTime.Value,
                         EventDateTime = args.EventDateTime.Value,
-                        ExternalId = !string.IsNullOrEmpty(args.ExternalId) ? args.ExternalId.Trim():"",
+                        ExternalId = args.ExternalId?.Trim(),
                         IsAddedManually = args.IsAddedManually,
                         UserId = myUserId,
                         CustomerCareUserEmail = myCustomerCareUserEmail,

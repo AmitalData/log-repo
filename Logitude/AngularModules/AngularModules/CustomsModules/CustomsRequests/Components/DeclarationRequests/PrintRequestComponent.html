@@ -1,4 +1,4 @@
-﻿<!-- PrintRequestComponent view  -->
+<!-- PrintRequestComponent view  -->
 <style>
     .MessageBox {
         width:200px;
@@ -126,7 +126,7 @@
 
                                 <td style="width:230px; height: 20px;" *ngIf="declarationPrintItem.PrintErrorText">
                                         <LogTextBox [ObjectFieldName]="'PrintErrorText'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="declarationPrintItem" [ObjectTableName]="ObjectTableName"
                                                     [HideLastColumn]="true"
                                                     [HideColumns]="true" [Text]="declarationPrintItem.PrintErrorText"></LogTextBox>

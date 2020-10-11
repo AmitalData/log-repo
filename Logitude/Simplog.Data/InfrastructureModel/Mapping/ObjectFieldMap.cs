@@ -56,7 +56,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.FieldCode).HasMaxLength(200).IsUnicode(false);
+            //this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.HelpTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);
@@ -129,7 +130,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CanAutomateSetValue).HasColumnName("CanAutomateSetValue");
             this.Property(t => t.AllowedInAirlineMessaging).HasColumnName("AllowedInAirlineMessaging");
             this.Property(t => t.HasTemplate).HasColumnName("HasTemplate");
-            this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
+            this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
             this.Property(t => t.GeneratedComponentPath).HasColumnName("GeneratedComponentPath");
             this.Property(t => t.DisplayInDocumentReferences).HasColumnName("DisplayInDocumentReferences");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -145,19 +146,19 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
 
             //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
-            }
+            //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            //if (dbms == "oracle")
+            //{
+                this.Property(t => t.SearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
+                this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
+            //}
 
-            //#else
-            else
-            {
-                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
-            }
+            ////#else
+            //else
+            //{
+            //    this.Property(t => t.SearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
+            //    this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
+            //}
 
             //#endif
 

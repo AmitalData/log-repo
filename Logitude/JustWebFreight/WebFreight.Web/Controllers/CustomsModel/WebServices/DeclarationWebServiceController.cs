@@ -37,6 +37,13 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging;
+using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
+using Logitude.CustomsMessaging.ResponseServices;
+
+
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -77,7 +84,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter)
+        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors)
         {
             try
             {
@@ -89,7 +96,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationQueryService query = new DeclarationQueryService(customContext);
                 List<DeclarationErrorView> list
                     = query.GetDeclarationErrors(declarationId == "undefined" ? null : declarationId
-                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter);
+                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter , IsAmendmentErrors);
 
                 return Request.CreateResponse(HttpStatusCode.OK, list);
             }
@@ -359,6 +366,78 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+        public HttpResponseMessage GetAcceptDeclarationAmendment(string declarationId)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                DeclarationQueryService queryService = new DeclarationQueryService(customContext);
+                 var declaration = queryService.GetAcceptDeclarationAmendment(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declaration);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+ 
+                DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+                string error="";
+                DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
+
+                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error,user: requestParams.LoggingUserId);
+
+                XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+ 
+
+                if (declarationPM != null)
+                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        public HttpResponseMessage PostSendExportDeclaration(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         public HttpResponseMessage PostSendDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -374,6 +453,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
+
+
+        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new DF_MSG2892_ImportDeclarationAmendmentMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
 
         public HttpResponseMessage PostSendManifest(MANIFESTRequestRequestParams requestParamsData)
         {
@@ -1171,6 +1269,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetCheckFreightAmountsByIncotermWithDefault(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext myContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService queryService = new DeclarationQueryService(myContext);
+
+                string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant); 
+                if (isNoIncotermCheck == "Y")
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                }
+
+                var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationClosureMethod(string declarationId, int tenant)
         {
             try
@@ -1544,6 +1668,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
+ 
+
 
                 CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
 
@@ -1562,6 +1688,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
                 submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
                 submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
+
+                submitRequestParams.TestCase = requestParamsCredit.TestCase;
 
                 var messagingService = new
                     DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
@@ -1591,6 +1719,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 List<CustomsCollateralPM> customsCollateralList = queryService.GetDeclarationCollateralsList(declarationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customsCollateralList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDeclarationCargoSealLists(string declarationId, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CargoSealIdentifierQueryService queryService = new CargoSealIdentifierQueryService(customContext);
+                List<CargoSealIdentifierPM> cargoSealIdentifierPMList = queryService.GetDeclarationCargoSealIdentifierList(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, cargoSealIdentifierPMList);
             }
 
             catch (Exception ex)
@@ -1639,34 +1784,63 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-
         //DeclarationMamanSpecialAction
         public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
         {
             try
             {
                 ICustomContext myContext = CustomContext.GetContext(tenant);
-                CourierGWMessageECSpclMamanRequestService courierGWMessageECSpclMamanRequestService = new CourierGWMessageECSpclMamanRequestService();
-                MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
-                MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                if (actionCode == "C")
+                ICourierGWMessageECSpcRequestService courierGWMessageECSpclRequestService = null;
+
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(myContext);
+                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
-                }
-                switch(mamanSpecialActionCode)
-                {
-                    case "2":
-                        mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                        break;
-                    case "4":
-                        mamanSpecialCode = MamanSpecialCode.StickerPrinting;
-                        break;
-                    case "5":
-                        mamanSpecialCode = MamanSpecialCode.PrintDocuments;
-                        break;
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    {
+                        courierGWMessageECSpclRequestService = new CourierGWMessageECSpclMamanRequestService();
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    {
+                        courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
+                    }
                 }
 
-                string actionResultString = courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                string actionResultString = "";
+                if (courierGWMessageECSpclRequestService != null)
+                {
+                    MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
+                    MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                    if (actionCode == "C")
+                    {
+                        mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
+                    }
+                    switch (mamanSpecialActionCode)
+                    {
+                        case "2":
+                            mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                            break;
+                        case "4":
+                            mamanSpecialCode = MamanSpecialCode.StickerPrinting;
+                            break;
+                        case "5":
+                            mamanSpecialCode = MamanSpecialCode.PrintDocuments;
+                            break;
+                        case "6":
+                            mamanSpecialCode = MamanSpecialCode.Sban;
+                            break;
+                    }
+
+                    actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                }
+                else
+                {
+                    actionResultString = "לא קיימת הרשאה";
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
 
             }
@@ -1674,6 +1848,76 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage PostSendDeclarationCancellation(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData = null;
+
+                // use messageing service
+                var service = new SaveDF_MSG5002_DeclarationCancellationRequestMsgService();
+                responseData = service.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
+
+        public HttpResponseMessage GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
+
+                //Get DeclarationCancellation Attachments
+                bool isAttachmentNumberIsMoreThenAllow = false;
+                List<CustomsDocumentPM> customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationId, ParentEntityCode = "DeclarationCancellation" }, tenant);
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+                {
+                    isAttachmentNumberIsMoreThenAllow = true;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, isAttachmentNumberIsMoreThenAllow);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData = null;
+
+                // use messageing service
+                var service = new SE_6001_SealUpdateMessagingService();
+                responseData = service.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
     

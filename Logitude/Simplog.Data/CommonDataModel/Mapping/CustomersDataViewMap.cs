@@ -79,8 +79,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SalesmanUserEnglishName).HasColumnName("SalesmanUserEnglishName");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
-            this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
+          
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
@@ -122,6 +121,22 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserName).HasColumnName("ActivatedByUserName");
             this.Property(t => t.SetAsInactiveByName).HasColumnName("SetAsInactiveByName");
             this.Property(t => t.ActivationRequestedByUserName).HasColumnName("ActivationRequestedByUserName");
+
+            //#if ORACLE_DB
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogsInvitationStatusName");
+                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
+            }
+            //#elseelse
+            else
+            {
+                this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
+                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
+                
+            }
+            //#endif
         }
     }
 }

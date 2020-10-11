@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,18 +145,19 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             if (Transaction.Current == null) return;
             //Register for the transaction completed event for the current transaction
+            Transaction.Current.TransactionCompleted -= new TransactionCompletedEventHandler(Current_TransactionCompleted);
             Transaction.Current.TransactionCompleted += new TransactionCompletedEventHandler(Current_TransactionCompleted);
 
 
         }
         static void Current_TransactionCompleted(object sender, TransactionEventArgs e)
         {
-            Console.WriteLine(Environment.StackTrace.ToString());
-            Console.WriteLine("A transaction has completed:");
-            Console.WriteLine("ID:             {0}", e.Transaction.TransactionInformation.LocalIdentifier);
-            Console.WriteLine("Distributed ID: {0}", e.Transaction.TransactionInformation.DistributedIdentifier);
-            Console.WriteLine("Status:         {0}", e.Transaction.TransactionInformation.Status);
-            Console.WriteLine("IsolationLevel: {0}", e.Transaction.IsolationLevel);
+            Debug.WriteLine(Environment.StackTrace.ToString());
+            Debug.WriteLine("A transaction has completed:");
+            Debug.WriteLine("ID:             {0}", e.Transaction.TransactionInformation.LocalIdentifier);
+            Debug.WriteLine("Distributed ID: {0}", e.Transaction.TransactionInformation.DistributedIdentifier);
+            Debug.WriteLine("Status:         {0}", e.Transaction.TransactionInformation.Status);
+            Debug.WriteLine("IsolationLevel: {0}", e.Transaction.IsolationLevel);
         }
     }
 

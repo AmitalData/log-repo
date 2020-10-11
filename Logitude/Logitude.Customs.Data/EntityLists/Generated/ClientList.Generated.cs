@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsExporter  { get; set; }
        [DataMember]
        public string FacilitationTypeCode  { get; set; }
+       [DataMember]
+       public string NationalIdentificationNumber  { get; set; }
    }
 
 }

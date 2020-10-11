@@ -108,6 +108,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Card CustomerCard { get; set; }
         [Column("NoEscortRequired")]
 	    public bool NoEscortRequired { get; set; }
+        [Column("VehicleChassisNumber")]
+	    public string VehicleChassisNumber { get; set; }
     }
 }
 	 

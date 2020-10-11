@@ -1,5 +1,5 @@
-﻿<style>
-    .NoSelect{
+<style>
+    .NoSelect {
         -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Chrome/Safari/Opera */
         -khtml-user-select: none; /* Konqueror */
@@ -7,56 +7,88 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
         user-select: none; /* Non-prefixed version, currently not supported by any browser */
     }
+
     .myTitleClass {
         color: blue;
         text-decoration: underline;
     }
+
         .myTitleClass:hover .edit {
             visibility: visible;
             /*display:block;*/
-            opacity:1;
+            opacity: 1;
         }
+
     .edit {
         float: left;
-        visibility:hidden ;
+        visibility: hidden;
         /*display:none;*/
-        opacity:0;
+        opacity: 0;
         margin: 2px;
     }
 </style>
 <div style="height: 24px;direction:ltr">
     <table>
-        <tr>
+        <tr *ngIf="EntityPM.Direction!='E'">
             <td colspan="2">
                 <div class="ShortTitleControl">
-                    <span 
-                          *ngIf="_EntityNumber && _ShowEntityNumberClick"
+                    <span *ngIf="_EntityNumber && _ShowEntityNumberClick"
                           class="myTitleClass" style="float: right; width: auto; padding: 0px 4px;">
                         <!--<span class="edit" *ngIf="_ShowEntityNumberClick" (click)="EntityNumberClick()">
                             &nbsp;
                         </span>-->
-                            <!--<img style="visibility:inherit; vertical-align: middle; transform:none;" title="הצג תיק עמילות" class="FlipImgHoriz" src="./Images/LOVSearch.png">-->
-                            <!--<a href="#"><i class="fa fa-pencil fa-lg"></i></a>-->
-                            <IconButton 
-                                        [IsSmall]="true" [Name]="'Edit'" 
-                                        class="edit" 
-                                        (click)="EntityNumberClick()"
-                                        style="visibility:inherit; vertical-align: middle; transform:none;" title="שמור והצג תיק עמילות"></IconButton>
-                        
+                        <!--<img style="visibility:inherit; vertical-align: middle; transform:none;" title="הצג תיק עמילות" class="FlipImgHoriz" src="./Images/LOVSearch.png">-->
+                        <!--<a href="#"><i class="fa fa-pencil fa-lg"></i></a>-->
+                        <IconButton [IsSmall]="true" [Name]="'Edit'"
+                                    class="edit"
+                                    (click)="EntityNumberClick()"
+                                    style="visibility:inherit; vertical-align: middle; transform:none;" title="שמור והצג תיק עמילות"></IconButton>
+
                         {{_EntityNumber}}
-                    </span> 
+                    </span>
                     <span *ngIf="_EntityNumber && !_ShowEntityNumberClick"
                           style="float: right; width: auto; padding: 0px 4px;">
                         {{_EntityNumber}}
-                    </span> 
-                    
+                    </span>
+
                     <span *ngIf="EntityNumber" style="float: right; width: auto; padding: 0px 4px;">  {{EntityNumber}} </span>
                     <!--<span *ngIf="!EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{EntityPM.CustomerName}}  </span>-->
                     <span *ngIf="!EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{EntityPM.CustomerName}}  - </span>
                     <span *ngIf="EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{CourierImporterName}}  </span>
 
                     <span *ngIf="EntityPM.FacilityTypeName" class="TextTrimming"
-                           style="float: right; width: auto; font-size:12px;font-weight:bold;padding-bottom:2px">({{EntityPM.FacilityTypeName}})</span>
+                          style="float: right; width: auto; font-size:12px;font-weight:bold;padding-bottom:2px">({{EntityPM.FacilityTypeName}})</span>
+
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="EntityPM.Direction=='E'">
+            <td colspan="2">
+                <div class="ShortTitleControl">
+                    <span *ngIf="EntityPM.ExportFile" class="TextTrimming"
+                          style="float: right; width: auto; padding: 0px 4px;">/ {{EntityPM.ExportFile}}</span>
+                    <span *ngIf="_EntityNumber && _ShowEntityNumberClick"
+                          class="myTitleClass" style="float: right; width: auto; padding: 0px 4px;">
+                        <IconButton [IsSmall]="true" [Name]="'Edit'"
+                                    class="edit"
+                                    (click)="EntityNumberClick()"
+                                    style="visibility:inherit; vertical-align: middle; transform:none;" title="שמור והצג תיק עמילות"></IconButton>
+
+                        {{_EntityNumber}}
+                    </span>
+                    <span *ngIf="_EntityNumber && !_ShowEntityNumberClick"
+                          style="float: right; width: auto; padding: 0px 4px;">
+                        {{_EntityNumber}}
+                    </span>
+
+
+                    <span *ngIf="EntityNumber" style="float: right; width: auto; padding: 0px 4px;">  {{EntityNumber}} </span>
+                    <!--<span *ngIf="!EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{EntityPM.CustomerName}}  </span>-->
+                    <span *ngIf="!EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{EntityPM.CustomerName}}  - </span>
+                    <span *ngIf="EntityPM.IsCourierDeclaration" class="" style="float: right; width: auto; padding: 0px 4px;">  {{CourierImporterName}}  </span>
+
+                    <span *ngIf="EntityPM.FacilityTypeName" class="TextTrimming"
+                          style="float: right; width: auto; font-size:12px;font-weight:bold;padding-bottom:2px">({{EntityPM.FacilityTypeName}})</span>
 
                 </div>
             </td>

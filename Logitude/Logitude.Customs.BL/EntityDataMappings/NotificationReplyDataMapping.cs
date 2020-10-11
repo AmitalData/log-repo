@@ -40,8 +40,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.RepliedByUserId != null)
             {
-                UserRepository rep = new UserRepository(0);
-                User user = rep.GetSingleUser(entityPOCO.RepliedByUserId , entityPOCO.Tenant, false);
+                UserRepository rep = new UserRepository(entityPOCO.Tenant);
+                User user = rep.GetSingleUser(entityPOCO.RepliedByUserId, entityPOCO.Tenant, false);
+                if (user == null)
+                {
+                    user = rep.GetSingleUser(entityPOCO.RepliedByUserId, 0, false);
+                }
+                user = user ?? new User();
+                //var qs= new SystemDataQuery(entityPOCO.Tenant);
+                //var user = qs.GetSinglePM(entityPOCO.RepliedByUserId, entityPOCO.Tenant);
+
                 entityPM.RepliedByUserName = user.Contact != null ? user.Contact.LocalName: null;
             }
         }

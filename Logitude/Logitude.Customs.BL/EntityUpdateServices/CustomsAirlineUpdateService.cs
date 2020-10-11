@@ -42,6 +42,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(CustomsAirlinePM entityPM, CustomsAirline entityPOCO)
         {
             ValidateEntity(entityPM);
+            entityPM.LocalName = entityPM.LocalName ?? entityPM.EnglishName;
 
             base.OnUpdating(entityPM, entityPOCO);
         }

@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     loggedContactId = loggedContact.Id;
                 }
 
-                
+
                 UpsertFUStatusLE2U(Tenant, loggedContactId, new UnifreightFUStatusParam()
                 {
                     Entname = "CFIFILEM",
@@ -55,8 +55,31 @@ namespace Logitude.Customs.BL.TraceEvents
                     StatusRemarks = "",
 
                 });
+                //SendINVAD(Tenant, CustomFileNo, loggedContactId);
+
             }
 
+        }
+
+        private static void SendINVAD(int Tenant, string CustomFileNo, string loggedContactId)
+        {
+            string unifrieghtEvent = "INAD";
+            string eventRemarks = "";
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
         }
 
         public void UpsertFUStatusLE2U(int tenant, string logitudeUserId, UnifreightFUStatusParam myUnifreightFUStatusParam)
@@ -84,7 +107,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
                     
-                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, DateTime.Now);
+                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, myUnifreightFUStatusParam.EventDateTime?? DateTime.Now);
 
 
                     //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
@@ -147,6 +170,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
             myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+            LogMessagingUtil.Instance.AppendLine("TASKID="+myYCULTASKPM_Packs.TASKID);
         }
 
         public string GetMyFUStatusXML(
@@ -188,8 +212,10 @@ namespace Logitude.Customs.BL.TraceEvents
             myAmitalStatusTracerModel.Tenant = tenant;
             myAmitalStatusTracerModel.UserId = loggingUserId;
             myAmitalStatusTracerModel.MyFUStatus = myFUStatus;
+
             var myGFUSTS = AmitalEventTracer.GetFUStatus(myAmitalStatusTracerModel);
             var xml = XmlGenericUtil<GFUSTS>.SerializeObject(myGFUSTS, true);
+            
             return xml;
         }
 

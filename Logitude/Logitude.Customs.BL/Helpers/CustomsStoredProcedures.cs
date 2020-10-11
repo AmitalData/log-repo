@@ -18,6 +18,64 @@ namespace Logitude.Customs.BL.Helpers
 {
     public class CustomsStoredProcedures
     {
+        public static void Declaration_SetIsPaymentProtested(string declarationId, int tenant,bool IsPaymentProtested)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    //string cmd =
+                    //    "update Declarations dest SET dest.IsPaymentProtested= case when exists (select 1 from declarationpaymentmethods t1 where t1.declarationid =dest.id) then 1 else 0 end " +
+                    //    $"where dest.id = '{declarationId}' and dest.tenant={tenant}  ";
+
+                    //cmd =
+                    //    "declare  " +
+                    //    "   n NUMBER(5) := 0; " +
+                    //    "begin   " +
+                    //    $"   select count(*) into n from declarationpaymentmethods t1 where t1.declarationid ='{declarationId}' and t1.tenant={tenant} ;   " +
+                    //    "   if n>0 then 	" +
+                    //    $"       update Declarations dest SET dest.IsPaymentProtested= 1 where dest.id = '{declarationId}' and dest.tenant={tenant}  ;    " +
+                    //    "   else     " +
+                    //    $"       update Declarations dest SET dest.IsPaymentProtested= 0 where dest.id = '{declarationId}' and dest.tenant={tenant}  ;   " +
+                    //    "   end if; " +
+                    //    "END";
+                    int intIsPaymentProtested = 0;
+                    if (IsPaymentProtested)
+                    {
+                        intIsPaymentProtested = 1;
+                    }
+                    string cmd =
+                        $"update Declarations dest SET dest.IsPaymentProtested= {intIsPaymentProtested} where dest.id = '{declarationId}' and dest.tenant={tenant}  ";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            else
+            {
+                bool tested = false;
+                if (!tested)
+                {
+                    throw new Exception("Declaration_SetIsPaymentProtested 4sqlServer 2do !!!");
+                }
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = 
+                        "update declarations dest SET dest.ispaymentprotested= case when exists (select 1 from declarationpaymentmethods t1 where t1.declarationid =dest.id) then 1 else 0 end " +
+                        $"where dest.id = '{declarationId}' and dest.tenant={tenant}  ;";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
         public static void UpdateSupplierInvoiceItemsSequence(string declarationId,int counterKey, int tenant)
         {
             string strConnString = GetConnection(tenant);

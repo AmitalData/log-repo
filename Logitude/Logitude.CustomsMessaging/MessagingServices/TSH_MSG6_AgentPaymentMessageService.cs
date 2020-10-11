@@ -51,7 +51,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             return response;
         }
+        protected override TSH_MSG7_AgentPaymentReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+            var MyFake_TSH_MSG6_AgentPaymentMessageService = new Fake_TSH_MSG6_AgentPaymentMessageService();
+            return MyFake_TSH_MSG6_AgentPaymentMessageService.GetFakeCustomsResponse(requestParamsData);
 
+        }
 
         protected override TSH_MSG7_AgentPaymentReply CallWS(TSH_MSG6_AgentPayment customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {

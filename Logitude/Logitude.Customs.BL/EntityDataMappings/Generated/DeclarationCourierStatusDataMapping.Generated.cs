@@ -34,7 +34,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TotalInvoiceAmountInUSD, 
 	         CourierPendingReasonCode, 
 	         PendingRemarks, 
-	         SpecialActionStatus,
+	         SpecialActionStatus, 
+	         FastIndividualProcessCode, 
+	         ManualProcessCode, 
+	         TerminalSuspentionNumber, 
+	         LastMileStatusCode, 
+	         LastMileStatusDate, 
+	         LastMileStatusRemarks, 
+	         StorageSiteStatusCode, 
+	         StorageSiteErrorText, 
+	         CourierPendingReasonList, 
+	         LastMileStatusName,
 	      }
 
 
@@ -80,12 +90,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PendingRemarks, 
 	         CourierSuspentionReasonName, 
 	         AcceptanceStatusCode, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
 	         SpecialActionStatus, 
-	         SpecialActionsErrorXml,
+	         SpecialActionsErrorXml, 
+	         CourierPendingReasonErrorPlace, 
+	         FastIndividualProcessCode, 
+	         ManualProcessCode, 
+	         TerminalSuspentionNumber, 
+	         LastMileStatusCode, 
+	         LastMileStatusDate, 
+	         LastMileStatusRemarks, 
+	         StorageSiteStatusCode, 
+	         StorageSiteErrorText, 
+	         StorageSiteStatusName, 
+	         CourierPendingReasonList, 
+	         LastMileStatusName, 
+	         SortedImporterCode, 
+	         SortedDocumentStatusCode, 
+	         SortedCourierManifestStatus, 
+	         SortedCourierDeclarationStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -152,6 +176,56 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
             {
 				entityPOCO.SpecialActionStatus = entityPM.SpecialActionStatus;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))
+            {
+				entityPOCO.FastIndividualProcessCode = entityPM.FastIndividualProcessCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
+            {
+				entityPOCO.ManualProcessCode = entityPM.ManualProcessCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalSuspentionNumber))
+            {
+				entityPOCO.TerminalSuspentionNumber = entityPM.TerminalSuspentionNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusCode))
+            {
+				entityPOCO.LastMileStatusCode = entityPM.LastMileStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusDate))
+            {
+				entityPOCO.LastMileStatusDate = entityPM.LastMileStatusDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusRemarks))
+            {
+				entityPOCO.LastMileStatusRemarks = entityPM.LastMileStatusRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteStatusCode))
+            {
+				entityPOCO.StorageSiteStatusCode = entityPM.StorageSiteStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteErrorText))
+            {
+				entityPOCO.StorageSiteErrorText = entityPM.StorageSiteErrorText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
+            {
+				entityPOCO.CourierPendingReasonList = entityPM.CourierPendingReasonList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
+            {
+				entityPOCO.LastMileStatusName = entityPM.LastMileStatusName;
 			}
 			}
 
@@ -223,6 +297,56 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SpecialActionStatus = entityPOCO.SpecialActionStatus;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FastIndividualProcessCode))
+            {
+					entityPM.FastIndividualProcessCode = entityPOCO.FastIndividualProcessCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ManualProcessCode))
+            {
+					entityPM.ManualProcessCode = entityPOCO.ManualProcessCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TerminalSuspentionNumber))
+            {
+					entityPM.TerminalSuspentionNumber = entityPOCO.TerminalSuspentionNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileStatusCode))
+            {
+					entityPM.LastMileStatusCode = entityPOCO.LastMileStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileStatusDate))
+            {
+					entityPM.LastMileStatusDate = entityPOCO.LastMileStatusDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileStatusRemarks))
+            {
+					entityPM.LastMileStatusRemarks = entityPOCO.LastMileStatusRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageSiteStatusCode))
+            {
+					entityPM.StorageSiteStatusCode = entityPOCO.StorageSiteStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageSiteErrorText))
+            {
+					entityPM.StorageSiteErrorText = entityPOCO.StorageSiteErrorText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierPendingReasonList))
+            {
+					entityPM.CourierPendingReasonList = entityPOCO.CourierPendingReasonList;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileStatusName))
+            {
+					entityPM.LastMileStatusName = entityPOCO.LastMileStatusName;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -289,6 +413,56 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SpecialActionStatus = entityPM.SpecialActionStatus;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))
+            {
+                oldEntityPM.FastIndividualProcessCode = entityPM.FastIndividualProcessCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
+            {
+                oldEntityPM.ManualProcessCode = entityPM.ManualProcessCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalSuspentionNumber))
+            {
+                oldEntityPM.TerminalSuspentionNumber = entityPM.TerminalSuspentionNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusCode))
+            {
+                oldEntityPM.LastMileStatusCode = entityPM.LastMileStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusDate))
+            {
+                oldEntityPM.LastMileStatusDate = entityPM.LastMileStatusDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusRemarks))
+            {
+                oldEntityPM.LastMileStatusRemarks = entityPM.LastMileStatusRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteStatusCode))
+            {
+                oldEntityPM.StorageSiteStatusCode = entityPM.StorageSiteStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteErrorText))
+            {
+                oldEntityPM.StorageSiteErrorText = entityPM.StorageSiteErrorText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
+            {
+                oldEntityPM.CourierPendingReasonList = entityPM.CourierPendingReasonList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
+            {
+                oldEntityPM.LastMileStatusName = entityPM.LastMileStatusName;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -301,6 +475,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.PendingRemarks)) //T4 find type == nText 
             {
                 entityPM.PendingRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PendingRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastMileStatusRemarks)) //T4 find type == nText 
+            {
+                entityPM.LastMileStatusRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastMileStatusRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.StorageSiteErrorText)) //T4 find type == nText 
+            {
+                entityPM.StorageSiteErrorText = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageSiteErrorText));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CourierPendingReasonList)) //T4 find type == nText 
+            {
+                entityPM.CourierPendingReasonList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierPendingReasonList));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

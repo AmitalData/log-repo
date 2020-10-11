@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -20,138 +21,128 @@ import {DeficitList} from '../../EntityLists/DeficitList';
 @Injectable()
 
 export class DeficitListService {
-	private _http: HttpClient;
-    private _apiUrl: string;   
-	public static CachedData: Array<DeficitList> = [];
-    constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/deficitviews';  
-    }
+  private _http: HttpClient;
+  private _apiUrl: string;
+  public static CachedData: Array<DeficitList> = [];
+  constructor() {
+    this._http = ServiceHelper.HttpClient;
+    this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/deficitviews';
+  }
 
-    getSingle(id: string) {
-	   
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
-                    
-                var entity: DeficitList;
-				if(list)
-				{
-                   entity = this.MapJsonToEntityList(list);
-                }   
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = entity;  
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    getAll() {
-        
-	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
-
-       return defer(() => {
-            return this._http.get(this._apiUrl+'/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-              var allLists = response;
-              var _mappedListsArray: Array< DeficitList> = [];
-		      if(allLists)
-			  {
-				for (var key in  allLists) {				
-				   var entity: DeficitList;
-                   entity = this.MapJsonToEntityList(allLists[key]);
-				   _mappedListsArray.push(entity);
-				 }
-               }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-	
-    getByFilters(filters: ApiQueryFilters) {
-        
-        var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter)
-                {
-					propValue = encodeURIComponent(propValue);
-					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-				}
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
+  getSingle(id: string) {
 
 
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+
+    return defer(() => {
+      return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var list = response;
+
+        var entity: DeficitList;
+        if (list) {
+          entity = this.MapJsonToEntityList(list);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
-        
-		
-	   return defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+        serviceResponse.Result = entity;
+        return serviceResponse;
+      }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
-                var _mappedListsArray: Array< DeficitList> = [];
-				if(serviceResponse.Result)
-				{
-                for (var key in serviceResponse.Result) {
-				
-				   var entity: DeficitList;
-                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-				   _mappedListsArray.push(entity);
+  getAll() {
 
-				 }
-                }   
 
-                serviceResponse.Result = _mappedListsArray;                  
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });        
+
+    return defer(() => {
+      return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+        var allLists = response;
+        var _mappedListsArray: Array<DeficitList> = [];
+        if (allLists) {
+          for (var key in allLists) {
+            var entity: DeficitList;
+            entity = this.MapJsonToEntityList(allLists[key]);
+            _mappedListsArray.push(entity);
+          }
+        }
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+        serviceResponse.Result = _mappedListsArray;
+        return serviceResponse;
+      }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
+
+  getByFilters(filters: ApiQueryFilters) {
+
+    var urlparameters = '/getbyfilters?';
+    var mykeys = Object.keys(filters);
+    var addtionalFiltersValues = null;
+    for (var i in mykeys) {
+      var propName = mykeys[i];
+      var propValue = filters[propName];
+
+      var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+      if (urlparameters != "?") {
+        urlparameters = urlparameters.concat('&');
+      }
+      if (!ignoreFilter) {
+        propValue = encodeURIComponent(propValue);
+        urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+      }
+
+      if (propName == "AdditionalFilters" && propValue.length > 0)
+        addtionalFiltersValues = JSON.stringify(propValue);
+
+
+    }
+    if (addtionalFiltersValues) {
+      urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
     }
 
-	
-	    MapJsonToEntityList(jsonList: any) {
-       
-            var entityList: DeficitList;
-            entityList = new DeficitList();
-            var jsonListKeys = Object.keys(jsonList);
+    var callUrl = this._apiUrl.concat(urlparameters);//
 
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-                entityList[property] = jsonList[property];
-            }
-			
 
-        return entityList;
+    return defer(() => {
+      return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = response;
+        var _mappedListsArray: Array<DeficitList> = [];
+        if (serviceResponse.Result) {
+          for (var key in serviceResponse.Result) {
+
+            var entity: DeficitList;
+            entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+            _mappedListsArray.push(entity);
+
+          }
+        }
+
+        serviceResponse.Result = _mappedListsArray;
+        return serviceResponse;
+      }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
+
+
+  MapJsonToEntityList(jsonList: any) {
+
+    var entityList: DeficitList;
+    entityList = new DeficitList();
+    var jsonListKeys = Object.keys(jsonList);
+
+    for (var key in jsonListKeys) {
+      var property = jsonListKeys[key];
+      entityList[property] = jsonList[property];
     }
+
+
+    return entityList;
+  }
 
 }
 
