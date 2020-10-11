@@ -74,9 +74,11 @@
                         <td style="width: 7px;">
                             <div></div>
                         </td>
+
                         <td style="width: 21px;">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
+
                         <td style="width: 5px;">
                             <div></div>
                         </td>
@@ -87,13 +89,10 @@
         </tr>
 
         <tr>
-
-
             <td style="vertical-align:top">
                 <!--<div  class="MediaFill">-->
                 <logitude-edit-grid (SelectedItemChanged)="OnSelectedDocumentInList($event)" [SelectedRow]="SelectedExternalViewModel" (MouseleaveChanged)="OnMouseleave($event)" (MouseOverChanged)="OnMouseOver($event)"
                                     [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
-
 
                     <!--Attach-->
                     <log-column [width]="'60'" [header]="'DocsIn.O.Attach' | TextCodeTranslationPipe">
@@ -103,9 +102,7 @@
                                 <table>
                                     <tr>
 
-                                        <td class="CellStretched" style="width: 60px; min-width: 60px; max-
-
-width: 60px; position: relative;">
+                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '60px'" [style.min-width]="IsRTL ? 'initial' : '60px'" [style.max-width]="IsRTL ? 'initial' : '60px'" style="position: relative;">
 
                                             <div *ngIf="item.SetAttachedIconVisibility" [ngSwitch]="item.Extention">
                                                 <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
@@ -146,10 +143,6 @@ width: 60px; position: relative;">
 
                     </log-column>
 
-
-
-
-
                     <!--File Name-->
                     <log-column [width]="'200'" [header]="'File Name'">
 
@@ -161,7 +154,7 @@ width: 60px; position: relative;">
                                     <tr>
 
                                         <td>
-                                            <div style="width:200px" class="TextTrimming">
+                                            <div [style.width]="IsRTL ? 'initial' : '200px'" class="TextTrimming">
                                                 {{item.FileName}}
                                             </div>
 
@@ -172,9 +165,6 @@ width: 60px; position: relative;">
                         </ng-template>
 
                     </log-column>
-
-
-
 
                     <!--Actions-->
                     <log-column [width]="'190'" [header]="'DocsIn.O.Actions' | TextCodeTranslationPipe">
@@ -187,7 +177,7 @@ width: 60px; position: relative;">
                                     <tr>
 
 
-                                        <td class="CellStretched" style="width: 190px; min-width: 190px; max-width: 190px; position: relative;">
+                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '190px'" [style.min-width]="IsRTL ? 'initial' : '190px'" [style.max-width]="IsRTL ? 'initial' : '190px'" style="position: relative;">
                                             <button id="{{'SetReceivedDocumentbtn' | IdGeneratorPipe}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
 
                                                 {{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}}
@@ -231,7 +221,7 @@ width: 60px; position: relative;">
                                 <table>
                                     <tr>
                                         <td>
-                                            <div style="width:200px" class="TextTrimming">
+                                            <div [style.width]="IsRTL ? 'initial' : '200px'" style="width:200px" class="TextTrimming">
                                                 {{item.Name}}
                                             </div>
 
@@ -244,8 +234,6 @@ width: 60px; position: relative;">
                         </ng-template>
                     </log-column>
 
-
-
                     <!--ChildReference-->
                     <log-column [width]="'150'" [header]="'DocsIn.O.ReferenceNo' | TextCodeTranslationPipe">
 
@@ -256,9 +244,7 @@ width: 60px; position: relative;">
                                     <tr>
 
 
-                                        <td class="CellStretched" style="width: 150px; min-width: 150px; max-
-
-width: 150px; position: relative;">
+                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '150px'" [style.min-width]="IsRTL ? 'initial' : '150px'" [style.max-width]="IsRTL ? 'initial' : '150px'" style="position: relative;">
 
 
                                             {{item.ChildReference}}
@@ -274,7 +260,6 @@ width: 150px; position: relative;">
                         </ng-template>
                     </log-column>
 
-
                     <!--ReceivedBy-->
                     <log-column [width]="'90'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
 
@@ -286,9 +271,7 @@ width: 150px; position: relative;">
                                     <tr>
 
 
-                                        <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width:
-
-90px; position: relative;">
+                                        <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
 
                                             {{item.ReceivedByUserName}}
 
@@ -300,7 +283,6 @@ width: 150px; position: relative;">
                         </ng-template>
                     </log-column>
 
-
                     <!--ReceivedDate-->
                     <log-column [width]="'150'" [header]="'DocsIn.O.ReceivedDate' | TextCodeTranslationPipe">
 
@@ -310,9 +292,7 @@ width: 150px; position: relative;">
 
                                 <table>
                                     <tr class="FormFieldRow">
-                                        <td style="width: 100px; min-width: 100px; max-width: 100px; position:
-
-relative;">
+                                        <td [style.width]="IsRTL ? 'initial' : '100px'" [style.min-width]="IsRTL ? 'initial' : '100px'" [style.max-width]="IsRTL ? 'initial' : '100px'" style="position:relative;">
                                             <LogDatePicker *ngIf="item.Received || item.DocumentHasFile"
                                                            (ValueChanged)="item.EditReceiveDate(item,$event)" [ObjectFieldName]="'ReceivedDate'" [ObjectTableName]="ObjectTableName"
                                                            [NoObjectField]="true"
@@ -325,24 +305,18 @@ relative;">
                         </ng-template>
                     </log-column>
 
-
-
                     <!--FollowUp-->
                     <log-column [width]="'70'" [header]="'Follow-Up'">
 
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                 <div style="width: 100%; height: 100%; position: relative;">
-                                    <div (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver
-
-(item)" class="CenterCenter">
+                                    <div (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver(item)" class="CenterCenter">
                                         <span (click)="AddFollowUp(item)" style="width:20px">
 
                                             <img *ngIf="item.ShowFollowUp || item.HasFollowUp"
                                                  src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
-                                            <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !
-
-item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
+                                            <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
 
 
                                         </span>
@@ -353,8 +327,8 @@ item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
 
 
                     </log-column>
-                    <!--Note-->
 
+                    <!--Note-->
                     <log-column [width]="'150'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
 
                         <ng-template let-item>
@@ -362,9 +336,7 @@ item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
 
                                 <table>
                                     <tr>
-                                        <td style="width: 150px; min-width: 150px; max-width: 150px; position:
-
-relative;">
+                                        <td [style.width]="IsRTL ? 'initial' : '150px'" [style.min-width]="IsRTL ? 'initial' : '150px'" [style.max-width]="IsRTL ? 'initial' : '150px'" style="position:relative;">
 
                                             <input [attr.id]="item.Key" (change)="item.EditNote(item)"
                                                    type="text" autocomplete="off" style="height:22px;width:140px" [(ngModel)]="item.Note" value="" />
@@ -378,6 +350,8 @@ relative;">
 
                         <!--IsRequested-->
                     </log-column>
+
+                    <!--IsRequired-->
                     <log-column [width]="'90'" [header]="'Is Required'">
 
                         <ng-template let-item>
@@ -385,9 +359,7 @@ relative;">
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                 <div style="width: 100%; height: 100%; position: relative;">
                                     <div class="CenterCenter">
-                                        <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested =
-
-$event"></CheckBox>
+                                        <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested =$event"></CheckBox>
                                     </div>
                                 </div>
 
@@ -398,22 +370,9 @@ $event"></CheckBox>
                         </ng-template>
                     </log-column>
 
-
-
                 </logitude-edit-grid>
                 <!--</div>-->
             </td>
-
-
-
-
-
-
-
-
         </tr>
-
     </table>
 </div>
-
-

@@ -770,7 +770,7 @@
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
-            defaultParam.MaxPageSize = 500;
+            defaultParam.MaxPageSize = 1000;
 
             if (!_ResponseToken) {
                 getToken();
@@ -848,7 +848,7 @@
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 50;
-            defaultParam.MaxPageSize = 500;
+            defaultParam.MaxPageSize = 1000;
             if (!_ResponseToken) {
                 getToken();
             }
