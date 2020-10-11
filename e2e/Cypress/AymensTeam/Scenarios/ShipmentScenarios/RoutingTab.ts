@@ -25,7 +25,8 @@ export class RoutingTab {
         }
 
         Resolvers.ButtonResolver.Selector(typeId).Click();
-
+        this.FillFromAddress('Port');
+        this.FillToAddress('PART');
         
         Resolvers.ButtonResolver.Selector('#CloseBtn').Click();
         Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();
@@ -51,16 +52,16 @@ export class RoutingTab {
 
         if (PickupDeliveryTypeCode == 'PART') {
             Resolvers.RadioButtonResolver.Selector('#Partner_FromRadio').Select();
-            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPartnerCardId').Type('raza');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToPartnerCardId').Type('raza');
 
         } else if (PickupDeliveryTypeCode == 'Port') {
             Resolvers.RadioButtonResolver.Selector('#Port_FromRadio').Select();
-            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPortId').Type('ez');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToPortId').Type('ez');
 
         } else {
             Resolvers.RadioButtonResolver.Selector('#CasualAddress_FromRadio').Select();
-            Resolvers.TextBoxResolver.Selector('#ShipmentPickUpDelivery_FromAddressCity').Type('Albania');
-            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromAddressCountryId').Type('Albania');
+            Resolvers.TextBoxResolver.Selector('#ShipmentPickUpDelivery_ToAddressCity').Type('Albania');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToAddressCountryId').Type('Albania');
         }
     }
 }
