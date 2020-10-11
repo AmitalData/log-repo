@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public CustomsDocumentPointerRepository()
         {
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+            //(context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
         }
 		public List<CustomsDocumentPointer> GetMulti(EntityKeyFields entityKeys)
         {
@@ -50,12 +50,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<CustomsDocumentPointer> GetQParentDocumentPointer(string parentEntityId, string parentEntityCode, int tenant)
         {
-           
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            return (from a in context.CustomsDocumentPointers
+            var res= (from a in context.CustomsDocumentPointers
                     where (a.ParentEntityId == parentEntityId && a.ParentEntityCode == parentEntityCode)
                     && a.Tenant == tenant
                     select a);
+            return res;
         }
 
         public List<CustomsDocumentPointer> GetCustomDocumentPointersForTicketId(string CustomsDocumentsTicketId, int tenant)
@@ -197,6 +198,8 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerListParentOnly(GetTicketsParams parameters, int tenant)
         {
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             var q = GetAll(tenant);
             q = q.Where(a => a.ParentEntityCode == parameters.ParentEntityCode && a.ParentEntityId == parameters.ParentEntityId);
             q = q.Distinct();
