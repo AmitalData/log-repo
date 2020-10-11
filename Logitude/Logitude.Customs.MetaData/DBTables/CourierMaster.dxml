@@ -199,6 +199,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="PackageQuantityInMAWB"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
