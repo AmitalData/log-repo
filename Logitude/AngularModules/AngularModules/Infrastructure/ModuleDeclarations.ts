@@ -15,7 +15,8 @@ import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import {PaddingPipe} from './Pipes/PaddingPipe';
-import {ReplacePipe} from './Pipes/ReplacePipe';
+import { ReplacePipe } from './Pipes/ReplacePipe';
+import { HighlightSearch } from './Pipes/HighlightSearch'; 
 import {StringToColorPipe} from './Pipes/StringToColorPipe';
 import {DateTimeToTimePipe} from './Pipes/DateTimeToTimePipe';
 import {AttatchmentIconPipe} from './Pipes/AttatchmentIconPipe';
@@ -194,6 +195,7 @@ export const Pipes =
         NumbersPipe,
         PaddingPipe,
         ReplacePipe,
+        HighlightSearch,
         StringToColorPipe,
         DateTimeToTimePipe,
         AttatchmentIconPipe,
