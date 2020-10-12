@@ -2592,6 +2592,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     case "Customs.Declaration":
                         {
+                            isVisible = false;
                             this.customsSettingListService.getSingleFromCache(this.TenantPM.Id.toString()).subscribe((response: ServiceResponse) => {
                                 var list = response.Result;
 
@@ -2600,11 +2601,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         isVisible = false;
                                     }
                                 }
+                                if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                    isVisible = true;
+                                }
+                                this.IsNewEntityButtonVisible = isVisible;
                             });
 
-                            if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
-                                isVisible = true;
-                            }
+                          
                             break;
                         }
 
