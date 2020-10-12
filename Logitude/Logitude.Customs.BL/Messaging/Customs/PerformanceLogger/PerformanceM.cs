@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Unifreight.Data.AmitalModel.Repsitories;
 
@@ -32,6 +33,19 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
             }
 
 
+        }
+
+        public static void SleepMSAfterEachQueuePeek()
+        {
+            string QueuePeekSleepMS = ConfigurationManager.AppSettings.Get("SleepInMSAfterEachQueuePeek");
+            if (!string.IsNullOrWhiteSpace(QueuePeekSleepMS))
+            {
+                int iQueuePeekSleepMS = 0;
+                if (int.TryParse(QueuePeekSleepMS, out iQueuePeekSleepMS))
+                {
+                    Thread.Sleep(iQueuePeekSleepMS);
+                }
+            }
         }
         public static void EnqueueLastInstance()
         {
