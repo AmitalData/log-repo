@@ -852,7 +852,10 @@ class JournalLineModel extends BaseComponent {
                             }
                         });
                     }
-                    } else {
+                    else this.currencyRate = 1;
+                }
+                else
+                {
                     // Local Currency
                     this.isRateManualy = false;
                     this.currencyRate = 1;
@@ -1260,6 +1263,7 @@ class JournalLineModel extends BaseComponent {
             this.currency = value;
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.CurrencyCode = value.Code;
+                this.CurrencyId = value.Id;
                  if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId) {
                      this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
                     this.ForeignAmount = this.LocalAmount;
