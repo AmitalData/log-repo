@@ -6,14 +6,20 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
     selector: 'list-template',
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
-               <span><span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent">{{rowData[fieldName]}}</span></span>
-            
-               </div>
+               <span>
+                 <div style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
+                     <!--<span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent"> 
+                           {{rowData[fieldName]}} 
+                    </span>-->
+                </div>
+              </span>
+
+             </div>
 
 `,
-    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData','AdditionalDataCustom']
+    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom','SearchTerm']
 })
-
+ 
 export class ListTemplateComponent implements OnInit {
 
     public rowData: any;
@@ -23,6 +29,7 @@ export class ListTemplateComponent implements OnInit {
     public PassAdditionalData: boolean = false;
     public AdditionalData: any;
     public AdditionalDataCustom: any;
+    public SearchTerm: string;
     public RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef, private CD: ChangeDetectorRef) {
@@ -55,6 +62,7 @@ export class ListTemplateComponent implements OnInit {
             this.noComponent = true;
         }
 
+        //this.CD.detectChanges();
     }
     
 }
