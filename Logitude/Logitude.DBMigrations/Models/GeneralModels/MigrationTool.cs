@@ -287,6 +287,11 @@ namespace Logitude.DBMigrations.Models
                     string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
+                        if(dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                        {
+                            continue;
+                        }
+
                         dxmlTable.TableDefinition.DBType = dbType;
                         DXMLGeneratedScript dxmlGeneratedScript = GenerateScriptsFromDXMLTable(dxmlTable);
                         dxmlsGeneratedScript = AddToDXMLGeneratedScript(dxmlsGeneratedScript, dxmlGeneratedScript);
@@ -1547,6 +1552,23 @@ namespace Logitude.DBMigrations.Models
                 }
             }
             return includeScriptDefinition;
+        }
+
+        protected bool IsModuleIncluded(string moduleName)
+        {
+            bool isModuleIncluded = true;
+            if (IncludedModules != null)
+            {
+                if (IncludedModules.Include)
+                {
+                    isModuleIncluded = IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+                else
+                {
+                    isModuleIncluded = !IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+            }
+            return isModuleIncluded;
         }
 
         protected string GetOracleSaveScriptHistoryQuery(string saveAction, string sxmlFileName, ScriptDefinition scriptDefinition)
