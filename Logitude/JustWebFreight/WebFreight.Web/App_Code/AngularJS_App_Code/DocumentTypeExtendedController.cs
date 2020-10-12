@@ -694,6 +694,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
 
+        public HttpResponseMessage GetDocumentTypeCopyLists(string objectTableId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DocumentType", "READ", authToken.Tenant);
+                DocumentTypeCopyQuery documentTypeQuery = new DocumentTypeCopyQuery(authToken.Tenant);
+                List<DocumentTypeCopyList> documentTypeCopyLists = documentTypeQuery.GetDocumentTypeCopiesByObjectTableId(objectTableId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, documentTypeCopyLists);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+
+
+
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

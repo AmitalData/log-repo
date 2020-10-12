@@ -83,6 +83,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public List<DocumentTypeCopyList> GetDocumentTypeCopiesByObjectTableId(string objectTableId,int tenant)
+        {
+            List<DocumentTypeCopyList> copies = (from a in repository.context.DocumentTypeCopies.Include("DocumentType")
+                                               where a.Tenant == tenant  && (a.DocumentType!=null && a.DocumentType.ObjectTableId == objectTableId ) && !a.InActive
+                                               select new DocumentTypeCopyList()
+                                               {
+                                                   InActive = a.InActive,
+                                                   Code = a.Code,
+                                                   Id = a.Id,
+                                                   Name = a.Name,
+                                                   Tenant = a.Tenant,
+                                                   DocumentTypeId = a.DocumentTypeId,
+                                               }).ToList();
+            return copies;
+        }
 
 
         public List<DocumentTypeCopyList> GetDocumentTypeCopyListsBydocumentTypeCopyIds(List<string> documentTypeCopyIds, int tenant)

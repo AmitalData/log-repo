@@ -2560,6 +2560,7 @@
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
+    <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />

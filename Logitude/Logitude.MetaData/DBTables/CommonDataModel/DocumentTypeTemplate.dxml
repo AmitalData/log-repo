@@ -209,6 +209,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DefultAttachmentsXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"
     ReferencedTable="Users"

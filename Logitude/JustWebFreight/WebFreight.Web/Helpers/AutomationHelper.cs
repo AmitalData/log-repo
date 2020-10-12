@@ -332,6 +332,7 @@ namespace WebFreight.Web.Helpers
 
             };
             storageservice.Write(htmlData, fileInfo);
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
 
             CommunicationLog log = new CommunicationLog()
             {
@@ -366,12 +367,31 @@ namespace WebFreight.Web.Helpers
                 log.ReplyToList = replyTo;
             }
 
-            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(tenant);
-            communicationLogRepository.Add(log);
-            communicationLogRepository.SubmitChanges();
+            context.CommunicationLogs.Add(log);
 
-			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+            DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
+            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() {DocumentTypeTemplateId = automation.TemplateId , EntityId = entityId, ObjectTableId = objectTableId , Tenant = tenant });
+            if (attachments.Count() > 0)
+            {
+                foreach (var item in attachments)
+                {
+                    CommunicationAttachment attachment = new CommunicationAttachment()
+                    {
+                        Id = IdCounter.GetNumber("CommunicationAttachment", tenant).ToString(),
+                        CommunicationLogId = log.Id,
+                        DocumentId = item.Id,
+                        Tenant = tenant,
+                    };
+                    context.CommunicationAttachments.Add(attachment);
+
+                }
+
+            }
+
+            context.SaveChanges();
+
+            //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+            DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
 			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
 
             return log.Id;
