@@ -112,11 +112,11 @@
                                                                         </tr>
                                                                     </table>
                                                                 </td>
-                                                                
+
                                                                 <td style="width:100%">
                                                                     <div></div>
                                                                 </td>
-                                                                
+
                                                                 <td style="vertical-align:top">
                                                                     <table>
                                                                         <tr>
@@ -179,7 +179,7 @@
 
                                                                 <tr style="height:25px">
                                                                     <td>
-                                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">                                                                            
+                                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:300px">
@@ -252,20 +252,20 @@
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
                                                                                                             <!--<div class="RadioButton" style="width:100px;display:inline">
-                                                                                                                <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
-                                                                                                                <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
-                                                                                                                    Immediately
-                                                                                                                </label>
-                                                                                                            </div>-->
+                                                                                                    <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
+                                                                                                    <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
+                                                                                                        Immediately
+                                                                                                    </label>
+                                                                                                </div>-->
                                                                                                         </td>
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
                                                                                                             <!--<div class="Delayed" style="width:100px;display:inline">
-                                                                                                                <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
-                                                                                                                <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
-                                                                                                                    Delayed
-                                                                                                                </label>
-                                                                                                            </div>-->
+                                                                                                    <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
+                                                                                                    <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
+                                                                                                        Delayed
+                                                                                                    </label>
+                                                                                                </div>-->
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -303,7 +303,7 @@
 
                                                                                                                                         <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'97px'" class="CellStretched">
 
-                                                                                                                                            <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'97px'">
+                                                                                                                                            <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'60px'">
                                                                                                                                                 <LogTextBox  [FocusOnMe]="'true'"  [IsFreeText]="true" [InputType]="'integer'" [ObjectFieldName]="'DelayTime'" [NoObjectField]="true" [Text]="DelayTime" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                                                             </div>
 
@@ -312,18 +312,39 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td class="CellStretched" style="width:100px;">
+                                                                                                                                        <!--<td class="CellStretched" style="width:100px;">
 
-                                                                                                                                            <div style="height:22px;width:100px">
-                                                                                                                                                <LogLov  style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
-                                                                                                                                                        [ObjectTableName]="'TimeUnit'"
-                                                                                                                                                        [DataContext]="DataContext"
-                                                                                                                                                        [NoValidation]="true"
-                                                                                                                                                        [LookUpTableName]="'TimeUnit'"
-                                                                                                                                                        [SelectedValue]="DelaytimeIndicator"
-                                                                                                                                                        [IsFreeText]="true"
-                                                                                                                                                        [HideColumns]="true">
-                                                                                                                                                </LogLov>
+                                                                                                                                <div style="height:22px;width:100px">
+                                                                                                                                    <LogLov style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
+                                                                                                                                            [ObjectTableName]="'TimeUnit'"
+                                                                                                                                            [DataContext]="DataContext"
+                                                                                                                                            [NoValidation]="true"
+                                                                                                                                            [LookUpTableName]="'TimeUnit'"
+                                                                                                                                            [SelectedValue]="DelaytimeIndicator"
+                                                                                                                                            [IsFreeText]="true"
+                                                                                                                                            [HideColumns]="true">
+                                                                                                                                    </LogLov>
+                                                                                                                                </div>
+                                                                                                                            </td>-->
+                                                                                                                                        <td style="width:70px;">
+                                                                                                                                            <div style="height:22px;width:70px">
+                                                                                                                                                <ComboBox style="width:70px;" (SelectedItemChanged)="DelaytimeIndicator = $event" [SelectedItem]="DelaytimeIndicator" [ItemsSource]="TimeUnits" [Binding]="'Name'"></ComboBox>
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:5px">
+                                                                                                                                            <div style="width:5px"></div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:60px;">
+                                                                                                                                            <div style="height:22px;width:60px">
+                                                                                                                                                <ComboBox style="width:60px;" (SelectedItemChanged)="DelaytimeOpIndicator = $event" [SelectedItem]="DelaytimeOpIndicator" [ItemsSource]="TimeUnitOps" [Binding]="'Name'"></ComboBox>
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:5px">
+                                                                                                                                            <div style="width:5px"></div>
+                                                                                                                                        </td>
+                                                                                                                                        <td style="width:130px;">
+                                                                                                                                            <div style="height:22px;width:130px">
+                                                                                                                                                <ComboBox style="width:130px;" (SelectedItemChanged)="DelayTimeObjectFieldsIndicator = $event" [SelectedItem]="DelayTimeObjectFieldsIndicator" [ItemsSource]="DelayTimeObjectFields" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                                             </div>
                                                                                                                                         </td>
                                                                                                                                         <td style="width:5px">
@@ -638,7 +659,7 @@
                                                                                                                                 <td style="width:3px"><div></div></td>
                                                                                                                                 <td style="width:30px;" *ngIf="IsChooseUsersVisible">
                                                                                                                                     <div style="width:60px"><Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink></div>
-                                                                                                                                    
+
                                                                                                                                 </td>
                                                                                                                                 <td style="width:30px" *ngIf="!IsChooseUsersVisible">
                                                                                                                                     <div style="width:60px"></div>
@@ -887,8 +908,8 @@
                                                                                                                         <td style="width:90px;">
                                                                                                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'FollowDateUniteCode'" [NoObjectField]="true" [Text]="FollowDateUniteCode" [ObjectTableName]="'Automation'" [DataContext]="DataContext"></LogTextBox>
                                                                                                                             <!--<div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
-                                                                                                                                <div  style="vertical-align:central;margin-top:2px;font-size:12px;color:#45494A">Days</div>
-                                                                                                                            </div>-->
+                                                                                                                    <div  style="vertical-align:central;margin-top:2px;font-size:12px;color:#45494A">Days</div>
+                                                                                                                </div>-->
 
                                                                                                                         </td>
                                                                                                                         <td>
@@ -977,7 +998,7 @@
 
                                                                                                             <td style="width:100px;" class="Label">Queue</td>
 
-                                                                                                            <td style="width:236px;">                                                                                                                
+                                                                                                            <td style="width:236px;">
                                                                                                                 <LogLov [ObjectFieldName]="'QueueId'"
                                                                                                                         [NoObjectField]="true"
                                                                                                                         [DataContext]="DataContext"
@@ -1029,7 +1050,7 @@
                                                                                                                 <table>
                                                                                                                     <tr>
                                                                                                                         <td style="width:66px;">
-                                                                                                                            <ComboBox [ItemsSource]="TaskOffsetTypeList" [SelectedItem]="SelectedTaskOffsetType" (SelectedItemChanged)="SelectedTaskOffsetType = $event" [Binding]="'Name'"></ComboBox>                                                                                                                           
+                                                                                                                            <ComboBox [ItemsSource]="TaskOffsetTypeList" [SelectedItem]="SelectedTaskOffsetType" (SelectedItemChanged)="SelectedTaskOffsetType = $event" [Binding]="'Name'"></ComboBox>
                                                                                                                         </td>
 
                                                                                                                         <td style="width:1px;">
@@ -1107,7 +1128,7 @@
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </table>
-                                                                                                            </td>                                                                                                            
+                                                                                                            </td>
                                                                                                         </tr>
 
                                                                                                         <tr class="FormFieldRow">
@@ -1212,7 +1233,7 @@
 
                         </div>
 
-                    </div>                    
+                    </div>
 
                     <!-- Tab  2-->
                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">

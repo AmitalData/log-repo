@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -44,22 +43,40 @@ namespace Logitude.DBMigrations.Models
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
-                string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+                if (!ToolArguments.IsArgumentProvided(Arguments.DEV))
+                {
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
+                }
+                else
+                {
+                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
 
-                ValidateDBFiles(dxmlFiles, sxmlFiles);
-                PrepareRequiredData();
+                    Console.WriteLine("");
 
-                GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
-                SaveScripts(scriptsToSave);
-                ExportMissingIndexesWarnings();
-
-                StartZeroDownTimeMigrations();
+                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
+                    StartNormalMigrations();
+                }
             }
             else
             {
                 StartZeroDownTimeService();
             }
+        }
+
+        protected void StartNormalMigrations()
+        {
+            string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
+            string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+
+            ValidateDBFiles(dxmlFiles, sxmlFiles);
+            PrepareRequiredData();
+
+            GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
+            SaveScripts(scriptsToSave);
+            ExportMissingIndexesWarnings();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -1938,6 +1955,11 @@ namespace Logitude.DBMigrations.Models
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
             {
                 ExitTool("Error: Cannot Use Zero Down Time Mode Without Execute Argument");
+            }
+
+            if (ToolArguments.IsArgumentProvided(Arguments.DEV) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
+            {
+                ExitTool("Error: Cannot Use Dev Mode Without Execute Argument");
             }
         }
 

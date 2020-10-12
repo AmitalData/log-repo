@@ -61,7 +61,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     {
                         if (validateResult.Type == "Delayed")
                         {
-                            this.AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityId);
+                            this.AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult, automationFieldLists, entityId);
                         }
 
                         else

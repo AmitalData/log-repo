@@ -110,6 +110,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 validateResult.Type = automatedBackup.Type;
                 validateResult.DelaytimeIndicator = automatedBackup.DelaytimeIndicator;
                 validateResult.Delaytime = automatedBackup.Delaytime;
+                validateResult.DelaytimeOp = automatedBackup.DelaytimeOp;
+                validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
             }
 
             return validateResult;
@@ -341,16 +343,38 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         }
 
 
-        public void AddDelayedAutomationQueue(string entityChangeId, string type, int tenant, string automationId, int delay, string delaytimeIndicator, string entityId)
+        public void AddDelayedAutomationQueue(string entityChangeId, string type, int tenant, string automationId, ValidateAutomationResultClass validateResult, List<Field> automationFieldLists, string entityId)
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DelayAutomationQueue", tenant);
+            int delay = validateResult.Delaytime;
+            bool newDelayedQueue = false;
+            DateTime nextRunDate = DateTime.UtcNow;
+            if (validateResult.DelaytimeIndicator == "OO" && validateResult.Delaytime != 0) delay = validateResult.Delaytime * 60;
+            if (validateResult.DelaytimeIndicator == "DD" && validateResult.Delaytime != 0) delay = validateResult.Delaytime * 60 * 24;
 
-            if (delaytimeIndicator == "OO" && delay != 0) delay = delay * 60;
-
-            DateTime nextRunDate = DateTime.UtcNow.AddMinutes((double)delay);
-            TimeSpan delayTime = nextRunDate - DateTime.UtcNow;
-            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "EntityId", entityId }, { "AutomationId", automationId } }, tenant, delayTime, null, null, null);
+            if (!string.IsNullOrEmpty(validateResult.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(validateResult.DelaytimeOp))
+            {
+                DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
+                Field field = automationFieldLists.Where(d => d.FieldCode == validateResult.SelectedDelaytimeFieldCode).FirstOrDefault();
+                if (field != null && !string.IsNullOrEmpty(field.Value))
+                {
+                    nextRunDateBeforeAddDelayed = ConvertToDate(field.Value) ?? nextRunDateBeforeAddDelayed;
+                    newDelayedQueue = true;
+                }
+                if (validateResult.DelaytimeOp == "BF") delay = delay * -1;
+                nextRunDate = nextRunDateBeforeAddDelayed.AddMinutes((double)delay);
+            }
+            else
+            {
+                nextRunDate = nextRunDate.AddMinutes((double)delay);
+                newDelayedQueue = true;
+            }
+            if (newDelayedQueue)
+            {
+                TimeSpan delayTime = nextRunDate - DateTime.UtcNow;
+                queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "EntityId", entityId }, { "AutomationId", automationId } }, tenant, delayTime, null, null, null);
+            }
         }
 
 
