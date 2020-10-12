@@ -79,7 +79,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 }
                 else
                 {
-                    throw new Exception("Sorry you’re not authenticated to view company info.");
+                    throw new Exception("Sorry you're not authenticated to view company info.");
                 }
 
 			}
