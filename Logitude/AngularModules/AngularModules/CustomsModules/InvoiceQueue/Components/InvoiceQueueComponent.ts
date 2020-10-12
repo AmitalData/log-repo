@@ -168,13 +168,13 @@ export class InvoiceQueueComponent
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
-                    SessionLocator.SelectedSession.CurrentWindow.Close("1");
+                    SessionLocator.SelectedSession.CurrentWindow.Close("0");
                 } else {
                     confirm.Close();
                 }
             });
         } else {
-            SessionLocator.SelectedSession.CurrentWindow.Close("1");
+            SessionLocator.SelectedSession.CurrentWindow.Close("0");
         }
     }
     ShowDisbursement() {
