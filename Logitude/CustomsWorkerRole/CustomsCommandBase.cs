@@ -232,96 +232,106 @@ namespace CustomsWorkerRole
 
                     DateTime QueueStartDate = DateTime.Now;
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
-                    LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
-                    using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+                    try
                     {
-                        try
+                        LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                        using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                         {
-
-                            LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                            
-                            response = _CustomDbQueueService.Receive();
-                            LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
-
-
-
-
-                            // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
-                        }
-                        catch (Exception)
-                        {
-
-                            throw;
-                        }
-
-
-                        if (response == null || (response != null && response.MessageId == null))
-                        {
-                            //Thread.Sleep(TimeSpan.FromSeconds(5));
-                            Thread.Sleep(TimeSpan.FromMilliseconds(300));
-                            break;
-                        }
-
-                        PerformanceM.EnqueueLastInstance();
-                        PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
-                        PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
-
-                        LastActivity = DateTime.UtcNow;
-                        proccesDone = true;
-                        LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                        bool successProcessMessage = ProcessMessage_Db(response);
-                        LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
-                        if (successProcessMessage)
-                        {
-                            _CustomDbQueueService.SafeComplete();
-                            Queue_scope.Complete();
-                            PerformanceM.LastInstance.QueueSuccessComplete = true;
-                        }
-                        else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
-                        {
-                            
                             try
                             {
-                                
-                                // if inner scope dispose without Complete // this can crush 
 
-                                // but there is case that there is acrush withou transaction
-                                // like while dca check status = so we want that the try of the step will increase in 1 - we must try commit it !!
-                                Queue_scope.Complete();
+                                LogMessagingUtilWR.Instance.AppendLine("QRecive");
+
+                                response = _CustomDbQueueService.Receive();
+                                LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+
+
+
+
+                                // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
                             }
                             catch (Exception)
                             {
-                                //throw;
+
+                                throw;
                             }
-                            Queue_scope.Dispose();//remove lock !!
-                            using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+
+
+                            if (response == null || (response != null && response.MessageId == null))
+                            {
+                                //Thread.Sleep(TimeSpan.FromSeconds(5));
+                                Thread.Sleep(TimeSpan.FromMilliseconds(300));
+                                break;
+                            }
+
+                            PerformanceM.EnqueueLastInstance();
+                            PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
+                            PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
+
+                            LastActivity = DateTime.UtcNow;
+                            proccesDone = true;
+                            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+                            bool successProcessMessage = ProcessMessage_Db(response);
+                            LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
+                            if (successProcessMessage)
+                            {
+                                _CustomDbQueueService.SafeComplete();
+                                Queue_scope.Complete();
+                                PerformanceM.LastInstance.QueueSuccessComplete = true;
+                            }
+                            else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
                             {
 
-                                _CustomDbQueueService.SafeAbandon();
-                                Abandon_Queue_scope.Complete();
+                                try
+                                {
+
+                                    // if inner scope dispose without Complete // this can crush 
+
+                                    // but there is case that there is acrush withou transaction
+                                    // like while dca check status = so we want that the try of the step will increase in 1 - we must try commit it !!
+                                    Queue_scope.Complete();
+                                }
+                                catch (Exception)
+                                {
+                                    //throw;
+                                }
+                                Queue_scope.Dispose();//remove lock !!
+                                using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                {
+
+                                    _CustomDbQueueService.SafeAbandon();
+                                    Abandon_Queue_scope.Complete();
+                                }
+
                             }
-                            
-                        }
-                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
-                        LogDoneItemInMemory();
-                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                        PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
-                        PerformanceM.EnqueueLastInstance();
+                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                            LogDoneItemInMemory();
+                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                            PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
+                            PerformanceM.EnqueueLastInstance();
 
-                        string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
+                            string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
 
-                        if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
-                        {
-                            string morethan = "";
-                            string str = LogMessagingUtilWR.Instance.GetString(out morethan);
-                            Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                            if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
+                            {
+                                string morethan = "";
+                                string str = LogMessagingUtilWR.Instance.GetString(out morethan);
+                                Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                            }
                         }
+
+                    }
+                    finally
+                    {
+                        PerformanceM.SleepMSAfterEachQueuePeek();
                     }
                 }
             }
 
 
         }
+
+        
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
