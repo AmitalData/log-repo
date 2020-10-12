@@ -202,7 +202,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.froalaEditorSetting.Height = window.innerHeight - 310;
                 this.IsShowButtonSaveAs = false;
                 this.Mode = "Edit";
-                this.IsShowDefultAttachment = true;
 
                 this.IsShowUploadAndDownloadButtons = true;
             }
@@ -212,7 +211,6 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
           
                 this.Mode = "Edit";
                 this.IsShowUploadAndDownloadButtons = true;
-                this.IsShowDefultAttachment = true;
             }
 
                  // Signature
@@ -376,6 +374,15 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     FillData() {
 
         if (this.template) {
+
+
+            if (this.template.TemplateType == "M") {
+                if (this.PageType == "Send" || this.PageType == "ManageTemplate" || this.PageType =="Maintenance") {
+                    this.IsShowDefultAttachment = true;
+                }
+            }
+
+
 
             this.TemplateHeaderHtml = this.template.TemplateHeaderHtml;
             this.TemplateFooterHtml = this.template.TemplateFooterHtml;

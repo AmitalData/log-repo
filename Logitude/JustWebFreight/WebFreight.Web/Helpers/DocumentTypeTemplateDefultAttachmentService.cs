@@ -1,9 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,9 +21,12 @@ namespace WebFreight.Web.Helpers
         private ICommonDataContext commonDataContext;
         private List<AttachmentsList> attachmentsLists;
         private DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs;
+        string shipmentObjectId = null;
+
         public List<AttachmentsList> GetDefultAttachmentList(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
         {
             this.defultAttachmentArgs = defultAttachmentArgs;
+            shipmentObjectId =  GetMasterShipmentObjectTableId(defultAttachmentArgs);
             attachmentsLists = new List<AttachmentsList>();
             DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(defultAttachmentArgs.Tenant);
             var defultAttachmentList = documentTypeTemplateQuery.GetDefultAttachmentLists(defultAttachmentArgs.DocumentTypeTemplateId, defultAttachmentArgs.Tenant);
@@ -36,15 +42,36 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        private string GetMasterShipmentObjectTableId(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
+        {
+            string result = string.Empty;
+            ObjectTableRepository objectTableRep = new ObjectTableRepository(defultAttachmentArgs.Tenant);
+            if (objectTableRep.IsObjectTableMaster(defultAttachmentArgs.ObjectTableId))
+            {
+                var shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", defultAttachmentArgs.Tenant);
+                result = shipmentObject.Id;
+            }
+            return result;
+        }
+
         private void BuildDocOutAttachmentList(List<DocumentDefultAttachment> defultAttachmentList)
         {
 
             List<string> documentTypeIds = defultAttachmentList.Where(d=>d.Type == "DocOut").Select(d => d.DocumentTypeId).ToList();
             if (documentTypeIds.Count() > 0)
             {
-                List<string> documentsFilingIds = (from a in commonDataContext.DocumentsFilings
-                                                   where a.Tenant == defultAttachmentArgs.Tenant && a.ObjectTableId == defultAttachmentArgs.ObjectTableId && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "O" && a.EntityId == defultAttachmentArgs.EntityId
-                                                   select a.Id).ToList();
+                IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings
+                                                         where a.Tenant == defultAttachmentArgs.Tenant && a.ObjectTableId == defultAttachmentArgs.ObjectTableId && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "O" && a.EntityId == defultAttachmentArgs.EntityId
+                                                         select a);
+
+                if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
+                {
+                    documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
+                }
+
+
+                List<string> documentsFilingIds = documentsFilings.Select(d => d.Id).ToList();
+
                 if (documentsFilingIds.Count > 0)
                 {
                     List<string> documentTypeCopyIds = defultAttachmentList.Where(d => d.Type == "DocOut").Select(d => d.DocumentTypeCopyId).ToList();
@@ -64,22 +91,23 @@ namespace WebFreight.Web.Helpers
             List<string> documentTypeIds = defultAttachmentList.Where(d => d.Type == "DocIn").Select(d => d.DocumentTypeId).ToList();
             if (documentTypeIds.Count() > 0)
             {
+                IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings.Include("Document").Include("DocumentType")
+                                                                where a.Tenant == defultAttachmentArgs.Tenant && (a.ObjectTableId == defultAttachmentArgs.ObjectTableId || a.ObjectTableId == shipmentObjectId) && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I" && a.EntityId == defultAttachmentArgs.EntityId && a.IsDeleted == false && (a.Document != null && a.Document.HasFile) select a);
+                if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
+                {
+                    documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
+                }
 
-                List<AttachmentsList> attachments = (from a in commonDataContext.DocumentsFilings.Include("Document").Include("DocumentType")
-                                                   where a.Tenant == defultAttachmentArgs.Tenant && a.ObjectTableId == defultAttachmentArgs.ObjectTableId && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I" && a.EntityId == defultAttachmentArgs.EntityId
-                                                     select a).GroupBy(d => d.DocumentTypeId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.CreateDate)
+               List<AttachmentsList> attachments = documentsFilings.GroupBy(d => d.DocumentTypeId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.CreateDate)
                                                    .Select(d => new AttachmentsList()
                                                    {
                                                        Id = d.DocumentId,
                                                        DocumentFilingId = d.Id,
-                                                       FileExtension = d.Document !=null ? d.Document.Extension:null , 
-                                                       FileSize = d.Document != null ? d.Document.FileSize:null, 
-                                                       Tenant = d.Document != null ? d.Document.Tenant:d.Tenant,
-                                                       DocumentTypeCopyNameWithDocumentTypeName = d.DocumentType != null  ?  d.DocumentType.Name
+                                                       FileExtension = d.Document != null ? d.Document.Extension : null,
+                                                       FileSize = d.Document != null ? d.Document.FileSize : null,
+                                                       Tenant = d.Document != null ? d.Document.Tenant : d.Tenant,
+                                                       DocumentTypeCopyNameWithDocumentTypeName = d.DocumentType != null ? d.DocumentType.Name : "",  
                                                    }).ToList();
-
-
-
                 if (attachments.Count > 0)
                 {
                     attachmentsLists =  attachmentsLists.Concat(attachments).ToList();
@@ -105,8 +133,9 @@ namespace WebFreight.Web.Helpers
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
         public int Tenant { get; set; }
+        public string ChildEntityId { get; set; }
 
-
+        
     }
 
 }

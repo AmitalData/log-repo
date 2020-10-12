@@ -79,9 +79,9 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var documentTypeCopyLists: DocumentTypeCopyList[] = pmResponse.Result;
-                documentTypeCopyLists.forEach((doc) => {
-                    var item = new DocumentDefultAttachmentItem(doc.DocumentTypeId, "DocOut", doc.Name, doc.Id)
-                    if (this.DocumentDefultAttachments.filter(d => d.Id == item.Id && d.Type == "DocOut")[0]) {
+                documentTypeCopyLists.forEach((copy) => {
+                    var item = new DocumentDefultAttachmentItem(copy.DocumentTypeId, "DocOut", copy.Name, copy.Id)
+                    if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeId == item.DocumentTypeId && d.Type == "DocOut")[0]) {
                         item.IsChecked = true;
                     }
                     this.DocOutAttachmentLists.push(item);
@@ -109,7 +109,7 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
                 var documentTypeList: DocumentTypeList[] = pmResponse.Result;
                 documentTypeList.filter(d => d.ObjectTableId == this.ObjectTableId && d.IsDocIn == true).forEach((doc) => {
                     var item = new DocumentDefultAttachmentItem(doc.Id, "DocIn", doc.Name);
-                    if (this.DocumentDefultAttachments.filter(d => d.Id == item.Id && d.Type == "DocIn")[0]) {
+                    if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeId == item.DocumentTypeId && d.Type == "DocIn")[0]) {
                         item.IsChecked = true;
                     }
                     this.DocInAttachmentLists.push(item);
