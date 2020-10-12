@@ -168,12 +168,14 @@ export class InvoiceQueueComponent
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
+                    alert("0" + "Close remark");
                     SessionLocator.SelectedSession.CurrentWindow.Close("0");
                 } else {
                     confirm.Close();
                 }
             });
         } else {
+            alert("0" + "2nd Close");
             SessionLocator.SelectedSession.CurrentWindow.Close("0");
         }
     }
