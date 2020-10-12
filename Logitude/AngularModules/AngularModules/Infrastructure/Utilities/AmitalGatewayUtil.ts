@@ -555,10 +555,8 @@ export class AmitalGatewayUtil {
     CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
 
         //Response.InvoiceAction
-        alert(ptoCreateQInvoice + " P ");
 
         let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
-        alert(toCreateQInvoice + "Callback");
         this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
         this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
         
@@ -1410,7 +1408,6 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
             logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
-                alert(toCreateQInvoice + "toCreateQInvoice stepbefore");
                 AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice, comp.Remarks);
 
             });
