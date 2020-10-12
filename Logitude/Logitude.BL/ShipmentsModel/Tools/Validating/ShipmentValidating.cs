@@ -135,7 +135,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         if (mySettings.ShipmentCreationWarning)
                         {
                             var RemainingLimit = LimitAmount - ActualBalance;
-                            limitWarningMsg = "The remaining credit limit for this customer is (" + RemainingLimit + ")";
+                            limitWarningMsg = "The remaining credit limit for this customer is " + RemainingLimit;
                         }
                     }
                 }

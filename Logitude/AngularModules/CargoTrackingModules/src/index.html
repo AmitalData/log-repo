@@ -4,7 +4,26 @@
 <head>
     <meta charset="utf-8">
     <title>Cargo Tracking Prototype</title>
-    <base href="/">
+ 
+    <script>
+        var locationhref = document.location.href;
+		var locationorigin = document.location.origin;
+        var MainFolder = "CargoTracking"
+        var baseref =locationhref.replace(locationorigin,"");
+       if(baseref.includes(MainFolder)){
+         var AllLength = baseref.lastIndexOf(MainFolder) + MainFolder.length ;
+            baseref ='<base href="' +baseref.substring(0, AllLength)+"/"+ '" />';
+       }
+       else{
+            baseref ='<base href="' +"/"+ '" >';
+
+       }
+         document.write(baseref);
+    </script>
+ <!-- <script>
+    var baseref ='<base href="' +"/"+ '" >';
+    document.write(baseref);
+</script>   -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- <link rel="stylesheet" href="assets/bootstrap.min.css"> -->

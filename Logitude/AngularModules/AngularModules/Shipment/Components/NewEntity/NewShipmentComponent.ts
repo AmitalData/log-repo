@@ -3795,6 +3795,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     confirmWindow.YesButtonText = "Continue";
                     confirmWindow.NoButtonText = "Cancel";
                     confirmWindow.Title = "Credit limit";
+                    confirmWindow.StringColor = "#D8770E";
+                    confirmWindow.ShowWarningImage = true;
                     confirmWindow.Show(warnings);
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
