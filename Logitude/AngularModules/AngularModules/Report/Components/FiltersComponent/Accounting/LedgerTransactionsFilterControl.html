@@ -154,19 +154,23 @@
                     <!-- <td style="width:15px"></td> -->
                     <!-- 3 -->
                     <td style="width:150px">
-                        <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
-                                  [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                        <LogLabel [ObjectFieldName]="'ChartOfAccountsTypeCode'"
+                                    [Text]="'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe"
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td style="width:200px">
                         <LogLov style="display: block;width: 150px;" float-start
-                                [ObjectFieldName]="'ChartOfAccountId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [LookUpTableName]="'ChartOfAccount'"
-                                (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
-                                [HideAddLink]="true" [HideColumns]="true">
+                            [ObjectFieldName]="'ChartOfAccountsTypeCode'"
+                            [ObjectTableName]="'GLAccount'"
+                            [DataContext]="DataContext"
+                            [QueryFilterItems]="ChartOfAccountTypeFilterItems"
+                            [LookUpTableName]="'ChartOfAccountsType'"
+                            [ForceShowAddLink]="true"
+                            [HideAddLink]="true"
+                            [HideColumns]="true">
                         </LogLov>
                     </td>
 
@@ -216,21 +220,26 @@
 
                     <!-- 3 -->
                     <td>
-                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
-                                  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                                    [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                        </LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td>
-                        <LogLov         style="display: block;width: 150px;" float-start
-                                        [ObjectFieldName]="'Salesman'"
-                                        [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'User'"
-                                        [SelectedValue]="Salesman"
-                                        [QueryFilterItems]="SalesmanFilterItems"
-                                        [HideColumns]="true">
-                                </LogLov>
+                        <LogLov style="display: block;width: 150px;" float-start
+                                [ObjectFieldName]="'ChartOfAccountId'" 
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" 
+                                [LookUpTableName]="'ChartOfAccount'"
+                                (SelectedItemChanged)="ChartOfAccount = $event" 
+                                [ForceShowAddLink]="true"
+                                [DependencyFilter1Value]="null"
+                                [DependencyFilter2Value]="ChartOfAccountsTypeCode"
+                                [HideAddLink]="true" 
+                                [HideColumns]="true">
+                        </LogLov>
                     </td>
 
                     <!-- 5 -->
@@ -342,10 +351,13 @@
                 <!-- Row 4 -->
                 <tr class="FieldRow">
                     <!-- Category -->
+                    <!-- 1 -->
                     <td style="padding-right: 5px;" class="Label">
                         <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe"
                                 [DataContext]="DataContext"></LogLabel>
                     </td>
+
+                    <!-- 2 -->
                     <td style="padding-top: 5px;">
                         <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
 
@@ -408,6 +420,25 @@
                             </div>
 
                         </div>
+                    </td>
+
+                    <!-- 3 -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                                  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <!-- 4 -->
+                    <td>
+                        <LogLov         style="display: block;width: 150px;" float-start
+                                        [ObjectFieldName]="'Salesman'"
+                                        [ObjectTableName]="'GLAccount'"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'User'"
+                                        [SelectedValue]="Salesman"
+                                        [QueryFilterItems]="SalesmanFilterItems"
+                                        [HideColumns]="true">
+                                </LogLov>
                     </td>
                     <td style=""></td>
 
