@@ -66,7 +66,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;               
                 CheckWithoutTransmitLines(authToken,entityPM);
-                
+                CheckErrorsInLines(authToken, entityPM);
                 BatchTaskExecutionPM btePM = TaxReportService.CreatePNCFileInBatch(entityPM.Id, tenant);
 
 
@@ -261,6 +261,27 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        private void CheckErrorsInLines(AuthenticationToken authToken, TaxReportPM taxreport)
+        {
+            List<string> errorsCodes = new List<string>() { "2" };
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(taxreport.Tenant);
+            List<int> linesWithError = taxReportQuery.CheckErrorsInLines(taxreport.Id, taxreport.Tenant, errorsCodes);
+            if (linesWithError.Count > 0)
+            {
+                ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
+                bool showlocal = !loggedContact.DontShowLocal;
+                string error = TextCodesTranslator.TranslateText("TaxReport.O.CantDownload", taxreport.Tenant, showlocal);
+                string[] errorParts = error.Split(',');
+                string lines = null;
+                for (int x = 0; x < linesWithError.Count; x++)
+                {
+                    lines = lines + x + ',';
+
+                }
+                throw new Exception(errorParts[0] + " ( " + lines.TrimEnd(',') + " ) " + errorParts[1]);
+            }
+        }
+
         private void CheckWithoutTransmitLines(AuthenticationToken authToken,TaxReportPM taxreport)
         {
             bool IsWithoutTransmitLineExist = CheckIfWithoutTransmitLineExist(taxreport.Id, taxreport.Tenant);
@@ -278,6 +299,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return taxReportQuery.CheckIfThereIsLineWithoutTransmit(taxReportId, tenant);
 
         }
+
+       
+
         private ContactPM GetLoggedContact(string loggedUserEmail, int tenant)
         {
 
