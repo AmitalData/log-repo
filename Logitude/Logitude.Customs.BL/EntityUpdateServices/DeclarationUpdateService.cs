@@ -718,7 +718,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            if (entityPM.ImporterName != entityPOCO.ImporterName)
+            {
 
+                {
+                    UpdatePendingByKeyWordsByImporterName(entityPM, false);
+                }
+            }
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
@@ -728,6 +734,63 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+        public void UpdatePendingByKeyWordsByImporterName(DeclarationPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert )
+        {
+
+            if (String.IsNullOrWhiteSpace(entityPM.ImporterName))
+            {
+                return;
+            }
+
+
+            List<string> pendingReasonCodeList = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            DeclarationCourierStatusPM declarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
+            if (declarationCourierStatusPM != null)
+            {
+                var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
+                var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
+                    entityPM.ImporterName,
+                     /*SearchByFieldCode:*/ "2"  /*שם יבואן*/,
+                    entityPM.Tenant);
+                foreach (var courierReasonCode in courierReasonCodeList)
+                {
+
+                    if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
+                    {
+                        pendingReasonCodeList.Add(courierReasonCode);
+                        DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                        declarationPendingPM = declarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == entityPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+                        if (declarationPendingPM != null)
+                        {
+                            if (declarationPendingPM.Status != "A")
+                            {
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationPendingPM.Status = "A";
+                                if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        else
+                        {
+                            declarationPendingPM = new DeclarationPendingPM();
+                            declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                            declarationPendingPM.Status = "A";
+                            declarationPendingPM.DeclarationID = entityPM.Id;
+                            declarationPendingPM.Tenant = entityPM.Tenant;
+                            declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
+                            declarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
+                            if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+                if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+                }
+            }
         }
 
         public bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)

@@ -26,6 +26,7 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
 namespace CustomsWorkerRole
 {
@@ -321,21 +322,29 @@ namespace CustomsWorkerRole
         {
             while (true)
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                
+                try
                 {
-                    var receivedMessage = _CustomDbQueueService.Receive();
-
-                    if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        //Thread.Sleep(TimeSpan.FromSeconds(5));
-                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
-                        break;
-                    }
+                        var receivedMessage = _CustomDbQueueService.Receive();
 
-                    LastActivity = DateTime.UtcNow;
-                    ProcessMessage_Db(receivedMessage);
-                    scope.Complete();
-                    LogDoneItemInMemory();
+                        if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
+                        {
+                            //Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                            break;
+                        }
+
+                        LastActivity = DateTime.UtcNow;
+                        ProcessMessage_Db(receivedMessage);
+                        scope.Complete();
+                        LogDoneItemInMemory();
+                    }
+                }
+                finally
+                {
+                    PerformanceM.SleepMSAfterEachQueuePeek();
                 }
             }        
         }
