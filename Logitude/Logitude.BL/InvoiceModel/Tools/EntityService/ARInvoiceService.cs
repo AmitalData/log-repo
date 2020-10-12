@@ -320,8 +320,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ChargesTypePM chargesType = chargesTypes.FirstOrDefault();
                     ARInvoiceLinePM interestInvoiceLine = invoice.InvoiceLines.Where(d => d.ChargesTypeId == chargesType.Id).FirstOrDefault();
-                    UserPM userPM = GetLoggedUser(invoice.Tenant);                  
-                    bool showLocal = !userPM.DontShowLocalLabels;
+                    UserPM userPM = GetLoggedUser(invoice.Tenant);
+                    bool showLocal = userPM != null ? !userPM.DontShowLocalLabels : LoggedContactResolver.GetLoggedContactShowLocal(tenant);                 
                     if (interestInvoiceLine != null)
                         entityPM.PrintNotes =string.IsNullOrEmpty(entityPM.PrintNotes)? entityPM.PrintNotes + " " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description) : entityPM.PrintNotes + ", " + (showLocal ? interestInvoiceLine.LocalDescription : interestInvoiceLine.Description);
                 }
