@@ -157,7 +157,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
                 CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
-                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
+                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
                 invoiceService.Create(aRInvoicePM);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
