@@ -98,6 +98,10 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new BankPageEntryTypeMap());
 	
+            modelBuilder.Configurations.Add(new CalculatedChartsOfAccountMap());
+	
+            modelBuilder.Configurations.Add(new CalculatedChartsOfAccountsLineMap());
+	
             modelBuilder.Configurations.Add(new CashBookMap());
 	
             modelBuilder.Configurations.Add(new CashBookLineMap());
@@ -235,6 +239,8 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new TaxWithholdingAssessOfficeMap());
 	
             modelBuilder.Configurations.Add(new TestEntityMap());
+	
+            modelBuilder.Configurations.Add(new UserDefinedReportMap());
 	
             modelBuilder.Configurations.Add(new VatReportStatusMap());
 	
@@ -753,6 +759,18 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<CalculatedChartsOfAccount> CalculatedChartsOfAccounts 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLines 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CashBook> CashBooks 
 	 {
 	      get; set;
@@ -1162,6 +1180,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<TestEntity> TestEntities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UserDefinedReport> UserDefinedReports 
 	 {
 	      get; set;
 	 
