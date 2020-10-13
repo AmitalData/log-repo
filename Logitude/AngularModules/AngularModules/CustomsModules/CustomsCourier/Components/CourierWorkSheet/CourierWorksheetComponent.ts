@@ -511,7 +511,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         MyFilters.GetCount = false;
         MyFilters.PageIndex = 0;
-        MyFilters.PageSize = 100;
+        MyFilters.GetAll = true;
+       // MyFilters.PageSize = 100;
         //this.CurrentQueryFilters = MyFilters;
         var ids: string[] = [];
         this._EntityListService.getByFilters("Customs.DeclarationCourierStatus", MyFilters, null).then((observable: Observable<any>) => {
