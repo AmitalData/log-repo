@@ -3140,6 +3140,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Reference3 = package.Reference3;
                     packageline.Reference4 = package.Reference4;
                     packageline.CommodityNumber = package.CommodityNumber;
+                    packageline.ClassNumber = package.ClassNumber; 
 
                     if (!string.IsNullOrEmpty(package.HorseId))
                     {
