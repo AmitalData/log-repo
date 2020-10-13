@@ -197,6 +197,11 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void GetObjects_ShipmentFields()
         {
+            if (this.Shipment.INTTRAContractNumber == null)
+            {
+                this.Errors.Add("Contract Number is required");
+            }
+
             if (this.Shipment.ShipperId == null)
             {
                 this.Errors.Add("Shipper is required");
@@ -442,6 +447,11 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
                     Value = this.MasterData.BookingConfirmationNumber,
+                });
+                this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+                {
+                    Type = INTTRA_Booking.ReferenceTypeValues.ContractNumber,
+                    Value = this.Shipment.INTTRAContractNumber,
                 });
             }
         }
@@ -918,6 +928,7 @@ namespace Logitude.XSD.INTTRA_Booking
                                    {
                                        PackageTypeId = g.Key.PackageTypeId,
                                        Quantity = g.Sum(s => s.Quantity),
+                                       Weight = g.Sum(s => s.GrossWeight),
                                    });
 
             foreach (var item in groupedPackages)
@@ -946,6 +957,11 @@ namespace Logitude.XSD.INTTRA_Booking
                             CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
                             CargoMovementTypeSpecified = true,
                         },
+                        EquipmentGrossWeight = new GrossWeightType()
+                        {
+                            UOM = INTTRA_Booking.WeightUOMValues.KGM,
+                            Value = this.GetWeightInKG(item.Weight),
+                        }
                     };
 
                     this.EquipmentDetails.Add(itemDetails);
