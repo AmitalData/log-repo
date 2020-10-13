@@ -2,7 +2,7 @@ import { Random } from "../../@e2e/core";
 import { Resolvers } from "../../Resolvers/Resolvers";
 
 export class NewEditActivitiesScenarios {
-    private ActivitTypes : string;
+    private ActivitTypes: string;
     public EntityId: string;
     public EntityNumber: string;
     public RunScenario(ActivitTypes: string) {
@@ -11,6 +11,7 @@ export class NewEditActivitiesScenarios {
         this.OpenWizardWindow();
         this.ActivityScenarios();
     }
+
 
     private OpenWizardWindow() {
         let index: number = 0;
@@ -22,7 +23,7 @@ export class NewEditActivitiesScenarios {
         Resolvers.ToggleButtonResolver.Selector('#NEWACTIVITY').SelectByIndex(index);
         Resolvers.WindowResolver.ShouldBeOpend();
     }
- 
+
     private ActivityScenarios() {
         if (this.ActivitTypes == "T") {
             this.CreateTask(this.EntityNumber);
@@ -41,7 +42,7 @@ export class NewEditActivitiesScenarios {
         }
 
     }
-    private CreateTask(EntityNumber: string) {
+    public CreateTask(EntityNumber: string) {
         Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('Task # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for task # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
@@ -50,20 +51,27 @@ export class NewEditActivitiesScenarios {
         this.WaitLoaded('contactviews/getbyfilters?');
         Resolvers.LOVResolver.Selector('#Activity_CustomerId').Type('Customer Activity');
         Resolvers.LOVResolver.Selector('#Activity_CallWithId').SelectFirst();
-
         Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('PhoneCall # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for PhoneCall # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
     private CreateAppoinment(EntityNumber: string) {
-      //  cy.wait(500)
+        //  cy.wait(500)
 
         this.WaitLoaded('cardviews/getbyfilters?');
         Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('Appoinment # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for Appoinment # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
-    private Save() {
+
+    public CreatePhoneCallWithoutCustomer(EntityNumber: string) {
+        this.WaitLoaded('contactviews/getbyfilters?');
+        Resolvers.LOVResolver.Selector('#Activity_CallWithId').SelectFirst();
+        Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('PhoneCall # : ' + EntityNumber);
+        Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for PhoneCall # : ' + EntityNumber);
+        Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
+    }
+    public Save() {
         return new Cypress.Promise((resolve, reject) => {
             cy.server();
             cy.route({
@@ -85,7 +93,7 @@ export class NewEditActivitiesScenarios {
                 .find('.LogitudeQuickSearchTextBox')
                 .within(() => {
                     cy.get('input').type(entityNumber).then(() => {
-                            cy.get('ul > li').eq(0).click({ force: true });
+                        cy.get('ul > li').eq(0).click({ force: true });
                     });
                 });
         });
@@ -108,7 +116,7 @@ export class NewEditActivitiesScenarios {
         cy.get('#Activity-SaveClose').click();
         this.WaitLoaded('CRMDomain/GetUpcomigActivities?');
     }
-    private EditTask(EntityNumber: string) {   
+    private EditTask(EntityNumber: string) {
         let today = new Date().toLocaleDateString();
         Resolvers.DatePickerResolver.Selector('#date_Activity_StartDateTime').Type(today);
         Resolvers.DatePickerResolver.Selector('#time_Activity_StartDateTime').Type('10:00 AM');
@@ -133,11 +141,11 @@ export class NewEditActivitiesScenarios {
         cy.server();
         cy.route({
             method: 'GET',
-            url: '**/' + urls+'**',
+            url: '**/' + urls + '**',
             onResponse: (xhr) => {
                 expect(xhr.status).to.eq(200);
             }
         }).as('entityLoaded');
-      //  cy.wait('@entityLoaded');
+        //  cy.wait('@entityLoaded');
     }
 }
