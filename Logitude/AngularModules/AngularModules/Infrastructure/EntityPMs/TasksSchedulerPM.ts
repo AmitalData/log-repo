@@ -220,6 +220,11 @@ export class TasksSchedulerPM {
     public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
        
 	 
+    private resultType: string;
+    public get ResultType() { return this.resultType; }
+    public set ResultType(newValue: string) { if (this.resultType != newValue) { this.resultType = newValue; this.MarkAsDirty("ResultType"); } }
+       
+	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
