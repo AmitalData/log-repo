@@ -7,7 +7,7 @@
 <!-- CreateDate -->
 <!-- DueDate -->
 <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming"
-    *ngIf="fieldName == 'CreateDate' || fieldName == 'DueDate'">
+    *ngIf="fieldName == 'CreateDate' || fieldName == 'DueDate' || fieldName == 'AccountingDate'">
     {{ rowData[fieldName] | DateTimePipe:'SD' }}
 </div>
 
@@ -21,8 +21,9 @@
 
 <!-- ReconciliationAmount -->
 <div class="TextTrimming" *ngIf="fieldName == 'ReconciliationAmount'"
-    style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
-    [class.red]='rowData["ReconciliationAmount"]<0'>
+    style=" text-align: right; padding: 0px 2px;direction: ltr;"
+    >
+    <!-- color:#00a24d; [class.red]='rowData["ReconciliationAmount"]<0' -->
     {{ rowData[fieldName] | NumbersPipe:'N2' }} {{rowData["CurrencySign"]}}
 </div>
 
