@@ -109,12 +109,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (!accLineDTO.IsMulti)
                         {
                             gLAccountPM.CurrencyCode = accLineDTO.CurrencyCode;
-                            gLAccountPM.CurrencyId = "";
+                            gLAccountPM.CurrencyId = null;
                         }
                         else
                         {
-                            gLAccountPM.CurrencyCode = "";
-                            gLAccountPM.CurrencyId = "";
+                            gLAccountPM.CurrencyCode = null;
+                            gLAccountPM.CurrencyId = null;
                         }
 
                         ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(MyContext);
