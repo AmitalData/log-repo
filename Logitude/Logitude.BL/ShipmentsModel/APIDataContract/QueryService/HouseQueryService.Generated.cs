@@ -931,13 +931,10 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
 						PickUpQueryService PickUpService26 = new PickUpQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("PickUps Can't be update"); 
+						 								//throw new ApplicationException("PickUps Can't be update"); 
 								temp.ShipmentPickUps = PickUpService26.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -947,13 +944,10 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
 						DeliveryQueryService DeliveryService26 = new DeliveryQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("Deliveries Can't be update"); 
+						 								//throw new ApplicationException("Deliveries Can't be update"); 
 								temp.ShipmentDeliveries = DeliveryService26.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}

@@ -84670,6 +84670,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ChargeStorageCurrencyCode&quot;"
     ListPropertyPath="&quot;ChargeStorageCurrencyCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -89449,7 +89450,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Deliveries&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89466,7 +89467,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90354,7 +90355,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUps&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90371,7 +90372,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91916,7 +91917,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUps&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91933,7 +91934,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"
