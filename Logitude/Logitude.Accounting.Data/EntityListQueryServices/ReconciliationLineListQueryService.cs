@@ -33,7 +33,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             IsPartial = a.IsPartial,
                                                             Tenant = a.Tenant,
                                                             ReconciliationAmount = a.ReconciliationAmount,
-
                                                             // ledger transaction fields
                                                             CreateDate = a.LedgerTransaction != null ? a.LedgerTransaction.CreateDate : DateTime.Now,
                                                             DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
@@ -48,9 +47,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             OpenAmountCurrencySign = (a.Currency != null ? a.Currency.Sign : null),
                                                             SearchFields = (a.LedgerTransaction != null ? a.LedgerTransaction.SearchFields : null),
                                                             CurrencySign = (a.Currency != null ? a.Currency.Sign : null),
-                                                            
+                                                            AccountingDate = a.LedgerTransaction != null ? a.LedgerTransaction.AccountingDate : DateTime.Now,
 
-                                                        });
+
+                                                        });;
             return query;
         }
 
