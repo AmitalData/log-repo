@@ -334,7 +334,7 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td style="width:60px;">
+                                                                                                                                        <td style="width:60px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
                                                                                                                                             <div style="height:22px;width:60px">
                                                                                                                                                 <ComboBox style="width:60px;" (SelectedItemChanged)="DelaytimeOpIndicator = $event" [SelectedItem]="DelaytimeOpIndicator" [ItemsSource]="TimeUnitOps" [Binding]="'Name'"></ComboBox>
                                                                                                                                             </div>
@@ -342,7 +342,7 @@
                                                                                                                                         <td style="width:5px">
                                                                                                                                             <div style="width:5px"></div>
                                                                                                                                         </td>
-                                                                                                                                        <td style="width:130px;">
+                                                                                                                                        <td style="width:130px;" *ngIf="DelaytimeIndicator && DelaytimeIndicator.Code == 'DD'">
                                                                                                                                             <div style="height:22px;width:130px">
                                                                                                                                                 <ComboBox style="width:130px;" (SelectedItemChanged)="DelayTimeObjectFieldsIndicator = $event" [SelectedItem]="DelayTimeObjectFieldsIndicator" [ItemsSource]="DelayTimeObjectFields" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                                             </div>
