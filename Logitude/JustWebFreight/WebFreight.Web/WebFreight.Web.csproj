@@ -957,6 +957,12 @@
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountsLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\UserDefinedReportViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountsLineController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\UserDefinedReportController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingIncrementalStatController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCardViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCountryViewsController.Generated.cs" />
@@ -2877,6 +2883,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessProcessQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessRoleUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CalculatedChartsOfAccountsLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CalculatedChartsOfAccountUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationReasonRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationRequestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealIdentifierUpdateClass.cs" />
@@ -3065,6 +3073,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageAdditionalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UpdateCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserDefinedReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\VatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackagesReleaseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackageUpdateClass.cs" />

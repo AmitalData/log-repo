@@ -32,6 +32,8 @@ namespace Logitude.Accounting.Data
 		 IDbSet<BankDeposit> BankDeposits { get; }
 		 IDbSet<BankDepositLine> BankDepositLines { get; }
 		 IDbSet<BankPageEntryType> BankPageEntryTypes { get; }
+		 IDbSet<CalculatedChartsOfAccount> CalculatedChartsOfAccounts { get; }
+		 IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLines { get; }
 		 IDbSet<CashBook> CashBooks { get; }
 		 IDbSet<CashBookLine> CashBookLines { get; }
 		 IDbSet<CashBookType> CashBookTypes { get; }
@@ -101,6 +103,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<TaxReportStatus> TaxReportStatuses { get; }
 		 IDbSet<TaxWithholdingAssessOffice> TaxWithholdingAssessOffices { get; }
 		 IDbSet<TestEntity> TestEntities { get; }
+		 IDbSet<UserDefinedReport> UserDefinedReports { get; }
 		 IDbSet<VatReportStatus> VatReportStatuses { get; }
 		 IDbSet<WithholdingTaxDeductionType> WithholdingTaxDeductionTypes { get; }
 	 

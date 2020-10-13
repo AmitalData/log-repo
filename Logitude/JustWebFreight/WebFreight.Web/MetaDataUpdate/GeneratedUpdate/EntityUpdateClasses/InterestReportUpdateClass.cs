@@ -2822,6 +2822,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB13.Id,
 						Style = null,
 						LocalDefaultText = "חישוב מחדש של הדוח",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB13.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
