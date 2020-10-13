@@ -1,4 +1,4 @@
-﻿export class AttachmentsList {
+export class AttachmentsList {
     Tenant: number;
     Id: string;
     DocumentTypeCopyNameWithDocumentTypeName: string;
@@ -6,6 +6,9 @@
     ShowRemoveLink: boolean;
     FileExtension: string;
     DocumentFilingId: string;
+    IsDefultTemplate: boolean;
+
+
     constructor() {
 
     }

@@ -218,8 +218,37 @@ export class DocumentTypeTemplatePM {
     private bCC: string;
     public get BCC() { return this.bCC; }
     public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
-       
-	 
+
+
+
+
+
+    private defultAttachmentsXML : string;
+    public get DefultAttachmentsXML() { return this.defultAttachmentsXML; }
+    public set DefultAttachmentsXML(newValue: string) { if (this.defultAttachmentsXML != newValue) { this.defultAttachmentsXML = newValue; this.MarkAsDirty("DefultAttachmentsXML "); } }
+
+
+     
+    private isDefultAttachmentsXMLChanged: boolean;
+    public get IsDefultAttachmentsXMLChanged() { return this.isDefultAttachmentsXMLChanged; }
+    public set IsDefultAttachmentsXMLChanged(newValue: boolean) { if (this.isDefultAttachmentsXMLChanged != newValue) { this.isDefultAttachmentsXMLChanged = newValue; this.MarkAsDirty("IsDefultAttachmentsXMLChanged"); } }
+
+
+
+
+    private documentDefultAttachments: any[];
+    get DocumentDefultAttachments () {
+        if (this.documentDefultAttachments == null) {
+            this.documentDefultAttachments = [];
+        }
+
+        return this.documentDefultAttachments;
+    }
+    set DocumentDefultAttachments(newValue: any[]) {
+        if (this.documentDefultAttachments != newValue) {
+            this.documentDefultAttachments = newValue;
+        }
+    }
 
     public OldEntityPM: DocumentTypeTemplatePM;
 		

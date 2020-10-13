@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Simplog.Data.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
@@ -58,7 +59,17 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ObjectTableId { get; set; }
         public string CC { get; set; }
         public string BCC { get; set; }
-        
+
+        [DataMember]
+        public string DefultAttachmentsXML { get; set; }
+
+
+        [DataMember]
+        public bool IsDefultAttachmentsXMLChanged { get; set; }
+
+        [DataMember]
+        public List<DocumentDefultAttachment> DocumentDefultAttachments { get; set; }
+
 
 
         //         this.Property(t => t.CountryCode).IsFixedLength().IsUnicode(false).HasMaxLength(2);
