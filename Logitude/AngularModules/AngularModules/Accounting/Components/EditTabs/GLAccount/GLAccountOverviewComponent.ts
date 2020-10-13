@@ -671,6 +671,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
             +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+            +   (this.externalTransactionsTotal  ? this.externalTransactionsTotal  : 0)
             + (this.OpenShipments?this.OpenShipments:0 );
 
             this.accountTotal = percentage;
