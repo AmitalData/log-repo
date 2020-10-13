@@ -146,6 +146,35 @@ namespace WebFreight.Web.App_Code
             return output.OrderBy(o => o.Name).ToList();
         }
 
+        public bool GetIsDocumentsApprovalRequried(string entityId, int tenant)
+        {
+            ShipmentAdditionalCloudDataRepository rep = new ShipmentAdditionalCloudDataRepository(tenant);
+            ShipmentAdditionalCloudData shipment = rep.GetSingleShipmentAdditionalCloudData(entityId, tenant);
+
+            if (shipment != null /*&& shipment.IsDocumentsApprovalRequried*/ && string.IsNullOrEmpty(shipment.DocumentsApprovedByUserName))
+            {
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool PutDocumentsApprovedByUserName(string entityId, string documentsApprovedByUserName, int tenant)
+        {
+            ShipmentAdditionalCloudDataRepository rep = new ShipmentAdditionalCloudDataRepository(tenant);
+            ShipmentAdditionalCloudData shipment = rep.GetSingleShipmentAdditionalCloudData(entityId, tenant);
+
+            if (shipment != null /*&& shipment.IsDocumentsApprovalRequried*/ && string.IsNullOrEmpty(shipment.DocumentsApprovedByUserName))
+            {
+                shipment.DocumentsApprovedByUserName = documentsApprovedByUserName;
+                rep.Update(shipment);
+                rep.SubmitChanges();
+                return true;
+            }
+
+            return false;
+        }
+
         private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(string entityId, string partnerType, int tenant, bool isExternalURL)
         {
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();

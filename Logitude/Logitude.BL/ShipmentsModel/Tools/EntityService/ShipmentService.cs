@@ -2824,6 +2824,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                 }
+                if (!string.IsNullOrEmpty(entityPM.DocumentsApprovedByUserName))
+                {
+                    shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
+                }
                 shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
 
                 if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
@@ -3104,7 +3108,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                         }
-
+                        if (!string.IsNullOrEmpty(entityPM.DocumentsApprovedByUserName))
+                        {
+                            shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
+                        }
 
                         if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
                         {

@@ -26,8 +26,8 @@
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
- 
-    
+
+
 <style type="text/css">
     img[src] {
         visibility: visible;
@@ -942,7 +942,7 @@
              </div>
         </a>
     </script>
-
+    
     <script type="text/x-kendo-tmpl" id="EventListBoxItemDataTemplate">
         <div class="EventListBoxItem">
             <div>
@@ -992,6 +992,16 @@
     <script type="text/javascript">
         function OnDownloadDocument() {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            const left = document.documentElement.clientWidth / 2.5;
+            const top = document.documentElement.clientHeight / 2.5;
+            var winFeature = 'width=330,height=125,top = ' + top + ',left = ' + left +'';
+            var win = window.open('DocumentsApprovalPage.aspx', 'popup_window', winFeature);
+            var timer = setInterval(function () {
+                if (win.closed) {
+                    clearInterval(timer);
+                    alert('closed');
+                }
+            }, 1000); 
         }
 
         function OnDownloadAllDocument() {
