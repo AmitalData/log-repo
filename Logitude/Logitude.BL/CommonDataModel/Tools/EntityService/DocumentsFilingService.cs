@@ -1135,9 +1135,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
-
-            TryBuildUD2LT(extDocPM);
-            TrySendBondedCustomDocument(extDocPM);
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                TryBuildUD2LT(extDocPM);
+                TrySendBondedCustomDocument(extDocPM);
+            }
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", this.MetaDataVersionValue);
