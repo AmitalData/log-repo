@@ -276,7 +276,7 @@ export class NewBIReport extends BaseComponent {
 
     omit_special_char(value: string) {
         this.ValidationErrorsList = [];
-        let format = /[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?~]/;
+        let format = /[#&]/;
         if (format.test(value)) {
             this.ValidationErrorsList.push("Name field can't contain the following special characters # &")
         }
