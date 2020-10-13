@@ -14,6 +14,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string CT2_TableName { get; set; }
 
         public string Pre_TableName { get; set; }
+        public string Pre2_TableName { get; set; }
+
         public string KeyName { get; set; }
         public string KeyName2 { get; set; }
         public string ConditionKey { get; set; }
