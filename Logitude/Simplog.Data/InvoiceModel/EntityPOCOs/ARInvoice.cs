@@ -42,6 +42,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public bool IsClosed { get; set; }
+        public bool IsFromInterestBatchInvoice { get; set; }
+
         public double? AmountInProfitCurrency { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountDueInLocalCurrency { get; set; }

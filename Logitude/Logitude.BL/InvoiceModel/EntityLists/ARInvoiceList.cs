@@ -40,6 +40,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string PaymentTermName { get; set; }
         public bool IsAutoCredit { get; set; }
         public bool IsCancelled { get; set; }
+        public bool IsFromInterestBatchInvoice { get; set; }
+
         public string CancelledByARInvoiceId { get; set; }
         public string InternalNotes { get; set; }
         public string PrintNotes { get; set; }

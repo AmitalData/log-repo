@@ -173,6 +173,11 @@ export class ARInvoicePM {
     public set HasInterestFeature(newValue: boolean) { if (this.hasInterestFeature != newValue) { this.hasInterestFeature = newValue; this.MarkAsDirty("HasInterestFeature"); } }
        
 	 
+    private isFromInterestBatchInvoice: boolean;
+    public get IsFromInterestBatchInvoice() { return this.isFromInterestBatchInvoice; }
+    public set IsFromInterestBatchInvoice(newValue: boolean) { if (this.isFromInterestBatchInvoice != newValue) { this.isFromInterestBatchInvoice = newValue; this.MarkAsDirty("IsFromInterestBatchInvoice"); } }
+       
+	 
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
