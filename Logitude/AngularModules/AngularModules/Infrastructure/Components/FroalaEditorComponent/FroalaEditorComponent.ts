@@ -98,6 +98,8 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
                 direction: '',
                 key: froalakey,
                 useClasses: false,
+                fontSizeSelection: true,
+                fontFamilySelection: true,
                 fontFamily: {
                     "Arial": 'Arial',
                     "Arial Black": 'Arial Black',
