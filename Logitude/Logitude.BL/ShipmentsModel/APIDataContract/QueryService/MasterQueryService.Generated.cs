@@ -400,11 +400,12 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
-					
+										 
 					if(IsUpdate == true)
 					{
-					    temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
-
+					    
+					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
+						
 					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{

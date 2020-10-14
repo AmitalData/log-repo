@@ -336,6 +336,7 @@ using <#=myspacestring#>
 					var Count = 0;
 					var HasCompositKey = "false";
 					var KeysAsParam = "";
+					var IsMulty = false;
 					var HasConcarancyCheck = false; 
 					//var DataContracts = entity.Elements("DataContracts").FirstOrDefault();
 					   foreach(var myfield in ((XElement)Mainentity).Elements("field"))  //get all classes
@@ -366,6 +367,7 @@ using <#=myspacestring#>
 					   {
 					   
 						var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+						IsMulty = CheckIsMulty((XElement)Mainentity,FieldName,ObjectTableName);
 						var IsCloseField = "false";
 						var temp = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault();
 						if(temp != null){
@@ -441,11 +443,17 @@ using <#=myspacestring#>
 						#>
 
 					} 
-					<#+if(HasConcarancyCheck == true){#>
-
+					<#+if(HasConcarancyCheck == true || IsMulty == true){#>
+					 
 					if(IsUpdate == true)
 					{
-					    temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
+					    <#+if(HasConcarancyCheck == true){#>
+
+					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); <#+}#>
+
+						<#+if(IsMulty == true){#>
+
+					      temp.ChangeSetOp = ChangeSetOperation.Update; <#+}#>
 
 					}<#+}
 					
@@ -625,7 +633,29 @@ using <#=myspacestring#>
 }
 <#+
 }
-
+private bool CheckIsMulty(XElement Mainentity,string FieldName,string ObjectTableName){
+				    	if(ObjectTableName == "ShipmentPickUp" || ObjectTableName == "ShipmentDelivery"){
+							return true;
+						}
+						 
+                       /*foreach(var myfield in ((XElement)Mainentity).Elements("field"))  //get all classes
+					   {
+					    
+					       var myFieldName = ((XElement)myfield).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value;
+						   if(myFieldName.Trim('"') == "FieldName"){ 
+					          var temp = ((XElement)myfield).Attributes().Where(a => a.Name == "IsMulti").FirstOrDefault().Value.Trim('"');
+						      if(temp == "true")
+							  {
+							    return true;
+							  }
+							  else 
+							  {
+							   return false;
+							  }
+						  }
+					   } */
+					   return false;
+}
  private void WriteApiDataContractMethod(dynamic entity)
 {
     var Name = ((XElement)entity).Attributes().Where(a => a.Name == "Name").FirstOrDefault(); 

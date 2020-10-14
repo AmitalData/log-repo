@@ -117,7 +117,13 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentPickUp with Id " + item.Id + " doesn't exist");
 					} 
-					
+										 
+					if(IsUpdate == true)
+					{
+					    
+						
+					      temp.ChangeSetOp = ChangeSetOperation.Update; 
+					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
