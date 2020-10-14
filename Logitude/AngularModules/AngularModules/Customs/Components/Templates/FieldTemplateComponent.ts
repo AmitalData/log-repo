@@ -20,7 +20,6 @@ import { ExceptionReasonListService } from '../../Services/StandardLists/Excepti
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
