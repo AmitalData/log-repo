@@ -24,7 +24,8 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
-import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
+
 import {ARPaymentChequeReplicaPM} from '../../EntityPMs/ARPaymentChequeReplicaPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
