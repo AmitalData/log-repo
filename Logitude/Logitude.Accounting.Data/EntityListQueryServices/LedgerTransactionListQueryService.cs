@@ -1204,6 +1204,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
             return _today;
         }
+
+
+        public IQueryable<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
+        {
+            DateTime today = GetCurrentDate(tenant);
+
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from trans in context.LedgerTransactions
+                                                                    join jrn in context.Journals on trans.JournalId equals jrn.Id
+                                                                    where 
+                                                                        jrn.ExternalSystem != null
+                                                                    &&  trans.AccountId == accountId 
+                                                                    &&  trans.Tenant == tenant 
+                                                                    && trans.DueDate > today
+                                                                    && trans.LocalAmountCredit != 0
+                                                                    select trans);
+
+            IQueryable<LedgerTransactionList> ledgerTransactionListQuery = GetIqueryableList(ledgerTransactionQuery);
+
+            return ledgerTransactionListQuery;
+        }
     }
 
     public class LedgerTransactionDto
