@@ -166,6 +166,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
+        public string ClassNumber { get; set; }
     }
 
     public class InsidePackageLine

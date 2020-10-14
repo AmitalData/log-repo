@@ -417,6 +417,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards;
         }
 
+        public IQueryable<CardList> GetCardPMsByTenant(int tenant)
+        {
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             VatNumber = a.VatNumber,
+                                             CountryCode = a.CountryCode,
+                                             CountryName = a.CountryName,
+                                             CityName = a.CityName,
+                                             GLAccountId = a.GLAccountId
+                                         };
+
+            return cards;
+        }
+
+
         public List<string> GetCardIdsByTenant(int tenant)
         {
 

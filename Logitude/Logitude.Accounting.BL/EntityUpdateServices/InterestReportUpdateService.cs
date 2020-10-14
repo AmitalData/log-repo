@@ -245,6 +245,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             autoCreditInvoice.IsInvoiceNumberFromStock = aRInvoice.IsInvoiceNumberFromStock;
             autoCreditInvoice.IsInvoiceNumberManuallySet = aRInvoice.IsInvoiceNumberManuallySet;
             autoCreditInvoice.Tenant = aRInvoice.Tenant;
+            autoCreditInvoice.HasInterestFeature = true;
             autoCreditInvoice = CreateautoCreditInvoiceLines(autoCreditInvoice, aRInvoice);
             return autoCreditInvoice;
 

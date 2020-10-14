@@ -1,6 +1,6 @@
 import { ServiceHelper } from './../../Utilities/ServiceHelper';
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
@@ -9,9 +9,9 @@ import {CargoTrackingShipmentSearchList} from '../../EntityLists/CargoTrackingSh
 @Injectable()
 export class CargoTrackingSearchService {
     private _apiUrl: string;
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient , @Inject('BASE_URL') baseUrl: string) {
         // this._apiUrl = "http://localhost:9996/"  + 'api/CargoTrackingSearch';
-        this._apiUrl = ServiceHelper.GetAppURL()  + 'api/CargoTrackingSearch';
+        this._apiUrl = ServiceHelper.GetAppURL(baseUrl)  + 'api/CargoTrackingSearch';
     }
 
 

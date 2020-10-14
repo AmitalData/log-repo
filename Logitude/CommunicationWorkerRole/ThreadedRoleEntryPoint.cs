@@ -503,21 +503,30 @@ namespace CommunicationWorkerRole
 
             foreach (var Service in BatchServicesDefinitions)
             {
-                for (int i = 0; i < Service.NumberOfThreads; i++)
+                try
                 {
-                    List<object> args = new List<object>();
-                    if (!string.IsNullOrEmpty(Service.Parameter1))
+                    for (int i = 0; i < Service.NumberOfThreads; i++)
                     {
-                        args.Add(Service.Parameter1);
+                        List<object> args = new List<object>();
+                        if (!string.IsNullOrEmpty(Service.Parameter1))
+                        {
+                            args.Add(Service.Parameter1);
+                        }
+                        if (!string.IsNullOrEmpty(Service.Parameter2))
+                        {
+                            args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
+                        }
+                        object[] ArrArgs = args.ToArray();
+                        var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + Service.ClassName), ArrArgs) as WorkerEntryPoint;
+                        Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
+                        workers.Add(Item);
                     }
-                    if (!string.IsNullOrEmpty(Service.Parameter2))
-                    {
-                        args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
-                    }
-                    object[] ArrArgs = args.ToArray();
-                    var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + Service.ClassName), ArrArgs) as WorkerEntryPoint;
-                    Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
-                    workers.Add(Item);
+                }
+                catch(Exception ex)
+                {
+                    EventLog eventLog = new EventLog();
+                    eventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
+                    ExceptionHandler.HandleException(ex, DateTime.UtcNow, 0, "", "WorkerRole", "ThreadedRoleEntryPoint :  Creating Instance for service: "+ Service?.ClassName, null);
                 }
             }
             int into = 0;
