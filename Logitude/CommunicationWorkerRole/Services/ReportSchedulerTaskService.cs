@@ -36,7 +36,7 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
-        TaskManagerBase currentTask;
+        
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -122,6 +122,7 @@ namespace CommunicationWorkerRole.Services
         private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
+            
             List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
             string cardId = GetcardIdValueField(schedulerDetails);
             List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
@@ -132,12 +133,16 @@ namespace CommunicationWorkerRole.Services
                 StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
-            }
-            else
-            {
-                currentTask.LogWarning("The E-mail was not sent, the customer status is inactive.");
+                schedulerDetails.ReportDetails.Recepients = GetRecepientsAfterRemoveInActiveCustomer(cardId, reportTask.Tenant, schedulerDetails.ReportDetails.Recepients);
+                if (schedulerDetails.ReportDetails.Recepients != null)
+                {
+                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                }
+                else
+                {
+                    currentTask.LogWarning("The E-mail was not sent, the customer status is inactive.");
+                }
             }
         }
 
