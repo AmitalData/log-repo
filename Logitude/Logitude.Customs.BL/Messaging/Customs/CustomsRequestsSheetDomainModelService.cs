@@ -44,10 +44,9 @@ using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
 using Unifreight.BL.EntityQueryServices;
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 20R01P
+
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-========================================================================
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 20R01D
+
 
 
 //using Simplog.Infrastructure.SimplogUtilities;
