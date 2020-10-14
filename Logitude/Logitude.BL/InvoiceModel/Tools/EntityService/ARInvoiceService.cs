@@ -116,6 +116,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         string loggedUserEmail;
         public ARInvoiceService(IInvoiceContext objectContext, int tenant, string loggedUserEmail)
         {
+            this.sATInterfaceHelper = new SATInterfaceHelper();
             this.tenant = tenant;
             this.isUpdateTotalVats = false;
             this.objectContext = objectContext;

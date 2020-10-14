@@ -13795,6 +13795,9 @@
       LocalDefaultText="&quot;כולל תנועות ממערכת חיצונית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
+    
+    
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
