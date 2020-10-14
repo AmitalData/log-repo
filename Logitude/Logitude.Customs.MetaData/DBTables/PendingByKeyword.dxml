@@ -21,7 +21,7 @@
   <Column
     Name="CourierPendingReasonCode"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -50,6 +50,6 @@
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"
-    ReferencedColumn="Code"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
 </Table>
