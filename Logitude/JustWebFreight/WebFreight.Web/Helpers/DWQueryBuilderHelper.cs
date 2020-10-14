@@ -562,7 +562,11 @@ namespace WebFreight.Web.Helpers
             }
 
 
+            var DWSettings = new DWHSettingRepository(Tenant);
+            var isParentTenant = DWSettings.IsParentTenant(Tenant);
 
+
+            FinalSelectStmt +="," + ( !isParentTenant ?  (Fact + ".[Source Tenant]  ") : (Fact  +".[Parent Tenant]")) + "as Tenant";
             FinalSelectStmt += " from " + Fact;
 
             if (Filters != null)
@@ -662,9 +666,7 @@ namespace WebFreight.Web.Helpers
             }
 
             string TenantWhere = ".[Parent Tenant] = ";
-            var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            var isParentTenant = DWSettings.IsParentTenant(Tenant);
             if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
