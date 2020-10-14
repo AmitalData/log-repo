@@ -26,7 +26,7 @@ namespace CommunicationWorkerRole.Tasks
             if (reportTask != null && !string.IsNullOrEmpty(reportTask.SchedulerDetailsXML))
             {
                 ReportSchedulerTaskService reportSchedulerTaskService = new ReportSchedulerTaskService(this);
-                reportSchedulerTaskService.SendPdfReportToReceipent(reportTask);
+                reportSchedulerTaskService.RunTask(reportTask);
             }
 
         }
