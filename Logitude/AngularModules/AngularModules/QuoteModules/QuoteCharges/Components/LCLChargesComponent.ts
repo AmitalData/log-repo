@@ -1082,6 +1082,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                                 item.SaleTotalAmountLocal = 0;
                             }
 
+                            if (AppTool.IsNullOrEmpty(item.SaleAmountInSaleCurrency)) {
+                                item.SaleAmountInSaleCurrency = 0;
+                            }
+
                             if (!lineVatType.IsMultiPercentage) {
                                 if (item.VatPercentage != null) {
                                     var myQroupItem = new QuoteTotalVATPM(null);
@@ -1092,11 +1096,11 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                                     myQroupItem.VatPercent = item.VatPercentage;
                                     myQroupItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                     myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                                    myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                    myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                     myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
 
                                     if (item.IsRegionalTax) {
-                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount + item.SaleTotalAmount * (this.RegionalTaxPercentage / 100);
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency + item.SaleAmountInSaleCurrency * (this.RegionalTaxPercentage / 100);
                                         myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (this.RegionalTaxPercentage / 100);
 
                                         var regionalTaxItem = new QuoteTotalVATPM(null);
@@ -1107,7 +1111,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                                         regionalTaxItem.VatPercent = this.RegionalTaxPercentage;
                                         regionalTaxItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                         regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                                        regionalTaxItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        regionalTaxItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                         regionalTaxItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
                                         group_Source.push(regionalTaxItem);
                                     }
@@ -1133,7 +1137,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                                         myQroupItem.VatPercent = this.GetVatTypePercentage(itemGroup.SingleVATTypeId);
                                         myQroupItem.ExternalVATCard = lineSingleVatType.ReceivablesExternalId;
                                         myQroupItem.ExternalTAXItemId = lineSingleVatType.ExternalTAXItemId;
-                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency;
                                         myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
                                         group_Source.push(myQroupItem);
                                     }
@@ -2451,8 +2455,7 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleUnitPrice != value) {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
-            this.fatherComponent.CheckUpdateQuantities();
-            
+            this.fatherComponent.CheckUpdateQuantities();            
         }
     }
     
@@ -2587,60 +2590,67 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
-  SetSaleQuantity(ChargesGroupCode: string = "FRT") {
-    var myResult = null;
 
-    if (this.IsAdhoc) {
-      switch (this.SaleMeasurementCode) {
-        case "GRWT": { myResult = this.QuotePM.GrossWeight; break; }
-        case "CHWT": { myResult = this.QuotePM.ChargeableWeight; break; }
-        case "VOLU": { myResult = this.QuotePM.Volume; break; }
-        case "BTEU": { myResult = this.QuotePM.TEU; break; }
-        case "FIXD": { myResult = 1; break; }
-        case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
-        case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "SaleTotalAmount"); break; }
-        case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
-        case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
-        case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
-        case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
-          case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
-          case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
-        default: { break; }
-      }
+    SetSaleQuantity(ChargesGroupCode: string = "FRT") {
+        var myResult = null;
+
+        if (this.IsAdhoc) {
+            switch (this.SaleMeasurementCode) {
+                case "GRWT": { myResult = this.QuotePM.GrossWeight; break; }
+                case "CHWT": { myResult = this.QuotePM.ChargeableWeight; break; }
+                case "VOLU": { myResult = this.QuotePM.Volume; break; }
+                case "BTEU": { myResult = this.QuotePM.TEU; break; }
+                case "FIXD": { myResult = 1; break; }
+                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "SaleTotalAmount"); break; }
+                case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
+                case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
+                default: { break; }
+            }
+        }
+
+        this.SaleQuantity = myResult;
     }
 
-    this.SaleQuantity = myResult;
-  }
+
     ComputeSaleAmounts() {
-        var myTotalAmount = null;
+        var totalAmount = null;
 
         if (!AppTool.IsNullOrEmpty(this.SaleUnitPrice) && !AppTool.IsNullOrEmpty(this.SaleQuantity)) {
             if (this.SaleMeasurementCode == "PRVL" || this.SaleMeasurementCode == "PRFR") {
-                myTotalAmount = this.SaleQuantity * this.SaleUnitPrice / 100;
+                totalAmount = this.SaleQuantity * this.SaleUnitPrice / 100;
             }
 
             else {
-                myTotalAmount = this.SaleQuantity * this.SaleUnitPrice;
+                totalAmount = this.SaleQuantity * this.SaleUnitPrice;
             }
         }
 
         /* MinMax */
-        if (myTotalAmount != null) {
+        if (totalAmount != null) {
             if (this.SaleMinAmount != null) {
-                if (myTotalAmount < this.SaleMinAmount) {
-                    myTotalAmount = this.SaleMinAmount;
+                if (totalAmount < this.SaleMinAmount) {
+                    totalAmount = this.SaleMinAmount;
                 }
             }
 
             if (this.SaleMaxAmount != null) {
-                if (myTotalAmount > this.SaleMaxAmount) {
-                    myTotalAmount = this.SaleMaxAmount;
+                if (totalAmount > this.SaleMaxAmount) {
+                    totalAmount = this.SaleMaxAmount;
                 }
             }
         }
 
-        this.EntityPM.SaleTotalAmount = AppTool.Round(myTotalAmount, 2);
-        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(myTotalAmount) ? null : AppTool.Round(myTotalAmount * this.SaleExchangeRate, 2);
+
+        this.EntityPM.SaleTotalAmount = AppTool.Round(totalAmount, 2);
+        this.EntityPM.SaleTotalAmountLocal = AppTool.IsNullOrEmpty(totalAmount) ? null : AppTool.Round(totalAmount * this.SaleExchangeRate, 2);
+        this.EntityPM.SaleAmountInSaleCurrency = AppTool.IsNullOrEmpty(this.EntityPM.SaleTotalAmountLocal) ? null : AppTool.Round(this.EntityPM.SaleTotalAmountLocal / this.QuotePM.ExchangeRate, 2);
+
+        this.EntityPM.SaleUnitPriceInSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleUnitPrice);
 
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.ItemsSource.Collection.filter(f => f.SaleMeasurementCode == "PRFR").forEach((item: QuoteChargeItem) => {
@@ -2658,6 +2668,24 @@ export class QuoteChargeItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
         this.fatherComponent.CheckUpdateQuantities();
     }
+
+    GetSalePriceInSaleCurrency(saleUnitPrice: number): number {
+
+        var output: number = null;
+
+        if (!AppTool.IsNullOrZero(saleUnitPrice)) {
+            if (this.EntityPM.SaleCurrencyId == this.QuotePM.SaleCurrencyId) {
+                output = saleUnitPrice;
+            }
+
+            else {
+                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 2);
+            }
+        }
+
+        return output;
+    }
+
     ComputeSalePrice() {
         if (AppTool.IsNullOrEmpty(this.CostUnitPriceInSaleCurrency)) {
             this.SaleUnitPrice = null;

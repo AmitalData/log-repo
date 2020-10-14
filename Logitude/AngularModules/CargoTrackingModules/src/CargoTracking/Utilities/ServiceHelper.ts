@@ -1,12 +1,21 @@
 import { HttpHeaders } from '@angular/common/http';
 
 export  class ServiceHelper{
-    public static GetAppURL(){
+
+    constructor(){
+        
+    }
+    public static GetAppURL(baseUrl:string){
 
         if (window.location.origin.indexOf('localhost') > -1)
             return 'http://localhost:9996/';
-        else
-            return window.location.origin + "/"+ window.location.pathname.split('/')[1] +"/";
+        else{
+            if(baseUrl.includes('/CargoTracking')){
+                baseUrl = baseUrl.replace("/CargoTracking","");
+            }
+            return baseUrl
+        }
+            
     }
     public static GetHeaders(){
 

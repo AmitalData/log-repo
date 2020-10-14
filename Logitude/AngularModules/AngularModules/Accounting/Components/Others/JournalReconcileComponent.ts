@@ -99,6 +99,13 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
     
 
+    
+    public get IsCustomerCare() {
+        return SessionLocator.LoggedUserPM.IsCustomerCare;
+    }
+
+
+
     glAcccountId: string;
     get GLAccountId() { return this.glAcccountId; }
     set GLAccountId(value: string) {

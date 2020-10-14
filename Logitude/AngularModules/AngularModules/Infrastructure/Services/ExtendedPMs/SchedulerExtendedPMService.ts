@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {TasksSchedulerPM} from '../../EntityPMs/TasksSchedulerPM';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
+import { InfraSettings } from '../../Utilities/InfraSettings';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { TasksSchedulerPM } from '../../EntityPMs/TasksSchedulerPM';
 import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
@@ -19,7 +19,7 @@ export class SchedulerExtendedPMService {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
     }
 
-    GetSchedulerHistoryLogs(HistoryId: string)  {
+    GetSchedulerHistoryLogs(HistoryId: string) {
         var url = this.apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId;
 
         return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -31,7 +31,7 @@ export class SchedulerExtendedPMService {
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
-    GetSchedulerDetailsById(schedulerId: string)  {
+    GetSchedulerDetailsById(schedulerId: string) {
         var url = this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId;
 
         return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -43,7 +43,7 @@ export class SchedulerExtendedPMService {
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
-    insert(entityPM: TasksSchedulerPM)  {
+    insert(entityPM: TasksSchedulerPM) {
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;
@@ -74,7 +74,7 @@ export class SchedulerExtendedPMService {
         }
     }
 
-    update(entityPM: TasksSchedulerPM)  {
+    update(entityPM: TasksSchedulerPM) {
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;

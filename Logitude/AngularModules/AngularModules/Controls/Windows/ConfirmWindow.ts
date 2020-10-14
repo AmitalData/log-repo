@@ -23,6 +23,7 @@ export class ConfirmWindow {
     @Output() WindowClosed = new EventEmitter();
     public IsChecked: boolean = false;
     public IsYesEnabled: boolean = true;
+    public StringColor: string = "#6E7172";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
@@ -108,6 +109,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
     public IsYesEnabled: boolean = true;
+    public StringColor: string = "#6E7172";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
@@ -139,6 +141,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.ShowWarningImage = myWindow.ShowWarningImage;
         this.ShowCheckBox = myWindow.ShowCheckBox;
         this.IsYesEnabled = myWindow.IsYesEnabled;
+        this.StringColor = myWindow.StringColor;
 
         if (myWindow.Width != null) {
             this.Width = myWindow.Width + "px";

@@ -814,7 +814,7 @@ export class NewConsolidationComponent extends BaseComponent {
                         if (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning) {
 
                             var RemainingLimit = FormatTool.FormatNumber(LimitAmount - ActualBalance);
-                            var PercentageWarning: string = TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg5") + " (" + RemainingLimit + ")";
+                            var PercentageWarning: string = TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg5") + " " + RemainingLimit;
                             warnings.push(PercentageWarning);
                         }
                     }
