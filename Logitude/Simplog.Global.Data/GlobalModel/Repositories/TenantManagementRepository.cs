@@ -4,6 +4,8 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using System.Security.Cryptography;
+
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class TenantManagementRepository : IRepository<TenantManagement>
@@ -47,7 +49,30 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagementByBluesnapAccountId(string bluesnapaccountId)
         {
-            return (from a in context.TenantManagements.Include("GlobalTenant") where a.BluesnapAccount == bluesnapaccountId select a).FirstOrDefault();
+            TenantManagement tenantManagement = null;
+            var allTenantManagements = (from a in context.TenantManagements.Include("GlobalTenant")
+                                        where a.BluesnapAccount == bluesnapaccountId
+                                        select a);
+            var parentTenant = allTenantManagements.Where(a => a.IsParentTenant && a.NoPaymentForChildTenants).FirstOrDefault();
+
+            if (parentTenant != null)
+            {
+                tenantManagement = parentTenant;
+            }
+            else
+            {
+                tenantManagement = (from a in allTenantManagements.Include("GlobalTenant")
+                                    where a.BluesnapAccount == bluesnapaccountId && a.GlobalTenant.IsActive
+                                    select a).FirstOrDefault();
+                if (tenantManagement == null)
+                {
+                    tenantManagement = (from a in allTenantManagements.Include("GlobalTenant")
+                                        where a.BluesnapAccount == bluesnapaccountId && !a.GlobalTenant.IsActive
+                                        select a).FirstOrDefault();
+                }
+            }
+
+            return tenantManagement;
         }
 
         public List<TenantManagement> GetTenantManagementsForPackage(string packageCode)
