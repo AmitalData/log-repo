@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -44,22 +43,40 @@ namespace Logitude.DBMigrations.Models
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
-                string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+                if (!ToolArguments.IsArgumentProvided(Arguments.DEV))
+                {
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
+                }
+                else
+                {
+                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
+                    StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
 
-                ValidateDBFiles(dxmlFiles, sxmlFiles);
-                PrepareRequiredData();
+                    Console.WriteLine("");
 
-                GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
-                SaveScripts(scriptsToSave);
-                ExportMissingIndexesWarnings();
-
-                StartZeroDownTimeMigrations();
+                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
+                    StartNormalMigrations();
+                }
             }
             else
             {
                 StartZeroDownTimeService();
             }
+        }
+
+        protected void StartNormalMigrations()
+        {
+            string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
+            string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+
+            ValidateDBFiles(dxmlFiles, sxmlFiles);
+            PrepareRequiredData();
+
+            GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
+            SaveScripts(scriptsToSave);
+            ExportMissingIndexesWarnings();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -270,6 +287,11 @@ namespace Logitude.DBMigrations.Models
                     string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
+                        if(dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                        {
+                            continue;
+                        }
+
                         dxmlTable.TableDefinition.DBType = dbType;
                         DXMLGeneratedScript dxmlGeneratedScript = GenerateScriptsFromDXMLTable(dxmlTable);
                         dxmlsGeneratedScript = AddToDXMLGeneratedScript(dxmlsGeneratedScript, dxmlGeneratedScript);
@@ -1532,6 +1554,23 @@ namespace Logitude.DBMigrations.Models
             return includeScriptDefinition;
         }
 
+        protected bool IsModuleIncluded(string moduleName)
+        {
+            bool isModuleIncluded = true;
+            if (IncludedModules != null)
+            {
+                if (IncludedModules.Include)
+                {
+                    isModuleIncluded = IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+                else
+                {
+                    isModuleIncluded = !IncludedModules.Modules.Contains(moduleName?.ToLower()) && !String.IsNullOrEmpty(moduleName);
+                }
+            }
+            return isModuleIncluded;
+        }
+
         protected string GetOracleSaveScriptHistoryQuery(string saveAction, string sxmlFileName, ScriptDefinition scriptDefinition)
         {
             string saveScriptHistoryQuery;
@@ -1938,6 +1977,11 @@ namespace Logitude.DBMigrations.Models
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
             {
                 ExitTool("Error: Cannot Use Zero Down Time Mode Without Execute Argument");
+            }
+
+            if (ToolArguments.IsArgumentProvided(Arguments.DEV) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
+            {
+                ExitTool("Error: Cannot Use Dev Mode Without Execute Argument");
             }
         }
 

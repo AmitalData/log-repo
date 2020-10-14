@@ -12,26 +12,34 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public class Delivery
+    public partial class Delivery
     {
 
 	    
     public string Id { get; set; }
     
+    public DateTime? ATD { get; set; }
+    
+    public DateTime? ATA { get; set; }
+    
     public DateTime? ETD { get; set; }
     
     public DateTime? ETA { get; set; }
     
-    public Card FromPartnerCard { get; set; }
-    
     public Port FromPort { get; set; }
     
-    public Card ToPartnerCard { get; set; }
-    
     public Port ToPort { get; set; }
+    
+    public Card FromPartnerCard { get; set; }
+    
+    public Card ToPartnerCard { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

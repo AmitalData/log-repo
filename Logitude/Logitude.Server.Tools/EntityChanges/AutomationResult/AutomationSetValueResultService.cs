@@ -57,7 +57,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 {
                     if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                     {
-                        AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, entityId);
+                        AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult, automationFieldLists, entityId);
                     }
                     else SetValue(entityPM, entityChange, automationFieldLists, lastUpdate, this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, this.automationResultArgs.MainEntityChangeService.Changefields, automation, entityChangesAutomation, dateBefore);
                 }

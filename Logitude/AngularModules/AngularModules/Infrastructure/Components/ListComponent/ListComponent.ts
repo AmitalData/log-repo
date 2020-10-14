@@ -42,6 +42,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
+import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 
 @Component({
     
@@ -79,6 +80,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
+    @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
@@ -2385,7 +2387,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {
                         console.warn('$event.rowIndex is null' + aa.Result)
                     } else {
-                        this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });
+                        if(this.MyLogGridComponent){this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
+                        if(this.MyLogGridComponentV2){this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
+                        
                     }
                     
                 }

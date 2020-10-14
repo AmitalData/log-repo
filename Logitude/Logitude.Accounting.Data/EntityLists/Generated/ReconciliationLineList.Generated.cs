@@ -68,6 +68,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string ReconciledWithTransactionId  { get; set; }
+       [DataMember]
+       public DateTime? AccountingDate  { get; set; }
    }
 
 }

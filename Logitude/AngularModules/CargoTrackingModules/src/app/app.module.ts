@@ -14,7 +14,10 @@ import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashb
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
 import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
-
+export function getBaseUrl() {
+    return document.getElementsByTagName('base')[0].href;
+  }
+  
 @NgModule({
     declarations: [
         AppComponent,
@@ -38,7 +41,8 @@ import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favor
     ],
     providers: [
         CargoTrackingSearchService,
-        CargoTrackingBrandingDataExtendedService
+        CargoTrackingBrandingDataExtendedService,
+        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]
 })

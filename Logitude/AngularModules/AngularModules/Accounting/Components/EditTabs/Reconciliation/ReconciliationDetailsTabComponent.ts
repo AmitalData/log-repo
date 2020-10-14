@@ -194,13 +194,15 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
         this.columns = [];
 
         this.columns.push({
-            FieldName: 'CreateDate',
+            FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.CreateDate"),
-            Styles: { width: '100px' },
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate"),//'Acc. Date',
+            Styles: { width: '105px' },
             HtmlListComponentName: 'ReconciliationLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconciliationLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'AccountingDate'
         });
         this.columns.push({
             FieldName: 'JournalNumber',

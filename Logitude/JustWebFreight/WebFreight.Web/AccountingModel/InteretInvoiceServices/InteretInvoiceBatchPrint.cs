@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
 using WebFreight.Web.WebServices;
 
 
@@ -135,6 +136,19 @@ namespace Logitude.Accounting.BL.InterestService
 
         }
 
+        private DocumentOutCopy GetDocumentCopyByCode(ICommonDataContext commonContext, int tenant, string documentOutId, string DocumentCode )
+        {
+            DocumentOutCopy copy = (from a in commonContext.DocumentOutCopies
+                                    join Copy in commonContext.DocumentTypeCopies on a.DocumentTypeCopyId equals Copy.Id
+                                    where a.DocumentOutId == documentOutId
+                                          && tenant == (int)tenant
+                                          && Copy.Code == DocumentCode
+                                    select a).OrderBy(d => d.DocumentTypeCopy.IndexOrder).FirstOrDefault();
+
+
+            return copy;
+        }
+
         private bool PrintInvoicesPDF(string Email, int? tenant, string SelectId, PdfDocument pdfDoc, string DocumentCode, bool IsForChecked)
         {
             try
@@ -167,17 +181,22 @@ namespace Logitude.Accounting.BL.InterestService
                     documentOutId = doucmentOut.Id;
                     tenant = doucmentOut.Tenant;
 
-                    List<DocumentOutCopy> copies = (from a in commonContext.DocumentOutCopies
-                                                    join Copy in commonContext.DocumentTypeCopies on a.DocumentTypeCopyId equals Copy.Id
-                                                    where a.DocumentOutId == documentOutId 
-                                                          && tenant == (int)tenant
-                                                          && Copy.Code == DocumentCode
-                                                    select a).OrderBy(d => d.DocumentTypeCopy.IndexOrder).ToList();
+                    DocumentOutCopy copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, DocumentCode);
 
-                    Uploader up = new Uploader();
 
-                    foreach (DocumentOutCopy copy in copies)
+                    if (copy!=null && doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                     {
+                        copy = GetDocumentCopyByCode(commonContext,(int)tenant, documentOutId, "999G1");
+                    }
+                    if (copy == null)
+                    {
+                        return false;
+                    }
+
+                        Uploader up = new Uploader();
+
+                    //foreach (DocumentOutCopy copy in copies)
+                    //{
                         includeInPrint = true;
                         //if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                         //{
@@ -228,7 +247,7 @@ namespace Logitude.Accounting.BL.InterestService
                                             aRInvoiceRepository.SubmitChanges();
                                         }
 
-                                        break;
+                                        //break;
 
                                     }
                                 }
@@ -238,7 +257,7 @@ namespace Logitude.Accounting.BL.InterestService
 
                         }
 
-                    }
+                    //}
 
                 }
 

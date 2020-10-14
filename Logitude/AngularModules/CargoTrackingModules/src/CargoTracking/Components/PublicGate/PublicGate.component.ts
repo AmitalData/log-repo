@@ -131,6 +131,6 @@ export class PublicGateComponent
     back()
     {
         // this._location.back();
-        this.router.navigate(['search']);
+        this.router.navigate([this._Tenant,'search']);
     }
 }

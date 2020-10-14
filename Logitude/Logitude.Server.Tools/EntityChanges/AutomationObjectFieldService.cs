@@ -73,6 +73,7 @@ namespace Logitude.Server.Tools.EntityChanges
             List<ObjectField> customObjectFieldLists = new List<ObjectField>();
             List<AutomationCondition> automationConditionList = new List<AutomationCondition>();
             List<AutomationSetValue> automationSetValueLists = new List<AutomationSetValue>();
+            string automationDelayTimeFieldCode = "";
             AutomationFollowUp automationFollowUp = new AutomationFollowUp();
             AutomationQueuedTask automationQueuedTask = new AutomationQueuedTask();
 
@@ -94,6 +95,7 @@ namespace Logitude.Server.Tools.EntityChanges
                             automationFollowUp = automatedBackup.AutomationFollowUp;
                             automationQueuedTask = automatedBackup.AutomationQueuedTask;
                             delayedAutomationConditionList = automatedBackup.DelayAautomationConditionLists;
+                            automationDelayTimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
 
                             CacheManager.CacheWrapper.Insert(automatedBackupName, automatedBackup, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
                         }
@@ -105,6 +107,7 @@ namespace Logitude.Server.Tools.EntityChanges
                             automationFollowUp = automatedBackup.AutomationFollowUp;
                             automationQueuedTask = automatedBackup.AutomationQueuedTask;
                             delayedAutomationConditionList = automatedBackup.DelayAautomationConditionLists;
+                            automationDelayTimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
                         }
                     }
                     else
@@ -115,6 +118,7 @@ namespace Logitude.Server.Tools.EntityChanges
                         automationFollowUp = automatedBackup.AutomationFollowUp;
                         automationQueuedTask = automatedBackup.AutomationQueuedTask;
                         delayedAutomationConditionList = automatedBackup.DelayAautomationConditionLists;
+                        automationDelayTimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
                     }
 
                     if (automatedBackup != null && automatedBackup.Delaytime > LargeDelayTime)
@@ -168,6 +172,18 @@ namespace Logitude.Server.Tools.EntityChanges
                                 customObjectFieldLists.Add(objectFieldValue);
                             }
                         }
+                    }
+                }
+                #endregion
+
+                #region Add Automation Delay Time Value Object Field
+
+                if (!string.IsNullOrEmpty(automationDelayTimeFieldCode))
+                {
+                    ObjectField objectFieldValue = objectFieldLists.Where(d => d.FieldCode == automationDelayTimeFieldCode).FirstOrDefault();
+                    if (objectFieldValue != null && !customObjectFieldLists.Contains(objectFieldValue))
+                    {
+                        customObjectFieldLists.Add(objectFieldValue);
                     }
                 }
                 #endregion

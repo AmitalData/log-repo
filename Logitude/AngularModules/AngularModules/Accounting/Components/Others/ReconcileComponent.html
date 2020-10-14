@@ -743,7 +743,7 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe" [width]="'100'" [binding]="'OpenAmount'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
+                                <div style="direction: ltr; text-align: right; padding: 0px 2px;" >
                                     <span>{{ item.OpenAmount | NumbersPipe:'N2'  }} {{item.OpenAmountCurrencySign}}</span>
                                 </div>
                             </log-cell-template>

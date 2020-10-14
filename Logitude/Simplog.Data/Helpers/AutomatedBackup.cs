@@ -32,6 +32,14 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public int Delaytime { get; set; }
 
+
+        [DataMember]
+        public string DelaytimeOp { get; set; }
+
+
+        [DataMember]
+        public string SelectedDelaytimeFieldCode { get; set; }
+
         [DataMember]
         public string DelaytimeIndicator { get; set; }
 

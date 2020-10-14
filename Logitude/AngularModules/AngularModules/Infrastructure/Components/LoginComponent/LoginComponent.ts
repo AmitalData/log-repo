@@ -850,24 +850,26 @@ export class LoginComponent implements OnInit {
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 SessionLocator.FeatureToggles = myResponse.Result;
-                this.IncreaseProgressBar();
+                
                 //33
             }
+            this.IncreaseProgressBar();
         });
 
         this.UserExtendedPMService.CheckUserReleaseNotesToolTip(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 SessionLocator.ShowUserNewReleaseToolTip = myResponse.Result;
-                this.IncreaseProgressBar();
+                
                 //34
             }
+            this.IncreaseProgressBar();
         });
 
         this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe((Result: ServiceResponse) => {
             //var ObsList = [];
             if (!Result.HasError) {
                 window.DWObjectFields = Result.Result;
-                this.IncreaseProgressBar();
+                
                 //Result.Result.forEach((field) => {
                 //    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
                 //        var view = new DWObjectFieldsDetails(field, null);
@@ -876,13 +878,15 @@ export class LoginComponent implements OnInit {
                 //    }
                 //});
             }
+            this.IncreaseProgressBar();
         });
 
         this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 window.DWObjectFields_Charges = Result.Result;
-                this.IncreaseProgressBar();
+                
             }
+            this.IncreaseProgressBar();
         });
                 //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((myResult:any) => {
                 //    window.ObjectTableRulePMs = myResult;
@@ -946,7 +950,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 37;
+            this.TotalNumberOfLoads = 39;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
@@ -1007,71 +1011,7 @@ export class LoginComponent implements OnInit {
 
 
 
-    //MapLastTableAndNavigate(objectfields: any[]) {
-    //    this.IncreaseProgressBar();
-
-    //    //var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-    //    //var open = indexedDB.open("MyDatabase", 2);
-    //    //open.onupgradeneeded = function () {
-    //    //    var db = open.result;
-    //    //    var store = db.createObjectStore("ObjectField", { keyPath: "Id", unique: true });
-    //    //    var index = store.createIndex("Id", "Id");
-    //    //};
-    //    //open.onsuccess = function () {
-    //    //    // Start a new transaction
-    //    //    var db = open.result;
-    //    //    var tx = db.transaction("ObjectField", "readwrite");
-    //    //    var store: IDBObjectStore = tx.objectStore("ObjectField");
-    //    //    var index: IDBIndex = store.index("Id");
-
-    //    //    var start = new Date().getTime();
-    //    //    objectfields.forEach((objfield) => {
-    //    //        store.put(objfield);
-    //    //    });
-
-    //    //    var end = new Date().getTime();
-    //    //    var queryStart = new Date().getTime();
-    //    //    var queryEnd;
-    //    //    var cursorResult = [];
-    //    //    //var getAllObjectFields = store.openCursor();
-    //    //    store.openCursor().onsuccess = function (evt: any) {
-
-    //    //        var cursor: IDBCursorWithValue = evt.target.result;
-    //    //        if (cursor) {
-    //    //            cursorResult.push(cursor.value);
-    //    //            cursor.continue(); //["continue"]();
-    //    //        }
-    //    //        queryEnd = new Date().getTime();
-    //    //    };
-
-    //    //    // 1-98 //
-    //    //    // 350 - 1-13699
-    //    //    // 2650 - 1-16602
-    //    //    // 5400 - 1-952
-    //    //    var indexStart = new Date().getTime();
-    //    //    var indexEnd;
-    //    //    var getObjectFieldById = index.get("1-98");
-    //    //    getObjectFieldById.onsuccess = function () {
-    //    //        indexEnd = new Date().getTime();
-    //    //    };
-
-    //    //    //// 1-98 //
-    //    //    //var storeStart = new Date().getTime();
-    //    //    //var storeEnd;
-    //    //    //var getObjectFieldById = store.get("1-98");
-    //    //    //getObjectFieldById.onsuccess = function () {
-    //    //    //    storeEnd = new Date().getTime();
-    //    //    //};
-
-    //    //    // Close the db when the transaction is done
-    //    //    tx.oncomplete = function () {
-    //    //        db.close();
-    //    //    };
-    //    //}
-    //    //window.ObjectFields = objectfields;
-
-    //    //this.LoginCompleted.emit("event");
-    //}
+    
 
 }
 

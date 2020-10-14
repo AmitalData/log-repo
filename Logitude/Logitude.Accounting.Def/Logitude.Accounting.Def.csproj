@@ -82,6 +82,8 @@
     <Compile Include="EntityPMs\Generated\BankDepositLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BankDepositPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BankPageEntryTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CalculatedChartsOfAccountPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CalculatedChartsOfAccountsLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CashBookLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CashBookPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CashBookTypePM.Generated.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="EntityPMs\Generated\TaxReportStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaxWithholdingAssessOfficePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TestEntityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UserDefinedReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VatReportStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WithholdingTaxDeductionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\GLAccountCurrencyPM.cs" />

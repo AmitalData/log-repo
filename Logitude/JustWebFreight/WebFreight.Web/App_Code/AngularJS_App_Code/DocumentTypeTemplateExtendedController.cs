@@ -742,27 +742,56 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
-            //public HttpResponseMessage GetTemplateBodyhtmlOrJsonByDocumentTemplateId(string documentTyptemplateId, int tenant, bool isHtml)
-            //{
-            //    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
-            //    byte[] data = null;
-            //    string result = "";
-            //    if (isHtml)
-            //    {
-            //        data = documentTypeTemplateQuery.GetTemplateBodyHtmlByDocumentTypeTemplateId(documentTyptemplateId, tenant);
-            //    }
-            //    else
-            //    {
-            //        data = documentTypeTemplateQuery.GetTemplateBodyjsonByDocumentTypeTemplateId(documentTyptemplateId, tenant);
-            //    }
+        public HttpResponseMessage GetDocumentTypeTemplatesDefultAttachments(string documentTypeTemplateId,string objectTableId , string entityId, string childEntityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DocumentTypeTemplate", "READ", authToken.Tenant);
 
-            //    if (data != null)
-            //    {
-            //        result = System.Text.Encoding.UTF8.GetString(data);
-            //    }
+                DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
+                var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = documentTypeTemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = authToken.Tenant , ChildEntityId = childEntityId });
 
-            //    return Request.CreateResponse(HttpStatusCode.OK, result);
-            //}
+
+                return Request.CreateResponse(HttpStatusCode.OK, attachments);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
 
         }
+
+
+
+
+
+
+        //public HttpResponseMessage GetTemplateBodyhtmlOrJsonByDocumentTemplateId(string documentTyptemplateId, int tenant, bool isHtml)
+        //{
+        //    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+        //    byte[] data = null;
+        //    string result = "";
+        //    if (isHtml)
+        //    {
+        //        data = documentTypeTemplateQuery.GetTemplateBodyHtmlByDocumentTypeTemplateId(documentTyptemplateId, tenant);
+        //    }
+        //    else
+        //    {
+        //        data = documentTypeTemplateQuery.GetTemplateBodyjsonByDocumentTypeTemplateId(documentTyptemplateId, tenant);
+        //    }
+
+        //    if (data != null)
+        //    {
+        //        result = System.Text.Encoding.UTF8.GetString(data);
+        //    }
+
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
+
+    }
 }

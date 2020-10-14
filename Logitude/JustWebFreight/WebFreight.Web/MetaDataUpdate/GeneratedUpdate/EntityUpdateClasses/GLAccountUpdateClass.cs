@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "324df7ac767d193c005b3fb582d67fb1";
+
+		public const string HashString = "b81e99a1fb1dacb4ee06bebbc03feda3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9425,7 +9426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLTransactionReportOWithClosedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions",LocalDefaultText = @"כלול תנועות סגורות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the following filters is required: GLAccount, Chartofaccount or Category",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס \קבוצת מאזן \ סוג קבוצת מאזן \ קטגוריה ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the following filters is required: GLAccount /Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס /קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsSTransactionsTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.S.Transactions.Transactions", DefaultText = "Transactions",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -9578,6 +9579,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCantChangeRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CantChangeRecoMethod", DefaultText = "The reconcile method can’t be updated, the GLAcocunt has transactions",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOThereIsExternalTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThereIsExternalTrans", DefaultText = "Includes ledger transactions from external system",LocalDefaultText = @"כולל תנועות ממערכת חיצונית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

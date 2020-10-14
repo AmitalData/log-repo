@@ -107,7 +107,7 @@
 
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["OpenAmount"]<0'>
+    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;" >
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
     <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]!=0'>

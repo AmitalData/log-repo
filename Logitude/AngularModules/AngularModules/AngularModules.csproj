@@ -366,6 +366,7 @@
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Horse\HorseGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Horse\NewHorseComponent.ts" />
+    <TypeScriptCompile Include="Common\DataContracts\DocumentDefultAttachment.ts" />
     <TypeScriptCompile Include="Common\EntityLists\HorseList.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HorsePM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
@@ -376,11 +377,11 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
-	<TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />	
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
-	<Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />	
-	<TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
+    <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
+    <TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
     <Content Include="CRMModules\CRMActivity\Components\EditTabs\ActivityGeneralTabComponent.html" />
@@ -718,6 +719,7 @@
     <Content Include="InfrastructureModules\InfrastructureComputingPartner\Components\EditTranslationComputingPartners.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\ChooseEntityComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\FilingInboxWorkspaceComponent.html" />
@@ -1682,6 +1684,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\HelpResouceGeneralTabComponent.ts" />
@@ -1787,6 +1790,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
+    <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />

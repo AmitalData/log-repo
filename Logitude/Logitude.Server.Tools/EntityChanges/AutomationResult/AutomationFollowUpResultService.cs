@@ -47,7 +47,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     {
                         if (validateResult.Type == "Delayed")
                         {
-                           AddDelayedAutomationQueue(automationResultArgs.EntityChange.Id, automationResultArgs.EntityChangeArgs.ProcessType, automation.Tenant, automation.Id, validateResult.Delaytime, validateResult.DelaytimeIndicator, automationResultArgs.EntityChangeArgs.EntityId);
+                           AddDelayedAutomationQueue(automationResultArgs.EntityChange.Id, automationResultArgs.EntityChangeArgs.ProcessType, automation.Tenant, automation.Id, validateResult, automationResultArgs.AutomationFieldLists, automationResultArgs.EntityChangeArgs.EntityId);
                         }
                         else AddAutomationFollowUp(automationResultArgs.EntityChangeArgs.EntityPM, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, lastUpdate, automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, automation, entityChangesAutomation, dateBefore, true);
 

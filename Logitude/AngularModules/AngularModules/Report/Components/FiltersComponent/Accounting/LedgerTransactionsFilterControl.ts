@@ -42,6 +42,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     public IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
+    public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public GLAccountFilterItems: ApiQueryFilters;
 
     constructor(private CD: ChangeDetectorRef)
@@ -72,6 +73,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private InitLOVFilters()
     {
+        this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
+        this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
+
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
 
@@ -199,6 +203,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         }
     }
+    
+    private _ChartOfAccountsTypeCode : string;
+    public get ChartOfAccountsTypeCode() : string {
+        return this._ChartOfAccountsTypeCode;
+    }
+    public set ChartOfAccountsTypeCode(v : string) {
+        this._ChartOfAccountsTypeCode = v;
+    }
+    
     private chartOfAccount: string;
     public get ChartOfAccount() { return this.chartOfAccount; }
     public set ChartOfAccount(value: string)
@@ -394,6 +407,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ChartOfAccountsTypeCode";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountsTypeCode);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "CurrencyId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.CurrencyId);
         queryFilterItem.Operator = "Equals";
@@ -505,7 +524,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
 
-        if (!this.GLAccountId && !this.ChartOfAccountId && !this.SelectedCategoryValue) {
+        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
             isValid = false;
         }
