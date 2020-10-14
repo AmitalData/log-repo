@@ -15,6 +15,7 @@ import {
     ReportSchedulerRecepients,
 } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
@@ -25,11 +26,15 @@ export class AddEditReportTaskSchedulerComponent {
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = 'TasksScheduler';
     public ValidationErrorsList: string[];
+    public DisplayFTPOption: boolean = false;
     schedulerExtendedPMService: SchedulerExtendedPMService;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
+            this.DisplayFTPOption = true;
+        }
     }
 
     SetDataContext(DataContext: TaskReportSchedulerItemClass) {
@@ -154,6 +159,7 @@ export class AddEditReportTaskSchedulerComponent {
     set IsFTP(newValue: boolean) {
         if (this.isFTP != newValue) {
             this.isFTP = newValue;
+            this.DataContext.IsFTP = newValue;
         }
     }
 
@@ -190,6 +196,20 @@ export class AddEditReportTaskSchedulerComponent {
     NextButtonClicked() {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate('General.M.FieldIsRequired');
+
+        var errors: string[] = [];
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+
+        if (this.IsFTP) {
+            
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
+            if (AppTool.IsNullOrEmpty(this.DataContext.Password)) errors.push(msg.replace("%FieldName", "Password"));
+            //if (AppTool.IsNullOrEmpty(this.DataContext.Subject)) errors.push(msg.replace("%FieldName", "Subject"));
+            //if (AppTool.IsNullOrEmpty(this.DataContext.From)) errors.push(msg.replace("%FieldName", "From"));
+            if (AppTool.IsNullOrEmpty(this.DataContext.Host)) errors.push(msg.replace("%FieldName", "Host"));
+        }
 
         Validator.TryValidateObject(
             this.DataContext.EntityPM,

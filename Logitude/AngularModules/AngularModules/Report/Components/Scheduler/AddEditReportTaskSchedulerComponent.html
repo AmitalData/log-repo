@@ -89,7 +89,7 @@
                                                                     </table>
                                                                 </td>
                                                                  <td style="width:55%">
-                                                                    <table style="min-height: 320px;">
+                                                                    <table style="min-height: 170px;" *ngIf="DisplayFTPOption">
                                                                         <tr class="FormFieldRow">
                                                                             <td></td>
                                                                             <td>
@@ -119,9 +119,9 @@
                                                                         </tr>
                                                                         <tr *ngIf="IsFTP">
                                                                             <td></td>
-                                                                            <td style="width: 350px;">
+                                                                            <td style="width: 350px;vertical-align:top">
                                                                                  
-                                                                                    <FTBSchedulerTemplateComponent [DataContext]="DataContext?.EntityPM"></FTBSchedulerTemplateComponent>
+                                                                                    <FTBSchedulerTemplateComponent [DataContext]="DataContext" [BasicDisplayMode] ="true"></FTBSchedulerTemplateComponent>
                                                                                  
                                                                             </td>
                                                                         </tr>

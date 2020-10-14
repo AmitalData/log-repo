@@ -49,7 +49,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
     }
 
-    DataContext: any;
+    DataContext: TaskReportSchedulerItemClass;
     SetDataContext(DataContext: TaskReportSchedulerItemClass) {
         this.DataContext = DataContext;
         this.DataContext.EntityPM = DataContext.EntityPM;
@@ -216,9 +216,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     GetAllRecepients() {
         var recepients: ReportSchedulerRecepients = new ReportSchedulerRecepients();
-        recepients.To = this.PageChild_OPEMA.ToEmailLists.toString();
-        recepients.Cc = this.PageChild_OPEMA.CcEmailLists.toString();
-        recepients.Bcc = this.PageChild_OPEMA.BccEmailLists.toString();
+        recepients.To = this.PageChild_OPEMA?.ToEmailLists?.toString();
+        recepients.Cc = this.PageChild_OPEMA?.CcEmailLists?.toString();
+        recepients.Bcc = this.PageChild_OPEMA?.BccEmailLists?.toString();
         return recepients;
     }
 
@@ -236,7 +236,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     DisableFinishButton() {
-        if (this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length != 0)
+        if ((this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length != 0)
+            || this.DataContext.IsFTP)
             return false;
         return true;
     }

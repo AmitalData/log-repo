@@ -10,11 +10,12 @@ import { AppTool } from '../../../../../Infrastructure/Tools';
 
     selector: 'FTBSchedulerTemplateComponent',
     templateUrl: './FTBSchedulerTemplateComponent.html',
-    inputs: ['DataContext']
+    inputs: ['DataContext','BasicDisplayMode']
 })
 
 export class FTBSchedulerTemplateComponent {
     public DataContext: any;
+    public BasicDisplayMode: boolean = false;
     public ObjectTableName: string = "TasksScheduler";
     constructor() {
 
