@@ -229,7 +229,7 @@ namespace WebFreight.Web.App_Code
                     filter.Base64String = "";
 
 
-                    if (filter.FileName != "verysmalllogo" && filter.FileName != "sharedLogtsitcslogo")
+                    if (filter.FileName != "verysmalllogo" && filter.FileName != "sharedLogtsitcslogo" && !filter.KeepOriginalSize)
                     {
                         filter.FileData = ResizeImage(filter.FileData, filter.Width, filter.Height, filter.Extension);
 
