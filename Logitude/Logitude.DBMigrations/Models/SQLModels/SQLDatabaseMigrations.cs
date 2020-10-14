@@ -589,6 +589,11 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if (isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any())
+            {
+                isColumnInCurrentTable = false;
+            }
+
             if (!isColumnInCurrentTable)
             {
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any();
@@ -617,10 +622,14 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if(isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any())
+            {
+                isColumnInCurrentTable = false;
+            }
+
             if (!isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any())
             {
                 columnName = dxmlColumnName;
-                isColumnInCurrentTable = true;
             }
 
             if (!columnName.Contains(","))
@@ -651,7 +660,15 @@ namespace Logitude.DBMigrations.Models
             }
 
             List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name.ToLower()) && !c.Name.ToLower().StartsWith("drop_")).ToList();
-            return droppedColumns;
+            List<ColumnDefinition> droppedColumns2 = new List<ColumnDefinition>();
+            foreach(var dxmlColumn in DXMLTable.Columns.ToList())
+            {
+                if(CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumn.Name.ToLower()).Any() && CurrentTable.Columns.Where(c => dxmlColumn.OldNames != null && dxmlColumn.OldNames.Split(',').Select(dc => dc.ToLower()).ToList().Contains(c.Name.ToLower())).Any())
+                {
+                    droppedColumns2.Add(CurrentTable.Columns.Where(c => dxmlColumn.OldNames.Split(',').Select(dc => dc.ToLower()).ToList().Contains(c.Name.ToLower())).First());
+                }
+            }
+            return droppedColumns.Concat(droppedColumns2).ToList();
         }
 
         protected override string GetRenameTableScript()
