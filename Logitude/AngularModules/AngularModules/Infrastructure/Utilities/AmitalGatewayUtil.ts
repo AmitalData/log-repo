@@ -555,8 +555,8 @@ export class AmitalGatewayUtil {
     CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
 
         //Response.InvoiceAction
+
         let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
-         
         this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
         this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
         
