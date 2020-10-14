@@ -1743,7 +1743,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             }
         }
 
-        if (this.copyInvoice) {
+        if (this.copyInvoice && this.declarationPM.Direction != 'E') {
             itemPM.VendorId = this.EntityPM.VendorId;
             itemPM.IssueCountryCode = this.EntityPM.IssueCountryCode;
             itemPM.AccountTypeCode = this.EntityPM.AccountTypeCode;
@@ -1754,8 +1754,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             itemPM.InsruancePercentage = null;
             itemPM.InsuranceAmount = null;
             itemPM.InsruanceCurrencyTypeCode = null;
-
-        }
+        } else 
+            if (this.copyInvoice && this.declarationPM.Direction == 'E') {
+                itemPM.AccountTypeCode = this.EntityPM.AccountTypeCode;
+                itemPM.PartyRelationshipCode = this.EntityPM.PartyRelationshipCode;
+                itemPM.BuyerName = this.EntityPM.BuyerName;
+                itemPM.BuyerAddress = this.EntityPM.BuyerAddress;
+                itemPM.BuyerCountryCode = this.EntityPM.BuyerCountryCode;
+                itemPM.BuyerCountryName = this.EntityPM.BuyerCountryName;
+                itemPM.BuyerRoleCode = this.EntityPM.BuyerRoleCode; 
+                itemPM.BuyerRoleName = this.EntityPM.BuyerRoleName;
+            }
         itemPM.DeclarationId = this.declarationPM.Id;
         itemPM.IsValueForCustomsOnly = this.EntityPM.IsValueForCustomsOnly;//this.declarationPM.IsValueForCustomsOnly;
         itemPM.Tenant = SessionLocator.Tenant;
