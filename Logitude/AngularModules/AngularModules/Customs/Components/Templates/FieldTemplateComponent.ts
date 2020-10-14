@@ -17,6 +17,7 @@ import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/Dec
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonListService } from '../../Services/StandardLists/ExceptionReasonListService';
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
