@@ -28,6 +28,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SupplierInvoiceController : ApiController
     {
+
+        public HttpResponseMessage GetSupplierInvoiceItemsClasifiedRemarks(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                SupplierInvoiceItemListQueryService queryService = new SupplierInvoiceItemListQueryService(customContext);
+                List<SupplierInvoiceItemList> items = queryService.GetSupplierInvoiceItemsClasifiedRemarks(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, items);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetSupplierInvoiceItemsForInvoice(string declarationId, int counterkey)
         {
             try
