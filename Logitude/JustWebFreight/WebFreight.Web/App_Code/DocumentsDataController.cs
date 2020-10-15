@@ -14,6 +14,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.App_Code
 {
@@ -159,20 +160,28 @@ namespace WebFreight.Web.App_Code
             return false;
         }
 
-        public bool PutDocumentsApprovedByUserName(string entityId, string documentsApprovedByUserName, int tenant)
+        public bool GetPutDocumentsApprovedByUserName(string entityId, string documentsApprovedByUserName, int tenant)
         {
             ShipmentAdditionalCloudDataRepository rep = new ShipmentAdditionalCloudDataRepository(tenant);
             ShipmentAdditionalCloudData shipment = rep.GetSingleShipmentAdditionalCloudData(entityId, tenant);
-
             if (shipment != null /*&& shipment.IsDocumentsApprovalRequried*/ && string.IsNullOrEmpty(shipment.DocumentsApprovedByUserName))
             {
                 shipment.DocumentsApprovedByUserName = documentsApprovedByUserName;
                 rep.Update(shipment);
                 rep.SubmitChanges();
+                OpenDocumentApprovalQueue(entityId, documentsApprovedByUserName, tenant);
                 return true;
             }
-
             return false;
+
+        }
+
+        public bool OpenDocumentApprovalQueue(string entityId, string documentsApprovedByUserName, int tenant)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("DocumentApprovalQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "Id", entityId }, { "Tenant", tenant.ToString() }, { "ApprovedByUserName", documentsApprovedByUserName } }, tenant);
+            return true;
         }
 
         private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(string entityId, string partnerType, int tenant, bool isExternalURL)

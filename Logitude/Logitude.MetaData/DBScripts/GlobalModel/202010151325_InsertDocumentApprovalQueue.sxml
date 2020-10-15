@@ -1,0 +1,11 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="1">
+    <![CDATA[
+    
+      insert into BatchServicesDefinitions values ('DocumentApproval','DocumentApprovalWorkerRole',NULL,NULL,'DocumentApprovalQueue')
+      insert into BatchServicesDefinitionMods values ('DocumentApproval',0,1)
+      
+    ]]>
+  </Sql>
+</Script>
+
