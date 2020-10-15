@@ -12,9 +12,9 @@
 
   },
   "env": {
-    "TestURL": "https://test.logitudeworld.com/test/",
-    "TestEmail": "protractor2@test.com",
-    "TestPassword": "!P123p456",
+    "TestURL": "http://localhost:4200/",
+    "TestEmail": "mohammad@fnarsoft.com",
+    "TestPassword": "1",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
     "TestStagingEmail": "protractor2@test.com",
     "TestStagingPassword": "!P123p456",
