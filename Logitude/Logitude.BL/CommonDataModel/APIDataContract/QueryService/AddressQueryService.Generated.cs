@@ -159,7 +159,7 @@ using Simplog.Data.CommonDataModel;
 					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
 					if(MyEntity.Country != null)
 					{
-						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName);
+						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCountryPM != null)
 						{ 
@@ -212,7 +212,7 @@ using Simplog.Data.CommonDataModel;
 					StateQueryService StateStateService = new StateQueryService(Tenant);
 					if(MyEntity.State != null)
 					{
-						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName);
+						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myStatePM != null)
 						{ 
