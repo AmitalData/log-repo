@@ -196,7 +196,15 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
 				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
-				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;					
+				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
+				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
+				{
+					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant);
+				}
+
+							 
+				   temp.TotalVATOnly = MyEntityPM.TotalVATOnly;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -731,6 +739,30 @@ using Simplog.Data.InvoiceModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VendorGLAccount))
 					{							//throw new ApplicationException("VendorGLAccount Can't be update"); 
 							temp.VendorGLAccountId = MyEntity.VendorGLAccount;
+
+										}  
+
+					 
+
+					if(MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
+					{
+						APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("TotalVATs Can't be update"); 
+								temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMappingAndValidatin(MyEntity.TotalVATs,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 
+                    
+					if(!IsUpdate)// && (MyEntity.TotalVATOnly != temp.TotalVATOnly))
+					{							//throw new ApplicationException("TotalVATOnly Can't be update"); 
+							temp.TotalVATOnly = MyEntity.TotalVATOnly;
 
 										}  
 
