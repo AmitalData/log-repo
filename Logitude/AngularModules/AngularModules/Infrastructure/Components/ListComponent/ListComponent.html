@@ -391,14 +391,14 @@
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
                     <!--*ngIf="!DestroyMe" only in customs-->
-                    <logitude-grid *ngIf="!UsingLogGridV2" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid *ngIf="false" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)">
                     </logitude-grid>
-                    <logitude-grid-v2 *ngIf="UsingLogGridV2" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid-v2 *ngIf="true" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
