@@ -92,6 +92,20 @@ export class ShipmentComponent implements OnInit
 
         return iconPath;
     }
+    Delivered: boolean = false;
+    GetDeliveredIcon() {
+        var iconPath = "";
+
+        if (this.Shipment.CurrentMilestoneCode == "11") {
+          
+            iconPath = "./assets/images/misc/Delivered.png";
+        }
+        else {
+            iconPath = "./assets/images/misc/gps-marker.svg";
+        }
+          
+        return iconPath;
+    }
 
     SelectedTab: string = 'steps';
     TabToggleClicked(tabName: string)
@@ -108,15 +122,21 @@ export class ShipmentComponent implements OnInit
             this.ShipmentWithMilestones = result;
             if(this.ShipmentWithMilestones){
                 this.Shipment = result.ShipmentList;
+                if (this.Shipment.CurrentMilestoneCode == "11") {
+                    this.Delivered = true;
+                }
+                else {
+                    this.Delivered = false;
+                }
                 this.SetMilestonesFields(result);
             }
             
 
         });
     }
-
-    SetMilestonesFields(result:CargoTrackingShipmentWithMilestones){
-
+    public Date: Date;
+    SetMilestonesFields(result: CargoTrackingShipmentWithMilestones) {
+     
         this.AllMilestoneFields = result.Milestones;
         if(this.AllMilestoneFields){
             this.AllMilestoneFields.forEach(S=>{
@@ -126,11 +146,20 @@ export class ShipmentComponent implements OnInit
                     }
                     else if(!S.IsCurrent){
                         this.CompletedMilestoneFields.push(S);
+                       
                     }
                     else{
                         this.CurrentMilestoneField = S;
                     }
             });
+        }
+
+        if (this.Shipment.CurrentMilestoneCode == "11") {
+            this.Date = this.CompletedMilestoneFields[0].Date;
+        }
+        else {
+            this.Date = this.CurrentMilestoneField.Date;
+
         }
     }
 
