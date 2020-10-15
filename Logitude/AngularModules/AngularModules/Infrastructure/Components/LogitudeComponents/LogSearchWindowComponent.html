@@ -128,14 +128,14 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
+                                                                    <logitude-grid *ngIf="false" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
                                                                                    [columns]="columns1" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                    (CountReady)="onCountReady($event)"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
 
-                                                                    <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
+                                                                    <logitude-grid-v2 *ngIf="true" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
                                                                                       [columns]="columns1" [autoLoad]="true" [rows]="items"
                                                                                       [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                       (CountReady)="onCountReady($event)"
@@ -188,14 +188,14 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid *ngIf="false" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items" 
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                    (CountReady)="onCountReady($event)"
 
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
-                                                                    <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid-v2 *ngIf="true" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                       [columns]="columns" [autoLoad]="true" [rows]="items"
                                                                                       [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                       (CountReady)="onCountReady($event)"
