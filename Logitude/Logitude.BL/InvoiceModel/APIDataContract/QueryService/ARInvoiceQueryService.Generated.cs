@@ -236,7 +236,7 @@ using Simplog.Data.InvoiceModel;
 					ARInvoiceTypeQueryService InvoiceTypeARInvoiceTypeService = new ARInvoiceTypeQueryService(Tenant);
 					if(MyEntity.InvoiceType != null)
 					{
-						var myInvoiceTypePM = InvoiceTypeARInvoiceTypeService.ARInvoiceTypeDataMappingAndValidatin(MyEntity.InvoiceType,Tenant,ComputingPartnerName);
+						var myInvoiceTypePM = InvoiceTypeARInvoiceTypeService.ARInvoiceTypeDataMappingAndValidatin(MyEntity.InvoiceType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myInvoiceTypePM != null)
 						{ 
@@ -530,7 +530,7 @@ using Simplog.Data.InvoiceModel;
 					ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
-						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName);
+						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myTransferStatusPM != null)
 						{ 
@@ -633,7 +633,7 @@ using Simplog.Data.InvoiceModel;
 					ARInvoiceStatusQueryService StatusARInvoiceStatusService = new ARInvoiceStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
-						var myStatusPM = StatusARInvoiceStatusService.ARInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+						var myStatusPM = StatusARInvoiceStatusService.ARInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myStatusPM != null)
 						{ 

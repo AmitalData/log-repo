@@ -503,7 +503,7 @@ using <#=myspacestring#>
 						if(!IsUpdate)
 						{<#+}#>
 								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-								temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
+								temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName<#+if(IsManualMapping == "false"){#>,IsUpdate<#+}#>);
 
 					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						} <#+}#> 
@@ -517,7 +517,7 @@ using <#=myspacestring#>
 					<#=type#>QueryService <#=DCFieldName#><#=type#>Service = new <#=type#>QueryService(Tenant);
 					if(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null)
 					{
-						var my<#=DCFieldName#>PM = <#=DCFieldName#><#=type#>Service.<#=type#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant<#+if(IsManualMapping == "false"){#>,ComputingPartnerName<#+}#>);
+						var my<#=DCFieldName#>PM = <#=DCFieldName#><#=type#>Service.<#=type#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant<#+if(IsManualMapping == "false"){#>,ComputingPartnerName<#+}#><#+if(IsManualMapping == "false"){#>,IsUpdate<#+}#>);
 						<#+
 						if(type != "CustomField")
 						{
