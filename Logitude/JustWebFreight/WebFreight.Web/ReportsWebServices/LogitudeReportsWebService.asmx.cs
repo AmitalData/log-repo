@@ -7717,6 +7717,20 @@ namespace WebFreight.Web.ReportsWebServices
 
                         break;
                     }
+                case "FOPC":
+                    {
+                        if (fromDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.FirstOperationalCloseDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                        }
+
+                        if (toDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.FirstOperationalCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                        }
+
+                        break;
+                    }
             }
 
             #endregion
