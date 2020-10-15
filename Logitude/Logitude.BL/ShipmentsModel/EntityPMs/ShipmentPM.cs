@@ -2045,6 +2045,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool DocsSentToAgent { get; set; }
         public string VersionApproved { get; set; }
         public string ApprovedBy { get; set; }
+        public string DocumentsApprovedByUserName { get; set; }
         public DateTime? ApproveDateTime { get; set; }
         public bool IsNewARInvoiceBlocked { get; set; }
         public string ShipmentAddtionalDataXML { get; set; }

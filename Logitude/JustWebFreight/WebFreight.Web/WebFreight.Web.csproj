@@ -3395,6 +3395,8 @@
     <Content Include="SharedDocuments.aspx" />
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
+    <Content Include="SharedLogistic\DocumentsApprovalPage.aspx" />
+    <Content Include="SharedLogistic\DocumentsApprovalPageViewModel.js" />
     <Content Include="ShipmentStatuses.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
@@ -5681,6 +5683,13 @@
     </Compile>
     <Compile Include="EntityExternalUpdate.aspx.designer.cs">
       <DependentUpon>EntityExternalUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SharedLogistic\DocumentsApprovalPage.aspx.cs">
+      <DependentUpon>DocumentsApprovalPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SharedLogistic\DocumentsApprovalPage.aspx.designer.cs">
+      <DependentUpon>DocumentsApprovalPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShipmentPackageModel\RegisterShipmentPackageDataProvider.Shared.cs" />
     <Compile Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx.cs">
