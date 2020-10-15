@@ -524,10 +524,11 @@ namespace WebFreight.Web.WebServices
 
 
         [WebMethod]
-        public void ImportFeaturePackages(byte[] data)
+        public string ImportFeaturePackages(byte[] data)
         {
             ExportImportHelper helper = new ExportImportHelper();
             string error = helper.ImportPackageFeatures(data);
+            return error;
         }
 
         [WebMethod]
@@ -591,10 +592,11 @@ namespace WebFreight.Web.WebServices
 
 
         [WebMethod]
-        public void ImportRoleFeatures(byte[] data)
+        public string ImportRoleFeatures(byte[] data)
         {
             ExportImportHelper helper = new WebServices.ExportImportHelper();
             string message = helper.ImportRoleFeatures(data);
+            return message;
         }
         
       
