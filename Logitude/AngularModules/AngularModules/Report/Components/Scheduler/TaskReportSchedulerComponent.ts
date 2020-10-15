@@ -476,73 +476,7 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
 
 
 
-    get From() {
-        return this.FTPDetails ? this.FTPDetails.From : "";
-    }
-    set From(newValue: string) {
-        if (this.FTPDetails && this.FTPDetails.From != newValue) {
-            this.FTPDetails.From = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
-
-
-
-    get Subject() {
-        return this.FTPDetails ? this.FTPDetails.Subject : "";
-    }
-    set Subject(newValue: string) {
-        if (this.FTPDetails && this.FTPDetails.Subject != newValue) {
-            this.FTPDetails.Subject = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
-
-
-    get Prefix() {
-        return this.FTPDetails ? this.FTPDetails.Prefix : "";
-    }
-    set Prefix(newValue: string) {
-        if (this.FTPDetails && this.FTPDetails.Prefix != newValue) {
-            this.FTPDetails.Prefix = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
-
-    get Suffix() {
-        return this.FTPDetails ? this.FTPDetails.Suffix : "";
-    }
-    set Suffix(newValue: string) {
-        if (this.FTPDetails && this.FTPDetails.Suffix != newValue) {
-            this.FTPDetails.Suffix = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
-
-    get Extension() {
-        return this.FTPDetails ? this.FTPDetails.Extension : "";
-    }
-    set Extension(newValue: string) {
-        if (this.FTPDetails && this.FTPDetails.Extension != newValue) {
-            //if (!AppTool.IsNullOrEmpty(newValue) && newValue.startsWith("."))
-            //    newValue = newValue.substring(1, newValue.length);
-
-            this.FTPDetails.Extension = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
-
-    get IsSFTP() {
-        return this.FTPDetails.IsSFTP;
-    }
-    set IsSFTP(newValue: boolean) {
-        if (this.FTPDetails && this.FTPDetails.IsSFTP != newValue) {
-
-
-            this.FTPDetails.IsSFTP = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }
+  
 
     private isFTP: boolean;
     get IsFTP() {
@@ -558,6 +492,8 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
         if (schedulerDetails) {
             if (!schedulerDetails.ReportDetails) {
                 schedulerDetails.ReportDetails = new ReportSchedulerDetails;
+             }
+            if (!schedulerDetails.FTPDetails) {
                 schedulerDetails.FTPDetails = new FTPSchedulerDetails();
             }
 
