@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -65,22 +65,28 @@
 
 
 <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:25px;">
-   
-        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-  
+
+    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+
 </div>
 
 <table style="height:75px;width:550px;">
-   
+
     <tr style="height:25px">
-        <td style="width:5px;"><div style="width:5px;"></div></td>
-        <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+        <td style="width:5px;">
+            <div style="width:5px;"></div>
+        </td>
+        <td colspan="10">
+            <div style="color:#1B90CB;font-size:14px;">Filter By:</div>
+        </td>
     </tr>
 
 
 
     <tr style="height:30px">
-        <td style="width:5px;"><div style="width:5px;"></div></td>
+        <td style="width:5px;">
+            <div style="width:5px;"></div>
+        </td>
 
         <td style="width:70px;min-width:70px;max-width:70px" class="Label">Customer</td>
         <td style="width:200px;">
@@ -96,11 +102,13 @@
 
             </div>
         </td>
-      
+
 
         <td style="width:5px;min-width:5px;max-width:5px"></td>
-      
-        <td style="width:70px;"><div style="width:70px;">Branch</div></td>
+
+        <td style="width:70px;">
+            <div style="width:70px;">Branch</div>
+        </td>
 
         <td style="width:200px;">
             <div style="width:200px;">
@@ -121,13 +129,17 @@
         <td>
             <table>
                 <tr>
-                   
+
 
                     <td>
                         <table>
                             <tr>
-                                <td style="width:10px"><div style="width:10px"></div></td>
-                                <td style="width:70px;"><div style="width:70px">From Date:</div></td>
+                                <td style="width:10px">
+                                    <div style="width:10px"></div>
+                                </td>
+                                <td style="width:70px;">
+                                    <div style="width:70px">From Date:</div>
+                                </td>
 
                                 <td style="width:120px;">
                                     <div style="width:120px;">
@@ -143,12 +155,16 @@
                     </td>
 
 
-                    <td style="width:30px"><div style="width:30px"></div></td>
+                    <td style="width:30px">
+                        <div style="width:30px"></div>
+                    </td>
                     <td>
                         <table>
                             <tr>
 
-                                <td style="width:55px;"><div style="width:55px;"> To Date: </div></td>
+                                <td style="width:55px;">
+                                    <div style="width:55px;"> To Date: </div>
+                                </td>
 
                                 <td style="width:120px;">
                                     <div style="width:120px;">
@@ -159,7 +175,9 @@
                             </tr>
                         </table>
                     </td>
-                    <td style="width:30px"><div style="width:30px"></div></td>
+                    <td style="width:30px">
+                        <div style="width:30px"></div>
+                    </td>
 
                     <td style="width:90px;">
                         <button (click)="RunReport(true)" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
@@ -179,7 +197,9 @@
 
     </tr>
     <tr>
-        <td style="height:5px"><div style="height:5px"></div></td>
+        <td style="height:5px">
+            <div style="height:5px"></div>
+        </td>
     </tr>
     <tr>
         <td></td>
@@ -190,64 +210,61 @@
                     <td>
                         <table>
                             <tr>
+                                <td style="width:70px">
+                                    <label>Currency:</label>
+                                </td>
 
-
-                                <td style="width:400px">
-                                    <table>
-                                        <tr>
-                                            <td style="width:70px"><label>Currency:</label></td>
-
-                                            <td style="width:110px">
-                                                <div class="RadioButton" style="width:110px">
-                                                    <input type="radio" [id]="LocalCurrency" [attr.name]="LocalCurrency" (click)="setLocalCurrency('true')" [checked]="IsLocalCurrency == true" style="width:15px" />
-                                                    <label [attr.for]="LocalCurrency" style="font-size: 12px">
-                                                        Local Currency
-                                                    </label>
-                                                </div>
-
-                                            </td>
-
-
-                                            <td style="width:20px;"><div style="width:20px;"></div></td>
-
-                                            <td style="width:110px">
-                                                <div class="RadioButton" style="width:110px">
-
-                                                    <input type="radio" [id]="InvoiceCurrency" [attr.name]="LocalCurrency" (click)="setLocalCurrency('false')" [checked]="IsLocalCurrency == false" style="width:15px" />
-                                                    <label [attr.for]="InvoiceCurrency" style="font-size: 12px">
-                                                        Payment Currency
-                                                    </label>
-
-                                                </div>
-
-                                            </td>
-                                            <td style="width:40px;"><div style="width:40px;"></div></td>
-
-                                          
-
-                                            <td style="width:30px"><div style="width:30px"></div></td>
-
-                                           
-                                            <td></td>
-                                    </table>
+                                <td style="width:110px">
+                                    <div class="RadioButton" style="width:110px">
+                                        <input type="radio" [id]="LocalCurrency" [attr.name]="LocalCurrency" (click)="setLocalCurrency('true')" [checked]="IsLocalCurrency == true" style="width:15px" />
+                                        <label [attr.for]="LocalCurrency" style="font-size: 12px">
+                                            Local Currency
+                                        </label>
+                                    </div>
 
                                 </td>
 
+
+                                <td style="width:20px;">
+                                    <div style="width:20px;"></div>
+                                </td>
+
+                                <td style="width:130px">
+                                    <div class="RadioButton" style="width:130px">
+
+                                        <input type="radio" [id]="InvoiceCurrency" [attr.name]="LocalCurrency" (click)="setLocalCurrency('false')" [checked]="IsLocalCurrency == false" style="width:15px" />
+                                        <label [attr.for]="InvoiceCurrency" style="font-size: 12px">
+                                            Payment Currency
+                                        </label>
+
+                                    </div>
+                                </td>
+
+                                <td style="width:16px;">
+                                    <div></div>
+                                </td>
+
+
+
+                                <td style="width:200px">
+
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'"
+                                            [SelectedValue]="CurrencyId">
+                                    </LogLov>
+
+                                </td>
+
+
+                                <td>
+                                    <div></div>
+                                </td>
                         </table>
 
                     </td>
-
-
-
-
-
-
-
-
-
                 </tr>
             </table>
-
         </td>
 
         <td></td>
@@ -257,7 +274,9 @@
         <td colspan="4"></td>
 
     </tr>
-    <tr><td colspan="9"></td></tr>
+    <tr>
+        <td colspan="9"></td>
+    </tr>
 
 
 </table>

@@ -8987,6 +8987,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
             QueryFilterItem filterItem_LocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LocalCurrency").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -9030,6 +9031,15 @@ namespace WebFreight.Web.ReportsWebServices
                     isLocalCurrency = (bool)filterItem_LocalCurrency.FieldValue;
                 }
             }
+
+            string currencyId = null;
+            if (filterItem_CurrencyId != null)
+            {
+                if (filterItem_CurrencyId.FieldValue != null)
+                {
+                    currencyId = filterItem_CurrencyId.FieldValue.ToString();
+                }
+            }
             #endregion
 
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
@@ -9046,6 +9056,14 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(customerId))
             {
                 iQueryable = iQueryable.Where(d => d.BillToId == customerId);
+            }
+
+            if (!isLocalCurrency)
+            {
+                if (!string.IsNullOrEmpty(currencyId))
+                {
+                    iQueryable = iQueryable.Where(d => d.PaymentCurrencyId == currencyId);
+                }
             }
 
             iQueryable = (from d in iQueryable
