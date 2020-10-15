@@ -120,18 +120,18 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             });
 
 
-            //this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
-            //     this.invoiceItem = data;
-            //    if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
-            //        //ClassifcationComponent Build B4 This Component finish Load Document !!!
-            //        this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.ClasifiedRemarks;
-            //        return;
-            //    }
-            //    var document = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.ClasifiedRemarks);
-            //    this.TicketItemClicked(document);
+            this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
+                this.invoiceItem = data;
+                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
+                    //ClassifcationComponent Build B4 This Component finish Load Document !!!
+                    this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.DocumentFilingId;
+                    return;
+                }
+                var document = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.DocumentFilingId);
+                this.TicketItemClicked(document, true);
 
 
-            //});
+            });
         }
     }
 
@@ -154,7 +154,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }
 
     IsMouseOverDownload: boolean = false;
-    TicketItemClicked(document: RelatedDocumentViewModel) {
+    TicketItemClicked(document: RelatedDocumentViewModel,  selectItem: boolean = false) {
         if (this.IsMouseOverDownload) return;
 
         this.IsDocsPanelVisible = false;
@@ -169,7 +169,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.ImgScaleValue = "scale(1)";
         this.TrackBarValue = 1;
 
-        this.LoadDocumentPage();
+        this.LoadDocumentPage(null, selectItem);
         //this.LoadDocumentPage(); // need to check it again, it cannot draw image at first call
 
     }
@@ -195,7 +195,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         }
     }
 
-    LoadDocumentPage(pageIndex: number = null) {
+    LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
         if (this.SelectedTicket) {
 
             this.StartBusyIndicator("Loading page...");
@@ -237,7 +237,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         while (elements.length > 0) {
                             elements[0].parentNode.removeChild(elements[0]);
                         }
-                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0) {
+                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0   && selectItem) {
                                 let rect = document.createElement('div');
                                 rect.className = 'rectangle';
                                 rect.id = 'rectangle-' + "rectangle-1";
