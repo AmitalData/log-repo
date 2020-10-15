@@ -41,6 +41,7 @@ h1{
   padding: 10px 0 50px 0;
   background: RGB(242,244,247);
   margin-bottom: 40px;
+  text-align: center;
 }
 .shipment-header{
   padding: 40px 90px 20px 90px;
@@ -48,7 +49,7 @@ h1{
 }
 .shipment-header > div{
   float: left;
-  margin: 0 30px;
+  margin: 5px 30px;
 }
 
 .shipment-header .title{
@@ -89,6 +90,7 @@ h1{
   width: 2500px;
   height: 160px;
   transition: margin-left 1s;
+  text-align: left;
 }
 .slider .cards::after,  .cards::before{
   content: "";
@@ -117,6 +119,11 @@ h1{
   bottom: 0;
   right: 0;
 }
+.slider .card.empty{
+    background: none;
+    box-shadow: none;
+    border: none;
+}
 .slider .card{
   position: relative;
   float: left;
@@ -131,67 +138,67 @@ h1{
   box-shadow: 0px 0px 8px 0px #00000030;
 
 }
-.slider .card + .active{
-  background: var(--MainColor);
-  color: white;
-}
-.slider .card + .warning::after {
-  content: "!";
-  display: block;
-  width: 25px;
-  height: 25px;
-  border: 3px solid white;
-  background: red;
-  position: absolute;
-  top: -12px;
-  right: -9px;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
-  z-index: 1;
-  color: white;
-}
-.slider .card + .dim{
-  background: none;
-  box-shadow: none;
-  border: 1px solid gray;
-  color: gray;
-}
-.slider .card:hover{
-  box-shadow: 0px 0px 8px 0px #00000060;
-}
-.slider .card .code{
-  height: 22px;
-  width: 100%;
-  color: black;
-  text-align: right;
-  font-weight: bold;
-}
-.slider .card .date{
-  font-size: 45px;
-  margin-bottom: 10px;
-}
-.slider .card .date > span{
-  font-size: 16px;
-  font-weight: bold;
-}
-.slider .card .title{
-  font-size: 15px;
-  font-weight: 600;
-}
-.slider .card .desc{
-  font-size: 13px;
-  line-height: 18px;
-}
-
-
-
-    .data-cards::after, .data-cards::before{
-        content: "";
-        clear: both;
-        display: table;
+    .slider .card + .active{
+    background: var(--MainColor);
+    color: white;
     }
+    .slider .card + .warning::after {
+    content: "!";
+    display: block;
+    width: 25px;
+    height: 25px;
+    border: 3px solid white;
+    background: red;
+    position: absolute;
+    top: -12px;
+    right: -9px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 1;
+    color: white;
+    }
+    .slider .card + .dim{
+    background: none;
+    box-shadow: none;
+    border: 1px solid gray;
+    color: gray;
+    }
+    .slider .card:hover{
+    box-shadow: 0px 0px 8px 0px #00000060;
+    }
+    .slider .card .code{
+        height: 22px;
+        width: 100%;
+        color: black;
+        text-align: right;
+        font-weight: bold;
+    }
+    .slider .card .date{
+        font-size: 45px;
+        margin-bottom: 10px;
+    }
+    .slider .card .date > span{
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .slider .card .title{
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .slider .card .desc{
+    font-size: 13px;
+    line-height: 18px;
+    }
+
+
+
+.data-cards::after, .data-cards::before{
+    content: "";
+    clear: both;
+    display: table;
+}
     .data-cards > div{
         width: 180px;
         min-height: 60px;
@@ -209,29 +216,100 @@ h1{
     }
 
 
-    .PanelsNavigator{
-        margin: 25px 75px;
-    }
-    .PanelsNavigator button{
-        padding: 8px 20px;
-        border-radius: 25px;
-        box-shadow: 0px 0px 8px 0px #00000025;
-        color: rgb(66, 66, 66);
-        background: white;
-        border: none;
-        cursor: pointer;
-        margin-right: 20px;
+.PanelsNavigator{
+    margin: 25px 75px;
+    /* width: 1000px;
+    overflow: hidden; */
+}
 
+.PanelsNavigator button{
+    padding: 8px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 8px 0px #00000025;
+    color: rgb(66, 66, 66);
+    background: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 5px;
+
+}
+    .PanelsNavigator button:hover{
+        box-shadow: 0px 0px 8px 0px #00000040;
     }
-        .PanelsNavigator button:hover{
-            box-shadow: 0px 0px 8px 0px #00000040;
+    .PanelsNavigator button:active{
+        border: none;
+        outline: none;
+        transform: scale(0.96);
+    }
+    .PanelsNavigator button:focus{
+        border: none;
+        outline: none;
+    }
+
+
+
+@media screen and (max-width: 479px) {
+    .shipment-details-container{
+        display: flex;
+        flex-direction: column ;
+    }
+    .slider-wrapper {
+        height: 110px;
+        background: none;
+        margin: 0 -15px;
+    }
+    .slider{
+        width: 100% !important;
+    }
+    .slider .card{
+        width: 115px;
+        height: 90px;
+    }
+        .slider .card .code{
+            height: 15px;
+            font-size: 11px; 
         }
-        .PanelsNavigator button:active{
+        .slider .card .date{
+            font-size: 33px;
+        }
+        .slider .card .title{
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .data-cards{
+            /* background: white;
+            box-shadow: 0px 0px 8px 0px #00000025;
+            border-radius: 8px; */
+        }
+        .data-cards > div {
+            width: calc(50% - 20px);
+        }
+
+
+        .PanelsNavigator{
+            width: 100%;
+            margin: 20px 0 0 0;
+            overflow: auto;
+            height: 60px;
+        }
+        .panels-wrapper{
+            width: 650px;
+        }
+        .PanelsNavigator button{
+            box-shadow: none;
+            background: none;
+            border: 1px solid gray;
+            padding: 4px 14px;
+            margin-right: 10px;
+        }
+        .PanelsNavigator button.active{
             border: none;
-            outline: none;
-            transform: scale(0.96);
+            background: #E9F2FF;
+            box-shadow: 6px 4px 10px 0px #00000020;
+            font-weight: bold;
+
         }
-        .PanelsNavigator button:focus{
-            border: none;
-            outline: none;
-        }
+
+}

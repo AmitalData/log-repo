@@ -61,3 +61,36 @@
           background: #F2F4F7;
       }
   
+@media screen and (max-width: 479px) {
+    .panel{
+        width: 100% !important;
+        background: none;
+        box-shadow: none;
+        border-radius: none;
+    }
+    .panel:hover{
+        box-shadow: none;
+    }
+        .panel .header {
+            padding: 30px 5px 30px 5px;
+        }
+        .panel .body{
+            padding: 0 5px;
+        }
+        .panel .details {
+            padding: 30px 13px;
+            background: none;
+        }
+        .panel .body.mobile-white-panel, .panel .details.mobile-white-panel{
+            background: white;
+            box-shadow: 0px 0px 8px 0px #00000025;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .panel .body.mobile-gray-panel, .panel .details.mobile-gray-panel{
+            background: #F2F4F7;
+            box-shadow: none;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+}

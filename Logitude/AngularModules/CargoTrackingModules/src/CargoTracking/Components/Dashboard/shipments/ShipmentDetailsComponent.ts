@@ -40,11 +40,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.GetVariablesFromURI();
         this.GetIdFromURI();
-        this.LoadShipment();
 
     }
     ngAfterViewInit(): void
     {
+        this.LoadShipment();
+
     }
     @HostListener('window:resize', ['$event'])
     onResize(event) {
@@ -69,14 +70,20 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InitSlider()
     {
 
+        var PAGERS_WIDTH = 200; // 100 * 2 pager 
+        var screenwidth = window.innerWidth;
+
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-        var count = Math.floor((sliderWrapperWidth - 200)/this.sliderCardWidth);
+
+        if(screenwidth > 470)
+            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH)/this.sliderCardWidth);
+        
 
         this.sliderVisibleCardsCount = count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = 0;
+        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth+55)*-1 : 0; // mobile: add 
 
     }
     LoadShipment(){
@@ -87,8 +94,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
             console.log("[getShipment]", result);
             this.Shipment = result;
 
-
-            this.InitSlider();                       
+            setTimeout(() => {
+                this.InitSlider();                       
+            }, 200);
 
         });
     }
@@ -140,6 +148,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.sliderMarginLeft = this.sliderVisibleCardsWidth;
         else
             this.sliderMarginLeft = margin;
+
+        var screenwidth = window.innerWidth;
+        if(screenwidth < 470)
+            this.sliderMarginLeft - 55;
         
     }
     GetModeIcon()
@@ -192,8 +204,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
+    selectedNavButton: string = "Overview";
     PanelsNavigatorClicked(panelName: string){
-
+        this.selectedNavButton = panelName;
         var element = document.getElementById(panelName) as HTMLElement;
         if(element)
             element.scrollIntoView();
