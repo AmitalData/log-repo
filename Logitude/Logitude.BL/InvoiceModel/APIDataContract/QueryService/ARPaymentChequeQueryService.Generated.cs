@@ -187,7 +187,7 @@ using Simplog.Data.InvoiceModel;
 					ARPaymentChequeStatusReplicaQueryService ChequeStatusARPaymentChequeStatusReplicaService = new ARPaymentChequeStatusReplicaQueryService(Tenant);
 					if(item.ChequeStatus != null)
 					{
-						var myChequeStatusPM = ChequeStatusARPaymentChequeStatusReplicaService.ARPaymentChequeStatusReplicaDataMappingAndValidatin(item.ChequeStatus,Tenant,ComputingPartnerName);
+						var myChequeStatusPM = ChequeStatusARPaymentChequeStatusReplicaService.ARPaymentChequeStatusReplicaDataMappingAndValidatin(item.ChequeStatus,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myChequeStatusPM != null)
 						{ 

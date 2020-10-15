@@ -72,7 +72,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
             }
         }
 
-        public ObjectTablePM ObjectTableDataMappingAndValidatin(ObjectTable MyEntity, int Tenant, string ComputingPartnerName = "")
+        public ObjectTablePM ObjectTableDataMappingAndValidatin(ObjectTable MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             try
             {

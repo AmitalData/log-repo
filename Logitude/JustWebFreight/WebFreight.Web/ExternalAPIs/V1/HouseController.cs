@@ -364,6 +364,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
 
+                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
+                        aPITransshipmentHelper.ValidateRoutingsSeriesDates();
+
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
@@ -644,6 +647,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("Can't update house connected to master");
                             }
+
+                            APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(HousePM, authToken.Tenant);
+                            aPITransshipmentHelper.ValidateRoutingsSeriesDates();
 
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
