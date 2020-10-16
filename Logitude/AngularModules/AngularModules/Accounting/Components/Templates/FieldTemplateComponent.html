@@ -12,6 +12,28 @@
         <td>
             <div class="MediaFill">
 
+                                <!-- UserDefinedReport -->
+                                <div *ngIf="ObjectTableName == 'UserDefinedReport'">
+                                    <div *ngIf="FieldName == 'CreatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        <div>
+                                            {{ showLocal ? Entity.CreatedByLocalName : Entity.CreatedByEnglishName }}
+                                        </div>
+                                    </div>
+                                    <div *ngIf="FieldName == 'UpdatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        <div>
+                                            {{ showLocal ? Entity.UpdatedByLocalName : Entity.UpdatedByEnglishName }}
+                                        </div>
+                                    </div>
+                                    <div *ngIf="FieldName == 'IsCancelled'">
+                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
                 <!-- GLAccount -->
                 <div *ngIf="ObjectTableName == 'GLAccount'">
                     <div *ngIf="FieldName == 'BalanceInLocalCurrency'">

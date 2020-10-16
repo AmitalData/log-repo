@@ -143,6 +143,8 @@ import { InterestReportLineListService } from './Services/StandardLists/Interest
 import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
 import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
+import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
+import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -151,6 +153,8 @@ export class ModuleProviders {
 
         switch (name) {
             //#region standerd services
+            case "UserDefinedReportListService": { myResult = new UserDefinedReportListService(); break; }
+            case "UserDefinedReportPMService": { myResult = new UserDefinedReportPMService(); break; }
             case "AccountingEntityListService": { myResult = new AccountingEntityListService(); break; }
             case "AccountingPeriodListService": { myResult = new AccountingPeriodListService(); break; }
             case "AutomaticReconcileListService": { myResult = new AutomaticReconcileListService(); break; }

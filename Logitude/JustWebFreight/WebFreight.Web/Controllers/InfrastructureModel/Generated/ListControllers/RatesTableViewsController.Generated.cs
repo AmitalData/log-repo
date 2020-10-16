@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 RatesTableRepository  ratesTableRepository = new RatesTableRepository(MyContext);
                 IQueryable<RatesTable> entityPocos = ratesTableRepository.GetRatesTables(tenant);
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 entityLists = genericFilter.GetFilteredQuery<RatesTableList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(RatesTableList).GetProperty(queryOperations.SortByColumnName);
@@ -292,18 +294,18 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Id);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

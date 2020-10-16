@@ -227,6 +227,179 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<CalculatedChartsOfAccountPM> calculatedChartsOfAccounts;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("UserDefinedReportCalculatedChartsOfAccount", "Id","UserDefinedReportId")]
+	   [DataMember]
+	   public virtual List<CalculatedChartsOfAccountPM> CalculatedChartsOfAccounts  
+	   {
+	        get
+             {
+                 if (calculatedChartsOfAccounts == null)
+                 {
+                     calculatedChartsOfAccounts = new List<CalculatedChartsOfAccountPM>();
+                 }
+                 return calculatedChartsOfAccounts;
+              }
+             set { calculatedChartsOfAccounts = value; }
+	    }
+		   
+	   private List<CalculatedChartsOfAccountPM>  deletedCalculatedChartsOfAccounts;
+	   public virtual List<CalculatedChartsOfAccountPM> DeletedCalculatedChartsOfAccounts  
+	   {
+	        get
+             {
+                 if ( deletedCalculatedChartsOfAccounts == null)
+                 {
+                      deletedCalculatedChartsOfAccounts = new List<CalculatedChartsOfAccountPM>();
+                 }
+                 return  deletedCalculatedChartsOfAccounts;
+              }
+             set {  deletedCalculatedChartsOfAccounts = value; }
+	    }
+	  	  private string createdByEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByEnglishName  
+	   {
+	    
+	     get
+		{
+		   return createdByEnglishName;
+		 }
+		 set
+		 {
+		   if(createdByEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByEnglishName",OldValue=createdByEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByLocalName  
+	   {
+	    
+	     get
+		{
+		   return createdByLocalName;
+		 }
+		 set
+		 {
+		   if(createdByLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByLocalName",OldValue=createdByLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByEnglishName  
+	   {
+	    
+	     get
+		{
+		   return updatedByEnglishName;
+		 }
+		 set
+		 {
+		   if(updatedByEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByEnglishName",OldValue=updatedByEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByLocalName  
+	   {
+	    
+	     get
+		{
+		   return updatedByLocalName;
+		 }
+		 set
+		 {
+		   if(updatedByLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByLocalName",OldValue=updatedByLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByName  
+	   {
+	    
+	     get
+		{
+		   return updatedByName;
+		 }
+		 set
+		 {
+		   if(updatedByName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByName",OldValue=updatedByName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByName=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByName  
+	   {
+	    
+	     get
+		{
+		   return createdByName;
+		 }
+		 set
+		 {
+		   if(createdByName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByName",OldValue=createdByName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

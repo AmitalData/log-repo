@@ -609,14 +609,18 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        // if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+
+
+        // if (FeatureLocator.HasFeaturePermession("UserDefinedReport", "Module")) {
         //     var item = new MenusTablePM();
         //     item.CategoryTypeCode = "OTH";
         //     item.Icon = "Settings"
-        //     item.Code = "CARGO";
-        //     item.ObjectTableName = "Cargo Tracking";
+        //     item.Code = "UDR";
+        //     item.ObjectTableName = "UserDefinedReport";
         //     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         // }
+      
+
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CMS";
@@ -656,6 +660,8 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cargo Tracking";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
        
+
+           
 
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -1466,6 +1472,13 @@ export class MaintenanceComponent {
                                 }
                             }
 
+                            if(item.Code=="UDRM"){
+                                this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccount", 0).subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccountsLine", 0).subscribe((response:any) => {
+                                    });
+                                });
+                              
+                            }
                             //var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == listArgs.Perspective)[0];
 
                             var objectTablePM = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];

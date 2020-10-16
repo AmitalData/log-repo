@@ -273,6 +273,179 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<CalculatedChartsOfAccountsLinePM> calculatedChartsOfAccountLines;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CalculatedChartsOfAccountCalculatedChartsOfAccountsLine", "Id","CalculatedChartsOfAccountsId")]
+	   [DataMember]
+	   public virtual List<CalculatedChartsOfAccountsLinePM> CalculatedChartsOfAccountLines  
+	   {
+	        get
+             {
+                 if (calculatedChartsOfAccountLines == null)
+                 {
+                     calculatedChartsOfAccountLines = new List<CalculatedChartsOfAccountsLinePM>();
+                 }
+                 return calculatedChartsOfAccountLines;
+              }
+             set { calculatedChartsOfAccountLines = value; }
+	    }
+		   
+	   private List<CalculatedChartsOfAccountsLinePM>  deletedCalculatedChartsOfAccountLines;
+	   public virtual List<CalculatedChartsOfAccountsLinePM> DeletedCalculatedChartsOfAccountLines  
+	   {
+	        get
+             {
+                 if ( deletedCalculatedChartsOfAccountLines == null)
+                 {
+                      deletedCalculatedChartsOfAccountLines = new List<CalculatedChartsOfAccountsLinePM>();
+                 }
+                 return  deletedCalculatedChartsOfAccountLines;
+              }
+             set {  deletedCalculatedChartsOfAccountLines = value; }
+	    }
+	  	  private string cretedByLocalNameName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CretedByLocalNameName  
+	   {
+	    
+	     get
+		{
+		   return cretedByLocalNameName;
+		 }
+		 set
+		 {
+		   if(cretedByLocalNameName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CretedByLocalNameName",OldValue=cretedByLocalNameName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cretedByLocalNameName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByLocalName  
+	   {
+	    
+	     get
+		{
+		   return updatedByLocalName;
+		 }
+		 set
+		 {
+		   if(updatedByLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByLocalName",OldValue=updatedByLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByEnglishName  
+	   {
+	    
+	     get
+		{
+		   return updatedByEnglishName;
+		 }
+		 set
+		 {
+		   if(updatedByEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByEnglishName",OldValue=updatedByEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByEnglishName  
+	   {
+	    
+	     get
+		{
+		   return createdByEnglishName;
+		 }
+		 set
+		 {
+		   if(createdByEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByEnglishName",OldValue=createdByEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string chartOfAccountTypeEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartOfAccountTypeEnglishName  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountTypeEnglishName;
+		 }
+		 set
+		 {
+		   if(chartOfAccountTypeEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountTypeEnglishName",OldValue=chartOfAccountTypeEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountTypeEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string chartOfAccountTypeLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartOfAccountTypeLocalName  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountTypeLocalName;
+		 }
+		 set
+		 {
+		   if(chartOfAccountTypeLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountTypeLocalName",OldValue=chartOfAccountTypeLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountTypeLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -49,7 +49,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         IsCancelled, 
-	         ChartOfAccountTypeCode,
+	         ChartOfAccountTypeCode, 
+	         CretedByLocalNameName, 
+	         UpdatedByLocalName, 
+	         UpdatedByEnglishName, 
+	         CreatedByEnglishName, 
+	         ChartOfAccountTypeEnglishName, 
+	         ChartOfAccountTypeLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -26,6 +26,26 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime UpdatedDateTime  { get; set; }
        [DataMember]
        public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
+       [DataMember]
+       public string EnglishName  { get; set; }
+       [DataMember]
+       public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string ChartOfAccountTypeCode  { get; set; }
+       [DataMember]
+       public string CretedByLocalNameName  { get; set; }
+       [DataMember]
+       public string UpdatedByLocalName  { get; set; }
+       [DataMember]
+       public string UpdatedByEnglishName  { get; set; }
+       [DataMember]
+       public string CreatedByEnglishName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountTypeEnglishName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountTypeLocalName  { get; set; }
    }
 
 }

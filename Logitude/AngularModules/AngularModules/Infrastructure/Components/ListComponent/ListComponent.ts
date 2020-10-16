@@ -2894,6 +2894,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Height = 200;
                         break;
                     }
+                case "UserDefinedReport":
+                     {
+                        logWindow.Width = 400;
+                        logWindow.Height = 200;
+                        break;
+                    }    
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

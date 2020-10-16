@@ -28,8 +28,28 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          Id = a.Id,
 					
 					                          Tenant = a.Tenant,
-					
-					                          CreateDateTime = a.CreateDateTime,
+
+											  EnglishName = a.EnglishName,
+
+											  LocalName = a.LocalName,
+
+											  CreatedByEnglishName = a.CreatedByUser==null? null: a.CreatedByUser.Contact ==null ? null : a.CreatedByUser.Contact.EnglishName,
+											
+											  CretedByLocalNameName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.LocalName,
+											  
+											  UpdatedByEnglishName = a.UpdatedByUser==null? null: a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName,
+
+											  UpdatedByLocalName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.LocalName,
+
+											  ChartOfAccountTypeCode = a.ChartOfAccountTypeCode,
+
+											  ChartOfAccountTypeEnglishName = a.ChartOfAccountsType == null ? null : a.ChartOfAccountsType.EnglishName,
+
+											  ChartOfAccountTypeLocalName = a.ChartOfAccountsType == null ? null : a.ChartOfAccountsType.LocalName,
+
+											  IsCancelled = a.IsCancelled,
+
+											  CreateDateTime = a.CreateDateTime,
 					
 					                          CreatedByUserId = a.CreatedByUserId,
 					
@@ -43,7 +63,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<CalculatedChartsOfAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CalculatedChartsOfAccount> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<CalculatedChartsOfAccount> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CalculatedChartsOfAccount> iQueryable, int tenant)
         {

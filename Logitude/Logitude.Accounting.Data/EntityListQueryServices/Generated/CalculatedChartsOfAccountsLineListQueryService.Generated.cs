@@ -131,10 +131,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CalculatedChartsOfAccountsLineList GetSingle(string id)
+        public CalculatedChartsOfAccountsLineList GetSingle(string id, DateTime createdatetime)
         {
             IQueryable<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLineQuery = (from a in context.CalculatedChartsOfAccountsLines
-                                                       where a.Id == id
+                                                       where a.Id == id && a.CreateDateTime == createdatetime
                                                        select a);
 
              

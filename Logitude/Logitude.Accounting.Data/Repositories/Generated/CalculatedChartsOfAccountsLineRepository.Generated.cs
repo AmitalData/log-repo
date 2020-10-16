@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  CalculatedChartsOfAccountsLine GetSingle(string id, int tenant)
+		public  CalculatedChartsOfAccountsLine GetSingle(string id, DateTime createdatetime, int tenant)
         {
             return (from a in context.CalculatedChartsOfAccountsLines
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Id == id && a.CreateDateTime == createdatetime && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             CalculatedChartsOfAccountsLineKeys keys = entityKeys as CalculatedChartsOfAccountsLineKeys;
             return (from a in context.CalculatedChartsOfAccountsLines
-                    where a.Id == keys.Id
+                    where a.Id == keys.Id && a.CreateDateTime == keys.CreateDateTime
                     select a).FirstOrDefault();
         }
 		         

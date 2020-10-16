@@ -31,13 +31,13 @@ namespace Logitude.Accounting.Data.EntityMapping
 	  }
 
 		
-		    this.HasKey(t => new { t.Id });
+		    this.HasKey(t => new { t.Id, t.CreateDateTime });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime").IsRequired();
+            this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
 
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -53,9 +53,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ChartOfAccountId).HasColumnName("ChartOfAccountId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LineTypeCode).HasColumnName("LineTypeCode").HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.LineTypeCode).HasColumnName("LineTypeCode").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.CalculatedChartsOfAccountsId).HasColumnName("CalculatedChartsOfAccountsId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CalculatedChartsOfAccountsId).HasColumnName("CalculatedChartsOfAccountsId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

@@ -98,6 +98,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new BankPageEntryTypeMap());
 	
+            modelBuilder.Configurations.Add(new CalculatedChartsLineTypeMap());
+	
             modelBuilder.Configurations.Add(new CalculatedChartsOfAccountMap());
 	
             modelBuilder.Configurations.Add(new CalculatedChartsOfAccountsLineMap());
@@ -754,6 +756,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<BankPageEntryType> BankPageEntryTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CalculatedChartsLineType> CalculatedChartsLineTypes 
 	 {
 	      get; set;
 	 

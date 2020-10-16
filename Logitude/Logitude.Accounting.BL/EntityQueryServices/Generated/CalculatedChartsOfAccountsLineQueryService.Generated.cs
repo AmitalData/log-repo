@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class CalculatedChartsOfAccountsLineQueryService: EntityQueryService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLineKeys,CalculatedChartsOfAccountsLinePM,object,CalculatedChartsOfAccountsLineKeys>
+   public partial class CalculatedChartsOfAccountsLineQueryService: EntityQueryService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLineKeys,CalculatedChartsOfAccountsLinePM,CalculatedChartsOfAccountPM,CalculatedChartsOfAccountKeys>
    {
    
         CalculatedChartsOfAccountsLineRepository repository;
@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new CalculatedChartsOfAccountsLineDataMapping();
         }
 		 
-		public  CalculatedChartsOfAccountsLinePM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CalculatedChartsOfAccountsLinePM GetSingle(string id, DateTime createdatetime,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CalculatedChartsOfAccountsLineKeys(){ Id = id };
+             EntityKeys = new CalculatedChartsOfAccountsLineKeys(){ Id = id, CreateDateTime = createdatetime };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CalculatedChartsOfAccountsLine entityPOCO)
         {
-            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPOCO.Id,  };
+            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPOCO.Id, CreateDateTime = entityPOCO.CreateDateTime,  };
             return entityKeys;
         }
      

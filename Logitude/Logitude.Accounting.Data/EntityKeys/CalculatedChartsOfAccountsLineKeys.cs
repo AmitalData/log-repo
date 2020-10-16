@@ -16,11 +16,15 @@ namespace Logitude.Accounting.Data.EntityKeys
 	  
 				 
 	    			   
+	  public DateTime CreateDateTime  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
+                 return Id+'_'+CreateDateTime ;
                  
       }
 

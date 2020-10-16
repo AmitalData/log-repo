@@ -1,0 +1,78 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 400px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+              
+
+                            <!-- EnglishName -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 170px;">
+                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 140px;">
+                                    <LogTextBox  [HideColumns]="true" [ObjectFieldName]="'EnglishName'"   [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                       
+                           <!-- LocalName -->
+                             <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+    
+                                    <td>
+                                        <LogTextBox  [HideColumns]="true" [ObjectFieldName]="'LocalName'"  [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                    </td>
+                                    <td><div></div></td>
+                           </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'cancel-AddUserDefinedReport' | IdGeneratorPipe}}"  class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'ok-AddUserDefinedReport' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

@@ -117,6 +117,8 @@ import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLin
 import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 import { GLAccountInterestComponent } from './Components/EditTabs/GLAccount/GLAccountInterestComponent';
 import { NewInterestReportComponent } from './Components/NewEntity/NewInterestReportComponent';
+import { NewUserDefinedReportComponent } from './Components/NewEntity/NewUserDefinedReportComponent';
+
 import { InterestReportGeneralTabComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
@@ -130,6 +132,7 @@ import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTra
 import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTemplates/CargoTrackingIncrementalStatListTemplate';
 
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
+import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -166,6 +169,7 @@ export const Components =
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
+        NewUserDefinedReportComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -214,6 +218,7 @@ export const Components =
         ExternalPagesTabComponent,
         GLAccountInterestComponent,
         InterestInvoiceAutoCreditComponent,
+        UserDefinedReportGeneralTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -317,6 +322,8 @@ export class ModuleDeclarations {
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
+            case "NewUserDefinedReportComponent": { myResult = NewUserDefinedReportComponent; break; }
+
             case "CreateInterestReportsForCustomersComponent": { myResult = CreateInterestReportsForCustomersComponent; break; }
 
             //Maintenance
@@ -366,6 +373,7 @@ export class ModuleDeclarations {
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
             case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
             case "InterestReportGeneralTabComponent": { myResult = InterestReportGeneralTabComponent; break; }
+            case "UserDefinedReportGeneralTabComponent": { myResult = UserDefinedReportGeneralTabComponent; break; }
 
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }

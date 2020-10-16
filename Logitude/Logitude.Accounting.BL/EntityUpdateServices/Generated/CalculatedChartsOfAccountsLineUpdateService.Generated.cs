@@ -22,7 +22,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class CalculatedChartsOfAccountsLineUpdateService:EntityUpdateService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLinePM,EntityPM>
+   public partial class CalculatedChartsOfAccountsLineUpdateService:EntityUpdateService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLinePM,CalculatedChartsOfAccountPM>
    {
    
         CalculatedChartsOfAccountsLineRepository entityRepository;
@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CalculatedChartsOfAccountsLinePM entityPM)
         {
-            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPM.Id };
+            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPM.Id, CreateDateTime = entityPM.CreateDateTime };
             return entityKeys;
         }
 
