@@ -23,6 +23,11 @@
                     </td>
 
                     <td style="width:20px;"><div></div></td>
+                    <td style="width:70px;">Currency:</td>
+                    <td style="width:150px; ">
+                        <ComboBox [ItemsSource]="CurrenciesComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
+                    </td>
+                    <td style="width:20px;"><div></div></td>
 
                     <td style="width:85px" class="Label">Due Date To:</td>
                     <td style="width:150px;">

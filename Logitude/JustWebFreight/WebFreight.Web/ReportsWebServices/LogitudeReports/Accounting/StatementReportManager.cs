@@ -30,6 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool includeDraftInvoices = false;
         private string ARAPFilter = null;
         private string invoicePaymentFilter = null;
+        private string currencyCodeFilter = null;
 
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
@@ -49,6 +50,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem_IncludeDraftInvoices = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
             QueryFilterItem filterItem_ARAPFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ARAPFilter").FirstOrDefault();
             QueryFilterItem filterItem_InvoicePaymentFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoicePaymentFilter").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyCodeFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault();
 
             if (filterItem_BillTo != null)
             {
@@ -89,6 +91,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     invoicePaymentFilter = filterItem_InvoicePaymentFilter.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_CurrencyCodeFilter != null)
+            {
+                if (filterItem_CurrencyCodeFilter.FieldValue != null)
+                {
+                    currencyCodeFilter = filterItem_CurrencyCodeFilter.FieldValue.ToString();
+                }
+            }
+            
         }
 
         public byte[] GetData()
@@ -122,11 +133,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             this.FillGeneralData();
             List<StatementRecord> totalList = this.FillStatementRecordData();
-            
-            var results = from p in dataProvider.StatementRecordList
-                          group p by p.Currency into g
-                          select new { Currency = g.Key, records = g.ToList() };
 
+            var results  = from p in dataProvider.StatementRecordList
+                                    group p by p.Currency into g
+                                    select new { Currency = g.Key, records = g.ToList() };
+            if (currencyCodeFilter != null)
+            {
+                results = results.Where(a=>a.Currency == currencyCodeFilter);
+            }
+           
             foreach (var result in results)
             {
                 List<StatementRecord> statementRecords = result.records.ToList();
@@ -184,9 +199,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 dataProvider.StatementAgingSummaryRecordList.Add(agingRecord);
             }
 
-            dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
-            dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
-
+            if (currencyCodeFilter != null)
+            {
+                dataProvider.StatementRecordList = dataProvider.StatementRecordList.Where(or => or.Currency == currencyCodeFilter).ToList();
+                dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == currencyCodeFilter).ToList();
+            }
+            else
+            {
+                dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
+                dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
+            }
             List<StatementGroup> finalResults = (from p in dataProvider.StatementRecordList
                                                  group p by p.Currency into g
                                                  select new StatementGroup()

@@ -5,6 +5,10 @@ import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component, OnInit}  from '@angular/core';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { CodeNameClass } from './CodeNameClass';
+import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
+import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({    
     selector: 'StatementFilterComponent',
@@ -19,6 +23,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     public queryFilterItems: QueryFilterItem[];    
     public ObjectTableName: string = "Report";
     public DataContext: StatementFilterComponent = this;
+    public CurrenciesComboList: Array<CodeNameClass>;
     constructor() {
         super();
     }
@@ -26,6 +31,13 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     public CustomerId: string = null;
     public DueDate: Date = null;
 
+    private selectedItemComboBox: CodeNameClass;
+    get SelectedItemComboBox() { return this.selectedItemComboBox; }
+    set SelectedItemComboBox(value: CodeNameClass) {
+        if (this.selectedItemComboBox != value) {
+            this.selectedItemComboBox = value;
+        }
+    }
     private includeDraftInvoices: boolean = false;
     public get IncludeDraftInvoices() { return this.includeDraftInvoices; }
     public set IncludeDraftInvoices(value: boolean) {
@@ -36,8 +48,30 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
+        this.FillCurrenciesComboBoxList();
     }
 
+    FillCurrenciesComboBoxList() {
+        var service: CurrencyListService = new CurrencyListService();
+        service.getAll().subscribe((result: ServiceResponse) => {
+            var list: CurrencyList[] = result.Result.filter(d => !d.InActive);
+            if (list != null) {
+                this.CurrenciesComboList = [];
+                var all: CodeNameClass = new CodeNameClass();
+                all.Code = "All";
+                all.Name = "All";
+                this.CurrenciesComboList.push(all);
+                list.forEach(item => {
+                    var currency: CodeNameClass = new CodeNameClass();
+                    currency.Code = item.Code.toString();
+                    currency.Name = item.EnglishName;
+                    this.CurrenciesComboList.push(currency);
+                });
+
+                this.SelectedItemComboBox = this.CurrenciesComboList.filter(a => a.Code == "All")[0];
+            }
+        });
+    }
     ngOnInit() {
 
     }
@@ -79,6 +113,16 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
             this.queryFilterItem.FieldName = "InvoicePaymentFilter";
             this.queryFilterItem.FieldValue = this.InvoicePaymentSelectedValue;
             this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+
+
+        if (this.SelectedItemComboBox != null && this.SelectedItemComboBox.Code != "All") {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CurrencyCode";
+            this.queryFilterItem.FieldValue = this.SelectedItemComboBox.Code;
+            this.queryFilterItem.Operator = "CurrencyCode";
             this.queryFilterItems.push(this.queryFilterItem);
         }
 
