@@ -145,6 +145,7 @@ import { InterestReportLinesByDateListService } from './Services/StandardLists/I
 import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
 import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
 import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
+import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -247,6 +248,7 @@ export class ModuleProviders {
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
             case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
             case "InterestReportLinesByDateListService": { myResult = new InterestReportLinesByDateListService(); break; }
+            case "CalculatedChartsLineTypeListService": { myResult = new CalculatedChartsLineTypeListService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }

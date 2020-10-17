@@ -32,7 +32,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         IsCancelled, 
-	         ChartOfAccountTypeCode,
+	         ChartOfAccountTypeCode, 
+	         Line,
 	      }
 
 
@@ -55,7 +56,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByEnglishName, 
 	         CreatedByEnglishName, 
 	         ChartOfAccountTypeEnglishName, 
-	         ChartOfAccountTypeLocalName,
+	         ChartOfAccountTypeLocalName, 
+	         Line,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -112,6 +114,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountTypeCode))
             {
 				entityPOCO.ChartOfAccountTypeCode = entityPM.ChartOfAccountTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Line))
+            {
+				entityPOCO.Line = entityPM.Line;
 			}
 			}
 
@@ -173,6 +180,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ChartOfAccountTypeCode = entityPOCO.ChartOfAccountTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Line))
+            {
+					entityPM.Line = entityPOCO.Line;
+            }
+
 		}
 
 		public void PMToOldPM(CalculatedChartsOfAccountPM entityPM, CalculatedChartsOfAccountPM oldEntityPM)
@@ -227,6 +239,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountTypeCode))
             {
                 oldEntityPM.ChartOfAccountTypeCode = entityPM.ChartOfAccountTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Line))
+            {
+                oldEntityPM.Line = entityPM.Line;
             }
 			
 		}

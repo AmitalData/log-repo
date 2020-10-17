@@ -773,7 +773,7 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
-	 public IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLines 
+	 public IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountLines 
 	 {
 	      get; set;
 	 

@@ -46,6 +46,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ChartOfAccountTypeEnglishName  { get; set; }
        [DataMember]
        public string ChartOfAccountTypeLocalName  { get; set; }
+       [DataMember]
+       public int Line  { get; set; }
    }
 
 }

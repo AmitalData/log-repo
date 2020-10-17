@@ -30,14 +30,14 @@ namespace Logitude.Accounting.Data.Repositories
 		
 		public  CalculatedChartsOfAccountsLine GetSingle(string id, DateTime createdatetime, int tenant)
         {
-            return (from a in context.CalculatedChartsOfAccountsLines
+            return (from a in context.CalculatedChartsOfAccountLines
                     where a.Id == id && a.CreateDateTime == createdatetime && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CalculatedChartsOfAccountsLine> GetAll(int tenant)
         {
-            return from a in context.CalculatedChartsOfAccountsLines  
+            return from a in context.CalculatedChartsOfAccountLines  
                    where a.Tenant == tenant
                    select a;
         }
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
         public CalculatedChartsOfAccountsLine GetSingle(EntityKeyFields entityKeys)
         {
             CalculatedChartsOfAccountsLineKeys keys = entityKeys as CalculatedChartsOfAccountsLineKeys;
-            return (from a in context.CalculatedChartsOfAccountsLines
+            return (from a in context.CalculatedChartsOfAccountLines
                     where a.Id == keys.Id && a.CreateDateTime == keys.CreateDateTime
                     select a).FirstOrDefault();
         }
@@ -54,26 +54,26 @@ namespace Logitude.Accounting.Data.Repositories
         public void Add(CalculatedChartsOfAccountsLine entity)
         {
             onAdd();
-            context.CalculatedChartsOfAccountsLines.Add(entity);
+            context.CalculatedChartsOfAccountLines.Add(entity);
         }
 
         public void Remove(CalculatedChartsOfAccountsLine entity)
         {
-            context.CalculatedChartsOfAccountsLines.Attach(entity);
-            context.CalculatedChartsOfAccountsLines.Remove(entity);
+            context.CalculatedChartsOfAccountLines.Attach(entity);
+            context.CalculatedChartsOfAccountLines.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CalculatedChartsOfAccountsLine entity)
         {
             onUpdate();
-            context.CalculatedChartsOfAccountsLines.Attach(entity);
+            context.CalculatedChartsOfAccountLines.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CalculatedChartsOfAccountsLine> All()
         {
-            return context.CalculatedChartsOfAccountsLines.ToList();
+            return context.CalculatedChartsOfAccountLines.ToList();
         }
 
         private IAccountingContext context

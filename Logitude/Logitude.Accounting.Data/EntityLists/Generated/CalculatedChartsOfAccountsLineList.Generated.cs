@@ -50,6 +50,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LineTypeEnglishName  { get; set; }
        [DataMember]
        public string LineTypeLocalName  { get; set; }
+       [DataMember]
+       public int Line  { get; set; }
    }
 
 }

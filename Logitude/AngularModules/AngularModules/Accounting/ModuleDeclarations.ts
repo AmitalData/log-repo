@@ -102,6 +102,7 @@ import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDed
 import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
 import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
 import { CreateInterestReportsForCustomersComponent } from './Components/Others/CreateInterestReportsForCustomersComponent';
+import { AddEditCalculatedChartsOfAccountComponent } from './Components/EditTabs/UserDefinedReport/AddEditCalculatedChartsOfAccount/AddEditCalculatedChartsOfAccountComponent';
 
 // Short Titles
 import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
@@ -123,6 +124,7 @@ import { InterestReportGeneralTabComponent } from './Components/EditTabs/Interes
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
+import { UserDefinedReportShortTitleComponent } from './Components/ShortTiTles/UserDefinedReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
 
@@ -170,6 +172,7 @@ export const Components =
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
+        
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -249,6 +252,7 @@ export const Components =
         JournalReconcileComponent,
         ExternalReconcileComponent,
         AddEditTaxWithholdingLineComponent,
+        AddEditCalculatedChartsOfAccountComponent,
         NewTaxReportComponent,
         AccountingFlatFileDownloadComponent,
         NewTaxDeductionReportComponent,
@@ -281,8 +285,8 @@ export const Components =
         InterestReportEditOpenBalanceComponent,
         BtatchPrintWarningComponent,
         BtatchPrintConfirmComponent,
-        InvoiceDateForBatchInvoicesComponent
-      
+        InvoiceDateForBatchInvoicesComponent,
+        UserDefinedReportShortTitleComponent
 
 
     ];
@@ -392,6 +396,7 @@ export class ModuleDeclarations {
 
 
             //Others
+            case "UserDefinedReportShortTitleComponent" :{myResult =UserDefinedReportShortTitleComponent; break;}
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
@@ -410,6 +415,7 @@ export class ModuleDeclarations {
             case "InterestReportLineByDateDetailsComponent": { myResult = InterestReportLineByDateDetailsComponent; break; }
             case "InterestReportEditOpenBalanceComponent": { myResult = InterestReportEditOpenBalanceComponent; break; }
             case "InterestReportEditCalculationDateComponent": { myResult = InterestReportEditCalculationDateComponent; break; }
+            case "AddEditCalculatedChartsOfAccountComponent": { myResult = AddEditCalculatedChartsOfAccountComponent; break; }
             case "GLAccountSearchWindowComponent": {
                 myResult = GLAccountSearchWindowComponent; break;
             }

@@ -53,6 +53,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ChartOfAccountTypeCode { get; set; }
 	      
         public virtual ChartOfAccountsType ChartOfAccountsType { get; set; }
+        [Column("Line")]
+	    public int Line { get; set; }
     }
 }
 	 

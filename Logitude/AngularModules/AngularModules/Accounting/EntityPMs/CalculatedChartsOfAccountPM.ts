@@ -147,6 +147,11 @@ export class CalculatedChartsOfAccountPM {
     public set ChartOfAccountTypeLocalName(newValue: string) { if (this.chartOfAccountTypeLocalName != newValue) { this.chartOfAccountTypeLocalName = newValue; this.MarkAsDirty("ChartOfAccountTypeLocalName"); } }
        
 	 
+    private line: number;
+    public get Line() { return this.line; }
+    public set Line(newValue: number) { if (this.line != newValue) { this.line = newValue; this.MarkAsDirty("Line"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountPM;
 	

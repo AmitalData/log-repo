@@ -2712,6 +2712,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             // APPaymentTools.Create(eventAggregator, viewInjectionService, regionManager, container);
                         } else if (this.ObjectTableName == "Journal") {
                             this.RunNewJournalWizard();
+                        } else if (this.ObjectTableName == "UserDefinedReport") {
+                            this.RunNewUserDefinedReportWizard();
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
@@ -3348,6 +3350,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
                     EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.FullAccounting")
+                });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    //this.LoadAllScreenData();
+                    //this.isWindowOpened = false;
+                    this.RefreshBtnClick();
+
+                });
+            });
+    }
+
+    RunNewUserDefinedReportWizard() {
+         var entityPM: JournalPM = new JournalPM();
+        entityPM.IsNew=true;
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityPM: entityPM, ObjectTableName: 'UserDefinedReport' 
                 });
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     //this.LoadAllScreenData();

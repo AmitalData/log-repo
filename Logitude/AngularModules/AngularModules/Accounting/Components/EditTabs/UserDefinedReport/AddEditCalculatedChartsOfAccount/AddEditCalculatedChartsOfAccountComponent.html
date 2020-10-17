@@ -54,11 +54,6 @@
                 <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
             </td>
         </tr>
-        <tr class="TabTitleRow">
-            <td>
-                {{'General.O.General' | TextCodeTranslationPipe}}
-            </td>
-        </tr>
         <tr style="height: 1px;vertical-align:top">
             <td>
                 <table>
@@ -165,7 +160,7 @@
                                                     <table>
                                                         <tr style="height:15px;">
                                                             <td>
-                                                                <LogLabel [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                <!-- <LogLabel [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel> -->
                                                             </td>
                                                         </tr>
                                                         <tr style="height:5px;">
@@ -182,7 +177,7 @@
                                                     <table>
                                                         <tr >
                                                            <td>
-                                                            <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsCancelled = $event"></LogCheckBox>
+                                                            <!-- <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsCancelled = $event"></LogCheckBox> -->
                                                           </td> 
   
                                                         </tr>
@@ -213,6 +208,12 @@
                                                 <td style="width: 130px;">
                                                     <table>
                                                         <tr style="height:15px;">
+                                                            <td>
+
+                                                                <LogLabel [ObjectFieldName]="'ChartOfAccountTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                                                
+                                                            </td>
                                                          </tr>
                                                         <tr style="height:5px;">
                                                             <td>
@@ -227,6 +228,17 @@
                                                 <td>
                                                     <table>
                                                         <tr style="height:5px;">
+                                                            <td>
+                                                                <LogLov 
+                                                                       [ObjectFieldName]="'ChartOfAccountTypeCode'"
+                                                                       [ObjectTableName]="ObjectTableName"
+                                                                       [DataContext]="DataContext"
+                                                                       [LookUpTableName]="'ChartOfAccountsType'"
+                                                                       [HideColumns]="true">
+                                                              </LogLov>
+
+                                                                
+                                                            </td>
                                                          </tr>
                                                         <tr style="height:20px;">
                                                             <td><div></div></td>
@@ -248,7 +260,45 @@
                                             </tr>
                                           
                                             <tr class="FormFieldRow">
-                                                
+
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+
+                                                                <LogLabel [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+ 
+                                                            </td>
+                                                         </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsCancelled = $event"></LogCheckBox>
+                                                            </td>
+                                                         </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                           
                                             </tr>
                                             <tr><td></td></tr>
                                         </table>
@@ -274,10 +324,10 @@
                 <table>
                     <tr>
                         <td style="width: 30px;">
-                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.IsCancelled" (click)="AddPeriodClicked()"></IconButton>
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.IsCancelled" (click)="AddLine()"></IconButton>
                          </td>
                         <td>
-                             <span style="font-size: 16px;" >{{'CalculatedChartsOfAccount' | TextCodeTranslationPipe}}</span>
+                             <span style="font-size: 16px;" >{{'CalculatedChartsOfAccountsLine' | TextCodeTranslationPipe}}</span>
                         </td>
                     </tr>
                 </table>
@@ -289,7 +339,7 @@
                 <div class="GeneratedGridContainer">
                     <logitude-edit-grid GridWidth="100%"
                                     GridHeight="100%"
-                                    [ItemSource]="CalculatedChartsOfAccountItemList"
+                                    [ItemSource]="DataContext.CalculatedChartsOfAccountsLineItemList"
                                     [HeaderHeight]="25"
                                     [UseVirtuallization]="true"
                                     [IsReadOnly]="false"
@@ -297,9 +347,9 @@
                                     (Ondblclick)="OnFocus()">
 
                      <!--Line-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.Line' | TextCodeTranslationPipe" [binding]="'Line'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.Line' | TextCodeTranslationPipe" [binding]="'Line'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
+                        <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
                             <div   [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.Line}}</span>
                             </div>
@@ -307,42 +357,78 @@
                     </ng-template>
                     </log-column>
 
-                    <!--EnglishName-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.EnglishName' | TextCodeTranslationPipe" [binding]="'EnglishName'">
+                    
+                <!--LineTypeCode-->
+                  <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.LineTypeCode' | TextCodeTranslationPipe" [binding]="'LineTypeCode'">
+                    <ng-template let-item>
+                      <log-cell-template   #logcelltemplate>
+                        <div  *ngIf="logcelltemplate.IsDisplayMode"  [style.text-align]="isRTL ? 'right' : 'left'">
+                            <span>{{item.LineTypetName}}</span>
+                        </div>
+                        <div *ngIf="logcelltemplate.IsEditMode">
+                            <LogLov 
+                                   [ObjectFieldName]="'LineTypeCode'"
+                                   [ObjectTableName]="ObjectTableName"
+                                   [DataContext]="DataContext"
+                                   [LookUpTableName]="'CalculatedChartsLineType'"
+                                   [HideColumns]="true">
+                           </LogLov>
+                        </div>
+                      </log-cell-template>
+                   </ng-template>
+                </log-column>
+
+
+                     <!--ChartOfAccount-->
+                  <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.ChartOfAccountId' | TextCodeTranslationPipe" [binding]="'ChartOfAccountId'">
+                        <ng-template let-item>
+                          <log-cell-template   #logcelltemplate>
+                            <div  *ngIf="logcelltemplate.IsDisplayMode"  [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.ChartOfAccountName}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov 
+                                       [ObjectFieldName]="'ChartOfAccountId'"
+                                       [ObjectTableName]="ObjectTableName"
+                                       [DataContext]="DataContext"
+                                       [LookUpTableName]="'ChartOfAccount'"
+                                       [HideColumns]="true">
+                               </LogLov>
+                            </div>
+                          </log-cell-template>
+                       </ng-template>
+                    </log-column>
+
+                  <!--GLAccount-->
+                  <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.GLAccountId' | TextCodeTranslationPipe" [binding]="'GLAccountId'">
+                    <ng-template let-item>
+                      <log-cell-template   #logcelltemplate>
+                        <div  *ngIf="logcelltemplate.IsDisplayMode"  [style.text-align]="isRTL ? 'right' : 'left'">
+                            <span>{{item.GLAccountName}}</span>
+                        </div>
+                        <div *ngIf="logcelltemplate.IsEditMode">
+                            <LogLov 
+                                   [ObjectFieldName]="'GLAccountId'"
+                                   [ObjectTableName]="ObjectTableName"
+                                   [DataContext]="DataContext"
+                                   [LookUpTableName]="'GLAccount'"
+                                   [HideColumns]="true">
+                           </LogLov>
+                        </div>
+                      </log-cell-template>
+                   </ng-template>
+                </log-column>
+
+                    
+                    <!--CreateDateTime-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccountsLine.F.CreateDateTime' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
-                            <div   [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.EnglishName}}</span>
-                            </div>
-
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CreateDateTime | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </ng-template>
                     </log-column>
 
-                    <!--LocalName-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"  [header]="'CalculatedChartsOfAccount.F.LocalName' | TextCodeTranslationPipe" [binding]="'LocalName'">
-                        <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.LocalName}}</span>
-                            </div>
-
-                        </log-cell-template>
-                    </ng-template>
-                    </log-column>
-
-                    <!--ChartOfAccountTypeCode-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="'CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName' | TextCodeTranslationPipe" [binding]="'ChartOfAccountTypeCode'">
-                        <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-
-                            <div  [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span> {{item.ChartOfAccountTypeName}} </span>
-                            </div>
-
-                        </log-cell-template>
-                    </ng-template>
-                    </log-column>
 
                        <!--CreatedByUserName-->
                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'"  [header]="'CalculatedChartsOfAccountsLine.F.CreatedByUserId' | TextCodeTranslationPipe">
@@ -355,18 +441,20 @@
                     </ng-template>
                     </log-column>
 
-                    <!--CreateDateTime-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.CreateDateTime' | TextCodeTranslationPipe">
-                        <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CreateDateTime | DateTimeToDatePipe}} </div>
-                        </log-cell-template>
-                    </ng-template>
-                    </log-column>
 
+                         <!--UpdatedDateTime-->
+                         <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccountsLine.F.UpdatedDateTime' | TextCodeTranslationPipe">
+                            <ng-template let-item>
+                            <log-cell-template   #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedDateTime | DateTimeToDatePipe}} </div>
+                            </log-cell-template>
+                        </ng-template>
+                        </log-column>
+
+                        
            
                     <!--UpdatedByUser-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'CalculatedChartsOfAccount.F.UpdatedByUserId' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'CalculatedChartsOfAccountsLine.F.UpdatedByUserId' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
@@ -376,17 +464,9 @@
                     </ng-template>
                     </log-column>
 
-                    <!--UpdatedDateTime-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.UpdatedDateTime' | TextCodeTranslationPipe">
-                        <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedDateTime | DateTimeToDatePipe}} </div>
-                        </log-cell-template>
-                    </ng-template>
-                    </log-column>
-
+               
                     <!--IsCancelled-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.IsCancelled' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccountsLine.F.IsCancelled' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'"> 
@@ -401,7 +481,7 @@
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Edit'" [disabled]="item.IsCancelled" [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="RemoveLine(item)"></IconButton>
                             </div>
                         </log-cell-template>
                     </ng-template>
@@ -412,5 +492,28 @@
             </td>
         </tr>
 
+        <tr style="height: 52px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+        
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+        
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+        
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
     </table>
     </div>

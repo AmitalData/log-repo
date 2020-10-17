@@ -78,6 +78,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

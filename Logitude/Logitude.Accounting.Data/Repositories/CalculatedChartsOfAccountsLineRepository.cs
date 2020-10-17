@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
 
             CalculatedChartsOfAccountKeys myEntityKeys = entityKeys as CalculatedChartsOfAccountKeys;
-            return (from a in context.CalculatedChartsOfAccountsLines where a.CalculatedChartsOfAccountsId == myEntityKeys.Id select a).ToList();
+            return (from a in context.CalculatedChartsOfAccountLines where a.CalculatedChartsOfAccountsId == myEntityKeys.Id select a).ToList();
         }
 
    }

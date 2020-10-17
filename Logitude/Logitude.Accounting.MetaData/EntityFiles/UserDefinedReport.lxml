@@ -10,11 +10,11 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
-  IsNewWizard="true"
+  IsNewWizard="false"
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"
@@ -1365,7 +1365,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
-      Code="&quot;IRCN&quot;"
+      Code="&quot;CLEV&quot;"
       ObjectTableName="&quot;UserDefinedReport&quot;"
       EnglishName="&quot;Cancelled&quot;"
       LocalName="&quot;Cancelled&quot;"

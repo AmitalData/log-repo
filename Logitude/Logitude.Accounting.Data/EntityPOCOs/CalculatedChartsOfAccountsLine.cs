@@ -62,6 +62,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CalculatedChartsOfAccountsId { get; set; }
 	      
         public virtual ChartOfAccount CalculatedChartsOfAccount { get; set; }
+        [Column("Line")]
+	    public int Line { get; set; }
     }
 }
 	 

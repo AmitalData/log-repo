@@ -137,6 +137,11 @@ export class CalculatedChartsOfAccountsLinePM {
     public set LineTypeLocalName(newValue: string) { if (this.lineTypeLocalName != newValue) { this.lineTypeLocalName = newValue; this.MarkAsDirty("LineTypeLocalName"); } }
        
 	 
+    private line: number;
+    public get Line() { return this.line; }
+    public set Line(newValue: number) { if (this.line != newValue) { this.line = newValue; this.MarkAsDirty("Line"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
 	

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CalculatedChartsOfAccountsLines"
+  Name="CalculatedChartsOfAccountLines"
+  OldNames="CalculatedChartsOfAccountsLines"
   Schema="dbo"
   DBType="Main"
   Module="Accounting">
@@ -82,6 +83,12 @@
     Name="CalculatedChartsOfAccountsId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Line"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
