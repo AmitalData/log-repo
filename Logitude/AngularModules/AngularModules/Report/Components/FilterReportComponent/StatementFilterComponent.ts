@@ -28,11 +28,13 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     public IsRegisterDateId: string = "IsRegisterDateId_";
     public IsDueDateId: string = "IsDueDateId_";
     private CurrentSession = SessionLocator.SelectedSession;
+    public ValidationErrorsList: Array<string> = [];
 
     constructor() {
         super();
         this.IsRegisterDateId = this.IsRegisterDateId + this.CurrentSession.GetNewId(this.IsRegisterDateId);
         this.IsDueDateId = this.IsDueDateId + this.CurrentSession.GetNewId(this.IsDueDateId);
+        this.DateRadio = this.DateRadio + this.CurrentSession.GetNewId(this.DateRadio);
     }
 
     public CustomerId: string = null;
@@ -84,91 +86,96 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
     }
 
-    public IsByDueDate: boolean = true;
-    IsDueDateClicked(arg: boolean) {
-        this.IsByDueDate = arg;
+    public IsByDueDate: boolean = false;
+    public IsRegisterDate: boolean = false;
+    public IsDueDate: boolean = true;
+    public DateRadio: string = "DateRadio_";
+    IsDueDateClicked() {
+        this.IsByDueDate = true;
     }
-
+    IsRegisterDateClicked() {
+        this.IsByDueDate = false;
+    }
     RunReport(isloading: boolean) {
-        this.queryFilterItems = [];
+        this.ValidationErrorsList = [];
+        if (this.FromDate > this.DueDate)
+            this.ValidationErrorsList.push("From date field must be less than To date field");
 
-        this.queryFilterItems = new Array<QueryFilterItem>();
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = [];
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsByDueDate";
-        this.queryFilterItem.FieldValue = this.IsByDueDate;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "BillToId";
-        this.queryFilterItem.FieldValue = this.CustomerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "DueDate";
-        this.queryFilterItem.FieldValue = this.DueDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "LessThanOrEqual";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        if (this.FromDate) {
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldName = "BillToId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "DueDate";
+            this.queryFilterItem.FieldValue = this.DueDate;
             this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "GreaterThanOrEqual";
+            this.queryFilterItem.Operator = "LessThanOrEqual";
             this.queryFilterItems.push(this.queryFilterItem);
+
+            if (this.FromDate) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItem.Operator = "GreaterThanOrEqual";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            this.queryFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
+            this.queryFilterItems.push(new QueryFilterItem("IsByDueDate", this.IsByDueDate));
+
+            if (this.ARAPSelectedValue != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ARAPFilter";
+                this.queryFilterItem.FieldValue = this.ARAPSelectedValue;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.InvoicePaymentSelectedValue != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "InvoicePaymentFilter";
+                this.queryFilterItem.FieldValue = this.InvoicePaymentSelectedValue;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+
+            if (this.SelectedItemComboBox != null && this.SelectedItemComboBox.Code != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "CurrencyCode";
+                this.queryFilterItem.FieldValue = this.SelectedItemComboBox.Code;
+                this.queryFilterItem.Operator = "CurrencyCode";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            this.reportFliter = new ReportFliter();
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
+
+            this.ReportsPreview.CleanPartnersObslist();
+            if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
+
+            this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
-
-        this.queryFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
-
-        if (this.ARAPSelectedValue != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ARAPFilter";
-            this.queryFilterItem.FieldValue = this.ARAPSelectedValue;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.InvoicePaymentSelectedValue != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "InvoicePaymentFilter";
-            this.queryFilterItem.FieldValue = this.InvoicePaymentSelectedValue;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-
-        if (this.SelectedItemComboBox != null && this.SelectedItemComboBox.Code != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CurrencyCode";
-            this.queryFilterItem.FieldValue = this.SelectedItemComboBox.Code;
-            this.queryFilterItem.Operator = "CurrencyCode";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-
-        this.ReportsPreview.CleanPartnersObslist();
-        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
     }
 
     public ARAPSelectedValue: string = "All";

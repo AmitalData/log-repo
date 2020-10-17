@@ -1,132 +1,146 @@
 
-<table>
-    <tr style="height:30px;">
-        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
-    </tr>
+    <table>
 
-    <tr style="height:30px;">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:10px;"><div></div></td>
+        <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr style="height:30px;">
+                        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+                    </tr>
 
-                    <td style="width:60px" class="Label">Partner:</td>
-                    <td style="width:200px;">
-                        <LogLov [ObjectFieldName]="'CustomerId'"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'Card'"
-                                [DisplayMemberPath]="'EnglishName'"
-                                [DependencyFilter1IsList]="'true'"
-                                [ShowInActive]="'true'"
-                                [DependencyFilter1Value]="'AG,CS,AL,SL,CC,VD,CG,CO,OT,SG,TR,WH'">
-                        </LogLov>
-                    </td>
+                    <tr style="height:30px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:10px;"><div></div></td>
 
-                    <td style="width:10px;"><div></div></td>
-                    <td style="width:70px;">Currency:</td>
-                    <td style="width:150px; ">
-                        <ComboBox [ItemsSource]="CurrenciesComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
-                    </td>
-                    <td style="width:20px;"><div></div></td>
+                                    <td style="width:60px" class="Label">Partner:</td>
+                                    <td style="width:200px;">
+                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'"
+                                                [DisplayMemberPath]="'EnglishName'"
+                                                [DependencyFilter1IsList]="'true'"
+                                                [ShowInActive]="'true'"
+                                                [DependencyFilter1Value]="'AG,CS,AL,SL,CC,VD,CG,CO,OT,SG,TR,WH'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width:10px;"><div></div></td>
+                                    <td style="width:70px;">Currency:</td>
+                                    <td style="width:150px; ">
+                                        <ComboBox [ItemsSource]="CurrenciesComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
+                                    </td>
+                                    <td style="width:20px;"><div></div></td>
 
 
-                    <td style="width:90px">
-                        <div class="RadioButton" style="width:80px">
-                            <input type="radio" [attr.id]="IsDueDateId" [attr.name]="DateRadio" (click)="IsDueDateClicked('true') " [checked]="IsByDueDate == true" style="width:15px" />
-                            <label [attr.for]="IsDueDateId" style="font-size: 12px">
-                                Due Date
-                            </label>
-                        </div>
-                    </td>
+                                    <td style="width:90px">
+                                        <div class="RadioButton" style="width:80px">
+                                            <input type="radio" [attr.id]="IsDueDateId" [attr.name]="DateRadio" (click)="IsDueDateClicked()" [checked]="IsDueDate == true" style="width:15px" />
+                                            <label [attr.for]="IsDueDateId" style="font-size: 12px">
+                                                Due Date
+                                            </label>
+                                        </div>
+                                    </td>
 
-                    <td style="width:140px">
-                        <div class="RadioButton" style="width:140px">
-                            <input type="radio" [attr.id]="IsRegisterDateId" [attr.name]="DateRadio" (click)="IsDueDateClicked('false')" [checked]="IsByDueDate == false" style="width:15px" />
-                            <label [attr.for]="IsRegisterDateId" style="font-size: 12px">
-                                Invoice/Register Date
-                            </label>
-                        </div>
-                    </td>
+                                    <td style="width:140px">
+                                        <div class="RadioButton" style="width:140px">
+                                            <input type="radio" [attr.id]="IsRegisterDateId" [attr.name]="DateRadio" (click)="IsRegisterDateClicked()" [checked]="IsRegisterDate == true" style="width:15px" />
+                                            <label [attr.for]="IsRegisterDateId" style="font-size: 12px">
+                                                Invoice/Register Date
+                                            </label>
+                                        </div>
+                                    </td>
 
-                    <td style="width:20px;">
-                        <div></div>
-                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
 
-                    <!--From Date-->
-                    <td style="width:70px;">From Date</td>
-                    <td style="width:120px;">
-                        <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                    </td>
+                                    <!--From Date-->
+                                    <td style="width:70px;">From Date</td>
+                                    <td style="width:120px;">
+                                        <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
 
-                    <td style="width:10px;">
-                        <div></div>
-                    </td>
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
 
-                    <!--To Date-->
-                    <td style="width:60px;">To Date</td>
-                    <td style="width:120px;">
-                        <LogDatePicker [ObjectFieldName]="'DueDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                    </td>
+                                    <!--To Date-->
+                                    <td style="width:60px;">To Date</td>
+                                    <td style="width:120px;">
+                                        <LogDatePicker [ObjectFieldName]="'DueDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
 
-                    <td style="width: 20px;"><div></div></td>
+                                    <td style="width: 20px;"><div></div></td>
 
-                    <td style="width: 1px;">
-                        <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft Invoices'"></CheckBox>
-                    </td>
+                                    <td style="width: 1px;">
+                                        <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft Invoices'"></CheckBox>
+                                    </td>
 
-                    <td style="width:50px;"><div></div></td>
+                                    <td style="width:50px;"><div></div></td>
 
-                    <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
-                    </td>
+                                    <td style="width:80px;">
+                                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                    </td>
 
-                    <td><div></div></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-    <tr style="height:30px">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:10px;"><div></div></td>
+                    <tr style="height:30px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:10px;"><div></div></td>
 
-                    <td style="width:110px; vertical-align:middle;">
-                        <ul class="FiltersMenu">
-                            <li (click)="ARAPItemClicked('All')" (mouseover)="ARAPMouseOver('All')" [class.SelectedFilter]="ARAPSelectedValue === 'All'">
-                                All
-                            </li>
-                            <li (click)="ARAPItemClicked('AR')" (mouseover)="ARAPMouseOver('AR')" (mouseleave)="ARAPMouseLeave('AR')" [class.SelectedFilter]="ARAPSelectedValue === 'AR'">
-                                AR
-                            </li>
-                            <li (click)="ARAPItemClicked('AP')" (mouseover)="ARAPMouseOver('AP')" (mouseleave)="ARAPMouseLeave('AP')" [class.SelectedFilter]="ARAPSelectedValue === 'AP'">
-                                AP
-                            </li>
-                        </ul>
-                    </td>
+                                    <td style="width:110px; vertical-align:middle;">
+                                        <ul class="FiltersMenu">
+                                            <li (click)="ARAPItemClicked('All')" (mouseover)="ARAPMouseOver('All')" [class.SelectedFilter]="ARAPSelectedValue === 'All'">
+                                                All
+                                            </li>
+                                            <li (click)="ARAPItemClicked('AR')" (mouseover)="ARAPMouseOver('AR')" (mouseleave)="ARAPMouseLeave('AR')" [class.SelectedFilter]="ARAPSelectedValue === 'AR'">
+                                                AR
+                                            </li>
+                                            <li (click)="ARAPItemClicked('AP')" (mouseover)="ARAPMouseOver('AP')" (mouseleave)="ARAPMouseLeave('AP')" [class.SelectedFilter]="ARAPSelectedValue === 'AP'">
+                                                AP
+                                            </li>
+                                        </ul>
+                                    </td>
 
-                    <td style="width:50px;">
-                        <div></div>
-                    </td>
+                                    <td style="width:50px;">
+                                        <div></div>
+                                    </td>
 
-                    <td style="width:160px; vertical-align:middle;">
-                        <ul class="FiltersMenu">
-                            <li (click)="InvoicePaymentItemClicked('All')" (mouseover)="InvoicePaymentMouseOver('All')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'All'">
-                                All
-                            </li>
-                            <li style="width:60px;" (click)="InvoicePaymentItemClicked('Invoices')" (mouseover)="InvoicePaymentMouseOver('Invoices')" (mouseleave)="InvoicePaymentMouseLeave('Invoices')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'Invoices'">
-                                Invoices
-                            </li>
-                            <li style="width:70px;" (click)="InvoicePaymentItemClicked('Payments')" (mouseover)="InvoicePaymentMouseOver('Payments')" (mouseleave)="InvoicePaymentMouseLeave('Payments')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'Payments'">
-                                Payments
-                            </li>
-                        </ul>
-                    </td>
+                                    <td style="width:160px; vertical-align:middle;">
+                                        <ul class="FiltersMenu">
+                                            <li (click)="InvoicePaymentItemClicked('All')" (mouseover)="InvoicePaymentMouseOver('All')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'All'">
+                                                All
+                                            </li>
+                                            <li style="width:60px;" (click)="InvoicePaymentItemClicked('Invoices')" (mouseover)="InvoicePaymentMouseOver('Invoices')" (mouseleave)="InvoicePaymentMouseLeave('Invoices')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'Invoices'">
+                                                Invoices
+                                            </li>
+                                            <li style="width:70px;" (click)="InvoicePaymentItemClicked('Payments')" (mouseover)="InvoicePaymentMouseOver('Payments')" (mouseleave)="InvoicePaymentMouseLeave('Payments')" [class.SelectedFilter]="InvoicePaymentSelectedValue === 'Payments'">
+                                                Payments
+                                            </li>
+                                        </ul>
+                                    </td>
 
-                    <td><div></div></td>
-                </tr>
-            </table>
-        </td>       
-    </tr>
-</table>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        
+    </table>
