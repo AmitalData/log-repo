@@ -207,7 +207,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[2]))
                         {
-                            partnerExcel.Name = rowData[2].Trim();
+                            if (rowData[2].Length > 70)
+                            {
+                                this.errorMsg = this.errorMsg + "Name Field max length must be 70";
+                            }
+                            else
+                            {
+                                partnerExcel.Name = rowData[2].Trim();
+                            }
                         }
                         else
                         {
@@ -219,28 +226,56 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[3]))
                         {
-                            partnerExcel.VatNO = rowData[3].Trim();
+                            if (rowData[3].Length > 20)
+                            {
+                                this.errorMsg = this.errorMsg + "Vat NO Field max length must be 20";
+                            }
+                            else
+                            {
+                                partnerExcel.VatNO = rowData[3].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 4)
                     {
                         if (!string.IsNullOrEmpty(rowData[4]))
                         {
-                            partnerExcel.Address1 = rowData[4].Trim();
+                            if (rowData[4].Length > 65)
+                            {
+                                this.errorMsg = this.errorMsg + "Address1 Field max length must be 65";
+                            }
+                            else
+                            {
+                                partnerExcel.Address1 = rowData[4].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 5)
                     {
                         if (!string.IsNullOrEmpty(rowData[5]))
                         {
-                            partnerExcel.Address2 = rowData[5].Trim();
+                            if (rowData[5].Length > 65)
+                            {
+                                this.errorMsg = this.errorMsg + "Address2 Field max length must be 65";
+                            }
+                            else
+                            {
+                                partnerExcel.Address2 = rowData[5].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 6)
                     {
                         if (!string.IsNullOrEmpty(rowData[6]))
                         {
-                            partnerExcel.ZipCode = rowData[6].Trim();
+                            if (rowData[6].Length > 15)
+                            {
+                                this.errorMsg = this.errorMsg + "Zip/Postal Code Field max length must be 15";
+                            }
+                            else
+                            {
+                                partnerExcel.ZipCode = rowData[6].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 7)
@@ -254,33 +289,47 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[8]))
                         {
-                            partnerExcel.State = rowData[8].Trim();
+                            if (rowData[8].Length > 40)
+                            {
+                                this.errorMsg = this.errorMsg + "State Field max length must be 40";
+                            }
+                            else
+                            {
+                                partnerExcel.State = rowData[8].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 9)
                     {
                         if (!string.IsNullOrEmpty(rowData[9]))
                         {
-                            string countryCode = rowData[9].Trim();
-                            Country country = countryRepository.GetSingleCountryByCode(countryCode, tenant);
-                            if (country != null)
+                            if (rowData[9].Length > 2)
                             {
-                                partnerExcel.CountryCode = countryCode;
-                                partnerExcel.CountryId = country.Id;
-                                partnerExcel.City = rowData[7].Trim().Length > 25 ? rowData[7].Trim().Substring(0, 25) : rowData[7].Trim();
-
-                                if (partnerExcel.State != null)
-                                {
-                                    State state = stateRepository.GetSingleStateByCodeAndCountry(partnerExcel.State, country.Id, tenant);
-                                    if (state != null)
-                                    {
-                                        partnerExcel.StateId = state.Id;
-                                    }
-                                }
+                                this.errorMsg = this.errorMsg + "Country Code Field max length must be 2";
                             }
                             else
                             {
-                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Country is invalid" + ",";
+                                string countryCode = rowData[9].Trim();
+                                Country country = countryRepository.GetSingleCountryByCode(countryCode, tenant);
+                                if (country != null)
+                                {
+                                    partnerExcel.CountryCode = countryCode;
+                                    partnerExcel.CountryId = country.Id;
+                                    partnerExcel.City = rowData[7].Trim().Length > 25 ? rowData[7].Trim().Substring(0, 25) : rowData[7].Trim();
+
+                                    if (partnerExcel.State != null)
+                                    {
+                                        State state = stateRepository.GetSingleStateByCodeAndCountry(partnerExcel.State, country.Id, tenant);
+                                        if (state != null)
+                                        {
+                                            partnerExcel.StateId = state.Id;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Country is invalid" + ",";
+                                }
                             }
                         }
                         else
@@ -292,49 +341,98 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[10]))
                         {
-                            partnerExcel.PhoneNumber = rowData[10].Trim();
+                            if (rowData[10].Length > 40)
+                            {
+                                this.errorMsg = this.errorMsg + "Phone Number Field max length must be 40";
+                            }
+                            else
+                            {
+                                partnerExcel.PhoneNumber = rowData[10].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 11)
                     {
                         if (!string.IsNullOrEmpty(rowData[11]))
                         {
-                            partnerExcel.FaxNumber = rowData[11].Trim();
+                            if (rowData[11].Length > 25)
+                            {
+                                this.errorMsg = this.errorMsg + "Fax Number Field max length must be 25";
+                            }
+                            else
+                            {
+                                partnerExcel.FaxNumber = rowData[11].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 12)
                     {
                         if (!string.IsNullOrEmpty(rowData[12]))
                         {
-                            partnerExcel.EMail = rowData[12].Trim();
+                            if (rowData[12].Length > 70)
+                            {
+                                this.errorMsg = this.errorMsg + "Email Field max length must be 70";
+                            }
+                            else
+                            {
+                                partnerExcel.EMail = rowData[12].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 13)
                     {
                         if (!string.IsNullOrEmpty(rowData[13]))
                         {
-                            partnerExcel.ContactName = rowData[13].Trim();
+                            if (rowData[13].Length > 60)
+                            {
+                                this.errorMsg = this.errorMsg + "Contact Name Field max length must be 60";
+                            }
+                            else
+                            {
+                                partnerExcel.ContactName = rowData[13].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 14)
                     {
                         if (!string.IsNullOrEmpty(rowData[14]))
                         {
-                            partnerExcel.ReceivablesExternalID = rowData[14].Trim();
+                            if (rowData[14].Length > 25)
+                            {
+                                this.errorMsg = this.errorMsg + "Receivables External ID Field max length must be 25";
+                            }
+                            else
+                            {
+                                partnerExcel.ReceivablesExternalID = rowData[14].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 15)
                     {
                         if (!string.IsNullOrEmpty(rowData[15]))
                         {
-                            partnerExcel.PayablesExternalID = rowData[15].Trim();
+                            if (rowData[15].Length > 25)
+                            {
+                                this.errorMsg = this.errorMsg + "Payables External ID Field max length must be 25";
+                            }
+                            else
+                            {
+                                partnerExcel.PayablesExternalID = rowData[15].Trim();
+                            }
                         }
                     }
                     if (rowData.Length > 16)
                     {
                         if (!string.IsNullOrEmpty(rowData[16]))
                         {
-                            partnerExcel.Code = rowData[16].Trim();
+                            if (rowData[16].Length > 6)
+                            {
+                                this.errorMsg = this.errorMsg + "Code Field max length must be 6";
+                            }
+                            else
+                            {
+                                partnerExcel.Code = rowData[16].Trim();
+                            }
                         }
                     }
 
