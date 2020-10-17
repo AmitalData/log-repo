@@ -243,6 +243,11 @@ namespace Logitude.XSD.INTTRA_Booking
                                      where d.Tenant == this.Tenant
                                      && d.ShipmentId == this.ShipmentId
                                      select d).ToList();
+            List<string> ShipmentPackagesIds = this.ShipmentPackages.Select(s => s.Id).ToList();
+            this.AllHarmonizes = (from d in shipmentContext.ShipmentPackageHarmonizes
+                                  where d.Tenant == this.Tenant
+                                  && ShipmentPackagesIds.Contains(d.PackageId)
+                                  select d).ToList();
 
             if ((this.ShipmentPackages == null || (this.ShipmentPackages != null && this.ShipmentPackages.Count() == 0))
                 &&
@@ -811,7 +816,6 @@ namespace Logitude.XSD.INTTRA_Booking
         }
 
         // Message Details
-        private int lineNumber_Goods = 1;
         public List<INTTRA_Booking.GoodsDetailsType> GoodsDetails;
         public List<INTTRA_Booking.EquipmentDetailsType> EquipmentDetails;
         private List<PackageType> AllPackageTypes;
@@ -961,7 +965,8 @@ namespace Logitude.XSD.INTTRA_Booking
                         {
                             UOM = INTTRA_Booking.WeightUOMValues.KGM,
                             Value = this.GetWeightInKG(item.Weight),
-                        }
+                        },
+                        
                     };
 
                     this.EquipmentDetails.Add(itemDetails);
@@ -972,27 +977,88 @@ namespace Logitude.XSD.INTTRA_Booking
         private void BuildMessageDetails_GoodsDetails()
         {
             string descriptionOfGoods = FormatHelper.FormatString(this.ShipmentPM.DescriptionOfGoods, FormatHelper.PatternType.NatureAndQuantityOfGoods);
-
-            INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
+            INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType();
+            itemDetails.LineNumber = "1";
+            itemDetails.GoodDescription = !string.IsNullOrEmpty(descriptionOfGoods) ? this.iNTTRAGeneralMethods.GetStringList(descriptionOfGoods, 2, 1024).FirstOrDefault() : null;
+            itemDetails.PackageDetail = new PackageDetailType()
             {
-                LineNumber = "1",
-                GoodDescription = !string.IsNullOrEmpty(descriptionOfGoods) ? this.iNTTRAGeneralMethods.GetStringList(descriptionOfGoods, 2, 1024).FirstOrDefault(): null,
-                PackageDetail = new PackageDetailType()
-                {
-                    OuterPack = new OuterPackType(),
-                    
-                },
-                DetailsReferenceInformation = new ReferenceInformationType[]
-                {
-                    new ReferenceInformationType()
-                    {
-                        Type = ReferenceTypeValues.FreightForwarderRefNumber,
-                        Value = this.Shipment.ShipmentNumber,
-                    }
-                },
+                OuterPack = new OuterPackType(),
             };
-
+            itemDetails.CommodityClassification = this.FillPackagesHarmonizeList().ToArray<INTTRA_Booking.CommodityClassificationType>();
+            itemDetails.DetailsReferenceInformation = new ReferenceInformationType[]
+            {
+                new ReferenceInformationType()
+                {
+                    Type = ReferenceTypeValues.FreightForwarderRefNumber,
+                    Value = this.Shipment.ShipmentNumber,
+                }
+             };
             this.GoodsDetails.Add(itemDetails);
+        }
+
+        private List<CommodityClassificationType> FillPackagesHarmonizeList()
+        {
+            List<INTTRA_Booking.CommodityClassificationType> commodityClassificationTypeList = new List<INTTRA_Booking.CommodityClassificationType>();
+            if (this.ShipmentPackages != null && this.ShipmentPackages.Count() > 0)
+            {
+                foreach (var myShipmentPackage in this.ShipmentPackages)
+                {
+                    if (myShipmentPackage.IsMultiHarmonize)
+                    {
+                        List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                        if (iHarmonizes.Count > 0)
+                        {
+                            string iHarmonizeDescription = null;
+
+                            foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                            {
+                                if (iHarmonizeDescription == null)
+                                {
+                                    iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                }
+
+                                else
+                                {
+                                    iHarmonizeDescription += ", " + itemHarmonize.Harmonize;
+                                }
+                            }
+
+                            commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
+                            {
+                                Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
+                                Value = iHarmonizeDescription,
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                        {
+                            string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+
+                            commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
+                            {
+                                Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
+                                Value = iHarmonizeDescription,
+                            });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(Shipment.MainHarmonize))
+                {
+                    string iHarmonizeDescription = "HS Code: " + Shipment.MainHarmonize;
+                    commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
+                    {
+                        Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
+                        Value = iHarmonizeDescription,
+                    });
+                }
+            }
+            return commodityClassificationTypeList;
         }
 
         public System.DateTime TodayDate { get; set; }
