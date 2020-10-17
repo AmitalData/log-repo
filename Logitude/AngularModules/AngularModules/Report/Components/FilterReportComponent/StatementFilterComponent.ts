@@ -9,6 +9,7 @@ import { CodeNameClass } from './CodeNameClass';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({    
     selector: 'StatementFilterComponent',
@@ -24,12 +25,19 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Report";
     public DataContext: StatementFilterComponent = this;
     public CurrenciesComboList: Array<CodeNameClass>;
+    public IsRegisterDateId: string = "IsRegisterDateId_";
+    public IsDueDateId: string = "IsDueDateId_";
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
+        this.IsRegisterDateId = this.IsRegisterDateId + this.CurrentSession.GetNewId(this.IsRegisterDateId);
+        this.IsDueDateId = this.IsDueDateId + this.CurrentSession.GetNewId(this.IsDueDateId);
     }
 
     public CustomerId: string = null;
     public DueDate: Date = null;
+    public FromDate: Date = null;
 
     private selectedItemComboBox: CodeNameClass;
     get SelectedItemComboBox() { return this.selectedItemComboBox; }
@@ -75,11 +83,23 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     ngOnInit() {
 
     }
-    
+
+    public IsByDueDate: boolean = true;
+    IsDueDateClicked(arg: boolean) {
+        this.IsByDueDate = arg;
+    }
+
     RunReport(isloading: boolean) {
         this.queryFilterItems = [];
 
         this.queryFilterItems = new Array<QueryFilterItem>();
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "IsByDueDate";
+        this.queryFilterItem.FieldValue = this.IsByDueDate;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
         this.queryFilterItem = new QueryFilterItem();
         this.queryFilterItem.DisplayInList = false;
@@ -95,6 +115,16 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         this.queryFilterItem.FieldDataType = "Date";
         this.queryFilterItem.Operator = "LessThanOrEqual";
         this.queryFilterItems.push(this.queryFilterItem);
+
+        if (this.FromDate) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "GreaterThanOrEqual";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
 
         this.queryFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
 

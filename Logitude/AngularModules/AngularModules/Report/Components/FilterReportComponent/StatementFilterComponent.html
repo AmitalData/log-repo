@@ -22,16 +22,50 @@
                         </LogLov>
                     </td>
 
-                    <td style="width:20px;"><div></div></td>
+                    <td style="width:10px;"><div></div></td>
                     <td style="width:70px;">Currency:</td>
                     <td style="width:150px; ">
                         <ComboBox [ItemsSource]="CurrenciesComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
                     </td>
                     <td style="width:20px;"><div></div></td>
 
-                    <td style="width:85px" class="Label">Due Date To:</td>
-                    <td style="width:150px;">
-                        <LogDatePicker [ObjectFieldName]="'DueDate'" [DataContext]="DataContext"></LogDatePicker>
+
+                    <td style="width:90px">
+                        <div class="RadioButton" style="width:80px">
+                            <input type="radio" [attr.id]="IsDueDateId" [attr.name]="DateRadio" (click)="IsDueDateClicked('true') " [checked]="IsByDueDate == true" style="width:15px" />
+                            <label [attr.for]="IsDueDateId" style="font-size: 12px">
+                                Due Date
+                            </label>
+                        </div>
+                    </td>
+
+                    <td style="width:140px">
+                        <div class="RadioButton" style="width:140px">
+                            <input type="radio" [attr.id]="IsRegisterDateId" [attr.name]="DateRadio" (click)="IsDueDateClicked('false')" [checked]="IsByDueDate == false" style="width:15px" />
+                            <label [attr.for]="IsRegisterDateId" style="font-size: 12px">
+                                Invoice/Register Date
+                            </label>
+                        </div>
+                    </td>
+
+                    <td style="width:20px;">
+                        <div></div>
+                    </td>
+
+                    <!--From Date-->
+                    <td style="width:70px;">From Date</td>
+                    <td style="width:120px;">
+                        <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <!--To Date-->
+                    <td style="width:60px;">To Date</td>
+                    <td style="width:120px;">
+                        <LogDatePicker [ObjectFieldName]="'DueDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                     </td>
 
                     <td style="width: 20px;"><div></div></td>
