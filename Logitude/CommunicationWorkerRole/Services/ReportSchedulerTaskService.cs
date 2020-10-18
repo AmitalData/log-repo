@@ -138,6 +138,7 @@ namespace CommunicationWorkerRole.Services
                 {
                     this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
                     SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
                 }
                 else
                 {
