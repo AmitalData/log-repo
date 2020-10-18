@@ -486,7 +486,7 @@ namespace Logitude.Accounting.BL.CoreBL
     class JournalSrcLineDTO
     {
         public static List<String> RowType = new List<String>(new string[]
-            { "d", "c", "D", "C", "ז", "ח", });
+            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
 
         public const string _EmptyDate = "00000000";
         private const bool useLocal = true;
@@ -553,12 +553,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     case "c":
                     case "C":
                     case "ז":
+                    case "1":
                         rec.ActionCode = "1";
                         break;
                     case "d":
                     case "D":
                     case "ח":
+                    case "2":
                         rec.ActionCode = "2";
+                        break;
+                    case "3":
+                        rec.ActionCode = "3";
                         break;
                     default:
                         break;
@@ -580,7 +585,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     fieldname = "AccountingDate";
                     pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "yyyyMMdd");
+                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
                     rec.AccountingDate = date;
                 }
             }
@@ -593,7 +598,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     fieldname = "DocumentDate";
                     pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "yyyyMMdd");
+                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
                     rec.DocumentDate = date;
                 }
             }
@@ -606,7 +611,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     fieldname = "DueDate";
                     pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "yyyyMMdd");
+                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
                     rec.DueDate = date;
                 }
             }
