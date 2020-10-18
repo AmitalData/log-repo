@@ -625,8 +625,8 @@ namespace WebFreight.Web.Helpers
             SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
             DataTable dataTable = QBHelper.GetDWQueryData(sqlCommandDefinition);
 
-            BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenant);
-            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+            //BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenant);
+            //bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
 
 
 
