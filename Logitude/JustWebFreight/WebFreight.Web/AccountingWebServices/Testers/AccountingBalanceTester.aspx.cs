@@ -92,7 +92,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonExternalReconcile_click,
             _ButtonCardIndexNew_Click,
             _ButtonLoadConsolTaxRep_Click,
-            _ButtonLoadGLAccountsCSV_Click
+            _ButtonLoadGLAccountsCSV_Click,
+            _ButtonLoadJournalsCSV_Click
         }
 
         //DateTime _MyDate;
@@ -1979,6 +1980,52 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             finally
             {
                 _MyLastAction.Value = MyLastAction._ButtonLoadGLAccountsCSV_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
+
+
+        protected void ButtonLoadJournalsCSV_Click(object sender, EventArgs e)
+        {
+
+            string param = "";
+            string paramDefault = "Please insert page, you can add a header  //Tenant=28";
+
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadJournalsCSV_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                string fileJournalsCSV = _TextBoxParam.Text;
+
+                var myJournalsCSVFlatFileAnalyser = new JournalsCSVFlatFileAnalyser();
+                myJournalsCSVFlatFileAnalyser.Analyse(null, fileJournalsCSV);
+
+                _LabelResult.Text = JsonConvert.SerializeObject(myJournalsCSVFlatFileAnalyser.MyCSVFlatFileLoadResult); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadJournalsCSV_Click.ToString();
                 if (string.IsNullOrWhiteSpace(param))
                 {
                     param = paramDefault;

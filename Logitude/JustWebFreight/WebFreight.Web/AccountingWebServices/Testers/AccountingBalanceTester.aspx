@@ -1480,6 +1480,7 @@ div#two {
                 </li>
                 <li>
             <asp:Button ID="ButtonLoadGLAccountsCSV" runat="server" Text="Load GLAccounts from .csv (Tenant)" OnClick="ButtonLoadGLAccountsCSV_Click" />        
+            <asp:Button ID="ButtonLoadJournalsCSV" runat="server" Text="Load Journals from .csv (Tenant)" OnClick="ButtonLoadJournalsCSV_Click" />        
                 </li>
             </ul>
             
