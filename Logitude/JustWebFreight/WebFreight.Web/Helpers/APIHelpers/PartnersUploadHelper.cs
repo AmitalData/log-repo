@@ -209,7 +209,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[2].Length > 70)
                             {
-                                this.errorMsg = this.errorMsg + "Name Field max length must be 70";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Name Field max length must be 70" + ",";
                             }
                             else
                             {
@@ -228,7 +228,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[3].Length > 20)
                             {
-                                this.errorMsg = this.errorMsg + "Vat NO Field max length must be 20";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Vat NO Field max length must be 20" + ",";
                             }
                             else
                             {
@@ -242,7 +242,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[4].Length > 65)
                             {
-                                this.errorMsg = this.errorMsg + "Address1 Field max length must be 65";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Address1 Field max length must be 65" + ",";
                             }
                             else
                             {
@@ -256,7 +256,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[5].Length > 65)
                             {
-                                this.errorMsg = this.errorMsg + "Address2 Field max length must be 65";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Address2 Field max length must be 65" + ",";
                             }
                             else
                             {
@@ -270,7 +270,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[6].Length > 15)
                             {
-                                this.errorMsg = this.errorMsg + "Zip/Postal Code Field max length must be 15";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Zip/Postal Code Field max length must be 15" + ",";
                             }
                             else
                             {
@@ -291,7 +291,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[8].Length > 40)
                             {
-                                this.errorMsg = this.errorMsg + "State Field max length must be 40";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "State Field max length must be 40" + ",";
                             }
                             else
                             {
@@ -305,7 +305,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[9].Length > 2)
                             {
-                                this.errorMsg = this.errorMsg + "Country Code Field max length must be 2";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Country Code Field max length must be 2" + ",";
                             }
                             else
                             {
@@ -343,7 +343,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[10].Length > 40)
                             {
-                                this.errorMsg = this.errorMsg + "Phone Number Field max length must be 40";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Phone Number Field max length must be 40" + ",";
                             }
                             else
                             {
@@ -357,7 +357,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[11].Length > 25)
                             {
-                                this.errorMsg = this.errorMsg + "Fax Number Field max length must be 25";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Fax Number Field max length must be 25" + ",";
                             }
                             else
                             {
@@ -371,7 +371,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[12].Length > 70)
                             {
-                                this.errorMsg = this.errorMsg + "Email Field max length must be 70";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Email Field max length must be 70" + ",";
                             }
                             else
                             {
@@ -385,7 +385,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[13].Length > 60)
                             {
-                                this.errorMsg = this.errorMsg + "Contact Name Field max length must be 60";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Contact Name Field max length must be 60" + ",";
                             }
                             else
                             {
@@ -399,7 +399,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[14].Length > 25)
                             {
-                                this.errorMsg = this.errorMsg + "Receivables External ID Field max length must be 25";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Receivables External ID Field max length must be 25" + ",";
                             }
                             else
                             {
@@ -413,7 +413,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[15].Length > 25)
                             {
-                                this.errorMsg = this.errorMsg + "Payables External ID Field max length must be 25";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Payables External ID Field max length must be 25" + ",";
                             }
                             else
                             {
@@ -427,7 +427,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             if (rowData[16].Length > 6)
                             {
-                                this.errorMsg = this.errorMsg + "Code Field max length must be 6";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code Field max length must be 6" + ",";
                             }
                             else
                             {
