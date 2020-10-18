@@ -33,7 +33,7 @@ export class ImageParameter {
     public Buffersize: number;
     public Position: number;
     public Result: string;
-
+    public KeepOriginalSize:boolean;
 
     constructor() {
      
