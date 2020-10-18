@@ -47,28 +47,43 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             IQueryable<CardSearch> cardSearches = (from a in commonDataContext.CardSearches where a.Tenant == cardSearchFilterArgs.Tenant && a.InActive == inactive select a);
             if (partnerTypeCodeLists.Count > 0) cardSearches = cardSearches.Where(d => partnerTypeCodeLists.Contains(d.PartnerTypeId));
 
-            List<CardSearchResult> cardResult = (from a in cardSearches
-                                                 where a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
-                                                 select a)
-                           .GroupBy(d => d.CardId)
-                           .Select(d => d.FirstOrDefault())
-                           .OrderByDescending(d => d.Weight)
-                           .Take(cardSearchFilterArgs.QueryOperations.PageSize)
-                           .Select(d => new CardSearchResult()
-                           {
-                               CardId = d.CardId,
-                               Weight = d.Weight
-                           })
-                           .ToList();
+            List<CardSearchResult> cardSearchResultLists = GetCardSearchDataResults(cardSearchFilterArgs, cardSearches);
 
-            var cardIds = cardResult.Select(c => c.CardId).ToList();
+            var cardIds = cardSearchResultLists.Select(c => c.CardId).ToList();
             var filteredEntityLists = entityLists.Where(d => cardIds.Contains(d.Id)).ToList();
             foreach (var list in filteredEntityLists)
             {
-                list.SearchWeight = cardResult.First(c => c.CardId == list.Id).Weight;
+                list.SearchWeight = cardSearchResultLists.First(c => c.CardId == list.Id).Weight;
             }
 
             return filteredEntityLists.AsQueryable();
+        }
+
+        private static List<CardSearchResult> GetCardSearchDataResults(CardSearchFilterArgs cardSearchFilterArgs, IQueryable<CardSearch> cardSearches)
+        {
+            List<CardSearchResult> cardSearchResultLists = new List<CardSearchResult>();
+            int take = int.Parse((cardSearchFilterArgs.QueryOperations.PageSize * 1.5).ToString());
+            int skip = 0;
+            bool isFirstTime = true;
+            int selectedDataCount = 0;
+            while ((selectedDataCount == take && cardSearchResultLists.Count() < cardSearchFilterArgs.QueryOperations.PageSize) || isFirstTime)
+            {
+                var cardSearchResultSelectedLists = (from a in cardSearches
+                                               where a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
+                                               select new CardSearchResult()
+                                               {
+                                                   CardId = a.CardId,
+                                                   Weight = a.Weight,
+                                               }).OrderByDescending(d => d.Weight).Skip(skip).Take(take).ToList();
+
+                selectedDataCount = cardSearchResultSelectedLists.Count();
+                isFirstTime = false;
+                skip += selectedDataCount;
+                cardSearchResultSelectedLists = cardSearchResultSelectedLists.GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take((cardSearchFilterArgs.QueryOperations.PageSize - cardSearchResultLists.Count)).ToList();
+                cardSearchResultLists = cardSearchResultLists.Concat(cardSearchResultSelectedLists).ToList();
+            }
+
+            return cardSearchResultLists;
         }
 
         private IQueryable<CardList> SortDataListByWeight(CardSearchFilterArgs cardSearchFilterArgs, IQueryable<CardList> entityLists)
