@@ -157,7 +157,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
-
+                Contact loggedcontact = GetLoggedContact(currentInvoice.Tenant);
                 #region Start
 
                 string invoiceTypeCode = "";
@@ -1275,6 +1275,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.BillToAddress_NoName = DataProviders.General.GetAddress(billToCardAddress);
                             invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
+                            invoicedataprovider.BillToAddress1 = billToCardAddress.Address1;
+                            invoicedataprovider.BillToAddress2 = billToCardAddress.Address2;
+                            invoicedataprovider.BillToCity = billToCardAddress.City;
+                            if(billToCardAddress.Country!= null)
+                            invoicedataprovider.BillToCountry = loggedcontact.DontShowLocalLabels? billToCardAddress.Country.EnglishName : billToCardAddress.Country.LocalName;
+                            if(billToCardAddress.State != null)
+                            invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
@@ -2810,7 +2817,17 @@ namespace WebFreight.Web.ReportsWebServices
                             if (billToAddress != null)
                             {
                                 invoiceDataProvider.BillToAddress_NoName = DataProviders.General.GetAddress(billToAddress);
-
+                                invoiceDataProvider.BillToAddress1 = billToAddress.Address1;
+                                invoiceDataProvider.BillToAddress2 = billToAddress.Address2;
+                                invoiceDataProvider.BillToCity = billToAddress.City;
+                                if (billToAddress.Country != null)
+                                {
+                                    invoiceDataProvider.BillToCountry = loggedcontact.DontShowLocalLabels ? billToAddress.Country.EnglishName : billToAddress.Country.LocalName;
+                                }
+                                if (billToAddress.State != null)
+                                {
+                                    invoiceDataProvider.BillToState = loggedcontact.DontShowLocalLabels ? billToAddress.State.EnglishName : billToAddress.State.LocalName;
+                                }
                                 if (!loggedcontact.DontShowLocalLabels && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToAddress);
