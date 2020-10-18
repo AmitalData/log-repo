@@ -1928,7 +1928,8 @@ namespace WebFreight.Web.Helpers
 
             report.AutoLocalizeReportOnRun = true;
 
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
+                && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
             {
                 report.ReportCacheMode = StiReportCacheMode.On;
                 report.RenderedPages.CacheMode = true;

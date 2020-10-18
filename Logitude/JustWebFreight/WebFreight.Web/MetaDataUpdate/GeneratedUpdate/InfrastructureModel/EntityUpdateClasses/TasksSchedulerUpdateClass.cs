@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class TasksSchedulerUpdateClass
    {  		
-		public const string HashString = "7d7ccb5fd3f1594cd7884730a55f82ce";
+		public const string HashString = "94c4456a3bd4299e8103990ea07af533";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tasks Scheduler",
-			      				    Code =  "5fc6",
+			      				    Code =  "e58e",
 			      				    Name =  "TasksScheduler",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -1688,7 +1688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SchedulerDetailsData",
+					  						PMPropertyPath =  "SchedulerDetailsData1",
 					  						ListPropertyPath =  "SchedulerDetailsData",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,

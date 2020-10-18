@@ -46,28 +46,31 @@ namespace CommunicationWorkerRole.Services
             {"Stored pdf report in Blob", null},
             {"Send email to reciepents", null},
         };
-        public ReportSchedulerTaskService()
-        {
-        }
 
-        public void SendPdfReportToReceipent(TasksSchedulerPM reportTask)
+        TaskManagerBase currentTask;
+        public ReportSchedulerTaskService(TaskManagerBase task)
+        {
+            this.currentTask = task;
+        }
+        
+        public void RunTask(TasksSchedulerPM reportTask)
         {
             try
             {
                 SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
-                List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-                string cardId = GetcardIdValueField(schedulerDetails);
-                List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
-                allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
-                schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
-                if (schedulerDetails.ReportDetails.Recepients != null)
+
+                if (reportTask.ResultType == null || reportTask.ResultType == "Email" )
                 {
-                    StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-                    string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                    SendPdfReportToReceipent(reportTask, schedulerDetails, reportFilter);
                 }
+                else if(reportTask.ResultType == "FTP")
+                {
+                    SendPdfReportToFTP(reportTask, schedulerDetails, reportFilter);
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -79,6 +82,61 @@ namespace CommunicationWorkerRole.Services
                 throw new Exception(errorMessage);
             }
         }
+
+        private void SendPdfReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        {
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            MemoryStream memoryStream = new MemoryStream();
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
+            stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+            if (memoryStream != null && schedulerDetails.FTPDetails != null)
+            {
+
+                this.trackerLogs[trackerCounter, 0] = "Uploading report to ftp";
+                this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+
+                string p_message = "";
+                string p_status = "";
+                var fileName = reportTask.Name + ".pdf";
+                FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+                ftpService.Upload(fileName, schedulerDetails.FTPDetails.Folder, memoryStream.ToArray(), out p_message, out p_status, true, true);
+
+                if (p_status == "-1")
+                {
+                    currentTask.LogWarning(p_message);
+                }
+                else
+                {
+                    currentTask.LogInfo(p_message);
+                }
+
+
+            }
+        }
+
+        private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        {
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
+            List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
+            string cardId = GetcardIdValueField(schedulerDetails);
+            List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
+            allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
+            schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            if (schedulerDetails.ReportDetails.Recepients != null)
+            {
+                StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+            }
+        }
+
 
         private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
