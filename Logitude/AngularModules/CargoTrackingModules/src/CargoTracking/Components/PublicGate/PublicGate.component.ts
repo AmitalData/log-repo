@@ -26,10 +26,12 @@ export class PublicGateComponent
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
     _Tenant: number;
+    BackGroundImg:string;
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, private activerouter: ActivatedRoute, private router: Router)
     {
 
         this.GetDataFromURL();
+        
     }
 
 
@@ -51,7 +53,7 @@ export class PublicGateComponent
 
             }
             this.IsBrandingDataLoaded = true;
-
+            this.BackGroundImg= "url("+ response.Result.BackgroundImg+")";
             this.listenToRouterEvents();
         });
     }
