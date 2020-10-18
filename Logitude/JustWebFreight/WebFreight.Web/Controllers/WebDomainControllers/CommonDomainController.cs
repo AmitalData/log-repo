@@ -118,7 +118,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        List<ExcelPackageType> partnersTypes_Sheet;
+        List<ExcelPartnerType> partnersTypes_Sheet;
         List<PartnerType> partnersTypes;
         private byte[] ExportPartnersUploadTemplateToExcel(int tenant)
         {
@@ -136,15 +136,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private void FillPartnersTypes(int tenant)
         {
-            partnersTypes_Sheet = new List<ExcelPackageType>();
+            partnersTypes_Sheet = new List<ExcelPartnerType>();
             PartnerTypeRepository partnerTypeRepository = new PartnerTypeRepository(tenant);
-            partnersTypes = partnerTypeRepository.GetPartnerTypes().ToList();
+            partnersTypes = partnerTypeRepository.GetPartnerTypes().Where(a => a.Id != "AC" && a.Id != "CO" && a.Id != "CC" && a.Id != "FL" && a.Id != "PT" && a.Id != "OT").ToList();
             if (partnersTypes != null && partnersTypes.Count > 0)
             {
                 partnersTypes_Sheet = (from a in partnersTypes
-                                       select new ExcelPackageType()
+                                       select new ExcelPartnerType()
                                        {
                                            Code = a.Id,
+                                           Name = a.Name,
+                                           
                                        }).ToList();
             }
         }
@@ -2861,7 +2863,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
     }
 }
-
+public class ExcelPartnerType
+{
+    public string Code { get; set; }
+    public string Name { get; set; }
+}
 public class StatusData
 {
     public int Tenant { get; set; }
