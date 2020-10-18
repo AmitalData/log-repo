@@ -15,7 +15,10 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
 
   selector: 'ImageComponent',
   templateUrl: './ImageComponent.html',
-  inputs: ['EntityId', 'ImageId', "EntityName", 'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth', 'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 'ConversationHeaderId'],
+  inputs: ['EntityId', 'ImageId', "EntityName", 
+  'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
+   'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 
+   'ConversationHeaderId','KeepOriginalSize'],
   providers: [ImageLibraryService],
 })
 
@@ -48,7 +51,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   IsShowSocialMessageAreaImage2: boolean = true;
   IsShowSocialMessageAreaImage3: boolean = true;
   IsShowSocialMessageAreaImage4: boolean = true;
-
+  KeepOriginalSize:boolean=false;
 
   @Output() UploadCompleted: EventEmitter<any> = new EventEmitter();
   constructor(public _imageLibraryService: ImageLibraryService, private cd: ChangeDetectorRef) {
@@ -248,7 +251,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
     filter.Width = widht;
     filter.Height = height;
     filter.Extension = extension;
-
+    filter.KeepOriginalSize=this.KeepOriginalSize;
     filter.UploadMode = "ImageComponent";
 
     if (this.EntityName == "Customer" || this.EntityName == "Airline") {

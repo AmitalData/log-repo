@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.Controllers.CargoTrackingModel
 {
@@ -22,7 +23,20 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
-                CargoTrackingBrandingData data = new CargoTrackingBrandingData { Tenant = tenant, MainColor =tenantManagementPM.MainColor , SecondaryColor = tenantManagementPM.SecondaryColor, BackgroundId = tenantManagementPM.BackgroundId };
+                Uploader uploaderService = new Uploader();
+                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", tenant);
+                CargoTrackingBrandingData data = new CargoTrackingBrandingData()
+                {
+                    Tenant = tenant,
+                    MainColor = tenantManagementPM.MainColor,
+                    SecondaryColor = tenantManagementPM.SecondaryColor,
+                    BackgroundId = tenantManagementPM.BackgroundId,
+                    
+                };
+                if (filedata != null)
+                {
+                    data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                }
                 ServiceResponse response = new ServiceResponse();
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
