@@ -329,7 +329,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         var percentageHeightwindow = heighthwindow * 0.1764705;
         var sendWindowHeight = heighthwindow - percentageHeightwindow;
         var sendWindowWidth = widthwindow - percentagewidthwindow;
-        if (sendWindowWidth < 900) sendWindowWidth = 900;
+        if (sendWindowWidth < 1080) sendWindowWidth = 1080;
         if (sendWindowHeight < 500) sendWindowHeight = 500;
 
         var windowArgs: any = {};
