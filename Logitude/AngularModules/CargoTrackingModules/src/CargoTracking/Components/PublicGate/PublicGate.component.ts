@@ -53,7 +53,7 @@ export class PublicGateComponent
 
             }
             this.IsBrandingDataLoaded = true;
-            this.BackGroundImg= "url("+ response.Result.BackgroundImg+")";
+            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":"url('../assets/images/misc/map-bg.svg')";
             this.listenToRouterEvents();
         });
     }

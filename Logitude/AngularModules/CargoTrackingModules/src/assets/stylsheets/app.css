@@ -28,7 +28,7 @@ select:focus {
 }
 
 .app-content {
-    background-image: url("../images/misc/map-bg.svg");
+    /* background-image: url("../images/misc/map-bg.svg"); */
     min-height: 100vh;
     position: relative;
    
