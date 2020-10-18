@@ -1554,6 +1554,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
+                             IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
                          };
 
             return result;
