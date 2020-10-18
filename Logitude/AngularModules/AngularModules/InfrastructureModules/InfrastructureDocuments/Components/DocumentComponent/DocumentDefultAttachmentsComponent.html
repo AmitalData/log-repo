@@ -27,9 +27,9 @@
         <td style="height:45%" class="CellStretch">
             <div class="SimpleGridView">
 
-                <div style="margin-left:3px;">Docs Out Document Types :</div>
+                <div style="margin-left:3px;">Docs out Document Types:</div>
 
-                <div class="SimpleGridViewBody">
+                <div *ngIf="!IsNotDocumentOutFound" class="SimpleGridViewBody">
                     <table>
                         <tr style="height: 1px;">
                             <td>
@@ -37,7 +37,7 @@
                                     <tr style="border:0px" class="SimpleGridViewRow RowHover" *ngFor="let item of DocOutAttachmentLists">
                                         <td>
                                             <table>
-                                                <tr style="height:25px;border:0px" >
+                                                <tr style="height:25px;border:0px">
 
                                                     <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;border:0px">
                                                         <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
@@ -65,6 +65,11 @@
                         </tr>
                     </table>
                 </div>
+
+                <div class="SimpleGridViewBody" style="vertical-align:top;text-align:left;margin-top:5px;height:50px;" *ngIf="IsNotDocumentOutFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs out Document Types Found</span></div>
+
+
+
             </div>
 
         </td>
@@ -81,9 +86,9 @@
         <td style="height:50%" class="CellStretch">
             <div class="SimpleGridView">
 
-                <div style="margin-left:3px;">Docs In Document Types :</div>
+                <div style="margin-left:3px;">Docs in Document Types:</div>
 
-                <div class="SimpleGridViewBody">
+                <div *ngIf="!IsNotDocumentInFound" class="SimpleGridViewBody">
                     <table>
                         <tr style="height: 1px;">
                             <td>
@@ -119,6 +124,10 @@
                         </tr>
                     </table>
                 </div>
+                <div class="SimpleGridViewBody" style="vertical-align:top;text-align:left;margin-top:5px;height:50px;" *ngIf="IsNotDocumentInFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs in Document Types Found</span></div>
+
+
+
             </div>
 
         </td>

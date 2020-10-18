@@ -591,9 +591,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(sqlCommandDefinition);
 
-                int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
-                BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
-                bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(MyData);
+                //int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
+                //BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
+                //bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(MyData);
 
 
                 DWQueryDataResult myResult = new DWQueryDataResult();

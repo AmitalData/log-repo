@@ -84,16 +84,20 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
                     if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeId == item.DocumentTypeId && d.Type == "DocOut")[0]) {
                         item.IsChecked = true;
                     }
-                    this.DocOutAttachmentLists.push(item);
+                  this.DocOutAttachmentLists.push(item);
                 });
             }
 
+            if (this.DocOutAttachmentLists.length == 0) this.IsNotDocumentOutFound = true;
 
             this.IsLoadDocumentOutDocument = true;
             this.LoadComplete();
 
         });
     }
+
+    IsNotDocumentOutFound: boolean = false;
+    IsNotDocumentInFound: boolean = false;
 
     LoadDocumentIn() {
 
@@ -112,11 +116,11 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
                     if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeId == item.DocumentTypeId && d.Type == "DocIn")[0]) {
                         item.IsChecked = true;
                     }
-                    this.DocInAttachmentLists.push(item);
+                   this.DocInAttachmentLists.push(item);
                 });
-
-
             }
+            if (this.DocInAttachmentLists.length == 0) this.IsNotDocumentInFound = true;
+
 
             this.IsLoadDocumentInDocument = true;
             this.LoadComplete();

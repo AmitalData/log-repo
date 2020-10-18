@@ -566,7 +566,7 @@ namespace WebFreight.Web.Helpers
             var isParentTenant = DWSettings.IsParentTenant(Tenant);
 
 
-            FinalSelectStmt +="," + ( !isParentTenant ?  (Fact + ".[Source Tenant]  ") : (Fact  +".[Parent Tenant]")) + "as Tenant";
+            //FinalSelectStmt +="," + ( !isParentTenant ?  (Fact + ".[Source Tenant]  ") : (Fact  +".[Parent Tenant]")) + "as Tenant";
             FinalSelectStmt += " from " + Fact;
 
             if (Filters != null)
