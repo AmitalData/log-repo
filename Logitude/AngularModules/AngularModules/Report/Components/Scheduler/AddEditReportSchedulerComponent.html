@@ -54,10 +54,10 @@
                     <td style="width: 5px;">
                         <div></div>
                     </td>
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 2">
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 2 || (DataContext.IsFTP && SelectedTabLocation == 1)">
                         <button style="cursor:pointer" class="RedButton" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                     </td>
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 2">
+                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 2 && !(DataContext.IsFTP && SelectedTabLocation == 1)">
                         <button style="cursor:pointer" class="RedButton" [disabled]="DisableFinishButton()" (click)="SaveButtonClicked()">{{'General.B.Finish' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>

@@ -71,7 +71,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public ARInvoiceLineActionList ARInvoiceLineActionDataMappingAndValidatin(ARInvoiceLineAction MyEntity, int Tenant, string ComputingPartnerName = "")
+        public ARInvoiceLineActionList ARInvoiceLineActionDataMappingAndValidatin(ARInvoiceLineAction MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             try
             {

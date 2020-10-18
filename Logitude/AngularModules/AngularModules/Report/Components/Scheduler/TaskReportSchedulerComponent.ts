@@ -8,7 +8,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
-import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerDetails, ReportSchedulerDetails, FTPSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
     
@@ -30,7 +30,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     @Output() TasksCustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
     @Output() SelectedRowChanged = new EventEmitter();
-
     constructor(private _entityListService: EntityListService) {
 
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
@@ -303,6 +302,7 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
 
     SchedulerDetails: SchedulerDetails;
     ReportSchedulerDetails: ReportSchedulerDetails;
+    FTPDetails: FTPSchedulerDetails;
 
     constructor(item: TasksSchedulerPM, public fatherComponent: TaskReportSchedulerComponent, isNew: boolean = false) {
         super();
@@ -430,13 +430,74 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
             this.EntityPM.Friday = newValue;
         }
     }
+    get Host() {
+        return this.FTPDetails ? this.FTPDetails.Host : "";
+    }
+    set Host(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Host != newValue) {
+            this.FTPDetails.Host = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
 
+
+    get Folder() {
+        return this.FTPDetails ? this.FTPDetails.Folder : "";
+    }
+    set Folder(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Folder != newValue) {
+            this.FTPDetails.Folder = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    get UserName() {
+        return this.FTPDetails ? this.FTPDetails.UserName : "";
+    }
+    set UserName(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.UserName != newValue) {
+            this.FTPDetails.UserName = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+
+    get Password() {
+        return this.FTPDetails ? this.FTPDetails.Password : "";
+    }
+    set Password(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Password != newValue) {
+            this.FTPDetails.Password = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+
+  
+
+    private isFTP: boolean;
+    get IsFTP() {
+        return this.isFTP;
+    }
+    set IsFTP(newValue: boolean) {
+        if (this.isFTP != newValue) {
+            this.isFTP = newValue;
+        }
+    }
     SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.SchedulerDetails = schedulerDetails;
         if (schedulerDetails) {
             if (!schedulerDetails.ReportDetails) {
                 schedulerDetails.ReportDetails = new ReportSchedulerDetails;
+             }
+            if (!schedulerDetails.FTPDetails) {
+                schedulerDetails.FTPDetails = new FTPSchedulerDetails();
             }
+
+            this.FTPDetails = schedulerDetails.FTPDetails;
             this.EntityPM.SchedulerDetailsData = schedulerDetails;
         }
     }

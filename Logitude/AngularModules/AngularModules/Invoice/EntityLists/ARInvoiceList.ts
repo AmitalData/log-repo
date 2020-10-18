@@ -41,6 +41,7 @@ export class ARInvoiceList {
 		PaymentTermName: string;
 		IsAutoCredit: boolean;
 		IsCancelled: boolean;
+		IsFromInterestBatchInvoice: boolean;
 		CancelledByARInvoiceId: string;
 		InternalNotes: string;
 		PrintNotes: string;

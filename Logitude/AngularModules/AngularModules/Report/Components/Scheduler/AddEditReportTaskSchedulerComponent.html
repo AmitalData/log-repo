@@ -88,6 +88,53 @@
                                                                         </tr>
                                                                     </table>
                                                                 </td>
+                                                                 <td style="width:55%">
+                                                                    <table style="min-height: 170px;" *ngIf="DisplayFTPOption">
+                                                                        <tr class="FormFieldRow">
+                                                                            <td></td>
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr  class="FormFieldRow">
+                                                                                        
+                                                                                        <td style="width:100px">
+                                                                                            <div style="padding-left: 18px;">
+                                                                                                Send via
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td style="width:80px">
+            
+                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsEmail == true" (Checked)="SetTaskType('E')" [Text]="'E-mail'" [Top]="5"></RadioButton>
+            
+            
+                                                                                        </td>
+                                                                                        <td style="width:80px">
+            
+                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsFTP == true" (Checked)="SetTaskType('FTP')" [Text]="'FTP'" [Top]="5"></RadioButton>
+            
+                                                                                        </td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="IsFTP">
+                                                                            <td></td>
+                                                                            <td style="width: 350px;vertical-align:top">
+                                                                                 
+                                                                                    <FTBSchedulerTemplateComponent [DataContext]="DataContext" [BasicDisplayMode] ="true"></FTBSchedulerTemplateComponent>
+                                                                                 
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td style="width: 350px;"></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    
+                                                                    
+                                                                </td>
+                                                               
                                                             </tr>
                                                         </table>
 

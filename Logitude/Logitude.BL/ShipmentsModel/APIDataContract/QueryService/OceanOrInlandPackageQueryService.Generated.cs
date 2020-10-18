@@ -137,7 +137,7 @@ using Simplog.Data.ShipmentsModel;
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)
 					{
-						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myPackageTypePM != null)
 						{ 
@@ -354,7 +354,7 @@ using Simplog.Data.ShipmentsModel;
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("InsidePackages Can't be update"); 
-								temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName);
+								temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  

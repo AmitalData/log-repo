@@ -158,7 +158,13 @@ namespace WebFreight.Web.WebServices
                     if (allUpdatedRolesIds.Count > 0)
                     {
                         int tenant = 0;
-                        string email = HttpContext.Current.User.Identity.Name;
+                        string email = "system@tanent0.com";
+
+                        if(HttpContext.Current != null)
+                        {
+                            email = HttpContext.Current.User.Identity.Name;
+                        }
+                        
                         string loggedUserId = this.GetLoggedUserId(email, tenant);
 
                         FeatureChangeRepository myRepository = new FeatureChangeRepository(tenant);

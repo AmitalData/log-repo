@@ -56,6 +56,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime? LastRunStartTimeUTC { get; set; }
         public DateTime? LastRunStartTime { get; set; }
         public double AverageRunTime { get; set; }
+
+        public string ResultType { get; set; }
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }
         
