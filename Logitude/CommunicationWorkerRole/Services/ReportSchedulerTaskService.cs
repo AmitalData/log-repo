@@ -133,6 +133,7 @@ namespace CommunicationWorkerRole.Services
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
                 SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
         }
 
