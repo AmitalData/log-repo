@@ -121,8 +121,10 @@ export class FieldTemplateComponent {
         var myExceptionReasonListService = new ExceptionReasonListService();
         myExceptionReasonListService.getSingleFromCache(ToolTipValue)
             .subscribe(serviceResponse => {
-                var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
-                ToolTipValue = ExceptionReason.LocalName;
+                if (serviceResponse.Result != null) {
+                    var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
+                    ToolTipValue = ExceptionReason.LocalName;
+                }
             });
         return ToolTipValue;
     }

@@ -187,6 +187,8 @@ export class DeclarationList {
 	ReplacingRepairRequest: string;
 	FOBValueNIS: number;
 	FOBValueDollar: number;
+	CreateDateDuplicate: Date;
+	TransportModeDuplicate: string;
 	
 }
  

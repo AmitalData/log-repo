@@ -372,6 +372,10 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? FOBValueNIS  { get; set; }
        [DataMember]
        public decimal? FOBValueDollar  { get; set; }
+       [DataMember]
+       public DateTime? CreateDateDuplicate  { get; set; }
+       [DataMember]
+       public string TransportModeDuplicate  { get; set; }
    }
 
 }
