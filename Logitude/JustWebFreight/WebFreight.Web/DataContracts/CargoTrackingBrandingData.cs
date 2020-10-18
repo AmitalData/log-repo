@@ -11,5 +11,6 @@ namespace WebFreight.Web.DataContracts
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
         public string BackgroundId { get; set; }
+        public string BackgroundImg { get; set; }
     }
 }

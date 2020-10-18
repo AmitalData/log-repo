@@ -31,6 +31,8 @@ select:focus {
     background-image: url("../images/misc/map-bg.svg");
     min-height: 100vh;
     position: relative;
+   
+     
 }
 
 

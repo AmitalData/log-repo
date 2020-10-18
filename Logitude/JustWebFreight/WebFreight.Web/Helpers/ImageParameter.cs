@@ -52,6 +52,7 @@ namespace WebFreight.Web.Helpers
         
         public string PhoneNumber { get; set; }
         public string DeviceName { get; set; }
-        public string SecurityKey { get; set; }  
+        public string SecurityKey { get; set; }
+        public bool KeepOriginalSize { get; set; }
     }
 }
