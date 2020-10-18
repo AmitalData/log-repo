@@ -1079,7 +1079,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             var percentageHeightwindow = heighthwindow * 0.1764705;
             var sendWindowHeight = heighthwindow - percentageHeightwindow;
             var sendWindowWidth = widthwindow - percentagewidthwindow;
-            if (sendWindowWidth < 1000) sendWindowWidth = 1000;
+            if (sendWindowWidth < 1080) sendWindowWidth = 1080;
             if (sendWindowHeight < 600) sendWindowHeight = 600;
 
             var windowArgs: any = {};

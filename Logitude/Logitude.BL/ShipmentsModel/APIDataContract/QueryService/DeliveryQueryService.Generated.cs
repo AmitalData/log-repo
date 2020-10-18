@@ -117,7 +117,13 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentDelivery with Id " + item.Id + " doesn't exist");
 					} 
-					
+										 
+					if(IsUpdate == true)
+					{
+					    
+						
+					      temp.ChangeSetOp = ChangeSetOperation.Update; 
+					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -161,7 +167,7 @@ using Simplog.Data.ShipmentsModel;
 					PortQueryService FromPortPortService = new PortQueryService(Tenant);
 					if(item.FromPort != null)
 					{
-						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(item.FromPort,Tenant,ComputingPartnerName);
+						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(item.FromPort,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myFromPortPM != null)
 						{ 
@@ -182,7 +188,7 @@ using Simplog.Data.ShipmentsModel;
 					PortQueryService ToPortPortService = new PortQueryService(Tenant);
 					if(item.ToPort != null)
 					{
-						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(item.ToPort,Tenant,ComputingPartnerName);
+						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(item.ToPort,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myToPortPM != null)
 						{ 
@@ -203,7 +209,7 @@ using Simplog.Data.ShipmentsModel;
 					CardQueryService FromPartnerCardCardService = new CardQueryService(Tenant);
 					if(item.FromPartnerCard != null)
 					{
-						var myFromPartnerCardPM = FromPartnerCardCardService.CardDataMappingAndValidatin(item.FromPartnerCard,Tenant,ComputingPartnerName);
+						var myFromPartnerCardPM = FromPartnerCardCardService.CardDataMappingAndValidatin(item.FromPartnerCard,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myFromPartnerCardPM != null)
 						{ 
@@ -224,7 +230,7 @@ using Simplog.Data.ShipmentsModel;
 					CardQueryService ToPartnerCardCardService = new CardQueryService(Tenant);
 					if(item.ToPartnerCard != null)
 					{
-						var myToPartnerCardPM = ToPartnerCardCardService.CardDataMappingAndValidatin(item.ToPartnerCard,Tenant,ComputingPartnerName);
+						var myToPartnerCardPM = ToPartnerCardCardService.CardDataMappingAndValidatin(item.ToPartnerCard,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myToPartnerCardPM != null)
 						{ 

@@ -53,7 +53,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.AverageRunTime = TaskScheduler.AverageRunTime;
             TaskScheduler.EntityId = TaskSchedulerPM.EntityId;
             TaskScheduler.MonthlyDay = 0;
-
+            TaskScheduler.ResultType = TaskSchedulerPM.ResultType;
 
         }
     }

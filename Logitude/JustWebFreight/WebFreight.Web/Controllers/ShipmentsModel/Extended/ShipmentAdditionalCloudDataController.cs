@@ -127,6 +127,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     CustomData.VersionApproved = data.VersionApproved;
                     CustomData.ApproveDateTime = data.ApproveDateTime;
                     CustomData.DenyReason = data.DenyReason;
+                    CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
                     CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                     CustomData.TaxesDetails = new List<TaxesDetails>();
 

@@ -196,7 +196,15 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
 				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
-				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;					
+				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
+				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
+				{
+					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant);
+				}
+
+							 
+				   temp.TotalVATOnly = MyEntityPM.TotalVATOnly;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -240,7 +248,7 @@ using Simplog.Data.InvoiceModel;
 					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
 					if(MyEntity.Vendor != null)
 					{
-						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName);
+						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myVendorPM != null)
 						{ 
@@ -277,7 +285,7 @@ using Simplog.Data.InvoiceModel;
 					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{
-						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant,ComputingPartnerName);
+						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myInvoiceCurrencyPM != null)
 						{ 
@@ -322,7 +330,7 @@ using Simplog.Data.InvoiceModel;
 					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
-						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
+						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myPaymentTermPM != null)
 						{ 
@@ -359,7 +367,7 @@ using Simplog.Data.InvoiceModel;
 					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.LocalCurrency != null)
 					{
-						var myLocalCurrencyPM = LocalCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.LocalCurrency,Tenant,ComputingPartnerName);
+						var myLocalCurrencyPM = LocalCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.LocalCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myLocalCurrencyPM != null)
 						{ 
@@ -412,7 +420,7 @@ using Simplog.Data.InvoiceModel;
 					APInvoiceStatusQueryService StatusAPInvoiceStatusService = new APInvoiceStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
-						var myStatusPM = StatusAPInvoiceStatusService.APInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+						var myStatusPM = StatusAPInvoiceStatusService.APInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myStatusPM != null)
 						{ 
@@ -433,7 +441,7 @@ using Simplog.Data.InvoiceModel;
 					CurrencyQueryService ProfitCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.ProfitCurrency != null)
 					{
-						var myProfitCurrencyPM = ProfitCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ProfitCurrency,Tenant,ComputingPartnerName);
+						var myProfitCurrencyPM = ProfitCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ProfitCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myProfitCurrencyPM != null)
 						{ 
@@ -470,7 +478,7 @@ using Simplog.Data.InvoiceModel;
 					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.UpdatedByUser != null)
 					{
-						var myUpdatedByUserPM = UpdatedByUserUserService.UserDataMappingAndValidatin(MyEntity.UpdatedByUser,Tenant,ComputingPartnerName);
+						var myUpdatedByUserPM = UpdatedByUserUserService.UserDataMappingAndValidatin(MyEntity.UpdatedByUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myUpdatedByUserPM != null)
 						{ 
@@ -531,7 +539,7 @@ using Simplog.Data.InvoiceModel;
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
-						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
+						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myBranchPM != null)
 						{ 
@@ -600,7 +608,7 @@ using Simplog.Data.InvoiceModel;
 					APInvoiceTransferStatusQueryService TransferStatusAPInvoiceTransferStatusService = new APInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
-						var myTransferStatusPM = TransferStatusAPInvoiceTransferStatusService.APInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName);
+						var myTransferStatusPM = TransferStatusAPInvoiceTransferStatusService.APInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myTransferStatusPM != null)
 						{ 
@@ -629,7 +637,7 @@ using Simplog.Data.InvoiceModel;
 					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.ApprovedByUser != null)
 					{
-						var myApprovedByUserPM = ApprovedByUserUserService.UserDataMappingAndValidatin(MyEntity.ApprovedByUser,Tenant,ComputingPartnerName);
+						var myApprovedByUserPM = ApprovedByUserUserService.UserDataMappingAndValidatin(MyEntity.ApprovedByUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myApprovedByUserPM != null)
 						{ 
@@ -694,7 +702,7 @@ using Simplog.Data.InvoiceModel;
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("InvoiceLines Can't be update"); 
-								temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
+								temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -731,6 +739,30 @@ using Simplog.Data.InvoiceModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VendorGLAccount))
 					{							//throw new ApplicationException("VendorGLAccount Can't be update"); 
 							temp.VendorGLAccountId = MyEntity.VendorGLAccount;
+
+										}  
+
+					 
+
+					if(MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
+					{
+						APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("TotalVATs Can't be update"); 
+								temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMappingAndValidatin(MyEntity.TotalVATs,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 
+                    
+					if(!IsUpdate)// && (MyEntity.TotalVATOnly != temp.TotalVATOnly))
+					{							//throw new ApplicationException("TotalVATOnly Can't be update"); 
+							temp.TotalVATOnly = MyEntity.TotalVATOnly;
 
 										}  
 

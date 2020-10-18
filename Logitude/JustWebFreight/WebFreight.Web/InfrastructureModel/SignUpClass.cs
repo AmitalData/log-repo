@@ -460,7 +460,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTenantSettings(tenant, tenantSettingRepository, tenantZeroObjectTables);
                 AddPaymentTerms(tenant, paymentTermRepository, tenantZeroPaymentTerms);
 
-                AddDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, tenantZeroObjectTables, /*CurrentTenantObjectTables*/null, documentTypeCustomFieldRepository, tenantZeroCustomFields);
+                AddDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, tenantZeroObjectTables, /*CurrentTenantObjectTables*/null, documentTypeCustomFieldRepository, tenantZeroCustomFields, signUpInfo.CountryCode);
                 List<DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToList();
 
                 AddDocumentTypeTemplates(tenant, documentTypeTemplateRepository, tenantZeroDocumentTypes, currentTenantDocumentTypes, documentTypeRepository, signUpInfo.CountryCode);
@@ -1843,14 +1843,16 @@ namespace WebFreight.Web.InfrastructureModel
             thePaymentTermRepository.SubmitChanges();
         }
 
-        public static void AddDocumentTypes(int theTenant, DocumentTypeRepository theDocumentTypeRepository, DocumentTypeCopyRepository theDocumentTypeCopyRepository, List<DocumentTypePM> tenantZeroDocumentTypes, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, DocumentTypeCustomFieldRepository theDocumentTypeCustomFieldRepository, List<DocumentTypeCustomField> tenantZeroCustomFields)
+        public static void AddDocumentTypes(int theTenant, DocumentTypeRepository theDocumentTypeRepository, DocumentTypeCopyRepository theDocumentTypeCopyRepository, List<DocumentTypePM> tenantZeroDocumentTypes, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, DocumentTypeCustomFieldRepository theDocumentTypeCustomFieldRepository, List<DocumentTypeCustomField> tenantZeroCustomFields, string countryCode=null)
         {
+            //string countryCode = GetCurrentTenantCountryCode(tenant);
+
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes)
             {
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
-                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id))
+                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode) || (docType.CountryCode == countryCode)))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
                     if (tenantZeroObject != null)
@@ -1938,7 +1940,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             DocumentTypeTemplateQuery theDocumentTypeTemplateQuery = new DocumentTypeTemplateQuery(theDocumentTypeTemplateRepository);
             List<DocumentTypeTemplatePM> documentTypeTemplateList = theDocumentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).ToList();
-
+            bool sameCountry = false;
             AutomationHelper automationHelper = new AutomationHelper();
             List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
@@ -1947,14 +1949,17 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (DocumentTypePM documenttype in tenantZeroDocumentType)
             {
                 DocumentType usedDocumenttype = currentTenantDocumentType.Where(d => d.Code == documenttype.Code && d.Tenant == theTenant && !d.InActive && d.IsCopiedAtSignup).FirstOrDefault();
-                if (usedDocumenttype != null)
+                sameCountry = documenttype.CountryCode == coutryCode;
+                if (usedDocumenttype != null && (string.IsNullOrEmpty(documenttype.CountryCode) || sameCountry))
                 {
                     List<DocumentTypeTemplate> documentTypeTemplates = new List<DocumentTypeTemplate>();
                     foreach (DocumentTypeTemplatePM documentTypeTemplatePM in documentTypeTemplateList.Where(d => d.DocumentTypeId == documenttype.Id))
                     {
-                        DocumentTypeTemplate newDocumentTypeTemplate = GetInstanceFromDocumentTypeTemplate(theTenant, usedDocumenttype, documentTypeTemplatePM);
-                        theDocumentTypeTemplateRepository.Add(newDocumentTypeTemplate);
-                        documentTypeTemplates.Add(newDocumentTypeTemplate);
+                        if (sameCountry || (string.IsNullOrEmpty(documentTypeTemplatePM.CountryCode) || documentTypeTemplatePM.CountryCode == coutryCode)) {
+                            DocumentTypeTemplate newDocumentTypeTemplate = GetInstanceFromDocumentTypeTemplate(theTenant, usedDocumenttype, documentTypeTemplatePM);
+                            theDocumentTypeTemplateRepository.Add(newDocumentTypeTemplate);
+                            documentTypeTemplates.Add(newDocumentTypeTemplate); 
+                        }
                     }
                     usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
                     usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);

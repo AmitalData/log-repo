@@ -139,10 +139,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         var myPortPM = PortService.PortDataMappingAndValidatin(item.FromPort, Tenant, ComputingPartnerName);
                         if (myPortPM != null)
                         {
-                            if (!IsUpdate)
-                            {
+                            //if (!IsUpdate)
+                            //{
                                 temp.FromPortId = myPortPM.Id;
-                            }
+                            //}
                         }
                     }
 
@@ -151,10 +151,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         var myPortPM = PortService.PortDataMappingAndValidatin(item.ToPort, Tenant, ComputingPartnerName);
                         if (myPortPM != null)
                         {
-                            if (!IsUpdate)
-                            {
+                            //if (!IsUpdate)
+                            //{
                                 temp.ToPortId = myPortPM.Id;
-                            }
+                            //}
                         }
                     }
 

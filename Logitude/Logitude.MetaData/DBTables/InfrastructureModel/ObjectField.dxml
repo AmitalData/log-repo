@@ -218,10 +218,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchWindowFiltersIndex"
-    OldName="DisplayInSearchWindowFiltersIndex"
-    Type="int"
-    DefaultValue="0">
+    Name="DisplayInSearchWindowFiltersIndex"
+    ShortName="SearchWindowFiltersIndex"
+    OldNames="SearchWindowFiltersIndex"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
@@ -425,8 +425,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowedInCustFieldsSettings"
-    OldName="AllowedInCustomerFieldsSettings"
+    Name="AllowedInCustomerFieldsSettings"
+    ShortName="AllowedInCustFieldsSettings"
+    OldNames="AllowedInCustFieldsSettings"
     Type="bit">
     <Constraints
       Nullable="false" />

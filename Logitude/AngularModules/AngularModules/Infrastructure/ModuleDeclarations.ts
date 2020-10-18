@@ -179,6 +179,8 @@ import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/Infrastr
 import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
 import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
 
+import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
+//import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
     [
         FocusMeDirective,
@@ -285,7 +287,9 @@ export const ControlsComponents =
         ImageLibraryComponent,
         TaskSchedulerHistoryComponent,
         DropdownMenuComponent,
-        MultiSelectLOVComponent
+        MultiSelectLOVComponent,
+        
+        FTBSchedulerTemplateComponent
     ];
 export const Components =
     [
@@ -360,6 +364,7 @@ export const Components =
         BTELogTabComponent,
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
+        FTBSchedulerTemplateComponent
     ];
 
 export class ModuleDeclarations {
@@ -460,7 +465,7 @@ export class ModuleDeclarations {
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
-
+            case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
 
         }
 
