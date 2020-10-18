@@ -2554,6 +2554,7 @@
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />
     <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
