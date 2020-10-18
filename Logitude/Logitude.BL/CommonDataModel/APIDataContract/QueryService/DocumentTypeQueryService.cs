@@ -78,7 +78,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public DocumentTypePM DocumentTypeDataMappingAndValidatin(DocumentType MyEntity, int Tenant, string ComputingPartnerName = "")
+        public DocumentTypePM DocumentTypeDataMappingAndValidatin(DocumentType MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             try
             {

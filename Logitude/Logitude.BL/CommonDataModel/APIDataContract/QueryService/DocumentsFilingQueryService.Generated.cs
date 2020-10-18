@@ -181,7 +181,7 @@ using Simplog.Data.CommonDataModel;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
-						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
+						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCreatedByUserPM != null)
 						{ 
@@ -210,7 +210,7 @@ using Simplog.Data.CommonDataModel;
 					ObjectTableQueryService EntityTypeObjectTableService = new ObjectTableQueryService(Tenant);
 					if(MyEntity.EntityType != null)
 					{
-						var myEntityTypePM = EntityTypeObjectTableService.ObjectTableDataMappingAndValidatin(MyEntity.EntityType,Tenant,ComputingPartnerName);
+						var myEntityTypePM = EntityTypeObjectTableService.ObjectTableDataMappingAndValidatin(MyEntity.EntityType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myEntityTypePM != null)
 						{ 
@@ -231,7 +231,7 @@ using Simplog.Data.CommonDataModel;
 					DocumentTypeQueryService DocumentTypeDocumentTypeService = new DocumentTypeQueryService(Tenant);
 					if(MyEntity.DocumentType != null)
 					{
-						var myDocumentTypePM = DocumentTypeDocumentTypeService.DocumentTypeDataMappingAndValidatin(MyEntity.DocumentType,Tenant,ComputingPartnerName);
+						var myDocumentTypePM = DocumentTypeDocumentTypeService.DocumentTypeDataMappingAndValidatin(MyEntity.DocumentType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myDocumentTypePM != null)
 						{ 
