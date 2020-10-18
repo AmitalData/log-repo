@@ -13,6 +13,7 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -295,13 +296,17 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
         {
-            
-            return
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+
+
+            var q =
                   (
                   from rec in context.Declarations
                   where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant
                   select rec.Id
-                  ).ToList();
+                  );
+            return q.ToList(); ;
         }
         public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
         {

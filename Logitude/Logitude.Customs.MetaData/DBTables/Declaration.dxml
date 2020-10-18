@@ -1153,4 +1153,9 @@
     ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
+
+  <Index
+    Columns="CourierHAWB" />
+
+  
 </Table>
