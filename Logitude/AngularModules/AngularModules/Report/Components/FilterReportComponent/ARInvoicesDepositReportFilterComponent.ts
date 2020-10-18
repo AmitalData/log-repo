@@ -3,8 +3,8 @@ import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, Output, ElementRef}  from '@angular/core';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {ParticipantList} from '../../EntityLists/ParticipantList';
@@ -19,7 +19,7 @@ import {CodeNameClass} from './CodeNameClass';
     inputs: ['ReportsPreview']
 })
 
-export class ARInvoicesDepositReportFilterComponent extends BaseComponent   {
+export class ARInvoicesDepositReportFilterComponent extends BaseComponent implements OnInit {
     public ReportsPreview: ReportsPreviewComponent;
 
     public ValidationErrorsList: string[];
@@ -67,14 +67,9 @@ export class ARInvoicesDepositReportFilterComponent extends BaseComponent   {
         else if (code == "false")
             this.IsLocalCurrency = false;
 
+        this.CurrencyId = null;
+        this.SetUIProperties();
     }
-
-    public IsLocalCurrencyClicked() {
-
-        this.IsLocalCurrency = true;
-
-    }
-
 
     public Currency() {
 
@@ -148,7 +143,21 @@ export class ARInvoicesDepositReportFilterComponent extends BaseComponent   {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
 
+    ngOnInit() {
+        this.SetUIProperties();
+    }
 
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("CurrencyId", null, !this.IsLocalCurrency);
+    }
+
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(value: string) {
+        if (this.currencyId != value) {
+            this.currencyId = value;
+        }
+    }
 
     RunReport(isloading: boolean) {
 
@@ -210,12 +219,12 @@ export class ARInvoicesDepositReportFilterComponent extends BaseComponent   {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-
-
-            
-
-
-
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CurrencyId";
+            this.queryFilterItem.FieldValue = this.CurrencyId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
