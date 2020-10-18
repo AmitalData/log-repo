@@ -312,10 +312,12 @@ namespace WebFreight.Web.Validators
 
             if (entityTableRules.Count > 0)
             {
+                List<RuleConditionField> AllRulesConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).ToList();
+
                 foreach (ObjectTableRule rule in entityTableRules)
                 {
                     List<ObjectTableRuleField> ruleFields = GetRuleFields(rule, tenant);
-                    List<RuleConditionField> RuleConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).ToList(); ;
+                    List<RuleConditionField> RuleConditionFields = AllRulesConditionFields.Where(f=>f.ObjectTableRuleId == rule.Id).ToList();
                     bool enableRun = true;
                     if (rule.TriggerTypeCode == "COND")
                     {
