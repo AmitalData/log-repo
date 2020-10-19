@@ -27,9 +27,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private int tenant;
         private string billToId = null;
         private DateTime? dueDate = null;
+        private DateTime? fromDate = null;
         private bool includeDraftInvoices = false;
         private string ARAPFilter = null;
         private string invoicePaymentFilter = null;
+        private string currencyCodeFilter = null;
+        private bool isByDueDateFilter = false; 
 
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
@@ -49,6 +52,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem_IncludeDraftInvoices = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
             QueryFilterItem filterItem_ARAPFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ARAPFilter").FirstOrDefault();
             QueryFilterItem filterItem_InvoicePaymentFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoicePaymentFilter").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyCodeFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault();
+            QueryFilterItem filterItem_IsByDueDateFilter = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByDueDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+
 
             if (filterItem_BillTo != null)
             {
@@ -63,6 +70,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterItem_DueDate.FieldValue != null)
                 {
                     dueDate = (DateTime)filterItem_DueDate.FieldValue;
+                }
+            }
+
+            if(filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
                 }
             }
 
@@ -87,6 +102,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterItem_InvoicePaymentFilter.FieldValue != null)
                 {
                     invoicePaymentFilter = filterItem_InvoicePaymentFilter.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CurrencyCodeFilter != null)
+            {
+                if (filterItem_CurrencyCodeFilter.FieldValue != null)
+                {
+                    currencyCodeFilter = filterItem_CurrencyCodeFilter.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_IsByDueDateFilter != null)
+            {
+                if (filterItem_IsByDueDateFilter.FieldValue != null)
+                {
+                    isByDueDateFilter = (bool)filterItem_IsByDueDateFilter.FieldValue;
                 }
             }
         }
@@ -122,11 +153,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             this.FillGeneralData();
             List<StatementRecord> totalList = this.FillStatementRecordData();
-            
-            var results = from p in dataProvider.StatementRecordList
-                          group p by p.Currency into g
-                          select new { Currency = g.Key, records = g.ToList() };
 
+            var results  = from p in dataProvider.StatementRecordList
+                                    group p by p.Currency into g
+                                    select new { Currency = g.Key, records = g.ToList() };
+            if (currencyCodeFilter != null)
+            {
+                results = results.Where(a=>a.Currency == currencyCodeFilter);
+            }
+           
             foreach (var result in results)
             {
                 List<StatementRecord> statementRecords = result.records.ToList();
@@ -184,9 +219,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 dataProvider.StatementAgingSummaryRecordList.Add(agingRecord);
             }
 
-            dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
-            dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
-
+            if (currencyCodeFilter != null)
+            {
+                dataProvider.StatementRecordList = dataProvider.StatementRecordList.Where(or => or.Currency == currencyCodeFilter).ToList();
+                dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == currencyCodeFilter).ToList();
+            }
+            else
+            {
+                dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
+                dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
+            }
             List<StatementGroup> finalResults = (from p in dataProvider.StatementRecordList
                                                  group p by p.Currency into g
                                                  select new StatementGroup()
@@ -291,9 +333,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
 
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
@@ -309,11 +372,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
-                                    
+
                                     list_APInvoices = this.BuildList_APInvoice(iQueryable_APInvoice);
                                     break;
                                 }
@@ -342,6 +426,36 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
+                                    if (dueDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+                                    }
+
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
                                     list_APInvoices = this.BuildList_APInvoice(iQueryable_APInvoice);
                                     break;
@@ -364,11 +478,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
-                                    
+
                                     list_ARPayments = this.BuildList_ARPayment(iQueryable_ARPayment);
                                     break;
                                 }
@@ -382,11 +517,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
-                                    
+
                                     list_APPayments = this.BuildList_APPayment(iQueryable_APPayment);
                                     break;
                                 }
@@ -402,12 +558,37 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
+                                   
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
-                                    
+
                                     list_ARPayments = this.BuildList_ARPayment(iQueryable_ARPayment);
                                     list_APPayments = this.BuildList_APPayment(iQueryable_APPayment);
                                     break;
@@ -439,12 +620,37 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == billToId);
                                     }
 
-                                    if (dueDate != null)
+                                    if (fromDate != null)
                                     {
-                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
                                     }
 
+                                    if (dueDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+
+                                        }
+                                    }
+                                
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
                                     list_ARPayments = this.BuildList_ARPayment(iQueryable_ARPayment);
                                     break;
@@ -461,12 +667,37 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
-                                    
+
                                     list_APInvoices = this.BuildList_APInvoice(iQueryable_APInvoice);
                                     list_APPayments = this.BuildList_APPayment(iQueryable_APPayment);
                                     break;
@@ -494,12 +725,42 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == billToId);
                                     }
 
+                                    if (fromDate != null)
+                                    {
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                                        }
+                                    }
+
                                     if (dueDate != null)
                                     {
-                                        iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
-                                        iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        if (isByDueDateFilter)
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
+
+                                        else
+                                        {
+                                            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                            iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                                        }
                                     }
 
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
