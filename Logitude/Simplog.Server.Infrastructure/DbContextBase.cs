@@ -158,7 +158,7 @@ namespace Simplog.Server.Infrastructure
                 myHeader += ":";
             }
             catch { }
-            return myHeader + mySaveLog + myStack; ;
+            return myHeader + "~" +  mySaveLog + "~" + myStack; ;
 
 
 
