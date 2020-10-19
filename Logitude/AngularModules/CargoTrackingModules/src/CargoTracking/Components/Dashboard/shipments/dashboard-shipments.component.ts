@@ -23,6 +23,7 @@ export class DashboardShipmentsComponent
     Shipments: CargoTrackingShipmentList[] = [];
     tenant;
     isLoading: boolean  = false;
+    isFiltersSideBarOpened: boolean  = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,

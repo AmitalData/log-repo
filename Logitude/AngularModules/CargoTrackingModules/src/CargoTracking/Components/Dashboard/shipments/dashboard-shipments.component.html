@@ -40,13 +40,23 @@
             </li>
         </ul>
     </div>
+
     <div class="actions-buttons hide-mobile">
-        <div><img src="./assets/images/icons/filter@1x.png" alt=" " /></div>
+        <div (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened" ><img src="./assets/images/icons/filter@1x.png" alt=" " /></div>
         <div><img src="./assets/images/icons/sort@1x.png" alt=" " /></div>
     </div>
+    
 
 </div>
 <div class="clearFix hide-mobile"></div>
+
+<div class="filters-sidebar" *ngIf="isFiltersSideBarOpened">
+    <div class="header">
+        <div class="title">Advanced Filters</div>
+        <div class="close-btn" (click)="isFiltersSideBarOpened = false">×</div>
+    </div>
+</div>
+
 
 <div class="selected-filters" *ngIf="SelectedFilters.length > 0">
     <ul>
