@@ -425,18 +425,42 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[16]))
                         {
-                            if (rowData[16].Length > 6)
+                            if (partnerExcel.Type == "WH"  && rowData[16].Length > 5)
                             {
-                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code Field max length must be 6" + ",";
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code Field max length must be 5" + ",";
+                            }
+                            else if (partnerExcel.Type == "TR" && rowData[16].Length > 7)
+                            {
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code Field max length must be 7" + ",";
                             }
                             else
                             {
                                 partnerExcel.Code = rowData[16].Trim();
                             }
                         }
+                        else
+                        {
+                            if (partnerExcel.Type == "WH" || partnerExcel.Type == "TR")
+                            {
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code field is required " + ",";
+                            }
+                        }
                     }
 
                     this.PartnerExcelList.Add(partnerExcel);
+                }
+
+
+                var checkDuplicates = from x in PartnerExcelList.Where(a=>a.Code != null && (a.Type == "WH" || a.Type == "TR"))
+                                      group x by ( x.Code, x.Type) into g
+                                      let count = g.Count()
+                                      orderby count descending
+                                      select new { Value = g.Key, Count = count };
+
+                int checkCodeDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
+                if (checkCodeDuplicates_Count > 0)
+                {
+                    errorMsg = "Warehouse/Trucker Codes are duplicated,";
                 }
             }
             else
