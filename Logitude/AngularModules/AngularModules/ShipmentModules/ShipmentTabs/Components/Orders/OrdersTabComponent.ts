@@ -269,6 +269,8 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("CutoffDate", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmationNotes", this.ObjectTableName, isConfirmationEnabled);
+        this.UIProperties.SetEnabled("INTTRAContractNumber", this.ObjectTableName, isConfirmationEnabled);
+        this.UIProperties.SetEnabled("MainHarmonize", this.ObjectTableName, isConfirmationEnabled);
 
         this.UIProperties.SetEnabled("WarehouseLegCutOffDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegVGMCutOffDate", this.ObjectTableName, isEditingEnabled);
@@ -899,6 +901,32 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     set BookingConfirmationNotes(newValue: string) {
         if (this.EntityPM.BookingConfirmationNotes != newValue) {
             this.EntityPM.BookingConfirmationNotes = newValue;
+        }
+    }
+
+    get INTTRAContractNumber() { return this.EntityPM.INTTRAContractNumber; }
+    set INTTRAContractNumber(value: string) {
+        if (this.EntityPM.INTTRAContractNumber != value) {
+            this.EntityPM.INTTRAContractNumber = value;
+        }
+    }
+
+    get MainHarmonize() { return this.EntityPM.MainHarmonize; }
+    set MainHarmonize(value: string) {
+        if (this.EntityPM.MainHarmonize != value) {
+            this.EntityPM.MainHarmonize = value;
+        }
+    }
+
+    ChooseHarmonizeClicked() {
+        if (this.IsEditingEnabled) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
+            logitudeWindow.WindowArgs = { Entity: this.EntityPM, FieldName: 'MainHarmonize' };
+            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+            });
         }
     }
 
