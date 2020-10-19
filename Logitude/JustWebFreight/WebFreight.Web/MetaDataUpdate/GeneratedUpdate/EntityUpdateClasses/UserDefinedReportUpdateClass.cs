@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "cb168cb60ce475ea2b20e728a7c34c8f";
+		public const string HashString = "4c7cde1ebe6e8883d9b6e3a1f61a6a37";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -155,12 +155,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -217,12 +218,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -278,12 +280,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -340,12 +343,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -401,12 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -462,12 +467,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -523,12 +529,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1003,7 +1010,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "הוגדר ע"י משתמש", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature UserDefinedReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserDefinedReportFeatures.UserDefinedReports", NameTextCodeDefaultText = "User Defined Reports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserDefinedReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1165,7 +1172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode UserDefinedReportTextCode_UserDefinedReportOCalculatedChartofAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.CalculatedChartofAccount", DefaultText = "Calculated Chart of Account",LocalDefaultText = @"קבוצת המאזן המחושבת", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode UserDefinedReportTextCode_UserDefinedReportODontHaveAnyLinesInThem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.DontHaveAnyLinesInThem.", DefaultText = "don't have any lines in them.",LocalDefaultText = @"הוגדרה ללא שורות , יש להגדיר לפחות שורה אחת", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportODontHaveAnyLinesInThem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.DontHaveAnyLinesInThem.", DefaultText = "don't have any line",LocalDefaultText = @"הוגדרה ללא שורות , יש להגדיר לפחות שורה אחת", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode UserDefinedReportTextCode_UserDefinedReportOTheTeportNeedsAtLeastOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.TheTeportNeedsAtLeastOne", DefaultText = "The report needs at least one calculated chart of account.",LocalDefaultText = @"יש להגדיר לפחות קבוצת מאזן אחת", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

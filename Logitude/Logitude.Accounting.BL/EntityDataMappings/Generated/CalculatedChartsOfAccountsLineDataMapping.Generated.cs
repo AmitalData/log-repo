@@ -63,7 +63,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountLocalName, 
 	         LineTypeEnglishName, 
 	         LineTypeLocalName, 
-	         Line,
+	         Line, 
+	         ErrorLog,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -75,6 +76,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTime))
+            {
+				entityPOCO.CreateDateTime = entityPM.CreateDateTime;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
@@ -205,6 +211,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTime))
+            {
+                oldEntityPM.CreateDateTime = entityPM.CreateDateTime;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))

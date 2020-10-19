@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CalculatedChartsOfAccountsLinePM entityPM)
         {
-            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPM.Id, CreateDateTime = entityPM.CreateDateTime };
+            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 

@@ -21,7 +21,7 @@ namespace Logitude.Accounting.Data.EntityMapping
         { 
 				this.ToTable("CalculatedChartsOfAccountLines");
 		
-		    this.HasKey(t => new { t.Id, t.CreateDateTime });
+		    this.HasKey(t => new { t.Id });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 

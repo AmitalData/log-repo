@@ -142,6 +142,11 @@ export class CalculatedChartsOfAccountsLinePM {
     public set Line(newValue: number) { if (this.line != newValue) { this.line = newValue; this.MarkAsDirty("Line"); } }
        
 	 
+    private errorLog: string;
+    public get ErrorLog() { return this.errorLog; }
+    public set ErrorLog(newValue: string) { if (this.errorLog != newValue) { this.errorLog = newValue; this.MarkAsDirty("ErrorLog"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
 	

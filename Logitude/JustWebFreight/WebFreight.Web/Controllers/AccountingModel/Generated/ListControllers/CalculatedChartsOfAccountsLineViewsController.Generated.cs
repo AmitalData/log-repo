@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, DateTime createdatetime)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 CalculatedChartsOfAccountsLineListQueryService calculatedChartsOfAccountsLineQuery = new CalculatedChartsOfAccountsLineListQueryService(MyContext);
-                CalculatedChartsOfAccountsLineList calculatedChartsOfAccountsLineList = calculatedChartsOfAccountsLineQuery.GetSingle(id, createdatetime);
+                CalculatedChartsOfAccountsLineList calculatedChartsOfAccountsLineList = calculatedChartsOfAccountsLineQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  calculatedChartsOfAccountsLineList);

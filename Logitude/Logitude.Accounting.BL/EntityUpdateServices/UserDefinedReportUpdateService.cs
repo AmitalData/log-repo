@@ -23,17 +23,13 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
    public partial class UserDefinedReportUpdateService 
    {
-        protected override void UpdateComposition(UserDefinedReportPM entityPM)
-        {
-            CalculatedChartsOfAccountUpdateService _CalculatedChartsOfAccountUpdateService = new CalculatedChartsOfAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            _CalculatedChartsOfAccountUpdateService.UpdateMulti(entityPM.CalculatedChartsOfAccounts, entityPM.DeletedCalculatedChartsOfAccounts, entityPM, false);
-        }
-
+     
         protected override void OnCreating(UserDefinedReportPM entityPM, EntityPM entityParentPM)
         {
 
@@ -46,6 +42,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         
         }
 
+        protected override void UpdateComposition(UserDefinedReportPM entityPM)
+        {
+ 
+            CalculatedChartsOfAccountUpdateService _CalculatedChartsOfAccountUpdateService = new CalculatedChartsOfAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            _CalculatedChartsOfAccountUpdateService.UpdateMulti(entityPM.CalculatedChartsOfAccounts, entityPM.DeletedCalculatedChartsOfAccounts, entityPM, true);
+        }
+
+
+        protected override void Validate(UserDefinedReportPM entityPM)
+        {
+            ValidationResult result = UserDefinedReportValidator.IsUserDefinedReportValid(entityPM);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
 
         protected override void Trace(UserDefinedReportPM entityPM, UserDefinedReport entityPOCO, string changesXml)
         {
@@ -176,7 +189,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CalculatedChartsOfAccountsLinePM calculatedChartsOfAccountsLinePM = calculatedChartsOfAccountsLineQueryService.GetSingle(line.Id, false, false);
 
 
-
+                    if (calculatedChartsOfAccountsLinePM ==null)
+                    {
+                        continue;
+                    }
                     notes += TranslateTextsClass.Translate("CalculatedChartsOfAccountsLine", line.Tenant, showLocals) + " " + TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.Line", line.Tenant, showLocals) + " " + line.Line + Environment.NewLine;
 
                     if (line.LineTypeCode != calculatedChartsOfAccountsLinePM.LineTypeCode)
@@ -203,8 +219,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (line.GLAccountId != calculatedChartsOfAccountsLinePM.GLAccountId)
                     {
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(calculatedChartsOfAccountsLinePM.Tenant);
-                        GLAccountPM Old_GLAccountPM = gLAccountQueryService.GetSingle(calculatedChartsOfAccountsLinePM.ChartOfAccountId, false, false);
-                        GLAccountPM New_GLAccountPM = gLAccountQueryService.GetSingle(line.ChartOfAccountId, false, false);
+                        GLAccountPM Old_GLAccountPM = gLAccountQueryService.GetSingle(calculatedChartsOfAccountsLinePM.GLAccountId, false, false);
+                        GLAccountPM New_GLAccountPM = gLAccountQueryService.GetSingle(line.GLAccountId, false, false);
                         string old_GLAccountName = showLocals ? Old_GLAccountPM.LocalName : Old_GLAccountPM.EnglishName;
                         string new_GLAccountName = showLocals ? New_GLAccountPM.LocalName : New_GLAccountPM.EnglishName;
                         notes += TranslateTextsClass.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountTypeCode", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + old_GLAccountName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + new_GLAccountName + Environment.NewLine;

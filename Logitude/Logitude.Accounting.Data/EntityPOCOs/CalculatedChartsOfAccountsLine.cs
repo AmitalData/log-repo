@@ -23,7 +23,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
         [Column("CreateDateTime")]
 	    public DateTime CreateDateTime { get; set; }
         [ForeignKey("CreatedByUser")]
@@ -61,7 +60,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("CalculatedChartsOfAccountsId")]
 	    public string CalculatedChartsOfAccountsId { get; set; }
 	      
-        public virtual ChartOfAccount CalculatedChartsOfAccount { get; set; }
+        public virtual CalculatedChartsOfAccount CalculatedChartsOfAccount { get; set; }
         [Column("Line")]
 	    public int Line { get; set; }
     }

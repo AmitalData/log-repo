@@ -13,6 +13,7 @@ using Logitude.Accounting.Data;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -22,7 +23,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CalculatedChartsOfAccountPM entityPM, CalculatedChartsOfAccount entityPOCO)
         {
-             
+            AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.CreateDateTime);
+            AddPOCOPropertyName(POCOPropertyNames.UpdatedDateTime);
+            entityPM.UpdatedDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPOCO.UpdatedDateTime = entityPM.UpdatedDateTime;
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.UserDefinedReportId = entityPM.UserDefinedReportId;
+                entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPOCO.CreateDateTime = entityPM.CreateDateTime;
+            }
+
         }
 
         public void CustomPOCOToPM(CalculatedChartsOfAccountPM entityPM, CalculatedChartsOfAccount entityPOCO)

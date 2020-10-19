@@ -18,14 +18,7 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
    public partial class CalculatedChartsOfAccountsLineQueryService 
-   {
-        public CalculatedChartsOfAccountsLinePM GetSingle(string id, bool getComposition, bool getFromCache)
-        {
-            EntityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = id };
-
-            return base.GetSingle(EntityKeys, getComposition, getFromCache);
-        }
-
+   { 
 
 
     }

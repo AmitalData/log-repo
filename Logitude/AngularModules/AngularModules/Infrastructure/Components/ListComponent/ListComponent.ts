@@ -43,6 +43,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
+import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 
 @Component({
     
@@ -3361,8 +3362,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     RunNewUserDefinedReportWizard() {
-         var entityPM: JournalPM = new JournalPM();
-        entityPM.IsNew=true;
+        var entityPM: UserDefinedReportPM = new UserDefinedReportPM();
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;

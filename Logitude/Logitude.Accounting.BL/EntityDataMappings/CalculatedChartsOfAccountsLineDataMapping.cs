@@ -13,6 +13,7 @@ using Logitude.Accounting.Data;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -22,7 +23,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CalculatedChartsOfAccountsLinePM entityPM, CalculatedChartsOfAccountsLine entityPOCO)
         {
-            
+            AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.CreateDateTime);
+            AddPOCOPropertyName(POCOPropertyNames.UpdatedDateTime);
+            AddPOCOPropertyName(POCOPropertyNames.CalculatedChartsOfAccountsId);
+            entityPM.UpdatedDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPOCO.UpdatedDateTime = entityPM.UpdatedDateTime;
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.CalculatedChartsOfAccountsId = entityPM.CalculatedChartsOfAccountsId;
+                entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPOCO.CreateDateTime = entityPM.CreateDateTime;
+            }
+
         }
 
         public void CustomPOCOToPM(CalculatedChartsOfAccountsLinePM entityPM, CalculatedChartsOfAccountsLine entityPOCO)
@@ -81,7 +95,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.LineTypeCode != null)
             {
                 CalculatedChartsLineTypeQueryService calculatedChartsLineTypeQueryService = new CalculatedChartsLineTypeQueryService(entityPOCO.Tenant);
-                CalculatedChartsLineTypePM calculatedChartsLineTypePM = calculatedChartsLineTypeQueryService.GetSingle(entityPOCO.GLAccountId, false, true);
+                CalculatedChartsLineTypePM calculatedChartsLineTypePM = calculatedChartsLineTypeQueryService.GetSingle(entityPOCO.LineTypeCode, false, true);
                 if (calculatedChartsLineTypePM != null)
                 {
                     entityPM.LineTypeEnglishName = calculatedChartsLineTypePM.EnglishName;

@@ -18,8 +18,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-
-       [Key]
        [DataMember]
        public DateTime CreateDateTime  { get; set; }
        [DataMember]
@@ -52,6 +50,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LineTypeLocalName  { get; set; }
        [DataMember]
        public int Line  { get; set; }
+       [DataMember]
+       public string ErrorLog  { get; set; }
    }
 
 }

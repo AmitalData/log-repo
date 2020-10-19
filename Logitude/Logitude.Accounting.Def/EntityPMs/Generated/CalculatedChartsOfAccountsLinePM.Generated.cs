@@ -67,9 +67,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 	  private DateTime createDateTime ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -547,6 +545,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Line",OldValue=line,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   line=value;
+		   }
+			
+		 }
+	   }
+	  private string errorLog ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ErrorLog  
+	   {
+	    
+	     get
+		{
+		   return errorLog;
+		 }
+		 set
+		 {
+		   if(errorLog != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ErrorLog",OldValue=errorLog,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   errorLog=value;
 		   }
 			
 		 }

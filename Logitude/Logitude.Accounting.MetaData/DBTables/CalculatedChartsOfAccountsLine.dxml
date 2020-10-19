@@ -23,7 +23,6 @@
     Name="CreateDateTime"
     Type="datetime">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -119,7 +118,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CalculatedChartsOfAccountsId"
-    ReferencedTable="ChartOfAccounts"
+    ReferencedTable="CalculatedChartsOfAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

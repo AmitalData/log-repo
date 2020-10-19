@@ -1,12 +1,11 @@
--- Add New Column With Name Line
-ALTER TABLE [dbo].[CalculatedChartsOfAccounts] ADD [Line] INT NOT NULL;
+-- Drop Primary Key Constraint
+EXEC('IF (OBJECT_ID(''[dbo].[PK_CalculatedChartsOfAccountsLines]'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[CalculatedChartsOfAccountLines] DROP CONSTRAINT [PK_CalculatedChartsOfAccountsLines] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('78281e0e-7e6d-4195-a8c5-bbe9bbe9babe', 'CalculatedChartsOfAccount.dxml', 'CalculatedChartsOfAccounts', 'Line', 'Add Column', GETDATE(), '-- Add New Column With Name LineALTER TABLE [dbo].[CalculatedChartsOfAccounts] ADD [Line] INT NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7547f0e0-dd84-4887-9620-e982b90c2477', 'CalculatedChartsOfAccountsLine.dxml', 'CalculatedChartsOfAccountLines', NULL, 'Drop Primary Key Constraint', GETDATE(), '-- Drop Primary Key ConstraintEXEC(''IF (OBJECT_ID(''''[dbo].[PK_CalculatedChartsOfAccountsLines]'''', ''''PK'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[CalculatedChartsOfAccountLines] DROP CONSTRAINT [PK_CalculatedChartsOfAccountsLines] END'');');
 
+-- Add Primary Key Constraint
+EXEC('ALTER TABLE [dbo].[CalculatedChartsOfAccountLines] ADD CONSTRAINT [PK_CalculatedChartsOfAccountsLines] PRIMARY KEY ([Id])');
 
--- Add New Column With Name Line
-ALTER TABLE [dbo].[CalculatedChartsOfAccountLines] ADD [Line] INT NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b8e06c0d-e4fb-4280-87f9-c9f1970ca22e', 'CalculatedChartsOfAccountsLine.dxml', 'CalculatedChartsOfAccountLines', 'Line', 'Add Column', GETDATE(), '-- Add New Column With Name LineALTER TABLE [dbo].[CalculatedChartsOfAccountLines] ADD [Line] INT NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f621936a-fe32-44a3-bfb5-6410f2d052fb', 'CalculatedChartsOfAccountsLine.dxml', 'CalculatedChartsOfAccountLines', 'Id', 'Add Primary Key Constraint', GETDATE(), '-- Add Primary Key ConstraintEXEC(''ALTER TABLE [dbo].[CalculatedChartsOfAccountLines] ADD CONSTRAINT [PK_CalculatedChartsOfAccountsLines] PRIMARY KEY ([Id])'');');
 
 

@@ -24,6 +24,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
    public partial class CalculatedChartsOfAccountsLineUpdateService 
    {
+        protected override void OnCreating(CalculatedChartsOfAccountsLinePM entityPM, CalculatedChartsOfAccountPM entityParentPM)
+        {
+            entityPM.CalculatedChartsOfAccountsId = entityParentPM.Id;
+            
+        }
         protected override void OnUpdating(CalculatedChartsOfAccountsLinePM entityPM, CalculatedChartsOfAccountsLine entityPOCO)
         {
 

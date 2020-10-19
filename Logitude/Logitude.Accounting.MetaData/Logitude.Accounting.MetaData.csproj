@@ -89,6 +89,9 @@
     <None Include="DBTables\BankDeposit.dxml" />
     <None Include="DBTables\BankDepositLine.dxml" />
     <None Include="DBTables\BankPageEntryType.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccount.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLine.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLineType.dxml" />
     <None Include="DBTables\CashBook.dxml" />
     <None Include="DBTables\CashBookLine.dxml" />
     <None Include="DBTables\CashBookType.dxml" />

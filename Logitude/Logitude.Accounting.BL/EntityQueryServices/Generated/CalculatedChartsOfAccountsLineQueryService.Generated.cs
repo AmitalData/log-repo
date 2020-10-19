@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new CalculatedChartsOfAccountsLineDataMapping();
         }
 		 
-		public  CalculatedChartsOfAccountsLinePM GetSingle(string id, DateTime createdatetime,bool getComposition, bool getFromCache)
+		public  CalculatedChartsOfAccountsLinePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CalculatedChartsOfAccountsLineKeys(){ Id = id, CreateDateTime = createdatetime };
+             EntityKeys = new CalculatedChartsOfAccountsLineKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CalculatedChartsOfAccountsLine entityPOCO)
         {
-            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPOCO.Id, CreateDateTime = entityPOCO.CreateDateTime,  };
+            CalculatedChartsOfAccountsLineKeys entityKeys = new CalculatedChartsOfAccountsLineKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

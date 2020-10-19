@@ -210,7 +210,7 @@
                                                         <tr style="height:15px;">
                                                             <td>
 
-                                                                <LogLabel [ObjectFieldName]="'ChartOfAccountTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                <LogLabel [ObjectFieldName]="'ChartOfAccountTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="ThisDataContext"></LogLabel>
 
                                                                 
                                                             </td>
@@ -232,9 +232,13 @@
                                                                 <LogLov 
                                                                        [ObjectFieldName]="'ChartOfAccountTypeCode'"
                                                                        [ObjectTableName]="ObjectTableName"
-                                                                       [DataContext]="DataContext"
+                                                                       [DataContext]="ThisDataContext"
                                                                        [LookUpTableName]="'ChartOfAccountsType'"
-                                                                       [HideColumns]="true">
+                                                                       [HideColumns]="true" 
+                                                                       (SelectedItemChanged)="ChartOfAccountsType = $event"
+                                                                       [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
+                                                                       [RunToggleMode]="true"
+                                                                       [FocusOnMe]="'true'">
                                                               </LogLov>
 
                                                                 
@@ -369,9 +373,13 @@
                             <LogLov 
                                    [ObjectFieldName]="'LineTypeCode'"
                                    [ObjectTableName]="ObjectTableName"
-                                   [DataContext]="DataContext"
+                                   [DataContext]="item"
                                    [LookUpTableName]="'CalculatedChartsLineType'"
-                                   [HideColumns]="true">
+                                   [HideColumns]="true"
+                                   (SelectedItemChanged)="item.LineType = $event"
+                                   [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
+                                   [RunToggleMode]="true"
+                                   [FocusOnMe]="'true'">
                            </LogLov>
                         </div>
                       </log-cell-template>
@@ -382,7 +390,7 @@
                      <!--ChartOfAccount-->
                   <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.ChartOfAccountId' | TextCodeTranslationPipe" [binding]="'ChartOfAccountId'">
                         <ng-template let-item>
-                          <log-cell-template   #logcelltemplate>
+                          <log-cell-template  [IsEnabled]="item.LineTypeCode == '2' ? true : false"  #logcelltemplate>
                             <div  *ngIf="logcelltemplate.IsDisplayMode"  [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.ChartOfAccountName}}</span>
                             </div>
@@ -390,9 +398,13 @@
                                 <LogLov 
                                        [ObjectFieldName]="'ChartOfAccountId'"
                                        [ObjectTableName]="ObjectTableName"
-                                       [DataContext]="DataContext"
+                                       [DataContext]="item"
                                        [LookUpTableName]="'ChartOfAccount'"
-                                       [HideColumns]="true">
+                                       [HideColumns]="true"      
+                                       (SelectedItemChanged)="item.ChartOfAccount = $event"
+                                       [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
+                                       [RunToggleMode]="true"
+                                       [FocusOnMe]="'true'">
                                </LogLov>
                             </div>
                           </log-cell-template>
@@ -402,7 +414,7 @@
                   <!--GLAccount-->
                   <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccountsLine.F.GLAccountId' | TextCodeTranslationPipe" [binding]="'GLAccountId'">
                     <ng-template let-item>
-                      <log-cell-template   #logcelltemplate>
+                      <log-cell-template [IsEnabled]="item.LineTypeCode == '1' ? true : false"   #logcelltemplate>
                         <div  *ngIf="logcelltemplate.IsDisplayMode"  [style.text-align]="isRTL ? 'right' : 'left'">
                             <span>{{item.GLAccountName}}</span>
                         </div>
@@ -410,9 +422,13 @@
                             <LogLov 
                                    [ObjectFieldName]="'GLAccountId'"
                                    [ObjectTableName]="ObjectTableName"
-                                   [DataContext]="DataContext"
+                                   [DataContext]="item"
                                    [LookUpTableName]="'GLAccount'"
-                                   [HideColumns]="true">
+                                   [HideColumns]="true"
+                                   (SelectedItemChanged)="item.GLAccount = $event"
+                                   [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
+                                   [RunToggleMode]="true"
+                                   [FocusOnMe]="'true'">
                            </LogLov>
                         </div>
                       </log-cell-template>
@@ -466,22 +482,40 @@
 
                
                     <!--IsCancelled-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccountsLine.F.IsCancelled' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="'center'" [width]="'95'" [header]="'CalculatedChartsOfAccountsLine.F.IsCancelled' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> 
-                                <img *ngIf="item.IsCancelled" src="./Images/CheckBoxIcon.png" />    
+                            <div [style.text-align]="'center'" style="margin-top: 4px;"> 
+                                <!-- <img *ngIf="item.IsCancelled" src="./Images/CheckBoxIcon.png" />     -->
+                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogCheckBox>
+
                             </div>
                         </log-cell-template>
                     </ng-template>
                     </log-column>
 
-                    <!--NULL-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
+                    <!--Remove Line-->
+                    <!-- <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
                                 <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="RemoveLine(item)"></IconButton>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column> -->
+
+                       <!--Error Log-->
+                       <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:0px;">
+                               
+                                <LogToolTip  [float]="'none'" *ngIf="item.ErrorLog && !item.IsCancelled"  [direction]="!isRTL? 'topright':'topleft'" [name]="'ErrorLog'"
+                                    [mode]="'error'" [title]="''">
+                                    {{item.ErrorLog}} 
+                                </LogToolTip>
+
                             </div>
                         </log-cell-template>
                     </ng-template>

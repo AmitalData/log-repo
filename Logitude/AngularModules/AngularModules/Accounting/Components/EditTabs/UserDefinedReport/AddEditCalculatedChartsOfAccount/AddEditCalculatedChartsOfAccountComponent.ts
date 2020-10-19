@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { CalculatedChartsOfAccountPM } from 'Accounting/EntityPMs/CalculatedChartsOfAccountPM';
 import { CalculatedChartsOfAccountsLinePM } from 'Accounting/EntityPMs/CalculatedChartsOfAccountsLinePM';
+import { ChartOfAccountsTypePM } from 'Accounting/EntityPMs/ChartOfAccountsTypePM';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -10,6 +11,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { AppTool } from 'Infrastructure/Tools';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { Validator } from 'Infrastructure/Validators/Validator';
 import { CalculatedChartsOfAccountItem, CalculatedChartsOfAccountsLineItem } from '../UserDefinedReportGeneralTabComponent';
 
@@ -21,6 +23,7 @@ import { CalculatedChartsOfAccountItem, CalculatedChartsOfAccountsLineItem } fro
 
 export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public DataContext: CalculatedChartsOfAccountItem = null;
+    public ThisDataContext: AddEditCalculatedChartsOfAccountComponent = this;
     public EntityPM: CalculatedChartsOfAccountPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public ObjectTableName: string = "CalculatedChartsOfAccount";
@@ -31,6 +34,9 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
     }
+
+
+    
     OnFocus() {
         if (this.DataContext.CalculatedChartsOfAccountsLineItemList.Length == 0) {
             this.AddLine();
@@ -41,8 +47,16 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             this.AddLine();
         }
     }
-    RemoveLine(){
-        
+    RemoveLine(line){
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Remove(line);
+        this.DataContext.EntityPM.RemoveCalculatedChartsOfAccountsLine(line);
+        this.DataContext.EntityPM.CalculatedChartsOfAccountLines.splice(line.Line - 1, 1);
+        for (var i = 0; i < this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length; i++) {
+            var oldItem =this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[i];
+            var updatedItem = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[i];
+            updatedItem.Line = i + 1;
+            this.DataContext.CalculatedChartsOfAccountsLineItemList.Update(oldItem, updatedItem);
+        }
     }
     CancelButtonClicked(){
         this.CurrentSession.CloseCurrentWindow();
@@ -51,11 +65,50 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         this.ValidationErrorsList= [];
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.ValidateErrorLogsLines();
+        this.ValidateLine(errors);
          if (errors.length == 0) {
             this.CurrentSession.CloseCurrentWindowEmit("Ok");
         } else {
             this.ValidationErrorsList = errors;
         }
+    }
+
+    ValidateLine(errors: string[]){
+        if(this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length == 0){
+            errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
+        }
+        else {
+            var haveValues = false;
+            this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> 
+                !s.IsCancelled ?haveValues = true:null
+            );
+            if(!haveValues)
+            errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
+
+        }
+        var LinesHaveErrors:number[]=[]
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> !s.IsCancelled && !AppTool.IsNullOrEmpty(s.ErrorLog)?LinesHaveErrors.push(s.Line):null);
+        if(LinesHaveErrors.length!=0){
+            var ErrorMessage = TextCodeTranslator.Translate("UserDefinedReport.O.CantSaveTheCalculatedChartofAccount");
+            if(LinesHaveErrors.length>1) 
+                ErrorMessage+="s";
+            ErrorMessage+=" "+LinesHaveErrors.toString();
+            errors.push(ErrorMessage);
+        }
+
+    }
+
+    
+    ValidateErrorLogsLines(){
+        var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        var RequiredChartsofAccountFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountId"));
+        var RequiredGLAccountFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccountsLine.F.GLAccountId"));
+        var RequiredLineTypeFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccountsLine.F.LineTypeCode"));
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> !s.IsCancelled && (AppTool.IsNullOrEmpty(s.LineTypeCode)? s.ErrorLog = RequiredLineTypeFiled:
+                                                                                        s.LineTypeCode=='1' && !s.GLAccountId? s.ErrorLog = RequiredGLAccountFiled:                                             
+                                                                                        s.LineTypeCode=='2' && !s.ChartOfAccountId? s.ErrorLog = RequiredChartsofAccountFiled:null)
+                                                                                   );
     }
     AddLine() {
         var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
@@ -74,95 +127,27 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        this.BuildLinesData();
      }
 
  
-    get EnglishName() { return this.EntityPM.EnglishName; }
-    set InterestBaseStartDate(newValue: string) {
-        if (this.EntityPM.EnglishName != newValue) {
-            this.EntityPM.EnglishName = newValue;
-        }
-    }
-
-    get Line() {
-        if (this.EntityPM != null) {
-            return this.EntityPM.Line;
-        }
-        else
-            return null;
-    }
-    set Line(newValue: number) {
-        if (this.EntityPM.Line != newValue) {
-            this.EntityPM.Line = newValue;
-        }
-    }
-
-    get LocalName() { return this.EntityPM.LocalName; }
-    set LocalName(newValue: string) {
-        if (this.EntityPM.LocalName != newValue) {
-            this.EntityPM.LocalName = newValue;
-        }
-    }
-
-    get IsCancelled() { return this.EntityPM.IsCancelled; }
-    set IsCancelled(newValue: boolean) {
-        if (this.EntityPM.IsCancelled != newValue) {
-            this.EntityPM.IsCancelled = newValue;
-        }
-    }
-
-    get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
-    set UpdatedByUserId(newValue: string) {
-        if (this.EntityPM.UpdatedByUserId != newValue) {
-            this.EntityPM.UpdatedByUserId = newValue;
-        }
-    }
-
-    get ChartOfAccountTypeCode() { return this.EntityPM.ChartOfAccountTypeCode; }
+    get ChartOfAccountTypeCode() { return this.DataContext.ChartOfAccountTypeCode; }
     set ChartOfAccountTypeCode(newValue: string) {
-        if (this.EntityPM.ChartOfAccountTypeCode != newValue) {
-            this.EntityPM.ChartOfAccountTypeCode = newValue;
+        if (this.DataContext.ChartOfAccountTypeCode != newValue) {
+            if(this.DataContext.ChartOfAccountTypeCode  && this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length > 0){
+                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("UserDefinedReport.O.CantUpdateTheChartofAccountType"));
+            }
+            else{
+                this.DataContext.ChartOfAccountTypeCode = newValue;
+            }
         }
     }
-
-    get ChartOfAccountTypeName() { return this.isRTL ? this.EntityPM.ChartOfAccountTypeLocalName : this.EntityPM.ChartOfAccountTypeEnglishName;  }
-
-    get UpdatedByUserName() { return  this.isRTL ? this.EntityPM.UpdatedByLocalName : this.EntityPM.UpdatedByEnglishName; }
-
-    get CreatedByUserName() { return this.isRTL ? this.EntityPM.CretedByLocalNameName : this.EntityPM.CreatedByEnglishName;  }
-  
-    get CreatedByUserId() { return this.EntityPM.CreatedByUserId; }
-    set CreatedByUserId(newValue: string) {
-        if (this.EntityPM.CreatedByUserId != newValue) {
-            this.EntityPM.CreatedByUserId = newValue;
+   
+    get ChartOfAccountsType() { return this.DataContext.ChartOfAccountsType; }
+    set ChartOfAccountsType(newValue: ChartOfAccountsTypePM) {
+        if (this.DataContext.ChartOfAccountsType != newValue) {
+                this.DataContext.ChartOfAccountsType = newValue;
+            }
         }
-    }
-
-    get UpdatedDateTime() { return this.EntityPM.UpdatedDateTime; }
-    set UpdatedDateTime(newValue: Date) {
-        if (this.EntityPM.UpdatedDateTime != newValue) {
-            this.EntityPM.UpdatedDateTime = newValue;
-        }
-    }
-
-    get CreateDateTime() { return this.EntityPM.CreateDateTime; }
-    set CreateDateTime(newValue: Date) {
-        if (this.EntityPM.CreateDateTime != newValue) {
-            this.EntityPM.CreateDateTime = newValue;
-        }
-    }
-
-
-    public BuildLinesData() {
-        this.DataContext.CalculatedChartsOfAccountsLineItemList.Clear();
-        var list = [];
-        if(this.EntityPM.CalculatedChartsOfAccountLines)
-        this.EntityPM.CalculatedChartsOfAccountLines.forEach(item => {
-            list.push(new CalculatedChartsOfAccountsLineItem(item, true, this));
-        });
-        this.DataContext.CalculatedChartsOfAccountsLineItemList.InsertCollection(list);
-    }
  
  
 }

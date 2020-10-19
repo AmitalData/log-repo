@@ -24,11 +24,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
    public partial class CalculatedChartsOfAccountUpdateService 
    {
+        protected override void OnCreating(CalculatedChartsOfAccountPM entityPM, UserDefinedReportPM entityParentPM)
+        {
+            entityPM.UserDefinedReportId = entityParentPM.Id;
+            base.OnCreating(entityPM, entityParentPM);
+        }
         protected override void UpdateComposition(CalculatedChartsOfAccountPM entityPM)
         {
+  
             CalculatedChartsOfAccountsLineUpdateService _CalculatedChartsOfAccountsLineUpdateService = new CalculatedChartsOfAccountsLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            _CalculatedChartsOfAccountsLineUpdateService.UpdateMulti(entityPM.CalculatedChartsOfAccountLines, entityPM.DeletedCalculatedChartsOfAccountLines, entityPM, false);
+            _CalculatedChartsOfAccountsLineUpdateService.UpdateMulti(entityPM.CalculatedChartsOfAccountLines, entityPM.DeletedCalculatedChartsOfAccountLines, entityPM, true);
         }
+
+        
         protected override void OnUpdating(CalculatedChartsOfAccountPM entityPM, CalculatedChartsOfAccount entityPOCO)
         {
 
