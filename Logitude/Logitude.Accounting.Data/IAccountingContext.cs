@@ -32,8 +32,9 @@ namespace Logitude.Accounting.Data
 		 IDbSet<BankDeposit> BankDeposits { get; }
 		 IDbSet<BankDepositLine> BankDepositLines { get; }
 		 IDbSet<BankPageEntryType> BankPageEntryTypes { get; }
+		 IDbSet<CalculatedChartsLineType> CalculatedChartsLineTypes { get; }
 		 IDbSet<CalculatedChartsOfAccount> CalculatedChartsOfAccounts { get; }
-		 IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLines { get; }
+		 IDbSet<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountLines { get; }
 		 IDbSet<CashBook> CashBooks { get; }
 		 IDbSet<CashBookLine> CashBookLines { get; }
 		 IDbSet<CashBookType> CashBookTypes { get; }

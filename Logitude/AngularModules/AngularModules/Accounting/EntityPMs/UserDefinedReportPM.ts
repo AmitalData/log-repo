@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {CalculatedChartsOfAccountPM} from './CalculatedChartsOfAccountPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -67,6 +68,70 @@ export class UserDefinedReportPM {
     private isCancelled: boolean;
     public get IsCancelled() { return this.isCancelled; }
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
+     
+	private calculatedChartsOfAccounts: CalculatedChartsOfAccountPM[];
+    get  CalculatedChartsOfAccounts() {
+        if (this.calculatedChartsOfAccounts == null) {
+            this.calculatedChartsOfAccounts = [];
+        }
+
+        return this.calculatedChartsOfAccounts;
+    }
+    set  CalculatedChartsOfAccounts(newValue: CalculatedChartsOfAccountPM[]) {
+        if (this.calculatedChartsOfAccounts != newValue) {
+            this.calculatedChartsOfAccounts = newValue;
+        }
+    }
+    public AddCalculatedChartsOfAccount(item: CalculatedChartsOfAccountPM) {
+        if (item != null) {
+            var index = this. CalculatedChartsOfAccounts.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. CalculatedChartsOfAccounts.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCalculatedChartsOfAccount(item: CalculatedChartsOfAccountPM) {
+        if (item != null) {
+            var index = this. CalculatedChartsOfAccounts.indexOf(item);
+            if (index > -1) {
+                this. CalculatedChartsOfAccounts.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public CalculatedChartsOfAccounts: Array<CalculatedChartsOfAccountPM>= [];
+     private createdByEnglishName: string;
+    public get CreatedByEnglishName() { return this.createdByEnglishName; }
+    public set CreatedByEnglishName(newValue: string) { if (this.createdByEnglishName != newValue) { this.createdByEnglishName = newValue; this.MarkAsDirty("CreatedByEnglishName"); } }
+       
+	 
+    private createdByLocalName: string;
+    public get CreatedByLocalName() { return this.createdByLocalName; }
+    public set CreatedByLocalName(newValue: string) { if (this.createdByLocalName != newValue) { this.createdByLocalName = newValue; this.MarkAsDirty("CreatedByLocalName"); } }
+       
+	 
+    private updatedByEnglishName: string;
+    public get UpdatedByEnglishName() { return this.updatedByEnglishName; }
+    public set UpdatedByEnglishName(newValue: string) { if (this.updatedByEnglishName != newValue) { this.updatedByEnglishName = newValue; this.MarkAsDirty("UpdatedByEnglishName"); } }
+       
+	 
+    private updatedByLocalName: string;
+    public get UpdatedByLocalName() { return this.updatedByLocalName; }
+    public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
+       
+	 
+    private updatedByName: string;
+    public get UpdatedByName() { return this.updatedByName; }
+    public set UpdatedByName(newValue: string) { if (this.updatedByName != newValue) { this.updatedByName = newValue; this.MarkAsDirty("UpdatedByName"); } }
+       
+	 
+    private createdByName: string;
+    public get CreatedByName() { return this.createdByName; }
+    public set CreatedByName(newValue: string) { if (this.createdByName != newValue) { this.createdByName = newValue; this.MarkAsDirty("CreatedByName"); } }
        
 	 
 

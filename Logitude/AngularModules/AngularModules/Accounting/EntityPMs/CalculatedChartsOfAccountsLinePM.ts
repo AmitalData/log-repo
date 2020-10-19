@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {CalculatedChartsOfAccountPM} from './CalculatedChartsOfAccountPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -18,11 +19,13 @@ export class CalculatedChartsOfAccountsLinePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
- 	 
+
+	 
     
     private id: string;
     public get Id() { return this.id; }
@@ -84,13 +87,85 @@ export class CalculatedChartsOfAccountsLinePM {
     public set CalculatedChartsOfAccountsId(newValue: string) { if (this.calculatedChartsOfAccountsId != newValue) { this.calculatedChartsOfAccountsId = newValue; this.MarkAsDirty("CalculatedChartsOfAccountsId"); } }
        
 	 
+    private createdByLocalName: string;
+    public get CreatedByLocalName() { return this.createdByLocalName; }
+    public set CreatedByLocalName(newValue: string) { if (this.createdByLocalName != newValue) { this.createdByLocalName = newValue; this.MarkAsDirty("CreatedByLocalName"); } }
+       
+	 
+    private createdByEnglishName: string;
+    public get CreatedByEnglishName() { return this.createdByEnglishName; }
+    public set CreatedByEnglishName(newValue: string) { if (this.createdByEnglishName != newValue) { this.createdByEnglishName = newValue; this.MarkAsDirty("CreatedByEnglishName"); } }
+       
+	 
+    private updatedByEnglishName: string;
+    public get UpdatedByEnglishName() { return this.updatedByEnglishName; }
+    public set UpdatedByEnglishName(newValue: string) { if (this.updatedByEnglishName != newValue) { this.updatedByEnglishName = newValue; this.MarkAsDirty("UpdatedByEnglishName"); } }
+       
+	 
+    private updatedByLocalName: string;
+    public get UpdatedByLocalName() { return this.updatedByLocalName; }
+    public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
+       
+	 
+    private gLAccountEnglishName: string;
+    public get GLAccountEnglishName() { return this.gLAccountEnglishName; }
+    public set GLAccountEnglishName(newValue: string) { if (this.gLAccountEnglishName != newValue) { this.gLAccountEnglishName = newValue; this.MarkAsDirty("GLAccountEnglishName"); } }
+       
+	 
+    private gLAccountLocalName: string;
+    public get GLAccountLocalName() { return this.gLAccountLocalName; }
+    public set GLAccountLocalName(newValue: string) { if (this.gLAccountLocalName != newValue) { this.gLAccountLocalName = newValue; this.MarkAsDirty("GLAccountLocalName"); } }
+       
+	 
+    private chartOfAccountEnglishName: string;
+    public get ChartOfAccountEnglishName() { return this.chartOfAccountEnglishName; }
+    public set ChartOfAccountEnglishName(newValue: string) { if (this.chartOfAccountEnglishName != newValue) { this.chartOfAccountEnglishName = newValue; this.MarkAsDirty("ChartOfAccountEnglishName"); } }
+       
+	 
+    private chartOfAccountLocalName: string;
+    public get ChartOfAccountLocalName() { return this.chartOfAccountLocalName; }
+    public set ChartOfAccountLocalName(newValue: string) { if (this.chartOfAccountLocalName != newValue) { this.chartOfAccountLocalName = newValue; this.MarkAsDirty("ChartOfAccountLocalName"); } }
+       
+	 
+    private lineTypeEnglishName: string;
+    public get LineTypeEnglishName() { return this.lineTypeEnglishName; }
+    public set LineTypeEnglishName(newValue: string) { if (this.lineTypeEnglishName != newValue) { this.lineTypeEnglishName = newValue; this.MarkAsDirty("LineTypeEnglishName"); } }
+       
+	 
+    private lineTypeLocalName: string;
+    public get LineTypeLocalName() { return this.lineTypeLocalName; }
+    public set LineTypeLocalName(newValue: string) { if (this.lineTypeLocalName != newValue) { this.lineTypeLocalName = newValue; this.MarkAsDirty("LineTypeLocalName"); } }
+       
+	 
+    private line: number;
+    public get Line() { return this.line; }
+    public set Line(newValue: number) { if (this.line != newValue) { this.line = newValue; this.MarkAsDirty("Line"); } }
+       
+	 
+    private errorLog: string;
+    public get ErrorLog() { return this.errorLog; }
+    public set ErrorLog(newValue: string) { if (this.errorLog != newValue) { this.errorLog = newValue; this.MarkAsDirty("ErrorLog"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
-		
+	
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CalculatedChartsOfAccountsLine");

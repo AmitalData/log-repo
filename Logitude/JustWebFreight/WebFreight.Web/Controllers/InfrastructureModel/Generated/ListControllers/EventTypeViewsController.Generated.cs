@@ -178,7 +178,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -215,6 +215,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 EventTypeRepository  eventTypeRepository = new EventTypeRepository(MyContext);
                 IQueryable<EventType> entityPocos = eventTypeRepository.GetEventTypes(tenant);
@@ -232,7 +233,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 entityLists = genericFilter.GetFilteredQuery<EventTypeList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(EventTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -296,18 +298,18 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

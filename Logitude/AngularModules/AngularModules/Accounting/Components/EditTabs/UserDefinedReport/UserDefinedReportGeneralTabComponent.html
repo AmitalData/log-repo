@@ -1,0 +1,416 @@
+
+<style>
+
+    .tab-footer {
+        background: #f7f7f7;
+        height: 75px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0, 0, 0, 0.31);
+    }
+
+    .SimpleGridHeaderRow td,
+    .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .Disabled {
+        background: red;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 8px 5px;
+        /*margin: 0px 10px;*/
+        min-width: 100px;
+        /*text-align: center;*/
+        /*overflow: auto;*/
+    }
+
+    .footer-summery::before,
+    .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        padding-left: 150px;
+    }
+</style>
+<div class="TabHolder">
+    <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                {{'General.O.General' | TextCodeTranslationPipe}}
+            </td>
+        </tr>
+        <tr style="height: 1px;vertical-align:top">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 570px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <!-- EnglishName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width: 220px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td >
+                                                                <LogTextBox   [ObjectFieldName]="'EnglishName'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                            </td>                                     
+                                                      </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- LocalName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <LogTextBox   [ObjectFieldName]="'LocalName'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                            </td>
+                                                      
+                                                        </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- IsCancelled -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr >
+                                                           <td>
+                                                            <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsCancelled = $event"></LogCheckBox>
+                                                          </td> 
+  
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td colspan="2">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2"><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                             <tr class="FormFieldRow">
+
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                         </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                         </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                           
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                          
+                                            <tr class="FormFieldRow">
+                                                
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 30px;">
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.IsCancelled" (click)="AddPeriodClicked()"></IconButton>
+                         </td>
+                        <td>
+                             <span style="font-size: 16px;" >{{'CalculatedChartsOfAccount' | TextCodeTranslationPipe}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="5" style="height: 100%;padding-bottom: 80px;">
+                <div class="GeneratedGridContainer">
+                    <logitude-edit-grid GridWidth="100%"
+                                    GridHeight="100%"
+                                    [ItemSource]="CalculatedChartsOfAccountItemList"
+                                    [HeaderHeight]="25"
+                                    [UseVirtuallization]="true"
+                                    [IsReadOnly]="false"
+                                    (RowEnded)="OnRowEnded($event)"
+                                    (Ondblclick)="OnFocus()">
+
+                     <!--Line-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.Line' | TextCodeTranslationPipe" [binding]="'Line'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div   [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.Line}}</span>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--EnglishName-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.EnglishName' | TextCodeTranslationPipe" [binding]="'EnglishName'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div   [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.EnglishName}}</span>
+                            </div>
+
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--LocalName-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"  [header]="'CalculatedChartsOfAccount.F.LocalName' | TextCodeTranslationPipe" [binding]="'LocalName'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.LocalName}}</span>
+                            </div>
+
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--ChartOfAccountTypeCode-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="'CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName' | TextCodeTranslationPipe" [binding]="'ChartOfAccountTypeCode'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+
+                            <div  [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span> {{item.ChartOfAccountTypeName}} </span>
+                            </div>
+
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                       <!--CreatedByUserName-->
+                   <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'"  [header]="'CalculatedChartsOfAccountsLine.F.CreatedByUserId' | TextCodeTranslationPipe">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.CreatedByUserName}}</span>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--CreateDateTime-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.CreateDateTime' | TextCodeTranslationPipe">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CreateDateTime | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+           
+                    <!--UpdatedByUser-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'CalculatedChartsOfAccount.F.UpdatedByUserId' | TextCodeTranslationPipe">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.UpdatedByUserName}}</span>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--UpdatedDateTime-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.UpdatedDateTime' | TextCodeTranslationPipe">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedDateTime | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--IsCancelled-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.IsCancelled' | TextCodeTranslationPipe">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> 
+                                <img *ngIf="item.IsCancelled" src="./Images/CheckBoxIcon.png" />    
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                    <!--NULL-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
+                                <IconButton [Name]="'Edit'" [disabled]="item.IsCancelled" [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                    </log-column>
+
+                </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    </div>

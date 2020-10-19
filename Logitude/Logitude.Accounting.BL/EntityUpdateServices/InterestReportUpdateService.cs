@@ -42,9 +42,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             InterestReportLinesByDateUpdateService interestReportLinesByDateUpdateService = new InterestReportLinesByDateUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             interestReportLinesByDateUpdateService.UpdateMulti(entityPM.InterestReportLinesByDates, entityPM.DeletedInterestReportLinesByDates, entityPM, false);
-            ContactPM contactLocal = GetLoggedContact(entityPM.Tenant);
-            bool showLocals = !contactLocal.DontShowLocal;
- 
         }
          private void CreateEvent(string eventCode, InterestReportPM interestReport,string Notes = null)
         {

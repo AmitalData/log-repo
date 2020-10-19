@@ -21,6 +21,9 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {UserDefinedReportPM} from '../../EntityPMs/UserDefinedReportPM';
 
+import {CalculatedChartsOfAccountPM} from '../../EntityPMs/CalculatedChartsOfAccountPM';
+
+import {CalculatedChartsOfAccountsLinePM} from '../../EntityPMs/CalculatedChartsOfAccountsLinePM';
 
 @Injectable()
 
@@ -181,12 +184,29 @@ export class UserDefinedReportPMService {
                  
             }
 			
+               this.MapCalculatedChartsOfAccounts(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
+			   			   
+            entityPM.OldEntityPM.CalculatedChartsOfAccounts = [];
+            for (var item in entityPM.CalculatedChartsOfAccounts) {
+            var myCalculatedChartsOfAccountPM = entityPM.CalculatedChartsOfAccounts[item];
+            var newCalculatedChartsOfAccountPM: CalculatedChartsOfAccountPM = this.clone(myCalculatedChartsOfAccountPM);
+						
+                newCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines = [];
+                for (var k in myCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines) {
+				    var myCalculatedChartsOfAccountsLinePM =myCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines[k];
+				    var newCalculatedChartsOfAccountsLinePM=this.clone(myCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines[k]);
+                    newCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines.push(newCalculatedChartsOfAccountsLinePM);
 
+					                 }
+							 
+            entityPM.OldEntityPM.CalculatedChartsOfAccounts.push(newCalculatedChartsOfAccountPM);
+            }
+			   
 		}
         else {
 
@@ -196,6 +216,206 @@ export class UserDefinedReportPMService {
         return entityPM;
     }
 
+    MapCalculatedChartsOfAccounts(entityPM: UserDefinedReportPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCalculatedChartsOfAccounts: CalculatedChartsOfAccountPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCalculatedChartsOfAccounts = entityPM.OldEntityPM.CalculatedChartsOfAccounts;
+        }
+
+        entityPM.CalculatedChartsOfAccounts = new Array<CalculatedChartsOfAccountPM>();
+        for (var item in jsonPM.CalculatedChartsOfAccounts) {
+            var jItem = jsonPM.CalculatedChartsOfAccounts[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCalculatedChartsOfAccountPM: CalculatedChartsOfAccountPM;
+	  
+            if (mapParent) {
+                newCalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(entityPM);
+            }
+            else
+            {
+                newCalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCalculatedChartsOfAccountPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newCalculatedChartsOfAccountPM.UniqueKey = Guid.newGuid();
+                newCalculatedChartsOfAccountPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newCalculatedChartsOfAccountPM.OldEntityPM = this.clone(newCalculatedChartsOfAccountPM);
+ 
+
+                this.MapCalculatedChartsOfAccountLines(newCalculatedChartsOfAccountPM, jItem, mapParent);
+                newCalculatedChartsOfAccountPM.OldEntityPM.CalculatedChartsOfAccountLines = [];
+                for (var k in newCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines) {
+                    //var clonedInside = this.clone(newCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines[k]);
+                    newCalculatedChartsOfAccountPM.OldEntityPM.CalculatedChartsOfAccountLines.push(newCalculatedChartsOfAccountPM.CalculatedChartsOfAccountLines[k].OldEntityPM); // clone old CalculatedChartsOfAccountLines//
+                }
+
+				
+            }
+            else {
+                if (newCalculatedChartsOfAccountPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newCalculatedChartsOfAccountPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newCalculatedChartsOfAccountPM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapCalculatedChartsOfAccountLines(newCalculatedChartsOfAccountPM, jItem, mapParent);
+ 
+                newCalculatedChartsOfAccountPM.OldEntityPM = null;
+                newCalculatedChartsOfAccountPM.EntityParentPM = null;
+            }
+			
+			 newCalculatedChartsOfAccountPM.IsDirty = false;
+            entityPM.CalculatedChartsOfAccounts.push(newCalculatedChartsOfAccountPM);
+        }
+        if (oldCalculatedChartsOfAccounts) {
+            
+            for (var itemKey in oldCalculatedChartsOfAccounts) {
+                if (entityPM.CalculatedChartsOfAccounts.filter(p=> p.UniqueKey === oldCalculatedChartsOfAccounts[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldCalculatedChartsOfAccounts[itemKey]) {
+                        //oldCalculatedChartsOfAccounts[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.CalculatedChartsOfAccounts.push(oldCalculatedChartsOfAccounts[itemKey]);
+						var oldItemJson = oldCalculatedChartsOfAccounts[itemKey];
+                        var deletedPM: CalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapCalculatedChartsOfAccountLines(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.CalculatedChartsOfAccounts.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapCalculatedChartsOfAccountLines(entityPM: CalculatedChartsOfAccountPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCalculatedChartsOfAccountLines: CalculatedChartsOfAccountsLinePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCalculatedChartsOfAccountLines = entityPM.OldEntityPM.CalculatedChartsOfAccountLines;
+        }
+
+        entityPM.CalculatedChartsOfAccountLines = new Array<CalculatedChartsOfAccountsLinePM>();
+        for (var item in jsonPM.CalculatedChartsOfAccountLines) {
+            var jItem = jsonPM.CalculatedChartsOfAccountLines[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCalculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM;
+	  
+            if (mapParent) {
+                newCalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(entityPM);
+            }
+            else
+            {
+                newCalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCalculatedChartsOfAccountsLinePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newCalculatedChartsOfAccountsLinePM.UniqueKey = Guid.newGuid();
+                newCalculatedChartsOfAccountsLinePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newCalculatedChartsOfAccountsLinePM.OldEntityPM = this.clone(newCalculatedChartsOfAccountsLinePM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newCalculatedChartsOfAccountsLinePM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newCalculatedChartsOfAccountsLinePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newCalculatedChartsOfAccountsLinePM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newCalculatedChartsOfAccountsLinePM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newCalculatedChartsOfAccountsLinePM.OldEntityPM = null;
+                newCalculatedChartsOfAccountsLinePM.EntityParentPM = null;
+            }
+			
+			 newCalculatedChartsOfAccountsLinePM.IsDirty = false;
+            entityPM.CalculatedChartsOfAccountLines.push(newCalculatedChartsOfAccountsLinePM);
+        }
+        if (oldCalculatedChartsOfAccountLines) {
+            
+            for (var itemKey in oldCalculatedChartsOfAccountLines) {
+                if (entityPM.CalculatedChartsOfAccountLines.filter(p=> p.UniqueKey === oldCalculatedChartsOfAccountLines[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldCalculatedChartsOfAccountLines[itemKey]) {
+                        //oldCalculatedChartsOfAccountLines[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.CalculatedChartsOfAccountLines.push(oldCalculatedChartsOfAccountLines[itemKey]);
+						var oldItemJson = oldCalculatedChartsOfAccountLines[itemKey];
+                        var deletedPM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.CalculatedChartsOfAccountLines.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

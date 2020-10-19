@@ -14,6 +14,15 @@ export class UserDefinedReportList {
 	CreatedByUserId: string;
 	UpdatedDateTime: Date;
 	UpdatedByUserId: string;
+	EnglishName: string;
+	LocalName: string;
+	IsCancelled: boolean;
+	CreatedByEnglishName: string;
+	CreatedByLocalName: string;
+	UpdatedByEnglishName: string;
+	UpdatedByLocalName: string;
+	UpdatedByName: string;
+	CreatedByName: string;
 	
 }
  

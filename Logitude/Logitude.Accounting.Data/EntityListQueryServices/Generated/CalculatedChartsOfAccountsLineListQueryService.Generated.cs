@@ -30,7 +30,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CalculatedChartsOfAccountsLine> iQueryable = (from a in context.CalculatedChartsOfAccountsLines
+            IQueryable<CalculatedChartsOfAccountsLine> iQueryable = (from a in context.CalculatedChartsOfAccountLines
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -133,7 +133,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public CalculatedChartsOfAccountsLineList GetSingle(string id)
         {
-            IQueryable<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLineQuery = (from a in context.CalculatedChartsOfAccountsLines
+            IQueryable<CalculatedChartsOfAccountsLine> CalculatedChartsOfAccountsLineQuery = (from a in context.CalculatedChartsOfAccountLines
                                                        where a.Id == id
                                                        select a);
 
@@ -149,7 +149,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CalculatedChartsOfAccountsLine> iQueryable = (from a in context.CalculatedChartsOfAccountsLines 
+            IQueryable<CalculatedChartsOfAccountsLine> iQueryable = (from a in context.CalculatedChartsOfAccountLines 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);

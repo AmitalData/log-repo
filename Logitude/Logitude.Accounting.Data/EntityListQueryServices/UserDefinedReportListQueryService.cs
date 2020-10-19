@@ -28,6 +28,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          Id = a.Id,
 					
 					                          Tenant = a.Tenant,
+
+											  EnglishName = a.EnglishName,
+
+											  LocalName = a.LocalName,
+
+											  IsCancelled = a.IsCancelled,
 					
 					                          CreateDateTime = a.CreateDateTime,
 					
@@ -36,14 +42,23 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          UpdatedDateTime = a.UpdatedDateTime,
 					
 					                          UpdatedByUserId = a.UpdatedByUserId,
-					
-		                    	            });
+
+											  CreatedByEnglishName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName,
+
+											  CreatedByLocalName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.LocalName,
+
+											  UpdatedByEnglishName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName,
+
+											  UpdatedByLocalName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.LocalName,
+
+
+											});
             return query;
 		}
 
 		private IQueryable<UserDefinedReport> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<UserDefinedReport> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<UserDefinedReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<UserDefinedReport> iQueryable, int tenant)
         {

@@ -22,7 +22,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class CalculatedChartsOfAccountsLineUpdateService:EntityUpdateService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLinePM,EntityPM>
+   public partial class CalculatedChartsOfAccountsLineUpdateService:EntityUpdateService<CalculatedChartsOfAccountsLine,CalculatedChartsOfAccountsLinePM,CalculatedChartsOfAccountPM>
    {
    
         CalculatedChartsOfAccountsLineRepository entityRepository;
