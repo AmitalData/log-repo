@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
             args.InvoiceDate = interestReportArguments.InvoiceDate;
-
+            args.CloseWithoutInvoice = interestReportArguments.CloseWithoutInvoice;
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         }
         private void CreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
-            if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
+            if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest|| interestReportArgs.CloseWithoutInvoice)
             {
                 IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
                 InterestReportService interestReportService = new InterestReportService();

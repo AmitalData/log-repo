@@ -2554,11 +2554,13 @@
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />
     <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
+    <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
@@ -3395,6 +3397,8 @@
     <Content Include="SharedDocuments.aspx" />
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
+    <Content Include="SharedLogistic\DocumentsApprovalPage.aspx" />
+    <Content Include="SharedLogistic\DocumentsApprovalPageViewModel.js" />
     <Content Include="ShipmentStatuses.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
@@ -5681,6 +5685,13 @@
     </Compile>
     <Compile Include="EntityExternalUpdate.aspx.designer.cs">
       <DependentUpon>EntityExternalUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SharedLogistic\DocumentsApprovalPage.aspx.cs">
+      <DependentUpon>DocumentsApprovalPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SharedLogistic\DocumentsApprovalPage.aspx.designer.cs">
+      <DependentUpon>DocumentsApprovalPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShipmentPackageModel\RegisterShipmentPackageDataProvider.Shared.cs" />
     <Compile Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx.cs">

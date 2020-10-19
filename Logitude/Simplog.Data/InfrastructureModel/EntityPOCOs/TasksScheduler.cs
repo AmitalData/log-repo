@@ -57,7 +57,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public double AverageRunTime { get; set; }
         public string EntityId { get; set; }
 
-
+        public string ResultType { get; set; }
 
     }
 }

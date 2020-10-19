@@ -709,7 +709,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     var GridDataSource = [];
 
     var iconTemplate = "";
-    iconTemplate += "<a id='#= Id #' href='#= Url #' target='_blank' OnClick='OnDownloadDocument()' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
+    iconTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
     iconTemplate += "<img src='#= FileType #' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto;' />";
     iconTemplate += "</a>";
     GridColumns.push({ title: " ", field: "FileType", width: 35, template: iconTemplate });
@@ -733,7 +733,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     }
 
     var linkTemplate = "";
-    linkTemplate += "<a id='#= Id #' href='#= Url #' target='_blank' OnClick='OnDownloadDocument()'>";
+    linkTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)'>";
     linkTemplate += "<div style='cursor:pointer; font-size:11px; color:\\#27AAE1; text-align:right; padding-right: 10px;'>View</div>";
     linkTemplate += "</a>";
 

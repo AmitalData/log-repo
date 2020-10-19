@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "347b935586cddf3f88738152ff299316";
+		public const string HashString = "08fe3da821b2476f0336dc9df13a13fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12228,7 +12228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Ship Id",
 					  						FullLocalDefaultText =  "כלי הובלה ימי",
 					  						ListFieldLable =  "ShipCodeListLable",
-					  						ListLableDefaultText =  "Ship Id",
+					  						ListLableDefaultText =  "Ship Id ",
 					  						ListLocalDefaultText =  "כלי הובלה ימי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -14174,9 +14174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllCourierDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_15.Id, NameTextCodeCode = DeclarationTextCode_15.Code, ObjectTableName = "Customs.Declaration", Code = "AllCourierDeclarations",  QueryGroupCode = "DECL", IndexOrder = 15, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_15.Id,FeatureUniqeCode= DeclarationFeature_15.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllCourierDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_15.Id, NameTextCodeCode = DeclarationTextCode_15.Code, ObjectTableName = "Customs.Declaration", Code = "AllCourierDeclarations",  QueryGroupCode = "DECL", IndexOrder = 15, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_15.Id,FeatureUniqeCode= DeclarationFeature_15.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWBCourierMaster" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
 			 QueryColumn AllCourierDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -16920,6 +16920,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationsOUnSavedRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declarations.O.UnSavedRemarks", DefaultText = "Remarks wont be saved",LocalDefaultText = @"ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

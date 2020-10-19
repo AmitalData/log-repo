@@ -85,6 +85,17 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
             this.DataTypeCode = this.ObjectField.DataTypeCode;
             this.DigitsAfterPoints = "n" + this.ObjectField.DigitsAfterPoint;
 
+            if (this.ObjectField.DigitsAfterPoint == 0) {
+                switch (this.DataTypeCode) {
+                    case "Double":
+                    case "Decimal":
+                        {
+                            this.DigitsAfterPoints = "n2";
+                            break;
+                        }
+                }
+            }
+
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;
                 this.NumberFieldTextAlign = "left";

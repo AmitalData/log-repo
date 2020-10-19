@@ -350,7 +350,7 @@ using Simplog.Data.InvoiceModel;
 					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
 					if(item.ARInvoiceLineAction != null)
 					{
-						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName);
+						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myARInvoiceLineActionPM != null)
 						{ 

@@ -1290,6 +1290,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 case "WRDE":
                     {
                         myResult = entityPM.WarehouseLegTerminalName;
+
+                        if (myResult != null)
+                        {
+                            if (myResult.Length > 40)
+                            {
+                                myResult = myResult.Substring(0, 39);
+                            }
+                        }
+
                         break;
                     }
                 case "ORDR":

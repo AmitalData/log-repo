@@ -82,7 +82,7 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
         this.DateFilterList.push(new CodeNameClass("ARR", "Actual Arrival Date"));
         this.DateFilterList.push(new CodeNameClass("DEP", "Actual Departure Date"));
         this.DateFilterList.push(new CodeNameClass("OPE", "Operational Date"));
-
+        this.DateFilterList.push(new CodeNameClass("FOPC", "First Operational Close Date"));
         this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "CRT")[0];
     }
 

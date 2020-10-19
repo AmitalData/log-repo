@@ -165,7 +165,7 @@ using Simplog.Data.QuoteModel;
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
-						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
+						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myChargesTypePM != null)
 						{ 
@@ -186,7 +186,7 @@ using Simplog.Data.QuoteModel;
 					CurrencyQueryService CostCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.CostCurrency != null)
 					{
-						var myCostCurrencyPM = CostCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.CostCurrency,Tenant,ComputingPartnerName);
+						var myCostCurrencyPM = CostCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.CostCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCostCurrencyPM != null)
 						{ 
@@ -223,7 +223,7 @@ using Simplog.Data.QuoteModel;
 					MeasurementQueryService CostMeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.CostMeasurement != null)
 					{
-						var myCostMeasurementPM = CostMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.CostMeasurement,Tenant,ComputingPartnerName);
+						var myCostMeasurementPM = CostMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.CostMeasurement,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCostMeasurementPM != null)
 						{ 
@@ -292,7 +292,7 @@ using Simplog.Data.QuoteModel;
 					MeasurementQueryService SaleMeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.SaleMeasurement != null)
 					{
-						var mySaleMeasurementPM = SaleMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.SaleMeasurement,Tenant,ComputingPartnerName);
+						var mySaleMeasurementPM = SaleMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.SaleMeasurement,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(mySaleMeasurementPM != null)
 						{ 
@@ -437,7 +437,7 @@ using Simplog.Data.QuoteModel;
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("PriceBreaks Can't be update"); 
-								temp.QuoteChargePriceSteps = QuotePriceStepsService4.QuotePriceStepsDataMappingAndValidatin(item.PriceBreaks,Tenant,ComputingPartnerName);
+								temp.QuoteChargePriceSteps = QuotePriceStepsService4.QuotePriceStepsDataMappingAndValidatin(item.PriceBreaks,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  

@@ -2007,11 +2007,16 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static void UpdateDocumentTypes(int tenant, DocumentTypeRepository documentTypeRepository, DocumentTypeCopyRepository documentTypeCopyRepository, Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes, Dictionary<string, DocumentType> currentTenantDocumentTypes, DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository, List<DocumentTypeCustomField> tenantZeroCustomFields, DocumentTypeTemplateRepository documentTypeTemplateRepository)
         {
+
+            string countryCode = GetCurrentTenantCountryCode(tenant);
+            bool sameCountry = false;
+
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes.Values)
             {
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
-                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id))
+                sameCountry = docType.CountryCode == countryCode;
+                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode) || sameCountry))
                 {
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
@@ -2022,7 +2027,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                             where a.Code.Trim().ToUpper() == docType.Code.Trim().ToUpper()
                                             select a).FirstOrDefault();
 
-                        if (documentType == null)
+                    if (documentType == null)
                         {
                             List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
                             DocumentType newDocType = new DocumentType()
@@ -2107,7 +2112,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                                   select doc).Any();
 
 
-                                if ((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id))
+                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode) || a.CountryCode == countryCode)))
                                 {
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
@@ -2186,7 +2191,25 @@ namespace WebFreight.Web.MetaDataUpdate
         }
 
        
-
+        private static string GetCurrentTenantCountryCode(int tenant)
+        {
+            string countryCode = "";
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+            AddressPM address = null;
+            if (currentTenant != null && currentTenant.AddressId != null)
+            {
+                ICommonDataContext objectContext = CommonDataContext.GetContext(currentTenant.Id);
+                AddressRepository addressRepository = new AddressRepository(objectContext);
+                AddressQuery addressQuery = new AddressQuery(addressRepository);
+                address = addressQuery.GetSinglePM(currentTenant.AddressId, currentTenant.Id);
+                if (address != null)
+                {
+                    countryCode = address.CountryCode;
+                }
+            }
+            return countryCode;
+        }
         private static void UpdateTenantVersion(int tenant, TenantRepository tenantRepository)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())

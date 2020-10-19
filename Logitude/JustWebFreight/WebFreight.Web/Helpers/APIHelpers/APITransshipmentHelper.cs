@@ -214,7 +214,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
         }
-        private void ValidateRoutingsSeriesDates()
+        public void ValidateRoutingsSeriesDates()
         {
             bool isTransshipment1Exists = (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) ? true : false;
             bool isTransshipment2Exists = (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) ? true : false;

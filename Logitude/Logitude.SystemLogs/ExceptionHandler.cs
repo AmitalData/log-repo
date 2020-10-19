@@ -75,28 +75,31 @@ namespace Logitude.SystemLogs
                 {
                     ErrorMessage = ExtraMessage + Environment.NewLine;
                 }
-
-                ErrorMessage += exception.Message;
-
-                if (exception.InnerException != null)
+                else
                 {
-                    ErrorMessage += Environment.NewLine + exception.InnerException.Message;
+                    ErrorMessage += exception.Message;
 
-                    if (exception.InnerException.InnerException != null)
+                    if (exception.InnerException != null)
                     {
-                        ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.Message;
+                        ErrorMessage += Environment.NewLine + exception.InnerException.Message;
 
-                        if (exception.InnerException.InnerException.InnerException != null)
+                        if (exception.InnerException.InnerException != null)
                         {
-                            ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.InnerException.Message;
-                        }
-                    }
+                            ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.Message;
 
-                    //if (exception.InnerException.Message.Contains("Physical connection is not usable"))
-                    //{
-                    //    SqlConnection.ClearAllPools();
-                    //}
+                            if (exception.InnerException.InnerException.InnerException != null)
+                            {
+                                ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.InnerException.Message;
+                            }
+                        }
+
+                        //if (exception.InnerException.Message.Contains("Physical connection is not usable"))
+                        //{
+                        //    SqlConnection.ClearAllPools();
+                        //}
+                    }
                 }
+                
 
                 if (clientDate == null)
                     clientDate = DateTime.Now;

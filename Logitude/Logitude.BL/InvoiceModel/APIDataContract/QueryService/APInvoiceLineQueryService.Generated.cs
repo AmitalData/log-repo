@@ -165,7 +165,7 @@ using Simplog.Data.InvoiceModel;
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
-						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
+						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myChargesTypePM != null)
 						{ 
@@ -247,7 +247,7 @@ using Simplog.Data.InvoiceModel;
 					CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.ForiegnCurrency != null)
 					{
-						var myForiegnCurrencyPM = ForiegnCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.ForiegnCurrency,Tenant,ComputingPartnerName);
+						var myForiegnCurrencyPM = ForiegnCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.ForiegnCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myForiegnCurrencyPM != null)
 						{ 
@@ -316,7 +316,7 @@ using Simplog.Data.InvoiceModel;
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
-						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);
+						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myPrepaidCollectPM != null)
 						{ 
@@ -345,7 +345,7 @@ using Simplog.Data.InvoiceModel;
 					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.ContainerType != null)
 					{
-						var myContainerTypePM = ContainerTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.ContainerType,Tenant,ComputingPartnerName);
+						var myContainerTypePM = ContainerTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.ContainerType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myContainerTypePM != null)
 						{ 

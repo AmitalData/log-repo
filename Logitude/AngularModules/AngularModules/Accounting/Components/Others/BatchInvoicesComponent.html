@@ -107,11 +107,15 @@
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
-                    <td style="width: 85%">
+                    <td style="width: 80%">
                         <div></div>
                     </td>
+                    <td style="width:70px">
+                        <button class="RedButton" (click)="CloseWithoutInvoice()">{{CloseWithoutInvoiceText}}</button>
+                    </td>
+                    <td style="width: 15px;"></td>
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="CheckNumberOfInterestReportInvoicingWithoutInvoice()">{{CreateInvoiceText}}</button>
+                        <button class="GreenButton" (click)="CheckNumberOfInterestReportInvoicingWithoutInvoice()">{{CreateInvoiceText}}</button>
                     </td>
 
                 </tr>

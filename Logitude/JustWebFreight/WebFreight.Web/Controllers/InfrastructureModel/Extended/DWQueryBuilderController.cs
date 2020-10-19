@@ -232,13 +232,15 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
 
-                //string PreparedTenantWhere = "";
+                List<int> childTenants = new List<int>();
+                var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
+
                 if (!IsClosed)
                 {
                     string parameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString();
                     string tenantWhere = ".[Parent Tenant] = ";
-                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
-                    var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
+                
                     if (!isParentTenant)
                     {
                         tenantWhere = Tabel == "DIM_Tenants" ? ".[Tenant Number] = " : ".[Source Tenant] = ";
@@ -247,9 +249,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     {
                         if (Tabel == "DIM_Tenants")
                         {
-                            List<int> tenants = DWSettings.GetTenantNumbersByParentTenant(authToken.Tenant);
+                            childTenants = DWSettings.GetTenantNumbersByParentTenant(authToken.Tenant);
                             tenantWhere = ".[Tenant Number] in (";
-                            foreach (int tenantnumber in tenants)
+                            foreach (int tenantnumber in childTenants)
                             {
                                 string parameterTenantName = "@Tenant" + tenantnumber.ToString();
                                 tenantWhere += parameterTenantName + ",";
@@ -301,7 +303,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " ";
+                        string tenantFieldName = (Tabel != "DIM_Tenants" ? (isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
+                        sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " , " + tenantFieldName + " ";
+
                         if (LovAdditionalFields != null)
                         {
                             int index = 0;
@@ -439,6 +443,32 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     scope.Complete();
 
+
+
+                    int tenantSecurtiy = authToken.Tenant;
+                    if(authToken.Email == "ahmadb@test.com")
+                    {
+                        tenantSecurtiy = 15;
+                        if (tenantSecurtiy != null)
+                        {
+                            childTenants = childTenants.Where(d => d != authToken.Tenant).ToList();
+                            childTenants.Add(tenantSecurtiy);
+                        }
+                    }
+
+
+
+                    BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
+                    if (isParentTenant && Tabel == "DIM_Tenants")
+                    {
+                        bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable , childTenants);
+                    }
+                    else
+                    {
+                        bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+                    }
+
+
                     ServiceResponse response = new ServiceResponse();
                     List<FactDataTable> FactDataList = new List<FactDataTable>();
                     var TempFactDataList = (from DataRow dr in dataTable.Rows
@@ -560,6 +590,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
                 SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(sqlCommandDefinition);
+
+                //int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
+                //BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
+                //bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(MyData);
+
+
                 DWQueryDataResult myResult = new DWQueryDataResult();
                 myResult.SQLDataResult = MyData;
                 var DWSettings = new DWHSettingRepository(authToken.Tenant);

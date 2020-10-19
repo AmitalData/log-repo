@@ -12,7 +12,11 @@
     jQuery.IsBrandingEnabled = "";
     jQuery.TenantDateTimeFormat = null;
     jQuery.IsMoneyTabEnabled = false;
-    jQuery.DisplayDocumentsAndEvents = false;    
+    jQuery.DisplayDocumentsAndEvents = false;
+    jQuery.IsDocumentsApprovalRequried = false;
+    jQuery.DocumentsApprovalName = "";
+    jQuery.DownloadAll = false;
+    jQuery.DocumentUrl = "";
 
     var IsTabSelected_PAR = false;
     var IsTabSelected_PAC = false;
@@ -378,6 +382,62 @@
 
     });
 
+    jQuery.GetIsDocumentsApprovalRequried = (function () {
+
+        var url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+
+                //$.SendContactActivity($.CurrentEmail, "Shipment", "Documents Approval", $.CurrentTenant, $.CurrentCardId);
+
+                if (result) {
+                    $.IsDocumentsApprovalRequried = true;
+                }
+                else {
+
+                }
+
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+            }
+        });
+    });
+
+    jQuery.PutDocumentsApprovedByUserName = (function () {
+
+        var url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&documentsApprovedByUserName=" + $.DocumentsApprovalName + "&tenant=" + $.CurrentTenant;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+
+                //$.SendContactActivity($.CurrentEmail, "Shipment", "Documents Approval", $.CurrentTenant, $.CurrentCardId);
+
+                if (result) {
+                    $.IsDocumentsApprovalRequried = false;
+                }
+                else {
+
+                }
+
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+            }
+        });
+    });
+
     jQuery.GetShipmentEvents = (function () {
 
         $("#EventsPageBusyIndicator").show();
@@ -510,6 +570,7 @@
 
                             if ($.DisplayDocumentsAndEvents) {
                                 $.GetShipmentDocuments();
+                                $.GetIsDocumentsApprovalRequried();
                             }
 
                             else {
@@ -526,6 +587,7 @@
 
                         else {
                             $.GetShipmentDocuments();
+                            $.GetIsDocumentsApprovalRequried();
                         }
                     }
 
@@ -606,8 +668,8 @@
     });
 
     $(document).ready(function () {
+        $('#Container2').hide();
         $("#TAB_MON").hide();
-        $("#DownloadAll").hide();
 
         $.ResizePage(210);
         $.SetTabsEnabled(false);
@@ -631,9 +693,9 @@
             $.CurrentEntityKey = linkParameters[0];
             $.CurrentEntityId = linkParameters[1];
             $.CurrentTenant = linkParameters[2];
-            $.IsBrandingEnabled = linkParameters[3];
+            $.IsBrandingEnabled = linkParameters[3];          
+
             $.IsExternalURL = true;
-          
             if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
                
                 $("#PoweredArea2").hide();

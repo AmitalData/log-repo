@@ -380,6 +380,7 @@
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="LogMessagesWorkerRole.cs" />
+    <Compile Include="DocumentApprovalWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />

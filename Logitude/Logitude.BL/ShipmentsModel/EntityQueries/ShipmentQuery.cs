@@ -3951,6 +3951,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
                     }
                     return shipmentPM;
                 }
@@ -4003,6 +4004,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
                     }
                     return shipmentPM;
                 }
@@ -4048,6 +4050,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
             }
             return returnShipment;
         }
@@ -12737,6 +12740,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
                         shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
                         shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
 
                     }
                     return shipmentPM;
@@ -12768,6 +12772,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 DenyReason = b.DenyReason,
                                 DeclarationXmlData = b.DeclarationXmlData,
                                 PaymentRequestXML = b.PaymentRequestXML,
+                                DocumentsApprovedByUserName = b.DocumentsApprovedByUserName,
                             }).FirstOrDefault();
 
                 return data;
