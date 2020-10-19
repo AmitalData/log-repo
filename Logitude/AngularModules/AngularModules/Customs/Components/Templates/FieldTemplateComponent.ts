@@ -174,8 +174,8 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 700;//400;
-        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 800;//400;
+        logitudeWindow.Width = 900;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
 
