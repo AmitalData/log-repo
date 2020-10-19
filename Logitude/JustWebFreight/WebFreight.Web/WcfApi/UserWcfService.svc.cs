@@ -142,16 +142,16 @@ namespace WebFreight.Web.WcfApi
                     }
 
                     User entity = userRepository.GetSingleUserByCodeOrEmailForTenant(entityPM.Code, entityPM.Email, entityPM.Tenant, false);
-                    if (entity == null && !string.IsNullOrEmpty(entityPM.Email) && entityPM.Tenant != 0)
-                    {
-                        var tenantZeroUser = userRepository.GetSingleUserByEmail(entityPM.Email, 0, false);
-                        if(tenantZeroUser != null)
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "This user already exists on tenant zero!";
-                            return response;
-                        }
-                    }
+                    //if (entity == null && !string.IsNullOrEmpty(entityPM.Email) && entityPM.Tenant != 0)
+                    //{
+                    //    var tenantZeroUser = userRepository.GetSingleUserByEmail(entityPM.Email, 0, false);
+                    //    if(tenantZeroUser != null)
+                    //    {
+                    //        response.HasError = true;
+                    //        response.ErrorMessage = "This user already exists on tenant zero!";
+                    //        return response;
+                    //    }
+                    //}
                     if (entity == null)
                     {
                         RolePM defaultRole = null;
