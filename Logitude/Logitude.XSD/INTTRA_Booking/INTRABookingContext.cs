@@ -256,9 +256,14 @@ namespace Logitude.XSD.INTTRA_Booking
                 this.Errors.Add("Shipment Order Packages or Shipment Packages are required");
             }
 
-            else if (this.ShipmentOrderPackages.Where(d => d.GrossWeight == null || d.GrossWeight == 0).Any() && this.ShipmentPackages.Where(d => d.Weight == null || d.Weight == 0).Any())
+            else if ((this.ShipmentPackages != null && this.ShipmentPackages.Count() > 0) && this.ShipmentPackages.Where(d => d.Weight == null || d.Weight == 0).Any())
             {
                 this.Errors.Add("All Containers should have Gross Weight");
+            }
+
+            else if ((this.ShipmentOrderPackages != null && this.ShipmentOrderPackages.Count() > 0) &&this.ShipmentOrderPackages.Where(d => d.GrossWeight == null || d.GrossWeight == 0).Any())
+            {
+                this.Errors.Add("All Shipment Order Packages should have Gross Weight");
             }
         }
 
