@@ -61,6 +61,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedEntityPM;
         }
 
+        public CountryCityPM GetCountryCityPMByCountryIdAndNAme(string countryId, string cityName, int tenant)
+        {
+            CountryCityPM entityPM = (from a in repository.context.CountryCities.Include("Country").Include("State")
+                                      where a.Tenant == tenant && a.CountryId == countryId && a.EnglishName == cityName
+                                      select new CountryCityPM()
+                                      {
+                                          AddedManually = a.AddedManually,
+                                          EnglishName = a.EnglishName,
+                                          Id = a.Id,
+                                          Code = a.Code,
+                                          InActive = a.InActive,
+                                          LocalName = a.LocalName,
+                                          Notes = a.Notes,
+                                          Tenant = a.Tenant,
+                                          SearchFields = a.SearchFields,
+                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                          CountryId = a.CountryId,
+                                          CountryCode = a.Country == null ? null : a.Country.Code,
+                                          CountryEnglishName = a.Country == null ? null : a.Country.EnglishName,
+                                          StateId = a.StateId,
+                                          StateCode = a.State == null ? null : a.State.Code,
+                                          StateEnglishName = a.State == null ? null : a.State.EnglishName,
+                                      }).FirstOrDefault();
+
+            CountryCityPM securedEntityPM = new CountryCityPM();
+            SecuredMapping.GetMappedPM(entityPM, securedEntityPM, "CountryCity", tenant);
+
+            return securedEntityPM;
+        }
+
         public IQueryable<CountryCityPM> GetCountryCitiesPMsByTenant(int tenant)
         {
             IQueryable<CountryCityPM> iQueryable =
