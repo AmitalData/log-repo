@@ -48,30 +48,33 @@
                     <div class="milestones">
                         <div class="start">
                             <img src="./assets/images/misc/calendar.svg" alt="">
-                            <div class="label">Booking</div>
-                            <div class="details">02-NOV-2019, 13:10</div>
+                            <div class="label">Created</div>
+                            <div class="details">{{Shipment.CreateDate | date: 'dd/MM/yyyy'}}</div>
                         </div>
                         <div class="middle">
-                            <img src="./assets/images/misc/Truck.svg" alt="">
+                            <img class="path " [attr.src]="GetModeIcon()" alt=" " />
 
                             <div class="label">In Progress</div>
-                            <div class="details">last update 18-nov-2019, 18:00</div>
+                            <div class="details">{{Date | date: 'dd/MM/yyyy'}}</div>
                         </div>
                         <div class="end">
-                            <img src="./assets/images/misc/gps-marker.svg" alt="">
 
-                            <div class="label dim">Delivered</div>
+                            <img class="path " [attr.src]="GetDeliveredIcon()" alt=" " />
+                            <div *ngIf="!Delivered" class="label dim">Delivered</div>
+                            <div *ngIf="Delivered" class="label">Delivered</div>
                             <!-- <div class="details">details</div> -->
                         </div>
                     </div>
 
                     <div class="line-progressbar">
                         <div class="line blue-line"></div>
-                        <div class="line dim-line"></div>
+                        <div *ngIf="!Delivered" class="line dim-line"></div>
+                        <div *ngIf="Delivered" class="line dilevered-line"></div>
 
                         <div class="dot start"></div>
                         <div class="dot outline"></div>
-                        <div class="dot gray end"></div>
+                        <div *ngIf="!Delivered" class="dot gray end"></div>
+                        <div *ngIf="Delivered" class="dot blue end"></div>
                     </div>
 
                 </div>
