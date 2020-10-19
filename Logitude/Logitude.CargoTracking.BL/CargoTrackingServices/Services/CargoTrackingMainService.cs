@@ -1189,7 +1189,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
             cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
             cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_CurrentMilestoneCode] ON [dbo].["+ TableName + "]([CurrentMilestoneCode]) End \n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_CurrentMilestoneCode] ON [dbo].["+ TableName + "]([CurrentMilestoneCode])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "]([EntityId]) End \n";
 
             return cmd;
 
