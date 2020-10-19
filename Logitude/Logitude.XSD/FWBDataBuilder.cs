@@ -1669,8 +1669,8 @@ namespace Logitude.XSD
 
             #region [12] RateDescription
 
-            bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
             bool isSLACExists = !string.IsNullOrEmpty(Context.SLAC) ? true : false;
+            bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
 
             if (Context.IsMultipleCommodities)
             {
@@ -1919,13 +1919,34 @@ namespace Logitude.XSD
                     int i = 0;
                     int RateDescriptionMaxOccurs = 11;
                     int DimensionsLinesMaxOccurs = RateDescriptionMaxOccurs - 1;
-                    if (isHarmonizeExists)
+                    int allValidPackagesCounts = Context.ShipmentPackages.Where(d => d.Length > 0 && d.Width > 0 && d.Height > 0).Count();
+                    
+                    int lines = 1;
+
+                    if (isSLACExists)
                     {
+                        lines++;
                         DimensionsLinesMaxOccurs -= 1;
                     }
 
+                    if (isHarmonizeExists)
+                    {
+                        lines++;
+                        DimensionsLinesMaxOccurs -= 1;
+                    }
+
+                    if (allValidPackagesCounts > DimensionsLinesMaxOccurs)
+                    {
+                        lines = 11;
+                        DimensionsLinesMaxOccurs -= 1;
+                    }
+
+                    else
+                    {
+                        lines += allValidPackagesCounts;
+                    }
                     #region
-                   
+
                     #region First Totals Line
 
                     i += 1;
@@ -2018,14 +2039,59 @@ namespace Logitude.XSD
                     listRateDescription.Add(listRateTotalsItem);
                     #endregion
 
-                    #region Dimensions
-                    int allValiePackagesCounts = Context.ShipmentPackages.Where(d => d.Length > 0 && d.Width > 0 && d.Height > 0).Count();
-                    List<ShipmentPackage> allRemainingPackages = new List<ShipmentPackage>();
+                    #region NatureOfGoodsList
+                    int NatureOfGoodsMaxOccurs = RateDescriptionMaxOccurs - lines;
 
-                    if (allValiePackagesCounts > DimensionsLinesMaxOccurs)
+                    foreach (string str in Context.NatureOfGoodsList)
                     {
-                        DimensionsLinesMaxOccurs -= 1;
+                        if (NatureOfGoodsMaxOccurs > 0)
+                        {
+                            i += 1;
+
+                            CHAMP17.RateDescriptionFullBody listRateGoodsItem = new CHAMP17.RateDescriptionFullBody()
+                            {
+                                ChargeLineCount = new CHAMP17.ChargeLineCount()
+                                {
+                                    AWBRateLineNumber = i,
+                                },
+                            };
+
+                            if (Context.ShipmentLevelCode == "C")
+                            {
+                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                                {
+                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                    {
+                                        Item = new CHAMP17.Consolidation()
+                                        {
+                                            NatureAndQuantityOfGoods = str,
+                                        }
+                                    }
+                                };
+                            }
+
+                            else
+                            {
+                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                                {
+                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                    {
+                                        Item = new CHAMP17.GoodsDescription()
+                                        {
+                                            NatureAndQuantityOfGoods = str,
+                                        }
+                                    }
+                                };
+                            }
+
+                            listRateDescription.Add(listRateGoodsItem);
+                            NatureOfGoodsMaxOccurs--;
+                        }
                     }
+                    #endregion
+
+                    #region Dimensions
+                    List<ShipmentPackage> allRemainingPackages = new List<ShipmentPackage>();
 
                     foreach (ShipmentPackage package in Context.ShipmentPackages)
                     {
@@ -2120,55 +2186,6 @@ namespace Logitude.XSD
                     }
                     #endregion
 
-                    #region NatureOfGoodsList
-
-                    foreach (string str in Context.NatureOfGoodsList)
-                    {
-                        if (listRateDescription.Count < DimensionsLinesMaxOccurs)
-                        {
-                            i += 1;
-
-                            CHAMP17.RateDescriptionFullBody listRateGoodsItem = new CHAMP17.RateDescriptionFullBody()
-                            {
-                                ChargeLineCount = new CHAMP17.ChargeLineCount()
-                                {
-                                    AWBRateLineNumber = i,
-                                },
-                            };
-
-                            if (Context.ShipmentLevelCode == "C")
-                            {
-                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                                {
-                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                    {
-                                        Item = new CHAMP17.Consolidation()
-                                        {
-                                            NatureAndQuantityOfGoods = str,
-                                        }
-                                    }
-                                };
-                            }
-
-                            else
-                            {
-                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                                {
-                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                    {
-                                        Item = new CHAMP17.GoodsDescription()
-                                        {
-                                            NatureAndQuantityOfGoods = str,
-                                        }
-                                    }
-                                };
-                            }
-
-                            listRateDescription.Add(listRateGoodsItem);
-                        }
-                    }
-                    #endregion
-
                     #region Harmonize
                     if (isHarmonizeExists)
                     {
@@ -2199,8 +2216,15 @@ namespace Logitude.XSD
 
                     if (isSLACExists)
                     {
+                        i += 1;
+
                         CHAMP17.RateDescriptionFullBody listRateSLACItem = new CHAMP17.RateDescriptionFullBody()
                         {
+                            ChargeLineCount = new CHAMP17.ChargeLineCount()
+                            {
+                                AWBRateLineNumber = i,
+                            },
+
                             RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
                             {
                                 RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
