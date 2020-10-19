@@ -894,7 +894,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
                             }
-                            if (!isStatusVPA) isCollectActive = false;
+                            if (isStatusVPA) isCollectActive = false;
                         }
 
                         if (isCollectActive)
