@@ -23,14 +23,14 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         public IQueryable<CargoTrackingShipment> GetByShipmentIds(List<string> ShipmentIds, int tenant)
         {
-            IQueryable<string> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
+            List<string> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
                                                                     where
 
                                                                        shipment.Tenant == tenant
                                                                        && shipment.IsMainRecord == false
                                                                        && ShipmentIds.Contains(shipment.EntityId)
                                                                        
-                                                                    select shipment.CustomsShipmentHeaderId);
+                                                                    select shipment.CustomsShipmentHeaderId).ToList();
 
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
@@ -39,7 +39,8 @@ namespace Logitude.CargoTracking.Data.Repositories
                                                                         && shipment.IsMainRecord == true 
                                                                         && ShipmentIds.Contains(shipment.EntityId)
                                                                       )
-                                                                     || shipmentsIsNotMain.Contains(shipment.EntityId))
+                                                                     || shipmentsIsNotMain.Contains(shipment.EntityId)
+                                                                     )
                                                            select shipment);
 
 
