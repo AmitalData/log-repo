@@ -37,93 +37,93 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             List<CargoTable> CargoTableLists = new List<CargoTable>();
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "Port",
-            //    FieldsDBName = "Id,Tenant,Code,CountryId,EnglishName,AutomaticLastUpdateDate",
-            //    CT_FieldsDBName = "Id,Code,EnglishName,CountryId,Tenant",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    DBTableName = "Ports",
-            //    CT_TableName = "CargoTrackingPorts",
-            //    Main_CT_TableName = "CargoTrackingPorts",
-            //    Pre_TableName = "Pre_CargoTrackingPorts",
-            //    ConditionsNumber = 1,
-            //});
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Port",
+                FieldsDBName = "Id,Tenant,Code,CountryId,EnglishName,AutomaticLastUpdateDate",
+                CT_FieldsDBName = "Id,Code,EnglishName,CountryId,Tenant",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                DBTableName = "Ports",
+                CT_TableName = "CargoTrackingPorts",
+                Main_CT_TableName = "CargoTrackingPorts",
+                Pre_TableName = "Pre_CargoTrackingPorts",
+                ConditionsNumber = 1,
+            });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "Card",
-            //    FieldsDBName = "Id,Tenant,Code,LocalName,EnglishName,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    CT_FieldsDBName = "Id,Code,EnglishName,LocalName,Tenant",
-            //    DBTableName = "Cards",
-            //    CT_TableName = "CargoTrackingCards",
-            //    Main_CT_TableName = "CargoTrackingCards",
-            //    Pre_TableName = "Pre_CargoTrackingCards",
-            //    ConditionsNumber = 1,
-            //});
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Card",
+                FieldsDBName = "Id,Tenant,Code,LocalName,EnglishName,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Code,EnglishName,LocalName,Tenant",
+                DBTableName = "Cards",
+                CT_TableName = "CargoTrackingCards",
+                Main_CT_TableName = "CargoTrackingCards",
+                Pre_TableName = "Pre_CargoTrackingCards",
+                ConditionsNumber = 1,
+            });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "TransportModes",
-            //    FieldsDBName = "Id,Name,SearchFields,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    CT_FieldsDBName = "Id,Name,SearchFields",
-            //    DBTableName = "TransportModes",
-            //    CT_TableName = "CargoTrackingTransportModes",
-            //    Main_CT_TableName = "CargoTrackingTransportModes",
-            //    Pre_TableName = "Pre_CargoTrackingTransportModes",
-            //    ConditionsNumber = 1,
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "TransportModes",
+                FieldsDBName = "Id,Name,SearchFields,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Name,SearchFields",
+                DBTableName = "TransportModes",
+                CT_TableName = "CargoTrackingTransportModes",
+                Main_CT_TableName = "CargoTrackingTransportModes",
+                Pre_TableName = "Pre_CargoTrackingTransportModes",
+                ConditionsNumber = 1,
 
-            //});
+            });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "Countries",
-            //    FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    CT_FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant",
-            //    DBTableName = "Countries",
-            //    CT_TableName = "CargoTrackingCountries",
-            //    Main_CT_TableName = "CargoTrackingCountries",
-            //    Pre_TableName = "Pre_CargoTrackingCountries",
-            //    ConditionsNumber = 1,
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Countries",
+                FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant",
+                DBTableName = "Countries",
+                CT_TableName = "CargoTrackingCountries",
+                Main_CT_TableName = "CargoTrackingCountries",
+                Pre_TableName = "Pre_CargoTrackingCountries",
+                ConditionsNumber = 1,
 
-            //});
+            });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "ShipmentMasterDatas",
-            //    FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA,Tenant,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    CT_FieldsDBName = "Id,Tenant,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA",
-            //    DBTableName = "ShipmentMasterDatas",
-            //    CT_TableName = "CargoTrackingShipmentMasters",
-            //    Main_CT_TableName = "CargoTrackingShipmentMasters",
-            //    Pre_TableName = "Pre_CargoTrackingShipmentMasters",
-            //    ConditionsNumber = 1,
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "ShipmentMasterDatas",
+                FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA,Tenant,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Tenant,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA",
+                DBTableName = "ShipmentMasterDatas",
+                CT_TableName = "CargoTrackingShipmentMasters",
+                Main_CT_TableName = "CargoTrackingShipmentMasters",
+                Pre_TableName = "Pre_CargoTrackingShipmentMasters",
+                ConditionsNumber = 1,
 
-            //});
+            });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "ShipmentComputedFields",
-            //    FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA,Tenant,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    ConditionKey = "Id",
-            //    CT_FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,Tenant,FinalDeliveryETA",
-            //    DBTableName = "ShipmentComputedFields",
-            //    CT_TableName = "CargoTrackingShipmentComputeds",
-            //    Main_CT_TableName = "CargoTrackingShipmentComputeds",
-            //    Pre_TableName = "Pre_CargoTrackingShipmentComputeds",
-            //    ConditionsNumber = 1,
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "ShipmentComputedFields",
+                FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA,Tenant,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,Tenant,FinalDeliveryETA",
+                DBTableName = "ShipmentComputedFields",
+                CT_TableName = "CargoTrackingShipmentComputeds",
+                Main_CT_TableName = "CargoTrackingShipmentComputeds",
+                Pre_TableName = "Pre_CargoTrackingShipmentComputeds",
+                ConditionsNumber = 1,
 
-            //});
+            });
 
             CargoTableLists.Add(new CargoTable()
             {

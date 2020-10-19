@@ -644,6 +644,8 @@ namespace CargoTrackingWinFormService.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
+            cargoTrackingService = new CargoTrackingMainService();
+
             if (FirstInit)
             {
                 this.Height += 40;
