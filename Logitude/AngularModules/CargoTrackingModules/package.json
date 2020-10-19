@@ -4,10 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /CargoTracking/ --prod && start dist\\CargoTracking",
-    "build:Cloud": "ng build --base-href /cloud/CargoTracking/ --prod && start dist\\CargoTracking",
-    "build:test": "ng build --base-href /test/CargoTracking/ --prod && start dist\\CargoTracking",
-    "build:CC": "ng build --prod && start dist\\CargoTracking",
+    "build:Old": "ng build --base-href /CargoTracking/ --prod && start dist\\CargoTracking",
+    "build": "ng build --prod && start dist\\CargoTracking",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
