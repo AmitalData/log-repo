@@ -1,0 +1,8 @@
+<!ELEMENT LOGIGENREQ (LogitudeGeneralRequest*)>
+<!ELEMENT LogitudeGeneralRequest (Code?, Date1?, Date2?, Param1?, Param2?, More_Param?)>
+<!ELEMENT Code (#PCDATA)>
+<!ELEMENT Date1 (#PCDATA)>
+<!ELEMENT Date2 (#PCDATA)>
+<!ELEMENT Param1 (#PCDATA)>
+<!ELEMENT Param2 (#PCDATA)>
+<!ELEMENT More_Param (#PCDATA)>
