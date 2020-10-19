@@ -153,6 +153,12 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
 
+        public string BillToAddress1 { get; set; }
+        public string BillToAddress2 { get; set; }
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
+        public string BillToState { get; set; }
+
         public string Via1 { get; set; }
         public string Via2 { get; set; }
         public string Via3 { get; set; }
