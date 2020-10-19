@@ -750,12 +750,12 @@
     FieldName="&quot;VendorName&quot;"
     OldNames="VendorName"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoice&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="70"
+    MaxLength="100"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -11019,6 +11019,10 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+========================================================================
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> master.73246
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
