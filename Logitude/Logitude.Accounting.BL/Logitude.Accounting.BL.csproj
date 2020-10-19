@@ -237,6 +237,7 @@
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
     <Compile Include="CoreBL\GLAccountsAgingCSVBuilder.cs" />
+    <Compile Include="CoreBL\GLAccountsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\InterestReport\CSVStringLinesGetter.cs" />
     <Compile Include="CoreBL\InterestReport\IInterestReportCalculationPreparations.cs" />
     <Compile Include="CoreBL\InterestReport\IInterestReportsCreationForCustomerDataPreparation.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
+    <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\Mapping\InterestReportInvoiceMapping.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />

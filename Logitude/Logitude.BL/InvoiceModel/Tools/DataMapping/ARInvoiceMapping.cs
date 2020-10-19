@@ -89,6 +89,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.SalesmanUserId = entityPM.SalesmanUserId;
             entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
             entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+            entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
 
             if (entityPM.HouseNumber != null)
             {

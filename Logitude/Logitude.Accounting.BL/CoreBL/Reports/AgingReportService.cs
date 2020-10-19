@@ -382,7 +382,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                             .Where(r => r.AccountId == g.Key.AccountId)
                             .Where(r => r.CurrencyId == g.Key.CurrencyId).ToList();
 
+                        currencyAging.ForEach(r=>
+                        {
+                            if (r.OpenDebit < 0)
+                            {
+                                r.OpenCredit -= r.OpenDebit;
+                                r.OpenDebit = 0;
+                            }
 
+                            if (r.OpenCredit < 0)
+                            {
+                                r.OpenDebit -= r.OpenCredit;
+                                r.OpenCredit = 0;
+                            }
+
+                        }
+
+                        );
                         currencyAging = ManipulateFifoPerAccCurr(currencyAging);
                         totalByMonthFIFO.AddRange(currencyAging);
                     }

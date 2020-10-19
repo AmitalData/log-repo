@@ -19,7 +19,7 @@ export const Components =
         MainSchedulerComponent,
         SchedulerDateListTemplate,
         SchedulerDurationListTemplate,
-        FTBSchedulerTemplateComponent,
+        //FTBSchedulerTemplateComponent,
         TaskSchedulerTemplateComponent,
         ChooseProcedureCodeComponent,
     ];

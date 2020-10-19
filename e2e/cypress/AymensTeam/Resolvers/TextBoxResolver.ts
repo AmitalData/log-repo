@@ -21,19 +21,40 @@ export class TextBoxResolver extends AbstractResolver implements IResolver {
         return this;
     }
 
+    private isEditGrid: boolean = false;
+    public IsEditGrid(value: boolean = true) {
+        this.isEditGrid = value;
+        return this;
+    }
+
     Reset() {
         super.Reset();
         this.objectTable = null;
         this.objectField = null;
         this.isTextArea = false;
+        this.isEditGrid = false;
     }
 
     public Type(value: string) {
         if (this.selector) {
-            cy.get(this.GetContainer())
-                .find(this.selector)
-                .eq(this.index)
-                .type(value);
+
+            if (this.isEditGrid) {
+                cy.get(this.GetContainer())
+                    .find(this.selector)
+                    .eq(this.index)
+                    .within((element) => {
+                        cy.wrap(element).click({ force: true }).then(() => {
+                            cy.get('input').type(value);
+                        });
+                    });
+            }
+
+            else {
+                cy.get(this.GetContainer())
+                    .find(this.selector)
+                    .eq(this.index)
+                    .type(value);
+            }
         }
 
         else {

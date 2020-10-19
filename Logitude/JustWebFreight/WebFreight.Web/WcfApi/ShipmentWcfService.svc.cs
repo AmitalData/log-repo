@@ -1261,7 +1261,7 @@ namespace WebFreight.Web.WcfApi
                             bool exists = false;
                             if (!string.IsNullOrEmpty(traceEvent.ExternalId))
                             {
-                                exists = shipmentEvents.Where(e => e.ExternalId == traceEvent.ExternalId).Any();
+                                exists = shipmentEvents.Where(e => e.ExternalId.Trim() == traceEvent.ExternalId.Trim()).Any();
                             }
 
                             if (!exists)

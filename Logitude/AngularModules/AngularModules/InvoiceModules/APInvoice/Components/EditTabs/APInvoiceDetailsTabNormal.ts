@@ -1472,8 +1472,6 @@ export class APInvoiceLineItem extends BaseComponent {
     set Exists(newValue: boolean) {
         if (newValue == true) {
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
-
-            this.OnInvoiceExchangeRateChanged();
         }
 
         else {

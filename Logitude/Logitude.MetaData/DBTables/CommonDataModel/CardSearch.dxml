@@ -66,9 +66,8 @@
 
 
   <Index
-  Columns="Tenant,InActive,Keyword,PartnerTypeId,Weight"
-  Include="CardId" />
-
+  Columns="Tenant,InActive,Keyword,PartnerTypeId"
+  Include="CardId,Weight" />
 
   <Index
   Columns="Tenant,Weight" />

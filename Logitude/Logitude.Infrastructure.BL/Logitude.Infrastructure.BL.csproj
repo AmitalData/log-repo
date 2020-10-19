@@ -167,6 +167,7 @@
     <Compile Include="EntityUpdateServices\TeamUpdateService.cs" />
     <Compile Include="ExtendedServices\BatchTaskExecutionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\BIReportClassLevelValidator.cs" />
     <Compile Include="Validators\InfrastructureTranslateTextsClass.cs" />
     <Compile Include="Validators\InfrastructureValidationClass.cs" />
     <Compile Include="Validators\InfrastructureValidationClass.Shared.cs" />

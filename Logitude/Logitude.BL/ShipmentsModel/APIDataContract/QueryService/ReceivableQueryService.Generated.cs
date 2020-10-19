@@ -137,7 +137,7 @@ using Simplog.Data.ShipmentsModel;
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
-						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
+						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myChargesTypePM != null)
 						{ 
@@ -158,7 +158,7 @@ using Simplog.Data.ShipmentsModel;
 					MeasurementQueryService MeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.Measurement != null)
 					{
-						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName);
+						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myMeasurementPM != null)
 						{ 
@@ -203,7 +203,7 @@ using Simplog.Data.ShipmentsModel;
 					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
-						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);
+						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCurrencyPM != null)
 						{ 
@@ -232,7 +232,7 @@ using Simplog.Data.ShipmentsModel;
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
-						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);
+						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myPrepaidCollectPM != null)
 						{ 

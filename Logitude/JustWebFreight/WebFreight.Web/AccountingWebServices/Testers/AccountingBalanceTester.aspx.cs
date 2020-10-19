@@ -91,7 +91,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonYearTransferCancel_Click,
             _ButtonExternalReconcile_click,
             _ButtonCardIndexNew_Click,
-            _ButtonLoadConsolTaxRep_Click
+            _ButtonLoadConsolTaxRep_Click,
+            _ButtonLoadGLAccountsCSV_Click,
+            _ButtonLoadJournalsCSV_Click
         }
 
         //DateTime _MyDate;
@@ -809,6 +811,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 workerrolename_Options = "production,development,staging",
                 workerrolename = "production",
                 TimeOutinSec = 30,
+                ConversionJournal=false,
                 //YYYY = 2016,
                 //CheckControlAccountMode=false
             };
@@ -830,7 +833,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var myWorker = new JournalApproveService.JournalApproveWorker();
                 var sw = Stopwatch.StartNew();
                 HttpContext.Current.Items["workerrolename"] = (string)param.workerrolename;
-                myWorker.WorkUntilQEmptyQueueDB( TimeSpan.FromSeconds((int)param.TimeOutinSec));
+                string selectedQueue = null;
+                if ((bool)param.ConversionJournal)
+                {
+                    selectedQueue = JournalApproveService.K_AccountingConversionJournalApproveWR;
+                }
+                myWorker.WorkUntilQEmptyQueueDB( TimeSpan.FromSeconds((int)param.TimeOutinSec), selectedQueue);
                 sw.Stop();
                 _LabelLog.Text = $"Tot:{sw.Elapsed}" + LogMessagingUtil.Instance.ToString();
 
@@ -1926,6 +1934,98 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             finally
             {
                 _MyLastAction.Value = MyLastAction._ButtonLoadConsolTaxRep_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
+
+
+        protected void ButtonLoadGLAccountsCSV_Click(object sender, EventArgs e)
+        {
+
+            string param = "";
+            string paramDefault = "Please insert page, you can add a header  //Tenant=28";
+
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadGLAccountsCSV_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                string fileGLAccountsCSV = _TextBoxParam.Text;
+
+                var myGLAccountsCSVFlatFileAnalyser = new GLAccountsCSVFlatFileAnalyser();
+                myGLAccountsCSVFlatFileAnalyser.Analyse(null, fileGLAccountsCSV);
+
+                _LabelResult.Text = JsonConvert.SerializeObject(myGLAccountsCSVFlatFileAnalyser.MyCSVFlatFileLoadResult); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadGLAccountsCSV_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
+
+
+        protected void ButtonLoadJournalsCSV_Click(object sender, EventArgs e)
+        {
+
+            string param = "";
+            string paramDefault = "Please insert page, you can add a header  //Tenant=28";
+
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadJournalsCSV_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                string fileJournalsCSV = _TextBoxParam.Text;
+
+                var myJournalsCSVFlatFileAnalyser = new JournalsCSVFlatFileAnalyser();
+                myJournalsCSVFlatFileAnalyser.Analyse(null, fileJournalsCSV);
+
+                _LabelResult.Text = JsonConvert.SerializeObject(myJournalsCSVFlatFileAnalyser.MyCSVFlatFileLoadResult); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadJournalsCSV_Click.ToString();
                 if (string.IsNullOrWhiteSpace(param))
                 {
                     param = paramDefault;

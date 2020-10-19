@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         public ARInvoicePM MapARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
         {
             ARInvoicePM aRInvoicePM = new ARInvoicePM();
+            aRInvoicePM.IsFromInterestBatchInvoice = true;
             aRInvoicePM.ARInvoiceTypeCode = "IT";
             aRInvoicePM.BillToGLAccountId = interestReport.GLAccountId;
             aRInvoicePM.BillToId = interestReport.CustomerId;

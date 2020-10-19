@@ -562,7 +562,7 @@ export class CreditLimitHelper {
             if (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning) {
 
                 var RemainingLimit = FormatTool.FormatNumber(LimitAmount - ActualBalance);
-                var PercentageWarning: string = "The remaining credit limit for this customer is (" + RemainingLimit + ")";
+                var PercentageWarning: string = "The remaining credit limit for this customer is " + RemainingLimit;
                 this.Warnings.push(PercentageWarning);
             }
         }

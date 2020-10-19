@@ -79,6 +79,8 @@ namespace Logitude.Accounting.BL.CoreBL
             bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
             if (hasMultipleARPayments == true)
             {
+                CheckAllPaymentsReconciliation(reconciliationPM, recoTransactions);
+
                 CheckIfTotalNotEqualsZero(reconciliationPM);
 
                 MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
@@ -98,6 +100,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             return recoCallBack;
+        }
+
+        private static void CheckAllPaymentsReconciliation(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
+        {
+            bool allTransactionsIsPayments = recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
+            if (allTransactionsIsPayments == true)
+            {
+                var msg = TextCodesTranslator.TranslateText("ARPayment.O.AllPaymentsReconciliation", reconciliationPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant));
+                throw new ApplicationException(msg);
+            }
         }
 
         private void SubmitReconciliations(int tenant, List<ReconciliationPM> paymentReconciliations)

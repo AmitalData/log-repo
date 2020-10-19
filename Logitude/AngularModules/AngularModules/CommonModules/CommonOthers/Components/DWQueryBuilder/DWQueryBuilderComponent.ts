@@ -674,7 +674,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (item.HasTree) {
             var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
             if (defaultItem) {
-                view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
+                view.Code = defaultItem.Code;
                 view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
             }
         }
@@ -1330,7 +1330,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.HasTree) {
                 var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
-                    view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
+                    view.Code = defaultItem.Code;
                 }
             }
             if (field.FilterItems.length == 0) {
@@ -1426,7 +1426,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public PartnerFullNameTextCodeCode: string;
     public IsHaveTranslation: boolean = false;
     public TranslationText: string;
-
+    public MultiSelectedDisplayName: string;
+    
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
@@ -1473,8 +1474,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.FieldCode = DWObjectField.Code;
             this.IsMultipleSelection = DWObjectField.IsMultipleSelection;
             this.ColumnName = DWObjectField.ColumnName;
-            if (this.IsMultipleSelection)
+            if (this.IsMultipleSelection) {
                 this.MultiSelectedValueLists = DWObjectField.MultiSelectedValueLists;
+            }
             this.ParentDataTypeCode = DWObjectField.ParentDataTypeCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
@@ -1762,6 +1764,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
             this.textValue = newValue;
+            
             if (this.ParentDataTypeCode == "DateTime" || this.ParentDataTypeCode == "Date") {
                 var timerToken = setTimeout(() => {
                     this.ShowSampleDateCommand.emit(this);
@@ -1814,7 +1817,40 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
     public set MultiSelectedValueLists(newValue: MultiSelectedValue[]) {
         this.multiSelectedValueLists = newValue;
+        this.MultiSelectedDisplayName = this.GetMultiSelectedDisplayName();
+    }
 
+    private GetMultiSelectedDisplayName() {
+        let textValue = "";
+        let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
+        let headerName = dimensionTableCode == "DIM_Partners" ? "Local Name" : this.Code.replace('[', '').replace(']', '');
+        if (this.multiSelectedValueLists && this.multiSelectedValueLists.length > 0) {
+            this.multiSelectedValueLists.forEach((field) => {
+                textValue += this.ResolveValue(field, headerName) + ";";
+            });
+
+            textValue += "@@";
+            textValue = textValue.replace(";@@", "");
+            textValue = textValue.replace("@@", "");
+        }
+        return textValue;
+    }
+
+    private ResolveValue(Values: MultiSelectedValue, header: string) {
+        var i = "";
+        var j = 0;
+        var result = "";
+        while (Values["Value" + i]) {
+            if (Values["Value" + i].Header == header) {
+                result = Values["Value" + i].Row;
+                return result;
+            }
+
+            j += 1;
+            i = j.toString();
+        }
+
+        return result;
     }
 
     private columnName: string;

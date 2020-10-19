@@ -80,7 +80,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class GLAccountUpdateClass
    {  		
 
-		public const string HashString = "3a2aeee668a93ef782d0ee6389606f5d";
+		public const string HashString = "e8dfa2cfeb99008b59cd08d900255a5c";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -9570,6 +9570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCantChangeRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CantChangeRecoMethod", DefaultText = "The reconcile method can’t be updated, the GLAcocunt has transactions",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountOThereIsExternalTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThereIsExternalTrans", DefaultText = "Includes ledger transactions from external system",LocalDefaultText = @"כולל תנועות ממערכת חיצונית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

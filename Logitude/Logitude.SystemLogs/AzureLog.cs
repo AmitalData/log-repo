@@ -221,7 +221,11 @@ namespace Logitude.SystemLogs
 
             if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
                 return;
-
+            stackTrace = GetStackTrace(exception);
+            if (stackTrace.Length > 7000)
+            {
+                stackTrace = stackTrace.Substring(0, 6999);
+            }
             var better1st7000ThenNothing = true;//itzik 
             if (better1st7000ThenNothing)
             {
@@ -229,12 +233,14 @@ namespace Logitude.SystemLogs
                 if (cachedException != null && cachedException.Source == "EntityFramework" && exception.Length > 7000)//Islam: take the start and the end if it is a db exception.
                 {
                     exception = exception.Substring(0, 3500) + exception.Substring(exception.Length - 3500, 3500);
+                    //exception = HandleExceptionLength(exception);
                 }
                 else
                 {
                     exception = exception.Substring(0, Math.Min(7000, exception.Length));
                 }
             }
+            
             
 
             if (String.IsNullOrWhiteSpace(userName))
@@ -302,6 +308,20 @@ namespace Logitude.SystemLogs
           //  errorsContext.ErrorLogsEntity.Add(errorLog);
              
            // errorsContext.SaveChanges();
+        }
+
+        private static string GetStackTrace(string exception)
+        {
+            string StackTrace = "";
+            string[] myException = exception.Split('~');
+           
+            if (myException.Length == 3)
+            {
+                //string Header = myException[0];
+                //string Body = myException[1]; 
+                StackTrace = myException[2];
+            }
+            return StackTrace;
         }
 
         public static void SaveWarmingLogsInStorage(string log, string type, int tenant)

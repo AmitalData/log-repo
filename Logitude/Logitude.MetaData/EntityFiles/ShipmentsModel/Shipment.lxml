@@ -84643,6 +84643,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;ebf401cb-2e89-4ae4-8257-952b4ba54cbc&quot;"
+    FieldName="&quot;ChargeStorageCurrencyCode&quot;"
+    OldNames="ChargeStorageCurrencyCode"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="3"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="3"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ChargeStorageCurrencyCode&quot;"
+    ListPropertyPath="&quot;ChargeStorageCurrencyCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ChargeStorageCurrencyCode&quot;"
+    DefaultText="&quot;ChargeStorageCurrencyCode&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Shipments&quot;"
     TextCode="&quot;Shipments&quot;"
@@ -89381,7 +89450,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Deliveries&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89398,7 +89467,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90286,7 +90355,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUps&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90303,7 +90372,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91848,7 +91917,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUps&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91865,7 +91934,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomFields&quot;"
         DCVersion="&quot;ApiV1&quot;"

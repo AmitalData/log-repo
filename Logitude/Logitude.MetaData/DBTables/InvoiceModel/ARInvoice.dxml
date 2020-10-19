@@ -741,6 +741,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsFromInterestBatchInvoice"
+    OldNames="IsFromInterestBatchPrint"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

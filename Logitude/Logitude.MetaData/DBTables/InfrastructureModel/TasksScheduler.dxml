@@ -242,4 +242,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ResultType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

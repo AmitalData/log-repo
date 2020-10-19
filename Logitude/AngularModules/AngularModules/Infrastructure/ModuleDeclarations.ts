@@ -174,6 +174,7 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
+import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
     [
@@ -278,7 +279,8 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
         ImageLibraryComponent,
-        TaskSchedulerHistoryComponent, 
+        TaskSchedulerHistoryComponent,
+        FTBSchedulerTemplateComponent
     ];
 export const Components =
     [
@@ -352,6 +354,7 @@ export const Components =
         BTELogTabComponent,
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
+        FTBSchedulerTemplateComponent
     ];
 
 export class ModuleDeclarations {
@@ -451,7 +454,7 @@ export class ModuleDeclarations {
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
-
+            case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
 
         }
 

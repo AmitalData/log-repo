@@ -348,6 +348,24 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected global::System.Web.UI.WebControls.Button ButtonLoadConsolTaxRep;
 
         /// <summary>
+        /// ButtonLoadGLAccountsCSV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonLoadGLAccountsCSV;
+
+        /// <summary>
+        /// ButtonLoadJournalsCSV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonLoadJournalsCSV;
+
+        /// <summary>
         /// _MyLastAction control.
         /// </summary>
         /// <remarks>

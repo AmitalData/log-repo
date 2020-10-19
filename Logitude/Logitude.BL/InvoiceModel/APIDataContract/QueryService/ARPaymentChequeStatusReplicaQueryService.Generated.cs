@@ -72,7 +72,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARPaymentChequeStatusReplicaPM ARPaymentChequeStatusReplicaDataMappingAndValidatin(ARPaymentChequeStatusReplica MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ARPaymentChequeStatusReplicaPM ARPaymentChequeStatusReplicaDataMappingAndValidatin(ARPaymentChequeStatusReplica MyEntity,int Tenant,string ComputingPartnerName = "", bool IsUpdate = false)
         {
 		    try
             {

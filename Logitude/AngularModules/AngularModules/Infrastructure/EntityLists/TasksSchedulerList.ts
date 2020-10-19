@@ -44,5 +44,6 @@ export class TasksSchedulerList {
 		AverageRunTime: number;
 		EntityId: string;
 		Recepients: string;
+		ResultType: string;
 	
 }

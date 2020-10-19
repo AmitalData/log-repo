@@ -282,7 +282,7 @@ using Simplog.Data.InvoiceModel;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
-						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
+						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCreatedByUserPM != null)
 						{ 
@@ -311,7 +311,7 @@ using Simplog.Data.InvoiceModel;
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
-						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
+						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myBranchPM != null)
 						{ 
@@ -332,7 +332,7 @@ using Simplog.Data.InvoiceModel;
 					CurrencyQueryService PaymentCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.PaymentCurrency != null)
 					{
-						var myPaymentCurrencyPM = PaymentCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.PaymentCurrency,Tenant,ComputingPartnerName);
+						var myPaymentCurrencyPM = PaymentCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.PaymentCurrency,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myPaymentCurrencyPM != null)
 						{ 
@@ -353,7 +353,7 @@ using Simplog.Data.InvoiceModel;
 					CardQueryService BillToCardService = new CardQueryService(Tenant);
 					if(MyEntity.BillTo != null)
 					{
-						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName);
+						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myBillToPM != null)
 						{ 
@@ -422,7 +422,7 @@ using Simplog.Data.InvoiceModel;
 					CreditCardTypeQueryService CreditCardTypeCreditCardTypeService = new CreditCardTypeQueryService(Tenant);
 					if(MyEntity.CreditCardType != null)
 					{
-						var myCreditCardTypePM = CreditCardTypeCreditCardTypeService.CreditCardTypeDataMappingAndValidatin(MyEntity.CreditCardType,Tenant,ComputingPartnerName);
+						var myCreditCardTypePM = CreditCardTypeCreditCardTypeService.CreditCardTypeDataMappingAndValidatin(MyEntity.CreditCardType,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myCreditCardTypePM != null)
 						{ 
@@ -463,7 +463,7 @@ using Simplog.Data.InvoiceModel;
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("PaymentInvoices Can't be update"); 
-								temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+								temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -479,7 +479,7 @@ using Simplog.Data.InvoiceModel;
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("ARPaymentCheques Can't be update"); 
-								temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
+								temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -515,7 +515,7 @@ using Simplog.Data.InvoiceModel;
 					ARPaymentStatusQueryService StatusARPaymentStatusService = new ARPaymentStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
-						var myStatusPM = StatusARPaymentStatusService.ARPaymentStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+						var myStatusPM = StatusARPaymentStatusService.ARPaymentStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myStatusPM != null)
 						{ 

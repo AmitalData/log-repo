@@ -455,7 +455,7 @@
                     <div class="LogLovContainer">
 
                         <!-- LogLov Input textbox -->
-                        <div class="LogLovInputDiv" [ngStyle]="InputDivStyle" title="{{ObjectTableName == 'DIM_Partners'? DisplayTextNgModel : ''}}">
+                        <div class="LogLovInputDiv" [ngStyle]="InputDivStyle" title="{{DisplayTextNgModel}}">
                             <table>
                                 <tr>
                                     <td style="position:relative;">
@@ -467,7 +467,7 @@
                                                (blur)="OnSearchInputBlur()"
                                                (mouseover)='OnMouseHover()'
                                                (mouseleave)='OnMouseLeave()'
-                                               [placeholder]="ObjectFieldName.replace('[','').replace(']','')"
+                                               [placeholder]="ObjectTableName == 'DIM_Partners'? 'Name' : ObjectFieldName.replace('[','').replace(']','')"
                                                style="border:1px solid transparent;
                                                       border-radius:3px;
                                                       text-indent:5px;
