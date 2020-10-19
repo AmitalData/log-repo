@@ -1250,7 +1250,7 @@
   <Query
     Code="&quot;User Defined Reports&quot;"
     TextCode="&quot;User Defined Reports&quot;"
-    LocalTextCode="&quot;הוגדר ע&quot;י משתמש&quot;"
+    LocalTextCode="&quot;הוגדר ע\&quot;י משתמש&quot;"
     QueryGroupCode="&quot;c4c8&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;UserDefinedReport&quot;"

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "4c7cde1ebe6e8883d9b6e3a1f61a6a37";
+		public const string HashString = "be93992d206a545ea335a30c62b59aca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1010,7 +1010,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "הוגדר ע"י משתמש", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode UserDefinedReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", DefaultText = @"User Defined Reports",LocalDefaultText = "הוגדר ע\"י משתמש", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature UserDefinedReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReport.Q.UserDefinedReports", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserDefinedReportFeatures.UserDefinedReports", NameTextCodeDefaultText = "User Defined Reports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserDefinedReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
