@@ -396,12 +396,12 @@
                     </ng-template>
                     </log-column>
 
-                    <!--NULL-->
+                    <!--Edit-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Edit'" [disabled]="item.IsCancelled" [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
+                                <IconButton [Name]="'Edit'"   [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
                             </div>
                         </log-cell-template>
                     </ng-template>

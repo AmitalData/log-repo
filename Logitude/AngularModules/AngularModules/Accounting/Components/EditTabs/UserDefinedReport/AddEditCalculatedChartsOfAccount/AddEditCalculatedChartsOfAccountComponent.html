@@ -288,7 +288,7 @@
                                                     <table>
                                                         <tr style="height:5px;">
                                                             <td>
-                                                                <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsCancelled = $event"></LogCheckBox>
+                                                                <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="DataContext.IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="DataContext.IsCancelled = $event"></LogCheckBox>
                                                             </td>
                                                          </tr>
                                                         <tr style="height:20px;">
