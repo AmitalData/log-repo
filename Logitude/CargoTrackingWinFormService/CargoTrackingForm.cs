@@ -30,7 +30,7 @@ namespace CargoTrackingWinFormService.Forms
         private string FromCloudConectionstring = "Main,sa,Saas256,amitaldata.cloudapp.net";
         private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
         private string ToTestConectionstring = "CargoTracking,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
-        private string ToCloudConectionstring = "CargoTracking,sa,Saas256,amitaldata.cloudapp.net";
+        private string ToCloudConectionstring = "CargoTracking,amitaladmin,London2015!London2015!,amital.database.windows.net";
 
 
         private int[] ScreensHight;
@@ -46,6 +46,7 @@ namespace CargoTrackingWinFormService.Forms
         private int IncrementalsErrosResultCount = 0;
         private CargoTrackingMainService cargoTrackingService;
         private int NumberOfCoulmnUpdated = 0;
+        private int NumberOfCoulmnUpdated2 = 0;
         private int Table_X = 0;
         private int Table_Y = 1;
         private int TableCellMrginHight = 10;
@@ -55,6 +56,8 @@ namespace CargoTrackingWinFormService.Forms
         private int TabsNumber = 6;
         private int SleepTime = 0;
         private bool ButtonWindowsServiceIsForStop=false;
+        public int TotalRecordedUpdated = 0;
+        public int TotalTimeUpdated = 0;
         public CargoTrackingForm()
         {
             InitializeComponent();
@@ -79,7 +82,7 @@ namespace CargoTrackingWinFormService.Forms
             this.SleepSecounds.Value = SleepTime;
             this.MappingFromConnections.Text = dbSourceConnection;
             this.MappingToConnections.Text = dbSourceConnection;
-
+            this.checkBox1.Checked = true;
         }
   
 
@@ -188,9 +191,10 @@ namespace CargoTrackingWinFormService.Forms
             {
                 CargoTrackingArguments = new CargoTrackingArguments()
                 {
-                    FromDate = BuildFrom.Value,
-                    ToDate = BuildTo.Value,
+                    FromDate = checkBox1.Checked? new DateTime(1900,1,1): BuildFrom.Value,
+                    ToDate = checkBox1.Checked ? new DateTime(2500, 1, 1) : BuildTo.Value,
                     Tenant = null,
+                    AllData = checkBox1.Checked,
                 };
             }
             
@@ -202,9 +206,11 @@ namespace CargoTrackingWinFormService.Forms
                 CargoTrackingArguments = CargoTrackingArguments,
                 IsUpdateAfterFinished = null,
             };
-          NumberOfCoulmnUpdated = cargoTrackingService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs).NumberOfRecordUpdated;
-  
-        }
+            RecordUpdated Numbers = cargoTrackingService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
+            NumberOfCoulmnUpdated = Numbers.NumberOfRecordUpdated;
+            NumberOfCoulmnUpdated2 = Numbers.NumberOfRecordUpdated2;
+            TotalRecordedUpdated += (TotalRecordedUpdated+ NumberOfCoulmnUpdated2);
+         }
 
 
 
@@ -302,7 +308,7 @@ namespace CargoTrackingWinFormService.Forms
             foreach (CargoTable table in CargoTableLists)
             {
                 table.Labels = new List<object>();
-                string TableNameLabe = table.CT_TableName.Length <23 ? table.CT_TableName : table.CT_TableName.Substring(0,17)+" ...";
+                string TableNameLabe = table.DBTableName.Length <23 ? table.DBTableName : table.DBTableName.Substring(0,17)+" ...";
                 AddLabelToGrid(TableNameLabe, 1, 0, 1, table, IsFromBuild);
                 AddLabelToGrid( "In Progress...", 1, 0, 2, table, IsFromBuild);
                 AddLabelToGrid( "Remaining ...", 0, 1, 3, table, IsFromBuild);
@@ -340,7 +346,10 @@ namespace CargoTrackingWinFormService.Forms
             UpdateCargoDataBase(table, IsFromBuild);
  
             SetControlPropertyValue((Label)table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue((Label)table.Labels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
+            if (NumberOfCoulmnUpdated2 == 0)
+                SetControlPropertyValue((Label)table.Labels[1], "Text", "( " + String.Format("{0:n0}", NumberOfCoulmnUpdated) + " )");
+            else
+                SetControlPropertyValue((Label)table.Labels[1], "Text", "( " + String.Format("{0:n0}", NumberOfCoulmnUpdated) + " ) " + "( "+ String.Format("{0:n0}", NumberOfCoulmnUpdated2) + " ) ");
             SetControlPropertyValue((Label)table.Labels[1], "ForeColor", Color.Red);
 
             stopWatch.Stop();
@@ -635,6 +644,8 @@ namespace CargoTrackingWinFormService.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
+            cargoTrackingService = new CargoTrackingMainService();
+
             if (FirstInit)
             {
                 this.Height += 40;
@@ -1154,6 +1165,20 @@ namespace CargoTrackingWinFormService.Forms
             string Note = "Mapping From => "+Environment.NewLine+"Table Name: "+ TableNmae+ Environment.NewLine+"Field Name: "+ FieldName;
             return Note;
            
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                BuildFrom.Enabled = false;
+                BuildTo.Enabled = false;
+            }
+            else
+            {
+                BuildFrom.Enabled = true;
+                BuildTo.Enabled = true;
+            }
         }
     }
 }

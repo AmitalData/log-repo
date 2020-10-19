@@ -12,14 +12,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingSearchService
     {
 
-        public static void SearchService(DataRow TableRow, DataTable dataTable, string TableName)
+        public static void SearchService(DataRow TableRow, BulkDataPreperation bulkDataPreperation, string TableName)
         {
-            if (TableName == "CargoTrackingShipmentSearches")
+            if (TableName == "CargoTrackingShipmentSearches" || TableName == "CargoTrackingShipments")
             {
-                 AddCustomerRefrences(TableRow, dataTable, "CustomerReference1");
-                 AddCustomerRefrences(TableRow, dataTable, "CustomerReference2");
-                 AddNewRecord(TableRow, dataTable, "Master");
-                 AddNewRecord(TableRow, dataTable, "House");
+                if (bulkDataPreperation.dataTable2 == null)
+                {
+                    bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
+                }
+                AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
+                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
+                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
+                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
                 if (!TableRow["ShipmentNumber"].Equals(null) && TableRow["ShipmentNumber"].GetType().Name != "DBNull")
                 { TableRow.SetField("SearchFields", TableRow["ShipmentNumber"]); }
 
