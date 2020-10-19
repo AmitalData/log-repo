@@ -368,6 +368,8 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
+    Columns="EntityId" />
+  <Index
     Columns="Tenant,IsMainRecord,EntityId" />
   <Index
     Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />

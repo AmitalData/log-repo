@@ -24,7 +24,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
                 Uploader uploaderService = new Uploader();
-                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", tenant);
+                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);
                 CargoTrackingBrandingData data = new CargoTrackingBrandingData()
                 {
                     Tenant = tenant,
