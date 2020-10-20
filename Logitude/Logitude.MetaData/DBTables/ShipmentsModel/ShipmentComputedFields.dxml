@@ -366,7 +366,7 @@
   <Column
     Name="ContainersNumbersandTypesArray"
     Type="nvarchar"
-    Size="1000">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
