@@ -24,6 +24,8 @@ export class DashboardShipmentsComponent
     tenant;
     isLoading: boolean  = false;
     isFiltersSideBarOpened: boolean  = false;
+    isFilter1Expanded: boolean  = false;
+    isFilter2Expanded: boolean  = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
