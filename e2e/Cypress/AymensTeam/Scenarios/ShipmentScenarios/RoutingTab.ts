@@ -30,13 +30,14 @@ export class RoutingTab {
         
         Resolvers.ButtonResolver.Selector('#CloseBtn').Click();
         Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();
+        Resolvers.WindowResolver.ShouldBeClosed();
 
     }
     private FillFromAddress(PickupDeliveryTypeCode: string) {
 
         if (PickupDeliveryTypeCode == 'PART') {
             Resolvers.RadioButtonResolver.Selector('#Partner_FromRadio').Select();
-            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPartnerCardId').Type('raza');
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_FromPartnerCardId').Type('testshipper');
 
         } else if (PickupDeliveryTypeCode == 'Port') {
             Resolvers.RadioButtonResolver.Selector('#Port_FromRadio').Select();
@@ -51,15 +52,15 @@ export class RoutingTab {
     private FillToAddress(PickupDeliveryTypeCode: string) {
 
         if (PickupDeliveryTypeCode == 'PART') {
-            Resolvers.RadioButtonResolver.Selector('#Partner_FromRadio').Select();
-            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToPartnerCardId').Type('raza');
+            Resolvers.RadioButtonResolver.Selector('#Partner_ToRadio').Select();
+            Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToPartnerCardId').Type('testconsi');
 
         } else if (PickupDeliveryTypeCode == 'Port') {
-            Resolvers.RadioButtonResolver.Selector('#Port_FromRadio').Select();
+            Resolvers.RadioButtonResolver.Selector('#Port_ToRadio').Select();
             Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToPortId').Type('ez');
 
         } else {
-            Resolvers.RadioButtonResolver.Selector('#CasualAddress_FromRadio').Select();
+            Resolvers.RadioButtonResolver.Selector('#CasualAddress_ToRadio').Select();
             Resolvers.TextBoxResolver.Selector('#ShipmentPickUpDelivery_ToAddressCity').Type('Albania');
             Resolvers.LOVResolver.Selector('#ShipmentPickUpDelivery_ToAddressCountryId').Type('Albania');
         }
