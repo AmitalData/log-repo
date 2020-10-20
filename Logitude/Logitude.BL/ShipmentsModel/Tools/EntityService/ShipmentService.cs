@@ -448,8 +448,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateReceivables = false;
                 this.entityPoco = entityRepository.GetSingleShipment(entityPM.Id, tenant);
                 entityPM.OldStatusValue = entityPoco.StatusId;
-
-                this.entityMasterData = (entityPM.ShipmentLevelCode == "H") ? shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId) : shipmentMasterDataRepository.GetSingleMasterData(entityPoco.MasterShipmentDataId);
+                this.entityMasterData = GetShipmentMasterData();
 
                 if (this.entityPM.ShipmentLevelCode == "C")
                 {
@@ -457,17 +456,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.isProrateReceivablesPOCO = this.entityMasterData.ProrateReceivables;
                 }
 
-                if (entityPM.IsHybrid)//31-Mar fix for old consoles in hybrid without masterdata id
-                {
-                    if (entityMasterData == null && entityPoco.ShipmentLevelCode != "H" && !entityPM.ConvertFromDirectToHouse && !entityPM.ConvertFromHouseToDirect)
-                    {
-                        entityMasterData = new ShipmentMasterData();
-                        entityMasterData.Id = entityPM.Id;
-                        entityPM.MasterShipmentDataId = entityPM.Id;
-                        entityMasterData.MasterShipmentNumber = entityPM.ShipmentNumber;
-                        shipmentMasterDataRepository.Add(entityMasterData);
-                    }
-                }
+
 
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
@@ -542,7 +531,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Handle();
                     //shipmentBehaviourFacade.Trace(shipmentTracing);
 
-                    if(shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
+                    if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                     {
                         ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
                         if (storageReceivable != null)
@@ -570,7 +559,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentTracing.TraceTerminalData();
                     }
-                 
+
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
@@ -652,7 +641,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //    }
             //}
         }
-        
+
+        private ShipmentMasterData GetShipmentMasterData()
+        {
+            var entityMasterData = (entityPM.ShipmentLevelCode == "H") ? shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId) : shipmentMasterDataRepository.GetSingleMasterData(entityPoco.MasterShipmentDataId);
+
+            if (entityPM.IsHybrid)//31-Mar fix for old consoles in hybrid without masterdata id
+            {
+                if (entityMasterData == null && entityPoco.ShipmentLevelCode != "H" && !entityPM.ConvertFromDirectToHouse && !entityPM.ConvertFromHouseToDirect)
+                {
+                    entityMasterData = new ShipmentMasterData();
+                    entityMasterData.Id = entityPM.Id;
+                    entityPM.MasterShipmentDataId = entityPM.Id;
+                    entityMasterData.MasterShipmentNumber = entityPM.ShipmentNumber;
+                    shipmentMasterDataRepository.Add(entityMasterData);
+                }
+            }
+
+            return entityMasterData;
+        }
+
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
         {
             if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
