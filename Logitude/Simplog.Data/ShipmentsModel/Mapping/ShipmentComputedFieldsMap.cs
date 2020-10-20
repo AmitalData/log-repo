@@ -24,7 +24,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FinalDeliveryATD).IsOptional();
             this.Property(t => t.FinalDeliveryATA).IsOptional();
             this.Property(t => t.ContainersNumbers).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.ContainersNumbersAndTypesArray).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.ContainersNumbersAndTypesArray).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Commodity).HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.FirstPickupLocation).HasMaxLength(100).IsUnicode(true);
 
