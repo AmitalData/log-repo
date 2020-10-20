@@ -121,10 +121,17 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
             }
             else{
                 if(!IsNew){
+                    var IncludesLines:number[]=[];
                       Object.assign(itemComponent.EntityPM, this.EntityCancelledCopy);
                       this.EntityLinesCancelledCopy.forEach(s=> 
-                        itemComponent.EntityPM.CalculatedChartsOfAccountLines.forEach(q=>q.Line == s.line? Object.assign(q , s) : null)
+                        itemComponent.EntityPM.CalculatedChartsOfAccountLines.forEach(q=>{ 
+                            if(q.Line == s.line){
+                                q.Line == s.line? Object.assign(q , s) : null;
+                                IncludesLines.push(q.Line);
+                            }
+                          })
                         );
+                        IncludesLines.forEach(c=>itemComponent.EntityPM.CalculatedChartsOfAccountLines.splice(c,1));
                       this.BuildLinesData();
                 }
             }
