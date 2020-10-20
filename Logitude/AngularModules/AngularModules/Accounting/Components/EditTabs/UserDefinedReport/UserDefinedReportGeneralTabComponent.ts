@@ -181,18 +181,21 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
     public EntityCancelledCopy:CalculatedChartsOfAccountPM ;
     public EntityLinesCancelledCopy:any[]=[];
     public AddPeriodClicked(){
-        var calculatedChartsOfAccountPM: CalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(this.EntityPM);
-        calculatedChartsOfAccountPM.Tenant = this.EntityPM.Tenant;
-        var lastRow = this.CalculatedChartsOfAccountItemList.Collection[this.CalculatedChartsOfAccountItemList.Collection.length - 1];
-        calculatedChartsOfAccountPM.Line = this.CalculatedChartsOfAccountItemList.Collection.length > 0 ? (lastRow.Line  + 1) : 1;
-        if (!AppTool.IsNullOrEmpty(this.EntityPM) && !AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            calculatedChartsOfAccountPM.UserDefinedReportId = this.EntityPM.Id;
+        if(!this.EntityPM.IsCancelled){
+            var calculatedChartsOfAccountPM: CalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(this.EntityPM);
+            calculatedChartsOfAccountPM.Tenant = this.EntityPM.Tenant;
+            var lastRow = this.CalculatedChartsOfAccountItemList.Collection[this.CalculatedChartsOfAccountItemList.Collection.length - 1];
+            calculatedChartsOfAccountPM.Line = this.CalculatedChartsOfAccountItemList.Collection.length > 0 ? (lastRow.Line  + 1) : 1;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM) && !AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                calculatedChartsOfAccountPM.UserDefinedReportId = this.EntityPM.Id;
+            }
+            var line = new CalculatedChartsOfAccountItem(calculatedChartsOfAccountPM ,true, this);
+            this.LogWindowShow(TextCodeTranslator.Translate("CalculatedChartsOfAccount"), line,true,calculatedChartsOfAccountPM);
         }
-        var line = new CalculatedChartsOfAccountItem(calculatedChartsOfAccountPM ,true, this);
-        this.LogWindowShow(TextCodeTranslator.Translate("CalculatedChartsOfAccount"), line,true,calculatedChartsOfAccountPM);
     }
 
     public EditPeriodClicked(item:CalculatedChartsOfAccountItem){
+        if(!this.EntityPM.IsCancelled){
         this.EntityCancelledCopy = Object.assign({}, item.EntityPM);
         this.EntityLinesCancelledCopy = [];
         item.EntityPM.CalculatedChartsOfAccountLines.forEach(S=>
@@ -200,7 +203,7 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
         );
        this.LogWindowShow(TextCodeTranslator.Translate("CalculatedChartsOfAccount"), item);
     }
-  
+}
  
 }
 

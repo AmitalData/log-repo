@@ -1,6 +1,6 @@
 import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Event, RoutesRecognized, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
@@ -27,12 +27,13 @@ export class PublicGateComponent
     companyName: string = "Unifreight Cloud Services";
     _Tenant: number;
     BackGroundImg:string;
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, private activerouter: ActivatedRoute, private router: Router)
+    map_Img:string;
+    constructor(@Inject('BASE_URL') baseUrl: string ,private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, private activerouter: ActivatedRoute, private router: Router)
     {
 
-        this.GetDataFromURL();
-        
+        this.GetDataFromURL(baseUrl);
     }
+
 
 
     private getcargoTrackingData()
@@ -54,14 +55,15 @@ export class PublicGateComponent
             }
             this.IsBrandingDataLoaded = true;
 
-            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":"url('../assets/images/misc/map-bg.svg')";
+            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.map_Img;
 
             this.listenToRouterEvents();
         });
     }
-    private GetDataFromURL()
+    private GetDataFromURL(baseUrl:string)
     {
-
+        this.map_Img = baseUrl+"/assets/images/misc/map-bg.svg";
+       
         this.router.events.subscribe((event: any) =>
         {
             if (this._Tenant == null || Number.isNaN(this._Tenant)) {
