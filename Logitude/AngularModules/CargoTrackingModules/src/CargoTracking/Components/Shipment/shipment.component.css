@@ -216,6 +216,11 @@ ul.line-list li.tick {
     z-index: 1;
 }
 
+    .line-progressbar .dilevered-line {
+        background: #002664;
+        right: 0;
+        z-index: 1;
+    }
 .line-progressbar .dot {
     z-index: 20;
     width: 24px;
@@ -253,6 +258,10 @@ ul.line-list li.tick {
 .line-progressbar .dot.gray {
     background: #D2D2D2;
 }
+
+    .line-progressbar .dot.blue {
+        background: #002664;
+    }
 
 .line-progressbar .pos-75 {
     left: calc(75% - 12px);

@@ -49,7 +49,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalName"
@@ -78,4 +78,30 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UserDefinedReportId"
+    ReferencedTable="UserDefinedReports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChartOfAccountTypeCode"
+    ReferencedTable="ChartOfAccountsTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

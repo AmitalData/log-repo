@@ -43,6 +43,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
+import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 
 @Component({
     
@@ -2712,6 +2713,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             // APPaymentTools.Create(eventAggregator, viewInjectionService, regionManager, container);
                         } else if (this.ObjectTableName == "Journal") {
                             this.RunNewJournalWizard();
+                        } else if (this.ObjectTableName == "UserDefinedReport") {
+                            this.RunNewUserDefinedReportWizard();
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
@@ -2894,6 +2897,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Height = 200;
                         break;
                     }
+                case "UserDefinedReport":
+                     {
+                        logWindow.Width = 400;
+                        logWindow.Height = 200;
+                        break;
+                    }    
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -3342,6 +3351,23 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
                     EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.FullAccounting")
+                });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    //this.LoadAllScreenData();
+                    //this.isWindowOpened = false;
+                    this.RefreshBtnClick();
+
+                });
+            });
+    }
+
+    RunNewUserDefinedReportWizard() {
+        var entityPM: UserDefinedReportPM = new UserDefinedReportPM();
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityPM: entityPM, ObjectTableName: 'UserDefinedReport' 
                 });
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     //this.LoadAllScreenData();

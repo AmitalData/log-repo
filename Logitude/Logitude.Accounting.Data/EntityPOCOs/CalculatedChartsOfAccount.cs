@@ -25,22 +25,36 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("CreateDateTime")]
 	    public DateTime CreateDateTime { get; set; }
+        [ForeignKey("CreatedByUser")]
         [Column("CreatedByUserId")]
 	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User CreatedByUser { get; set; }
         [Column("UpdatedDateTime")]
 	    public DateTime UpdatedDateTime { get; set; }
+        [ForeignKey("UpdatedByUser")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }
+	      
+        public virtual User UpdatedByUser { get; set; }
+        [ForeignKey("UserDefinedReport")]
         [Column("UserDefinedReportId")]
 	    public string UserDefinedReportId { get; set; }
+	      
+        public virtual UserDefinedReport UserDefinedReport { get; set; }
         [Column("LocalName")]
 	    public string LocalName { get; set; }
         [Column("EnglishName")]
 	    public string EnglishName { get; set; }
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
+        [ForeignKey("ChartOfAccountsType")]
         [Column("ChartOfAccountTypeCode")]
 	    public string ChartOfAccountTypeCode { get; set; }
+	      
+        public virtual ChartOfAccountsType ChartOfAccountsType { get; set; }
+        [Column("Line")]
+	    public int Line { get; set; }
     }
 }
 	 

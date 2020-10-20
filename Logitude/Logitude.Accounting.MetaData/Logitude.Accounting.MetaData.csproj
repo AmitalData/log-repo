@@ -89,6 +89,9 @@
     <None Include="DBTables\BankDeposit.dxml" />
     <None Include="DBTables\BankDepositLine.dxml" />
     <None Include="DBTables\BankPageEntryType.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccount.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLine.dxml" />
+    <None Include="DBTables\CalculatedChartsOfAccountsLineType.dxml" />
     <None Include="DBTables\CashBook.dxml" />
     <None Include="DBTables\CashBookLine.dxml" />
     <None Include="DBTables\CashBookType.dxml" />
@@ -164,6 +167,7 @@
     <None Include="EntityFiles\AccountingNote.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
+    <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">

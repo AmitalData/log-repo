@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CalculatedChartsOfAccountsLines"
+  Name="CalculatedChartsOfAccountLines"
+  OldNames="CalculatedChartsOfAccountsLines"
   Schema="dbo"
   DBType="Main"
   Module="Accounting">
@@ -73,7 +74,7 @@
   <Column
     Name="LineTypeCode"
     Type="varchar"
-    Size="5">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -82,7 +83,13 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
@@ -105,8 +112,13 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="LineTypeCode"
+    ReferencedTable="CalculatedChartsLineTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="CalculatedChartsOfAccountsId"
-    ReferencedTable="ChartOfAccounts"
+    ReferencedTable="CalculatedChartsOfAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -143,6 +143,9 @@ import { InterestReportLineListService } from './Services/StandardLists/Interest
 import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
 import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
+import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
+import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
+import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -151,6 +154,8 @@ export class ModuleProviders {
 
         switch (name) {
             //#region standerd services
+            case "UserDefinedReportListService": { myResult = new UserDefinedReportListService(); break; }
+            case "UserDefinedReportPMService": { myResult = new UserDefinedReportPMService(); break; }
             case "AccountingEntityListService": { myResult = new AccountingEntityListService(); break; }
             case "AccountingPeriodListService": { myResult = new AccountingPeriodListService(); break; }
             case "AutomaticReconcileListService": { myResult = new AutomaticReconcileListService(); break; }
@@ -243,6 +248,7 @@ export class ModuleProviders {
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
             case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
             case "InterestReportLinesByDateListService": { myResult = new InterestReportLinesByDateListService(); break; }
+            case "CalculatedChartsLineTypeListService": { myResult = new CalculatedChartsLineTypeListService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }

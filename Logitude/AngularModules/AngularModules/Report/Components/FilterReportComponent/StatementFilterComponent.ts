@@ -74,7 +74,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
                 list.forEach(item => {
                     var currency: CodeNameClass = new CodeNameClass();
                     currency.Code = item.Code.toString();
-                    currency.Name = item.EnglishName;
+                    currency.Name = item.Code;
                     this.CurrenciesComboList.push(currency);
                 });
 

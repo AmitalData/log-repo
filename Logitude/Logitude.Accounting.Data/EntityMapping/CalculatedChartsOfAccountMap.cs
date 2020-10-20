@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UserDefinedReportId).HasColumnName("UserDefinedReportId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.UserDefinedReportId).HasColumnName("UserDefinedReportId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(100).IsUnicode(true);
 
@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled").IsRequired();
 
             this.Property(t => t.ChartOfAccountTypeCode).HasColumnName("ChartOfAccountTypeCode").IsRequired().HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.Line).HasColumnName("Line").IsRequired();
         }
     }
 }

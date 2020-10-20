@@ -51,13 +51,18 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ChartOfAccountId { get; set; }
 	      
         public virtual ChartOfAccount ChartOfAccount { get; set; }
+        [ForeignKey("CalculatedChartsLineType")]
         [Column("LineTypeCode")]
 	    public string LineTypeCode { get; set; }
+	      
+        public virtual CalculatedChartsLineType CalculatedChartsLineType { get; set; }
         [ForeignKey("CalculatedChartsOfAccount")]
         [Column("CalculatedChartsOfAccountsId")]
 	    public string CalculatedChartsOfAccountsId { get; set; }
 	      
-        public virtual ChartOfAccount CalculatedChartsOfAccount { get; set; }
+        public virtual CalculatedChartsOfAccount CalculatedChartsOfAccount { get; set; }
+        [Column("Line")]
+	    public int Line { get; set; }
     }
 }
 	 

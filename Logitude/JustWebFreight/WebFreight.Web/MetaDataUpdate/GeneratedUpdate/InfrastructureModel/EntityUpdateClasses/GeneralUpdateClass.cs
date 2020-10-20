@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "56cf41d3aff70d5d54ff9b8e882146c0";
+		public const string HashString = "dcfd5cc27943643eb32467553da50efc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "General",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Generals",
-			      				    OldDBTableName =  "Generals",
 			      				    ObjectTableSingular =  "General",
 			      				    ObjectTablePlural =  "Generals",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "485a",
+			      				    Code =  "ba93",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -609,6 +608,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_UPLOADPARTNERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPLOADPARTNERS", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.UPLOADPARTNERS", NameTextCodeDefaultText = @"Partners Upload" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_CARGOTRACKING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOTRACKING", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CARGOTRACKING", NameTextCodeDefaultText = @"CargoTracking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_UserDefinedReportFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReportFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.UserDefinedReportFeature", NameTextCodeDefaultText = @"User Defined Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2212,7 +2213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralFromDateMustBeLTT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.FromDateMustBeLTT", DefaultText = "From date'' field must be less than or equal to ''To date'' field  ",LocalDefaultText = @"מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = "''To date''  field must be greater than or equal to ''From date'' field",LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = "To date''  field must be greater than or equal to ''From date'' field",LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersTariffProducts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.TariffProducts", DefaultText = "Tariff Products",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2405,6 +2406,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralAccountingOAgingMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.Accounting.O.AgingMethod", DefaultText = "Aging Method",LocalDefaultText = @"שיטת גיול", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralOFieldIsInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FieldIsInactive", DefaultText = "%FieldName is Inactive",LocalDefaultText = @"%FieldName  חסום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = "הוגדר ע\''י משתמש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

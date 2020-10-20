@@ -82,6 +82,7 @@
     <Compile Include="EntityPMs\Generated\BankDepositLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BankDepositPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BankPageEntryTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CalculatedChartsLineTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CalculatedChartsOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CalculatedChartsOfAccountsLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CashBookLinePM.Generated.cs" />

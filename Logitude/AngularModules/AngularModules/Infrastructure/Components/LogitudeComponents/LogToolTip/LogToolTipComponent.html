@@ -5,6 +5,7 @@
     <!--<img src="./Images/Info.png" width="18" height="18" />-->
     <div *ngIf="mode == 'Info'" class="ConfirmIcon">!</div>
     <img  *ngIf="mode == 'Warning'" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
+    <img  *ngIf="mode == 'error'" src="./Images/error-16.png" alt="error" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
     <div [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
         <!-- <div class="popup-arrow"></div> -->
@@ -30,6 +31,7 @@
 
     <!--<img src="./Images/Info.png" width="18" height="18" />-->
     <div *ngIf="mode == 'Info'" class="ConfirmIcon">!</div>
+    <img  *ngIf="mode == 'error'" src="./Images/error-16.png" alt="error" style="width: 18px;" />
     <img *ngIf="mode == 'Warning'" [style.margin-bottom.px]="bottom" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
     

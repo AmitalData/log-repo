@@ -1229,7 +1229,7 @@ export class EditComponent implements OnDestroy {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
-                || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
+                || this.ObjectTableName == "BankDeposit"|| this.ObjectTableName == "UserDefinedReport"  || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {

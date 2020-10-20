@@ -17,8 +17,9 @@ namespace Logitude.Accounting.Data.Repositories
         
 		public List<CalculatedChartsOfAccount> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            UserDefinedReportKeys myEntityKeys = entityKeys as UserDefinedReportKeys;
+            return (from a in context.CalculatedChartsOfAccounts where a.UserDefinedReportId == myEntityKeys.Id select a).ToList();
         }
 
    }

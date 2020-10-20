@@ -45,6 +45,7 @@ using WebFreight.Web.Helpers;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using General = WebFreight.Web.DataProviders.General;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -157,7 +158,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
-
+                Contact loggedcontact = GetLoggedContact(currentInvoice.Tenant);
                 #region Start
 
                 string invoiceTypeCode = "";
@@ -1275,6 +1276,24 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.BillToAddress_NoName = DataProviders.General.GetAddress(billToCardAddress);
                             invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
+                            invoicedataprovider.BillToAddress1 = billToCardAddress.Address1;
+                            invoicedataprovider.BillToAddress2 = billToCardAddress.Address2;
+                            invoicedataprovider.BillToCity = billToCardAddress.City;
+                            if (billToCardAddress.Country != null)
+                            {
+                                invoicedataprovider.BillToCountry = loggedcontact.DontShowLocalLabels ? billToCardAddress.Country.EnglishName : billToCardAddress.Country.LocalName;
+                                if (billToCardAddress.City != null)
+                                {
+                                    CountryCityPM countryCity = GetCountryCityPM(billToCardAddress.CountryId, billToCardAddress.City, billToCardAddress.Tenant);
+                                    if (countryCity != null)
+                                    {
+                                        invoicedataprovider.BillToCity = loggedcontact.DontShowLocalLabels ? countryCity.EnglishName : countryCity.LocalName;
+                                    }
+                                }
+                            }
+
+                            if (billToCardAddress.State != null)
+                            invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
@@ -2628,6 +2647,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
+
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -2814,7 +2834,25 @@ namespace WebFreight.Web.ReportsWebServices
                             if (billToAddress != null)
                             {
                                 invoiceDataProvider.BillToAddress_NoName = DataProviders.General.GetAddress(billToAddress);
-
+                                invoiceDataProvider.BillToAddress1 = billToAddress.Address1;
+                                invoiceDataProvider.BillToAddress2 = billToAddress.Address2;
+                                invoiceDataProvider.BillToCity = billToAddress.City; 
+                                if (billToAddress.Country != null)
+                                {
+                                    invoiceDataProvider.BillToCountry = loggedcontact.DontShowLocalLabels ? billToAddress.Country.EnglishName : billToAddress.Country.LocalName;
+                                    if (billToAddress.City != null)
+                                    {
+                                        CountryCityPM countryCity = GetCountryCityPM(billToAddress.CountryId, billToAddress.City, billToAddress.Tenant);
+                                        if(countryCity!= null)
+                                        {
+                                            invoiceDataProvider.BillToCity= loggedcontact.DontShowLocalLabels ? countryCity.EnglishName : countryCity.LocalName;
+                                        }
+                                    }
+                                }
+                                if (billToAddress.State != null)
+                                {
+                                    invoiceDataProvider.BillToState = loggedcontact.DontShowLocalLabels ? billToAddress.State.EnglishName : billToAddress.State.LocalName;
+                                }
                                 if (!loggedcontact.DontShowLocalLabels && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToAddress);
@@ -3853,6 +3891,12 @@ namespace WebFreight.Web.ReportsWebServices
             return invoiceDataProvider;
         }
 
+        private CountryCityPM GetCountryCityPM(string countryId, string cityName , int tenant)
+        {
+            CountryCityQuery countryCityQuery = new CountryCityQuery(tenant);
+            CountryCityPM city = countryCityQuery.GetCountryCityPMByCountryIdAndNAme(countryId, cityName, tenant);
+            return city;
+        }
         private bool CheckAutoCreditInvoice(ARInvoice invoice)
         {
             if (invoice.IsAutoCredit && invoice.StatusCode == "AC" && invoice.ARInvoiceTypeCode == "CD" && invoice.CreditedByARInvoiceId != null)

@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class CalculatedChartsOfAccountQueryService: EntityQueryService<CalculatedChartsOfAccount,CalculatedChartsOfAccountKeys,CalculatedChartsOfAccountPM,object,CalculatedChartsOfAccountKeys>
+   public partial class CalculatedChartsOfAccountQueryService: EntityQueryService<CalculatedChartsOfAccount,CalculatedChartsOfAccountKeys,CalculatedChartsOfAccountPM,UserDefinedReportPM,UserDefinedReportKeys>
    {
    
         CalculatedChartsOfAccountRepository repository;
