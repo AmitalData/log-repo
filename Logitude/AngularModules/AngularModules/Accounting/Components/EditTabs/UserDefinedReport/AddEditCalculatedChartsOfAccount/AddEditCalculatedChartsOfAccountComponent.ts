@@ -29,7 +29,6 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public ObjectTableName: string = "CalculatedChartsOfAccount";
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
-    public IsCancelled: false; 
 
     constructor() {
         super();
