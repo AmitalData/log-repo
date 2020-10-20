@@ -630,7 +630,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     Card myCard = null;
                     var repository = new CardRepository(ResolvedTenant());
                     myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, ResolvedTenant());
-                    if (!String.IsNullOrWhiteSpace(myCard.Code))
+                    if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                     {
                         string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
                         if (defValue == "Y")
