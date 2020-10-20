@@ -73,6 +73,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityId = dirtyEntityPM.DeclarationId;
                     customFile = dirtyEntityPM.CustomFileNo;
                 }
+           
+
+                var comments = eventContextTagModel.FUStatusRemarks;
+                if (statusId == "LIK")
+                {
+                    comments = dirtyEntityPM.Remarks;
+                }
+
 
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
