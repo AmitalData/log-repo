@@ -35,6 +35,7 @@ namespace WebFreight.Web.Monitoring
         private bool AnyFailedStatus()
         {
             bool IsFaild = false;
+            bool IsFaildWaiting = false;
 
             IWebFreightContext Context = WebFreightContext.GetContext(0);
 
@@ -42,9 +43,14 @@ namespace WebFreight.Web.Monitoring
 
             try
             {
+                IsFaildWaiting = (from a in Context.QueueMessages
+                                  where (a.QueueDefinitionCode.Contains("ImporterApprovalReceivedQueue")) && (a.CreateDateTime > twoDaysBefore) && a.Status == 0
+                                  select a).Count() > 30;
+
                 IsFaild = (from a in Context.QueueMessages
-                           where (a.QueueDefinitionCode.Contains("ImporterApprovalReceivedQueue")) && (a.CreateDateTime > twoDaysBefore) && a.Status == 0
-                           select a).Any();
+                           where a.QueueDefinitionCode.Contains("ImporterApprovalReceivedQueue") && a.Status == -1
+                           && a.CreateDateTime >= DateTime.Now.Date
+                           select a).Count() > 50;
             }
 
             catch (Exception errorInfo)
@@ -52,7 +58,7 @@ namespace WebFreight.Web.Monitoring
                 ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "ImporterApprovalReceivedQueue", "Bug in AnyFailedStatus Method : IsFaild = (from a in Context.QueueMessages ...", null);
             }
 
-            return IsFaild;
+            return (IsFaild || IsFaildWaiting);
         }
     }
 }
