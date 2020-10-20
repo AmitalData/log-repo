@@ -36,6 +36,7 @@ using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Xml.Linq;
+using Logitude.Customs.BL.Validators;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -1244,6 +1245,62 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
+
+        public static void SetCLSHWB(String DeclarationID , string loggingUserId, int a_tenent, UnifreightEventMode a_Mode)
+        {
+            DeclarationPM myDeclarationPM;
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(a_tenent);
+            
+            var customContext = CustomContext.GetContext(a_tenent);
+            DeclarationCourierStatusQueryService courierStatusQueryService = new DeclarationCourierStatusQueryService(a_tenent);
+            DeclarationCourierStatusPM mydeclarationCourierStatusPM = courierStatusQueryService.GetSingle(DeclarationID, true, false);
+            DeclarationCourierStatusUpdateService courierStatusUpdateService =  new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), a_tenent);
+
+            try
+            {
+                myDeclarationPM = declarationQueryService.GetSingleDeclarationById(DeclarationID, a_tenent);
+
+                if (a_Mode == UnifreightEventMode.@new)
+                {
+                    mydeclarationCourierStatusPM.IsClosedForFollowUp = true;
+                }
+                else
+                {
+                    mydeclarationCourierStatusPM.IsClosedForFollowUp = false;
+                }
+
+                
+                mydeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                courierStatusUpdateService.Update(mydeclarationCourierStatusPM,true);
+
+                string unifrieghtEvent = "CLSHWB"; //"CLSHWB";
+                //string eventRemarks = remarks;
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = unifrieghtEvent,
+                    // Mode = UnifreightEventMode.@new,
+                    Mode = a_Mode,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = myDeclarationPM.CustomFileNo
+                    //EventRemarks = eventRemarks,
+                };
+                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    a_tenent,
+                    loggingUserId,
+                    MyUnifreightEventParam);
+
+            }
+            catch (Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
+
+
         private static void RaiseFuturePaymentEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
         {
             try
