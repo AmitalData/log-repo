@@ -119,6 +119,14 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
     }
 
+    ClearPortFields() {
+
+        this.FromPortCountryCode = "";
+        this.ToPortCountryCode = "";
+        this.FromPortCode = "";
+        this.ToPortCode = "";
+    }
+
     IsPrivateLabel: boolean = false;
     AllowSendingDocsToAgent: boolean = false;
     DocsSentToAgent: boolean = false;
@@ -135,14 +143,16 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this.ShipmentSelectedEvent.subscribe((res) => {
             //this.CurrentSession.StartBusyIndicator("Loading ...");//
           this.StopLoading = false;
-          if (res == null) {
-            this.StopLoading = true;
-            this.externalDocs = [];
-            this.SignReqDocs = [];
-            this.externalRequestedDocs = [];
-            this.AllHeader = "By Category (0)";
-            this.RequestedCount = 0;
-            this.SignRequiredCount = 0;
+            if (res == null) {
+                this.StopLoading = true;
+                this.externalDocs = [];
+                this.SignReqDocs = [];
+                this.externalRequestedDocs = [];
+                this.AllHeader = "By Category (0)";
+                this.RequestedCount = 0;
+                this.SignRequiredCount = 0;
+                this.SelectedShipment = null;
+                this.ClearPortFields();
             return;
           }
           
@@ -176,7 +186,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this.ReloadDocuments(true);
                   });
                   this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult: any) => {
-                    if (!theResult.HasError) {
+                      if (!theResult.HasError && theResult.Result) {
                       this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
                     }
                   });
