@@ -27,6 +27,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.ExternalService;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -122,6 +123,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
+
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
         }
 
         public void Update(bool mapComposition = false)
@@ -192,11 +197,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
+
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
         }
 
         #region Initialize
         private void InitializeComponents()
         {
+            SetVendorDetails();
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
@@ -256,6 +266,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
         }
         #endregion
+
+        private void SetVendorDetails()
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
+            entityPM.VendorContactId = card != null ? card.PrimaryContactId : null;
+            entityPM.VendorVatNumber = card != null ? card.VatNumber : null;
+        }
 
         #region LinkedData
         private List<APInvoiceMultipleShipmentPM> allInvoiceShipments;

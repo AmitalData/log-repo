@@ -114,6 +114,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
+        public string VendorContactId { get; set; }
         public string ExternalAccountingEntityId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? OperationalDate { get; set; }
@@ -334,6 +335,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string CreatedByPartner { get; set; }
         public bool TotalVATOnly { get; set; }
-
+        public string VendorVatNumber { get; set; }
     }
 }
