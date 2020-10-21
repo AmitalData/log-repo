@@ -55,6 +55,20 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
       this.http = ServiceHelper.HttpClient;
 
     }
+    ValidationBeforeSave(customsDocumentsTicket: CustomsDocumentsTicketPM, param1: string) {
+
+        if (param1 == "1" && AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoicesSequences)) {
+            return "חובה לבחור חשבון.";
+        }
+
+        if (param1 == "2" && AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoicesSequences) || AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoiceItemsSequences) ) {
+            return "חובה לבחור שורת פרט מכס";
+        }
+
+
+        return "";
+    }
+  
 
     CheckIfDuplicateTicket() {
         if (this.declarationPM.Direction == 'E') {

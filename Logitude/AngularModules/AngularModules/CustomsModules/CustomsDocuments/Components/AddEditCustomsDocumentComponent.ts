@@ -592,11 +592,19 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             }
         }
 
+        var err = this.iCustomsDocumentsController.ValidationBeforeSave(this.CustomsDocumentsTicket, this.SelectedIndex.toString());
+        if (err!="") {
+
+            this.ValidationErrorsList.push(err);
+                return;
+            }
+        
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (this.ViewDisableMessageVisibility) {
             this.CancelButtonClicked();
             return;
         }
+
         var requiredFieldsErrors: string[] = [];
 
         if (this.CustomsDocument != null) {
