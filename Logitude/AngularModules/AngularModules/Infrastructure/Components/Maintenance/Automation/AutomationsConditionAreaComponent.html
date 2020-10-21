@@ -185,7 +185,7 @@
                                                                                                     <tr>
                                                                                                         <td *ngIf="item.SelectedCustomField && !item.IsRefrachCustomField">
 
-                                                                                                            <div *ngIf="item.SelectedCustomField.DataTypeCode == 'Text' || item.SelectedCustomField.DataTypeCode == 'nText' || item.SelectedCustomField.DataTypeCode == 'Integer' || item.SelectedCustomField.DataTypeCode == 'Double' ||item.SelectedCustomField.DataTypeCode == 'Decimal'">
+                                                                                                            <div *ngIf="item.SelectedCustomField.DataTypeCode == 'Text' || item.SelectedCustomField.DataTypeCode == 'nText' || item.SelectedCustomField.DataTypeCode == 'Integer' || item.SelectedCustomField.DataTypeCode == 'Double' || item.SelectedCustomField.DataTypeCode == 'SigDouble' ||item.SelectedCustomField.DataTypeCode == 'Decimal'">
                                                                                                                 <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [IsMultiline]="item.IsMultiline" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogTextBox>
                                                                                                             </div>
 
@@ -238,7 +238,7 @@
 
                                                                                                         <td *ngIf="item.SelectedCustomField && item.IsRefrachCustomField">
 
-                                                                                                            <div *ngIf="item.SelectedCustomField.DataTypeCode == 'Text' || item.SelectedCustomField.DataTypeCode == 'nText' || item.SelectedCustomField.DataTypeCode == 'Integer' || item.SelectedCustomField.DataTypeCode == 'Double' ||item.SelectedCustomField.DataTypeCode == 'Decimal'">
+                                                                                                            <div *ngIf="item.SelectedCustomField.DataTypeCode == 'Text' || item.SelectedCustomField.DataTypeCode == 'nText' || item.SelectedCustomField.DataTypeCode == 'Integer' || item.SelectedCustomField.DataTypeCode == 'Double' || item.SelectedCustomField.DataTypeCode == 'SigDouble' ||item.SelectedCustomField.DataTypeCode == 'Decimal'">
                                                                                                                 <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [IsMultiline]="item.IsMultiline" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogTextBox>
                                                                                                             </div>
 
