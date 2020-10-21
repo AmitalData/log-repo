@@ -155,7 +155,8 @@ export class DeclarationReshimonConversionComponent
         }
         //check digits 3-4 is 98 or 99 according to DclarationType
         if (this.DeclarationNumber.substr(2, 2) != "98" &&
-            this.DeclarationNumber.substr(2, 2) != "99") {
+            this.DeclarationNumber.substr(2, 2) != "99" &&
+            this.DeclarationNumber.substr(2, 2) != "97") {
             this.ReshimonNumber = null;
             this.ReshimonNumberLast = null;
 
