@@ -376,6 +376,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? CreateDateDuplicate  { get; set; }
        [DataMember]
        public string TransportModeDuplicate  { get; set; }
+       [DataMember]
+       public string CustomFileForExport  { get; set; }
    }
 
 }

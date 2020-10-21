@@ -189,6 +189,7 @@ export class DeclarationList {
 	FOBValueDollar: number;
 	CreateDateDuplicate: Date;
 	TransportModeDuplicate: string;
+	CustomFileForExport: string;
 	
 }
  
