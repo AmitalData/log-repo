@@ -35,7 +35,11 @@ let R: RandomGenerator= new RandomGenerator();
             TransportModeId : 'A',
             DeclarationOfficeCode : '14',
       }
-     })
+     }).its('body')
+     .then(ImportDeclaration => {
+      win.sessionStorage.setItem('ImportDeclarationId', ImportDeclaration.Id);
+      cy.log("Declaration Id: "+ImportDeclaration.Id);
+     });
    }); 
   });
 });

@@ -38,10 +38,9 @@ let R: RandomGenerator= new RandomGenerator();
       })
       .its('body')
       .then(customerPM => {
-       cy.window().then(win => { 
        win.sessionStorage.setItem('CusstomerGECUId', customerPM.Id);
        win.sessionStorage.setItem('CusstomerGECUCode', customerPM.Code);
-       });
+       cy.log("customer Id: "+customerPM.Id);
       });
    }); 
   });

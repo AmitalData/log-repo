@@ -36,7 +36,7 @@ it('Get or Create API Customer Successfully', () => {
       var Result = response.body.Result[0];
       cy.window().then(win => { 
        if(Result!=null && Result!=""){
-        cy.log(Result.Id+" " + Result.Code);
+        cy.log("customer Id: "+Result.Id);
         win.sessionStorage.setItem('CusstomerGECUId', Result.Id);
         win.sessionStorage.setItem('CusstomerGECUCode', Result.Code);
        }
@@ -62,7 +62,12 @@ it('Get or Create API Customer Successfully', () => {
         
           },
          
-        })
+        }).its('body')
+        .then(Customer => {
+          win.sessionStorage.setItem('CusstomerGECUId', Customer.Id);
+          win.sessionStorage.setItem('CusstomerGECUCode', Customer.Code);
+          cy.log("customer Id: "+Customer.Id);
+        });
        }
      });
     });
