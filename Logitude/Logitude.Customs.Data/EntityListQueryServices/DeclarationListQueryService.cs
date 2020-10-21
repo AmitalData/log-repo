@@ -460,8 +460,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ShipCode = a.ShipCode,
                                                      ShipName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
                                                      IsExporterConfirmation = a.IsExporterConfirmation,
-                                                     CreateDateDuplicate=a.CreateDateTime,
-                                                     TransportModeDuplicate=a.TransportModeId
+                                                     CreateDateForExport=a.CreateDateTime,
+                                                     TransportModeForExport=a.TransportModeId,
+                                                     CustomFileForExport=a.CustomFileNo
                                                  });
 
 
