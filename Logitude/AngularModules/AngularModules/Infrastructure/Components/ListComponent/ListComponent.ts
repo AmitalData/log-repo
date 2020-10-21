@@ -433,6 +433,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     pubSubAdvanceQueryFiltersServiceRecived: PubSubService1;
     @Output() GridFilterchangeevent = new EventEmitter();
     @Output() SearchFieldchangeevent = new EventEmitter();
+    @Output() FilterChangedEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     AdvanceQFiltersService: PubSubService;
     public TenantPM: TenantPM;
@@ -1504,7 +1505,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
             var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
-            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
+            //this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
+            this.FilterChangedEvent.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
     }
     onMenuHeaderchanged(event) {
