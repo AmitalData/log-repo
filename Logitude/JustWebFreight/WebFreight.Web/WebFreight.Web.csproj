@@ -1008,6 +1008,7 @@
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
