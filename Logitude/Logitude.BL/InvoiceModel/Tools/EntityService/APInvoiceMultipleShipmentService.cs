@@ -28,6 +28,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ExternalService;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -117,6 +118,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setApproved = entityPM.SetApproved;
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
+
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
+
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             this.invoiceRepository.Add(invoice);
             this.invoiceRepository.SubmitChanges();
@@ -125,8 +131,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.RunStoredProcedures();
 
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
-            entityAutomationService.RunAutomation();
         }
 
         public void Update(bool mapComposition = false)
@@ -165,6 +169,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
 
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
+            entityAutomationService.RunAutomation();
 
 
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
@@ -199,8 +205,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.RunStoredProcedures();
 
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
-            entityAutomationService.RunAutomation();
         }
 
         #region Initialize
