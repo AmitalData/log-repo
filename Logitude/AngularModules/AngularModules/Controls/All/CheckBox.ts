@@ -96,7 +96,8 @@ export class CheckBox{
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
+        var pipe: IdGeneratorPipe = new IdGeneratorPipe();
+        this.ControlId = pipe.transform("CheckBox_" + this.CurrentSession.GetNewId("CheckBox"));
         this.ControlId2 = this.ControlId + "_LBL";
     }
 
