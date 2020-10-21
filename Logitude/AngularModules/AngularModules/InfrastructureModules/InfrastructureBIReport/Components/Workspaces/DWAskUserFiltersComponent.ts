@@ -188,12 +188,13 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
                     if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe((myResult: ServiceResponse) => {
+
+                            this.CurrentSession.StopBusyIndicator();
                             if (!myResult.HasError) {
-                                this.CurrentSession.StopBusyIndicator();
                                 this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count, IsParentTenant: this.isParentTenant});// more than 10000
                             }
-                            else {
-                                this.CurrentSession.StopBusyIndicator();
+                            else if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
+                                this.ShowMessageWindow(myResult.ErrorsArray[0]);
                             }
                         });
                     }
