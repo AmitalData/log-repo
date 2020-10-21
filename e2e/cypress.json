@@ -12,7 +12,7 @@
 
   },
   "env": {
-    "TestURL": "https://test.logitudeworld.com/test/",
+    "TestURL": "https://test.logitudeworld.com/Test",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
@@ -31,9 +31,9 @@
     "FATestPassword": "!Sg13579",
     "FACloudEmail": "sumaya@cloud.com",
     "FACloudPassword": "Sg0592463934!",
-    "ProdStagingTIURL":"https://staging.logitudeworld.com/",
-    "ProdStagingTIEmail":"protractor2@test.com",
-    "ProdStagingTIPassword":"!P123p123"
+    "ProdStagingTIURL": "https://staging.logitudeworld.com/",
+    "ProdStagingTIEmail": "protractor2@test.com",
+    "ProdStagingTIPassword": "!P123p123"
 
 
   },
