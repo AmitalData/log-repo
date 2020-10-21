@@ -106,6 +106,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                    SequenceNumeric = a.SequenceNumeric,
                                                                    IsParent = a.IsParent,
                                                                    ClasifiedRemarks = a.ClasifiedRemarks,
+                                                                   InvoiceNumber=a.SupplierInvoice.InvoiceNumber,
 
 
                                                                }).ToList();
