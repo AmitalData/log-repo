@@ -2,21 +2,28 @@
   <Sql Version="1">
     <![CDATA[
     
-If(OBJECT_ID('tempdb..#temp') Is Not Null)
-Begin  Drop Table #temp End
+    
 declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
 
+
+  declare @Id as varchar(15)
+       declare @FieldName as VARCHAR(200) 
+	   declare @FieldValue as datetime 
+	    declare @DocumentTypeId as VARCHAR(15) 
+
+DECLARE DataCursor CURSOR READ_ONLY
+	FOR
 select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
   CASE
        WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
        WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
        ELSE DocumentTypes.OnSendPopulateDateFieldName
  END AS FieldName,
- CASE  WHEN DocumentsFilings.UpdateDate is null THEN DocumentsFilings.CreateDate ELSE DocumentsFilings.UpdateDate END AS FieldValue
- into #temp
+ Max(DocumentsFilings.UpdateDate)
+
  from DocumentsFilings
  inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
-where  (
+where  $LastCounterWhere$ and (
  CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
  WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
  ELSE DocumentTypes.OnSendPopulateDateFieldName
@@ -24,23 +31,16 @@ where  (
  CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
  WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
  ELSE DocumentTypes.OnSendPopulateDateFieldName END) !=''
- and   DocumentsFilings.ObjectTableId =@ObjectTableId and DocumentTypes.ObjectTableId =@ObjectTableId
-and  $LastCounterWhere$
-	  declare @Id as varchar(15)
-       declare @FieldName as VARCHAR(200) 
-	   declare @FieldValue as datetime 
-
-	DECLARE DataCursor CURSOR READ_ONLY
-	FOR
-  
-  
-  
-	SELECT #temp.EntityId,  #temp.FieldName, #temp.FieldValue 
-	FROM #temp	
-	WHERE FieldValue  IN ( SELECT MAX(FieldValue) FROM #temp GROUP BY EntityId, FieldName, DocumentTypeId) 
-    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@FieldName, @FieldValue
+ and   DocumentsFilings.ObjectTableId =@ObjectTableId and DocumentTypes.ObjectTableId =@ObjectTableId 
+ GROUP BY EntityId,DocumentTypeId , CASE
+       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
+       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
+       ELSE DocumentTypes.OnSendPopulateDateFieldName
+ END
+    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
+
 		 declare @functionring as varchar(3000)
 		 	declare @TableName varchar(100) 
 
@@ -58,14 +58,11 @@ and  $LastCounterWhere$
 	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
 	EXEC(@functionring)
 
-	FETCH NEXT FROM DataCursor  INTO @Id,@FieldName, @FieldValue
+	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
 	END
 	CLOSE DataCursor
 	DEALLOCATE DataCursor
 
-     drop table #temp
-
-      
     ]]>
   </Sql>
 </Script>
