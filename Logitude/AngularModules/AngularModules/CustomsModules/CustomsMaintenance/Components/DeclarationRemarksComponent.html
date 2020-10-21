@@ -111,7 +111,18 @@
             <td colspan="5" style="width: 100% ; ">
                 <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="SupplierInvoiceItemList">
-
+                        <!-- InvoiceNumber -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
+                                    [binding]="'InvoiceNumber'"
+                                    [width]="'100'" [Alignment]="'Right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.InvoiceNumber}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
                         <!-- ClassificationCode -->
                         <!--"'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"-->
                         <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"

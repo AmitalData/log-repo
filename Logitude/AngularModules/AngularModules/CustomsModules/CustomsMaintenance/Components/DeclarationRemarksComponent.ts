@@ -63,11 +63,7 @@ export class DeclarationRemarksComponent
                     if (response) {
                         var TempInvoiceItemsList = [];
                         for (let item of response.Result) {
-                            
-                            
                             this.SupplierInvoiceItemList.Insert(item);
-
-
                         }
                     }
                     this.SupplierInvoiceItemListLoaded = true;
