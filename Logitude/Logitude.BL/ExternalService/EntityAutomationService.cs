@@ -17,8 +17,6 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ExternalService
 {
-
-
     public  class EntityAutomationService
     {
         private object entityPM = null;
@@ -37,7 +35,6 @@ namespace Logitude.BL.ExternalService
             this.objectTableName = args.ObjectTableName;
             this.automationType = args.AutomationType;
             this.entityId = args.EntityId;
-
             if (automationType != "OnCreate")
             {
                 this.automationObjectFields = GetObjectFieldsUsedInAutomation();
@@ -45,8 +42,11 @@ namespace Logitude.BL.ExternalService
                 MapAutomationFieldsFormPocoToEntityPM(poco, this.oldEntityPM);
             }
 
+            if (args.EntityAutomationMappingPMFields != null)
+            {
+                args.EntityAutomationMappingPMFields.Map(poco, this.oldEntityPM);
+            }
         }
-
 
         public void RunAutomation()
         {
@@ -56,7 +56,6 @@ namespace Logitude.BL.ExternalService
             mainEntityChangeService.AddEntityChange();
 
         }
-
 
         private List<ObjectFieldPM> GetObjectFieldsUsedInAutomation()
         {
@@ -76,7 +75,6 @@ namespace Logitude.BL.ExternalService
             var notifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, oldEntityPM);
             return EntityPMChangeTrackingHelper.GetChangesDetectedXml(notifyPropertyChangeValuesLists);
         }
-
 
         private void MapAutomationFieldsFormPocoToEntityPM( object poco , object entityPM)
         {
@@ -153,10 +151,6 @@ namespace Logitude.BL.ExternalService
 
     }
 
-
-  
-
-
     public class NotifyPropertyChangeArgs
     {
         public string PropertyName { get; set; }
@@ -177,11 +171,7 @@ namespace Logitude.BL.ExternalService
         public string ObjectTableName { get; set; }
         public int Tenant { get; set; }
         public string EntityId { get; set; }
-
-
-
+        public IEntityAutomationMappingPMFields EntityAutomationMappingPMFields { get; set; }
     }
 
-
 }
-
