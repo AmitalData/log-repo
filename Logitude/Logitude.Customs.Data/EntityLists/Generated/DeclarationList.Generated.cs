@@ -373,9 +373,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public decimal? FOBValueDollar  { get; set; }
        [DataMember]
-       public DateTime? CreateDateDuplicate  { get; set; }
+       public DateTime? CreateDateForExport  { get; set; }
        [DataMember]
-       public string TransportModeDuplicate  { get; set; }
+       public string TransportModeForExport  { get; set; }
        [DataMember]
        public string CustomFileForExport  { get; set; }
    }
