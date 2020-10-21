@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp',   'ChangeCheckBoxesState'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp', 'ChangeCheckBoxesState','FilterChangedEvent'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -111,6 +111,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public MenuHeaderchangeevent: EventEmitter<any>;
     public Filterchangeevent: LogEvents.EventManager;
     CheckBoxFilterChanged: EventEmitter<any>;
+    FilterChangedEvent: EventEmitter<any>;
     @Output() ColumnResisedevent = new EventEmitter();
     @Output() RowHoverevent = new EventEmitter();
     public ViewHeight: number;
@@ -730,7 +731,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     }
 
     filterChanged(filters) {
-        var LogGridIdPostFex = this.LogGridId.replace('LogGrid_', '');
+        // var LogGridIdPostFex = this.LogGridId.replace('LogGrid_', '');
         // if (LogGridIdPostFex != filters.ListComponentPostFex) {
         //     return;
         // }
@@ -956,7 +957,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
 
         var xx = this.rows;
-        this.FiltersChangedsubscription = this.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
+        //this.FiltersChangedsubscription = this.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
+        this.FiltersChangedsubscription = this.FilterChangedEvent.subscribe(change => this.filterChanged(change));
+
         if (this.pubSubAdvanceQueryFiltersServiceRecived) {
             this.pubSubAdvanceQueryFiltersSub = this.pubSubAdvanceQueryFiltersServiceRecived.Stream.subscribe(filters => this.processQueryFilter(filters));
         }
@@ -2261,7 +2264,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
     ngOnDestroy() {
         this.cd = null;
-        this.FiltersChangedsubscription.unsubscribe();
+        if (this.FiltersChangedsubscription) {
+            this.FiltersChangedsubscription.unsubscribe();
+        } 
         if (this.requestedRowsReadySub) {
             this.requestedRowsReadySub.unsubscribe();
         }
