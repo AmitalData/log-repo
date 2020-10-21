@@ -23,7 +23,7 @@ select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
 
  from DocumentsFilings
  inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
-where  $LastCounterWhere$ and (
+where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
  CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
  WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
  ELSE DocumentTypes.OnSendPopulateDateFieldName
