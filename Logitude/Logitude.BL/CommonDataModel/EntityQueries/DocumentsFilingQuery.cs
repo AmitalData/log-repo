@@ -1983,7 +1983,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //.Include("CreatedByUser.Contact")
                                        .Include("Document").Include("DocumentType")
                                        //.Include("Owner.Contact")
-                                       where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId) || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber))
+                                       where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId && (a.ExternalEntityName != "EFIFILEM" && a.ExternalEntityName != "MFIFILEM")) 
+                                       || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber) 
+                                       || ((a.ExternalEntityName == "EFIFILEM" || a.ExternalEntityName == "MFIFILEM" )&& a.EntityReference == referenceNumber))
                                        && a.DirectionCode == directionCode && a.IsDeleted == false
                                        select new DocumentsFilingPM()
                                        {
