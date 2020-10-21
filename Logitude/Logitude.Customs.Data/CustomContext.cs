@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new AmendRequestRejectReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
@@ -1250,6 +1252,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes 
 	 {
 	      get; set;
 	 

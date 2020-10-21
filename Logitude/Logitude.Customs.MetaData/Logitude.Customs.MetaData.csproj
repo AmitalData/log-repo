@@ -459,6 +459,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\AmendmentRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
