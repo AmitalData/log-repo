@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -104,7 +105,7 @@ namespace Logitude.Customs.Data.Repsitories
             if (!string.IsNullOrEmpty(entity3ChildId))
             {
                 iqurable = from a in context.CustomsDocumentPointers
-                           where a.ParentEntityId == entityId && a.Child1EntityId==entity1ChildId&&a.Child2EntityId==entity2ChildId&&a.Child3EntityId==entity3ChildId && a.Tenant==tenant&&a.ParentEntityCode==parentEntityCode
+                           where a.ParentEntityId == entityId && a.Child1EntityId == entity1ChildId && a.Child2EntityId == entity2ChildId && a.Child3EntityId == entity3ChildId && a.Tenant == tenant && a.ParentEntityCode == parentEntityCode
                            select a;
             }
             else if (!string.IsNullOrEmpty(entity2ChildId))
@@ -127,9 +128,53 @@ namespace Logitude.Customs.Data.Repsitories
                            select a;
             }
 
-            var customsDocumentPointers = (from a in iqurable
-                                           group a by a.CustomsDocumentsTicketId into gr
-                                           select new { CustomsDocumentsTicketId=gr.Key }).ToList();
+            var sw = Stopwatch.StartNew();
+            var qGroupby = (from a in iqurable
+                            group a by a.CustomsDocumentsTicketId into gr
+                            select new { CustomsDocumentsTicketId = gr.Key });
+
+            /*
+SELECT 
+1 AS C1,
+Distinct1.CustomsDocumentsTicketId
+FROM ( SELECT DISTINCT 
+	Extent1.CustomsDocumentsTicketId
+	FROM couriernet_main.CustomsDocumentPointers Extent1
+	WHERE ((Extent1.ParentEntityId = :p__linq__0) AND (Extent1.Tenant = :p__linq__1)) AND (Extent1.ParentEntityCode = :p__linq__2)
+)  Distinct1
+
+             */
+            var customsDocumentPointers =
+                //(from a in iqurable
+                // group a by a.CustomsDocumentsTicketId into gr
+                // select new { CustomsDocumentsTicketId = gr.Key }).ToList();
+                qGroupby.ToList();
+            var time1 = sw.ElapsedMilliseconds;
+            if (false)
+            {
+                // up its equal to down !!
+                /*
+                SELECT 
+                Distinct1.C1,
+                Distinct1.CustomsDocumentsTicketId
+                FROM ( SELECT DISTINCT 
+                Extent1.CustomsDocumentsTicketId,
+                1 AS C1
+                FROM couriernet_main.CustomsDocumentPointers Extent1
+                WHERE ((Extent1.ParentEntityId = :p__linq__0) AND (Extent1.Tenant = :p__linq__1)) AND (Extent1.ParentEntityCode = :p__linq__2)
+                )  Distinct1
+                */
+                sw = Stopwatch.StartNew();
+                var qDistinct = iqurable
+                   .Select(r => new { CustomsDocumentsTicketId = r.CustomsDocumentsTicketId })
+                   .Distinct();
+                customsDocumentPointers = qDistinct
+                    .ToList();
+                var time2 = sw.ElapsedMilliseconds;
+            }
+
+
+
 
             List<string> ticketIds = new List<string>();
 
@@ -141,47 +186,47 @@ namespace Logitude.Customs.Data.Repsitories
                                                     where ticketIds.Contains(a.Id)
                                                     select a).ToList();
             return tickets;
-            
+
         }
 
 
-        public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
+{
+(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
 
-            List<CustomsDocumentsTicket> customsDocumentsTicket;
-            customsDocumentsTicket = (from a in context.CustomsDocumentsTickets
-                                      where (a.DocumentsFilingId == documentsFilingId)
-                                       && a.Tenant == tenant
-                                       select a).ToList();
+List<CustomsDocumentsTicket> customsDocumentsTicket;
+customsDocumentsTicket = (from a in context.CustomsDocumentsTickets
+                      where (a.DocumentsFilingId == documentsFilingId)
+                       && a.Tenant == tenant
+                       select a).ToList();
 
-            return customsDocumentsTicket;
-        }
+return customsDocumentsTicket;
+}
 
-        public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsIds(string ticketIds, int tenant)
-        {
-            string[] ids = ticketIds.Split(',');
-            List<CustomsDocumentsTicket> customsDocumentsTicket;
-            customsDocumentsTicket = (from a in context.CustomsDocumentsTickets
-                                      where (ids.Contains(a.Id))
-                                       && a.Tenant == tenant
-                                      select a).ToList();
+public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsIds(string ticketIds, int tenant)
+{
+string[] ids = ticketIds.Split(',');
+List<CustomsDocumentsTicket> customsDocumentsTicket;
+customsDocumentsTicket = (from a in context.CustomsDocumentsTickets
+                      where (ids.Contains(a.Id))
+                       && a.Tenant == tenant
+                      select a).ToList();
 
-            return customsDocumentsTicket;
-        }
-    }
-   public class GetTicketsParams
-   {
-       public string ParentEntityCode { get; set; }
-       public string Child1EntityCode { get; set; }
-       public string Child2EntityCode { get; set; }
-       public string Child3EntityCode { get; set; }
-       public string ParentEntityId { get; set; }
-       public string Child1EntityId { get; set; }
-       public string Child2EntityId { get; set; }
-       public string Child3EntityId { get; set; }
-   }
+return customsDocumentsTicket;
+}
+}
+public class GetTicketsParams
+{
+public string ParentEntityCode { get; set; }
+public string Child1EntityCode { get; set; }
+public string Child2EntityCode { get; set; }
+public string Child3EntityCode { get; set; }
+public string ParentEntityId { get; set; }
+public string Child1EntityId { get; set; }
+public string Child2EntityId { get; set; }
+public string Child3EntityId { get; set; }
+}
 
 }
    
