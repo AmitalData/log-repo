@@ -1,5 +1,5 @@
 
-import  { CreateRandom } from './CreateRandom';
+ import {CreateRandom} from "../Helper/CreateRandom";
 import { LoginComp } from "../../login/Login.po";
 export class APInvoiceSpec {
   private login: LoginComp = new LoginComp();
