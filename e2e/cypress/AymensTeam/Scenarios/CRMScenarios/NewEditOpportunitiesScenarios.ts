@@ -67,6 +67,18 @@ export class NewEditOpportunitiesScenarios {
         Resolvers.ButtonResolver.Selector('#AddPhoneCall').Click();
         scenarios.CreatePhoneCallWithoutCustomer(this.EntityNumber);
         scenarios.Save();
+        Resolvers.ButtonResolver.Selector('#AddTask').Click();
+        scenarios.CreateTask(this.EntityNumber);
+        scenarios.Save();
+        Resolvers.ButtonResolver.Selector('#AddAppointment').Click();
+        scenarios.CreateAppoinment(this.EntityNumber);
+        scenarios.Save();
+        Resolvers.MainMenuResolver.Selector('#OpportunityTHGeneral').Select();
+        Resolvers.LOVResolver.Selector("#Opportunity_ContactId").SelectFirst();
+        Resolvers.LOVResolver.Selector("#Opportunity_OwnerId").SelectFirst();
+        Resolvers.LOVResolver.Selector("#Opportunity_LeadSourceId").SelectFirst();
+        Resolvers.LOVResolver.Selector("#Opportunity_LeadUserId").SelectFirst(); 
+        Resolvers.LOVResolver.Selector("#Opportunity_LeadPartnerId").SelectFirst();
         //  this.WaitLoaded('CRMDomain/GetUpcomigActivities?');
 
 

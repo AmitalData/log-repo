@@ -55,7 +55,7 @@ export class NewEditActivitiesScenarios {
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for PhoneCall # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
-    private CreateAppoinment(EntityNumber: string) {
+    public CreateAppoinment(EntityNumber: string) {
         //  cy.wait(500)
 
         this.WaitLoaded('cardviews/getbyfilters?');
