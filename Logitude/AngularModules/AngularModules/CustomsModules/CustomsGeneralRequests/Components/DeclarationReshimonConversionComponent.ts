@@ -41,7 +41,9 @@ export class DeclarationReshimonConversionComponent
             [
                 { 'DeclarationConvertionDigits': "", 'Name': '' },
                 { 'DeclarationConvertionDigits': "99", 'Name': 'יבוא' },
-                { 'DeclarationConvertionDigits': "98", 'Name': 'יצוא' }
+            { 'DeclarationConvertionDigits': "98", 'Name': 'יצוא' },
+            { 'DeclarationConvertionDigits': "97", 'Name': 'שטעון' }
+
             ];
         this.SelectedDeclarationConvertionDigits = this._DeclarationTypeList[0].DeclarationConvertionDigits;
         
