@@ -103,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = eventContextTagModel.FUStatusRemarks,
+                        comments = comments,
                     }
                 };
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
