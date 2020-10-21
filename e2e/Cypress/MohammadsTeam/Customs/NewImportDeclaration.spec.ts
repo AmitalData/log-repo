@@ -3,7 +3,7 @@
 import { APILoginComp } from "../../login/APILogin.po";
 import {RandomGenerator} from "../Helper/RandomGenerator";
 import { GetCreateAPICustomer } from './GetCreateAPICustomer';
-export class APInvoiceSpec {
+export class NewImportDeclaration {
 private login: APILoginComp = new APILoginComp();
 private APICustomer: GetCreateAPICustomer = new GetCreateAPICustomer();
 }
