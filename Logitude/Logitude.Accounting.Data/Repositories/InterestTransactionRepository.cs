@@ -10,6 +10,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.Data.Utilities;
+using Microsoft.SqlServer.Server;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -40,7 +41,8 @@ namespace Logitude.Accounting.Data.Repositories
                 && d.InterestValueDate >= interestTransactionGetParameters.InterestCalculationStartDate);
 
         }
-   }
+ 
+    }
 
 }
    

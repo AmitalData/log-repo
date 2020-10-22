@@ -452,7 +452,14 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = this.Shipment.INTTRAContractNumber,
                 });
             }
+
+            this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+            {
+                Type = ReferenceTypeValues.FreightForwarderRefNumber,
+                Value = this.Shipment.ShipmentNumber,
+            });
         }
+
         private void BuildMessageProperties_Locations()
         {
             this.Locations = new List<INTTRA_Booking.LocationDateTimeType>();
@@ -972,14 +979,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     OuterPack = new OuterPackType(),
                     
                 },
-                DetailsReferenceInformation = new ReferenceInformationType[]
-                {
-                    new ReferenceInformationType()
-                    {
-                        Type = ReferenceTypeValues.FreightForwarderRefNumber,
-                        Value = this.Shipment.ShipmentNumber,
-                    }
-                },
+               
             };
 
             this.GoodsDetails.Add(itemDetails);
