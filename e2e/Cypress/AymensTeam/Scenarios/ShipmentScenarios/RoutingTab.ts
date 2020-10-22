@@ -6,10 +6,11 @@ export class RoutingTab {
     public RunRoutingTabScenarios(transportMode: string) {
         this.transportMode = transportMode;
         this.GoToRoutingTab();
-        this.AddPickupDeilvery('P');
-        this.AddPreOnCarriage('Pre');
-        this.AddPreOnCarriage('On');
-        this.AddPickupDeilvery('D');
+        //this.AddPickupDeilvery('P');
+        //this.AddPreOnCarriage('Pre');
+        this.AddMainCarriag();
+        //this.AddPreOnCarriage('On');
+        //this.AddPickupDeilvery('D');
     }
     private GoToRoutingTab() {
         cy.get('#ShipmentTHRoutings').click();
@@ -67,7 +68,6 @@ export class RoutingTab {
             Resolvers.ToggleButtonResolver.Selector('#RoutingToggle').SelectByIndex(2);
             this.FillOnCarriageDetails();
         }
-
     }
     private FillPreCarriageDetails() {
         if (this.transportMode == 'A') {
@@ -106,5 +106,16 @@ export class RoutingTab {
         Resolvers.DatePickerResolver.Selector('#date_Shipment_OnCarriageETD').Type('.');
 
         Resolvers.ButtonResolver.Selector('#OnCarriageOKBtn').Click();
+    }
+    private AddMainLegs() {
+        Resolvers.ButtonResolver.Selector('#Edit-MainCarriage').Click();
+        this.FillMainCarriageDetails();
+    }
+    private FillMainCarriageDetails() {
+        
+        Resolvers.TextBoxResolver.Selector('#Shipment_TrailerNumber').Type('razan');
+    }
+    private FillViaPort1LegDetails(){
+
     }
 }
