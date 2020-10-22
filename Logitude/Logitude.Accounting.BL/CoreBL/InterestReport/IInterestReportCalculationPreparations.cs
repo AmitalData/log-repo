@@ -8,6 +8,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     public interface IInterestReportCalculationPreparations
     {
         List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters);
+        InterestTransactionPM GetOpenBalanceTransactionForInterestReport(string ReportId, int Tenant);
         InterestReportPM GetInterestReportPM(string interestReportId, int tenant);
         decimal? GetCreditLimitFromGLAccount(string GLAccount, int tenant);
         List<GLAccountInterestPeriodPM> GetGlaccountInterestPeriods(InterestReportPM interestReportPM);

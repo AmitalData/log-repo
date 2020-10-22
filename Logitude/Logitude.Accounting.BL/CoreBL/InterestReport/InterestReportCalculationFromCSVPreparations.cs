@@ -217,5 +217,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             throw new NotImplementedException();
         }
+
+        public InterestTransactionPM GetOpenBalanceTransactionForInterestReport(string ReportId, int Tenant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

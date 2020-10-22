@@ -244,6 +244,11 @@ export class InterestReportPM {
     public set InvoiceDate(newValue: Date) { if (this.invoiceDate != newValue) { this.invoiceDate = newValue; this.MarkAsDirty("InvoiceDate"); } }
        
 	 
+    private isNewReport: boolean;
+    public get IsNewReport() { return this.isNewReport; }
+    public set IsNewReport(newValue: boolean) { if (this.isNewReport != newValue) { this.isNewReport = newValue; this.MarkAsDirty("IsNewReport"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
