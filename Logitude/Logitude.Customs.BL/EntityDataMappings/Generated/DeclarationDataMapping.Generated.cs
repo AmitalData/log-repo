@@ -380,7 +380,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar,
+	         FOBValueDollar, 
+	         AmendmentRejectionReasonName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -2564,10 +2565,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendDeficitInitiatedReasTo)) //T4 find type == nText 
             {
                 entityPM.AmendDeficitInitiatedReasTo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendDeficitInitiatedReasTo));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
-            {
-                entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestReasonExplanation)) //T4 find type == nText 
             {
