@@ -1820,11 +1820,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.MultiSelectedDisplayName = this.GetMultiSelectedDisplayName();
     }
 
+
     private GetMultiSelectedDisplayName() {
         let textValue = "";
-        let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
-        let headerName = dimensionTableCode == "DIM_Partners" ? "Local Name" : this.Code.replace('[', '').replace(']', '');
         if (this.multiSelectedValueLists && this.multiSelectedValueLists.length > 0) {
+            let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
+            let headerName = (dimensionTableCode == "DIM_Partners" && this.LOVAdditionalColumns && this.LOVAdditionalColumns.indexOf('[Local Name]') != -1) ? "Local Name" : (this.Code ? this.Code.replace('[', '').replace(']', '') : "");
             this.multiSelectedValueLists.forEach((field) => {
                 textValue += this.ResolveValue(field, headerName) + ";";
             });
