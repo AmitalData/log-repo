@@ -850,7 +850,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            
+
+            if (string.IsNullOrEmpty(myResult))
+            {
+                string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
+                throw new ApplicationException(message);
+            }
+
             return myResult;
         }
 
