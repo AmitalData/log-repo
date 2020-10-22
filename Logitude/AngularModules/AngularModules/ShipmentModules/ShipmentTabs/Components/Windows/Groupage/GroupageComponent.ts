@@ -90,7 +90,7 @@ export class GroupageComponent {
                 itemString += ": " + item.ContainerNumber;
             }
 
-            this.ToggleItems.push(new ToggleItem(itemString, item.ContainerNumber));
+            this.ToggleItems.push(new ToggleItem(itemString, item.ContainerNumber, index));
         });
 
         this.ToggleItems.push(new ToggleItem("New Container", null));
@@ -142,7 +142,14 @@ export class GroupageComponent {
         logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageContainerComponent");
     }
     AddToExistingContainer(toggleItem: ToggleItem, shipmentListItem: GroupageListItem) {
-        var MasterListItem: GroupageListItem = this.MyGroupagePackages.filter(f => f.ContainerNumber == toggleItem.ContainerNumber)[0];
+
+        var allMatchedContainers = this.MyGroupagePackages.filter(f => f.ContainerNumber == toggleItem.ContainerNumber);
+
+        if (allMatchedContainers.length > 1) {
+            allMatchedContainers = this.MyGroupagePackages.filter(f => f.Index == toggleItem.Index);
+        }
+
+        var MasterListItem: GroupageListItem = allMatchedContainers[0];
         if (MasterListItem) {
 
             var insideShipmentPack = new InsideShipmentPackagePM(null);
@@ -518,9 +525,11 @@ export class GroupageInsideItem {
     }
 }
 class ToggleItem {
+    public Index: number = null;
     public Label: string;
     public ContainerNumber: string;
-    constructor(label: string, myContainerNumber: string) {
+    constructor(label: string, myContainerNumber: string, index: number = null) {
+        this.Index = index;
         this.Label = label;
         this.ContainerNumber = myContainerNumber;        
     }
