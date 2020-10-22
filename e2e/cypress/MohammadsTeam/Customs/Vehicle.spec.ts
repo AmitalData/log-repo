@@ -119,21 +119,21 @@ cy.get('input[id="Customs.Vehicle_VehicleMaxPowerKW"]').type('4000')
       
    cy.get('li[id=VehiclesOwnersAndSafetyTabComponent').click();
 
-cy.get('#AddRowSafeties').click();
+//cy.get('#AddRowSafeties').click();
 
-cy.get('#edit-log-grid_0_00_0_0').click();
+//cy.get('#edit-log-grid_0_00_0_0').click();
 
-cy.get('input[id="Customs.VehicleOwner_PassCountryCode"]').type('1')
- cy.get('ul[id="mydatalist_Customs.VehicleOwner_PassCountryCode"]').contains('1').then(a => {
-               a[0].click();  
-         })
+//cy.get('input[id="Customs.VehicleOwner_PassCountryCode"]').type('1')
+// cy.get('ul[id="mydatalist_Customs.VehicleOwner_PassCountryCode"]').contains('1').then(a => {
+    //           a[0].click();  
+    //     })
 
 
-cy.get('#edit-log-grid_0_00_1_0').click();
-cy.get('input[id="VehicleSafAccessoryInstlTypCod"]').type('2')
-  cy.get('ul[id="mydatalist_VehicleSafAccessoryInstlTypCod"]').contains('2').then(a => {
-               a[0].click();  
-           })
+//cy.get('#edit-log-grid_0_00_1_0').click();
+//cy.get('input[id="VehicleSafAccessoryInstlTypCod"]').type('2')
+  //cy.get('ul[id="mydatalist_VehicleSafAccessoryInstlTypCod"]').contains('2').then(a => {
+      //         a[0].click();  
+       //    })
 
 
 
@@ -164,9 +164,53 @@ cy.get('input[id="Customs.Vehicle_LastNameOrCorporationName"]').type('BBBB')
 cy.get('#edit-log-grid_0_10_6_0').click();
   cy.get('input[id=CheckBox_0_108]').check({ force: true }).should('be.checked')   
 
-          // cy.get('button[id=OK-AddVehicle]').click();
-//cy.get('#SearchFieldsId_0_0').type(str);
-      
+          cy.get('button[id=OK-AddVehicle]').click();
+     
+
+ cy.get('input[id=SearchFieldsId_0_0]').should('be.visible').then( a=> {
+    cy.get('input[id=SearchFieldsId_0_0]').type(str,{ force: true });
+    cy.get('div[id=ListDataLoaded]').then( a=> {
+          cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
+      })});
+
+    cy.get('li[id=CustomsVehicleTHGeneral').click();
+    cy.get('input[id="Customs.Vehicle_RichbitFileNumber"]').type('B466774')
+    cy.get('li[id=CustomsVehicleTHMoreDetails').click();
+
+    cy.get('#CheckBox_0_114').check({ force: true }).should('be.checked')   
+    
+
+     cy.get('li[id=CustomsVehicleTHOwnersAndSafety').click();
+   cy.get('button[id=Add_2]').click();
+
+ cy.get('#edit-log-grid_0_30_0_1').click();
+cy.get('input[id="Customs.Vehicle_ClientId"]').type('2000')
+
+cy.get('#edit-log-grid_0_30_1_1').click();
+cy.get('input[id="Customs.Vehicle_PassportNumber"]').type('3434530')
+cy.get('#edit-log-grid_0_30_2_1').click();
+cy.get('input[id="Customs.VehicleOwner_PassCountryCode"]').type('AL').should("have.value", 'AL')
+
+            cy.get('ul[id="mydatalist_Customs.VehicleOwner_PassCountryCode"]').contains('AL').then(a => {
+                a[0].click();  
+            })
+
+cy.get('#edit-log-grid_0_30_3_1').click();
+cy.get('input[id="Customs.VehicleOwner_ImporterPassportTypeCode"]').type('1').should("have.value", '1')
+
+            cy.get('ul[id="mydatalist_Customs.VehicleOwner_ImporterPassportTypeCode"]').contains('1').then(a => {
+                a[0].click();  
+            })
+cy.get('#edit-log-grid_0_30_4_1').click();
+cy.get('input[id="Customs.Vehicle_FirstName"]').type('AAA')
+cy.get('#edit-log-grid_0_30_5_1').click();
+cy.get('input[id="Customs.Vehicle_LastNameOrCorporationName"]').type('BBBB')
+cy.get('#edit-log-grid_0_30_6_1').click();
+  cy.get('input[id=CheckBox_0_122]').check({ force: true }).should('be.checked')   
+cy.get('#CustomsVehicle-Save').click()
+
+cy.get('#CustomSendOptionsComponent_0').click()
+
     });
       
 
