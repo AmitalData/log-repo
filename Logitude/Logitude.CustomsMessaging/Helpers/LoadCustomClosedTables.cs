@@ -1030,6 +1030,12 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CancellationReasonRequestType, CancellationReasonRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CancellationReasonRequestType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendRequestRejectReasonTypeTable = closedSystemTables.Where(d => d.id == "1606").FirstOrDefault();
+            ObjectTable amendRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendRequestRejectReasonType", 0, false);
+            InsertClosedTableRecord(amendRequestRejectReasonTypeTable, amendRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(modificationAndDiscountTypeTable);
+
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
