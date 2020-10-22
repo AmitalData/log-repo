@@ -61,7 +61,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             return "חובה לבחור חשבון.";
         }
 
-        if (param1 == "2" && AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoicesSequences) || AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoiceItemsSequences) ) {
+        if (param1 == "2" &&( AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoicesSequences) || AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedInvoiceItemsSequences)) ) {
             return "חובה לבחור שורת פרט מכס";
         }
 

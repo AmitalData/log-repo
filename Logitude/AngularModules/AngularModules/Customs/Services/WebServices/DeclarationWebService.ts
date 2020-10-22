@@ -781,6 +781,27 @@ export class DeclarationWebService {
                 }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetDeclarationDocumentWithConnectNotValid(parentEntityId: string, parentEntityCode: string) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetDeclarationDocumentWithConnectNotValid/?parentEntityId=" + parentEntityId
+                + "&parentEntityCode=" + parentEntityCode
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse = response;
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     GetDeclarationMandatoryTicketList(parentEntityId: string, parentEntityCode: string) {
         return defer(() => {
