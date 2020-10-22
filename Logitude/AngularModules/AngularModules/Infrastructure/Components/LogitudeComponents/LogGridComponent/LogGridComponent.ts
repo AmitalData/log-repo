@@ -954,8 +954,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         var xx = this.rows;
         //this.FiltersChangedsubscription = this.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
-        this.FiltersChangedsubscription = this.FilterChangedEvent.subscribe(change => this.filterChanged(change));
-
+        if (this.FilterChangedEvent) {
+            this.FiltersChangedsubscription = this.FilterChangedEvent.subscribe(change => this.filterChanged(change));
+        }
         if (this.pubSubAdvanceQueryFiltersServiceRecived) {
             this.pubSubAdvanceQueryFiltersSub = this.pubSubAdvanceQueryFiltersServiceRecived.Stream.subscribe(filters => this.processQueryFilter(filters));
         }
