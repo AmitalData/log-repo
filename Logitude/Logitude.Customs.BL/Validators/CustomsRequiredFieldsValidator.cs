@@ -61,7 +61,8 @@ namespace Logitude.Customs.BL.Validators
 
             #region declaration entity
             ObjectTable declarationTable = objectTabelRepository.GetObjectTableByName("Customs.Declaration", 0, fromCache);
-            List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationTable.Id, tenant , isExport);
+
+            List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTableFromCache(declarationTable.Id, tenant , isExport);
             List<PropertyInfo> properties = GetPropertiesForEntity("DeclarationPM");
 
             foreach (PropertyInfo info in properties)
@@ -180,7 +181,8 @@ namespace Logitude.Customs.BL.Validators
                     #region SupplierInvoiceItemsConnectedDeclaration
 
                     ObjectTable supplierInvoiceItemsConnectedDeclarationTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoiceItemsConDeclar", 0, fromCache);
-                    List<CustomsRequiredFieldPM> SupplierInvoiceItemsConnectedDeclarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceItemsConnectedDeclarationTable.Id, tenant, isExport);
+
+                    List<CustomsRequiredFieldPM> SupplierInvoiceItemsConnectedDeclarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTableFromCache(supplierInvoiceItemsConnectedDeclarationTable.Id, tenant, isExport);
                     List<PropertyInfo> supplierInvoiceItemsConnectedDeclarationProperties = GetPropertiesForEntity("SupplierInvoiceItemsConDeclarPM");
                     foreach (SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConnectedDeclaration in supplierInvoiceItemsConnectedDeclarations)
                     {

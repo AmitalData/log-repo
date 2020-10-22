@@ -1,7 +1,7 @@
 
-import  { CreateRandom } from './CreateRandom';
+ import {CreateRandom} from "../Helper/CreateRandom";
 import { LoginComp } from "../../login/Login.po";
-export class APInvoiceSpec {
+export class NewExportDeclarations {
   private login: LoginComp = new LoginComp();
 }
 describe('New Declarations ', () => {
