@@ -18,6 +18,7 @@ import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard
 
 import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/PanelComponent";
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
+import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,6 +36,7 @@ import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckB
         // Infra
         PanelComponent,
         CheckBoxComponent,
+        DetailsMenuComponent,
         
     ],
     imports: [

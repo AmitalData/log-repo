@@ -197,7 +197,7 @@
     <!-- Mobile: floating bar -->
     <div class="floating-bar mobile-only">
         <ul>
-            <li><img src="/assets/images/icons/star@1x.png" alt=""></li>
+            <li (click)="showDetailsMenu = !showDetailsMenu"><img src="/assets/images/icons/star@1x.png" alt=""></li>
             <li><img src="/assets/images/icons/search@1x.png" alt=""></li>
             <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="/assets/images/icons/filter@1x-white.png" alt=""></li>
             <li><img src="/assets/images/icons/sort@1x-white.png" alt=""></li>
@@ -262,5 +262,11 @@
             </li>
         </ul>
     </div>
+
+    <!-- Details Menu - bottom -->
+    <details-menu
+        [Show]="showDetailsMenu"
+        [MenuTitle]="'Favorites'"
+        [Buttons]="[{Code: 'set', Name:'Set As Favorite'}]"></details-menu>
 
 </div>

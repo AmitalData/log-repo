@@ -27,6 +27,7 @@ export class DashboardShipmentsComponent
     isFilter1Expanded: boolean  = false;
     isFilter2Expanded: boolean  = false;
     isAbdullahCompanyChecked: boolean  = true;
+    showDetailsMenu: boolean  = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -176,6 +177,7 @@ export class DashboardShipmentsComponent
     ApplyFilterButtonClicked() {
         this.isFiltersSideBarOpened = false;
     }
+    
 
 }
 
