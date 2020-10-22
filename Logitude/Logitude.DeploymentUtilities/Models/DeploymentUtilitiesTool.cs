@@ -1,7 +1,10 @@
 ﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
+using System.Linq;
 using WebFreight.Web.WebServices;
 
 namespace Logitude.DeploymentUtilities.Models
@@ -10,46 +13,76 @@ namespace Logitude.DeploymentUtilities.Models
     {
         public void RunTool()
         {
-            if (ToolArguments.IsArgumentProvided(Arguments.ROLES))
+            List<string> mainArguments = new List<string>() { Arguments.IMPORT, Arguments.EXPORT, Arguments.HTMLVERSION };
+            if (mainArguments.Where(a => ToolArguments.IsArgumentProvided(a)).Count() > 1)
             {
-                UploadRoles();
+                ExitTool("Error: Cannot Use More Than One Of Main Arguments: Import, Export, And HTMLVersion");
             }
 
-            if (ToolArguments.IsArgumentProvided(Arguments.FEATURES))
-            {
-                UploadFeatures();
-            }
+            bool isImportArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.IMPORT);
+            bool isExportArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXPORT);
+            bool isHtmlVersionArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.HTMLVERSION);
+            bool isRolesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ROLES);
+            bool isPackagesArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.PACKAGES);
 
-            if (ToolArguments.IsArgumentProvided(Arguments.HTMLVERSION))
+            if (isImportArgumentProvided)
+            {
+                if (isRolesArgumentProvided)
+                {
+                    ImportRoles();
+                }
+
+                if (isPackagesArgumentProvided)
+                {
+                    ImportPackages();
+                }
+            }
+            else if (isExportArgumentProvided)
+            {
+                if (isRolesArgumentProvided)
+                {
+                    ExportRoles();
+                }
+
+                if (isPackagesArgumentProvided)
+                {
+                    ExportPackages();
+                }
+            }
+            else if (isHtmlVersionArgumentProvided)
             {
                 UpdateHtmlVersion();
             }
+            else
+            {
+                Console.WriteLine("Cannot Find One Of Main Arguments: Import, Export, And HTMLVersion");
+            }
         }
         
-        protected void UploadRoles()
+        protected void ImportRoles()
         {
-            Console.Write("\n");
-
-            string rolesCSVFilePath = ToolArguments.GetArgumentValue(Arguments.ROLES);
-            byte[] rolesData = GetByteArrayFromCSVFile(rolesCSVFilePath);
-
-            if(rolesData == null)
-            {
-                ExitTool("Error: Cannot Get Byte Array From CSV File " + rolesCSVFilePath);
-            }
-
             try
             {
-                Console.WriteLine("Uploading Roles From File " + rolesCSVFilePath + " ...");
+                Console.Write("\n");
+
+                string rolesCSVFilePath = ToolArguments.GetArgumentValue(Arguments.ROLES);
+                byte[] rolesData = GetByteArrayFromCSVFile(rolesCSVFilePath);
+
+                if (rolesData == null)
+                {
+                    ExitTool("Error: Cannot Get Byte Array From CSV File " + rolesCSVFilePath);
+                }
+
+                Console.WriteLine("Importing Roles From File " + rolesCSVFilePath + " ...");
                 ExcelExportService excelExportService = new ExcelExportService();
                 string result = excelExportService.ImportRoleFeatures(rolesData);
                 if (String.IsNullOrEmpty(result))
                 {
-                    Console.WriteLine("Roles Was Uploaded Successfully");
+                    Console.WriteLine("Roles Was Imported Successfully");
                 }
                 else
                 {
-                    Console.WriteLine("Uploading Roles Finished With Errors:\n" + result);
+                    Console.WriteLine("Importing Roles Finished With Errors:\n" + result);
                 }
             }
             catch(Exception exception)
@@ -58,30 +91,108 @@ namespace Logitude.DeploymentUtilities.Models
             }
         }
 
-        protected void UploadFeatures()
+        protected void ExportRoles()
         {
-            Console.Write("\n");
-
-            string featuresCSVFilePath = ToolArguments.GetArgumentValue(Arguments.FEATURES);
-            byte[] featuresData = GetByteArrayFromCSVFile(featuresCSVFilePath);
-
-            if (featuresData == null)
-            {
-                ExitTool("Error: Cannot Get Byte Array From CSV File " + featuresCSVFilePath);
-            }
-
             try
             {
-                Console.WriteLine("Uploading Features From File " + featuresCSVFilePath + " ...");
-                ExcelExportService excelExportService = new ExcelExportService();
-                string result = excelExportService.ImportFeaturePackages(featuresData);
-                if (String.IsNullOrEmpty(result))
+                Console.Write("\n");
+
+                string rolesCSVFilePath = ToolArguments.GetArgumentValue(Arguments.ROLES);
+                string rolesCSVDirectoryPath = Path.GetDirectoryName(rolesCSVFilePath);
+
+                if (!IsDirectoryExists(rolesCSVDirectoryPath))
                 {
-                    Console.WriteLine("Features Was Uploaded Successfully");
+                    ExitTool("Error: Cannot Find Path " + rolesCSVDirectoryPath);
+                }
+
+                if (!IsCSVFile(rolesCSVFilePath))
+                {
+                    ExitTool("Error: Invalid CSV File " + rolesCSVFilePath);
+                }
+
+                Console.WriteLine("Exporting Roles To CSV File " + rolesCSVFilePath + " ...");
+                string sourceDBConnectionString = ConfigurationManager.ConnectionStrings["SourceDatabaseStr"].ToString();
+                ExcelExportService excelExportService = new ExcelExportService();
+                byte[] byteArray = excelExportService.ExportRoleFeaturesFromSourceDB(sourceDBConnectionString);
+                string result = ConvertByteArrayToCSVFile(byteArray, rolesCSVFilePath);
+                if(result == null)
+                {
+                    Console.WriteLine("Roles Was Exported Successfully");
                 }
                 else
                 {
-                    Console.WriteLine("Uploading Features Finished With Errors:\n" + result);
+                    Console.WriteLine("Error: Cannot Convert Byte Array To CSV File");
+                }
+            }
+            catch (Exception exception)
+            {
+                ExitTool("Error: " + exception.ToString());
+            }
+        }
+
+        protected void ImportPackages()
+        {
+            try
+            {
+                Console.Write("\n");
+
+                string packagesCSVFilePath = ToolArguments.GetArgumentValue(Arguments.PACKAGES);
+                byte[] packagesData = GetByteArrayFromCSVFile(packagesCSVFilePath);
+
+                if (packagesData == null)
+                {
+                    ExitTool("Error: Cannot Get Byte Array From CSV File " + packagesCSVFilePath);
+                }
+
+                Console.WriteLine("Importing Packages From File " + packagesCSVFilePath + " ...");
+                ExcelExportService excelExportService = new ExcelExportService();
+                string result = excelExportService.ImportFeaturePackages(packagesData);
+                if (String.IsNullOrEmpty(result))
+                {
+                    Console.WriteLine("Packages Was Imported Successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Importing Packages Finished With Errors:\n" + result);
+                }
+            }
+            catch (Exception exception)
+            {
+                ExitTool("Error: " + exception.ToString());
+            }
+        }
+
+        protected void ExportPackages()
+        {
+            try
+            {
+                Console.Write("\n");
+
+                string packagesCSVFilePath = ToolArguments.GetArgumentValue(Arguments.PACKAGES);
+                string packagesCSVDirectoryPath = Path.GetDirectoryName(packagesCSVFilePath);
+
+                if (!IsDirectoryExists(packagesCSVDirectoryPath))
+                {
+                    ExitTool("Error: Cannot Find Path " + packagesCSVDirectoryPath);
+                }
+
+                if (!IsCSVFile(packagesCSVFilePath))
+                {
+                    ExitTool("Error: Invalid CSV File " + packagesCSVFilePath);
+                }
+
+                Console.WriteLine("Exporting Packages To CSV File " + packagesCSVFilePath + " ...");
+                string sourceDBConnectionString = ConfigurationManager.ConnectionStrings["SourceDatabaseStr"].ToString();
+                ExcelExportService excelExportService = new ExcelExportService();
+                byte[] byteArray = excelExportService.ExportPackagesFeaturesFromSourceDB(sourceDBConnectionString);
+                string result = ConvertByteArrayToCSVFile(byteArray, packagesCSVFilePath);
+                if (result == null)
+                {
+                    Console.WriteLine("Packages Was Exported Successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Error: Cannot Convert Byte Array To CSV File");
                 }
             }
             catch (Exception exception)
@@ -92,17 +203,17 @@ namespace Logitude.DeploymentUtilities.Models
 
         protected void UpdateHtmlVersion()
         {
-            Console.Write("\n");
-
-            string htmlVersion = ToolArguments.GetArgumentValue(Arguments.HTMLVERSION);
-
-            if (String.IsNullOrEmpty(htmlVersion))
-            {
-                ExitTool("Error: Cannot Find The New HTML Version");
-            }
-
             try
             {
+                Console.Write("\n");
+
+                string htmlVersion = ToolArguments.GetArgumentValue(Arguments.HTMLVERSION);
+
+                if (String.IsNullOrEmpty(htmlVersion))
+                {
+                    ExitTool("Error: Cannot Find The New HTML Version");
+                }
+
                 Console.WriteLine("Updating HTML Version To " + htmlVersion + " ...");
                 SettingRepository settingRepository = new SettingRepository();
                 Setting setting = settingRepository.GetSingleSetting("1");
@@ -155,6 +266,21 @@ namespace Logitude.DeploymentUtilities.Models
             }
         }
 
+        protected string ConvertByteArrayToCSVFile(byte[] byteArray, string csvFilePath)
+        {
+            try
+            {
+                FileStream fileStream = new FileStream(csvFilePath, FileMode.Create, FileAccess.Write);
+                fileStream.Write(byteArray, 0, byteArray.Length);
+                fileStream.Close();
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return exception.ToString();
+            }
+        }
+        
         protected bool IsFileExists(string filePath)
         {
             if (File.Exists(filePath))
@@ -174,6 +300,15 @@ namespace Logitude.DeploymentUtilities.Models
             return false;
         }
 
+        protected bool IsDirectoryExists(string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                return true;
+            }
+            return false;
+        }
+        
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
