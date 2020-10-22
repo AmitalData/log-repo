@@ -320,8 +320,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                           where BK.Inactive == false //&& (Ex.ExternalReconciliation==null || Ex.ExternalReconciliation.IsCancelled == false)
                                                           select new ExternalReconciliationPeriod()
                                                           {
-                                                              EnglishType = "GLAccount",  //GLAccount.O.GLAccount
-                                                              LocalType = "מזהה פנימי לכרטיס",
+                                                              EnglishType = IsTransfer? "Transfer" : "GLAccount",   
+                                                              LocalType = IsTransfer ? "דחוי " : "חשבון ",
                                                               Number = a.Account.DisplayNumber,
                                                               BankAccountId = BK.Id,
                                                               Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit * -1 : a.ForeignAmountDebit,
@@ -365,11 +365,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private IQueryable<LedgerTransaction> ApplyFiltersForLedgerTransactions(IQueryable<LedgerTransaction> ledgerTransactions, List<BankAccountPM> AllBankAccounts,bool IsTransfer)
         {
             if (ExternalReconciliationNumber == null)
-            {
-               
-                IQueryable<LedgerTransaction> TransferledgerTransactions = null;
-                IQueryable<LedgerTransaction> MainledgerTransactions = null;
-
+            { 
                 if (IsTransfer == true)
                 {
                     List<string> AllTransferGlAccountId = AllBankAccounts.Select(a => a.TransferGLAcccountId).ToList();
