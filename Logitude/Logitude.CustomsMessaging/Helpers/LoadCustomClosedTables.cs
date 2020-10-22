@@ -1033,7 +1033,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendRequestRejectReasonTypeTable = closedSystemTables.Where(d => d.id == "1606").FirstOrDefault();
             ObjectTable amendRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendRequestRejectReasonType", 0, false);
             InsertClosedTableRecord(amendRequestRejectReasonTypeTable, amendRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(modificationAndDiscountTypeTable);
+            addedClosedTables.Add(amendRequestRejectReasonTypeTable);
 
 
 
