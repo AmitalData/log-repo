@@ -372,6 +372,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\TransportModeListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />

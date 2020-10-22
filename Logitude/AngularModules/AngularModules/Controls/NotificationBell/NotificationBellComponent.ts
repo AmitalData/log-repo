@@ -159,7 +159,6 @@ export class NotificationBellComponent {
                                 case "5117N":
                                 case "8400A":
                                 case "5101C":
-                                case "5101D":
                                 case "5101G":
                                 //case "5101I":
                                 case "5101S":
@@ -212,6 +211,7 @@ export class NotificationBellComponent {
 
                                 case "5101N":
                                 case "5101R":
+                                case "5101D":
                                 case "5101A":
                                 case "5101E":
                                     {

@@ -121,8 +121,10 @@ export class FieldTemplateComponent {
         var myExceptionReasonListService = new ExceptionReasonListService();
         myExceptionReasonListService.getSingleFromCache(ToolTipValue)
             .subscribe(serviceResponse => {
-                var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
-                ToolTipValue = ExceptionReason.LocalName;
+                if (serviceResponse.Result != null) {
+                    var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
+                    ToolTipValue = ExceptionReason.LocalName;
+                }
             });
         return ToolTipValue;
     }
@@ -172,8 +174,8 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 700;//400;
-        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 800;//400;
+        logitudeWindow.Width = 900;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
 
