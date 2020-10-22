@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 
 
-
+import {AppTool} from '../MohammadsTeam/AppTool'
 export class APILoginComp {
-	cy.log('log out any message we want here')
+ 
 
 }
  
@@ -11,35 +11,48 @@ it('APILogin Successfully', () => {
  
   var Email = Cypress.env("LocalEmail");
   var Password = Cypress.env("LocalPassword");
+  var APIURL = Cypress.env("CustomsAPIURL");
 
-  cy.request({
-    method: 'POST',
-    url: Cypress.env("LocalAPIURL")+'Authentication',  
-	 headers: {
-      'Content-Type': 'application/json',
-     },
-    body: {
-      Email: Email,
-      Password: Password
-	  ByToken : false,
-      CardId : null,
-      CardType : null,
-      IsMobileLogin : false,
-      IsUser : true,
-      GetToken : true,
-      IsAngularLogin : true,
-      ClientType : "Web"
-    },
-   
-  })
-  .its('body')
-  .then(identity => {
-	 cy.window().then(win => { 
-	 win.sessionStorage.setItem('Token', identity.Token);
-     win.sessionStorage.setItem('LoginUserId', identity.Id);
-	 win.sessionStorage.setItem('LoginUserName', identity.UserName);
-	 });
+
+  cy.window().then(win=> {
+    const Token = win.sessionStorage.getItem('Token')
+    cy.log("Old Token: "+Token+"\n");
+    if(AppTool.IsNullOrEmpty(Token)){
+      cy.request({
+        method: 'POST',
+        url: APIURL+'Authentication',  
+       headers: {
+          'Content-Type': 'application/json',
+         },
+        body: {
+          Email: Email,
+          Password: Password,
+          ByToken : false,
+          CardId : null,
+          CardType : null,
+          IsMobileLogin : false,
+          IsUser : true,
+          GetToken : true,
+          IsAngularLogin : true,
+          ClientType : "Web"
+        },
+       
+      })
+      .its('body')
+      .then(identity => {
+       cy.window().then(win => { 
+       win.sessionStorage.setItem('Token', identity.Token);
+       win.sessionStorage.setItem('LoginUserId', identity.Id);
+       win.sessionStorage.setItem('LoginUserName', identity.UserName);
+       cy.log("New Token: "+identity.Token+"\n");
+       cy.log("LoginUserId: "+identity.LoginUserId+"\n");
+       cy.log("LoginUserName: "+identity.LoginUserName+"\n");
+       });
+      });
+    }
   });
+
+ 
 
 })
 

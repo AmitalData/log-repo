@@ -12,11 +12,13 @@ let R: RandomGenerator= new RandomGenerator();
   it('New Import Declarations Created Successfully', function () {
 
   var Tenant  = Cypress.env("CustomsTenant");
+  var APIURL = Cypress.env("CustomsAPIURL");
+
 	cy.window().then(win=> {
       const Token = win.sessionStorage.getItem('Token')
       cy.request({
         method: 'POST',
-        url: Cypress.env("LocalAPIURL") +'Customers',  
+        url: APIURL +'Customers',  
         headers: {
           'Content-Type': 'application/json',
           'Token': Token,

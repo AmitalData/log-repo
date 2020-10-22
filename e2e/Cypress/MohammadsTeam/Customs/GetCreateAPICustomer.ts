@@ -14,6 +14,7 @@ it('Get or Create API Customer Successfully', () => {
  
    
   var Tenant  = Cypress.env("CustomsTenant");
+  var APIURL = Cypress.env("CustomsAPIURL");
 
 	cy.window().then(win=> {
     const Token = win.sessionStorage.getItem('Token');
@@ -27,7 +28,7 @@ it('Get or Create API Customer Successfully', () => {
 
     cy.request({
       method: 'GET',
-      url: Cypress.env("LocalAPIURL") +'CardViews' + URLParameter,  
+      url: APIURL +'CardViews' + URLParameter,  
       headers: {
         'Content-Type': 'application/json',
         'Token': Token,
@@ -43,7 +44,7 @@ it('Get or Create API Customer Successfully', () => {
        else {
         cy.request({
           method: 'POST',
-          url: Cypress.env("LocalAPIURL") +'Customers',  
+          url: APIURL +'Customers',  
           headers: {
             'Content-Type': 'application/json',
             'Token': Token,
