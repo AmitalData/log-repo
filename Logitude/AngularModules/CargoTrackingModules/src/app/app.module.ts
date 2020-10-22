@@ -17,6 +17,7 @@ import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favor
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
 
 import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/PanelComponent";
+import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 @NgModule({
     declarations: [
         AppComponent,
@@ -28,11 +29,12 @@ import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/Pan
         // Dashboard
         DashboardComponent,
         DashboardShipmentsComponent,
-        FavoritesComponent,
+        FavoritesComponent, 
         ShipmentDetailsComponent,
 
         // Infra
         PanelComponent,
+        CheckBoxComponent,
         
     ],
     imports: [

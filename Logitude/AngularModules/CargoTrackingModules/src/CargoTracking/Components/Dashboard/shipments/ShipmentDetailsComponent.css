@@ -139,32 +139,32 @@ h1{
 
 }
     .slider .card + .active{
-    background: var(--MainColor);
-    color: white;
+      background: var(--MainColor);
+      color: white;
     }
     .slider .card + .warning::after {
-    content: "!";
-    display: block;
-    width: 25px;
-    height: 25px;
-    border: 3px solid white;
-    background: red;
-    position: absolute;
-    top: -12px;
-    right: -9px;
-    border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-    z-index: 1;
-    color: white;
+        content: "!";
+        display: block;
+        width: 25px;
+        height: 25px;
+        border: 3px solid white;
+        background: red;
+        position: absolute;
+        top: -12px;
+        right: -9px;
+        border-radius: 50%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        /* z-index: 1; */
+        color: white;
     }
     .slider .card + .dim{
-    background: none;
-    box-shadow: none;
-    border: 1px solid gray;
-    color: gray;
-    }
+      background: none;
+      box-shadow: none;
+      border: 1px solid gray;
+      color: gray;
+    }]
     .slider .card:hover{
     box-shadow: 0px 0px 8px 0px #00000060;
     }
@@ -253,6 +253,7 @@ h1{
     .shipment-details-container{
         display: flex;
         flex-direction: column ;
+        padding-top: 50px;
     }
     .slider-wrapper {
         height: 110px;

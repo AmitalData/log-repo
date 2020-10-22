@@ -296,6 +296,7 @@ h1{
 }
 
 .record-row {
+    position: relative;
     margin-bottom: 18px;
     background: white;
     box-shadow: 0px 0px 5px 0px #00000021;
@@ -353,6 +354,14 @@ h1{
     border-left: 2px solid #dadee2;
     display: inline-block;
     /* padding: 0 15px; */
+}
+
+.record-row .more-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    padding: 5px 8px;
 }
 
 .uppercase {
@@ -603,7 +612,8 @@ h1{
     bottom: 0;
     position: fixed;
     z-index: 2;
-    width: 300px;
+    width: 340px;
+    transition: 1s all ;
     /* padding: 20px; */
 }
 .filters-sidebar::after{
@@ -612,7 +622,7 @@ h1{
     top: 0;
     left: 0;
     bottom: 0;
-    right: 300px;
+    right: 340px;
     position: fixed;
 
 }
@@ -637,23 +647,56 @@ h1{
         }
     .filters-sidebar ul {
         padding: 0;
+        height: 100%;
     }
         .filters-sidebar ul li {
             list-style: none;
             padding: 15px 20px;
-            border-bottom: 1px solid rgb(170, 170, 170);
+            border-bottom: 1px solid rgb(224, 224, 224);
             color: var(--MainColor);
             font-weight: bold;
             text-transform: uppercase;
             font-size: 12px;
 
         }
+        .filters-sidebar ul li.filters-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+            .filters-sidebar ul li.filters-footer a {
+                display: block;
+                color: black;
+                margin: 20px 0;
+                text-transform: none;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            .filters-sidebar ul li.filters-footer button {
+                background: var(--MainColor);
+                border-radius: 3px;
+                width: 89%;
+                text-align: center;
+                color: white;
+                font-weight: 600;
+                font-size: 14px;
+                outline: none;
+                padding: 8px;
+                border: none;
+                cursor: pointer;
+            }
+            .filters-sidebar ul li.filters-footer button:hover {
+                opacity: 0.95;
+            }
+
+
         .filters-sidebar ul li.expanded {
             background-color: #F2F4F7;
         }
         .filters-sidebar ul li .filter-title{
             width: calc(100% - 40px);
             display: inline-block;
+            cursor: pointer;
         }
             .filters-sidebar ul li .expand-icon{
                 float: right;
@@ -673,13 +716,62 @@ h1{
                 color: black;
                 font-weight: normal;
                 padding-top: 10px;
-                /* background-color: #F2F4F7; */
+                padding-right: 20px;
                 min-height: 30px;
-                /* margin-left: -20px;
-                margin-right: -20px; */
-                /* padding: 0 20px; */
+                max-height: 250px;
             }
-
+        .checkbox-filteritem{
+            width: 100%;
+            /* margin-bottom: 15px; */
+            padding: 10px 0px;
+        }
+            .checkbox-filteritem::before, .checkbox-filteritem::after{
+                content: " ";
+                clear: both;
+                display: block;
+            }
+        
+    .floating-bar{
+        width: 80%; 
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 15px;
+        margin: 0 auto;
+        z-index: 1;
+    }
+        .floating-bar ul{ 
+            position: relative;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .floating-bar ul::after, .floating-bar ul::before{ 
+            content: " ";
+            display: block;
+            clear: both;
+        }
+            .floating-bar ul li{
+                padding: 13px 0 8px 0;
+                margin: 0;
+                list-style: none;
+                float: left !important;
+                width: 25%;
+                height: 26px;
+                text-align: center;
+                background: var(--MainColor);
+            } 
+            .floating-bar ul li:active{
+                opacity: 0.95;
+            }
+            .floating-bar ul li:first-child{
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+            } 
+            .floating-bar ul li:last-child{
+                border-top-right-radius: 25px;
+                border-bottom-right-radius: 25px;
+            } 
 
     @media screen and (max-width: 479px) {
         h1{
@@ -700,7 +792,7 @@ h1{
             right: 0;
             z-index: 99;
         }
-        ul li {
+         ul li, ul li {
             width: 100%;
             float: none !important;
             border: none;
@@ -739,6 +831,21 @@ h1{
             width: auto;
             border: none;
         }
+
+
+        
+        .filters-sidebar{
+            top: 50px; /* exc app bar*/
+            left: 0;
+            width: 100%;
+        }
+        .filters-sidebar::after{
+            content: none;
+        
+        }
+        .filters-sidebar li{
+            width: initial;
+        }
     }
 
     @media screen and (max-width: 479px) {
@@ -764,7 +871,7 @@ h1{
             display: block !important;
         }
         .record-row {
-            border: 1px solid #cacaca !important;
+            /* border: 1px solid #cacaca !important; */
             border-radius: 7px;
             margin: 10px 0;
         }
@@ -811,6 +918,7 @@ h1{
             font-size: 18px;
             line-height: 24px;
         }
+        
     }
     
 @media screen and (max-width: 1470px) {
