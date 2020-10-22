@@ -90,7 +90,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
 
     public get AmendmentRejectionReasonName() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReasonName : null; }
-    public set AmendmentRejectionAmendmentRejectionReasonNameReason(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
+    public set AmendmentRejectionReasonName(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
 
 
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
