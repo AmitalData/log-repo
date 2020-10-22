@@ -15468,7 +15468,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
     DisplayInList="true"
-    IsCustomFilter="true"
+    IsCustomFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
