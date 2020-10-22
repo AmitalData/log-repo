@@ -21,6 +21,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestTransactionPMs;
 
         }
+ 
         public List<InterestTransactionPM> GetInterestTransactionsByInterestReportId(string interestReportId, int tenant)
         {
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);

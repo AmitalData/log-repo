@@ -83,7 +83,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         RecalculateData, 
 	         IsUpdatedFromBatch, 
 	         CanRecalculate, 
-	         InvoiceDate,
+	         InvoiceDate, 
+	         IsNewReport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
