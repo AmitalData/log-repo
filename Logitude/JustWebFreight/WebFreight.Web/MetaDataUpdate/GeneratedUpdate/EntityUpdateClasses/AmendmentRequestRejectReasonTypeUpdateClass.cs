@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendRequestRejectReasonTypeUpdateClass
    {  		
-		public const string HashString = "b2762f89e1dbcb1ccfff3b0e49e4d3ed";
+		public const string HashString = "77e9ebd5ef0771055513213c814e5246";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוגי סיבות ביטול הצהרה",
 			      				    DefaultText =  "Amendment Request Reject Reason Type",
-			      				    Code =  "2172",
+			      				    Code =  "1b28",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -168,6 +168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -229,6 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -289,6 +291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -348,6 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -408,6 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -450,7 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup AmendRequestRejectReasonTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2172", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup AmendRequestRejectReasonTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1b28", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup AmendRequestRejectReasonTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "892b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AmendRequestRejectReasonTypeObjectTable = objectTables.ContainsKey("Customs.AmendRequestRejectReasonType") ? objectTables["Customs.AmendRequestRejectReasonType"] : null;
@@ -477,7 +482,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query AmendRequestRejectReasonTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmendRequestRejectReasonTypeTextCode_0.Id, NameTextCodeCode = AmendRequestRejectReasonTypeTextCode_0.Code, ObjectTableName = "Customs.AmendRequestRejectReasonType", Code = "AmendRequestRejectReasonType",  QueryGroupCode = "1b28", IndexOrder = 0, Tenant = 0, ObjectTableId = AmendRequestRejectReasonTypeObjectTable.Id, QuerySection = "Customs.AmendRequestRejectReasonType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmendRequestRejectReasonTypeFeature_0.Id,FeatureUniqeCode= AmendRequestRejectReasonTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn AmendRequestRejectReasonTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendRequestRejectReasonTypeQuery.Id,QueryCode = AmendRequestRejectReasonTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AmendRequestRejectReasonType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmendRequestRejectReasonTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendRequestRejectReasonTypeQuery.Id,QueryCode = AmendRequestRejectReasonTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AmendRequestRejectReasonType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmendRequestRejectReasonTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendRequestRejectReasonTypeQuery.Id,QueryCode = AmendRequestRejectReasonTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AmendRequestRejectReasonType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmendRequestRejectReasonTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendRequestRejectReasonTypeQuery.Id,QueryCode = AmendRequestRejectReasonTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AmendRequestRejectReasonType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
@@ -486,7 +499,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AmendRequestRejectReasonTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AmendRequestRejectReasonType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AmendRequestRejectReasonTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendRequestRejectReasonType").ToList();
+		       
+	      
+
+	         Screen AmendRequestRejectReasonTypeCustomsAmendRequestRejectReasonTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AmendRequestRejectReasonType.HeaderScreen", Name = "Customs.AmendRequestRejectReasonTypeHeaderScreen", ObjectTableId = AmendRequestRejectReasonTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AmendRequestRejectReasonTypeObjectTable.HeaderScreenId = AmendRequestRejectReasonTypeCustomsAmendRequestRejectReasonTypeHeaderScreenScreen0.Id;
+		    AmendRequestRejectReasonTypeObjectTable.HeaderScreenCode = AmendRequestRejectReasonTypeCustomsAmendRequestRejectReasonTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
