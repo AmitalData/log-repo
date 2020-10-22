@@ -593,21 +593,22 @@ export class SendDeclarationService implements OnDestroy {
                     if (myCustomsDocumentPMList2 && myCustomsDocumentPMList2.length > 0) {
 
                         myCustomsDocumentPMList2.forEach(x =>  {
-
-                            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.General.O.NotConnectInvoiceToDoc") + x.ExternalAttachmentId);
+                            //TextCodeTranslator.Translate("Customs.General.O.NotConnectInvoiceToDoc")
+                            this.ValidationErrors.push("חסר קישור לחשבון/שורת פרט מכס לצרופה : " + x.ExternalAttachmentId);
 
                         })
                     }
                     if (myCustomsDocumentPMList && myCustomsDocumentPMList.filter(x => x.DocumentStatusCode == '7').length > 0) {
-                        this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.General.O.DocumentInProgress"));
+                        //TextCodeTranslator.Translate("Customs.General.O.DocumentInProgress")
+                        this.ValidationErrors.push("קיימים מסמכים בתהליך שליחה.");
                  
                     }
 
                     if (this.ValidationErrors && this.ValidationErrors.length > 0) {
                         var windowArgs: any = {};
                         windowArgs.Errors = this.ValidationErrors;
-                        windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
-                        var windowTitle = TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments");
+                        windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
+                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
 
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 600;
