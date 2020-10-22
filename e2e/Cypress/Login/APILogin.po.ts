@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-import {AppTool} from '../MohammadsTeam/AppTool'
+import {AppTool} from '../MohammadsTeam/Helper/AppTool'
 export class APILoginComp {
  
 
