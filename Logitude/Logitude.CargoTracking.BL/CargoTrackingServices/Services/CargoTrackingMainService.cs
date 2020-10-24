@@ -368,8 +368,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
+                Thread.Sleep(10);
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true));
-
             }
 
 
@@ -518,6 +518,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
+                Thread.Sleep(10);
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns));
 
             }
@@ -811,7 +812,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private DateTime? UpdateBulkValues(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, DataTable dataTable, CargoTable table, DateTime? automaticLastUpdateDate ,bool IsCT2=false)
         {
-            if (!string.IsNullOrEmpty(table.RefreshIds))
+            if (!string.IsNullOrEmpty(table.RefreshIds) || !string.IsNullOrEmpty(table.RefreshIds2))
             {
 
                 using (SqlConnection destinationConnection =
