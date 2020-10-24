@@ -94,7 +94,7 @@ namespace CargoTrackingWinFormService.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             this.label22.Text = null;
-            this.EnableDisabledAllData(false);
+           // this.EnableDisabledAllData(false);
             if (FirstInit)
             {
                 this.Height += 40;
