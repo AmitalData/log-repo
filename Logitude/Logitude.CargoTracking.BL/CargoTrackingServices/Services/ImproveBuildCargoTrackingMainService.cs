@@ -1328,7 +1328,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CargoTrackingArguments= CargoTrackingArguments,
                 Condition= Condition,
             };
-            string condition = CargoTrackingTableBuildWhereCondition.BuildWhereCondition(buildWhereConditionArgs);
+            string condition = CargoTrackingTableBuildWhereCondition.BuildWhereCondition(buildWhereConditionArgs, buildCargoArgs.Table.IsClosedTable);
             return condition;
         }
 

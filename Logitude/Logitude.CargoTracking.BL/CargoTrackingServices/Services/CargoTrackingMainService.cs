@@ -31,7 +31,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         List<CargoDeleteRowsArgs> MainDeleteRowsArgs = new List <CargoDeleteRowsArgs>();
         int ThreadsNumber = 0;
         int ThreadsCompleatedWork = 0;
-        int memosh = 0;
         private object threadLock = new object();
         public List<CargoTable> FillCargoTableList()
         {
@@ -77,7 +76,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 Main_CT_TableName = "CargoTrackingTransportModes",
                 Pre_TableName = "Pre_CargoTrackingTransportModes",
                 ConditionsNumber = 1,
-
+                IsClosedTable = true,
             });
 
             CargoTableLists.Add(new CargoTable()
@@ -174,6 +173,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         { 
             int NumberRecordUpdated = 0;
             int NumberRecordUpdated2 = 0;
+            
             //MainDataTables = new List<DataTable>()
             RecordUpdated _recordUpdated = new RecordUpdated();
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
@@ -182,6 +182,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CreateCargoTrackingTable(cargoTrackingDataBaseArgs.buildCargoArgs);
                 cargoTrackingDataBaseArgs.buildCargoArgs.Table.CT_TableName = cargoTrackingDataBaseArgs.buildCargoArgs.Table.Pre_TableName;
                 cargoTrackingDataBaseArgs.buildCargoArgs.Table.CT2_TableName = cargoTrackingDataBaseArgs.buildCargoArgs.Table.Pre2_TableName;
+                this.MainThreadNumbers = (int)cargoTrackingDataBaseArgs.CargoTrackingArguments.ThreadNumber;
             }
 
             recordUpdated.IsFromBuild = GetIsIncrementalRunning(cargoTrackingDataBaseArgs.buildCargoArgs.SourceConnectionString);
@@ -528,7 +529,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             //        try
             //        {
             //            ThreadsNumber += 1;
-            //            memosh += 1;
+            //             
             //            bulkDataPreperation = UpdateBulkPreperations(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns);
             //        }
             //        finally
@@ -565,7 +566,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             try
             {
                 ThreadsNumber += 1;
-                memosh += 1;
                 bulkDataPreperation = UpdateBulkPreperations(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, IsCT2);
             }
             finally
@@ -696,8 +696,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 else
                 {
-                    cmd += " where C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
+                    {
+                        cmd += " where C.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
 
+                    }
+                    else
+                    {
+                        cmd += " where C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    }
                 }
 
                 cmd += " group by " + fieldName + ",com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
@@ -715,8 +722,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 else
                 {
-                    cmd += " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
+                    {
+                        cmd += " and P.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
 
+                    }
+                    else
+                    {
+                        cmd += " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    }
                 }
 
                 cmd += " group by " + fieldName + ",com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA ";
@@ -735,8 +749,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 else
                 {
-                    cmd += " where S.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and S.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
+                    {
+                        cmd += " where S.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and S.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and S.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
 
+                    }
+                    else
+                    {
+                        cmd += " where S.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and S.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    }
                 }
 
             }
@@ -1040,6 +1061,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , NULL,NULL)";
             ExecuteSql(cmd, connectionString);
         }
+        public void DeleteWatermarks(string connectionString)
+        {
+            string cmd = "Delete From CargoTrackingWatermarks";
+            ExecuteSql(cmd, connectionString);
+        }
         public void UpdateIsIncrementalRunning(int IsRunning, string connectionString)
         {
             string cmd = "Update Tenants set IsIncrementalBuildRunning = " + IsRunning +" Where Id = 0";
@@ -1175,9 +1201,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private string CreateIndex_Pre_ShipmentSearchs(string TableName)
         {
-            string cmd = "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "]([Tenant],[SearchFields],[IsPublic])\n";
-                   cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "]([ShipmentId]) End \n";
-
+            string cmd = "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "]([Tenant],[SearchFields],[IsPublic])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "]([ShipmentId])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_SearchFields] ON [dbo].[" + TableName + "]([Tenant],[SearchFields])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_ShipmentId] ON [dbo].[" + TableName + "]([Tenant],[ShipmentId])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_ShipmentId_SearchFields] ON [dbo].[" + TableName + "]([Tenant],[ShipmentId],[SearchFields])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_SearchFields] ON [dbo].[" + TableName + "]([SearchFields])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant] ON [dbo].[" + TableName + "]([Tenant])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "]([ShipmentDate])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_IsPublic] ON [dbo].[" + TableName + "]([IsPublic])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Id] ON [dbo].[" + TableName + "]([Id]) End \n";
             return cmd;
 
         }
@@ -1185,14 +1218,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private string CreateIndexAndRelations_Pre_Shipments(string TableName)
         {
 
-            string cmd = "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [UQ_"+TableName+"_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId])\n";
-            cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
+            string cmd = "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [UQ_" + TableName + "_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
+            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
             cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
-            cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_CurrentMilestoneCode] ON [dbo].["+ TableName + "]([CurrentMilestoneCode])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "]([EntityId]) End \n";
-
+            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_CurrentMilestoneCode] ON [dbo].[" + TableName + "]([CurrentMilestoneCode])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "]([EntityId])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentNumber] ON [dbo].[" + TableName + "]([ShipmentNumber])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_CustomerReference] ON [dbo].[" + TableName + "]([CustomerReference])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_House] ON [dbo].[" + TableName + "]([House])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Master] ON [dbo].[" + TableName + "]([Master])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant] ON [dbo].[" + TableName + "]([Tenant])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_SecurityKey] ON [dbo].[" + TableName + "]([SecurityKey])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_SecurityKey] ON [dbo].[" + TableName + "]([Tenant],[SecurityKey])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_EntityId] ON [dbo].[" + TableName + "]([Tenant],[EntityId])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_EntityId_SecurityKey] ON [dbo].[" + TableName + "]([Tenant],[EntityId],[SecurityKey])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId_CustomsShipmentHeaderId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId],[CustomsShipmentHeaderId]) End \n";
             return cmd;
 
         }
@@ -1411,7 +1453,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CargoTrackingArguments= CargoTrackingArguments,
                 Condition= Condition,
             };
-            string condition = CargoTrackingTableBuildWhereCondition.BuildWhereCondition(buildWhereConditionArgs);
+            string condition = CargoTrackingTableBuildWhereCondition.BuildWhereCondition(buildWhereConditionArgs, buildCargoArgs.Table.IsClosedTable);
             return condition;
         }
 
@@ -1532,6 +1574,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         public DateTime? ToDate;
         public int? Tenant;
         public bool? AllData;
+        public int? ThreadNumber;
+        public string FormTableName;
     }
 
     public class RecordUpdated
