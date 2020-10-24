@@ -1393,7 +1393,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      "[CreateDate] DATETIME NOT NULL," +
                      "[SecurityKey] VARCHAR(40) NULL," +
                      "[ConsigneeName] VARCHAR(70) NULL," +
-                     "[CustomerReference] VARCHAR(101) NULL," +
+                     "[CustomerReference] VARCHAR(100) NULL," +
                      "[IsMainRecord] BIT DEFAULT(0) NOT NULL," +
                      "[PickupEstimationDate] DATETIME NULL," +
                      "[FromWarehouseDate] DATETIME NULL," +
