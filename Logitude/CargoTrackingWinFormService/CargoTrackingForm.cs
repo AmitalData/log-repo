@@ -88,6 +88,7 @@ namespace CargoTrackingWinFormService.Forms
             this.checkBox1.Checked = true;
             this.checkBox2.Checked = true;
             this.checkBox3.Checked = true;
+            this.textBox3.Text = "Shipments";
         }
   
 

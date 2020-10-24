@@ -240,8 +240,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             ThreadsNumber = 0;
             ThreadsCompleatedWork = 0;
-            ThreadPool.SetMinThreads(1, 0);
-            ThreadPool.SetMaxThreads(MainThreadNumbers, 0);
+            ThreadPool.SetMinThreads(1, 1);
+            ThreadPool.SetMaxThreads(MainThreadNumbers, MainThreadNumbers);
             RecordUpdated _RecordUpdated = new RecordUpdated();
 
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
@@ -286,10 +286,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             RunBulkThreads2(bulkDataPreperation, cargoTrackingDataBaseArgs);
                         }
 
-                        if (ThreadsCompleatedWork != 0 && ThreadsCompleatedWork % MainThreadNumbers == 0)
-                        {
-                            WriteThreadsData(cargoTrackingDataBaseArgs);
-                        }
+                        //if (ThreadsCompleatedWork != 0 && ThreadsCompleatedWork % MainThreadNumbers == 0)
+                        //{
+                        //    WriteThreadsData(cargoTrackingDataBaseArgs);
+                        //}
                     }
 
                     bulkDataPreperation.sqlDataReader.Close();
@@ -319,10 +319,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                       
                     }
  
-                    if (ThreadsCompleatedWork >= ThreadsNumber)
-                    {
-                        WriteThreadsData(cargoTrackingDataBaseArgs);
-                    }
+                    //if (ThreadsCompleatedWork >= ThreadsNumber)
+                    //{
+                    //    WriteThreadsData(cargoTrackingDataBaseArgs);
+                    //}
                 }
                 else
                 {
@@ -369,7 +369,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
-                Thread.Sleep(10);
+                //Thread.Sleep(10);
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true));
             }
 
@@ -519,7 +519,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
-                Thread.Sleep(10);
+                //Thread.Sleep(10);
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns));
 
             }
@@ -865,35 +865,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                 
 
                             }
-                            bulkCopy.DestinationTableName = "dbo." + table.CT_TableName;
+                            if (IsCT2)
+                                bulkCopy.DestinationTableName = "dbo." + table.CT2_TableName;
+                            else
+                                bulkCopy.DestinationTableName = "dbo." + table.CT_TableName;
+
                             bulkCopy.BulkCopyTimeout = (int)timeOut;
                             bulkCopy.EnableStreaming = true;
                             bulkCopy.BatchSize = 100000;
-                            if (IsCT2)
-                            {
-                                bulkCopy.DestinationTableName =
-                                                        "dbo." + table.CT2_TableName;
-
-                                CopyMainBulk2 = MainBulk2;
-                                MainBulk2 = bulkCopy;
-                                CopyMainColumnMappings2 = MainColumnMappings2;
-                                MainColumnMappings2 = MainBulk2.ColumnMappings;
-                            }
-                            else
-                            {
-                                CopyMainBulk  = MainBulk ;
-                                MainBulk = bulkCopy;
-                                CopyMainColumnMappings  = MainColumnMappings ;
-                                MainColumnMappings = MainBulk.ColumnMappings;
-
-                            }
-
-                            dataTable.TableName = bulkCopy.DestinationTableName;
-                            MainDataTables.Add(dataTable);
-                            //lock (threadLock)
+                            //if (IsCT2)
                             //{
-                            //    bulkCopy.WriteToServer(dataTable);
+                            //    bulkCopy.DestinationTableName =
+                            //                            "dbo." + table.CT2_TableName;
+
+                            //    CopyMainBulk2 = MainBulk2;
+                            //    MainBulk2 = bulkCopy;
+                            //    CopyMainColumnMappings2 = MainColumnMappings2;
+                            //    MainColumnMappings2 = MainBulk2.ColumnMappings;
                             //}
+                            //else
+                            //{
+                            //    CopyMainBulk  = MainBulk ;
+                            //    MainBulk = bulkCopy;
+                            //    CopyMainColumnMappings  = MainColumnMappings ;
+                            //    MainColumnMappings = MainBulk.ColumnMappings;
+
+                            //}
+
+                            //dataTable.TableName = bulkCopy.DestinationTableName;
+                            //MainDataTables.Add(dataTable);
+                            lock (threadLock)
+                            {
+                                bulkCopy.WriteToServer(dataTable);
+                            }
                             //bulkCopy.WriteToServer(dataTable);
 
                         }

@@ -233,8 +233,8 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 57);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 58);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // CheckLabel
@@ -592,6 +592,11 @@
             // 
             this.numericUpDown2.Location = new System.Drawing.Point(100, 77);
             this.numericUpDown2.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(158, 22);
             this.numericUpDown2.TabIndex = 32;
@@ -638,6 +643,11 @@
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(472, 76);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown1.TabIndex = 29;
@@ -711,8 +721,8 @@
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(604, 59);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(604, 60);
             this.tableLayoutPanel2.TabIndex = 28;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
@@ -948,7 +958,7 @@
             this.label22.Location = new System.Drawing.Point(240, 12);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(29, 21);
+            this.label22.Size = new System.Drawing.Size(23, 17);
             this.label22.TabIndex = 28;
             this.label22.Text = "...";
             // 
@@ -1569,6 +1579,11 @@
             // 
             this.SleepSecounds.Location = new System.Drawing.Point(445, 193);
             this.SleepSecounds.Margin = new System.Windows.Forms.Padding(4);
+            this.SleepSecounds.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.SleepSecounds.Name = "SleepSecounds";
             this.SleepSecounds.Size = new System.Drawing.Size(121, 22);
             this.SleepSecounds.TabIndex = 24;
