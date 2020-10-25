@@ -108,14 +108,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
 
-
-            AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
-            AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
-            if (amendmentStatus != null)
+           if(entityPOCO.IsAmendment == true)
             {
-                entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
+                AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
+                AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
+                if (amendRequestRejectReasonType != null)
+                {
+                    entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
 
+                }
             }
+          
 
             CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
             CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
