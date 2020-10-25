@@ -1286,7 +1286,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIMARYNUM = myDeclarationPM.CustomFileNo,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A"
+                        DONEOPERATION = "D"
                     };
 
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
