@@ -97,6 +97,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.IsAmendmentDisplayOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
             AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
@@ -105,6 +106,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.AmendmentStatusName = amendmentStatus.Name;
 
             }
+
+
+           if(entityPOCO.IsAmendment == true)
+            {
+                AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
+                AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
+                if (amendRequestRejectReasonType != null)
+                {
+                    entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
+
+                }
+            }
+          
 
             CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
             CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);

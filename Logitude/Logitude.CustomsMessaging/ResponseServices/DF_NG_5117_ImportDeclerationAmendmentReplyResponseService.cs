@@ -103,8 +103,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
-                    if (customResponse.Response.Declaration != null)
-                    _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false,isUpdateAfterAccept:true);
+                   // if (customResponse.Response.Declaration != null)
+                   // _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false,isUpdateAfterAccept:true);
                 
                 }
                 else

@@ -1314,6 +1314,11 @@ export class DeclarationPM {
     public set FOBValueDollar(newValue: number) { if (this.fOBValueDollar != newValue) { this.fOBValueDollar = newValue; this.MarkAsDirty("FOBValueDollar"); } }
        
 	 
+    private amendmentRejectionReasonName: string;
+    public get AmendmentRejectionReasonName() { return this.amendmentRejectionReasonName; }
+    public set AmendmentRejectionReasonName(newValue: string) { if (this.amendmentRejectionReasonName != newValue) { this.amendmentRejectionReasonName = newValue; this.MarkAsDirty("AmendmentRejectionReasonName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

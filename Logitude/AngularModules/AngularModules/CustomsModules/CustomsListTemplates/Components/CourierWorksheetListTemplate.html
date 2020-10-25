@@ -192,18 +192,18 @@
                             <span>Pending</span>
                         </li>
                         <!--
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
-                            <span>הזנת Pending</span>
-                        </li>
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
-                            <span>עדכון Pending</span>
-                        </li>
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
-                            <span>מחיקת Pending</span>
-                        </li>
-                            -->
+    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+        <span>הזנת Pending</span>
+    </li>
+    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
+        <span>עדכון Pending</span>
+    </li>
+    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+        <span>מחיקת Pending</span>
+    </li>
+        -->
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
-                        <li  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
                             <span>כניסה ל-F/U</span>
                         </li>
 
@@ -238,6 +238,15 @@
                         <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'F');">
                             <span>העברה למהיר</span>
                         </li>
+
+                        <li *ngIf="IsClosedForFollowUp" (click)="SetCLSHWBEvent(0)">
+                            <span>ביטול סגירה ש.מ.ב</span>
+                        </li>
+
+                        <li *ngIf="!IsClosedForFollowUp" (click)="SetCLSHWBEvent(1)">
+                            <span>סגירה ש.מ.ב</span>
+                        </li>
+
                     </ul>
                 </div>
             </courier-filter-button>
