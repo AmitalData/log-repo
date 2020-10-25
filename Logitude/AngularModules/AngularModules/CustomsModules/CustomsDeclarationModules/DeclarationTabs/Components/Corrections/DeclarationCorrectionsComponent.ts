@@ -128,7 +128,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
-                        this.UIProperties.SetEnabled("AmendmentRejectionReason", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("AmendmentRejectionReasonName", this.ObjectTableName, false);
 
                         this.DisplayOnlyCheck();
 
