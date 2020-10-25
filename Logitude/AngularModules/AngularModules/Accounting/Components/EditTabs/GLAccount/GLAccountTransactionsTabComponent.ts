@@ -656,17 +656,20 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     GetOpenBalanceAmount() {
         var result = 0;
-        if (this.EntityPM) {
+        if (this.EntityPM && this.LTBSummery) 
+        {
             if (this.EntityPM.IsMultiCurrency) {
-                if(this.LTBSummery)
-                    if(this.LTBSummery.StartBalanceLocal)
-                        result = Number(this.LTBSummery.StartBalanceLocal);
+                if(this.LTBSummery.StartBalanceLocal)
+                    result = Number(this.LTBSummery.StartBalanceLocal);
             }
             else {
-                if(this.LTBSummery)
-                    if(this.LTBSummery.StartBalanceForeignList.length > 0)
-                        result = Number(this.LTBSummery.StartBalanceForeignList[0].BalanceForeign);
+                if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId){
+                    result = Number(this.LTBSummery.StartBalanceLocal);
+                }
+                else if(this.LTBSummery.StartBalanceForeignList.length > 0)
+                    result = Number(this.LTBSummery.StartBalanceForeignList[0].BalanceForeign);
             }
+
         }
         return result;
     }
