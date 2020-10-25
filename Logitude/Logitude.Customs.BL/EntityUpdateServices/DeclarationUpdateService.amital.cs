@@ -459,7 +459,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIMARYNUM = "0",
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
@@ -823,7 +823,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);

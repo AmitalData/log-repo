@@ -304,7 +304,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         GSTRING3 = entityPM.Id,
 
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         QUEUEMANAGEMENT=true,
 
 
@@ -701,7 +701,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                         PRIMARYNUM = dirtyCourierMasterPM.Id,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
