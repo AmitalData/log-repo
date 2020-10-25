@@ -447,7 +447,7 @@
                                                         </td>
 
                                                         <td style="width:240px">
-                                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReason"
+                                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReasonName"
                                                                         [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
                                                         </td>
                                                         <!--<td style="width:7px"></td>-->
@@ -502,7 +502,7 @@
                                         <tr>
                                             <td colspan="3" style="border: 1px solid gray;">
                                                 <logitude-edit-grid GridWidth="100%"
-                                                                    GridHeight="100%"
+                                                                    GridHeight="90%"
                                                                     [ItemSource]="AdditionalInformationlist"
                                                                     [IsDarkHeader]="true"
                                                                     (SelectedItemChanged)="OnRowSelected($event)"
@@ -813,13 +813,13 @@
                                     <tr style="height: 25px;">
 
                                         <td style="width:83px">
-                                            <LogLabel [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName"
+                                            <LogLabel [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
 
                                         </td>
 
                                         <td style="width:240px">
-                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReason"
+                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReasonName'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReasonName"
                                                         [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
                                         </td>
                                         <!--<td style="width:7px"></td>-->

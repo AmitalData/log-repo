@@ -68,7 +68,10 @@ export class LuhnAlgorithm {
         }
         //check digits 3-4 is 98 or 99 according to DclarationType
         if (declarationNumber.substr(2, 2) != "98" &&
-            declarationNumber.substr(2, 2) != "99") {
+            declarationNumber.substr(2, 2) != "99"
+            &&
+            declarationNumber.substr(2, 2) != "97"
+        ) {
             return null;
         }
 

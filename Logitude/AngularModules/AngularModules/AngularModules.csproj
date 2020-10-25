@@ -1256,6 +1256,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendCollateralRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContinuousResponseOnClaimFileResponseData.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\PhysicalCheckResponseData.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\AmendmentRequestRejectReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmountTypeList.ts" />
@@ -1299,6 +1300,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\TransactionNatureTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\AmendmentRequestRejectReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmountTypePM.ts" />
@@ -1373,6 +1375,7 @@
     <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AcceptanceStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentRequestRejectReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmountTypeListService.ts" />
@@ -1465,6 +1468,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
+    <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />

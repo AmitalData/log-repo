@@ -988,7 +988,6 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5117N":
                                 case "8400A":
                                 case "5101C":
-                                case "5101D":
                                 case "5101G":
                                 //case "5101I":
                                 case "5101S":
@@ -1044,6 +1043,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101R":
                                 case "5101A":
                                 case "5101E":
+                                case "5101D":
+
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
