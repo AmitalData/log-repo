@@ -31,6 +31,6 @@
     Type="varchar"
     Size="10">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>
