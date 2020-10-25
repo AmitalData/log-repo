@@ -39,6 +39,7 @@ let R: RandomGenerator= new RandomGenerator();
      }).its('body')
      .then(ImportDeclaration => {
       win.sessionStorage.setItem('ImportDeclarationId', ImportDeclaration.Id);
+      win.sessionStorage.setItem('CustomFileNo', ImportDeclaration.CustomFileNo);
       cy.log("Declaration Id: "+ImportDeclaration.Id);
      });
    }); 
