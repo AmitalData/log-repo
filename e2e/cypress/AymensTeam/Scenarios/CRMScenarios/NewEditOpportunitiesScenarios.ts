@@ -61,8 +61,7 @@ export class NewEditOpportunitiesScenarios {
     }
     private EditOpportunity(EntityNumber: string) {
         let scenarios: NewEditActivitiesScenarios = new NewEditActivitiesScenarios();
-        let today = new Date().toLocaleDateString();
-        Resolvers.DatePickerResolver.Selector('#date_Opportunity_StageDueDate').Type(today);
+        Resolvers.DatePickerResolver.Selector('#date_Opportunity_StageDueDate').Type('.');
         Resolvers.LOVResolver.Selector("#Opportunity_RatingCode").SelectFirst();
         Resolvers.ButtonResolver.Selector('#AddPhoneCall').Click();
         scenarios.CreatePhoneCallWithoutCustomer(this.EntityNumber);
