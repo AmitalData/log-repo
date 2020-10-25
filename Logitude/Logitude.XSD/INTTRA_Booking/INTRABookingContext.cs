@@ -1005,9 +1005,6 @@ namespace Logitude.XSD.INTTRA_Booking
                 OuterPack = new OuterPackType(),
             };
             itemDetails.CommodityClassification = this.FillPackagesHarmonizeList().ToArray<INTTRA_Booking.CommodityClassificationType>();
-                    
-               
-             };
             this.GoodsDetails.Add(itemDetails);
         }
 
