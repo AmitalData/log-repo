@@ -1,16 +1,30 @@
 import { Resolvers } from "../../Resolvers/Resolvers";
+import { Random } from '../../@e2e/core';
 
 export class RoutingTab {
     private transportMode: string;
+    private levelCode: string;
+    private levelName: string;
 
-    public RunRoutingTabScenarios(transportMode: string) {
+    public RunRoutingTabScenarios(levelCode: string,transportMode: string) {
         this.transportMode = transportMode;
+        this.levelCode = levelCode;
+
+        if (levelCode == 'M') {
+            this.levelName = 'Master';
+        } else {
+            this.levelName = 'Shipment';
+        }
         this.GoToRoutingTab();
-        //this.AddPickupDeilvery('P');
-        //this.AddPreOnCarriage('Pre');
-        this.AddMainCarriag();
-        //this.AddPreOnCarriage('On');
-        //this.AddPickupDeilvery('D');
+        this.AddPickupDeilvery('P');
+        if (this.levelCode != 'M') {
+        this.AddPreOnCarriage('Pre');
+        this.AddPreOnCarriage('On');
+        }
+        if (this.levelCode != 'H') {
+            this.AddMainLegs();
+        }
+        this.AddPickupDeilvery('D');
     }
     private GoToRoutingTab() {
         cy.get('#ShipmentTHRoutings').click();
@@ -110,12 +124,34 @@ export class RoutingTab {
     private AddMainLegs() {
         Resolvers.ButtonResolver.Selector('#Edit-MainCarriage').Click();
         this.FillMainCarriageDetails();
+        this.FillViaPort1LegDetails();
+        this.FillViaPort2LegDetails();
+        this.FillViaPort3LegDetails();
+        Resolvers.ButtonResolver.Selector('#MainCarriageOKBtn').Click();
     }
     private FillMainCarriageDetails() {
-        
-        Resolvers.TextBoxResolver.Selector('#Shipment_TrailerNumber').Type('razan');
+        Resolvers.TextBoxResolver.Selector('#Shipment_MainCarriageCarrierNumber').Type('123');
+        Resolvers.TextBoxResolver.Selector('#Shipment_Master').Type(Random.GetRandom());
+        Resolvers.DatePickerResolver.Selector('#date_Shipment_MainCarriageATD').Type('.');
+        Resolvers.DatePickerResolver.Selector('#date_Shipment_MainCarriageATA').Type('.');
+
     }
     private FillViaPort1LegDetails(){
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment1FromPortId').Type('mvd');
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment1CarrierId').SelectFirst();
+        Resolvers.TextBoxResolver.Selector('#Shipment_Transshipment1CarrierNumber').Type('456');
+
+    }
+    private FillViaPort2LegDetails() {
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment2FromPortId').Type('mvd');
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment2CarrierId').SelectFirst();
+        Resolvers.TextBoxResolver.Selector('#Shipment_Transshipment2CarrierNumber').Type('789');
+
+    }
+    private FillViaPort3LegDetails() {
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment3FromPortId').Type('mvd');
+        Resolvers.LOVResolver.Selector('#Shipment_Transshipment3CarrierId').SelectFirst();
+        Resolvers.TextBoxResolver.Selector('#Shipment_Transshipment3CarrierNumber').Type('987');
 
     }
 }
