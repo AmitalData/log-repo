@@ -28,6 +28,7 @@ export class DashboardShipmentsComponent
     isFilter2Expanded: boolean  = false;
     isAbdullahCompanyChecked: boolean  = true;
     showSortDetailsMenu: boolean  = false;
+    showShipmentDetailsMenu: boolean  = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -37,7 +38,7 @@ export class DashboardShipmentsComponent
         this.GetVariablesFromURI();
         // this.listenToRouterEvents();
         this.InitForm();
-        this.SearchText = '1000';
+        this.SearchText = 'abed';
         this.Search();
 
     }
@@ -88,6 +89,7 @@ export class DashboardShipmentsComponent
     Search()
     {
         if (this.tenant && this.SearchText) {
+            this.Shipments = [];
             // this.router.navigate([this.tenant,'search', this.SearchText]);
             this.LoadShipments();
         }
@@ -180,7 +182,22 @@ export class DashboardShipmentsComponent
     SortMenuClicked(buttonCode: string){
         console.log("sort by clicked, ",buttonCode);
     }
-    
+
+    lastClickedShipment: any;
+    ShipmentMoreButtonClicked(shipment: any , event: any){
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.lastClickedShipment = shipment;
+        this.showShipmentDetailsMenu = true;
+    }
+    ShipmentDetailsMenuClicked(buttonCode: string){
+        console.log("shipment more details", buttonCode, this.lastClickedShipment);
+
+        if(buttonCode == "set")
+            this.lastClickedShipment.IsFavorite = true;
+        
+    }
 
 }
 

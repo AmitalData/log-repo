@@ -97,7 +97,10 @@
                 <!-- References -->
                 <div class="column col-md-2 reference" style="width: 14%;">
                     <div>
-                        <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">Reference NO.</div>
+                        <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">
+                            Reference NO. 
+                            <span *ngIf="shipment.IsFavorite">&nbsp;<img src="/assets/images/icons/favoritesicon@1x.png" alt=""></span>
+                        </div>
                         <div class="truncateText" *ngFor="let item of references; let i = index">
                             <span [ngClass]="{'hide-mobile': i > 0}">
                                 {{item}}
@@ -182,7 +185,7 @@
                     </div>
                 </div>
 
-                <div class="more-btn mobile-only">
+                <div class="more-btn mobile-only" (click)="ShipmentMoreButtonClicked(shipment,$event)">
                     <img src="/assets/images/icons/more.png" alt="">
                 </div>
             </div>
@@ -193,8 +196,6 @@
 
         </div>
     </div>
-
-   
 
     <!-- Filters Sidebar -->
     <div class="filters-sidebar" *ngIf="isFiltersSideBarOpened">
@@ -255,15 +256,25 @@
         </ul>
     </div>
 
+    <!-- Progress Indicator -->
+    <div class="spinner" *ngIf="isLoading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+
     <!-- Details Menu - sort -->
-    <details-menu
-        [Show]="showSortDetailsMenu"
-        [Toggle]="'showSortDetailsMenu'"
-        [DataContext]="this"
-        [MenuTitle]="'Sort By'"
+    <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort By'"
         [Buttons]="[{Code: 'bytype', Name:'Type'}, {Code: 'bydate', Name:'Date created'}, {Code: 'bylastmod', Name:'By Last Modify'}]"
-        (ButtonClicked)="SortMenuClicked($event)"
-        ></details-menu>
+        (ButtonClicked)="SortMenuClicked($event)"></details-menu>
+    
+    <!-- Details Menu - shipment more -->
+    <details-menu [Show]="showShipmentDetailsMenu" [Toggle]="'showShipmentDetailsMenu'" [DataContext]="this"
+        [MenuTitle]="'Sort By'"
+        [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
+        (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
 
 </div>
 
@@ -276,3 +287,4 @@
         <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="/assets/images/icons/sort@1x-white.png" alt=""></li>
     </ul>
 </div>
+
