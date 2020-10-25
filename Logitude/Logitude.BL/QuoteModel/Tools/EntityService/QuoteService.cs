@@ -1109,7 +1109,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         }
         private void CloseEntityAutomatically()
         {
-            entityPM.QuoteClosingReasonId = "1-591";
+            var quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
+            var quoteClosing = quoteClosingReasonRepository.GetSingleQuoteClosingReasonByCode("XQ", tenant); 
+            entityPM.QuoteClosingReasonId = quoteClosing.Id;
             entityPM.IsClosed = true;
             entityPM.QuoteClosingReasonCode = "XQ";
             entityPM.ActionType = "Decline";
