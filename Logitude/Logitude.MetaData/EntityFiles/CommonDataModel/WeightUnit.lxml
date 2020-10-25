@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Weight Unit&quot;"
-  Code="&quot;7799&quot;"
+  Code="&quot;e69f&quot;"
   Name="&quot;WeightUnit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -405,7 +405,8 @@
     <Record
       SearchFields="&quot;kg,kilogram&quot;"
       Code="&quot;KG&quot;"
-      Name="&quot;Kilogram&quot;" />
+      Name="&quot;Kilogram&quot;"
+      PrintAs="&quot;kg&quot;" />
     <Record
       SearchFields="&quot;mt,metric ton&quot;"
       Code="&quot;MT&quot;"
@@ -413,7 +414,8 @@
     <Record
       SearchFields="&quot;lb,pound&quot;"
       Code="&quot;LB&quot;"
-      Name="&quot;Pound&quot;" />
+      Name="&quot;Pound&quot;"
+      PrintAs="&quot;lb&quot;"/>
   </Records>
   <DataContracts>
     <DataContract

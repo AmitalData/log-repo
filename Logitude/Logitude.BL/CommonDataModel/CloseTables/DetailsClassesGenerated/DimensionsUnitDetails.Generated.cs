@@ -26,6 +26,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "cm,cm", 
                 Code = "Cm", 
                 Name = "Cm", 
+                PrintAs = "cm", 
 			});
 			 
             all.Add(new DimensionsUnitDetails()
@@ -40,6 +41,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "inc,inch", 
                 Code = "Inc", 
                 Name = "Inch", 
+                PrintAs = "inch", 
 			});
 			
             return all;
@@ -49,12 +51,13 @@ namespace Logitude.BL.CommonDataModel
         {   
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Code = this.Code;  
-		    newPoco.Name = this.Name;   
+		    newPoco.Name = this.Name;  
+		    newPoco.PrintAs = this.PrintAs;   
         }
 
 		public string GetSearchFields(DimensionsUnit rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.PrintAs,",");
         }
    }
 }

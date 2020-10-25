@@ -78,7 +78,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                 {
                                                     Name = entity.Name,
                                                     Code = entity.Code,
-                                                    PrintAs = a.PrintAs,
+                                                    PrintAs = entity.PrintAs,
                                                     SearchFields = entity.SearchFields,
                                                 };
             return result;

@@ -64,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         Name = entity.Name,
                                                         Code = entity.Code,
                                                         SearchFields = entity.SearchFields,
-                                                        PrintAs = a.PrintAs
+                                                        PrintAs = entity.PrintAs
                                                     };
             return result;
         }

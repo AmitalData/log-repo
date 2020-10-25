@@ -26,6 +26,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "kg,kilogram", 
                 Code = "KG", 
                 Name = "Kilogram", 
+                PrintAs = "kg", 
 			});
 			 
             all.Add(new WeightUnitDetails()
@@ -40,6 +41,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "lb,pound", 
                 Code = "LB", 
                 Name = "Pound", 
+                PrintAs = "lb", 
 			});
 			
             return all;
@@ -49,12 +51,13 @@ namespace Logitude.BL.CommonDataModel
         {   
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Code = this.Code;  
-		    newPoco.Name = this.Name;   
+		    newPoco.Name = this.Name;  
+		    newPoco.PrintAs = this.PrintAs;   
         }
 
 		public string GetSearchFields(WeightUnit rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.PrintAs,",");
         }
    }
 }

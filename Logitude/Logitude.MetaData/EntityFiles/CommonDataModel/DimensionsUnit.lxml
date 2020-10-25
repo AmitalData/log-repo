@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Dimensions Unit&quot;"
-  Code="&quot;dd17&quot;"
+  Code="&quot;08b8&quot;"
   Name="&quot;DimensionsUnit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -401,7 +401,8 @@
     <Record
       SearchFields="&quot;cm,cm&quot;"
       Code="&quot;Cm&quot;"
-      Name="&quot;Cm&quot;" />
+      Name="&quot;Cm&quot;" 
+      PrintAs="&quot;cm&quot;"/>
     <Record
       SearchFields="&quot;ft,ft&quot;"
       Code="&quot;Ft&quot;"
@@ -409,7 +410,8 @@
     <Record
       SearchFields="&quot;inc,inch&quot;"
       Code="&quot;Inc&quot;"
-      Name="&quot;Inch&quot;" />
+      Name="&quot;Inch&quot;" 
+       PrintAs="&quot;inch&quot;"/>
   </Records>
   <DataContracts>
     <DataContract
