@@ -88708,6 +88708,20 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false"
       EntityStatusCode="&quot;SEEX&quot;" />
+    <EventType
+      Code="&quot;BKAR&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Booking arrangement&quot;"
+      LocalName="&quot;Booking arrangement&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;BKAR&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons

@@ -1007,7 +1007,7 @@ namespace Logitude.XSD.INTTRA_Booking
             itemDetails.CommodityClassification = this.FillPackagesHarmonizeList().ToArray<INTTRA_Booking.CommodityClassificationType>();
                     
                
-             };
+            
             this.GoodsDetails.Add(itemDetails);
         }
 
