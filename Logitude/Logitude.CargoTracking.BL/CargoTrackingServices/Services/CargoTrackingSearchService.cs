@@ -21,12 +21,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
                 }
 
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipmentNumber");
-                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
-                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
-               
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipmentNumber");
+                AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
+                AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ForwarderShipmentNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomFileNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipperName");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
+
 
             }
 
@@ -72,6 +78,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
 
+ 
     }
 
 }

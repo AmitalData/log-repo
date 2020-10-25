@@ -50,27 +50,19 @@ IF @@TRANCOUNT > 0
 ROLLBACK TRAN
 END CATCH;
 
--- Create New Table With Name CargoTrackingShipmentSearches
-CREATE TABLE [dbo].[CargoTrackingShipmentSearches](
-[Tenant] INT NOT NULL,
-[SearchFields] NVARCHAR(100) NULL,
-[ShipmentDate] DATETIME NOT NULL,
-[Id] INT IDENTITY(1,1) NOT NULL,
-[ShipmentId] VARCHAR(15) NULL,
-[IsPublic] BIT DEFAULT(0) NULL,
-CONSTRAINT [PK_CargoTrackingShipmentSearches] PRIMARY KEY([Id])
-);
+-- Drop Index IX_CargoTrackingShipments_CustomerReference From Table CargoTrackingShipments
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_CargoTrackingShipments_CustomerReference'' AND object_id = OBJECT_ID(''[dbo].[CargoTrackingShipments]'', ''U'')) BEGIN DROP INDEX [IX_CargoTrackingShipments_CustomerReference] ON [dbo].[CargoTrackingShipments] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('93de1fe6-71c4-4dbc-be25-be27e443f389', 'CargoTrackingShipmentSearch.dxml', 'CargoTrackingShipmentSearches', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CargoTrackingShipmentSearchesCREATE TABLE [dbo].[CargoTrackingShipmentSearches]([Tenant] INT NOT NULL,[SearchFields] NVARCHAR(100) NULL,[ShipmentDate] DATETIME NOT NULL,[Id] INT IDENTITY(1,1) NOT NULL,[ShipmentId] VARCHAR(15) NULL,[IsPublic] BIT DEFAULT(0) NULL,CONSTRAINT [PK_CargoTrackingShipmentSearches] PRIMARY KEY([Id]));');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('1154eb0a-709d-4ec3-9082-3fffcc54889d', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_CargoTrackingShipments_CustomerReference From Table CargoTrackingShipmentsEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_CargoTrackingShipments_CustomerReference'''' AND object_id = OBJECT_ID(''''[dbo].[CargoTrackingShipments]'''', ''''U'''')) BEGIN DROP INDEX [IX_CargoTrackingShipments_CustomerReference] ON [dbo].[CargoTrackingShipments] END'');');
 
--- Create Index On CargoTrackingShipmentSearches Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant_SearchFields_IsPublic] ON [dbo].[CargoTrackingShipmentSearches]([Tenant],[SearchFields],[IsPublic])');
+-- Change Size From 100 To 101 For Column CustomerReference
+ALTER TABLE [dbo].[CargoTrackingShipments] ALTER COLUMN [CustomerReference] VARCHAR(101);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('86c7abaf-5dac-4f98-8700-ee3d1eb74444', 'CargoTrackingShipmentSearch.dxml', 'CargoTrackingShipmentSearches', 'Tenant,SearchFields,IsPublic', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipmentSearches TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant_SearchFields_IsPublic] ON [dbo].[CargoTrackingShipmentSearches]([Tenant],[SearchFields],[IsPublic])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8c452f66-111f-433c-a8b0-edae5d8b4f37', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'CustomerReference', 'Alter Column Size', GETDATE(), '-- Change Size From 100 To 101 For Column CustomerReferenceALTER TABLE [dbo].[CargoTrackingShipments] ALTER COLUMN [CustomerReference] VARCHAR(101);');
 
--- Create Index On CargoTrackingShipmentSearches Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_ShipmentId] ON [dbo].[CargoTrackingShipmentSearches]([ShipmentId])');
+-- Create Index On CargoTrackingShipments Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_CustomerReference] ON [dbo].[CargoTrackingShipments]([CustomerReference])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ba6e2fa4-e176-41b8-8cca-0b58620c8dfe', 'CargoTrackingShipmentSearch.dxml', 'CargoTrackingShipmentSearches', 'ShipmentId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipmentSearches TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_ShipmentId] ON [dbo].[CargoTrackingShipmentSearches]([ShipmentId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f27210bf-7a01-4ccf-ad9b-b30c5546be9d', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'CustomerReference', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_CustomerReference] ON [dbo].[CargoTrackingShipments]([CustomerReference])'');');
 
 
