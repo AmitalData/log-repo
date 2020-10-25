@@ -7,7 +7,7 @@ delete from DWObjectTables
 ------------------------------------------------------------------------------------
 declare @DIM_BranchesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_BranchesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_BranchesNewId,0,'DIM_Branches','DIM_Branches','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_BranchesNewId,0,'','DIM_Branches','DIM_Branches','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_BranchesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_BranchesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -39,7 +39,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_ChargesTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ChargesTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ChargesTypesNewId,0,'DIM_ChargesTypes','DIM_ChargesTypes','Dimension','false','[English Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ChargesTypesNewId,0,'','DIM_ChargesTypes','DIM_ChargesTypes','Dimension','false','[English Name]','false')  
 --Fields --
 declare @DIM_ChargesTypesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ChargesTypesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -77,7 +77,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_CurrenciesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CurrenciesNewId,0,'DIM_Currencies','DIM_Currencies','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CurrenciesNewId,0,'','DIM_Currencies','DIM_Currencies','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_CurrenciesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -112,7 +112,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_CustomPickListsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CustomPickListsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CustomPickListsNewId,0,'DIM_CustomPickLists','DIM_CustomPickLists','Dimension','false','[Value]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CustomPickListsNewId,0,'','DIM_CustomPickLists','DIM_CustomPickLists','Dimension','false','[Value]','false')  
 --Fields --
 declare @DIM_CustomPickListsIdNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CustomPickListsIdNewId OUTPUT,'DWObjectField' 
@@ -138,7 +138,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_DatesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_DatesNewId,0,'DIM_Dates','DIM_Dates','Dimension','false','[Full Date]')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_DatesNewId,0,'','DIM_Dates','DIM_Dates','Dimension','false','[Full Date]')  
 --Fields --
 declare @DIM_DatesDateKeyNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDateKeyNewId OUTPUT,'DWObjectField' 
@@ -200,7 +200,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_DepartmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DepartmentsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_DepartmentsNewId,0,'DIM_Departments','DIM_Departments','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_DepartmentsNewId,0,'','DIM_Departments','DIM_Departments','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_DepartmentsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DepartmentsId_NumberNewId OUTPUT,'DWObjectField' 
@@ -229,7 +229,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_DirectionsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DirectionsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_DirectionsNewId,0,'DIM_Directions','DIM_Directions','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_DirectionsNewId,0,'','DIM_Directions','DIM_Directions','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_DirectionsCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DirectionsCodeNewId OUTPUT,'DWObjectField' 
@@ -243,7 +243,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_IncotermsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_IncotermsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_IncotermsNewId,0,'DIM_Incoterms','DIM_Incoterms','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_IncotermsNewId,0,'','DIM_Incoterms','DIM_Incoterms','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_IncotermsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_IncotermsId_NumberNewId OUTPUT,'DWObjectField' 
@@ -275,7 +275,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_LevelsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_LevelsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_LevelsNewId,0,'DIM_Levels','DIM_Levels','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_LevelsNewId,0,'','DIM_Levels','DIM_Levels','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_LevelsCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_LevelsCodeNewId OUTPUT,'DWObjectField' 
@@ -289,7 +289,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_MoveTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_MoveTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_MoveTypesNewId,0,'DIM_MoveTypes','DIM_MoveTypes','Dimension','false','[English Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_MoveTypesNewId,0,'','DIM_MoveTypes','DIM_MoveTypes','Dimension','false','[English Name]','false')  
 --Fields --
 declare @DIM_MoveTypesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_MoveTypesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -324,7 +324,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_OBLTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_OBLTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_OBLTypesNewId,0,'DIM_OBLTypes','DIM_OBLTypes','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_OBLTypesNewId,0,'','DIM_OBLTypes','DIM_OBLTypes','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_OBLTypesCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_OBLTypesCodeNewId OUTPUT,'DWObjectField' 
@@ -338,7 +338,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_PartnersNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PartnersNewId,0,'DIM_Partners','DIM_Partners','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PartnersNewId,0,'','DIM_Partners','DIM_Partners','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_PartnersId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersId_NumberNewId OUTPUT,'DWObjectField' 
@@ -436,7 +436,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PortsNewId,0,'DIM_Ports','DIM_Ports','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PortsNewId,0,'','DIM_Ports','DIM_Ports','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_PortsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsId_NumberNewId OUTPUT,'DWObjectField' 
@@ -477,7 +477,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_ShipmentPayableStatusesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentPayableStatusesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentPayableStatusesNewId,0,'DIM_ShipmentPayableStatuses','DIM_ShipmentPayableStatuses','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentPayableStatusesNewId,0,'','DIM_ShipmentPayableStatuses','DIM_ShipmentPayableStatuses','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_ShipmentPayableStatusesNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentPayableStatusesNameNewId OUTPUT,'DWObjectField' 
@@ -491,7 +491,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_ShipmentReceivableStatusesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentReceivableStatusesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentReceivableStatusesNewId,0,'DIM_ShipmentReceivableStatuses','DIM_ShipmentReceivableStatuses','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentReceivableStatusesNewId,0,'','DIM_ShipmentReceivableStatuses','DIM_ShipmentReceivableStatuses','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_ShipmentReceivableStatusesNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentReceivableStatusesNameNewId OUTPUT,'DWObjectField' 
@@ -505,7 +505,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_ShipmentStatusesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentStatusesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentStatusesNewId,0,'DIM_ShipmentStatuses','DIM_ShipmentStatuses','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_ShipmentStatusesNewId,0,'','DIM_ShipmentStatuses','DIM_ShipmentStatuses','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_ShipmentStatusesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentStatusesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -534,7 +534,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_SpecialServicesTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_SpecialServicesTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_SpecialServicesTypesNewId,0,'DIM_SpecialServicesTypes','DIM_SpecialServicesTypes','Dimension','false','[English Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_SpecialServicesTypesNewId,0,'','DIM_SpecialServicesTypes','DIM_SpecialServicesTypes','Dimension','false','[English Name]','false')  
 --Fields --
 declare @DIM_SpecialServicesTypesIdNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_SpecialServicesTypesIdNewId OUTPUT,'DWObjectField' 
@@ -566,7 +566,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_TenantsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TenantsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TenantsNewId,0,'DIM_Tenants','DIM_Tenants','Dimension','false','[Tenant Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TenantsNewId,0,'','DIM_Tenants','DIM_Tenants','Dimension','false','[Tenant Name]','false')  
 --Fields --
 declare @DIM_TenantsTenantNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TenantsTenantNumberNewId OUTPUT,'DWObjectField' 
@@ -583,7 +583,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_TransportModesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TransportModesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TransportModesNewId,0,'DIM_TransportModes','DIM_TransportModes','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TransportModesNewId,0,'','DIM_TransportModes','DIM_TransportModes','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_TransportModesCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TransportModesCodeNewId OUTPUT,'DWObjectField' 
@@ -597,7 +597,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_TypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TypesNewId,0,'DIM_Types','DIM_Types','Dimension','true','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_TypesNewId,0,'','DIM_Types','DIM_Types','Dimension','true','[Name]','false')  
 --Fields --
 declare @DIM_TypesCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_TypesCodeNewId OUTPUT,'DWObjectField' 
@@ -611,7 +611,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_UsersNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_UsersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_UsersNewId,0,'DIM_Users','DIM_Users','Dimension','false','[Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_UsersNewId,0,'','DIM_Users','DIM_Users','Dimension','false','[Name]','false')  
 --Fields --
 declare @DIM_UsersId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_UsersId_NumberNewId OUTPUT,'DWObjectField' 
@@ -649,7 +649,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_VesselsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_VesselsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_VesselsNewId,0,'DIM_Vessels','DIM_Vessels','Dimension','false','[English Name]','false')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_VesselsNewId,0,'','DIM_Vessels','DIM_Vessels','Dimension','false','[English Name]','false')  
 --Fields --
 declare @DIM_VesselsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_VesselsId_NumberNewId OUTPUT,'DWObjectField' 
@@ -687,7 +687,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName) Values(@Fact_ChargesNewId,0,'Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Shipment','Shipment Charges')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName) Values(@Fact_ChargesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Shipment Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Shipment Create Date Time]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Shipment','Shipment Charges')  
 --Fields --
 declare @Fact_ChargesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -884,17 +884,17 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_MasterChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MasterChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,ParentFactCode,RecordType,DisplayName) Values(@Fact_MasterChargesNewId,0,'Fact_MasterCharges','Fact_MasterCharges','Fact','false','factMasterCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Fact_Charges','Master','Master Charges')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey,ParentFactCode,RecordType,DisplayName) Values(@Fact_MasterChargesNewId,0,'','Fact_MasterCharges','Fact_MasterCharges','Fact','false','factMasterCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]','Fact_Charges','Master','Master Charges')  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_MastersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MastersNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName) Values(@Fact_MastersNewId,0,'','Fact_Masters','Fact_Masters','Fact','false','factMasters','false','Fact_Shipments','Master','Masters')  
 --Fields --
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType,DisplayName) Values(@Fact_ShipmentsNewId,0,'Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Shipment','Shipments')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType,DisplayName) Values(@Fact_ShipmentsNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Create Date Time]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Shipment','Shipments')  
 --Fields --
 declare @Fact_ShipmentsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsId_NumberNewId OUTPUT,'DWObjectField' 

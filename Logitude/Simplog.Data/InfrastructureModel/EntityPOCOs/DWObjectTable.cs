@@ -25,6 +25,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ParentFactCode { get; set; }
         public string RecordType { get; set; }
         public string DisplayName { get; set; }
+        public string IndexesXml { get; set; }
 
 
     }
