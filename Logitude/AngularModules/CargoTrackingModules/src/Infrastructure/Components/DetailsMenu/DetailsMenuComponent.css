@@ -6,7 +6,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.178);
+    background: rgba(0, 0, 0, 0.15);
 }
 .details-menu{
     position: fixed;
@@ -15,7 +15,7 @@
     right: 0;
     bottom: -100px;
     min-height: 50px;
-    transition: .5s all;
+    transition: .3s ease-out all;
     background: white;
     color: rgb(61, 61, 61);
 }
@@ -37,5 +37,10 @@ ul, li{
 li{
     list-style: none;
     width: 100%;
-    padding: 10px 20px;
+    padding: 15px 20px;
+    user-select: none;
+    font-size: 16px;
+}
+li:active{
+    background: #eee;
 }

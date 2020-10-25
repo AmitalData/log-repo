@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, Input, OnInit, Output, EventEmitter, AfterContentInit, AfterViewInit } from '@angular/core';
 
 
@@ -8,13 +9,14 @@ import { Component, Input, OnInit, Output, EventEmitter, AfterContentInit, After
 })
 export class DetailsMenuComponent implements AfterViewInit
 {
-
+    @Input() DataContext: any;
     @Output() ButtonClicked: EventEmitter<string> = new EventEmitter<string>();
 
     @Input() MenuTitle: string;
+    @Input() Toggle: string;
     @Input() Buttons: MenuButton[] = [];
-    MenuHeight: number = 44; // 44 title height
-    ITEM_HEIGHT: number = 40;
+    MenuHeight: number; // 44 title height
+    ITEM_HEIGHT: number = 50;
     constructor() { }
 
     ngAfterViewInit(): void
@@ -29,13 +31,15 @@ export class DetailsMenuComponent implements AfterViewInit
     public set Show(v: boolean)
     {
         this.show = v;
+        if(this.DataContext)
+            this.DataContext[this.Toggle] = v;
     }
 
     MenuButtonClicked(code: string)
     {
+        console.log("[details menu] button clicked: " + code);
         this.ButtonClicked.emit(code);
         this.Show = false;
-        console.log("[details menu] button clicked: " + code);
 
     }
 

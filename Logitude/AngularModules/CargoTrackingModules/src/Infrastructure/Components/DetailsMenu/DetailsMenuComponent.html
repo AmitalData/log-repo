@@ -1,6 +1,10 @@
 <div class="details-menu-dismiss-section" (click)="Show=false" [style.display]="Show?'Block':'none'"></div>
-<div class="details-menu" [class.show-menu]="Show" [style.height.px]="MenuHeight" [style]>
-    <div class="title">{{MenuTitle}}</div>
+<div class="details-menu" 
+    [class.show-menu]="Show" 
+    [style.height.px]="MenuHeight||0"
+    [style.bottom.px]="MenuHeight?-1*MenuHeight:0"
+    >
+    <div class="title uppercase">{{MenuTitle}}</div>
     <ul>
         <li *ngFor="let button of Buttons" (click)="MenuButtonClicked(button.Code)">{{button.Name}}</li>
     </ul>
