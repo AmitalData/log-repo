@@ -118,7 +118,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.IntegratorCode != null)
             {
                 CardQuery cardQuery = new CardQuery(entityPOCO.Tenant);
-                CardPM cardPM = cardQuery.GetSinglePM(entityPOCO.IntegratorCode, entityPOCO.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePMFromCache(entityPOCO.IntegratorCode, entityPOCO.Tenant);
                 if (cardPM != null)
                 {
                     entityPM.IntegratorName = cardPM.LocalName;

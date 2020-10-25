@@ -521,9 +521,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
                     }
                 }
-         //   }
+            //   }
 
-        //    else
+            //    else
             //{
             //    ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
             //    DeclarationKeys entityKeys = new DeclarationKeys() { Id = entityPM.Id };
@@ -545,8 +545,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //            result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
             //        }
             //    }
-           // }
-
+            // }
+            if (entityPM.Direction == "E")
+            {
+                if (!string.IsNullOrEmpty(entityPM.ExportFile))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.ExportFile : result + "," + entityPM.ExportFile;
+                }
+            }
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
         }

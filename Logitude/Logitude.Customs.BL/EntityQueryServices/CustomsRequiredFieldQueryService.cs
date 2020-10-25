@@ -9,11 +9,23 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CustomsRequiredFieldQueryService : EntityQueryService<CustomsRequiredField, CustomsRequiredFieldKeys, CustomsRequiredFieldPM, object, CustomsRequiredFieldKeys>
     {
+
+        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableFromCache(string ObjectTableId, int Tenant,string type="A")
+        {
+            string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
+            {
+                return this.GetCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant,type);
+            });
+            return res;
+        }
+
         public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
