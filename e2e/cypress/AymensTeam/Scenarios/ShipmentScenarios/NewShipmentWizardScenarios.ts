@@ -87,8 +87,11 @@ export class NewShipmentWizardScenarios {
         cy.get("#DirectionRadio_" + Resolvers.Session + this.direction).click({ force: true });
         cy.get("#TransportModeRadio_" + Resolvers.Session + this.transportMode).click({ force: true });
 
-        if (this.transportMode != "A") {
+        if (this.transportMode == "I") {
             cy.get("#ShipmentTypeRadio_" + Resolvers.Session + this.shipmentType).click({ force: true });
+        }
+        if (this.transportMode == "O") {
+            cy.get("#ShipmentTypeRadio_" + Resolvers.Session + this.shipmentType + "D").click({ force: true });
         }
 
         switch (this.transportMode) {
