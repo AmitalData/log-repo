@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class VolumeUnitUpdateClass
    {  		
-		public const string HashString = "e5d000ac6338639fad46a958eef7efb5";
+		public const string HashString = "8414080bf19e357d9ee1f4c0ec8b3c05";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Volume Unit",
-			      				    Code =  "3f0e",
+			      				    Code =  "646c",
 			      				    Name =  "VolumeUnit",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -339,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ObjectTableName =  "VolumeUnit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  50,
+					  						MaxLength =  10,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -347,7 +347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
+					  						SystemMaxLength =  10,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -355,6 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PrintAs",
 					  						ListPropertyPath =  "PrintAs",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

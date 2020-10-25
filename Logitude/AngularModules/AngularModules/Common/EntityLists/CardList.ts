@@ -108,6 +108,7 @@ export class CardList {
 		AirWeightRoundingCode: string;
 		OceanWeightRoundingCode: string;
 		InlandWeightRoundingCode: string;
+		SearchWeight: number;
 		RecordDate: Date;
 	
 }

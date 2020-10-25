@@ -24,7 +24,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.PrintAs)
                .IsRequired()
-               .HasMaxLength(50)
+               .HasMaxLength(10)
                .IsUnicode(false);
 
             this.Property(t => t.SearchFields)
