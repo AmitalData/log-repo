@@ -1031,7 +1031,7 @@ namespace WebFreight.Web.Security
                 if (IsSecureConnection != "true")
                 {
 
-                    string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:");
+                    string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:").Replace(":81","");
                     if (IsEndResponse)
                     {
                         context.Response.Redirect(redirectUrl);
