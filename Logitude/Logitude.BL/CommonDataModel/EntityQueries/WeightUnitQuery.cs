@@ -39,6 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         Code = a.Code,
                         Name = a.Name,
+                        PrintAs = a.PrintAs,
                         SearchFields = a.SearchFields,
                     }).FirstOrDefault();
         }
@@ -51,6 +52,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          {
                              Code = a.Code,
                              Name = a.Name,
+                             PrintAs = a.PrintAs,
                              SearchFields = a.SearchFields,
                          }).FirstOrDefault();
             return wUnit;
@@ -63,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         Code = a.Code,
                         Name = a.Name,
+                        PrintAs = a.PrintAs,
                         SearchFields = a.SearchFields,
                     });
         }
@@ -74,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 {
                                                     Name = entity.Name,
                                                     Code = entity.Code,
+                                                    PrintAs = a.PrintAs,
                                                     SearchFields = entity.SearchFields,
                                                 };
             return result;

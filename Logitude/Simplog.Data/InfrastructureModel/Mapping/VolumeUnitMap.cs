@@ -22,6 +22,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
+            this.Property(t => t.PrintAs)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)
                 .IsUnicode(true);
@@ -30,6 +35,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("VolumeUnits");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.PrintAs).HasColumnName("PrintAs");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
         }
     }

@@ -62,8 +62,10 @@ using Simplog.Data.InfrastructureModel;
 				   
 				   var temp = new VolumeUnit(); 
 				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;					
-				   return temp;
+				   temp.Name = MyEntityPM.Name;
+                   temp.PrintAs = MyEntityPM.PrintAs;
+
+                   return temp;
 			}
             catch (Exception ex)
             {
@@ -76,7 +78,7 @@ using Simplog.Data.InfrastructureModel;
         {
 		    try
             {
-				   					var temp = new VolumeUnitPM();
+				    var temp = new VolumeUnitPM();
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
