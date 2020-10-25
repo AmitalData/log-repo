@@ -285,7 +285,7 @@
 
         </tr>
         <tr>
-            <td colspan="5" style="height: 100%;padding-bottom: 80px;">
+            <td colspan="5" style="height: 100%;">
                 <div class="GeneratedGridContainer">
                     <logitude-edit-grid GridWidth="100%"
                                     GridHeight="100%"
@@ -401,7 +401,7 @@
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Edit'"   [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
+                                <IconButton [disabled]="EntityPM.IsCancelled" [Name]="'Edit'"   [IsSmall]="true" [Left]="3" (click)="EditPeriodClicked(item)"></IconButton>
                             </div>
                         </log-cell-template>
                     </ng-template>

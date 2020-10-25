@@ -55,6 +55,20 @@ namespace Logitude.BL.CommonDataModel
                 Name = "Time out", 
                 SearchFields = "T,Time out", 
 			});
+			 
+            all.Add(new CommunicationStatusTypeDetails()
+            {    
+                Code = "C", 
+                Name = "Processing", 
+                SearchFields = "C,Processing,", 
+			});
+			 
+            all.Add(new CommunicationStatusTypeDetails()
+            {    
+                Code = "E", 
+                Name = "Demo", 
+                SearchFields = "E,Demo,", 
+			});
 			
             return all;
        }

@@ -29,6 +29,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public ObjectTableName: string = "CalculatedChartsOfAccount";
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
+
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -111,16 +112,18 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
                                                                                    );
     }
     AddLine() {
-        var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
-        calculatedChartsOfAccountsLinePM.Tenant = this.EntityPM.Tenant;
-        this.EntityPM.AddCalculatedChartsOfAccountsLine(calculatedChartsOfAccountsLinePM);
-        var lastRow = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length - 1];
-        calculatedChartsOfAccountsLinePM.Line = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length > 0 ? (lastRow.Line  + 1) : 1;
-        if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-            calculatedChartsOfAccountsLinePM.CalculatedChartsOfAccountsId = this.EntityPM.Id;
+        if(!this.EntityPM.IsCancelled){
+            var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
+            calculatedChartsOfAccountsLinePM.Tenant = this.EntityPM.Tenant;
+            this.EntityPM.AddCalculatedChartsOfAccountsLine(calculatedChartsOfAccountsLinePM);
+            var lastRow = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length - 1];
+            calculatedChartsOfAccountsLinePM.Line = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length > 0 ? (lastRow.Line  + 1) : 1;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+                calculatedChartsOfAccountsLinePM.CalculatedChartsOfAccountsId = this.EntityPM.Id;
+            }
+            var line = new CalculatedChartsOfAccountsLineItem(calculatedChartsOfAccountsLinePM,true, this.DataContext);
+            this.DataContext.CalculatedChartsOfAccountsLineItemList.Insert(line);
         }
-        var line = new CalculatedChartsOfAccountsLineItem(calculatedChartsOfAccountsLinePM,true, this.DataContext);
-        this.DataContext.CalculatedChartsOfAccountsLineItemList.Insert(line);
     }
 
  
@@ -149,7 +152,6 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             }
         }
  
- 
+
 }
- 
  

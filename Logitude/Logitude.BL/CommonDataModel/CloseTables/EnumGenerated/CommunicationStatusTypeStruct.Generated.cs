@@ -15,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string InProgress = "P";  
        public const string Waiting = "W";  
        public const string Timeout = "T";  
+       public const string Processing = "C";  
+       public const string Demo = "E";  
     }
 }
 

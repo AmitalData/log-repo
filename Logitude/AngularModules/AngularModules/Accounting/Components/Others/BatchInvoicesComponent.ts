@@ -384,7 +384,12 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     }
     IsCloseWithoutInvoice: boolean = false;
     CloseWithoutInvoice() {
-        this.ConfirmClosingWithoutInvoice();
+        if (this.SelectedItemsCount == 0) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+        }
+        else {
+            this.ConfirmClosingWithoutInvoice();
+        }
       
     }
     CreateInvoiceButtonClicked() {

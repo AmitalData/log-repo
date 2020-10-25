@@ -20,6 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     public class InterestReportDataCalculations
     {
         private InterestReportPM interestReportPM;
+        private InterestTransactionPM OpenBalanceTransaction;
         private List<InterestTransactionPM> interestTransactionPMs;
         private string interestReportId;
         private int tenant;
@@ -46,6 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate,
                     tenant, glaccountIds, interestCalculationStartDate);
                 interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
+                OpenBalanceTransaction = interestReportCalculationPreparations.GetOpenBalanceTransactionForInterestReport(interestReportId,tenant);
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
@@ -121,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestTransactionPM firstTransaction = interestTransactionPMs.OrderBy(d => d.InterestValueDate).FirstOrDefault();
             DateTime openBalanceInterestValueDate = GetOpenBalanceInterestValueDate(latestInterestReport);
 
-            if (firstTransaction == null || openBalanceInterestValueDate != firstTransaction.InterestValueDate.Date)
+            if (OpenBalanceTransaction == null && (firstTransaction == null || openBalanceInterestValueDate != firstTransaction.InterestValueDate.Date))
             {
                 if (latestInterestReport != null)
                 {

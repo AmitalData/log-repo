@@ -20,6 +20,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestTransactionGetParameters.Tenant);
             return interestTransactionQueryService.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
         }
+        public virtual  InterestTransactionPM  GetOpenBalanceTransactionForInterestReport(string ReportId,int Tenant)
+        {
+            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(Tenant);
+            return interestTransactionQueryService.GetOpenBalanceInterestTransactionsByInterestReportId(ReportId, Tenant);
+        }
         public virtual InterestReportPM GetInterestReportPM(string interestReportId,int tenant)
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
