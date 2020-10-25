@@ -12,4 +12,4 @@ export class WeightUnitList {
 		PrintAs: string;
 		SearchFields: string;
 	
-}
+}
