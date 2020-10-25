@@ -135,7 +135,6 @@ export class LoginComponent implements OnInit {
         window.Tips = [];
         window.TipsVisibilities = [];
         window.DWObjectFields = [];
-        window.DWObjectFields_Charges = [];
         window.ObjectFieldModifications = [];
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
@@ -865,7 +864,7 @@ export class LoginComponent implements OnInit {
             this.IncreaseProgressBar();
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe((Result: ServiceResponse) => {
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildren().subscribe((Result: ServiceResponse) => {
             //var ObsList = [];
             if (!Result.HasError) {
                 window.DWObjectFields = Result.Result;
@@ -881,13 +880,6 @@ export class LoginComponent implements OnInit {
             this.IncreaseProgressBar();
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe((Result: ServiceResponse) => {
-            if (!Result.HasError) {
-                window.DWObjectFields_Charges = Result.Result;
-                
-            }
-            this.IncreaseProgressBar();
-        });
                 //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((myResult:any) => {
                 //    window.ObjectTableRulePMs = myResult;
                 //    this.IncreaseProgressBar();
@@ -950,7 +942,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 39;
+            this.TotalNumberOfLoads = 38;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
