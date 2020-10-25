@@ -90,7 +90,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
 
     public get AmendmentRejectionReasonName() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReasonName : null; }
-    public set AmendmentRejectionAmendmentRejectionReasonNameReason(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
+    public set AmendmentRejectionReasonName(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
 
 
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
@@ -128,7 +128,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
-                        this.UIProperties.SetEnabled("AmendmentRejectionReason", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("AmendmentRejectionReasonName", this.ObjectTableName, false);
 
                         this.DisplayOnlyCheck();
 
