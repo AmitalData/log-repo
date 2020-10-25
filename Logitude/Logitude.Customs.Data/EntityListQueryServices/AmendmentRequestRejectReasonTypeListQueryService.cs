@@ -40,8 +40,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<AmendRequestRejectReasonType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmendRequestRejectReasonType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+
+        }
 			}
 
 
