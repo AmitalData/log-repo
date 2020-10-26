@@ -177,12 +177,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
                 if (pHaveChange)
                 {
+                    DeclarationPM myDBDeclarationPM=null;
+                    object AncestorEntityUpdateService = null;
+                    this.GetAncestorEntityUpdateService(out AncestorEntityUpdateService);
+                    var AncestorDeclarationUpdateService = AncestorEntityUpdateService as DeclarationUpdateService;
+                    if (AncestorDeclarationUpdateService != null)
+                    {
 
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                    _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                        //myDBDeclarationPM = AncestorDeclarationUpdateService.GetDBEntity(entityPM.DeclarationId, entityPM.Tenant);
+                    }
+                    if (myDBDeclarationPM == null)
+                    {
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                        _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+
+                    }
+                    else
+                    {
+                        _DeclarationPM = myDBDeclarationPM;
+                    }
 
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange);
+                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange , _DeclarationPM);
                     this.openTaskForUnifreight = true;
                 }
             }
@@ -1091,10 +1107,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (declarationPM != null && declarationPM.IsCourierDeclaration)
             {
-                DeclarationQueryService cDeclarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                DeclarationPM fullDeclarationPM = cDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
-                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(fullDeclarationPM);
+                DeclarationPM myDBDeclarationPM = null;
+                object AncestorEntityUpdateService = null;
+                this.GetAncestorEntityUpdateService(out AncestorEntityUpdateService);
+                var AncestorDeclarationUpdateService = AncestorEntityUpdateService as DeclarationUpdateService;
+                if (AncestorDeclarationUpdateService == null)//AncestorDeclarationUpdateService.afterUpdate do CalculateDeclarationCourierStatus
+                {
+                    DeclarationQueryService cDeclarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    DeclarationPM fullDeclarationPM = cDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(fullDeclarationPM);
+                    declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                }
                 /*
                  * getSingle moved to CalculateDeclarationCourierStatus
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Context);
@@ -1108,7 +1132,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
                 */
-                declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                
             }
         }
 
