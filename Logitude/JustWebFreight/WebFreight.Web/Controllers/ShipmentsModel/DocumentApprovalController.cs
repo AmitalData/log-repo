@@ -53,7 +53,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(Data.Tenant);
+                //SecurityUtility.AuthenticationOnTenant(Data.Tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
                 CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
                 DocumentRepository documentrepository = new DocumentRepository(commonContext);
