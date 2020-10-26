@@ -108,4 +108,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IndexesXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -13,7 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingTableBuildWhereCondition
     {
 
-        public static string BuildWhereCondition(BuildWhereConditionArgs buildWhereConditionArg)
+        public static string BuildWhereCondition(BuildWhereConditionArgs buildWhereConditionArg , bool IsClosedTable=false)
         {
             string condition = " where (AutomaticLastUpdateDate > '" + buildWhereConditionArg.LastUpdate + "')";
             //if (LastUpdate!=null)
@@ -47,7 +47,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 else
                 {
-                    if (buildWhereConditionArg.CargoTrackingArguments.Tenant != null)
+                    if (buildWhereConditionArg.CargoTrackingArguments.Tenant != null && !IsClosedTable)
                     {
                         condition = " where Tenant = " + buildWhereConditionArg.CargoTrackingArguments.Tenant;
                     }

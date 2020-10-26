@@ -69,6 +69,7 @@ export class CargoTrackingShipmentList {
 	TransportModeName: string;
 	FromPortCountryCode: string;
 	ToPortCountryCode: string;
+	IsFavorite: boolean;
 	
 }
  

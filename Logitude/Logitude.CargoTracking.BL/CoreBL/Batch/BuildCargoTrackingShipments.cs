@@ -77,6 +77,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 FromDate = CargoTrackingArguments.FromDate,
                 Tenant = CargoTrackingArguments.Tenant,
                 ToDate = CargoTrackingArguments.ToDate,
+                ThreadNumber = 50,
+                FormTableName = null,
             };
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
             {
