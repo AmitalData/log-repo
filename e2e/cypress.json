@@ -15,7 +15,7 @@
 
     "CustomsAPIURL":"http://localhost:9996/api/",
 	"_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
-    "TestURL": "https://test.logitudeworld.com/test/",
+   "TestURL": "https://test.logitudeworld.com/test/",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
