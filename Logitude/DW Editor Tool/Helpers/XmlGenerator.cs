@@ -12,6 +12,8 @@ namespace DW_Editor_Tool.Helpers
 {
     public class XmlGenerator
     {
+
+     public static XmlNode indexesXmlNode = null;
         public static bool GenerateXmlToFile(DWObjectTableViewModel tableViewModel)
         {
             try
@@ -51,10 +53,22 @@ namespace DW_Editor_Tool.Helpers
                 entityElement.AppendChild(fieldsTagElement);
                 BuildFieldTags(tableViewModel, doc, fieldsTagElement);
 
+                entityElement.AppendChild(fieldsTagElement);
+
+                XmlNode newBook = doc.ImportNode(indexesXmlNode, true);
+                entityElement.AppendChild(newBook);
+
+
+
+
+                ////entityElement.AppendChild();
+
+
+
                 if (!string.IsNullOrEmpty(App.CurrentFilePath))
                 {
                     doc.Save(App.CurrentFilePath);
-                   
+
                     return true;
                 }
                 else
@@ -170,6 +184,11 @@ namespace DW_Editor_Tool.Helpers
                                     }
                                 }
                             }
+
+                            if (childNode.Name == "Indexes") indexesXmlNode = childNode;
+
+                            
+
                         }
                 
                         tableViewModel.BuildObsList(fieldsList);

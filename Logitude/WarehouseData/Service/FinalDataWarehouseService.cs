@@ -114,8 +114,8 @@ namespace WarehouseData.Helper
         public string AddNonClusteredIndexs(List<TableClass> tableLists)
         {
             string result = string.Empty;
-            foreach(TableClass table in tableLists.Where(d=>d.HasFactTable)) {
-
+            foreach (TableClass table in tableLists.Where(d => d.HasFactTable))
+            {
                 if (!string.IsNullOrEmpty(table.FieldIndexes))
                 {
                     string[] fieldNames = table.FieldIndexes.Split(',');
@@ -128,8 +128,29 @@ namespace WarehouseData.Helper
                     }
                 }
             }
+            result  += GetAutomaticDWObjectIndex(tableLists);
+
             return result;
         }
 
+        private  string GetAutomaticDWObjectIndex(List<TableClass> tableLists)
+        {
+            string result = string.Empty;
+            foreach (TableClass table in tableLists.Where(d => d.Indexes != null && d.Indexes.Count() > 0))
+            {
+                foreach (IndexItem index in table.Indexes)
+                {
+                    List<string> indexColumns = index.Columns.Split(',').ToList();
+                    string indexName = "INDEX[IX_" + table.DWObjectTableCode;
+                    foreach (string column in indexColumns)
+                    {
+                        indexName += ("_" + column.Replace("[", "").Replace("]", "").Replace(" ", ""));
+                    }
+                    result += (" CREATE NONCLUSTERED " + indexName + "] ON [dbo].[" + table.DWObjectTableCode + "](" + index.Columns + ") \r\n ");
+                }
+            }
+
+            return result;
+        }
     }
 }
