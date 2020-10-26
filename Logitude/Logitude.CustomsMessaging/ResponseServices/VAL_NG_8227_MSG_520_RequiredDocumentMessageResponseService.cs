@@ -187,7 +187,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
             workerRemarks = string.Concat(customResponse.RequiredDocumentDetails.remarks, "\n", workerRemarks);//Eitan H 6/6/18 Bug 39871: 8227 Notification display call# 310246 (make same remarks for all uses)
-
+            var isNew = true;
             if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1) // Craete new CustomsDocumentPointers
             {
                 var myDocumentId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(customResponse.RequiredDocumentDetails.documentID.ToString(), requestParams.Tenant);
@@ -198,6 +198,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    isNew = true;
+
                 }
                 else
                 {
@@ -205,7 +207,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetSingle(customsDocumentPointerPM.CustomsDocumentsTicketId,true,false);
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
-
+                    isNew = false;
                     if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
                     {
                         this.MyResponseData.ApplicationID = requestId;
@@ -242,10 +244,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customsDocumentPointerPM.DocumentRemarks = customsDocumentsTicketPM.Remarks;
                 customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                 //Create Notification
-                myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageInsert;
-                myInsertEventContextTagModel.EventCode = "CRD";
-                myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+                if(isNew)
+                {
+                    myInsertEventContextTagModel.CallProccessID = EventContextTagModel.ProccessEnum.VAL_NG_8227_MSG_520_RequiredDocumentMessageInsert;
+                    myInsertEventContextTagModel.EventCode = "CRD";
+                    myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
 
+
+                }
                 requestParams.LoggingObjectTableId = customsDocumentPointerPM.ParentEntityCode;
                 requestParams.LoggingEntityId = customsDocumentPointerPM.ParentEntityId;
             }

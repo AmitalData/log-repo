@@ -907,7 +907,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 PRIMARYNUM = myCustomFileNo,
                                 FORMID = "LGT_UPDATE_FCI",
                                 DEBUG = "F",
-                                DONEOPERATION = "A",
+                                DONEOPERATION = "D",
                                 //GSTRING1 = myYCULTASKPM.TASKID,
                             };
                             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
