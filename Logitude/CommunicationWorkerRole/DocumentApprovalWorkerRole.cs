@@ -187,10 +187,6 @@ namespace CommunicationWorkerRole
                                     apiLogsService = new APILogsService(webFreightContext, tenant);
                                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                                     ShipmentAdditionalCloudDataRepository Repo = new ShipmentAdditionalCloudDataRepository(tenant);
-                                    ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-                                    HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
-                                    HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository); 
-                                    HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(ForwarderShipment.ForwarderPartnerId);
                                     var Data = Repo.GetSingleShipmentAdditionalCloudData(Id, tenant);
                                     if (Data != null)
                                     {
@@ -206,21 +202,21 @@ namespace CommunicationWorkerRole
                                             string ImporterShipmentsURI = URI + "DocumentApproval";
                                             client.DefaultRequestHeaders.Add("Token", Token);
                                             client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
-                                           
-                                            
+
+
                                             LogPM.Subject = "Send Document Approval To Forwarder By DocumentApproval Controller";
                                             if (IsNewLog)
                                             {
                                                 LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
                                                 LogPM.QueueType = "DocumentApproval";
-                                                LogPM.Refrence = ForwarderShipment.ForwarderShipmentNumber;
+                                                //LogPM.Refrence = ForwarderShipment.ForwarderShipmentNumber;
                                                 apiLogsService.Create(LogPM);
                                             }
                                             var msg = "Start Sending Document Approval To Forwarder " + DateTime.Now;
                                             ShipmentAdditionalCloudDataAM DataAM = new ShipmentAdditionalCloudDataAM()
                                             {
-                                                ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
-                                                Tenant = Partner == null ? 0 : (int)Partner.PartnerTenant,
+                                                ShipmentNumber = ForwarderShipment.ShipmentNumber,
+                                                Tenant = ForwarderShipment.Tenant,
                                                 Code = "VAD",
                                                 //Date = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
                                                 //Time = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
@@ -228,7 +224,7 @@ namespace CommunicationWorkerRole
                                                 Direction = ForwarderShipment.DirectionId
                                             };
                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
-                                            
+
                                             var serializedObject = JsonConvert.SerializeObject(DataAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
                                             var result = client.PostAsync(ImporterShipmentsURI, content);
