@@ -370,27 +370,7 @@
   <Index
     Columns="EntityId" />
   <Index
-  Columns="ShipmentNumber" />
-  <Index
-  Columns="CustomerReference" />
-  <Index
-  Columns="House" />
-  <Index
-  Columns="Master" />
-  <Index
-   Columns="SecurityKey" />
-  <Index
-    Columns="Tenant" />
-  <Index
   Columns="Tenant,SecurityKey" />
-  <Index
-  Columns="Tenant,EntityId" />
-  <Index
- Columns="Tenant,EntityId,SecurityKey" />
-  <Index
-    Columns="Tenant,IsMainRecord,EntityId" />
-  <Index
-    Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>

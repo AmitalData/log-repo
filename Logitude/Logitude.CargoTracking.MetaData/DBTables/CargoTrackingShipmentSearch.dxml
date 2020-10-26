@@ -47,21 +47,7 @@
   <Index
     Columns="Tenant,SearchFields,IsPublic" />
   <Index
-    Columns="Tenant,SearchFields" />
-  <Index
-    Columns="Tenant,ShipmentId" />
-  <Index
-    Columns="Tenant,ShipmentId,SearchFields" />
-  <Index
     Columns="ShipmentId" />
   <Index
-    Columns="SearchFields" />
-  <Index
-    Columns="Tenant" />
-  <Index
     Columns="ShipmentDate" />
-  <Index
-    Columns="IsPublic" />
-  <Index
-    Columns="Id" />
 </Table>

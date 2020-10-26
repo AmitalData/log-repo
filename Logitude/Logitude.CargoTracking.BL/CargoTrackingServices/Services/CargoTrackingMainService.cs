@@ -355,18 +355,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (buildCargoArgs.Table.CT_TableName == "Pre_CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                string cmd2 = CreateIndexAndRelations_Pre_Shipments(buildCargoArgs.Table.CT_TableName);
+                string cmd2 = CreateConstraientWithRelations_Pre_Shipments(buildCargoArgs.Table.CT_TableName);
                 ExecuteSql(cmd2, buildCargoArgs.DestinationConnectionString);
-
+                cmd2 = ReBuildIndexes_Pre_Shipments(buildCargoArgs.Table.CT_TableName);
+                ExecuteSql(cmd2, buildCargoArgs.DestinationConnectionString);
             }
 
-                
-            //if (buildCargoArgs.Table.CT2_TableName == "Pre_CargoTrackingShipmentSearches" && buildCargoArgs.Table.CurrentCondition == 2)
-            //{
-            //    string cmd = CreateIndex_Pre_ShipmentSearchs(buildCargoArgs.Table.CT2_TableName);
-            //    ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
-            //}
-               
+
+            if (buildCargoArgs.Table.CT2_TableName == "Pre_CargoTrackingShipmentSearches" && buildCargoArgs.Table.CurrentCondition == 2)
+            {
+                //string cmd = CreateIndex_Pre_ShipmentSearchs(buildCargoArgs.Table.CT2_TableName);
+                //ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
+                string cmd = ReBuildIndexes_Pre_ShipmentSearchs(buildCargoArgs.Table.CT2_TableName);
+                ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
+            }
+
 
         }
 
@@ -392,7 +395,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
-                Thread.Sleep(50);
+                //Thread.Sleep(50);
                 WorkLimiter.WaitOne();
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true));
             }
@@ -543,7 +546,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
-                 Thread.Sleep(50);
+                 //Thread.Sleep(50);
                  WorkLimiter.WaitOne();
                 ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns));
 
@@ -593,8 +596,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             finally
             {
-               
-                WorkLimiter.Release();
+              if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
+                    WorkLimiter.Release();
+
                 Interlocked.Increment(ref ThreadsCompleatedWork);
                 //ThreadsCompleatedWork += 1;
             }
@@ -632,7 +636,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             else
                bulkDataPreperation.NumberOfCoulmnsUpdated2 += columns.Count;
 
-            bulkDataPreperation.cargoTable = PrepareTableParameters(cargoTrackingDataBaseArgs.buildCargoArgs, bulkDataPreperation.cargoTable, columns, IsCT2);
+            bulkDataPreperation.cargoTable = PrepareTableParameters(cargoTrackingDataBaseArgs, bulkDataPreperation.cargoTable, columns, IsCT2);
  
             bulkDataPreperation.automaticLastUpdateDate = UpdateBulkValues(cargoTrackingDataBaseArgs, dataTable, bulkDataPreperation.cargoTable, bulkDataPreperation.automaticLastUpdateDate, IsCT2);
 
@@ -837,22 +841,30 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return bulkDataPreperation.dataTable;
         }
 
-        private CargoTable PrepareTableParameters(CargoArgs buildCargoArgs, CargoTable table, List<string> columns,bool IsCT2=false)
+        private CargoTable PrepareTableParameters(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, CargoTable table, List<string> columns,bool IsCT2=false)
         {
             table.UpdatedCount = columns != null ? columns.Count() : 0;
 
             if (IsCT2)
             {
-                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = table.CT2_TableName, KeyName = table.ConditionKey2, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
+                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = table.CT2_TableName, KeyName = table.ConditionKey2, IdsList = columns, ConnectionString = cargoTrackingDataBaseArgs.buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
                 //MainDeleteRowsArgs.Add(DeleteRowsArgs);
                 table.RefreshIds2 = columns.ToString();
-                //table.RefreshIds2 = DeleteRowsFromCargoTables(DeleteRowsArgs);
+                if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
+                {
+                    table.RefreshIds2 = DeleteRowsFromCargoTables(DeleteRowsArgs);
+                }
+                //
             }
             else
             {
-                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.ConditionKey, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
+                CargoDeleteRowsArgs DeleteRowsArgs = new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.ConditionKey, IdsList = columns, ConnectionString = cargoTrackingDataBaseArgs.buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true };
                 //MainDeleteRowsArgs.Add(DeleteRowsArgs);
                 table.RefreshIds = columns.ToString();
+                if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
+                {
+                    table.RefreshIds2 = DeleteRowsFromCargoTables(DeleteRowsArgs);
+                }
                 //table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.ConditionKey, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
 
             }
@@ -1216,7 +1228,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case "Pre_CargoTrackingShipments":
                     {
                         SQL = CreateTable_Pre_Shipments(TableName);
-                        //SQL += CreateIndexAndRelations_Pre_Shipments(TableName);
+                        SQL += CreateIndexAndRelations_Pre_Shipments(TableName);
                         break;
                     }
                 case "Pre_CargoTrackingShipmentSearches":
@@ -1248,20 +1260,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_ShipmentId_SearchFields] ON [dbo].[" + TableName + "]([Tenant],[ShipmentId],[SearchFields])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_SearchFields] ON [dbo].[" + TableName + "]([SearchFields])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant] ON [dbo].[" + TableName + "]([Tenant])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "]([ShipmentDate]) End \n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "]([ShipmentDate]) \n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_IsPublic] ON [dbo].[" + TableName + "]([IsPublic])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Id] ON [dbo].[" + TableName + "]([Id]) \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "] DISABLE \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "] DISABLE \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "] DISABLE End \n";
             return cmd;
          }
 
         private string CreateIndexAndRelations_Pre_Shipments(string TableName)
         {
+            string cmd = "";
 
-            string cmd = "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [UQ_" + TableName + "_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
-            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
-            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
-            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId])\n";
+            //  cmd = "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [UQ_" + TableName + "_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
+            //cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
+            //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
+            //cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
+            //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_CurrentMilestoneCode] ON [dbo].[" + TableName + "]([CurrentMilestoneCode])\n";
             cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "]([EntityId])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentNumber] ON [dbo].[" + TableName + "]([ShipmentNumber])\n";
@@ -1274,9 +1290,41 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_EntityId] ON [dbo].[" + TableName + "]([Tenant],[EntityId])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_EntityId_SecurityKey] ON [dbo].[" + TableName + "]([Tenant],[EntityId],[SecurityKey])\n";
             //cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId_CustomsShipmentHeaderId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId],[CustomsShipmentHeaderId]) \n";
+
+          
+            cmd += "ALTER INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "] DISABLE \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SecurityKey] ON [dbo].[" + TableName + "] DISABLE End \n";
             return cmd;
          }
 
+        private string ReBuildIndexes_Pre_Shipments(string TableName)
+        {
+            string cmd = "";
+            cmd += "ALTER INDEX [IX_" + TableName + "_EntityId] ON [dbo].[" + TableName + "] REBUILD \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SecurityKey] ON [dbo].[" + TableName + "] REBUILD  \n";
+
+            return cmd;
+        }
+
+        private string ReBuildIndexes_Pre_ShipmentSearchs(string TableName)
+        {
+            string cmd = "";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "] REBUILD \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "] REBUILD \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "] REBUILD  \n";
+
+            return cmd;
+        }
+        private string CreateConstraientWithRelations_Pre_Shipments(string TableName)
+        {
+            string cmd = "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [UQ_" + TableName + "_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
+            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
+            cmd += "ALTER TABLE [dbo].[" + TableName + "] ADD CONSTRAINT [FK_" + TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_IsMainRecord_EntityId] ON [dbo].[" + TableName + "]([Tenant],[IsMainRecord],[EntityId])\n";
+
+            return cmd;
+        }
 
 
         private string CreateTable_Pre_Ports(string TableName)
@@ -1356,7 +1404,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                           "BEGIN " +
                           "CREATE TABLE [dbo].["+ TableName + "](" +
                           "[Tenant] INT NOT NULL," +
-                          "[SearchFields] NVARCHAR(1000) NULL," +
+                          "[SearchFields] NVARCHAR(100) NULL," +
                           "[ShipmentDate] DATETIME NOT NULL," +
                           "[Id] INT IDENTITY(1,1) NOT NULL," +
                           "[ShipmentId] VARCHAR(15) NULL," +
@@ -1466,7 +1514,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                      "[CustomsClearanceDate] DATETIME NULL," +
                      "[Id] INT IDENTITY(1,1) NOT NULL," +
                      "CONSTRAINT[PK_" + TableName + "] PRIMARY KEY([Id])" +
-                     ")  End \n";
+                     ")   \n";
 
             return cmd;
 

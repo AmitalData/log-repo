@@ -31,7 +31,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipperName");
                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
-                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
+                //AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
 
 
             }
