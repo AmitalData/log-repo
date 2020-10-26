@@ -3391,6 +3391,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.MasterNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerRef);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
