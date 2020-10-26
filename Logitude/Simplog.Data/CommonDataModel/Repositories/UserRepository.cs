@@ -85,7 +85,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             string entityName = "User" + id + tenant;
             if (LogitudeSettings.IsCostomsDeploy)
             {
-                
+                entityName = "IsCostomsDeployUser" + id + tenant;
                 var res = CacheManager.GetOrInsertNewObject<User>(entityName, () =>
                 {
                     return (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
