@@ -570,7 +570,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    }
                 //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged);
+                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged,GetDBEntity(entityPM.Id, entityPM.Tenant));
 
             }
         }
@@ -907,10 +907,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
+
+            bool fromcache = true; // why i need the Name ?? 
+            _AfterCommitUpdate = true;
             if (entityPM.CustomerCode != null)
             {
                 CardRepository rep = new CardRepository(entityPM.Tenant);
-                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, false);
+                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
                 if (customerCard != null)
                 {
                     entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
@@ -920,7 +923,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!string.IsNullOrEmpty(entityPM.DepartmentId))
             {
                 DepartmentRepository departmentRep = new DepartmentRepository(entityPM.Tenant);
-                Department department = departmentRep.GetSingleDepartment(entityPM.DepartmentId, entityPM.Tenant);
+                Department department = departmentRep.GetSingleDepartmentCache(entityPM.DepartmentId, entityPM.Tenant);
                 if (department != null)
                 {
                     entityPM.DepartmentName = department.LocalName != null ? department.LocalName : department.EnglishName;
@@ -931,7 +934,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.DeclarationOfficeCode != null)
             {
                 CustomsHouseTypeQueryService customsHouseTypeQueryService = new CustomsHouseTypeQueryService(entityPM.Tenant);
-                CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPM.DeclarationOfficeCode, false, false);
+                CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPM.DeclarationOfficeCode, false, fromcache);
                 if (declarationOffice != null)
                 {
                     entityPM.DeclarationOfficeName = declarationOffice.LocalName;
@@ -941,7 +944,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.AutonomyRegionTypeCode != null)
             {
                 AutonomyTypeQueryService autonomyTypeQueryService = new AutonomyTypeQueryService(entityPM.Tenant);
-                AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, false);
+                AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, fromcache);
                 if (autonomyType != null)
                 {
                     entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
@@ -951,7 +954,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterEntitlementTypeCode != null)
             {
                 EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(entityPM.Tenant);
-                EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, false);
+                EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, fromcache);
                 if (entitlementType != null)
                 {
                     entityPM.ImporterEntitlementTypeName = entitlementType.LocalName;
@@ -961,7 +964,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterPassCountryCode != null)
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
-                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, false);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, fromcache);
                 if (country != null)
                 {
                     entityPM.ImporterPassCountryName = country.LocalName;
@@ -971,7 +974,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.TransferImporterCountryCode != null)
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
-                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, false);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, fromcache);
                 if (country != null)
                 {
                     entityPM.ImporterPassCountryName = country.LocalName;
@@ -981,7 +984,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ProcedureCurrentCode != null)
             {
                 GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
-                GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, false);
+                GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, fromcache);
                 if (governmentProcedureType != null)
                 {
                     entityPM.ProcedureCurrentName = governmentProcedureType.LocalName;
@@ -991,7 +994,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ImporterId != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
-                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, false);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, fromcache);
                 if (client != null)
                 {
                     entityPM.CalculatedImporterName = client.LocalFirstName;
@@ -1001,7 +1004,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.DeclarationStatusTypeCode != null)
             {
                 DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPM.Tenant);
-                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, false);
+                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, fromcache);
                 if (declarationStatusType != null)
                 {
                     entityPM.DeclarationStatusTypeName = declarationStatusType.LocalName;
@@ -1252,7 +1255,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM.Id, dirtyDeclarationPM.Tenant );
 
             var eventContextTagModel = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
             if (eventContextTagModel != null)
@@ -2723,7 +2726,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return true;
             }
 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
             //Check SupplierInvoice fields
             if (entityPM.SupplierInvoices != null)
             {
