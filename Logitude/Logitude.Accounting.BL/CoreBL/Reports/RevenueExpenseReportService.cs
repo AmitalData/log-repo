@@ -461,7 +461,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     );
 
             }
+            if (FromDate.Month == 1 && FromDate.Day == 1)
+            {
 
+                var myLedgerTransactionRepository = new LedgerTransactionRepository(accountingContext);
+                var qYearTransferLedgerTransaction = myLedgerTransactionRepository
+                    .GetYearTransferLedgerTransaction(null, FromDate.Year, tenant);
+
+                QBaseTranactionBeginOfMonthToDateTillToDateInculde =
+                    QBaseTranactionBeginOfMonthToDateTillToDateInculde
+                    .Where(r => !(qYearTransferLedgerTransaction.Select(yt => yt.Id)).Contains(r.Id));
+
+            }
             var qTempTrans = (from r in QBaseTranactionBeginOfMonthToDateTillToDateInculde
                               select new TrailReportTemp()
                               {
@@ -606,7 +617,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     where trans.Id == "-1 not valid id"
                     select trans
                     );
-
+                
             }
             if (FromDate.Month == 1 && FromDate.Day == 1)
             {
