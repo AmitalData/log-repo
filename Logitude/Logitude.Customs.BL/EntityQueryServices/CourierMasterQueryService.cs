@@ -69,8 +69,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return qCMaster.Any() || qDec.Any() || b;
         }
 
-     
 
+        public CourierMasterPM GetByDeclarationIdCache(string declarationId, int Tenant)
+        {
+            string entityKeyString = $"masterGetByDeclarationId({declarationId},{Tenant})";
+            var res = CacheManager.GetOrInsertNewObject<CourierMasterPM>(entityKeyString, () =>
+            {
+                return this.GetByDeclarationId(declarationId, Tenant);
+            });
+            return res;
+        }
         public CourierMasterPM GetByDeclarationId(string declarationId, int tenant)
         {
             var courierDeclarationQueryService = new CourierDeclarationQueryService(tenant);

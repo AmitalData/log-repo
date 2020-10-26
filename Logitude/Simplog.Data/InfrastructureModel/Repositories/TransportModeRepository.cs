@@ -29,6 +29,16 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public TransportMode GetSingleTransportMode(string id)
         {
+            string entityKeyString = $"GetSingleTransportMode({id})";
+            var res = CacheManager.GetOrInsertNewObject<TransportMode>(entityKeyString, () =>
+            {
+                return this.GetSingleTransportModeCore(id);
+            });
+            return res;
+        }
+        TransportMode GetSingleTransportModeCore(string id)
+        {
+
             return (from a in context.TransportModes where a.Id == id select a).FirstOrDefault();
         }
 

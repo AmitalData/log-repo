@@ -16,7 +16,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class Send2MasofIfNeededService
     {
-        public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange=false)
+        public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM)
         {
             try
             {
@@ -45,8 +45,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     .Where(r => listStorageDefault.Contains(r.StorageSiteCode))
                     .Select(r => r.StorageSiteCode)
                     .FirstOrDefault();
-                var qs = new DeclarationQueryService(drityEntityPM.Tenant);
-                var dbPM = qs.GetSingle(drityEntityPM.Id, true, false);
+                if (dbPM==null)
+                {
+                    var qs = new DeclarationQueryService(drityEntityPM.Tenant);
+                    dbPM = qs.GetSingle(drityEntityPM.Id, true, false);
+
+                }
                 if (drityEntityPM.ChangeSetOp == ChangeSetOperation.Insert)
                 {
                     dataHaveChangeSendIt = true;
