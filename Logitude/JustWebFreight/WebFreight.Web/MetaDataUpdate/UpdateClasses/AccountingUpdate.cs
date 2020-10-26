@@ -655,6 +655,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             LoadTextCodes_AutomaticReconcileMethod(textcodes);
             LoadTextCodes_ReconcileExternalPage(textcodes);
             LoadTextCodes_System1000(textcodes);
+            LoadTextCodes_ConsolidatedTaxReport(textcodes);
+            LoadTextCodes_GLAccountsCSV(textcodes);
+            LoadTextCodes_JournalsCSV(textcodes);
             #region ObjectTable
             ObjectTable ChartOfAccountTable = objectContext.ObjectTables.Where(f => f.Name == "ChartOfAccount" && f.Tenant == 0).FirstOrDefault();
             ObjectTable JournalTable = objectContext.ObjectTables.Where(f => f.Name == "Journal" && f.Tenant == 0).FirstOrDefault();
