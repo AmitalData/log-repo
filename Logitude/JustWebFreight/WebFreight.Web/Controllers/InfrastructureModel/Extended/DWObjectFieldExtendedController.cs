@@ -87,7 +87,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 if (!isParentTenant)
                 {
                     ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
-                    objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, "Shipment");
+                    DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
+                    DWObjectTablePM  dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, authToken.Tenant);
+                    if(dWObjectTablePM != null)
+                    objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, dWObjectTablePM.RecordType);
                 }
        
 
@@ -177,7 +180,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
-        
+        public HttpResponseMessage getDWObjectFieldsWithChildren()
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
+                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldWithChildrenFieldsPMsByTenant(0).ToList();
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public HttpResponseMessage getDWObjectFieldsWithChildrenByDWTableId(string DWOTId)
         {

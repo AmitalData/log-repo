@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebFreight.Web.SharedLogistic
+namespace WebFreight.Web.SharedDocument
 {
     public partial class DocumentsApprovalPage : System.Web.UI.Page
     {

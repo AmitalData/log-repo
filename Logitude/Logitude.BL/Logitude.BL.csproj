@@ -420,6 +420,7 @@
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
+    <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
     <Compile Include="GlobalModel\EntityPMs\BluesnapTransactionPM.cs" />

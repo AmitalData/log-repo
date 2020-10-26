@@ -413,6 +413,11 @@ export class APInvoicePM {
     public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
        
 	 
+    private vendorContactId: string;
+    public get VendorContactId() { return this.vendorContactId; }
+    public set VendorContactId(newValue: string) { if (this.vendorContactId != newValue) { this.vendorContactId = newValue; this.MarkAsDirty("VendorContactId"); } }
+       
+	 
     private externalAccountingEntityId: string;
     public get ExternalAccountingEntityId() { return this.externalAccountingEntityId; }
     public set ExternalAccountingEntityId(newValue: string) { if (this.externalAccountingEntityId != newValue) { this.externalAccountingEntityId = newValue; this.MarkAsDirty("ExternalAccountingEntityId"); } }
@@ -777,6 +782,11 @@ export class APInvoicePM {
     private totalVATOnly: boolean;
     public get TotalVATOnly() { return this.totalVATOnly; }
     public set TotalVATOnly(newValue: boolean) { if (this.totalVATOnly != newValue) { this.totalVATOnly = newValue; this.MarkAsDirty("TotalVATOnly"); } }
+       
+	 
+    private vendorVatNumber: string;
+    public get VendorVatNumber() { return this.vendorVatNumber; }
+    public set VendorVatNumber(newValue: string) { if (this.vendorVatNumber != newValue) { this.vendorVatNumber = newValue; this.MarkAsDirty("VendorVatNumber"); } }
        
 	 
 

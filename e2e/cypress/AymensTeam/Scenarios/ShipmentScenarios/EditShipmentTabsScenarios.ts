@@ -19,7 +19,7 @@ export class EditShipmentTabsScenarios {
         this.OrderTab.RunOrderTabScenarios(shipmentType);
         this.PartnersTab.RunPartnersTabScenarios(levelCode,direction, transportMode);
         this.PackagesTab.RunPackagesTabsScenarios(shipmentType, transportMode);
-        this.RoutingTab.RunRoutingTabScenarios();
+        this.RoutingTab.RunRoutingTabScenarios(levelCode,transportMode);
         //this.PayablesTab.RunPayablesTabScenarios();
         //this.ReceivablesTab.RunReceivablesTabScenarios();
     }

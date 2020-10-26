@@ -27,6 +27,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.ExternalService;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -116,12 +118,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setApproved = entityPM.SetApproved;
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
+
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
+
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             this.invoiceRepository.Add(invoice);
             this.invoiceRepository.SubmitChanges();
 
             this.GetForeignFields();
             this.RunStoredProcedures();
+
+
         }
 
         public void Update(bool mapComposition = false)
@@ -160,6 +169,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
 
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
+            entityAutomationService.RunAutomation();
 
 
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
@@ -192,11 +203,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
+
+
         }
 
         #region Initialize
         private void InitializeComponents()
         {
+            SetVendorDetails();
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
@@ -256,6 +270,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
         }
         #endregion
+
+        private void SetVendorDetails()
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
+            entityPM.VendorContactId = card != null ? card.PrimaryContactId : null;
+            entityPM.VendorVatNumber = card != null ? card.VatNumber : null;
+        }
 
         #region LinkedData
         private List<APInvoiceMultipleShipmentPM> allInvoiceShipments;

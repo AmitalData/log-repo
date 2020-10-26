@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFreight.Web.SharedLogistic
+namespace WebFreight.Web.SharedDocument
 {
 
 

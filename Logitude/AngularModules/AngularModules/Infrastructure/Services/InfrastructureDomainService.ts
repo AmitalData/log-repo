@@ -354,6 +354,27 @@ export class InfrastructureDomainService {
         });
     }
 
+    getDWObjectFieldsWithChildren() {
+        var myUrl = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields/getDWObjectFieldsWithChildren';
+
+        return this._http.get(myUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result: any = response;
+            var entity: any;
+            var DWObjectFieldPMLists: any[];
+            DWObjectFieldPMLists = new Array<any>();
+
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                DWObjectFieldPMLists.push(entity);
+            });
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = DWObjectFieldPMLists;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     getDWObjectFieldsWithChildrenByDWTableId(DWOTId: string) {
         var myUrl = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields/getDWObjectFieldsWithChildrenByDWTableId' + '?DWOTId=' + DWOTId;
 

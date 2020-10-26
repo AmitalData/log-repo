@@ -573,89 +573,6 @@
         </table>
     </div>
     
-    <div id="Container2" class="LogitudeWindow">
-
-        <table>
-            <tr>
-                <td>
-                    <table>
-                        <tr>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                            </td>   
-                            <td style="background: #F2F2F2;width:24%;border-radius:10px;">
-                                <div style="border:1px solid #C8C8C8;border-radius:5px;">
-                                    <div style="border:1px solid #C8C8C8;border-radius:5px;margin:8px;">
-                                    
-                                <table>
-                        <tr>
-
-                            <td style="vertical-align: central;width:100%">
-                                <div>
-                                    <span style="font-family:auto;font-size: 15px; display: inline; color: black;">Please approve to download/view documents. </span>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td style="vertical-align: central;">
-                                <div>
-                                    <span style="font-family:auto;font-size: 13px; display: inline; color: black">(Shipment received confirmation will be sent) </span>
-                                </div>
-                            </td>
-
-                        </tr>
-                                     <tr>
-
-                            <td style="vertical-align: central;">
-                                <div id="ErrorMessage" style="height:10px">
-                                    <span style="font-family:auto;font-size: 13px; display: inline; color: red">*</span>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td style="vertical-align: central;width:40%">
-                                <div style="width:97%">
-                                    <input id="ApprovalName" class="Input" type="text" placeholder="Please enter your name" />
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td style="vertical-align: central; width:40%">
-                                <div style="margin-top: 9px; float: right;margin-right:-2%">
-                        <button class="RedButton" onclick="CloseButtonClicked()" style="float: right; margin-left: 7px; margin-right: 7px;" title="Close">Close</button>
-                    </div>
-                    <div style="margin-left: 3px; margin-top: 9px; float: right">
-                        <button class="GreenButton" onclick="ApproveButtonClicked()" style="float: right; margin-left: 7px;" title="Approve">Approve</button>
-                    </div>
-                            </td>
-
-                        </tr>
-                            </table>
-                                </div>
-                                </div>
-
-                            </td>  
-                            <td style="width:40%">
-                            </td>                           
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-
-</div>
     <div id="InvalidKeyArea" style="position:absolute; top:0px; z-index:3; width:100%;display:none">
         <table style="height:100%;">
 
@@ -1073,63 +990,14 @@
     </script>
     <script type="text/javascript">
         function OnDownloadDocument(url) {
-            if ($.IsDocumentsApprovalRequried) {
-                $.DownloadAll = false;
-                $.DocumentUrl = url;
-                $('#Container2').show();
-            }
-            else {
-                $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                window.open(url);
-            }
-            //const left = document.documentElement.clientWidth / 2.5;
-            //const top = document.documentElement.clientHeight / 2.5;
-            //var winFeature = 'width=330,height=125,top = ' + top + ',left = ' + left + '';
-            //var win = window.open('DocumentsApprovalPage.aspx', 'popup_window', winFeature);
-            //var timer = setInterval(function () {
-            //    if (win.closed) {
-            //        clearInterval(timer);
-            //        //$('#Container').show();
-            //        $('#Container2').hide();
-            //    }
-            //}, 1000);
+            $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open(url);
         }
 
-
-        function CloseButtonClicked() {
-            $('#Container2').hide();
-        }
-
-        function ApproveButtonClicked() {
-            if (!$('#ApprovalName').val()) {
-                $('#ErrorMessage').show();
-            }
-            else {
-                $('#ErrorMessage').hide();
-                $.DocumentsApprovalName = $('#ApprovalName').val();
-                $.PutDocumentsApprovedByUserName();
-                $('#Container2').hide();
-                if ($.DownloadAll) {
-                    $.DownloadAll = false;
-                    $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                    window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
-                }
-                else {
-                    $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                    window.open($.DocumentUrl);
-                }
-            }
-        }
 
         function OnDownloadAllDocument() {
-            if ($.IsDocumentsApprovalRequried) {
-                $.DownloadAll = true;
-                $('#Container2').show();
-            }
-            else {
-                $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
-            }
+            $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function GetURL() {
@@ -1198,81 +1066,6 @@
             font-size: 10px;
             color: #6E7172;
         }
-
-        .GreenButton {
-            border: 1px solid #009161;
-            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
-            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
-            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-        }
-
-        .RedButton {
-            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%) !important;
-            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) )) !important;
-            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-        }
-
-        .Button {
-            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
-            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
-            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        }
-
-        .Button, .RedButton, .GreenButton {
-            /*display: block;*/
-            outline: none;
-            text-align: center;
-            font-size: 11px;
-            color: #45494A;
-            /*width: 100%;*/
-            height: 22px;
-            border: 1px solid #6A8299;
-            border-radius: 3px;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-            text-shadow: 1px 1px white;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .LogitudeWindow {
-            position: absolute;
-            border-radius: 8px;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            overflow: hidden;
-            width: 100%;
-            padding-top: 20%;
-            z-index: 10;
-        }
-
-        .Input {
-            height: 15px;
-            min-height: 15px;
-            max-height: 15px;
-            width: 100%;
-            border: 1px solid #AAAAAA;
-            outline: none;
-            font-size: 11px;
-            color: #45494A;
-            background: white;
-            border-radius: 3px;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            -moz-box-shadow: inset 0 0 3px #AAAAAA;
-            -webkit-box-shadow: inset 0 0 3px #AAAAAA;
-            box-shadow: inset 0 0 3px #AAAAAA;
-        }
-
-            .Input:hover {
-                border: 1px solid #3BB3E2;
-            }
     </style>
 
 </body>

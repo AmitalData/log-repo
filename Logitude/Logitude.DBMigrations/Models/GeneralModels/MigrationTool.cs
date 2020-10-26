@@ -50,14 +50,14 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
+                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
                     StartNormalMigrations();
-                    StartZeroDownTimeMigrations();
 
                     Console.WriteLine("");
 
-                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
+                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
                     StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
                 }
             }
             else
@@ -106,6 +106,7 @@ namespace Logitude.DBMigrations.Models
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
+            ValidateNotExecutedAOTScripts(scriptDefinitions);
 
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
@@ -1369,6 +1370,20 @@ namespace Logitude.DBMigrations.Models
             }
 
             return scriptDefinitions;
+        }
+
+        protected void ValidateNotExecutedAOTScripts(List<ScriptDefinition> scriptDefinitions)
+        {
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && ToolArguments.IsArgumentProvided(Arguments.EXE))
+            {
+                List<ScriptDefinition> aotScripts = scriptDefinitions.Where(s => s.AOT).ToList();
+
+                if (aotScripts.Any() && !ToolArguments.IsArgumentProvided(Arguments.DEV))
+                {
+                    string scriptsSxmlNames = string.Join("\n", aotScripts.Select(s => s.SxmlFileName).ToArray());
+                    ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT And You Need To Run The Tool With -Dev Argument, The Scripts Are:\n" + scriptsSxmlNames);
+                }
+            }
         }
 
         protected GeneratedScript GetGeneralScripts(List<ScriptDefinition> scriptDefinitions, bool preScripts)
