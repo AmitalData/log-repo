@@ -130,7 +130,7 @@ export class RoutingTab {
         Resolvers.ButtonResolver.Selector('#MainCarriageOKBtn').Click();
     }
     private FillMainCarriageDetails() {
-        Resolvers.TextBoxResolver.Selector('#Shipment_MainCarriageCarrierNumber').Type('123');
+        Resolvers.TextBoxResolver.Selector('#Shipment_MainCarriageCarrierNumber_1').Type('123');
         Resolvers.TextBoxResolver.Selector('#Shipment_Master').Type(Random.GetRandom());
         Resolvers.DatePickerResolver.Selector('#date_Shipment_MainCarriageATD').Type('.');
         Resolvers.DatePickerResolver.Selector('#date_Shipment_MainCarriageATA').Type('.');

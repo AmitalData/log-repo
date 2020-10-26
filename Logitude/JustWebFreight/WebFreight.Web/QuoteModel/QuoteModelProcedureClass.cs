@@ -127,8 +127,6 @@ namespace WebFreight.Web.QuoteModel
             QuoteQuery quoteQuery;
             QuoteService quoteService;
             QuotePM quotePM;
-            QuoteStageRepository quoteStageRepository;
-            QuoteStage quoteStage;
 
             quotesContext = QuotesContext.GetContext(0);
             IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
@@ -143,13 +141,13 @@ namespace WebFreight.Web.QuoteModel
                 quoteQuery = new QuoteQuery(item.Tenant);
                 var email = "system@tenant" + item.Tenant + ".com";
                 quoteService = new QuoteService(quotesContext_Loop, item.Tenant, email);
-                quoteStageRepository = new QuoteStageRepository(item.Tenant);
-                quoteStage = quoteStageRepository.GetSingleQuoteStageByCode("QTDC", item.Tenant);
                 quotePM = quoteQuery.GetSinglePM(item.Id, item.Tenant);
                 quotePM.IsClosed = true;
+                var quoteClosingReasonRepository = new QuoteClosingReasonRepository(item.Tenant);
+                var quoteClosing = quoteClosingReasonRepository.GetSingleQuoteClosingReasonByCode("XQ", item.Tenant);
+                quotePM.QuoteClosingReasonId = quoteClosing.Id;
                 quotePM.QuoteClosingReasonCode = "XQ";
-                quotePM.StageId = quoteStage != null ? quoteStage.Id : null;
-                quotePM.StageDueDate = CalculateStageDueDate(quoteStage, todayDate, quotePM.StageDueDate);
+                quotePM.ActionType = "Decline";
                 quoteService.Update(quotePM, true);
             }
         }
