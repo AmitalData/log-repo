@@ -138,7 +138,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
                     FORMID = "LGT_UPDATE_FCI",
                     DEBUG = "F",
-                    DONEOPERATION = "A",
+                    DONEOPERATION = "D",
                     GSTRING1 = "NO_LOCK",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };

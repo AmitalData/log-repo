@@ -348,7 +348,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A"
+                        DONEOPERATION = "D"
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
 

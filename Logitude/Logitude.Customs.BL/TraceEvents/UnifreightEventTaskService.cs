@@ -89,7 +89,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 PRIMARYNUM = ENTITYNUM,
                 FORMID = "LGT_UPDATE_FCI",
                 DEBUG = "F",
-                DONEOPERATION = "A",
+                DONEOPERATION = "D",
 
             };
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
