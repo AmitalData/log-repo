@@ -35,6 +35,13 @@ namespace Simplog.Data.QuoteModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public QuoteClosingReason GetSingleQuoteClosingReasonByCode(string code, int tenant)
+        {
+            return (from a in context.QuoteClosingReasons
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
         public IQueryable<QuoteClosingReason> GetAll()
         {
             return context.QuoteClosingReasons;
