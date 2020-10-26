@@ -63,6 +63,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { forEachChild } from 'typescript';
 @Component({
 
     templateUrl: './DeclarationPaymentComponent.html',
@@ -109,6 +110,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
     IsAutomaticPayment: boolean;
+    isFromPayCourier: boolean;
     constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
@@ -175,7 +177,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
                                     this.DeclarationPM = args.EntityPM;
-
+                                    this.isFromPayCourier = args.isFromPayCourier;
                                     if (this.DeclarationPM.IsCourierDeclaration) {
                                         let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
@@ -263,7 +265,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         // PaymentMethods List
         this.PaymentMethodsList = new ObservableCollection([]);
-        if (!AppTool.IsNullOrEmpty(this.paymentPM)) {
+        if (!AppTool.IsNullOrEmpty(this.paymentPM) && !this.isFromPayCourier) {
             for (let item of this.paymentPM.DeclarationPaymentMethods) {
                 this.PaymentMethodsList.Insert(new PaymentMethodModel(item, this));
             }
@@ -723,7 +725,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
                     this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
                 }
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
+                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
                     var customBankListService: CustomBankListService = new CustomBankListService();
                     customBankListService.getAll().subscribe((response: ServiceResponse) => {
                         let allCustomBankList: CustomBankList[] = response.Result;
@@ -736,13 +738,28 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                                 this.AutoFillPaymentScreenByDefault();
                             }
+                            else if (this.isFromPayCourier && this.paymentPM.DeclarationPaymentMethods.length > 0) {
+                                this.paymentPM.DeclarationPaymentMethods.forEach(x => {
+                                   // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
+                                    this.paymentPM.RemoveDeclarationPaymentMethod(x);
+                                    this.AutoFillPaymentScreenByDefault();
+
+                                })    
+                            }
                         }
                     });
                 }
                 else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                     this.AutoFillPaymentScreenByDefault();
                 }
+                 else if (this.isFromPayCourier && this.paymentPM.DeclarationPaymentMethods.length > 0) {
+                    this.paymentPM.DeclarationPaymentMethods.forEach(x => {
+                        // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
+                        this.paymentPM.RemoveDeclarationPaymentMethod(x);
+                        this.AutoFillPaymentScreenByDefault();
 
+                    })
+                }
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
     }

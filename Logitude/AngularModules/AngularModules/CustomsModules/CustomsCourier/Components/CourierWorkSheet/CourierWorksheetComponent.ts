@@ -1140,6 +1140,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
         filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        this._CourierWorksheetSharedDataService.SelectedTabFilterCode = this._SelectedTabFilter.Code;
 
         switch (this._SelectedTabFilter.Code) {
             //case "ACC":
