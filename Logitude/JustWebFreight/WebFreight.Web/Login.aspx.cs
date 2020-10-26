@@ -46,7 +46,6 @@ namespace WebFreight.Web
             {
                 enableHttps = false;
             }
-
             //logbox
             if (LogitudeSettings.DeploymentStage != "Dev" && LogitudeSettings.WorkEnvironment != "customs")
             {
