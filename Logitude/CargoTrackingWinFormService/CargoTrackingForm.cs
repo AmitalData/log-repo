@@ -353,7 +353,17 @@ namespace CargoTrackingWinFormService.Forms
             foreach (CargoTable table in CargoTableLists)
             {
 
-                SetLabelValueAndUpdateTable(table, IsFromBuild);
+                try
+                {
+                    SetLabelValueAndUpdateTable(table, IsFromBuild);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
+                    Application.Exit();
+                    break;
+                }
+                
 
             }
 
