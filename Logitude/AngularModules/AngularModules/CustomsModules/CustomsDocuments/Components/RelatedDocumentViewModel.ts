@@ -26,8 +26,25 @@ export class RelatedDocumentViewModel {
             this.documentsFilingPM.Name = value;
         }
     }
-    public DocumentTypeName: string;
 
+    get DocumentTypeCode() { return this.documentsFilingPM.DocumentTypeCode; }
+    set DocumentTypeCode(value: string) {
+
+        if (this.documentsFilingPM.DocumentTypeCode != value) {
+            this.documentsFilingPM.DocumentTypeCode = value;
+        }
+    }
+
+    get DocumentCategoryCode() { return this.documentsFilingPM.DocumentCategoryCode; }
+    set DocumentCategoryCode(value: string) {
+
+        if (this.documentsFilingPM.DocumentCategoryCode != value) {
+            this.documentsFilingPM.DocumentCategoryCode = value;
+        }
+    }
+
+    public DocumentTypeName: string;
+ 
     //get DocumentTypeName() { return this.documentsFilingPM.CustomsDocumentTypeName; }
     //set DocumentTypeName(value: string) {
 
