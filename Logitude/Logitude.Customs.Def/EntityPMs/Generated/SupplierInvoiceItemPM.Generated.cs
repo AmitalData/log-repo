@@ -2089,6 +2089,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string classificationCodeSource ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationCodeSource  
+	   {
+	    
+	     get
+		{
+		   return classificationCodeSource;
+		 }
+		 set
+		 {
+		   if(classificationCodeSource != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationCodeSource",OldValue=classificationCodeSource,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationCodeSource=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
