@@ -189,9 +189,10 @@ export class DocumentObjectFieldsComponent implements OnInit {
             });
 
             if (this.InSertDataFieldType == "TextArea") {
-                this.SystemObsList = this.SystemObsList.filter(d => d.FieldName.toLowerCase() != "logo" && d.FieldName.toLowerCase() != "signature");
-            }
 
+                this.SystemObsList = this.SystemObsList.filter(d => d.FieldName.toLowerCase() != "logo" && d.FieldName.toLowerCase() != "signature" && d.FieldName.toLowerCase() != "smalllogo" && d.FieldName.toLowerCase() != "widelogo");
+            }
+        
             var smailLogo = this.SystemObsList.filter(d => d.FieldName == "SmallLogo")[0];
             if (smailLogo) {
                 var wideLogo = this.SystemObsList.filter(d => d.FieldName == "WideLogo")[0];
