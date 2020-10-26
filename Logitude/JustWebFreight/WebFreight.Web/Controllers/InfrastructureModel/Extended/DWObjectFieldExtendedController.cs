@@ -86,11 +86,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 List<ObjectFieldPM> objectFieldPMs = new List<ObjectFieldPM>();
                 if (!isParentTenant)
                 {
-                    ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
-                    DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
-                    DWObjectTablePM  dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, authToken.Tenant);
-                    if(dWObjectTablePM != null)
-                    objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, dWObjectTablePM.RecordType);
+                    objectFieldPMs = GetCustomObjectFields(DWOTId, authToken.Tenant);
                 }
        
 
@@ -146,6 +142,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        private List<ObjectFieldPM> GetCustomObjectFields(string DWOTId, int tenant)
+        {
+            List<ObjectFieldPM> objectFieldPMs = new List<ObjectFieldPM>();
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(tenant);
+            DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, tenant);
+            if (dWObjectTablePM != null)
+                objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, dWObjectTablePM.RecordType);
+            if (dWObjectTablePM != null && dWObjectTablePM.RecordType == "Master")
+                objectFieldPMs.AddRange(objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment"));
+
+            return objectFieldPMs;
+        }
         private void ResolveDWCustomObjectFields(List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup, int tenant)
         {
             if(objectFieldPMs!=null && objectFieldPMs.Count > 0) {
