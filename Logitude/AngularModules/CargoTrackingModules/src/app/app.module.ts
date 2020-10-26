@@ -14,10 +14,15 @@ import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashb
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
 import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
+import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
+import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/PanelComponent";
+import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
+import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
+  
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
-  }
-  
+}
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,7 +34,13 @@ export function getBaseUrl() {
         // Dashboard
         DashboardComponent,
         DashboardShipmentsComponent,
-        FavoritesComponent,
+        FavoritesComponent, 
+        ShipmentDetailsComponent,
+
+        // Infra
+        PanelComponent,
+        CheckBoxComponent,
+        DetailsMenuComponent,
         
     ],
     imports: [

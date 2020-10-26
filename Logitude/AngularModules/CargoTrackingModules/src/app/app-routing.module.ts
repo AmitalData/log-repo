@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
 import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
 import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
+import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { SearchComponent } from 'src/CargoTracking/Components/Search/search.component';
 import { ShipmentComponent } from 'src/CargoTracking/Components/Shipment/shipment.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
         children: [
             { path: "", redirectTo: "shipments", pathMatch: "full" }, 
             { path: "shipments", component: DashboardShipmentsComponent }, 
+            { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
             { path: "favorites", component: FavoritesComponent }, 
            
         ]
