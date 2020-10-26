@@ -153,7 +153,7 @@
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ARinvoiceId"
     ReferencedTable="ARInvoices"
