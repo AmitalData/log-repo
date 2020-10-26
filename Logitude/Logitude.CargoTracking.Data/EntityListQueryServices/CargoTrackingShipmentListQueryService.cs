@@ -60,6 +60,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CurrentMilestoneCode = a.CurrentMilestoneCode,
                                                                CurrentMilestoneName = m.EnglishName,
                                                                CurrentMilestoneDate = a.CurrentMilestoneDate,
+                                                               
                                                                SearchReferences = s.SearchFields ,
                                                                CustomerId = a.CustomerId,
                                                                TransportModeName = t.Name,
@@ -236,14 +237,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
 
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
-            
+
             foreach (var Id in ShipmentIds)
             {
-
                 string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
                 shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
                 shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
-               
+                shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.CurrentMilestoneCode = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.IsCurrent.Value).FirstOrDefault().Code; d.CurrentMilestoneDate = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.IsCurrent.Value).FirstOrDefault().Date; });
+                
             }
             return shipmetsLists;
         }
@@ -262,6 +263,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone() {Id = 11, Code = "Delivered", Name = "Delivered", Date = Shipment.DeliveredDate, EstimationDate = Shipment.DeliveredEstimationDate, Done = Shipment.DeliveredDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DeliveredDone == true ? false : true });
             milestones = milestones.OrderByDescending(s=>s.IsEstimation==true? s.EstimationDate : s.Date).ThenByDescending(s => s.Id).ToList();
             string CurrentMilestoneCode = milestones.Where(s=>s.IsEstimation==false).OrderByDescending(s => s.Date).ThenByDescending(s=>s.Id).Select(s => s.Code).FirstOrDefault();
+            if(CurrentMilestoneCode == null)
+            {
+                CurrentMilestoneCode = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Code).FirstOrDefault();
+            }
             for (int i=0; i < milestones.Count; i++)
             {
                 if (milestones[i].Code == CurrentMilestoneCode)
@@ -297,6 +302,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public bool? Done { get; set; }
         public bool? IsEstimation { get; set; }
         public bool? IsCurrent { get; set; }
+      
     }
     public class CargoTrackingShipmentWithMilestones
     {
