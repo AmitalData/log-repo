@@ -850,7 +850,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            
+
+            bool hasRoles = true;
+
+            if (this.isNewEntity)
+            {
+                if (entityPm.Roles.Count == 0)
+                {
+                    hasRoles = false;
+                }
+            }
+
+            else
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    hasRoles = false;
+                }
+            }
+
+            if (!hasRoles)
+            {
+                string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
+                throw new ApplicationException(message);
+            }
+
             return myResult;
         }
 
