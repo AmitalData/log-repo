@@ -469,7 +469,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             showGroup = true;
             if (field.DimensionTableDisplayName) {
                 this.AllGroupsDataSource.forEach((Group) => {
-                    var temp = Group.FieldsList.filter(a => a.DataTypeCode == "Dimension" && (a.Name.toLowerCase() == field.DimensionTableDisplayName.toLowerCase() || a.DisplayName.toLowerCase() == field.DimensionTableDisplayName.toLowerCase()))[0];
+                    var temp = Group.FieldsList.filter(a => a.DataTypeCode == "Dimension" && !a.HideTree && (a.Name.toLowerCase() == field.DimensionTableDisplayName.toLowerCase() || a.DisplayName.toLowerCase() == field.DimensionTableDisplayName.toLowerCase()))[0];
 
                     if (temp) {
                         if (showGroup) {
@@ -477,6 +477,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             showGroup = false;
                         }
                         this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList.push(temp);
+                        this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList.filter(
+                            (thing, i, arr) => arr.findIndex(t => t.DisplayName === thing.DisplayName) === i
+                        );
                         temp.IsViewTree = true;
                         temp.LoadWithSearchValue(temp, newValue);
                     }
