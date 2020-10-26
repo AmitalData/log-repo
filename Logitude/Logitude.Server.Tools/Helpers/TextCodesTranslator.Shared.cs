@@ -24,5 +24,6 @@ namespace Logitude.Server.Tools.Helpers
     public interface ITextCodeTranslator
     {
         string Translate(string textCodeCode, int tenant);
+        string Translate(string textCodeCode, int tenant, bool showLocal);
     }
 }
