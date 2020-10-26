@@ -13,7 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         public static void SetTableLogic(DataRow TableRow, int ConditionNumber)
         {
             CompareNullabelFirstPickupETADateTime(TableRow);
-            TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
+            //TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
             TableRow.SetField("PickupEstimationDate", TableRow["FirstPickupETD"]);
             TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
             TableRow.SetField("CreateDate", TableRow["CreateDateTime"]);
