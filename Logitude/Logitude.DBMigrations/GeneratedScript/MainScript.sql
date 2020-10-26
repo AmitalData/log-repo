@@ -1,22 +1,24 @@
--- Set Nullable For Column IsFromInterestBatchInvoice
-ALTER TABLE [dbo].[ARInvoices] ALTER COLUMN [IsFromInterestBatchInvoice] BIT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('5e5d779f-0d47-494d-9c0d-f38f21b5c5eb', 'ARInvoice.dxml', 'ARInvoices', 'IsFromInterestBatchInvoice', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column IsFromInterestBatchInvoiceALTER TABLE [dbo].[ARInvoices] ALTER COLUMN [IsFromInterestBatchInvoice] BIT NULL;');
-
--- Drop Column IsFromInterestBatchInvoice
-EXEC SP_RENAME 'dbo.ARInvoices.IsFromInterestBatchInvoice', 'Drop_IsFromInterestBatchInvoice', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7b91dfe2-8573-4d57-aa3b-55404a4f1dba', 'ARInvoice.dxml', 'ARInvoices', 'IsFromInterestBatchInvoice', 'Drop Column', GETDATE(), '-- Drop Column IsFromInterestBatchInvoiceEXEC SP_RENAME ''dbo.ARInvoices.IsFromInterestBatchInvoice'', ''Drop_IsFromInterestBatchInvoice'', ''COLUMN'';');
-
-
 -- General Script From 202009152200_FixHorseEventTypes.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
 DECLARE @EndTime datetime
 SELECT @StartTime = GETDATE()
+declare @WrongObjectTableId as varchar(15)
+set @WrongObjectTableId = (select Id from ObjectTables where Name = 'QuoteClosingReason')
+delete from EventTypes where Code in ('HRIN', 'HRRC') and Tenant = 0 and ObjectTableId = @WrongObjectTableId
+declare @ObjectTableId as varchar(15)
+set @ObjectTableId = (select Id from ObjectTables where Name = 'Horse')
+update EventTypes set ObjectTableId = @ObjectTableId where Code = 'HRIN'
+update EventTypes set ObjectTableId = @ObjectTableId where Code = 'HRRC'
 SELECT @EndTime = GETDATE()
-UPDATE [dbo].[DBScriptsHistory] SET [ExecutionDate] = GETDATE(), [ScriptBody] = 'NULL', [ElapsedTimeInMs] = DATEDIFF(MS,@StartTime,@EndTime), [HashValue] = 'ff1b86d341b0edfd8440c2fb8b42da15', [Version] = 434242 WHERE [SxmlFileName] = '202009152200_FixHorseEventTypes.sxml';
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202009152200_FixHorseEventTypes.sxml', GETDATE(), 'declare @WrongObjectTableId as varchar(15)
+set @WrongObjectTableId = (select Id from ObjectTables where Name = ''QuoteClosingReason'')
+delete from EventTypes where Code in (''HRIN'', ''HRRC'') and Tenant = 0 and ObjectTableId = @WrongObjectTableId
+declare @ObjectTableId as varchar(15)
+set @ObjectTableId = (select Id from ObjectTables where Name = ''Horse'')
+update EventTypes set ObjectTableId = @ObjectTableId where Code = ''HRIN''
+update EventTypes set ObjectTableId = @ObjectTableId where Code = ''HRRC''', DATEDIFF(MS,@StartTime,@EndTime), '89ba7a8cbe3640c00cea8ae514286393', 2);
 COMMIT TRAN
 END TRY
 BEGIN CATCH

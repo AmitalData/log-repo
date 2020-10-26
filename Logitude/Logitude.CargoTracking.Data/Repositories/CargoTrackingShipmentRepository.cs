@@ -52,8 +52,8 @@ namespace Logitude.CargoTracking.Data.Repositories
         {
             CargoTrackingShipment shipment = (from _shipment in currentContext.CargoTrackingShipments
                                                            where
-                                                              _shipment.SecurityKey == SecurityKey
-                                                              && _shipment.Tenant == tenant
+                                                                 _shipment.Tenant == tenant
+                                                              && _shipment.SecurityKey == SecurityKey
                                                            select _shipment).FirstOrDefault();
 
             return shipment;
