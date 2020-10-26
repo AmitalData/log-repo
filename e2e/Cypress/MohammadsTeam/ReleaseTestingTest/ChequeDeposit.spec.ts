@@ -60,18 +60,24 @@ let R: CreateRandom= new CreateRandom();
 
       // create the cheque deposit  
     cy.get('li[id=FABNKS]').click();
-    cy.get('li[id=NEWDEPOSIT]').click();
+    cy.get('button[id=NEWDEPOSIT]').click();
     cy.get('input[id=date_BankDeposit_AccountingDate]').type("1/9/2020");
     cy.get('input[id=BankDeposit_CashBookId]').type("cheque");
-    cy.get('ul[id=LogLovDropDown-BankDeposit_CashBookId]').contains("cheque").then(a => {
+    cy.get('ul[id=mydatalist_BankDeposit_CashBookId]').contains("cheque").then(a => {
         a[0].click();
     })
     cy.get('input[id=BankDeposit_DepositBankAccountId]').type("Bank");
     cy.get('ul[id=mydatalist_BankDeposit_DepositBankAccountId]').contains("Bank").then(a => {
         a[0].click();
     })
-    cy.get('input[id=CheckBox_0_1_LBL]').click();
-    cy.get('input[id=BankDepositBApprove]').click();
+    cy.get('button[id=CREATEDEPOSIT]').click();
+    
+    
+    cy.get('label[id=CheckBox_0_0_LBL]').click();
+   
+    // cy.get('input[id=CheckBox_0_1_LBL]').click();
+    cy.get('button[id=BankDepositBApprove]').click();
+    cy.wait(3000);
     cy.contains('Today');
     
 

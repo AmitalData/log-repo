@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Logitude.Server.Tools;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -99,8 +101,20 @@ namespace WarehouseData.Helper
                 }
             }
         }
+        public DataTable GetDataTableFromSql(string connectionString, string sqlString)
+        {
+            var result = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                SqlCommand commandSourceData = new SqlCommand(sqlString, sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                result.Load(reader);
+                reader.Close();
 
-
+            }
+            return result;
+        }
 
         public List<TableClass> FillDataWarehouseTable()
         {
@@ -277,6 +291,11 @@ namespace WarehouseData.Helper
 
         }
 
+        public List<IndexItem> GetDWObjectFieldIndexes(string xml)
+        {
+            List<IndexItem> result = LogitudeXmlSerializer.DeserializeObject<List<IndexItem>>(xml);
+            return result;
+        }
 
 
     }

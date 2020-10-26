@@ -12,6 +12,7 @@ import { DocumentTypeListExtendedService } from '../../../../Common/Services/Ext
 
 import { DocumentDefultAttachment } from '../../../../Common/DataContracts/DocumentDefultAttachment';
 import { DocumentTypeTemplatePM } from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 
 
@@ -36,9 +37,14 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
     IsLoadDocumentInDocument: boolean = false;
     IsLoadDocumentOutDocument: boolean = false;
     IsReady: boolean = false;
+    public DocOutItemsSource: ObservableCollection;
+    public DocInItemsSource: ObservableCollection;
+
     constructor() {
         this.DocOutAttachmentLists = [];
         this.DocInAttachmentLists = [];
+        this.DocOutItemsSource = new ObservableCollection([]);
+        this.DocInItemsSource = new ObservableCollection([]);
     }
 
     ngOnInit(
@@ -90,6 +96,10 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
 
             if (this.DocOutAttachmentLists.length == 0) this.IsNotDocumentOutFound = true;
 
+            this.DocOutItemsSource.Clear();
+
+            this.DocOutItemsSource.AppendCollection(this.DocOutAttachmentLists);
+
             this.IsLoadDocumentOutDocument = true;
             this.LoadComplete();
 
@@ -121,6 +131,9 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
             }
             if (this.DocInAttachmentLists.length == 0) this.IsNotDocumentInFound = true;
 
+            this.DocInItemsSource.Clear();
+
+            this.DocInItemsSource.AppendCollection(this.DocInAttachmentLists);
 
             this.IsLoadDocumentInDocument = true;
             this.LoadComplete();

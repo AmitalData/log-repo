@@ -370,9 +370,7 @@
   <Index
     Columns="EntityId" />
   <Index
-    Columns="Tenant,IsMainRecord,EntityId" />
-  <Index
-    Columns="Tenant,IsMainRecord,EntityId,CustomsShipmentHeaderId" />
+  Columns="Tenant,SecurityKey" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>
