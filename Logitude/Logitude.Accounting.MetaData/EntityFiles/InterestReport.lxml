@@ -2854,6 +2854,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsNewReport&quot;"
     ListPropertyPath="&quot;IsNewReport&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2910,164 +2911,873 @@
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="0" ObjectFieldName="&quot;ReportNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="1" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="2" ObjectFieldName="&quot;CreatedByLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="3" ObjectFieldName="&quot;GLAccountDisplayNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="4" ObjectFieldName="&quot;GLAccountLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="5" ObjectFieldName="&quot;InterestReportStatusName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="6" ObjectFieldName="&quot;TotalAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="7" ObjectFieldName="&quot;ARInvoiceNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="8" ObjectFieldName="&quot;InvoiceAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;Interest Report&quot;" IndexOrder="9" ObjectFieldName="&quot;InterestCalculationDate&quot;" ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ReportNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CreatedByLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;GLAccountDisplayNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GLAccountLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;InterestReportStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TotalAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ARInvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;InvoiceAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Query Code="&quot;DraftReports&quot;" TextCode="&quot;Draft Reports&quot;" LocalTextCode="&quot;דוחות טיוטה&quot;" QueryGroupCode="&quot;25a2&quot;" IndexOrder="1" ObjectTableName="&quot;InterestReport&quot;" QuerySection="&quot;InterestReport&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+  <Query
+    Code="&quot;DraftReports&quot;"
+    TextCode="&quot;Draft Reports&quot;"
+    LocalTextCode="&quot;דוחות טיוטה&quot;"
+    QueryGroupCode="&quot;25a2&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;InterestReport&quot;"
+    QuerySection="&quot;InterestReport&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
     <QueryColumns>
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="0" ObjectFieldName="&quot;ReportNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="1" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="2" ObjectFieldName="&quot;CreatedByLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="3" ObjectFieldName="&quot;GLAccountDisplayNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="4" ObjectFieldName="&quot;GLAccountLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="5" ObjectFieldName="&quot;InterestReportStatusName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="6" ObjectFieldName="&quot;TotalAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="7" ObjectFieldName="&quot;ARInvoiceNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="8" ObjectFieldName="&quot;InvoiceAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;DraftReports&quot;" IndexOrder="9" ObjectFieldName="&quot;InterestCalculationDate&quot;" ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ReportNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CreatedByLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;GLAccountDisplayNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GLAccountLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;InterestReportStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TotalAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ARInvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;InvoiceAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;DraftReports&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
-      <QueryFilter QueryCode="&quot;DraftReports&quot;" PredefinedValue="&quot;1&quot;" ObjectFieldName="&quot;InterestReportStatusCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DraftReports&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;InterestReportStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;InvoicedReports&quot;" TextCode="&quot;Invoiced Reports&quot;" LocalTextCode="&quot;דוחות עם חשבונית&quot;" QueryGroupCode="&quot;25a2&quot;" IndexOrder="2" ObjectTableName="&quot;InterestReport&quot;" QuerySection="&quot;InterestReport&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+  <Query
+    Code="&quot;InvoicedReports&quot;"
+    TextCode="&quot;Invoiced Reports&quot;"
+    LocalTextCode="&quot;דוחות עם חשבונית&quot;"
+    QueryGroupCode="&quot;25a2&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;InterestReport&quot;"
+    QuerySection="&quot;InterestReport&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
     <QueryColumns>
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="0" ObjectFieldName="&quot;ReportNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="1" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="2" ObjectFieldName="&quot;CreatedByLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="3" ObjectFieldName="&quot;GLAccountDisplayNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="4" ObjectFieldName="&quot;GLAccountLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="5" ObjectFieldName="&quot;InterestReportStatusName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="6" ObjectFieldName="&quot;TotalAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="7" ObjectFieldName="&quot;ARInvoiceNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="8" ObjectFieldName="&quot;InvoiceAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;InvoicedReports&quot;" IndexOrder="9" ObjectFieldName="&quot;InterestCalculationDate&quot;" ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ReportNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CreatedByLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;GLAccountDisplayNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GLAccountLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;InterestReportStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TotalAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ARInvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;InvoiceAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InvoicedReports&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
-      <QueryFilter QueryCode="&quot;InvoicedReports&quot;" PredefinedValue="&quot;2&quot;" ObjectFieldName="&quot;InterestReportStatusCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;InvoicedReports&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;InterestReportStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;ClosedWithoutInvoice&quot;" TextCode="&quot;Closed Without Invoice&quot;" LocalTextCode="&quot;דוחות שנסגרו ללא חשבונית&quot;" QueryGroupCode="&quot;25a2&quot;" IndexOrder="3" ObjectTableName="&quot;InterestReport&quot;" QuerySection="&quot;InterestReport&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+  <Query
+    Code="&quot;ClosedWithoutInvoice&quot;"
+    TextCode="&quot;Closed Without Invoice&quot;"
+    LocalTextCode="&quot;דוחות שנסגרו ללא חשבונית&quot;"
+    QueryGroupCode="&quot;25a2&quot;"
+    IndexOrder="3"
+    ObjectTableName="&quot;InterestReport&quot;"
+    QuerySection="&quot;InterestReport&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
     <QueryColumns>
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="0" ObjectFieldName="&quot;ReportNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="1" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="2" ObjectFieldName="&quot;CreatedByLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="3" ObjectFieldName="&quot;GLAccountDisplayNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="4" ObjectFieldName="&quot;GLAccountLocalName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="5" ObjectFieldName="&quot;InterestReportStatusName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="6" ObjectFieldName="&quot;TotalAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="7" ObjectFieldName="&quot;ARInvoiceNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="8" ObjectFieldName="&quot;InvoiceAmount&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ClosedWithoutInvoice&quot;" IndexOrder="9" ObjectFieldName="&quot;InterestCalculationDate&quot;" ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ReportNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CreatedByLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;GLAccountDisplayNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GLAccountLocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;InterestReportStatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TotalAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ARInvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;InvoiceAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
+        ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
-      <QueryFilter QueryCode="&quot;ClosedWithoutInvoice&quot;" PredefinedValue="&quot;4&quot;" ObjectFieldName="&quot;InterestReportStatusCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ClosedWithoutInvoice&quot;"
+        PredefinedValue="&quot;4&quot;"
+        ObjectFieldName="&quot;InterestReportStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;InterestReportHeaderScreen&quot;" ObjectTableName="&quot;InterestReport&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;InterestReport.HeaderScreen&quot;" NumberOfColumns="3" NumberOfRows="2">
+  <Screen
+    Name="&quot;InterestReportHeaderScreen&quot;"
+    ObjectTableName="&quot;InterestReport&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;InterestReport.HeaderScreen&quot;"
+    NumberOfColumns="3"
+    NumberOfRows="2">
     <ScreenFields>
-      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;ReportNumber&quot;" ScreenName="InterestReportHeaderScreen" />
-      <ScreenField Column="0" Row="1" ObjectFieldName="&quot;InterestCalculationDate&quot;" ScreenName="InterestReportHeaderScreen" />
-      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;InterestReportStatusLocalName&quot;" ScreenName="InterestReportHeaderScreen" />
-      <ScreenField Column="1" Row="1" ObjectFieldName="&quot;ARInvoiceNumber&quot;" ScreenName="InterestReportHeaderScreen" />
-      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CreatedByLocalName&quot;" ScreenName="InterestReportHeaderScreen" />
-      <ScreenField Column="2" Row="1" ObjectFieldName="&quot;UpdatedByLocalName&quot;" ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;ReportNumber&quot;"
+        ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
+        ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;InterestReportStatusLocalName&quot;"
+        ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ARInvoiceNumber&quot;"
+        ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;CreatedByLocalName&quot;"
+        ScreenName="InterestReportHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;UpdatedByLocalName&quot;"
+        ScreenName="InterestReportHeaderScreen" />
     </ScreenFields>
   </Screen>
-  <Tab TabName="&quot;General&quot;" TabLocalName="&quot;כללי&quot;" ObjectTableName="&quot;InterestReport&quot;" Code="&quot;IRGN&quot;" ControlPath="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;" TextCode="&quot;InterestReport.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
-  <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;אירועים&quot;" ObjectTableName="&quot;InterestReport&quot;" Code="&quot;IREV&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;InterestReport.TH.Events&quot;" IsPackagable="false" IndexOrder="1" IsSpellChecked="false" HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;InterestReport&quot;"
+    Code="&quot;IRGN&quot;"
+    ControlPath="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;"
+    TextCode="&quot;InterestReport.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;InterestReport&quot;"
+    Code="&quot;IREV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;InterestReport.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRCN&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Cancelled&quot;" LocalName="&quot;Cancelled&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRIN&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Invoiced&quot;" LocalName="&quot;Invoiced&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRCW&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Closed without Invoice&quot;" LocalName="&quot;Closed without Invoice&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRIF&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Invoicing Failed&quot;" LocalName="&quot;Invoicing Failed&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRFD&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Failed&quot;" LocalName="&quot;Failed&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRCD&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;IRUP&quot;" ObjectTableName="&quot;InterestReport&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCN&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Cancelled&quot;"
+      LocalName="&quot;Cancelled&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRIN&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Invoiced&quot;"
+      LocalName="&quot;Invoiced&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCW&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Closed without Invoice&quot;"
+      LocalName="&quot;Closed without Invoice&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRIF&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Invoicing Failed&quot;"
+      LocalName="&quot;Invoicing Failed&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRFD&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Failed&quot;"
+      LocalName="&quot;Failed&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCD&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRUP&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <MenuButtons MenuButtonGroupType="&quot;InterestReportEdit&quot;" MenuButtonGroupName="&quot;InterestReportEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;CreateInvoice&quot;" DefaultText="&quot;Create Invoice&quot;" MenuButtonType="&quot;button&quot;" Style="&quot;ApproveButtonStyle&quot;" IndexOrder="0" LocalDefaultText="&quot;הפק חשבונית&quot;" IsPackagable="false" />
-    <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;נוספים&quot;" IsPackagable="false">
-      <MenuItem EventCode="&quot;InterestPrint&quot;" DefaultText="&quot;Print&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הדפסה&quot;" IsPackagable="false" />
-      <MenuItem EventCode="&quot;IRCN&quot;" DefaultText="&quot;Cancel&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;ביטול דוח&quot;" IsPackagable="false" />
-      <MenuItem EventCode="&quot;CloseWithoutInvoice&quot;" DefaultText="&quot;Close Without Invoice&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="2" LocalDefaultText="&quot;סגירה ללא חשבונית&quot;" IsPackagable="false" />
-      <MenuItem EventCode="&quot;RecalculateReport&quot;" DefaultText="&quot;Recalculate Report&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="3" LocalDefaultText="&quot;חישוב מחדש של הדוח&quot;" IsPackagable="true" />
+  <MenuButtons
+    MenuButtonGroupType="&quot;InterestReportEdit&quot;"
+    MenuButtonGroupName="&quot;InterestReportEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;CreateInvoice&quot;"
+      DefaultText="&quot;Create Invoice&quot;"
+      MenuButtonType="&quot;button&quot;"
+      Style="&quot;ApproveButtonStyle&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;הפק חשבונית&quot;"
+      IsPackagable="false" />
+    <MenuButton
+      EventCode="&quot;More&quot;"
+      DefaultText="&quot;More&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;נוספים&quot;"
+      IsPackagable="false">
+      <MenuItem
+        EventCode="&quot;InterestPrint&quot;"
+        DefaultText="&quot;Print&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;הדפסה&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;IRCN&quot;"
+        DefaultText="&quot;Cancel&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול דוח&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;CloseWithoutInvoice&quot;"
+        DefaultText="&quot;Close Without Invoice&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;סגירה ללא חשבונית&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;RecalculateReport&quot;"
+        DefaultText="&quot;Recalculate Report&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="3"
+        LocalDefaultText="&quot;חישוב מחדש של הדוח&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;InterestReport.O.Customerisnotdefined&quot;" DefaultText="&quot;Customer is not defined to interest&quot;" LocalDefaultText="&quot;לקוח לא מוגדר לריבית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Customerisnotconnected&quot;" DefaultText="&quot;Customer is not connected to GLAccount&quot;" LocalDefaultText="&quot;הלקוח לא מחובר לכרטיס הנה''ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CustomeralreadyhasaDraftinterest&quot;" DefaultText="&quot;Customer already has a Draft interest report  number&quot;" LocalDefaultText="&quot;ללקוח כבר קיים דוח ריבית בסטטוס טיוטה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ShowDetails&quot;" DefaultText="&quot;Show Details&quot;" LocalDefaultText="&quot;פירוט&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Customeralreadyhasarecent&quot;" DefaultText="&quot;Customer already has a recent interest report date number&quot;" LocalDefaultText="&quot;ללקוח כבר קיים דוח ריבית מתאריך מאוחר יותר- מספר דוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount&quot;" DefaultText="&quot;Report total amount is lower than GLAccount Minimum amount definition  , Close the report without Invoice ?&quot;" LocalDefaultText="&quot;סכום הדוח קטן מהגדרת סכום מינימום לחיוב ריבית בכרטיס , לסגור את הדוח ללא חשבונית ?&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Cancel&quot;" DefaultText="&quot;Cancel&quot;" LocalDefaultText="&quot;ביטול&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Approve&quot;" DefaultText="&quot;Approve&quot;" LocalDefaultText="&quot;אישור&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.InterestForDate &quot;" DefaultText="&quot;Interest For Date &quot;" LocalDefaultText="&quot;חישוב ריבית לתאריך&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ClosingBalance&quot;" DefaultText="&quot;Closing Balance&quot;" LocalDefaultText="&quot;יתרת סגירה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CantCancel&quot;" DefaultText="&quot;Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first&quot;" LocalDefaultText="&quot;לא ניתן לבטל את הדוח מכיוון שקיים דוח מאוחר יותר ללקוח זה , אנא בטל אותו קודם&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ConfirmCancelling&quot;" DefaultText="&quot;Please confirm canceling the report&quot;" LocalDefaultText="&quot;הדוח הנ”ל יבוטל , האם להמשיך&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CancelingInvoicedReportMessage&quot;" DefaultText="&quot;ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?&quot;" LocalDefaultText="&quot;לדוח זה כבר הופקה חשבונית , ביטול הדוח יבטל את החשבונית , האם להמשיך ?&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.TheReportisinProgress&quot;" DefaultText="&quot;The Report is in Progress, Can't Cancel until it Finishes&quot;" LocalDefaultText="&quot;הדוח בתהליך , לא ניתן לבטל כרגע&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Customeralreadyhasaninprogress&quot;" DefaultText="&quot;Customer already has an in progress interest report number&quot;" LocalDefaultText="&quot;ללקוח כבר קיים דוח בתהליך , נא להמתין לסיום ולנסות שנית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestInvoice.O.BatchInterest&quot;" DefaultText="&quot;Batch Interest&quot;" LocalDefaultText="&quot;הפקה מרוכזת&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.BatchInvoice&quot;" DefaultText="&quot;Batch Invoice&quot;" LocalDefaultText="&quot;הפקת חשבונית ריבית מרוכזת&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CreateInvoice&quot;" DefaultText="&quot;Create Invoice&quot;" LocalDefaultText="&quot;צור חשבונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.SelectAtLeastOnLine&quot;" DefaultText="&quot;Please select at least one line&quot;" LocalDefaultText="&quot;אנא בחר שורה אחת לפחות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ShowInvoicingInProgressReports&quot;" DefaultText="&quot;Show Invoicing In Progress Reports&quot;" LocalDefaultText="&quot;הצג דוחות בתהליך הפקת חשבונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ReportIsBeingInvoiced&quot;" DefaultText="&quot;The Report is being Invoiced, Can't Cancel until it Finishes&quot;" LocalDefaultText="&quot; הדוח בתהליך הפקת חשבונית , ניתן יהיה לבטל בסיום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ReportinProgress&quot;" DefaultText="&quot;Report In Progress&quot;" LocalDefaultText="&quot;הדוח נמצא בתהליך בניה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ReportCreationFailed&quot;" DefaultText="&quot;Report Creation Failed&quot;" LocalDefaultText="&quot;בנית הדוח נכשלה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.EditOpenBalance&quot;" DefaultText="&quot;Edit Open Balance&quot;" LocalDefaultText="&quot;עדכן יתרת פתיחה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.SelectedReportsWillNotHaveAnInvoice&quot;" DefaultText="&quot;selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices&quot;" LocalDefaultText="&quot;הדוחות שנבחרו לא תיווצר עבורם חשבונית מכיוון שהם לא עומדים בהגדרת החיוב המינמלית שבכרטיס . &quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.OutOf&quot;" DefaultText="&quot;out of&quot;" LocalDefaultText="&quot;מתוך&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.AnotherBatchInvoiceStillInProgress&quot;" DefaultText="&quot;Please wait until all invoices that are being created have completed before creating more batch invoices&quot;" LocalDefaultText="&quot;קיימות חשבוניות בתהליך הפקה , לא ניתן להפיק נוספות עד שיסתיימו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.BatchReport&quot;" DefaultText="&quot;Batch Report&quot;" LocalDefaultText="&quot;הפקת דוחות ריבית מרוכזת &quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.AnotherBatchReportStillInProgress&quot;" DefaultText="&quot;Please wait until all reports that are being created have completed before creating more batch reports.&quot;" LocalDefaultText="&quot;קיימים דוחות בתהליך הפקה , לא ניתן להפיק נוספים עד שיסתיימו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.NoGlAccountPeriod&quot;" DefaultText="&quot;There is no GL Account Interest period in the dates provided&quot;" LocalDefaultText="&quot;לא קיימת הגדרת ריבית בכרטיס בתאריכים אלו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.NoStandardBasePeriod&quot;" DefaultText="&quot;there is no Interest Base period in the dates provided for the Standard Rate Base&quot;" LocalDefaultText="&quot;לא קיימת הגדרת ריבית רגילה  בכרטיס בתאריכים אלו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.NoExceptionalBasePeriod&quot;" DefaultText="&quot;there is no Interest Base period in the dates provided for the Exceptional Rate Base&quot;" LocalDefaultText="&quot;לא קיימת הגדרת ריבית חריגה בכרטיס בתאריכים אלו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.NoCreditBasePeriod&quot;" DefaultText="&quot;there is no Interest Base period in the dates provided for the Credit Rate Base&quot;" LocalDefaultText="&quot;לא קיימת הגדרת ריבית זכות בכרטיס בתאריכים אלו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.BatchPrint&quot;" DefaultText="&quot;Batch Print&quot;" LocalDefaultText="&quot;הדפסה ברצף&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ShowReportsWithPrintedInvoices&quot;" DefaultText="&quot;Show Reports with Printed Invoices&quot;" LocalDefaultText="&quot;הצג דוחות בתהליך הפקת חשבונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Invoicesnovalidcopiestoprint&quot;" DefaultText="&quot; were not printed because there are no valid copies to print.&quot;" LocalDefaultText="&quot;לא הודפסו מכיוון שלא נמצאו עותקים להדפסה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Reportsnovalidcopiestoprint&quot;" DefaultText="&quot; were not printed because there are no valid copies to print.&quot;" LocalDefaultText="&quot;לא הודפסו מכיוון שלא נמצאו עותקים להדפסה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Invoices&quot;" DefaultText="&quot;Invoices &quot;" LocalDefaultText="&quot;חשבוניות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Reports&quot;" DefaultText="&quot;Reports &quot;" LocalDefaultText="&quot;דוחות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.EditCalculationDate&quot;" DefaultText="&quot;Edit Calculation Date&quot;" LocalDefaultText="&quot;עדכן תאריך חישוב&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.DownloadorView&quot;" DefaultText="&quot;Would you like to Download or View all selected interest invoices as one document?&quot;" LocalDefaultText="&quot;&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.Download&quot;" DefaultText="&quot;Download&quot;" LocalDefaultText="&quot;הורדה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.View&quot;" DefaultText="&quot;View&quot;" LocalDefaultText="&quot;לצפות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CreatingInvoicepermitted&quot;" DefaultText="&quot;Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;" LocalDefaultText="&quot;ניתן להפיק חשבונית רק לדוח שבסטטוס טיוטה או נכשל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.EntertheInvoiceDate&quot;" DefaultText="&quot;Enter the Invoice Date to be used for the invoices for all selected reports&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.AlreadyExists&quot;" DefaultText="&quot;] already exists&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ConfirmClosingWithoutInvoice&quot;" DefaultText="&quot;Confirm closing the report without invoice?&quot;" LocalDefaultText="&quot;נא לאשר סגירת דוחות ללא הפקת חשבוניות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.AttachReportWithEachInvoice&quot;" DefaultText="&quot;Attach Report with Each Invoice&quot;" LocalDefaultText="&quot;צרף פירוט ריבית להדפסה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.on&quot;" DefaultText="&quot;on&quot;" LocalDefaultText="&quot;עד&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.LineWasCreatedByTheSystem&quot;" DefaultText="&quot;This line was created by the system in order to calculate the interest on the Open Balance&quot;" LocalDefaultText="&quot;ריבית מחושבת על יתרת חובה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CannotCreateReportWithCalculationDateLess&quot;" DefaultText="&quot;Can't create report. [Report &quot;" LocalDefaultText="&quot;לא ניתן להכין את הדוח , ישנו דוח בתאריכים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.UpdatingInvoicepermitted&quot;" DefaultText="&quot;Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;" LocalDefaultText="&quot;ניתן לעדכן דוח רק כאשר הסטאטוס של הדוח &quot;הוא &quot;טיוטה&quot; או &quot;נכשל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.ConfirmRecalculateReport&quot;" DefaultText="&quot;Confirm recalculating the report&quot;" LocalDefaultText="&quot;יש לאשר חישוב מחדש של הדוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.EnterCreditInvoiceDate&quot;" DefaultText="&quot;Enter Credit Invoice Date&quot;" LocalDefaultText="&quot;הקלד תאריך לחשבונית זיכוי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.RequiedCreditInvoiceDate&quot;" DefaultText="&quot;The credit invoice date is required&quot;" LocalDefaultText="&quot;חובה להקליד תאריך לחשבונית זיכוי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CreditInvoiceDate&quot;" DefaultText="&quot;Credit Invoice Date&quot;" LocalDefaultText="&quot; תאריך לחשבונית זיכוי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.InterestReports&quot;" DefaultText="&quot;Interest Report&quot;" LocalDefaultText="&quot;דוח ריבית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CloseAllSelectedWithoutInvoice&quot;" DefaultText="&quot;Confirm closing all selected reports without invoices.&quot;" LocalDefaultText="&quot;אישור סגירת כל הדוחות המסומנים ללא חשבוניות &quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InterestReport.O.CloseWithoutInvoice&quot;" DefaultText="&quot;Close Without Invoice&quot;" LocalDefaultText="&quot;סגירה ללא חשבונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Customerisnotdefined&quot;"
+      DefaultText="&quot;Customer is not defined to interest&quot;"
+      LocalDefaultText="&quot;לקוח לא מוגדר לריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Customerisnotconnected&quot;"
+      DefaultText="&quot;Customer is not connected to GLAccount&quot;"
+      LocalDefaultText="&quot;הלקוח לא מחובר לכרטיס הנה''ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CustomeralreadyhasaDraftinterest&quot;"
+      DefaultText="&quot;Customer already has a Draft interest report  number&quot;"
+      LocalDefaultText="&quot;ללקוח כבר קיים דוח ריבית בסטטוס טיוטה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ShowDetails&quot;"
+      DefaultText="&quot;Show Details&quot;"
+      LocalDefaultText="&quot;פירוט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Customeralreadyhasarecent&quot;"
+      DefaultText="&quot;Customer already has a recent interest report date number&quot;"
+      LocalDefaultText="&quot;ללקוח כבר קיים דוח ריבית מתאריך מאוחר יותר- מספר דוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount&quot;"
+      DefaultText="&quot;Report total amount is lower than GLAccount Minimum amount definition  , Close the report without Invoice ?&quot;"
+      LocalDefaultText="&quot;סכום הדוח קטן מהגדרת סכום מינימום לחיוב ריבית בכרטיס , לסגור את הדוח ללא חשבונית ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Cancel&quot;"
+      DefaultText="&quot;Cancel&quot;"
+      LocalDefaultText="&quot;ביטול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Approve&quot;"
+      DefaultText="&quot;Approve&quot;"
+      LocalDefaultText="&quot;אישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.InterestForDate &quot;"
+      DefaultText="&quot;Interest For Date &quot;"
+      LocalDefaultText="&quot;חישוב ריבית לתאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ClosingBalance&quot;"
+      DefaultText="&quot;Closing Balance&quot;"
+      LocalDefaultText="&quot;יתרת סגירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CantCancel&quot;"
+      DefaultText="&quot;Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את הדוח מכיוון שקיים דוח מאוחר יותר ללקוח זה , אנא בטל אותו קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ConfirmCancelling&quot;"
+      DefaultText="&quot;Please confirm canceling the report&quot;"
+      LocalDefaultText="&quot;הדוח הנ”ל יבוטל , האם להמשיך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CancelingInvoicedReportMessage&quot;"
+      DefaultText="&quot;ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?&quot;"
+      LocalDefaultText="&quot;לדוח זה כבר הופקה חשבונית , ביטול הדוח יבטל את החשבונית , האם להמשיך ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.TheReportisinProgress&quot;"
+      DefaultText="&quot;The Report is in Progress, Can't Cancel until it Finishes&quot;"
+      LocalDefaultText="&quot;הדוח בתהליך , לא ניתן לבטל כרגע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Customeralreadyhasaninprogress&quot;"
+      DefaultText="&quot;Customer already has an in progress interest report number&quot;"
+      LocalDefaultText="&quot;ללקוח כבר קיים דוח בתהליך , נא להמתין לסיום ולנסות שנית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestInvoice.O.BatchInterest&quot;"
+      DefaultText="&quot;Batch Interest&quot;"
+      LocalDefaultText="&quot;הפקה מרוכזת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.BatchInvoice&quot;"
+      DefaultText="&quot;Batch Invoice&quot;"
+      LocalDefaultText="&quot;הפקת חשבונית ריבית מרוכזת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CreateInvoice&quot;"
+      DefaultText="&quot;Create Invoice&quot;"
+      LocalDefaultText="&quot;צור חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.SelectAtLeastOnLine&quot;"
+      DefaultText="&quot;Please select at least one line&quot;"
+      LocalDefaultText="&quot;אנא בחר שורה אחת לפחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ShowInvoicingInProgressReports&quot;"
+      DefaultText="&quot;Show Invoicing In Progress Reports&quot;"
+      LocalDefaultText="&quot;הצג דוחות בתהליך הפקת חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ReportIsBeingInvoiced&quot;"
+      DefaultText="&quot;The Report is being Invoiced, Can't Cancel until it Finishes&quot;"
+      LocalDefaultText="&quot; הדוח בתהליך הפקת חשבונית , ניתן יהיה לבטל בסיום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ReportinProgress&quot;"
+      DefaultText="&quot;Report In Progress&quot;"
+      LocalDefaultText="&quot;הדוח נמצא בתהליך בניה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ReportCreationFailed&quot;"
+      DefaultText="&quot;Report Creation Failed&quot;"
+      LocalDefaultText="&quot;בנית הדוח נכשלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.EditOpenBalance&quot;"
+      DefaultText="&quot;Edit Open Balance&quot;"
+      LocalDefaultText="&quot;עדכן יתרת פתיחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.SelectedReportsWillNotHaveAnInvoice&quot;"
+      DefaultText="&quot;selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices&quot;"
+      LocalDefaultText="&quot;הדוחות שנבחרו לא תיווצר עבורם חשבונית מכיוון שהם לא עומדים בהגדרת החיוב המינמלית שבכרטיס . &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.OutOf&quot;"
+      DefaultText="&quot;out of&quot;"
+      LocalDefaultText="&quot;מתוך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.AnotherBatchInvoiceStillInProgress&quot;"
+      DefaultText="&quot;Please wait until all invoices that are being created have completed before creating more batch invoices&quot;"
+      LocalDefaultText="&quot;קיימות חשבוניות בתהליך הפקה , לא ניתן להפיק נוספות עד שיסתיימו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.BatchReport&quot;"
+      DefaultText="&quot;Batch Report&quot;"
+      LocalDefaultText="&quot;הפקת דוחות ריבית מרוכזת &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.AnotherBatchReportStillInProgress&quot;"
+      DefaultText="&quot;Please wait until all reports that are being created have completed before creating more batch reports.&quot;"
+      LocalDefaultText="&quot;קיימים דוחות בתהליך הפקה , לא ניתן להפיק נוספים עד שיסתיימו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.NoGlAccountPeriod&quot;"
+      DefaultText="&quot;There is no GL Account Interest period in the dates provided&quot;"
+      LocalDefaultText="&quot;לא קיימת הגדרת ריבית בכרטיס בתאריכים אלו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.NoStandardBasePeriod&quot;"
+      DefaultText="&quot;there is no Interest Base period in the dates provided for the Standard Rate Base&quot;"
+      LocalDefaultText="&quot;לא קיימת הגדרת ריבית רגילה  בכרטיס בתאריכים אלו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.NoExceptionalBasePeriod&quot;"
+      DefaultText="&quot;there is no Interest Base period in the dates provided for the Exceptional Rate Base&quot;"
+      LocalDefaultText="&quot;לא קיימת הגדרת ריבית חריגה בכרטיס בתאריכים אלו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.NoCreditBasePeriod&quot;"
+      DefaultText="&quot;there is no Interest Base period in the dates provided for the Credit Rate Base&quot;"
+      LocalDefaultText="&quot;לא קיימת הגדרת ריבית זכות בכרטיס בתאריכים אלו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.BatchPrint&quot;"
+      DefaultText="&quot;Batch Print&quot;"
+      LocalDefaultText="&quot;הדפסה ברצף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ShowReportsWithPrintedInvoices&quot;"
+      DefaultText="&quot;Show Reports with Printed Invoices&quot;"
+      LocalDefaultText="&quot;הצג דוחות בתהליך הפקת חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Invoicesnovalidcopiestoprint&quot;"
+      DefaultText="&quot; were not printed because there are no valid copies to print.&quot;"
+      LocalDefaultText="&quot;לא הודפסו מכיוון שלא נמצאו עותקים להדפסה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Reportsnovalidcopiestoprint&quot;"
+      DefaultText="&quot; were not printed because there are no valid copies to print.&quot;"
+      LocalDefaultText="&quot;לא הודפסו מכיוון שלא נמצאו עותקים להדפסה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Invoices&quot;"
+      DefaultText="&quot;Invoices &quot;"
+      LocalDefaultText="&quot;חשבוניות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Reports&quot;"
+      DefaultText="&quot;Reports &quot;"
+      LocalDefaultText="&quot;דוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.EditCalculationDate&quot;"
+      DefaultText="&quot;Edit Calculation Date&quot;"
+      LocalDefaultText="&quot;עדכן תאריך חישוב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.DownloadorView&quot;"
+      DefaultText="&quot;Would you like to Download or View all selected interest invoices as one document?&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.Download&quot;"
+      DefaultText="&quot;Download&quot;"
+      LocalDefaultText="&quot;הורדה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.View&quot;"
+      DefaultText="&quot;View&quot;"
+      LocalDefaultText="&quot;לצפות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CreatingInvoicepermitted&quot;"
+      DefaultText="&quot;Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;"
+      LocalDefaultText="&quot;ניתן להפיק חשבונית רק לדוח שבסטטוס טיוטה או נכשל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.EntertheInvoiceDate&quot;"
+      DefaultText="&quot;Enter the Invoice Date to be used for the invoices for all selected reports&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.AlreadyExists&quot;"
+      DefaultText="&quot;] already exists&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ConfirmClosingWithoutInvoice&quot;"
+      DefaultText="&quot;Confirm closing the report without invoice?&quot;"
+      LocalDefaultText="&quot;נא לאשר סגירת דוחות ללא הפקת חשבוניות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.AttachReportWithEachInvoice&quot;"
+      DefaultText="&quot;Attach Report with Each Invoice&quot;"
+      LocalDefaultText="&quot;צרף פירוט ריבית להדפסה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.on&quot;"
+      DefaultText="&quot;on&quot;"
+      LocalDefaultText="&quot;עד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.LineWasCreatedByTheSystem&quot;"
+      DefaultText="&quot;This line was created by the system in order to calculate the interest on the Open Balance&quot;"
+      LocalDefaultText="&quot;ריבית מחושבת על יתרת חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CannotCreateReportWithCalculationDateLess&quot;"
+      DefaultText="&quot;Can't create report. [Report &quot;"
+      LocalDefaultText="&quot;לא ניתן להכין את הדוח , ישנו דוח בתאריכים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.UpdatingInvoicepermitted&quot;"
+      DefaultText="&quot;Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'&quot;"
+      LocalDefaultText="&quot;ניתן לעדכן דוח רק כאשר הסטאטוס של הדוח &quot;הוא &quot;טיוטה&quot; או &quot;נכשל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ConfirmRecalculateReport&quot;"
+      DefaultText="&quot;Confirm recalculating the report&quot;"
+      LocalDefaultText="&quot;יש לאשר חישוב מחדש של הדוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.EnterCreditInvoiceDate&quot;"
+      DefaultText="&quot;Enter Credit Invoice Date&quot;"
+      LocalDefaultText="&quot;הקלד תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.RequiedCreditInvoiceDate&quot;"
+      DefaultText="&quot;The credit invoice date is required&quot;"
+      LocalDefaultText="&quot;חובה להקליד תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CreditInvoiceDate&quot;"
+      DefaultText="&quot;Credit Invoice Date&quot;"
+      LocalDefaultText="&quot; תאריך לחשבונית זיכוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.InterestReports&quot;"
+      DefaultText="&quot;Interest Report&quot;"
+      LocalDefaultText="&quot;דוח ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CloseAllSelectedWithoutInvoice&quot;"
+      DefaultText="&quot;Confirm closing all selected reports without invoices.&quot;"
+      LocalDefaultText="&quot;אישור סגירת כל הדוחות המסומנים ללא חשבוניות &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CloseWithoutInvoice&quot;"
+      DefaultText="&quot;Close Without Invoice&quot;"
+      LocalDefaultText="&quot;סגירה ללא חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

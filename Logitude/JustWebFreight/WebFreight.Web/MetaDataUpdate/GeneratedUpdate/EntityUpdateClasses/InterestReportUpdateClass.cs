@@ -80,7 +80,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class InterestReportUpdateClass
    {  		
 
-		public const string HashString = "9ab360b81d6b6816f7615f73585cf331";
+
+		public const string HashString = "6d75a17439075258802349a113cf85f6";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -91,7 +92,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestReport",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestReports",
-			      				    OldDBTableName =  "InterestReports",
 			      				    ObjectTableSingular =  "InterestReport",
 			      				    ObjectTablePlural =  "InterestReports",
 			      				    HasCustomFilter =  false,
@@ -149,7 +149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -210,7 +209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -271,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
-					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -334,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -397,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDateTime",
-					  						OldFieldName =  "UpdateDateTime",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -458,7 +453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -517,7 +511,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountId",
-					  						OldFieldName =  "GLAccountId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -578,7 +571,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReportNumber",
-					  						OldFieldName =  "ReportNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -641,7 +633,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestCalculationDate",
-					  						OldFieldName =  "InterestCalculationDate",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -704,7 +695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalAmount",
-					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -769,7 +759,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenBalance",
-					  						OldFieldName =  "OpenBalance",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -829,7 +818,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CloseBalance",
-					  						OldFieldName =  "CloseBalance",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -889,7 +877,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ARinvoiceId",
-					  						OldFieldName =  "ARinvoiceId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -947,7 +934,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceAmount",
-					  						OldFieldName =  "InvoiceAmount",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1012,7 +998,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountInterestCreditLimit",
-					  						OldFieldName =  "GLAccountInterestCreditLimit",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1072,7 +1057,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusCode",
-					  						OldFieldName =  "InterestReportStatusCode",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "InterestReportStatuse",
@@ -1136,7 +1120,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByLocalName",
-					  						OldFieldName =  "CreatedByLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1199,7 +1182,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountDisplayNumber",
-					  						OldFieldName =  "GLAccountDisplayNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1262,7 +1244,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountLocalName",
-					  						OldFieldName =  "GLAccountLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1325,7 +1306,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ARInvoiceNumber",
-					  						OldFieldName =  "ARInvoiceNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1388,7 +1368,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByLocalName",
-					  						OldFieldName =  "UpdatedByLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1450,7 +1429,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusName",
-					  						OldFieldName =  "InterestReportStatusName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1513,7 +1491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1573,7 +1550,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusLocalName",
-					  						OldFieldName =  "InterestReportStatusLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1635,7 +1611,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -1694,7 +1669,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportLinesByDates",
-					  						OldFieldName =  "InterestReportLinesByDates",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1752,7 +1726,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1809,7 +1782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountMinimumInterest",
-					  						OldFieldName =  "GLAccountMinimumInterest",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1867,7 +1839,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerLocalName",
-					  						OldFieldName =  "CustomerLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1924,7 +1895,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnableInvoiceing",
-					  						OldFieldName =  "EnableInvoiceing",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1981,7 +1951,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsFirstReport",
-					  						OldFieldName =  "IsFirstReport",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2038,7 +2007,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceFailureReason",
-					  						OldFieldName =  "InvoiceFailureReason",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2098,7 +2066,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCreatedFromBatch",
-					  						OldFieldName =  "IsCreatedFromBatch",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2155,7 +2122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BatchReportUserEmail",
-					  						OldFieldName =  "BatchReportUserEmail",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2212,7 +2178,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RecalculateData",
-					  						OldFieldName =  "RecalculateData",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2269,7 +2234,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsUpdatedFromBatch",
-					  						OldFieldName =  "IsUpdatedFromBatch",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2326,7 +2290,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CanRecalculate",
-					  						OldFieldName =  "CanRecalculate",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2383,7 +2346,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceDate",
-					  						OldFieldName =  "InvoiceDate",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2459,6 +2421,174 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsNewReport",
 					  						ListPropertyPath =  "IsNewReport",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsNewReport",
+					  						DefaultText =  "IsNewReport",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CanRecalculate",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CanRecalculate",
+					  						ListPropertyPath =  "CanRecalculate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CanRecalculate",
+					  						DefaultText =  "Can Recalculate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InvoiceDate",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InvoiceDate",
+					  						ListPropertyPath =  "InvoiceDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InvoiceDate",
+					  						DefaultText =  "InvoiceDate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsNewReport",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsNewReport",
+					  						ListPropertyPath =  "IsNewReport",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2996,6 +3126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
+
 			   MenuButton InterestReportMenuButton13 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "RecalculateReport",
@@ -3011,11 +3142,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB13.Id,
 						Style = null,
 						LocalDefaultText = "חישוב מחדש של הדוח",
-                        HtmlComponentPath=null,
-                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB13.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
+
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -3115,6 +3245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOEntertheInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EntertheInvoiceDate", DefaultText = "Enter the Invoice Date to be used for the invoices for all selected reports",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+
  		   TextCode InterestReportTextCode_InterestReportOAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AlreadyExists", DefaultText = "] already exists",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"נא לאשר סגירת דוחות ללא הפקת חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -3124,6 +3255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.on", DefaultText = "on",LocalDefaultText = @"עד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOLineWasCreatedByTheSystem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.LineWasCreatedByTheSystem", DefaultText = "This line was created by the system in order to calculate the interest on the Open Balance",LocalDefaultText = @"ריבית מחושבת על יתרת חובה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
  		   TextCode InterestReportTextCode_InterestReportOCannotCreateReportWithCalculationDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CannotCreateReportWithCalculationDateLess", DefaultText = "Can't create report. [Report ",LocalDefaultText = @"לא ניתן להכין את הדוח , ישנו דוח בתאריכים", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -3142,6 +3274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOCloseAllSelectedWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseAllSelectedWithoutInvoice", DefaultText = "Confirm closing all selected reports without invoices.",LocalDefaultText = @"אישור סגירת כל הדוחות המסומנים ללא חשבוניות ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCloseWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseWithoutInvoice", DefaultText = "Close Without Invoice",LocalDefaultText = @"סגירה ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

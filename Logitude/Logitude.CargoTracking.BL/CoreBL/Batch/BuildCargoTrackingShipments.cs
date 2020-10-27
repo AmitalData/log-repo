@@ -2,6 +2,7 @@
  
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -40,8 +41,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             {
                 TenantRepository tenantRepository = new TenantRepository(0);
                 UpdateIsIncrementalRunning(tenantRepository,true);
-                cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
-                AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
+                AddAllTablesToThread(CargoTrackingTableList.FillCargoTableList());
                 UpdateIsIncrementalRunning(tenantRepository,false);
             }
 
@@ -77,6 +78,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 FromDate = CargoTrackingArguments.FromDate,
                 Tenant = CargoTrackingArguments.Tenant,
                 ToDate = CargoTrackingArguments.ToDate,
+                ThreadNumber = 50,
+                FormTableName = null,
             };
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
             {

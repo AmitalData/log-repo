@@ -200,6 +200,11 @@ export class DWObjectFieldPM {
     public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
        
 	 
+    private factTableCode: string;
+    public get FactTableCode() { return this.factTableCode; }
+    public set FactTableCode(newValue: string) { if (this.factTableCode != newValue) { this.factTableCode = newValue; this.MarkAsDirty("FactTableCode"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

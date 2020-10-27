@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,12 +21,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 {
                     bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
                 }
+
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipmentNumber");
                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
-                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
-                if (!TableRow["ShipmentNumber"].Equals(null) && TableRow["ShipmentNumber"].GetType().Name != "DBNull")
-                { TableRow.SetField("SearchFields", TableRow["ShipmentNumber"]); }
+                AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ForwarderShipmentNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomFileNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipperName");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
+                //AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
+
 
             }
 
@@ -36,7 +44,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private static void AddCustomerRefrences(DataRow TableRow, DataTable dataTable,string CoulmnNmae)
         {
             string SearchField = null;
-            if (!TableRow[CoulmnNmae].Equals(null) && TableRow[CoulmnNmae].GetType().Name != "DBNull")
+            var Value = TableRow[CoulmnNmae];
+            if (!Value.Equals(null) && Value.GetType().Name != "DBNull" && !string.IsNullOrEmpty((string)Value) && !string.IsNullOrWhiteSpace((string)Value))
             { SearchField = (string)TableRow[CoulmnNmae]; 
 
             string[] SearchArr = SearchField.Split(',');
@@ -58,7 +67,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private static void AddNewRecord(DataRow TableRow, DataTable dataTable, string CoulmnNmae)
         {
             string SearchField = null;
-            if (!TableRow[CoulmnNmae].Equals(null) && TableRow[CoulmnNmae].GetType().Name != "DBNull")
+            var Value = TableRow[CoulmnNmae];
+            if (!Value.Equals(null) && Value.GetType().Name != "DBNull" && !string.IsNullOrEmpty((string)Value) && !string.IsNullOrWhiteSpace((string)Value))
             {
                     SearchField = (string)TableRow[CoulmnNmae];
                     DataRow TableRow1 = dataTable.NewRow();
@@ -69,6 +79,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
 
+ 
     }
 
 }

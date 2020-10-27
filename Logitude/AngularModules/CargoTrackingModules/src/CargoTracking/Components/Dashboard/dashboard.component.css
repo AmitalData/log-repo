@@ -16,6 +16,7 @@ h1{
     overflow: auto;
     text-align: center;
     color: white;
+      
   }
   
   .sidebar a {
@@ -46,9 +47,9 @@ h1{
     
   div.content {
     margin-left: 170px;
-    min-height: 100vh;
+    min-height: calc(100vh - 50px);
     /* background: #FAFBFC; */
-    padding: 0 46px;
+    /* padding: 0 46px; */
   }
 
   .sidebar .avatar > img{
@@ -82,7 +83,8 @@ h1{
     .sidebar {
       width: 100%;
       height: auto;
-      position: relative;
+      position: fixed;
+      z-index: 10; 
     }
     .sidebar a {float: left;}
     div.content {margin-left: 0;}

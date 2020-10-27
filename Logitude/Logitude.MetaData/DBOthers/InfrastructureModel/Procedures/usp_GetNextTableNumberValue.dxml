@@ -4,7 +4,8 @@
   Name="usp_GetNextTableNumberValue"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript>
+      <![CDATA[
 CREATE PROCEDURE [dbo].[usp_GetNextTableNumberValue]
 (
   @pLastValue INT OUTPUT,
@@ -28,7 +29,7 @@ DECLARE @COUNTER AS INT
  BEGIN
 
     IF NOT EXISTS (SELECT CounterId
-         FROM CounterStats with (UPDLOCK) WHERE CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
 		 
 BEGIN;  
 
@@ -62,7 +63,7 @@ BEGIN;
 
  
  Set @Current	= (SELECT  LastValue
-         FROM CounterStats with (UPDLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
 
 		 Set @Current = @Current + 1
 
@@ -81,7 +82,7 @@ BEGIN;
 
  
     IF NOT EXISTS (SELECT CounterId
-         FROM CounterStats with (UPDLOCK) WHERE CounterId = @pCounterId and Tenant =  @pTenant)
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Tenant =  @pTenant)
 		 
 BEGIN;  
 
@@ -115,7 +116,7 @@ BEGIN;
 
  
  Set @Current	= (SELECT  LastValue
-         FROM CounterStats with (UPDLOCK) WHERE  CounterId = @pCounterId  and Tenant =  @pTenant)
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId  and Tenant =  @pTenant)
 
 		 Set @Current = @Current + 1
 

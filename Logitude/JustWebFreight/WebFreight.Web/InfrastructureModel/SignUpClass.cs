@@ -1452,6 +1452,11 @@ namespace WebFreight.Web.InfrastructureModel
                 newTenant.IsDocumentsArchive = true;
                 newTenant.CustomerId = customerPM.Id;
                 newTenant.CustomerTenantShareImportFile = true;
+                if (!string.IsNullOrEmpty(newTenant.PrivateLabelId))
+                {
+                    newTenant.AutoArchiveOnInvoice = true;
+                    newTenant.DocumentShareAsDefault = true;
+                }
                 service.Update(newTenant);
             }
         }

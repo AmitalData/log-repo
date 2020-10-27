@@ -82,8 +82,41 @@ declare <#=idVarName#> varchar(15)
 execute usp_GetNextTableIdValue <#=idVarName#> OUTPUT,'DWObjectTable' 
 <#+
 
- string insertTableCommand = "insert into DWObjectTables(Id,Tenant";
+ string insertTableCommand = "insert into DWObjectTables(Id,Tenant,IndexesXml";
  string valuesCommand = " Values(" + idVarName + ",0";
+ string indexesXmlValue = null;
+
+  	foreach(var Indexes in entity.Elements("Indexes")) 
+		{ 
+           foreach(var IndexElement in Indexes.Elements("Index"))
+		   { 
+
+		   if(IndexElement.Attribute(XName.Get("Columns"))!=null){
+		   string columnsValue = IndexElement.Attribute(XName.Get("Columns")).Value;
+
+		   if(columnsValue!=null){
+		  
+		   if(string.IsNullOrEmpty(indexesXmlValue)){
+		   indexesXmlValue = "<ArrayOfIndexItem xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">";
+		   }
+
+
+		        indexesXmlValue += "<IndexItem> <Columns>" + columnsValue + "</Columns></IndexItem>";
+		   }
+
+		   }
+
+}
+}
+
+if(!string.IsNullOrEmpty(indexesXmlValue)){
+indexesXmlValue +="</ArrayOfIndexItem>";
+}
+
+ valuesCommand += ",'"+ indexesXmlValue + "'";
+
+
+
 	foreach (var Att in entity.Attributes())
 		 { 
 			if(Att.Name != "Id")

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,6 +39,7 @@ namespace WarehouseData
 
         public List<DWObjectFieldDB> CopyToDwObjectFieldLists { get; set; }
 
+        public List<IndexItem> Indexes { get; set; }
 
     }
 
@@ -51,6 +53,18 @@ namespace WarehouseData
         public bool IsPrimaryKey { get; set; }
         public string DimensionTableCode { get; set; }
         
+    }
+
+    [DataContract(Namespace = "")]
+    public class IndexItem
+    {
+        [DataMember]
+        public string Columns { get; set; }
+
+        [DataMember]
+        public string Include { get; set; }
+ 
+
     }
 
 }
