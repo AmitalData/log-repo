@@ -911,6 +911,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 else {
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.LocalName || list.EnglishName;
+                    this.EntityPM.VendorLocalName = list.LocalName;
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
