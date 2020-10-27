@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateUpdateClass
    {  		
-		public const string HashString = "e950a26c6ca5c53fe44524db584a7b1a";
+		public const string HashString = "ace184629312aa1cd69b2320fef64c9d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1777,6 +1777,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSColumnsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnsSettings", DefaultText = "Columns Settings",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSPageNumbering = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageNumbering", DefaultText = "Page Numbering",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowRegionalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowRegionalTax", DefaultText = "Show Regional Tax",LocalDefaultText = @"Show Regional Tax", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

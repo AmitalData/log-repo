@@ -832,6 +832,8 @@ namespace WebFreight.Web.Helpers
                     ShowVATTypePackages = setting.ShowVATTypePackages,
                     PageNumberingTextDesignId = !string.IsNullOrEmpty(setting.PageNumberingTextDesignId) ? CopyQuoteTemplateTableDesignPM(setting.PageNumberingTextDesignId, (int)orginalTenant) : "",
                     HidePageNumber = setting.HidePageNumber,
+                    ShowRegionalTAXPackages = setting.ShowRegionalTAXPackages,
+                    ShowRegionalTAXContainers = setting.ShowRegionalTAXContainers,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))
