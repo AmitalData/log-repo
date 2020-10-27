@@ -53,13 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CargoTrackingServices\HelperClasses\BuildWhereConditionArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\BulkDataPreperation.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingUpdateDataBaseArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoDeleteRowsArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTable.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingIncrementalArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\RecordUpdated.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\SqlTableCreator.cs" />
-    <Compile Include="CargoTrackingServices\Services\ImproveBuildCargoTrackingMainService.cs" />
+    <Compile Include="CargoTrackingServices\Services\BuildTablesStructure.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableList.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingValidateRecordsService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingCustomMappingService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingMainService.cs" />
@@ -68,10 +72,18 @@
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingCardsLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingPortsLogicService.cs" />
-    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableCondition.cs" />
-    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicAfterUpdating.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableConditions\CargoTrackingTableCondition.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicService.cs" />
-    <Compile Include="CargoTrackingServices\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
+    <Compile Include="CargoTrackingServices\Services\ServicesHelper\ServiceHelper.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableConditions\ShipmentTableCondtions.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\TransportModeTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\CountriesTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\ShipmentComputedTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\ShipmentMasterTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\CardTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\ShipmentSearcheTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\PortTableStrucrue.cs" />
+    <Compile Include="CargoTrackingServices\Services\TableStructure\ShipmentTableStrucrue.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingHeaderEntityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
