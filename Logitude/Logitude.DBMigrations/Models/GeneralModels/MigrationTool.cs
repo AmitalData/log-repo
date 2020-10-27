@@ -50,14 +50,14 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
+                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
                     StartNormalMigrations();
-                    StartZeroDownTimeMigrations();
 
                     Console.WriteLine("");
 
-                    ToolArguments.Arguments = ToolArguments.Arguments.Except(new string[] { Arguments.ZERODOWNTIME }).ToArray();
+                    ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
                     StartNormalMigrations();
+                    StartZeroDownTimeMigrations();
                 }
             }
             else

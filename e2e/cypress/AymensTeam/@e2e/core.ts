@@ -13,4 +13,9 @@ export class Random {
 
         return result;
     }
+    public static GetRandom() {
+        var result = '';
+        result += Math.floor(Math.random() * 1000000).toString();
+        return result;
+    }
 }

@@ -1525,6 +1525,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
         this.requestedRowCountSub = this.controller.requestedRowCount.subscribe((res) => {
 
+            if (this.UseBusyIndecator && res == 0)
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
             this.rowCount = res;
             this.CountReady.emit(res);
             //this.rows = new Array(this.rowCount)

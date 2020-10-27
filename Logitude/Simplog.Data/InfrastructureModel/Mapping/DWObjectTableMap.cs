@@ -28,9 +28,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ParentFactCode).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DisplayName).HasMaxLength(100).IsUnicode(false);
-
-
-
+           
+            this.Property(t => t.IndexesXml).IsMaxLength().IsUnicode(true);
 
 
 
@@ -53,6 +52,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ParentFactCode).HasColumnName("ParentFactCode");
             this.Property(t => t.RecordType).HasColumnName("RecordType");
             this.Property(t => t.DisplayName).HasColumnName("DisplayName");
+            this.Property(t => t.IndexesXml).HasColumnName("IndexesXml");
+
+
+
 
 
         }

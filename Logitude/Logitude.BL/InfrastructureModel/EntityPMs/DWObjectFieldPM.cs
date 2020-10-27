@@ -43,6 +43,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string DimensionDataViewName { get; set; }
         public bool IsMultipleSelection { get; set; }
         public string RecordType { get; set; }
+        public string FactTableCode { get; set; }
 
 
 

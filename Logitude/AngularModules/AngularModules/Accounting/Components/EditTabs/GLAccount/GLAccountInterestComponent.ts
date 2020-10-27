@@ -62,7 +62,10 @@ export class GLAccountInterestComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", false);
             this.Disabled = true;
         }
-
+        else {
+            this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", true);
+            this.Disabled = false;
+        }
         if (this.EntityPM.ActiveForInterest) {
             if(!this.EntityPM.IsSplitted){
                 this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);

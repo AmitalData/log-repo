@@ -46,6 +46,17 @@ namespace WarehouseData.Helper
             List<TableClass> dataWarehouseTables = FillDataWarehouseTable();
             dataWarehouseTables = objectFieldDataWarehouseService.BuildWarehouseObjectFieldOnTables(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.BuildDWObjectFieldDB(dataWarehouseTables, connectionString);
+
+            var dwObjectTables = GetDataTableFromSql(connectionString, "select IndexesXml,Code from DWObjectTables where IndexesXml is not null and IndexesXml !=''");
+            foreach (DataRow row in dwObjectTables.AsEnumerable())
+            {
+                string tableCode = row["Code"] != null ? row["Code"].ToString() : "";
+                string indexesXml = row["IndexesXml"] != null ? row["IndexesXml"].ToString() : "";
+                var table = dataWarehouseTables.Where(d => d.DWObjectTableCode == tableCode).FirstOrDefault();
+                if (table != null) table.Indexes = GetDWObjectFieldIndexes(indexesXml);
+
+            }
+
             return dataWarehouseTables;
         }
 
@@ -116,7 +127,6 @@ namespace WarehouseData.Helper
         {
         
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, tableLists);
-            ExecuteScript("Others", "Day 21 [Abed ] AddIndexesToFactTables", connectionString);
 
 
         }
