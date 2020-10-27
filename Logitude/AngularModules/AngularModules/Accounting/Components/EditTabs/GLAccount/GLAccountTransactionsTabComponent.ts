@@ -641,15 +641,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 result = this.TenantCurrencySign;
             }
             else {
-                result = this.EntityPM.CurrencySign;
-
-                // if (this.EntityPM.ReconcileMethodCode == "0") { // 0- Local Currency
-                //     result = this.TenantCurrencySign;
-
-                // } else {
-                //     result = this.EntityPM.CurrencySign;
-
-                // }
+                if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId)
+                    result = this.TenantCurrencySign;
+                else if(this.LTBSummery.StartBalanceForeignList.length > 0)
+                    result = this.EntityPM.CurrencySign;
             }
         }
         return result;
