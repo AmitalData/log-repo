@@ -21,12 +21,12 @@ namespace Unifreight.ContainerTasks
     public class ContainerTasks : IActivateOperation, IDisposable
     {
         string _token = "e2ad6f1dafbdd3dbdf9f6cb8f684d7cae1ff4306";
-        string baseEndPoint = @"http://capi.ocean-insights.com/containertracking/v1/";
+        string baseEndPoint = @"https://capi.ocean-insights.com/containertracking/v1/";
         public ContainerTasks(bool useOIV2)
         {
             if (useOIV2)
             {
-                baseEndPoint = @"http://capi.ocean-insights.com/containertracking/v2/";
+                baseEndPoint = @"https://capi.ocean-insights.com/containertracking/v2/";
             }
         }
         public void ActivateOperation(string operation, ref Hashtable hash_data_in, ref object obj_prj_inner_data, out string data_out, out string status, out string err_message)
