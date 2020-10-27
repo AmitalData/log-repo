@@ -14,8 +14,8 @@
 body {
     padding: 0;
     margin: 0;
-    background: var(--BGColor);
-    /* background: #F5F6FF; */ 
+    /* background: var(--BGColor); */
+     background: #F5F6FF;  
     font-family: 'Open Sans';
     font-size: 16px;
     line-height: 22px;
