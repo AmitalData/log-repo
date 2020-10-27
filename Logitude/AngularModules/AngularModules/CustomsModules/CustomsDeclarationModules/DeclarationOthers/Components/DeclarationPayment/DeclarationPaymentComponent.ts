@@ -889,6 +889,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     method.MethodTypeName = response.Result.LocalName;
                 });
             }
+
+            if (!AppTool.IsNullOrEmpty( this.paymentMethodModelMax)) {
+                this.paymentMethodModelMax.Amount = this.DeclarationPM.TotalTax;
+                this.paymentMethodModelMax.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.MethodTypeName = response.Result.LocalName;
+                });
+            }
         }
     }
 
@@ -921,6 +929,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 method.PayerActivityTypeCode = defaultValue;
                 this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
                     method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.paymentMethodModelMax)) {
+                this.paymentMethodModelMax.Amount = this.DeclarationPM.TotalTax;
+                this.paymentMethodModelMax.MethodTypeCode = "2";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.MethodTypeName = response.Result.LocalName;
+                });
+                this.paymentMethodModelMax.PayerActivityTypeCode = defaultValue;
+                this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.PayerActivityTypeName = response.Result.LocalName;
                 });
             }
         }
@@ -1255,46 +1275,84 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     PaymentMethodMessage: string = "";
     IsPaymentMethodMessageVisible: boolean = false;
     newLine: boolean = false;
-
+    paymentMethodModelMax: PaymentMethodModel
     AddPaymentMethodClicked(isBtl: boolean) {
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(
+                (response: ServiceResponse) => {
 
-        this.newLine = true;
-        var line = 0;
-        var seq = 0;
-        var method: DeclarationPaymentMethodPM = null;
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
 
-        if (this.paymentPM.DeclarationPaymentMethods.length == 1 && !isBtl) {
-            method = this.paymentPM.DeclarationPaymentMethods.find(d => d.PayerActivityTypeCode == null || d.MethodTypeCode == null || d.Amount == null);
-        }
-        if (!AppTool.IsNullOrEmpty(method)) {
-            this.IsPaymentMethodMessageVisible = true;
-            this.PaymentMethodMessage = TextCodeTranslator.Translate("Customs.Declaration.O.PaymentMethodFields");
-        }
-        else {
-            this.IsPaymentMethodMessageVisible = false;
-            this.PaymentMethodMessage = "";
-            if (this.paymentPM.DeclarationPaymentMethods.length > 0) {
+                        if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                var MinAndMax;
+                                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+                                    .subscribe(
+                                        (response: ServiceResponse) => {
+                                            let obj = response.Result;
+                                            if (obj) {
+                                                var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+                                                if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+                                                    let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+                                                    let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+                                                    let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
+                                                    if (min < this.TotalTax && max > this.TotalTax) {
+                                                        this.BetweenMinAndMax = true;
+                                                    }
+                                                }
+                                            }
+                                            this.newLine = true;
+                                            var line = 0;
+                                            var seq = 0;
+                                            var method: DeclarationPaymentMethodPM = null;
 
-                var line = this.paymentPM.DeclarationPaymentMethods.reduce(function (prev, current) { return (prev.Line > current.Line) ? prev : current }).Line;
-                var seq = this.paymentPM.DeclarationPaymentMethods.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current }).SequenceNumeric;
+                                            if (this.paymentPM.DeclarationPaymentMethods.length == 1 && !isBtl) {
+                                                method = this.paymentPM.DeclarationPaymentMethods.find(d => d.PayerActivityTypeCode == null || d.MethodTypeCode == null || d.Amount == null);
+                                            }
+                                            if (!AppTool.IsNullOrEmpty(method)) {
+                                                this.IsPaymentMethodMessageVisible = true;
+                                                this.PaymentMethodMessage = TextCodeTranslator.Translate("Customs.Declaration.O.PaymentMethodFields");
+                                            }
+                                            else {
+                                                this.IsPaymentMethodMessageVisible = false;
+                                                this.PaymentMethodMessage = "";
+                                                if (this.paymentPM.DeclarationPaymentMethods.length > 0) {
 
-            }
+                                                    var line = this.paymentPM.DeclarationPaymentMethods.reduce(function (prev, current) { return (prev.Line > current.Line) ? prev : current }).Line;
+                                                    var seq = this.paymentPM.DeclarationPaymentMethods.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current }).SequenceNumeric;
 
-            line++;
-            seq++;
+                                                }
 
-            var item = new DeclarationPaymentMethodPM(this.paymentPM);
-            item.Tenant = SessionLocator.Tenant;
-            item.DeclarationId = this.DeclarationPM.Id;
-            item.Line = line;
-            item.SequenceNumeric = seq;
-            this.paymentPM.AddDeclarationPaymentMethod(item);
+                                                line++;
+                                                seq++;
 
-            var itemModel = new PaymentMethodModel(item, this);
-            this.PaymentMethodsList.Insert(itemModel);
-        }
+                                                var item = new DeclarationPaymentMethodPM(this.paymentPM);
+                                                item.Tenant = SessionLocator.Tenant;
+                                                item.DeclarationId = this.DeclarationPM.Id;
+                                                item.Line = line;
+                                                item.SequenceNumeric = seq;
+                                                this.paymentPM.AddDeclarationPaymentMethod(item);
+                                                if (this.BetweenMinAndMax) {
+                                                    this.paymentMethodModelMax = new PaymentMethodModel(item, this);
+                                                }
+                                                else {
+                                                    var itemModel = new PaymentMethodModel(item, this);
+                                                    this.PaymentMethodsList.Insert(itemModel);
 
-        this.BuildMethods();
+                                                }
+                                            }
+
+                                            this.BuildMethods();
+
+                                        });
+
+                            }
+                        }
+
+                    }
+                });
 
         //RefreshScreenEvent myEvent = SessionLocator.CurrentAssemblyLocator.EventAggregator.GetEvent<RefreshScreenEvent>();
         //myEvent.Publish(new RefreshScreenEventArgs("DeclarationPaymentMethods"));
@@ -3143,6 +3201,7 @@ export class PaymentMethodModel extends BaseComponent {
 
 
                                 }
+
                                 if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3") {
                                     this.BankIsNull = true;
                                     this.methodPM.MethodTypeCode = "2";
@@ -3156,6 +3215,8 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
                                         this.methodPM.PayerActivityTypeName = response.Result.LocalName;
                                     });
+
+                                    this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
                                 }
                             }
                         }
