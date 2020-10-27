@@ -99,6 +99,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             application = entityPM.InternalNumber.Substring(3, 1);
                         }
                     }
+                    else if (!String.IsNullOrWhiteSpace(entityPM.InternalNumber) &&  entityPM.InternalNumber.Length > 5 && entityPM.InternalNumber.Substring(0, 2) == "A-" && entityPM.InternalNumber.Substring(3, 2) == "SP")
+                    {
+                        if (entityPM.InternalNumber.Substring(0, 5) == "A-ISP")
+                        {
+                            application = "I" + entityPM.InternalNumber.Substring(5, 1); //A-ISPO00001234 
+                        }
+                        else
+                        {
+                            application = entityPM.InternalNumber.Substring(2, 1); //A-MSP1234
+                        }
+                    }
+
                 }
                 if (!String.IsNullOrWhiteSpace(application))
                 {
