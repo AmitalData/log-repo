@@ -272,6 +272,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowVATTypePackages = itemPM.ShowVATTypePackages;
             itemPoco.PageNumberingTextDesignId = itemPM.PageNumberingTextDesignId;
             itemPoco.HidePageNumber = itemPM.HidePageNumber;
+            itemPoco.ShowRegionalTAXPackages = itemPM.ShowRegionalTAXPackages;
+            itemPoco.ShowRegionalTAXContainers = itemPM.ShowRegionalTAXContainers;
         }
     }
 }

@@ -569,6 +569,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
 
+    ShowRegionalTAXKey: string = Guid.newGuid();
+    get ShowRegionalTAX() {
+        var showRegionalTAX: boolean = false;
+        if (this.QuoteTemplateSettingPM) showRegionalTAX = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowRegionalTAXPackages : this.QuoteTemplateSettingPM.ShowRegionalTAXContainers;
+        return showRegionalTAX;
+    }
+    set ShowRegionalTAX(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") {
+                this.QuoteTemplateSettingPM.ShowRegionalTAXPackages = value;
+            } else this.QuoteTemplateSettingPM.ShowRegionalTAXContainers = value;
+        }
+    }
 
 
     ShowVATPercentageKey: string = Guid.newGuid();

@@ -2657,6 +2657,12 @@
       DefaultText="&quot;Page Numbering&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.S.ShowRegionalTax&quot;"
+      DefaultText="&quot;Show Regional Tax&quot;"
+      LocalDefaultText="&quot;Show Regional Tax&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

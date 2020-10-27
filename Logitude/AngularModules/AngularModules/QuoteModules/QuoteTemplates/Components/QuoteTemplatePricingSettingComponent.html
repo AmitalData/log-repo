@@ -266,6 +266,17 @@
 
                                                                                                         </tr>
 
+                                                                                                        <tr style="height:22px">
+                                                                                                            <td style="width:8px"></td>
+                                                                                                            <td>
+                                                                                                                <div class="CheckBox">
+                                                                                                                    <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowRegionalTAX" class="LeftCenter" style="text-align:center" [attr.id]="ShowRegionalTAXKey" type="checkbox" />
+                                                                                                                    <label style="color:black" class="LeftCenter" [attr.for]="ShowRegionalTAXKey">{{'QuoteTemplate.S.ShowRegionalTax' | TextCodeTranslationPipe}} </label>
+                                                                                                                </div>
+                                                                                                            </td>
+
+                                                                                                        </tr>
+
                                                                                                         <tr *ngIf="ShowVATDetails" style="height:22px">
                                                                                                             <td style="width:8px"></td>
                                                                                                             <td>
