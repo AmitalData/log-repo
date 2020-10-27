@@ -344,7 +344,7 @@ namespace WarehouseData.Service
                 if (table.TableName == "ObjectField")
                 {
                     condition += !isPrivateDB ? " where " : " and";
-                    condition += " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name = 'Shipment' or Name = 'Master')";
+                    condition += " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name = 'Shipment')";
 
                 }
 
