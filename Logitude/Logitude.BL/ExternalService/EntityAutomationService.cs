@@ -44,7 +44,7 @@ namespace Logitude.BL.ExternalService
 
             if (args.EntityAutomationMappingPMFields != null)
             {
-                args.EntityAutomationMappingPMFields.Map(poco, this.oldEntityPM);
+                args.EntityAutomationMappingPMFields.Map(this.entityPM, this.oldEntityPM);
             }
         }
 

@@ -87,6 +87,7 @@
   </Column>
   <Column
     Name="Line"
+    DefaultValue=""
     Type="int">
     <Constraints
       Nullable="false" />

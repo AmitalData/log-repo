@@ -920,6 +920,16 @@ export class QuoteTemplateSettingPM {
     public set PageNumberingTextDesignId(newValue: string) { if (this.pageNumberingTextDesignId != newValue) { this.pageNumberingTextDesignId = newValue; this.MarkAsDirty("PageNumberingTextDesignId"); } }
        
 	 
+    private showRegionalTAXPackages: boolean;
+    public get ShowRegionalTAXPackages() { return this.showRegionalTAXPackages; }
+    public set ShowRegionalTAXPackages(newValue: boolean) { if (this.showRegionalTAXPackages != newValue) { this.showRegionalTAXPackages = newValue; this.MarkAsDirty("ShowRegionalTAXPackages"); } }
+       
+	 
+    private showRegionalTAXContainers: boolean;
+    public get ShowRegionalTAXContainers() { return this.showRegionalTAXContainers; }
+    public set ShowRegionalTAXContainers(newValue: boolean) { if (this.showRegionalTAXContainers != newValue) { this.showRegionalTAXContainers = newValue; this.MarkAsDirty("ShowRegionalTAXContainers"); } }
+       
+	 
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		
@@ -943,4 +953,4 @@ export class QuoteTemplateSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

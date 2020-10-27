@@ -286,6 +286,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool HidePageNumber { get; set; }
 
         public string PageNumberingTextDesignId { get; set; }
+        public bool ShowRegionalTAXPackages { get; set; }
+        public bool ShowRegionalTAXContainers { get; set; }
 
     }
 }

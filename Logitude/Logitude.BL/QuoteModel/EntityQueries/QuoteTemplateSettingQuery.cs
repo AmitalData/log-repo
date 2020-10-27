@@ -260,6 +260,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowVATTypePackages =a.ShowVATTypePackages,
                                                   PageNumberingTextDesignId = a.PageNumberingTextDesignId,
                                                   HidePageNumber = a.HidePageNumber,
+                                                  ShowRegionalTAXPackages = a.ShowRegionalTAXPackages,
+                                                  ShowRegionalTAXContainers = a.ShowRegionalTAXContainers,
                                               }).FirstOrDefault();
 
             return entity;
@@ -489,6 +491,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowVATTypePackages = a.ShowVATTypePackages,
                                                        PageNumberingTextDesignId = a.PageNumberingTextDesignId,
                                                        HidePageNumber = a.HidePageNumber,
+                                                       ShowRegionalTAXPackages = a.ShowRegionalTAXPackages,
+                                                       ShowRegionalTAXContainers = a.ShowRegionalTAXContainers,
 
                                                                       };
             return qUoteTemplateSetting;
@@ -712,6 +716,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowVATTypePackages = quoteTemplateSetting.ShowVATTypePackages,
                                                     PageNumberingTextDesignId = quoteTemplateSetting.PageNumberingTextDesignId,
                                                     HidePageNumber = quoteTemplateSetting.HidePageNumber,
+                                                    ShowRegionalTAXPackages = quoteTemplateSetting.ShowRegionalTAXPackages,
+                                                    ShowRegionalTAXContainers = quoteTemplateSetting.ShowRegionalTAXContainers,
                                                           };
             return result;
         }

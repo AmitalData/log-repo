@@ -2687,6 +2687,11 @@ namespace Logitude.BL.Helpers
                     AppendHeaderColumn("SALEMINMAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
+                if (setting.ShowRegionalTAXPackages)
+                {
+                    AppendHeaderColumn("ISREGIONALTAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
+
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypePackages)
@@ -2799,6 +2804,12 @@ namespace Logitude.BL.Helpers
                 {
                     AppendHeaderColumn("SALEMINMAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
+
+                if (setting.ShowRegionalTAXContainers)
+                {
+                    AppendHeaderColumn("ISREGIONALTAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
+
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypeContainers)
@@ -2950,6 +2961,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountPackages) ++TdCount;
+                if (setting.ShowRegionalTAXPackages) ++TdCount;
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypePackages) ++TdCount;
@@ -2989,6 +3001,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
+                if (setting.ShowRegionalTAXContainers) ++TdCount;
 
                 if (quotePM.IsChargesByVAT)
                 {
@@ -3293,6 +3306,12 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = text, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                     }
+                    if (setting.ShowRegionalTAXPackages)
+                    {
+                        string isRegionalTax = chargePM.IsRegionalTax ? "Yes" : "No";
+                        HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = isRegionalTax, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+
+                    }
 
                     if (quotePM.IsChargesByVAT)
                     {
@@ -3520,6 +3539,12 @@ namespace Logitude.BL.Helpers
                     {
                         string saleMaxMinAmount = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
                         HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = saleMaxMinAmount, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
+
+                    if (setting.ShowRegionalTAXContainers)
+                    {
+                        string isRegionalTax = chargePM.IsRegionalTax ? "Yes" : "No";
+                        HtmlTemplate.Append(AddTableRows(new PricingTableRowDetailsArgs() { Value = isRegionalTax, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                     }
 
                     if (quotePM.IsChargesByVAT)

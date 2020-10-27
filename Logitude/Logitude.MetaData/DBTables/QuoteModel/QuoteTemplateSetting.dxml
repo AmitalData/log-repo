@@ -1197,6 +1197,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShowRegionalTAXPackages"
+    OldNames="ShowRegionalTAX"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowRegionalTAXContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="PageHeaderArea1ImageDetailId"
     ReferencedTable="ImageDetails"

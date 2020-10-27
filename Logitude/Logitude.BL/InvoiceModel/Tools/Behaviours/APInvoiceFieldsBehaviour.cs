@@ -61,14 +61,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
 
     public class EntityAutomationAPInvoiceMappingPMFields : IEntityAutomationMappingPMFields
     {
-        public void Map<T1,T2>(T1 poco, T2 oldPMEntity) 
+        public void Map<T1, T2>(T1 entityPM, T2 oldEntityPM)
         {
-            APInvoicePM myOldPMEntity = oldPMEntity as APInvoicePM;
-            APInvoice myPoco = poco as APInvoice;
-            CardRepository cardRepository = new CardRepository(myPoco.Tenant);
-            Card card = cardRepository.GetSingleCard(myPoco.VendorId, myPoco.Tenant);
-            myOldPMEntity.VendorContactId = card != null ? card.PrimaryContactId : null;
-            myOldPMEntity.VendorVatNumber = card != null ? card.VatNumber : null;
+            APInvoicePM myEntityPM = entityPM as APInvoicePM;
+            APInvoicePM myOldEntityPM = oldEntityPM as APInvoicePM;
+            myOldEntityPM.VendorContactId = myEntityPM.VendorContactId;
+            myOldEntityPM.VendorVatNumber = myEntityPM.VendorVatNumber;
+            CardRepository cardRepository = new CardRepository(myEntityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(myEntityPM.VendorId, myEntityPM.Tenant);
+            myEntityPM.VendorContactId = card != null ? card.PrimaryContactId : null;
+            myEntityPM.VendorVatNumber = card != null ? card.VatNumber : null;
 
         }
     }
