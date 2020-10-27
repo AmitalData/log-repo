@@ -346,10 +346,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
-      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
-      <Name>Logitude.Server.Tools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WarehouseDataViews\WarehouseDataViews.csproj">
       <Project>{3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0}</Project>
       <Name>WarehouseDataViews</Name>
