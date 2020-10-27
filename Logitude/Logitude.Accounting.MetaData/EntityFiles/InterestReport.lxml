@@ -2854,6 +2854,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsNewReport&quot;"
     ListPropertyPath="&quot;IsNewReport&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
