@@ -406,12 +406,13 @@
     <Record
       SearchFields="&quot;ft,ft&quot;"
       Code="&quot;Ft&quot;"
-      Name="&quot;Ft&quot;" />
+      Name="&quot;Ft&quot;" 
+      PrintAs="&quot;ft&quot;"/>
     <Record
       SearchFields="&quot;inc,inch&quot;"
       Code="&quot;Inc&quot;"
       Name="&quot;Inch&quot;" 
-       PrintAs="&quot;inch&quot;"/>
+      PrintAs="&quot;inch&quot;"/>
   </Records>
   <DataContracts>
     <DataContract

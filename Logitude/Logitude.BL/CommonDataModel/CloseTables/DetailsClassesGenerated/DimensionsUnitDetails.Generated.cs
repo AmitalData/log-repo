@@ -34,6 +34,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "ft,ft", 
                 Code = "Ft", 
                 Name = "Ft", 
+                PrintAs = "ft", 
 			});
 			 
             all.Add(new DimensionsUnitDetails()
