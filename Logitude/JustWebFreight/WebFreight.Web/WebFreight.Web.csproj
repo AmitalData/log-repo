@@ -3364,6 +3364,7 @@
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
+    <None Include="Properties\PublishProfiles\MasterDev.pubxml" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
