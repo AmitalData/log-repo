@@ -47,10 +47,14 @@
               "buildOptimizer": true,
               "budgets": [
                 {
-                  "type": "initial"
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
-                  "type": "anyComponentStyle"
+                  "type": "anyComponentStyle",
+                    "maximumWarning": "2mb",
+                    "maximumError": "5mb"
                 }
               ]
             }
