@@ -265,17 +265,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             List<string> errorsCodes = new List<string>() { "2" };
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(taxreport.Tenant);
-            List<int> linesWithError = taxReportQuery.CheckErrorsInLines(taxreport.Id, taxreport.Tenant, errorsCodes);
-            if (linesWithError.Count > 0)
+            int[] linesWithError = taxReportQuery.CheckErrorsInLines(taxreport.Id, taxreport.Tenant, errorsCodes).ToArray();
+            if (linesWithError.Length > 0)
             {
                 ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
                 bool showlocal = !loggedContact.DontShowLocal;
                 string error = TextCodesTranslator.TranslateText("TaxReport.O.CantDownload", taxreport.Tenant, showlocal);
                 string[] errorParts = error.Split(',');
                 string lines = null;
-                for (int x = 0; x < linesWithError.Count; x++)
+                for (int x = 0; x < linesWithError.Length; x++)
                 {
-                    lines = lines + x + ',';
+                    lines =lines + linesWithError[x].ToString() + ',';
 
                 }
                 throw new Exception(errorParts[0] + " ( " + lines.TrimEnd(',') + " ) " + errorParts[1]);
