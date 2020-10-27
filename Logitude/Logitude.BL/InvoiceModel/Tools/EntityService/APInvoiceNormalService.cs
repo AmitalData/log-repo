@@ -171,6 +171,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         AccountingSetting accountingSetting;
         private bool transferToFTPActivated;
         private bool canTransferToFTP;
+        private bool isTransferEnabled = false;
         private void GetAccountingSystem()
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
@@ -192,6 +193,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
                     this.canTransferToFTP = accountingSystem.CanTransferToFTP;
 
+                    if (accountingSetting.IsAPInvoicesTransferEnabled && accountingSystem.AllowAPInvoicesTransfer)
+                    {
+                        isTransferEnabled = true;
+                    }
                 }
             }
         }
@@ -645,7 +650,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateAPInvoiceMessage(bool setApproved)
         {
-            if (setApproved)
+            if (setApproved && isTransferEnabled)
             {
                 if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
