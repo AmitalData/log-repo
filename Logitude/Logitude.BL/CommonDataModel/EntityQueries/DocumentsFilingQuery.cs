@@ -2044,7 +2044,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CustomerDocumentId = a.CustomerDocumentId,
                                            ForwarderDocumentId = a.ForwarderDocumentId,
                                            SecurityId = a.SecurityId,
-
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode,
+ 
                                            LastVersion = a.LastVersion,
                                            CustomerTenantNumber = a.CustomerTenantNumber,
                                            IsRequested = a.IsRequested,
@@ -3005,6 +3006,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode
+ 
                                        }).ToList();
             }
             else
@@ -3263,6 +3266,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        OrigionalDocumentId = a.OrigionalDocumentId,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode
                                    }).ToList();
 
 
