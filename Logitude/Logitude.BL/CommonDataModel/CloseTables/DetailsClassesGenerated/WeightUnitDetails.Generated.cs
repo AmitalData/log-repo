@@ -34,7 +34,7 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "mt,metric ton", 
                 Code = "MT", 
                 Name = "Metric Ton", 
-                PrintAs = "mt", 
+                PrintAs = "Mt", 
 			});
 			 
             all.Add(new WeightUnitDetails()

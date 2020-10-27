@@ -411,7 +411,7 @@
       SearchFields="&quot;mt,metric ton&quot;"
       Code="&quot;MT&quot;"
       Name="&quot;Metric Ton&quot;" 
-      PrintAs="&quot;mt&quot;"/>
+      PrintAs="&quot;Mt&quot;"/>
     <Record
       SearchFields="&quot;lb,pound&quot;"
       Code="&quot;LB&quot;"

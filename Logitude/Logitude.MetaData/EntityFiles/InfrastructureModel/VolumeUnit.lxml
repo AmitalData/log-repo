@@ -477,15 +477,18 @@
     <Record
       SearchFields="&quot;cbf,cbf&quot;"
       Code="&quot;CBF&quot;"
-      Name="&quot;CBF&quot;" />
+      Name="&quot;CBF&quot;" 
+     PrintAs="&quot;CBF&quot;"/>
     <Record
       SearchFields="&quot;cbi,cbi&quot;"
       Code="&quot;CBI&quot;"
-      Name="&quot;CBI&quot;" />
+      Name="&quot;CBI&quot;" 
+       PrintAs="&quot;CBI&quot;"/>
     <Record
       SearchFields="&quot;cbm,cbm&quot;"
       Code="&quot;CBM&quot;"
-      Name="&quot;CBM&quot;" />
+      Name="&quot;CBM&quot;"
+       PrintAs="&quot;CBM&quot;"/>
   </Records>
   <DataContracts>
     <DataContract
