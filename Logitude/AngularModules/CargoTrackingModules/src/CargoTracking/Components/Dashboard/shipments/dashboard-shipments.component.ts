@@ -10,7 +10,7 @@ import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTr
 @Component({
     selector: 'dashboard-shipments',
     templateUrl: './dashboard-shipments.component.html',
-    styleUrls: ['./dashboard-shipments.component.css']
+    styleUrls: ['./dashboard-shipments.component.min.css']
 })
 export class DashboardShipmentsComponent 
 {

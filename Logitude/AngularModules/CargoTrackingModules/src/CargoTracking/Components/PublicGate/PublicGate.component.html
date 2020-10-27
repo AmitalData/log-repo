@@ -16,7 +16,7 @@
   
     <!-- Mobile App Bar -->
     <div class="mobile-header">
-        <div class="icon" *ngIf="showBackButton">
+        <div class="icon" *ngIf="GetBackEnabled()">
             <!-- <img src="./assets/menu.png" (click)="displayMenu = !displayMenu" /> -->
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>

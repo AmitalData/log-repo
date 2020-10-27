@@ -1,6 +1,6 @@
 import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements AfterViewInit
+export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 {
 
     @ViewChild('input') input: ElementRef;
@@ -25,52 +26,70 @@ export class SearchComponent implements AfterViewInit
     FilteredItems: any[] = [];
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-    _Tenant:number;
+    _Tenant: number;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
+        private location: Location,
         private searchService: CargoTrackingSearchService)
     {
         this.GetVariablesFromURI();
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
-       
 
-        if (this.SearchText) {
-            this.Search();
-        }
+
+        
 
         this.InitForm();
+    }
+    ngOnInit()
+    {
+        if(localStorage.getItem('SearchKey') == this.SearchText){
+            if (localStorage.getItem('Shipments'))
+                this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
+            else{
+                if (this.SearchText)
+                    this.Search();
+            }
+        }
+    }
+
+    ngOnDestroy()
+    {
+        if (this.Shipments.length > 0) {
+            localStorage.setItem('SearchKey', this.SearchText);
+            localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
+        }
     }
 
 
     private GetSearchTextFromURI()
-    {   
+    {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
         this.SearchText = searchKey;
- 
+
     }
 
 
     private GetVariablesFromURI()
-    {   
+    {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
-      
+
 
         var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
-        if(tenant!=null && tenant!=""){
-           this._Tenant = Number(tenant);
-         }
-         else{
+        if (tenant != null && tenant != "") {
+            this._Tenant = Number(tenant);
+        }
+        else {
             //  if(searchKey!=null && searchKey!=""){
             //     this.router.navigate([1,'search',searchKey]);
             //  }
             //  else{
             //     this.router.navigate([1,'search']);
             //  }
-            
-         }
+
+        }
     }
     private InitForm()
     {
@@ -80,8 +99,8 @@ export class SearchComponent implements AfterViewInit
     }
 
     ngAfterViewInit()
-    { 
-     //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+    {
+        //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
     SubscribeInputTextChanges()
@@ -136,7 +155,7 @@ export class SearchComponent implements AfterViewInit
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
-                if (url == "/"+this._Tenant+"/search/") {
+                if (url == "/" + this._Tenant + "/search/") {
                     this._SearchText = '';
                     this.FilterItems();
                 }
@@ -167,12 +186,13 @@ export class SearchComponent implements AfterViewInit
     }
     Search()
     {
-        if(this._Tenant && this.SearchText){
-            this.router.navigate([this._Tenant,'search', this.SearchText]);
+        if (this._Tenant && this.SearchText) {
+            this.location.go(this._Tenant + '/search/' + this.SearchText);
+            // this.router.navigate([this._Tenant,'search', this.SearchText]);
             // this.FilterItems();
             this.LoadShipments();
         }
-            
+
     }
     FilterItems()
     {
@@ -200,17 +220,18 @@ export class SearchComponent implements AfterViewInit
     }
 
     ItemClicked(item)
-    {   var selection = window.getSelection();
-        if(selection.toString().length === 0) {
+    {
+        var selection = window.getSelection();
+        if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this._Tenant,'search','shipment', SecurityKey]);
+            this.router.navigate([this._Tenant, 'search', 'shipment', SecurityKey]);
         }
     }
     LoadShipments()
     {
 
-     
+
 
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
@@ -218,22 +239,24 @@ export class SearchComponent implements AfterViewInit
             this.isLoading = true;
             RootContext.StartBusyIndicatorLoading();
             this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {   RootContext.StopBusyIndicator();
-                this.isLoading = false;
+            {
                 console.log("[getShipments]", result);
                 this.Shipments = result;
                 this.noResult = this.Shipments.length == 0 && !!this.SearchText;
+                RootContext.StopBusyIndicator();
+                this.isLoading = false;
 
             });
-        }else{
+        } else {
             this.Shipments = [];
         }
 
     }
     references: string[];
-    SplitReference(reference: string){
-      this.references =reference!= null?  reference.split(','): null;
-    
+    SplitReference(reference: string)
+    {
+        this.references = reference != null ? reference.split(',') : null;
+
     }
 
     GetModeIcon(mode: string)
