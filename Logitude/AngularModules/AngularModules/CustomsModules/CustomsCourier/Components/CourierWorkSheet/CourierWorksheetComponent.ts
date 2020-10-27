@@ -482,9 +482,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
 
-    SendALLSVG() {
+    SendALLSVG(isAll: boolean) {
 
-        if (this._SVGTotal == 0) {
+        if (this._SVGTotal == 0 && !isAll) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
