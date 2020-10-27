@@ -77,7 +77,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ToPortId = a.ToPortId,
 
                                                                ShipperId = a.ShipperId,
-
+                                                               DeliveredDate= a.DeliveredDate,
                                                                ConsigneeId = a.ConsigneeId,
 
                                                                GrossWeight = a.GrossWeight,
@@ -242,13 +242,28 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
                 shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
-                shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
-                shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.CurrentMilestoneCode = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.IsCurrent.Value).FirstOrDefault().Code; d.CurrentMilestoneDate = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.IsCurrent.Value).FirstOrDefault().Date; });
+
+                foreach (CargoTrackingShipmentList shipment in shipmetsLists)
+                {
+                    if (shipment.EntityId == Id)
+                    {
+                        shipment.SearchReferences = String.Join(",", references);
+                        if(shipment.CurrentMilestoneCode == null)
+                        {
+                            GetMilestonesFieldsFromCargoTrackingShipment(shipment);
+                            
+                        }
+                    }
+
+                }
+              //  shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
+               
+                //shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.FutureMilstoneName= (d.CurrentMilestoneCode == null? d.FutureMilstoneName= FutureMilstoneName: null); d.FutureMilstoneDate = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.Name== FutureMilstoneName).FirstOrDefault().Date; });
                 
             }
             return shipmetsLists;
         }
-
+        string FutureMilstoneName;
         public List<Milestone> GetMilestonesFieldsFromCargoTrackingShipment( CargoTrackingShipmentList  Shipment)
         {
             List<Milestone> milestones = new List<Milestone>();
@@ -263,10 +278,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone() {Id = 11, Code = "Delivered", Name = "Delivered", Date = Shipment.DeliveredDate, EstimationDate = Shipment.DeliveredEstimationDate, Done = Shipment.DeliveredDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DeliveredDone == true ? false : true });
             milestones = milestones.OrderByDescending(s=>s.IsEstimation==true? s.EstimationDate : s.Date).ThenByDescending(s => s.Id).ToList();
             string CurrentMilestoneCode = milestones.Where(s=>s.IsEstimation==false).OrderByDescending(s => s.Date).ThenByDescending(s=>s.Id).Select(s => s.Code).FirstOrDefault();
-            if(CurrentMilestoneCode == null)
+            if (CurrentMilestoneCode == null)
             {
-                CurrentMilestoneCode = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Code).FirstOrDefault();
+                Shipment.FutureMilstoneName = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Name).FirstOrDefault();
+                Shipment.FutureMilstoneDate = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Date).FirstOrDefault();
             }
+
             for (int i=0; i < milestones.Count; i++)
             {
                 if (milestones[i].Code == CurrentMilestoneCode)
