@@ -3,6 +3,7 @@ using CargoTrackingWinService.Helper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTrackingSetLogic;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTracking.BL.CoreBL.Batch;
 using System;
 using System.Collections.Generic;
@@ -187,8 +188,8 @@ namespace CargoTrackingWinFormService.Forms
                 return;
             }
 
-            dbSourceConnection = cargoTrackingService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-            dbDestinationConnection = cargoTrackingService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            dbSourceConnection = ServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            dbDestinationConnection = ServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
  
         }
         private void UpdateCargoDataBase(CargoTable table , bool IsFromBuild )
@@ -318,7 +319,7 @@ namespace CargoTrackingWinFormService.Forms
         private void UpdateCargoTables(bool IsFromBuild)
         {
             
-            List<CargoTable> CargoTableLists = cargoTrackingService.FillCargoTableList();
+            List<CargoTable> CargoTableLists = CargoTrackingTableList.FillCargoTableList();
             if (!checkBox2.Checked)
             {
                  CargoTableLists = CargoTableLists.Where(s => s.DBTableName == this.textBox3.Text).ToList();
@@ -508,7 +509,7 @@ namespace CargoTrackingWinFormService.Forms
        
 
             if (name == "CheckAndUpdateWaterMark")
-                cargoTrackingService.CheckAndUpdateWaterMark(dbDestinationConnection,dbSourceConnection);
+                ServiceHelper.CheckAndUpdateWaterMark(dbDestinationConnection,dbSourceConnection);
             if (name == "UpdateCargoTables")
             {
 
@@ -1231,7 +1232,7 @@ namespace CargoTrackingWinFormService.Forms
 
         private void MappingFields()
         {
-             CargoTable  CargoTable = cargoTrackingService.FillCargoTableList().Where(s=>s.CT_TableName == this.MappingTableName.Text && s.CT_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
+             CargoTable  CargoTable = CargoTrackingTableList.FillCargoTableList().Where(s=>s.CT_TableName == this.MappingTableName.Text && s.CT_FieldsDBName.Contains(this.MappingFieldName.Text)).FirstOrDefault();
             if (CargoTable==null)
             {
                 MessageBox.Show("Table or field not found !!!");
@@ -1327,7 +1328,7 @@ namespace CargoTrackingWinFormService.Forms
 
             this.label22.Text = null;
             this.BuildConnectionStrings(false);
-            this.cargoTrackingService.DeleteWatermarks(this.dbDestinationConnection);
+            ServiceHelper.DeleteWatermarks(this.dbDestinationConnection);
             this.label22.Text = "Watermarks Deleted";
         }
     }
