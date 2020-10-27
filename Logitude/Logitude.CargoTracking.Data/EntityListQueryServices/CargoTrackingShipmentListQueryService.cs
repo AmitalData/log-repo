@@ -235,14 +235,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
-
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
-
             foreach (var Id in ShipmentIds)
             {
                 string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
                 shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
-
                 foreach (CargoTrackingShipmentList shipment in shipmetsLists)
                 {
                     if (shipment.EntityId == Id)
@@ -254,16 +251,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                             
                         }
                     }
-
-                }
-              //  shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
-               
-                //shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.FutureMilstoneName= (d.CurrentMilestoneCode == null? d.FutureMilstoneName= FutureMilstoneName: null); d.FutureMilstoneDate = GetMilestonesFieldsFromCargoTrackingShipment(d).Where(s => s.Name== FutureMilstoneName).FirstOrDefault().Date; });
-                
+                }            
             }
             return shipmetsLists;
         }
-        string FutureMilstoneName;
+       
         public List<Milestone> GetMilestonesFieldsFromCargoTrackingShipment( CargoTrackingShipmentList  Shipment)
         {
             List<Milestone> milestones = new List<Milestone>();
