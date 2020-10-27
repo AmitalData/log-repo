@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -24,11 +25,14 @@ namespace WebFreight.Web.WcfApi
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "OceanInsightsWcfService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select OceanInsightsWcfService.svc or OceanInsightsWcfService.svc.cs at the Solution Explorer and start debugging.
+    //  ss
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class OceanInsightsWcfService : IOceanInsightsWcfService
     {
         public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type)
         {
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             Response response = new Response();
             try
             {

@@ -343,14 +343,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                         text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
                     }
                     else
                     {
                         jLine.CreditGLAccountId = creditPM.Id;
                     }
                 }
-                if (jLine.ActionCode != "2")
+                if (jLine.ActionCode != "1")
                 {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
                     {
@@ -365,7 +365,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                         text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
                     }
                     else
                     {

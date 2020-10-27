@@ -27,8 +27,9 @@ export class PublicGateComponent
     companyName: string = "Unifreight Cloud Services";
     _Tenant: number;
     BackGroundImg:string;
-    map_Img:string;
-    constructor(@Inject('BASE_URL') baseUrl: string ,private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, private activerouter: ActivatedRoute, private router: Router)
+
+    MapImgSRC:string ="";
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string, private router: Router)
     {
 
         this.GetDataFromURL(baseUrl);
@@ -55,15 +56,21 @@ export class PublicGateComponent
             }
             this.IsBrandingDataLoaded = true;
 
-            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.map_Img;
+
+            this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
+
 
             this.listenToRouterEvents();
         });
     }
-    private GetDataFromURL(baseUrl:string)
+
+    private GetDataFromURL(baseUrl: string)
+
     {
-        this.map_Img = baseUrl+"/assets/images/misc/map-bg.svg";
-       
+
+
+        this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+
         this.router.events.subscribe((event: any) =>
         {
             if (this._Tenant == null || Number.isNaN(this._Tenant)) {

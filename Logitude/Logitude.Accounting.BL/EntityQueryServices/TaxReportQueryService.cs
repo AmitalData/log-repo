@@ -60,6 +60,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                select a).Any();
           
         }
+
+        public List<int> CheckErrorsInLines(string taxReportId, int tenant, List<string> errorCodes)
+        {
+            TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
+         return linesRepo.CheckErrorsInLines(taxReportId, tenant, errorCodes);
+        }
+
+
         public List<TaxReport> GetFutureActiveReports(DateTime dateTime, int tenant) // not cancelled
         {
             TaxReportRepository reportsRepo = new TaxReportRepository(context);

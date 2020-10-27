@@ -121,7 +121,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                                 this.Loading = false;
                                 this.Success = false;
                                 this.Failed = true;
-                                this.ShowError(TextCodeTranslator.Translate("TaxReport.O.CantApprove"));
+                               this.ShowError(myResult.ErrorsArray);
                                 this.CurrentSession.CloseCurrentWindow();
                             }
                         });
@@ -260,7 +260,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     ShowError(error=null) {
         var msg = this.bteList? this.bteList.ErrorLog : error;
         var msgbox = new MessageWindow();
-        // msgbox.Width = 500;
+        msgbox.Width = 500;
         // msgbox.Height = 400;
         msgbox.RTL = this.isRTL;
         msgbox.Show(msg);

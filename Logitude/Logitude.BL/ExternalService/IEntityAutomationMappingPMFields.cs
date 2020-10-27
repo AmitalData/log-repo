@@ -9,7 +9,7 @@ namespace Logitude.BL.ExternalService
 {
     public interface IEntityAutomationMappingPMFields
     {
-        void Map<T1,T2>(T1 poco,T2 oldentityPm);
+        void Map<T1,T2>(T1 entityPm, T2 oldentityPm);
     }
 }
 

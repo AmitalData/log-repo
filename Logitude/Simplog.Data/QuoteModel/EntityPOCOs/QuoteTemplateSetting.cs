@@ -353,6 +353,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool ShowVATPercentageContainers { get; set; }
         public string PageNumberingTextDesignId { get; set; }
         public bool HidePageNumber { get; set; }
+        public bool ShowRegionalTAXPackages { get; set; }
+        public bool ShowRegionalTAXContainers { get; set; }
 
 
 
