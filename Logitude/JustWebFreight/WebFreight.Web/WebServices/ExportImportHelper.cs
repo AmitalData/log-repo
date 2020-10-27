@@ -158,7 +158,7 @@ namespace WebFreight.Web.WebServices
                     if (allUpdatedRolesIds.Count > 0)
                     {
                         int tenant = 0;
-                        string email = "system@tanent0.com";
+                        string email = "system@tenant0.com";
 
                         if(HttpContext.Current != null)
                         {
