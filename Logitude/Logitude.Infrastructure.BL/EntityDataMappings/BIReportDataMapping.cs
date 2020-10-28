@@ -30,6 +30,12 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                Logitude.BL.CommonDataModel.EntityQueries.UserQuery userQuery = new Logitude.BL.CommonDataModel.EntityQueries.UserQuery(entityPM.Tenant);
+                string systemUserId = userQuery.GetSystemUserIdIfItIsCustomerCare(entityPM.Tenant);
+                if (!string.IsNullOrEmpty(systemUserId)) entityPM.UpdatedByUserId = systemUserId;
+            }
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO);
