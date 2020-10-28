@@ -64,6 +64,7 @@
     <Compile Include="Contracts\IIIGClosedTable.cs" />
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentRequestRejectReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />
