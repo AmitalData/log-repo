@@ -129,19 +129,22 @@ export class ShipmentComponent implements OnInit
                     this.Delivered = false;
                 }
                 this.SetMilestonesFields(result);
+              
             }
             
 
         });
     }
+    public MilstonesExist: boolean = false;
     public Date: Date;
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones) {
      
-        this.AllMilestoneFields = result.Milestones;
+        this.AllMilestoneFields = result.Milestones;      
         if(this.AllMilestoneFields){
             this.AllMilestoneFields.forEach(S=>{
                 
-                    if(S.IsEstimation){
+                if (S.IsEstimation) {
+                  
                          this.FuturesMilestoneFields.push(S);
                     }
                     else if(!S.IsCurrent){
@@ -160,6 +163,9 @@ export class ShipmentComponent implements OnInit
         else {
             this.Date = this.CurrentMilestoneField.Date;
 
+        }
+        if (this.CompletedMilestoneFields.length > 0 || this.FuturesMilestoneFields.filter(d => d.EstimationDate).length > 0 || this.Shipment.CurrentMilestoneCode) {
+            this.MilstonesExist = true;
         }
     }
 

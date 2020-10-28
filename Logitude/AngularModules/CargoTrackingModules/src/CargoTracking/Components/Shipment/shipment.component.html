@@ -37,7 +37,7 @@
 
     <div class="panel-container">
         <div class="tab-selector" *ngIf="isTabletView">
-            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">Shipment Steps</div>
+            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">Shipment Milestones</div>
             <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">Shipment Details</div>
         </div>
 
@@ -80,44 +80,51 @@
                 </div>
 
 
-                <div class="title hide-mobile">Shipment Steps Details</div>
+                <div class="title hide-mobile">Shipment Milestones Details</div>
+                <div *ngIf="MilstonesExist">
+                    <div class="tag">Future milestone</div>
+                    <ul *ngIf="FuturesMilestoneFields" class="steps-list">
+                        <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
+                            <ng-container *ngIf="item.EstimationDate">
+                                <div class="tick"> </div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy'}}</div>
+                                <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
+                            </ng-container>
 
-                <div class="tag">Future steps</div>
-                <ul *ngIf="FuturesMilestoneFields" class="steps-list">
-                    <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
-                        <ng-container *ngIf="item.EstimationDate">
-                            <div class="tick"> </div>
-                            <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy'}}</div>
-                            <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
-                        </ng-container>
-                        
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
 
-                <div class="tag">Current step</div>
-                <ul *ngIf="CurrentMilestoneField" class="steps-list">
-                    <li  class="highlighted">
-                        <ng-container *ngIf="CurrentMilestoneField.Date">
-                            <div class="tick"> </div>
-                            <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy'}}</div>
-                            <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
-                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
-                        </ng-container>
-                    </li>
-                </ul>
+                    <div class="tag">Current milestone</div>
+                    <ul *ngIf="CurrentMilestoneField" class="steps-list">
+                        <li class="highlighted">
+                            <ng-container *ngIf="CurrentMilestoneField.Date">
+                                <div class="tick"> </div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy'}}</div>
+                                <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
+                            </ng-container>
+                        </li>
+                    </ul>
 
-                <div class="tag">Completed Steps</div>
-                <ul *ngIf="CompletedMilestoneFields" class="steps-list">
-                    <li *ngFor="let item of CompletedMilestoneFields">
-                        <ng-container *ngIf="item.Date">
-                            <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                            <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy'}}</div>
-                            <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
-                        </ng-container>
-                    </li>
-                </ul>
+                    <div class="tag">Completed Milestones</div>
+                    <ul *ngIf="CompletedMilestoneFields" class="steps-list">
+                        <li *ngFor="let item of CompletedMilestoneFields">
+                            <ng-container *ngIf="item.Date">
+                                <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy'}}</div>
+                                <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
+                            </ng-container>
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="!MilstonesExist" style=" height: 300px; vertical-align: middle;" >
+                    <div style="text-align: center;  vertical-align: middle;font-weight: bold;font-size: 16px;color: #D2D2D2; margin-top:150px ;">
+                    No Milstone Data Exists
+                    </div>
+                 
+                </div>
             </div>
 
         </div>
