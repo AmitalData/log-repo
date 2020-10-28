@@ -219,9 +219,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (_MyDeclarationPM.AvailabilityDate == null)
                             {
                                 _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-                                myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                                 IsAvailabilityDate2 = true;
                             }
+                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
                         if (_status == "SST" || _status == "SMG")
                             SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate2);
@@ -361,8 +361,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             IsAvailabilityDate = true;
                             _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-                            myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                         }
+                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
                     if (status=="SST" || status=="SMG")
                         SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate);
@@ -907,7 +907,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 PRIMARYNUM = myCustomFileNo,
                                 FORMID = "LGT_UPDATE_FCI",
                                 DEBUG = "F",
-                                DONEOPERATION = "A",
+                                DONEOPERATION = "D",
                                 //GSTRING1 = myYCULTASKPM.TASKID,
                             };
                             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.

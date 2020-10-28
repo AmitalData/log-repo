@@ -53,6 +53,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Address GetMainAddressByCardId(string cardId, int tenent)
         {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                string key = "GetMainAddressByCardId," + cardId + "," + tenent.ToString();
+                var val = CacheManager.GetOrInsertNewObject<Address>(key, () =>
+               {
+                   return (from a in context.Addresses.Include("Country").Include("State") where a.Tenant == tenent && a.CardId == cardId && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
+
+               });
+                return val;
+            }
             return (from a in context.Addresses.Include("Country").Include("State") where a.Tenant == tenent && a.CardId == cardId && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
         }
         public bool CheckIfCardHaveMainAddressByAddressIdAndCardId( string addressId, string cardId,  int tenent)

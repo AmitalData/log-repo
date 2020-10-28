@@ -796,7 +796,7 @@ export class MaintenanceComponent {
                     let windowTitle = "הגדרות מכס"//"Customs Settings";
                     let logWindow = new LogitudeWindow();
                     logWindow.Width = 750;
-                    logWindow.Height = 500;
+                    logWindow.Height = 700;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsSettingsComponent');

@@ -38,7 +38,11 @@ using System.Xml.Serialization;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
+
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+
+using Unifreight.BL.EntityQueryServices;
+
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -130,14 +134,19 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
 
                 bool avoidSign = false;
-                bool notApprovedYet = true;
+                bool notApprovedYet = false;
                 if (!notApprovedYet)
                 {
                     avoidSign = AvoidSign(_RequestParams);
-                    if (avoidSign && _RequestParams.ForcePersonalSign)
+                    if (avoidSign)
                     {
-                        _RequestParams.ForcePersonalSign = false;
+                        _RequestParams.AvoidSign = true;
+                        if ( _RequestParams.ForcePersonalSign)
+                        {
+                            _RequestParams.ForcePersonalSign = false;
+                        }
                     }
+                    
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
@@ -337,16 +346,49 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
+                if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
+                    &&
+                    String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                    CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
+                {
+                    return true;//in courier CompanyType -AvoidSign
+                }
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
-
+                    string defValue = GDFDATAQueryService.GetDefault(_Tenant,"ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    decimal defaultAmount = 0;
+                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
                     {
-                        var qs = new DeclarationQueryService(requestParams.Tenant);
-                        var declarationPm = qs.GetSingle(requestParams.LoggingEntityId, false, true);
+
+                        //var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
+                        //var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
+                        //if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                        {
+                            var declarationQueryService = new DeclarationQueryService(_Tenant);
+                            var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
+
+                            if (declaration.IsCourierDeclaration)
+                            {
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
+                                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
+                                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "H";
+                                }
+                                else
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "L";
+                                    LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
+                                    return true;
+                                }
+                            }
+                           
 
 
-                        return declarationPm.IsCourierDeclaration;
+                        }
+
+                        return false;
                     }
                     else
                     {
@@ -357,6 +399,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return false;
                 }
+                return false;
             }
             catch (Exception)
             {
@@ -469,7 +512,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
-
+            
             //if (Debugger.IsAttached)
             //{
             //    var doNotThrow = true;
@@ -1845,14 +1888,16 @@ After that Remove file  from DCA  .. ");
                     return SheetStatusEnum.Created;
                     break;
                 case CustomsStepEnum.CustomRequest:
-
-                    //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
-                    if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
-                        || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
-                        || _RequestParams.ForcePersonalSign)
+                    if (!_RequestParams.AvoidSign)
                     {
-                        return SheetStatusEnum.WaitingForSigning;
-                        break;
+                        //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
+                        if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
+                            || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
+                            || _RequestParams.ForcePersonalSign)
+                        {
+                            return SheetStatusEnum.WaitingForSigning;
+                            break;
+                        }
                     }
                     return SheetStatusEnum.InProcess;
                     break;

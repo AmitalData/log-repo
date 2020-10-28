@@ -15,6 +15,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public DocumentsFilingRepository()
         {
             commonDataContext = new CommonDataContext();
+            //(context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+        
         }
 
         public DocumentsFilingRepository(int tenant)
@@ -50,6 +52,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId(string entityId, int tenant)
         {
+
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                                                   where (a.EntityId == entityId || a.ChildEntityId == entityId)  && a.Tenant == tenant
                                                   select a).ToList();

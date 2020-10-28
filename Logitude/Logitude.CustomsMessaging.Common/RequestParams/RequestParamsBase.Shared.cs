@@ -85,6 +85,9 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string UnifreightListOnServerOnly { get; set; }
 
         public bool SplitterModeLetCreateMyType { get; set; }
+
+        public bool AvoidSign { get; set; }
+        
     }
 
     public class TestCase
