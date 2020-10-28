@@ -28,6 +28,7 @@ using Logitude.Customs.BL.BL;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using UnifreightIIG.Common.ExportDeclarationServiceReference;
+using Exception = System.Exception;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -928,6 +929,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+
+                        if (isCollectActive)
+                        {
+                            bool isStatusVPA = false;
+                            try
+                            {
+                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId);
+                            }
+                            catch (Exception e)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
+                            }
+                            if (isStatusVPA) isCollectActive = false;
+                        }
+
                         if (isCollectActive)
                         {
 

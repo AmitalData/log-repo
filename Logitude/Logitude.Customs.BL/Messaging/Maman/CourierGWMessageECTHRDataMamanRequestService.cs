@@ -152,7 +152,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             if (!string.IsNullOrWhiteSpace(myCourierMasterPM.TruckerId))
             { 
                 CardRepository cardRep = new CardRepository(myCourierMasterPM.Tenant);
-                Card card = cardRep.GetSingleCard(myCourierMasterPM.TruckerId, myCourierMasterPM.Tenant);
+                Card card = cardRep.GetSingleCardCache(myCourierMasterPM.TruckerId, myCourierMasterPM.Tenant);
                 if (card != null)
                 {
                     distributorHP = card.VatNumber;

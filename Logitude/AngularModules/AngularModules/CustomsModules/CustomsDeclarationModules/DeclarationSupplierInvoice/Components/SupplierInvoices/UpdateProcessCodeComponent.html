@@ -117,7 +117,7 @@
                     </td>
                     <td style="width:5px"><div></div></td>
                     <td style="width:30px">
-                        <button class="Button" (click)="AddLines()" [disabled]="!IsAddButtonEnabled">{{'Customs.General.B.Add' |TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="AddLines()" [disabled]="!IsAddButtonEnabled" id="Add_Lines">{{'Customs.General.B.Add' |TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
@@ -194,7 +194,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" id="UpdateProccess">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

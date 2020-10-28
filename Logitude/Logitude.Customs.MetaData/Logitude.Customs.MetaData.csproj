@@ -110,6 +110,7 @@
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
+    <None Include="DBScripts\Post\202010111400_UpdateRequiredFields.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -153,6 +154,7 @@
     <None Include="DBTables\AttachmentType.dxml" />
     <None Include="DBTables\Authority.dxml" />
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
+    <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -305,6 +307,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
@@ -458,9 +461,11 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

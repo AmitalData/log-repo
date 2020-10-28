@@ -32,6 +32,7 @@ import {CollateralsRequestFileCondPM} from '../../EntityPMs/CollateralsRequestFi
 import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnswerPM';
 import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Injectable()
 
@@ -107,8 +108,8 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-
+                }), catchError(ServiceHelper.HandleServiceError));
+            
         }
 
         );
@@ -1539,6 +1540,25 @@ export class DeclarationWebService {
             }
         }
     }
+
+
+    GetCLSHWBEventHandle(DeclarationID: string,  a_tenent: number, a_Mode: number) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetCLSHWBEventHandle/?DeclerationID=" + DeclarationID + "&a_Tenent=" + a_tenent + "&a_Mode=" + a_Mode + "&UserID=" + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapCustomsCollateralsAnswers(entityPM: CustomsCollateralPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldCustomsCollateralsAnswers: CustomsCollateralsAnswerPM[] = [];
@@ -1796,6 +1816,9 @@ export class DeclarationWebService {
         return entityPM;
     }
 
-    
+
+
+
+
 
 }

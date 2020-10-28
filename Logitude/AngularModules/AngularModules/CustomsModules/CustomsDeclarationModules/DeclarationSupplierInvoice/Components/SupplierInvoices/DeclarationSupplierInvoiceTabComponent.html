@@ -16,7 +16,7 @@
         font-family: sans-serif;
     }
 </style>
-<table  *ngIf="EntityPM.Direction!='E'">
+<table *ngIf=" EntityPM != null && EntityPM.Direction != 'E'">
     <tr>
         <td>
             <div class="TableHolder">
@@ -279,7 +279,7 @@
         </td>
     </tr>
 </table>
-<table *ngIf="EntityPM.Direction=='E'">
+<table *ngIf="  EntityPM != null &&  EntityPM.Direction=='E'">
     <tr>
         <td>
             <div class="TableHolder">

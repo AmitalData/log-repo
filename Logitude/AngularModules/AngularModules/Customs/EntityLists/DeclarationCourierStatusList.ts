@@ -77,6 +77,7 @@ export class DeclarationCourierStatusList {
 	SortedDocumentStatusCode: string;
 	SortedCourierManifestStatus: string;
 	SortedCourierDeclarationStatus: string;
+	Delivered: boolean;
 	
 }
  

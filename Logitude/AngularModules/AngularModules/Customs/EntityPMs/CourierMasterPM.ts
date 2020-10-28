@@ -284,6 +284,11 @@ export class CourierMasterPM {
     public set IsAutomaticManifestSent(newValue: boolean) { if (this.isAutomaticManifestSent != newValue) { this.isAutomaticManifestSent = newValue; this.MarkAsDirty("IsAutomaticManifestSent"); } }
        
 	 
+    private packageQuantityInMAWB: number;
+    public get PackageQuantityInMAWB() { return this.packageQuantityInMAWB; }
+    public set PackageQuantityInMAWB(newValue: number) { if (this.packageQuantityInMAWB != newValue) { this.packageQuantityInMAWB = newValue; this.MarkAsDirty("PackageQuantityInMAWB"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

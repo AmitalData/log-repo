@@ -44,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteStatusCode, 
 	         StorageSiteErrorText, 
 	         CourierPendingReasonList, 
-	         LastMileStatusName,
+	         LastMileStatusName, 
+	         Delivered,
 	      }
 
 
@@ -109,7 +110,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SortedImporterCode, 
 	         SortedDocumentStatusCode, 
 	         SortedCourierManifestStatus, 
-	         SortedCourierDeclarationStatus,
+	         SortedCourierDeclarationStatus, 
+	         Delivered,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -226,6 +228,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
             {
 				entityPOCO.LastMileStatusName = entityPM.LastMileStatusName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Delivered))
+            {
+				entityPOCO.Delivered = entityPM.Delivered;
 			}
 			}
 
@@ -347,6 +354,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastMileStatusName = entityPOCO.LastMileStatusName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Delivered))
+            {
+					entityPM.Delivered = entityPOCO.Delivered;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -461,6 +473,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
             {
                 oldEntityPM.LastMileStatusName = entityPM.LastMileStatusName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Delivered))
+            {
+                oldEntityPM.Delivered = entityPM.Delivered;
             }
 			
 		}

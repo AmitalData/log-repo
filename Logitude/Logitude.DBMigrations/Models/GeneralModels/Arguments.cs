@@ -19,6 +19,7 @@ namespace Logitude.DBMigrations.Models
         public const string DATATYPECHANGES = "-datatypechanges";
         public const string INCLUDEMODULES = "-includemodules";
         public const string EXCLUDEMODULES = "-excludemodules";
+        public const string ALLOWDROP = "-allowdrop";
         public const string DEV = "-dev";
     }
 }

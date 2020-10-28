@@ -1216,6 +1216,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? packageQuantityInMAWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantityInMAWB  
+	   {
+	    
+	     get
+		{
+		   return packageQuantityInMAWB;
+		 }
+		 set
+		 {
+		   if(packageQuantityInMAWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantityInMAWB",OldValue=packageQuantityInMAWB,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantityInMAWB=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

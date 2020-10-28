@@ -832,6 +832,11 @@ export class SupplierInvoiceItemPM {
     public set ItemFOBAmountNIS(newValue: number) { if (this.itemFOBAmountNIS != newValue) { this.itemFOBAmountNIS = newValue; this.MarkAsDirty("ItemFOBAmountNIS"); } }
        
 	 
+    private classificationCodeSource: string;
+    public get ClassificationCodeSource() { return this.classificationCodeSource; }
+    public set ClassificationCodeSource(newValue: string) { if (this.classificationCodeSource != newValue) { this.classificationCodeSource = newValue; this.MarkAsDirty("ClassificationCodeSource"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	
