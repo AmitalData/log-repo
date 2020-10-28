@@ -57,10 +57,10 @@ namespace Logitude.DBMigrations.Models
             CreateDBMigrationsLastDefaultValueColumn(dbMigrationsSetDefaultValue.DatabaseType, dbMigrationsSetDefaultValue.TableName);
 
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "InProgress");
-            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "StartDate", DateTime.Now.ToString());
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "StartDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             SetDefaultValueAsBatches(dbMigrationsSetDefaultValue);
             AddNotNullCheckConstraint(dbMigrationsSetDefaultValue);
-            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "EndDate", DateTime.Now.ToString());
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "EndDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "Done");
         }
 
@@ -75,10 +75,10 @@ namespace Logitude.DBMigrations.Models
             }
             
             dbMigrationsDataScript.StartDate = DateTime.Now;
-            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "StartDate", dbMigrationsDataScript.StartDate.ToString());
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "StartDate", dbMigrationsDataScript.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
             ExecuteScriptAsBatches(dbMigrationsDataScript);
             dbMigrationsDataScript.EndDate = DateTime.Now;
-            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "EndDate", dbMigrationsDataScript.EndDate.ToString());
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "EndDate", dbMigrationsDataScript.EndDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
 
             if (!ServiceMode)
             {
