@@ -28,13 +28,13 @@
 
         <div class="container ">
 
-            <div class="info-text " *ngIf="Shipments.length==0 && !noResult">
+            <div class="info-text " *ngIf="Shipments.length==0 && !noResult  && !hasError">
                 <p>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
                     survived not only five centuries.
                 </p>
             </div>
-            <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult">
+            <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
                 <img class="path " src="./assets/images/misc/dot-path.svg " alt=" " />
                 <img class="end " src="./assets/images/misc/path-end.svg " alt=" " />
                 <img class="start " src="./assets/images/misc/path-start.svg " alt=" " />
@@ -50,6 +50,17 @@
             </div>
 
 
+            <!-- Has Error -->
+            <div class="no-result-div" *ngIf="hasError">
+                <h1 style="color: rgb(211, 0, 0) ;">Oops!</h1>
+                <p style="font-size: 14px;">
+                    An error occurred while searching, please try again.
+                </p>
+                <a *ngIf="!showErrorMessage" (click)="showErrorMessage = true" style="cursor: pointer;text-decoration: underline;">Show Error</a>
+
+                <p *ngIf="showErrorMessage">{{ServiceError.ErrorMessage}}</p>
+
+            </div>
 
             <!-- No Result -->
             <div class="no-result-div" *ngIf="noResult">
