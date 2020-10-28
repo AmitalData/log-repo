@@ -306,7 +306,7 @@
 	inner JOIN DIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
 	
 	inner JOIN DIM_Currencies ProfitCurrency ON dw_Shipments.ProfitCurrencyId = ProfitCurrency.Id
-	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.StatusId = DIM_ShipmentStatuses.Id
+	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.ComputedStatusId = DIM_ShipmentStatuses.Id
 	inner JOIN DIM_OBLTypes ON dw_ShipmentMasterDatas.OBLTypeCode = DIM_OBLTypes.Code
 
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
