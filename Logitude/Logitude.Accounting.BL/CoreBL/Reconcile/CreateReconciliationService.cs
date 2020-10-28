@@ -76,10 +76,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
 
+            bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
             bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
-            if (hasMultipleARPayments == true)
+            if (hasMultipleARPayments == true && !hasTwoPaymentsOnly)
             {
-                CheckAllPaymentsReconciliation(reconciliationPM, recoTransactions);
+                CheckIfReconcilePaymentOnly(reconciliationPM, recoTransactions);
 
                 CheckIfTotalNotEqualsZero(reconciliationPM);
 
@@ -102,7 +103,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return recoCallBack;
         }
 
-        private static void CheckAllPaymentsReconciliation(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
+        private static void CheckIfReconcilePaymentOnly(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
         {
             bool allTransactionsIsPayments = recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
             if (allTransactionsIsPayments == true)
