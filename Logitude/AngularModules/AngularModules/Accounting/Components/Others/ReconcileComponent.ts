@@ -1065,10 +1065,36 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     GetFirst100LedgerToReconcile()
     {
         this.ValidationErrorsList = [];
+        var filters = this.GetAPIFilters();
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        this._LedgerTransactionExtendedListService.getFirst100LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            var first100Transactions = mm.Result;
+            if (!mm.HasError) {
+                if (!AppTool.IsNullOrEmpty(first100Transactions)) {
+                    this.SelectLines(first100Transactions);
+                    this.CalculateTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
 
+    private SelectLines(result: any)
+    {
+        this.SelectedLines.Clear();
+        let emittedArray = result.map((res: LedgerTransactionPM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
+        let selectedLines = result.map(res => (new LineModel(res, this, -1))); //[];
+        this.SelectedLines.InsertCollection(selectedLines);
+        this.ChangeCheckBoxesState.emit(emittedArray);
+    }
 
-
-        //#region filters
+    private GetAPIFilters()
+    {
         var filters = new ApiQueryFilters;
         if (this.currencyFilter) {
             filters.AdditionalFilters.push(this.currencyFilter);
@@ -1086,42 +1112,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.GetCount = true;
         filters.SortBy = this.DataSource.sortingCol;
         filters.SortDirection = this.DataSource.sortingDir;
- 
-        //#endregion
-
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
-
-
-        this._LedgerTransactionExtendedListService.getFirst100LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
-
-            var mm: ServiceResponse = myResult;
-            var result = mm.Result;
-            if (!mm.HasError) {
-
-                if (!AppTool.IsNullOrEmpty(result)) {
-                    this.SelectedLines.Clear();
-                    let emittedArray = result.map((res:LedgerTransactionPM)=>({rowData: res, IsChecked: true, RowIndex: -1, ById: true}));//result.map(res=>(new LineModel(res,this,-1)));//[];
-                    let selectedLines= result.map(res=>(new LineModel(res,this,-1)));//[];
-                    // for (var i = 0; i < result.length; i++) {
-                    //     var line1 = new LineModel(result[i], this,-1);
-                    //     array.push(line1);
-                    //     // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
-                    // }
-                    this.SelectedLines.InsertCollection(selectedLines);
-                    this.ChangeCheckBoxesState.emit(emittedArray);
-                    // for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
-                    //     var line = this.SelectedLines.Collection[i];
-                    //     this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
-                    // }
-                    this.CalculateTotals();
-                }
-            }
-            else {
-                this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
+        return filters;
     }
 
     CreateReconciliation() {
