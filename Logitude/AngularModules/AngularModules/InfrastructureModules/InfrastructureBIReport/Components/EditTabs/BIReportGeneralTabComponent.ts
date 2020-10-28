@@ -44,7 +44,7 @@ export class BIReportGeneralTabComponent extends BaseComponent {
 
     FillBIReportFolderNamesList() {
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.BIReportFolderExtendedListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+        this.BIReportFolderExtendedListService.GetPermittedFolders(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 this.BIReportFolders = myResponse.Result;

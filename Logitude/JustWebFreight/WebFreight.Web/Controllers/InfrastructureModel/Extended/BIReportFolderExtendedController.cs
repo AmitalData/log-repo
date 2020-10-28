@@ -21,7 +21,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 {
     public class BIReportFolderExtendedController : ApiController
     {
-        public HttpResponseMessage GetPermittedFolders()
+        public HttpResponseMessage GetPermittedFolders(string loggedUserId)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BIReportFolderQueryService bIReportFolderQuery = new BIReportFolderQueryService(MyContext);
-                List<BIReportFolderList> result = bIReportFolderQuery.GetPermittedFoldersList(authToken.Tenant);
+                List<BIReportFolderList> result = bIReportFolderQuery.GetPermittedFoldersList(authToken.Tenant, loggedUserId);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

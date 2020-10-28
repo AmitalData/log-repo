@@ -127,7 +127,7 @@ export class NewBIReport extends BaseComponent {
     }
 
     FillBIReportFolderNamesList() {
-        this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+        this.folderListService.GetPermittedFolders(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.BIReportFolders = myResponse.Result;
                 var selectedBIReport: string = myResponse.Result.filter(bi => bi.Id == this.EntityPM.BIReportFolderId)[0];

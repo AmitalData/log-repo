@@ -56,7 +56,7 @@ export class BIFolderReportComponent {
     private folderList: BIReportFolderList[];
     private reportList: BIReportList[];
     LoadData() {
-        this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+        this.folderListService.GetPermittedFolders(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.folderList = myResponse.Result;
                 
