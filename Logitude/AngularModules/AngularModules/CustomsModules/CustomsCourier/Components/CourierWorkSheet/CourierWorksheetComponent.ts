@@ -482,9 +482,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
 
-    SendALLSVG() {
+    SendALLSVG(isAll: boolean) {
 
-        if (this._SVGTotal == 0) {
+        if (this._SVGTotal == 0 && !isAll) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -511,7 +511,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         MyFilters.GetCount = false;
         MyFilters.PageIndex = 0;
-        MyFilters.PageSize = 100;
+        //MyFilters.PageSize = 100;
+        MyFilters.GetAll = true;
         //this.CurrentQueryFilters = MyFilters;
         var ids: string[] = [];
         this._EntityListService.getByFilters("Customs.DeclarationCourierStatus", MyFilters, null).then((observable: Observable<any>) => {
