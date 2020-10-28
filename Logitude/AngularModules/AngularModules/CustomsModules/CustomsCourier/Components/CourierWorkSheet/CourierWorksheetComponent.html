@@ -470,7 +470,7 @@
                                                                 <!--SVG-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='SVG' ">
                                                                     <tr>
-                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG()" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
+                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG(false)" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
