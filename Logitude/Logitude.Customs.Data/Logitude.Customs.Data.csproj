@@ -93,6 +93,7 @@
     <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomContextExt.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
+    <Compile Include="CustomFilters\DeclarationReferantDataCustomFilters.cs" />
     <Compile Include="CustomFilters\FreightPaymentMethodCustomFilters.cs" />
     <Compile Include="DataContracts\CertificateConnectedItems.cs" />
     <Compile Include="CustomContext.cs">
