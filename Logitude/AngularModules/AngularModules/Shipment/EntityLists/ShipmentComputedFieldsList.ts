@@ -24,6 +24,7 @@ export class ShipmentComputedFieldsList {
 		Commodity: string;
 		FirstPickupLocation: string;
 		ContainersNumbers: string;
+		ContainersNumbersAndTypesArray: string;
 		FirstPickupATD: Date;
 		FirstPickupATA: Date;
 		FinalDeliveryETD: Date;

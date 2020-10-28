@@ -95328,6 +95328,11 @@
       DefaultText="&quot;Status received from airline&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.B.Packages.AddFullTruckLoad&quot;"
+      DefaultText="&quot;Add Full Truck Load&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
