@@ -20,11 +20,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
      
         public string LastUpdate;
         public RecordUpdated recordUpdated = new RecordUpdated();
-        public int MainThreadNumbers = 50;
+        public int MainThreadNumbers = 3;
         int ThreadsNumber = 0;
         int ThreadsCompleatedWork = 0;
         private object threadLock = new object();
-        private static readonly Semaphore WorkLimiter = new Semaphore(100, 100);
+        //private static readonly Semaphore WorkLimiter = new Semaphore(100, 100);
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         { 
@@ -49,11 +49,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             ThreadsNumber = 0;
             ThreadsCompleatedWork = 0;
-            ThreadPool.SetMinThreads(1, 1);
-            ThreadPool.SetMaxThreads(MainThreadNumbers, MainThreadNumbers);
+           
+
             RecordUpdated _RecordUpdated = new RecordUpdated();
 
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
+            //if (bulkDataPreperation.cargoTable.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
+            //{
+            //    ThreadPool.SetMinThreads(1, 1);
+            //    ThreadPool.SetMaxThreads(MainThreadNumbers, MainThreadNumbers);
+            //}
             bool IsLastRecord = false;
             using (SqlConnection sourceConnection =
                                   new SqlConnection(cargoTrackingDataBaseArgs.buildCargoArgs.SourceConnectionString))
@@ -187,10 +192,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                 }
                 bulkDataPreperation.dataTable2.Rows.Clear();
-
-                WorkLimiter.WaitOne();
-                ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true));
-       
+            //if (bulkDataPreperation.cargoTable.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
+            //{
+            //     WorkLimiter.WaitOne();
+            //     ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true));
+            //}
+            //else
+            //{
+                BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns, true);
+            //}
+                
+                
 
         }
 
@@ -214,10 +226,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 bulkDataPreperation.dataTable.Rows.Clear();
                 bulkDataPreperation.NumberRecoredTake = 0;
 
-                 //Thread.Sleep(50);
-                 WorkLimiter.WaitOne();
-                ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns));
-
+            //if(bulkDataPreperation.cargoTable.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
+            //{
+            //  WorkLimiter.WaitOne();
+            //  ThreadPool.QueueUserWorkItem(o => BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns));
+            //}
+            //else
+            //{
+              BuildThreadPool(bulkDataPreperation, cargoTrackingDataBaseArgs, ThreadDataTable, columns);
+            //}
+            
 
         }
  
@@ -231,9 +249,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             finally
             {
-                    WorkLimiter.Release();
+                //if (bulkDataPreperation.cargoTable.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
+                //    WorkLimiter.Release();
 
-                Interlocked.Increment(ref ThreadsCompleatedWork);
+                    Interlocked.Increment(ref ThreadsCompleatedWork);
                 //ThreadsCompleatedWork += 1;
             }
         }
@@ -457,18 +476,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                 
 
                             }
-                            if (IsCT2)
-                                bulkCopy.DestinationTableName = "dbo." + table.CT2_TableName;
-                            else
-                                bulkCopy.DestinationTableName = "dbo." + table.CT_TableName;
-
-                            bulkCopy.BulkCopyTimeout = (int)ServiceHelper.timeOut;
-                            bulkCopy.EnableStreaming = true;
-                            bulkCopy.BatchSize = 100000;
+                          
 
                             lock (threadLock)
                             {
+                                if (IsCT2)
+                                    bulkCopy.DestinationTableName = "dbo." + table.CT2_TableName;
+                                else
+                                    bulkCopy.DestinationTableName = "dbo." + table.CT_TableName;
+
+                                bulkCopy.BulkCopyTimeout = (int)ServiceHelper.timeOut;
+                                bulkCopy.EnableStreaming = true;
+                                bulkCopy.BatchSize = 100000;
                                 bulkCopy.WriteToServer(dataTable);
+                                bulkCopy.Close();
+
                             }
 
 
