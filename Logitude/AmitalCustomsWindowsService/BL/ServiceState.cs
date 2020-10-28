@@ -110,28 +110,7 @@ LastError:{4}",
                     Debug.WriteLine(_AllQ);
                 }
 
-                ReqSheetStatisticClass.DoIt(
-                (emailbody, subj) =>
-                {
-                    var parameters = new CommunicationWorkerRole.EmailParameters()
-                    {
-                        From = "admin@fnarsoft.com",
-                        SwitchFromWithUserNameIfValid = true,
-                        To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
-                        Cc = "",
-                        Bcc = "",
-                        Subject = subj,
-                        Body =
-                        "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
-                        emailbody,
-                    };
-                    //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
-                    //parameters.Tenant = 92;
-                    Debug.WriteLine(parameters.To);
-                    CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
-                });
-
-
+                //SendReqSheetStatistic();
 
                 string bad = "bgcolor=red";
                 string Good = "bgcolor=Green";
@@ -172,6 +151,32 @@ LastError:{4}",
                 //throw;
             }
         }
+
+        private static void SendReqSheetStatistic()
+        {
+            return;
+            ReqSheetStatisticClass.DoIt(
+                            (emailbody, subj) =>
+                            {
+                                var parameters = new CommunicationWorkerRole.EmailParameters()
+                                {
+                                    From = "admin@fnarsoft.com",
+                                    SwitchFromWithUserNameIfValid = true,
+                                    To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
+                                    Cc = "",
+                                    Bcc = "",
+                                    Subject = subj,
+                                    Body =
+                                    "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
+                                    emailbody,
+                                };
+                    //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    //parameters.Tenant = 92;
+                    Debug.WriteLine(parameters.To);
+                                CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
+                            });
+        }
+
         internal static void RaiseAnotherDay()
         {
             try
