@@ -261,11 +261,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         });
     }
 
-    FillGridsData() {
+    FillGridsData(isAfterSend: boolean) {
 
         // PaymentMethods List
         this.PaymentMethodsList = new ObservableCollection([]);
-        if (!AppTool.IsNullOrEmpty(this.paymentPM) && !this.isFromPayCourier) {
+        if (!AppTool.IsNullOrEmpty(this.paymentPM) && (!this.isFromPayCourier ||  isAfterSend)) {
             for (let item of this.paymentPM.DeclarationPaymentMethods) {
                 this.PaymentMethodsList.Insert(new PaymentMethodModel(item, this));
             }
@@ -579,7 +579,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
     loadPaymentCompleted() {
 
-        this.FillGridsData();
+        this.FillGridsData(false);
 
         // create new entity if there is no payment
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
@@ -1884,7 +1884,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var result = response.Result;
                 console.log("[Response] declarationPaymentPMService.insert ", result);
                 this.paymentPM = result;
-                this.FillGridsData();
+                this.FillGridsData(true);
 
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
@@ -1898,7 +1898,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var result = response.Result;
                 console.log("[Response] declarationPaymentPMService.insert ", result);
                 this.paymentPM = result;
-                this.FillGridsData();
+                this.FillGridsData(true);
 
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
