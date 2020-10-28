@@ -232,8 +232,8 @@ export class SearchComponent implements AfterViewInit
     }
     references: string[];
     SplitReference(reference: string){
-      this.references =reference!= null?  reference.split(','): null;
-    
+        this.references = reference != null ? reference.split(',').slice(0, 6) : null;
+  
     }
 
     GetModeIcon(mode: string)
