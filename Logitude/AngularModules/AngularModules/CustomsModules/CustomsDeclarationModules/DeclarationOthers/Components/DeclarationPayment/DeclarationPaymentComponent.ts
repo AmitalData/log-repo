@@ -262,15 +262,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     FillGridsData(isAfterSend: boolean) {
-
-        // PaymentMethods List
+         // PaymentMethods List
         this.PaymentMethodsList = new ObservableCollection([]);
-        if (!AppTool.IsNullOrEmpty(this.paymentPM) && (!this.isFromPayCourier ||  isAfterSend)) {
+        if (!AppTool.IsNullOrEmpty(this.paymentPM) && (!this.isFromPayCourier || isAfterSend)) {
             for (let item of this.paymentPM.DeclarationPaymentMethods) {
                 this.PaymentMethodsList.Insert(new PaymentMethodModel(item, this));
             }
         }
 
+      
         // Protests List
         this.PaymentProtestsList = new ObservableCollection([]);
         if (!AppTool.IsNullOrEmpty(this.paymentPM)) {
@@ -739,12 +739,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 this.AutoFillPaymentScreenByDefault();
                             }
                             else if (this.isFromPayCourier && this.paymentPM.DeclarationPaymentMethods.length > 0) {
-                                this.paymentPM.DeclarationPaymentMethods.forEach(x => {
-                                   // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
-                                    this.paymentPM.RemoveDeclarationPaymentMethod(x);
-                                    this.AutoFillPaymentScreenByDefault();
+                                 //this.paymentPM.DeclarationPaymentMethods.forEach(x => {
+                                //    // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
+                                //    this.paymentPM.RemoveDeclarationPaymentMethod(x);
 
-                                })    
+
+                                //});
+
+                                for (var i = 0; i < this.paymentPM.DeclarationPaymentMethods.length; i++) {
+                                    this.paymentPM.RemoveDeclarationPaymentMethod(this.paymentPM.DeclarationPaymentMethods[i]);
+                                    i--;
+                                }
+                                this.AutoFillPaymentScreenByDefault();
                             }
                         }
                     });
@@ -753,12 +759,19 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.AutoFillPaymentScreenByDefault();
                 }
                  else if (this.isFromPayCourier && this.paymentPM.DeclarationPaymentMethods.length > 0) {
-                    this.paymentPM.DeclarationPaymentMethods.forEach(x => {
-                        // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
-                        this.paymentPM.RemoveDeclarationPaymentMethod(x);
-                        this.AutoFillPaymentScreenByDefault();
+ 
+                     for (var i = 0; i < this.paymentPM.DeclarationPaymentMethods.length; i++) {
+                         this.paymentPM.RemoveDeclarationPaymentMethod(this.paymentPM.DeclarationPaymentMethods[i]);
+                         i--;
+                     }
+                     //this.paymentPM.DeclarationPaymentMethods.forEach(x => {
+                     //    // paymentMethodModel: PaymentMethodModel = new paymentMethodModel()
+                     //    this.paymentPM.RemoveDeclarationPaymentMethod(x);
 
-                    })
+
+                     //});
+                     this.AutoFillPaymentScreenByDefault();
+
                 }
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
