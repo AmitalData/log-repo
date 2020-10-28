@@ -110,7 +110,7 @@ LastError:{4}",
                     Debug.WriteLine(_AllQ);
                 }
 
-                SendReqSheetStatistic();
+                //SendReqSheetStatistic();
 
                 string bad = "bgcolor=red";
                 string Good = "bgcolor=Green";
@@ -154,6 +154,7 @@ LastError:{4}",
 
         private static void SendReqSheetStatistic()
         {
+            return;
             ReqSheetStatisticClass.DoIt(
                             (emailbody, subj) =>
                             {
