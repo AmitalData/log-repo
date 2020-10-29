@@ -194,11 +194,11 @@
                         <div class="column col-md-1 status" style="width: 17%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div   class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
+                                <div class="value truncateText">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }}</div>
 
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="value">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value">{{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
                         </div>
                     </div>
