@@ -3086,6 +3086,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
             }
 
+            if (this.ObjectTableName == "UserDefinedReport") {
+                FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
+            }
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
             logWindow.Title = windowTitle;
