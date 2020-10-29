@@ -375,6 +375,7 @@ import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMServ
 import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
 import { CancellationReasonRequestTypeListService } from './Services/StandardLists/CancellationReasonRequestTypeListService';
 import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
+import { AmendmentFieldStatusListService } from './Services/StandardLists/AmendmentFieldStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -626,6 +627,7 @@ export class ModuleProviders {
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
             case "ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
             case "AmendRequestRejectReasonTypeListService": { myResult = new AmendRequestRejectReasonTypeListService(); break; }
+            case "AmendmentFieldStatusListService": { myResult = new AmendmentFieldStatusListService(); break; }
 
              //#endregion                
 

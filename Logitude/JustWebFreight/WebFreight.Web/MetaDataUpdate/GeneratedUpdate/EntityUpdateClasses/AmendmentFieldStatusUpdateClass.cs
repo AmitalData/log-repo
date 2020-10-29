@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendmentFieldStatusUpdateClass
    {  		
-		public const string HashString = "befc2d684ac82bd4b8b9c8a7a4e78dc2";
+		public const string HashString = "f05f34015ff1e54a1c9459db2ad8ad07";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס לשורת תיקון הצהרה",
 			      				    DefaultText =  "Amendment Field Status",
-			      				    Code =  "082e",
+			      				    Code =  "5e39",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -169,6 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -230,6 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -290,6 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -349,6 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -409,6 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -451,7 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup AmendmentFieldStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "082e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup AmendmentFieldStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5e39", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup AmendmentFieldStatusQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7683", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AmendmentFieldStatusObjectTable = objectTables.ContainsKey("AmendmentFieldStatus") ? objectTables["AmendmentFieldStatus"] : null;
@@ -479,13 +484,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AmendmentFieldStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmendmentFieldStatusTextCode_0.Id, NameTextCodeCode = AmendmentFieldStatusTextCode_0.Code, ObjectTableName = "AmendmentFieldStatus", Code = "AmendmentFieldStatus",  QueryGroupCode = "5e39", IndexOrder = 0, Tenant = 0, ObjectTableId = AmendmentFieldStatusObjectTable.Id, QuerySection = "AmendmentFieldStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmendmentFieldStatusFeature_0.Id,FeatureUniqeCode= AmendmentFieldStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AmendmentFieldStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AmendmentFieldStatus.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AmendmentFieldStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AmendmentFieldStatus.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AmendmentFieldStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AmendmentFieldStatus.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AmendmentFieldStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AmendmentFieldStatus.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AmendmentFieldStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AmendmentFieldStatus.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AmendmentFieldStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentFieldStatusQuery.Id,QueryCode = AmendmentFieldStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AmendmentFieldStatus.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -495,7 +500,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AmendmentFieldStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AmendmentFieldStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AmendmentFieldStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AmendmentFieldStatus").ToList();
+		       
+	      
+
+	         Screen AmendmentFieldStatusAmendmentFieldStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AmendmentFieldStatus.HeaderScreen", Name = "AmendmentFieldStatusHeaderScreen", ObjectTableId = AmendmentFieldStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AmendmentFieldStatusObjectTable.HeaderScreenId = AmendmentFieldStatusAmendmentFieldStatusHeaderScreenScreen0.Id;
+		    AmendmentFieldStatusObjectTable.HeaderScreenCode = AmendmentFieldStatusAmendmentFieldStatusHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
