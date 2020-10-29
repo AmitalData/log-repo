@@ -96,7 +96,7 @@ export class PublicGateComponent
 
                 if (Number.isNaN(this.tenant) || !this.tenant || this.tenant==null){
                     this.tenant=1;
-                    this.back();  
+                    this.GoToMainSearhpage();  
                 }
                 // else{
                 //     this._Tenant=1; 
@@ -148,6 +148,9 @@ export class PublicGateComponent
     {
         AppHelper.AppBack(this.router,this.location,this.tenant);
 
+    }
+    GoToMainSearhpage(){
+        this.router.navigate([this.tenant,'search']);
     }
     GetBackEnabled()
     {
