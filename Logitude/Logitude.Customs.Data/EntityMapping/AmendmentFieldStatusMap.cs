@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public AmendmentFieldStatusMap()
         { 
-				this.ToTable("AmendmentFieldStatuses");
+			  this.ToTable("AmendmentFieldStatuses", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

@@ -173,7 +173,7 @@ export class AmendmentFieldStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("AmendmentFieldStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatus").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentFieldStatusList> = [];
@@ -239,7 +239,7 @@ export class AmendmentFieldStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("AmendmentFieldStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatus").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentFieldStatusList> = [];

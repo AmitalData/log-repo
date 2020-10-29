@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "AmendmentFieldStatus",
+                    ObjectTableName = "Customs.AmendmentFieldStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AmendmentFieldStatuss",
+                    QuerySection = "Customs.AmendmentFieldStatuss",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> AmendmentFieldStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AmendmentFieldStatus",tenant);
+				List<ObjectField> AmendmentFieldStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AmendmentFieldStatus",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
