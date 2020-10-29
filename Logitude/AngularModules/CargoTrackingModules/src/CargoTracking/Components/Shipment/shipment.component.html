@@ -1,6 +1,16 @@
 <div *ngIf="!isLoading && !Shipment" class="no-result">
     <h2>    Sorry, Can't find this shipment </h2>
 </div>
+
+<!-- Progress Indicator -->
+<div class="spinner" *ngIf="isLoading">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div>
+
 <div class="content-wrapper" *ngIf="Shipment">
     <a [routerLink]="" (click)="goBack()">Back to search result</a>
 
