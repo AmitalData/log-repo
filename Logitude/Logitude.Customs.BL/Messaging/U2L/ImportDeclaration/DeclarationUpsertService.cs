@@ -344,7 +344,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             }
                             else
                             {
-                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
+                                string importerId = TranslateClient(_AmitalCustomsFile.ImporterId);
+                                if (importerId == null && mode == "UpdateNotEmpty")
+                                {
+                                    SendClientSearch();
+                                }
+                                this._MyDeclarationPM.ImporterId = importerId;
                                 this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
                             }
                         }
