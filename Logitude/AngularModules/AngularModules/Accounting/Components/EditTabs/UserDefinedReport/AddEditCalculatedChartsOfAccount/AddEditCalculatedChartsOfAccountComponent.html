@@ -404,6 +404,7 @@
                                        (SelectedItemChanged)="item.ChartOfAccount = $event"
                                        [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
                                        [RunToggleMode]="true"
+                                       [QueryFilterItems]="ChartOfAccountFilterItems"
                                        [FocusOnMe]="'true'">
                                </LogLov>
                             </div>
@@ -428,6 +429,7 @@
                                    (SelectedItemChanged)="item.GLAccount = $event"
                                    [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
                                    [RunToggleMode]="true"
+                                   [QueryFilterItems]="GLAccountFilterItems"
                                    [FocusOnMe]="'true'">
                            </LogLov>
                         </div>

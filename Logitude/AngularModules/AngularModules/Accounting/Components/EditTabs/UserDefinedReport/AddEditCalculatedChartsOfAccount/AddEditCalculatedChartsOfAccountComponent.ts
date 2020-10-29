@@ -4,6 +4,7 @@ import { CalculatedChartsOfAccountsLinePM } from 'Accounting/EntityPMs/Calculate
 import { ChartOfAccountsTypePM } from 'Accounting/EntityPMs/ChartOfAccountsTypePM';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
@@ -29,14 +30,22 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public ObjectTableName: string = "CalculatedChartsOfAccount";
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public ChartOfAccountFilterItems :ApiQueryFilters;
+    public GLAccountFilterItems :ApiQueryFilters;
 
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.ChartOfAccountFilterItems = new ApiQueryFilters();
+        this.GLAccountFilterItems = new ApiQueryFilters();
+     
     }
 
 
+    SetFilterItems(){
+        this.ChartOfAccountFilterItems.addAdditionalFilter("TypeCode", this.ChartOfAccountTypeCode, null, null, "Equals", false, false, false, "string");
+        this.GLAccountFilterItems.addAdditionalFilter("ChartOfAccountsTypeCode", this.ChartOfAccountTypeCode, null, null, "Equals", false, false, false, "string");
+    }
     
     OnFocus() {
         if (this.DataContext.CalculatedChartsOfAccountsLineItemList.Length == 0) {
@@ -111,8 +120,20 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
                                                                                         s.LineTypeCode=='2' && !s.ChartOfAccountId? s.ErrorLog = RequiredChartsofAccountFiled:null)
                                                                                    );
     }
+
+    ValidateCreateLine(){
+        this.ValidationErrorsList = [];
+        if(AppTool.IsNullOrEmpty(this.ChartOfAccountTypeCode)){
+            var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            var RequiredChartsOfAccountTypeFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName"));
+            this.ValidationErrorsList.push(RequiredChartsOfAccountTypeFiled);
+        }
+    }
+
     AddLine() {
         if(!this.EntityPM.IsCancelled){
+            this.ValidateCreateLine();
+            if( this.ValidationErrorsList.length == 0){
             var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
             calculatedChartsOfAccountsLinePM.Tenant = this.EntityPM.Tenant;
             this.EntityPM.AddCalculatedChartsOfAccountsLine(calculatedChartsOfAccountsLinePM);
@@ -123,7 +144,8 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             }
             var line = new CalculatedChartsOfAccountsLineItem(calculatedChartsOfAccountsLinePM,true, this.DataContext);
             this.DataContext.CalculatedChartsOfAccountsLineItemList.Insert(line);
-        }
+         }
+      }
     }
 
  
@@ -141,6 +163,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             }
             else{
                 this.DataContext.ChartOfAccountTypeCode = newValue;
+                this.SetFilterItems();
             }
         }
     }

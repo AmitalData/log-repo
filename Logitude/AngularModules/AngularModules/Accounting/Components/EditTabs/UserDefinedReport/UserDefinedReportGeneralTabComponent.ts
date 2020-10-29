@@ -455,12 +455,22 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         
         if (this.EntityPM.LineTypeCode != newValue) {
             this.ErrorLog=null;
+            this.ClearFields(newValue);
             this.EntityPM.LineTypeCode = newValue;
             this.ValidateChartOfAccountLine();
             this.ValidateGLAccountLine();
         }
     }
-
+    ClearFields(val:string){
+        if(val=="1"){
+            this.ChartOfAccountId= null;
+            this.ChartOfAccount = null;
+        }
+        else if(val=="2"){
+            this.GLAccount= null;
+            this.GLAccountId = null;
+        }
+    }
     private lineType: CalculatedChartsLineTypePM;
     get LineType() { return this.lineType; }
     set LineType(newValue: CalculatedChartsLineTypePM) {
