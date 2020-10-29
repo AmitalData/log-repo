@@ -1131,11 +1131,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AmendmentFieldStatus", ObjectTables, AmendmentFieldStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendmentFieldStatus", ObjectTables, AmendmentFieldStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AmendmentFieldStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AmendmentFieldStatus");
 					AmendmentFieldStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					List<ObjectField> addedFields = new List<ObjectField>();
@@ -1162,10 +1162,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
- 
-				AmendmentFieldStatusUpdateClass.FillAmendmentFieldStatus();
-
- 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendRequestRejectReasonType", ObjectTables, AmendRequestRejectReasonTypeUpdateClass.HashString))
@@ -17944,8 +17940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
 	   
-	   	   AmendmentFieldStatusUpdateClass.FillAmendmentFieldStatus();
-	
+	   
 	   
 	   
 	   

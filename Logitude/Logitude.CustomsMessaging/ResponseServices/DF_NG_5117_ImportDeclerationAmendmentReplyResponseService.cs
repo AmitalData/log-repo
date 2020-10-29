@@ -309,7 +309,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                                                         .SerializeObject(customResponse.Response);
 
-                                                    var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
+                                                    var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                                                         .DeSerializeObject(customResponseResponseXml);
                                                 
                                                     List<error> systemMessagesList = new List<error>();
@@ -480,7 +480,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                                 .SerializeObject(customResponse.Response);
 
-                            var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
+                            var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                                 .DeSerializeObject(customResponseResponseXml);
                             ////5117 5117 5117 5117 5117
                             List<error> systemMessagesList = new List<error>();
@@ -706,7 +706,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                             .SerializeObject(customResponse.Response);
 
-                        var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
+                        var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
                             .DeSerializeObject(customResponseResponseXml);
                         ////5117 5117 5117 5117 5117
                         List<error> systemMessagesList = new List<error>();

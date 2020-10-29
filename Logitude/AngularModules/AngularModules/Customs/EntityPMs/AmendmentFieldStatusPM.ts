@@ -58,7 +58,7 @@ export class AmendmentFieldStatusPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AmendmentFieldStatus");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AmendmentFieldStatus");
            
         }
     }
