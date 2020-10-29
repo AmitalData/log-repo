@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(25)))
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(55)))
                 {
                     int count = 0;
                     bool global_errors = false;
@@ -240,7 +240,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             updateService.Update(accPM, true);
                         });
 
-
+                    scope.Complete();
 
                     if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                     {
@@ -252,7 +252,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
                     //        throw new Exception($"{text}");
                     //    }
-                    scope.Complete();
+
 
 
                 }
