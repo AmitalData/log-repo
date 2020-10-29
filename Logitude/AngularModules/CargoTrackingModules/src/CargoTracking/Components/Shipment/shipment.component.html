@@ -52,8 +52,21 @@
                             <div class="details">{{Shipment.CreateDate | date: 'dd/MM/yyyy'}}</div>
                         </div>
                         <div class="middle">
-                            <img class="path " [attr.src]="GetModeIcon()" alt=" " />
-
+                            <!--<img class="path " [attr.src]="GetModeIcon()" alt=" " />-->
+                            <svg  width="47px" height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
+                                <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" [attr.fill]="mainColor">
+                                        <g  transform="translate(308.000000, 934.000000)">
+                                            <g  transform="translate(45.000000, 46.000000)">
+                                                <g id="Group-3">
+                                                    <path [attr.d]="GetModesvgPath()" [attr.transform]="transform"  />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
                             <div class="label">In Progress</div>
                             <div class="details">{{Date | date: 'dd/MM/yyyy'}}</div>
                         </div>
