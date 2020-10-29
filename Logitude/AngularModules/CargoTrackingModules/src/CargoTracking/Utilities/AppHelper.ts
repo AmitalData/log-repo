@@ -22,6 +22,9 @@ export  class AppHelper{
                 router.navigate([tenant, 'search']);
             }
         }
+        else{
+            router.navigate([tenant, 'search']);
+        }
 
     }
     public static GetBackEnabled(router)
