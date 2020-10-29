@@ -28,6 +28,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -331,8 +333,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         {
                             if (_AmitalCustomsFile.ImporterId.Length > 9)
                             {
-                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
+                                string importerId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9));
+                                if (importerId == null && mode == "UpdateNotEmpty")
+                                {
+                                    SendClientSearch();
+                                }
+                                this._MyDeclarationPM.ImporterId = importerId;//Yuval Chalup 04.02.2016 TASK-20059
                                 this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
+                                
                             }
                             else
                             {
@@ -815,6 +823,39 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
+        public void SendClientSearch() {
+            int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
+            var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant); 
+            var newClientSearchRequestParams = new ClientSearchRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "3610",
+                Tenant = Tenant,
+                RequestName = "Client Search",
+                ResponseName = "Client Search",
+                LoggingUserId = loggedUserId,  
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true,
+                ExternalId= _AmitalCustomsFile.ImporterId.Substring(0, 9),
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
+        }
+
         private void DeclarationReferantDataUpdate()
         {
             MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
