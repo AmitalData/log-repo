@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AmendmentFieldStatusList} from '../../EntityLists/AmendmentFieldStatusList';
+import {AmendmentFieldStatusTypeList} from '../../EntityLists/AmendmentFieldStatusTypeList';
 
 @Injectable()
 
-export class AmendmentFieldStatusListService {
+export class AmendmentFieldStatusTypeListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<AmendmentFieldStatusList> = [];
+	public static CachedData: Array<AmendmentFieldStatusTypeList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/amendmentfieldstatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/amendmentfieldstatustypeviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class AmendmentFieldStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: AmendmentFieldStatusList;
+						var entity: AmendmentFieldStatusTypeList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class AmendmentFieldStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatusType", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class AmendmentFieldStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<AmendmentFieldStatusList> = [];
+						var _mappedListsArray: Array<AmendmentFieldStatusTypeList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: AmendmentFieldStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: AmendmentFieldStatusTypeList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class AmendmentFieldStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatusType", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class AmendmentFieldStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<AmendmentFieldStatusList> = [];
+						var _mappedListsArray: Array<AmendmentFieldStatusTypeList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: AmendmentFieldStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: AmendmentFieldStatusTypeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class AmendmentFieldStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AmendmentFieldStatusType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -163,9 +163,9 @@ export class AmendmentFieldStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (AmendmentFieldStatusListService.CachedData.length > 0) {
+		if (AmendmentFieldStatusTypeListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = AmendmentFieldStatusListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = AmendmentFieldStatusTypeListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -173,25 +173,25 @@ export class AmendmentFieldStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatusType").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<AmendmentFieldStatusList> = [];
+					var _mappedListsArray: Array<AmendmentFieldStatusTypeList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: AmendmentFieldStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: AmendmentFieldStatusTypeList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					AmendmentFieldStatusListService.CachedData = _mappedListsArray;
+					AmendmentFieldStatusTypeListService.CachedData = _mappedListsArray;
 
-					var filteredData = AmendmentFieldStatusListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = AmendmentFieldStatusTypeListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendmentFieldStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendmentFieldStatusType", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -222,14 +222,14 @@ export class AmendmentFieldStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (AmendmentFieldStatusListService.CachedData.length > 0) {
+        if (AmendmentFieldStatusTypeListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = AmendmentFieldStatusListService.CachedData; 
+					serviceResponse.Result = AmendmentFieldStatusTypeListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(AmendmentFieldStatusListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(AmendmentFieldStatusTypeListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -239,18 +239,18 @@ export class AmendmentFieldStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldStatusType").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<AmendmentFieldStatusList> = [];
+					var _mappedListsArray: Array<AmendmentFieldStatusTypeList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: AmendmentFieldStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: AmendmentFieldStatusTypeList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					AmendmentFieldStatusListService.CachedData = _mappedListsArray;
+					AmendmentFieldStatusTypeListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -260,7 +260,7 @@ export class AmendmentFieldStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendmentFieldStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AmendmentFieldStatusType", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -275,8 +275,8 @@ export class AmendmentFieldStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: AmendmentFieldStatusList;
-            entityList = new AmendmentFieldStatusList();
+            var entityList: AmendmentFieldStatusTypeList;
+            entityList = new AmendmentFieldStatusTypeList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

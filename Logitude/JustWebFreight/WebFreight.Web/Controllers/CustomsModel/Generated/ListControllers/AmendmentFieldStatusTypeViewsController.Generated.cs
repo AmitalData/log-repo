@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class AmendmentFieldStatusViewsController : ApiController
+    public partial class AmendmentFieldStatusTypeViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                AmendmentFieldStatusListQueryService amendmentFieldStatusQuery = new AmendmentFieldStatusListQueryService(MyContext);
-                AmendmentFieldStatusList amendmentFieldStatusList = amendmentFieldStatusQuery.GetSingle(code);
+                AmendmentFieldStatusTypeListQueryService amendmentFieldStatusTypeQuery = new AmendmentFieldStatusTypeListQueryService(MyContext);
+                AmendmentFieldStatusTypeList amendmentFieldStatusTypeList = amendmentFieldStatusTypeQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  amendmentFieldStatusList);
+                return Request.CreateResponse(HttpStatusCode.OK,  amendmentFieldStatusTypeList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                AmendmentFieldStatusListQueryService amendmentFieldStatusQuery = new AmendmentFieldStatusListQueryService(MyContext);
-                List<AmendmentFieldStatusList> result = amendmentFieldStatusQuery.GetList(authToken.Tenant);
+                AmendmentFieldStatusTypeListQueryService amendmentFieldStatusTypeQuery = new AmendmentFieldStatusTypeListQueryService(MyContext);
+                List<AmendmentFieldStatusTypeList> result = amendmentFieldStatusTypeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.AmendmentFieldStatus",
+                    ObjectTableName = "Customs.AmendmentFieldStatusType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.AmendmentFieldStatuss",
+                    QuerySection = "Customs.AmendmentFieldStatusTypes",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> AmendmentFieldStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AmendmentFieldStatus",tenant);
+				List<ObjectField> AmendmentFieldStatusTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AmendmentFieldStatusType",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AmendmentFieldStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = AmendmentFieldStatusTypeObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AmendmentFieldStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = AmendmentFieldStatusTypeObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				AmendmentFieldStatusListQueryService amendmentFieldStatusQuery = new AmendmentFieldStatusListQueryService(MyContext);
+				AmendmentFieldStatusTypeListQueryService amendmentFieldStatusTypeQuery = new AmendmentFieldStatusTypeListQueryService(MyContext);
 
-                List<AmendmentFieldStatusList> entityLists = amendmentFieldStatusQuery.GetList(queryOperations, tenant);
+                List<AmendmentFieldStatusTypeList> entityLists = amendmentFieldStatusTypeQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = amendmentFieldStatusQuery.GetListCount(queryOperations);
+                    int count = amendmentFieldStatusTypeQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

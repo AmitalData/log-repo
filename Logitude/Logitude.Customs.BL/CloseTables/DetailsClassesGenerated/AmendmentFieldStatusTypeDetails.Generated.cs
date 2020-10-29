@@ -16,19 +16,19 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL
 {
-   public class AmendmentFieldStatusDetails : AmendmentFieldStatus, ICloseTable<AmendmentFieldStatus, AmendmentFieldStatusDetails>
+   public class AmendmentFieldStatusTypeDetails : AmendmentFieldStatusType, ICloseTable<AmendmentFieldStatusType, AmendmentFieldStatusTypeDetails>
    {
-       public List<AmendmentFieldStatusDetails> GetAll()
+       public List<AmendmentFieldStatusTypeDetails> GetAll()
        {
-		    var all = new List<AmendmentFieldStatusDetails>(); 
+		    var all = new List<AmendmentFieldStatusTypeDetails>(); 
             return all;
        }
 
-	    public void MapPoco(AmendmentFieldStatus newPoco)
+	    public void MapPoco(AmendmentFieldStatusType newPoco)
         {    
         }
 
-		public string GetSearchFields(AmendmentFieldStatus rec)
+		public string GetSearchFields(AmendmentFieldStatusType rec)
         {   
            return string.Empty;
         }

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="AmendmentFieldStatuses"
+  Name="AmendmentFieldStatusTypes"
+  OldNames="AmendmentFieldStatuses,AmendmentFieldStatuses"
   Schema="Customs"
   DBType="Main"
   Module="Customs">

@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class AmendmentFieldStatusRepository:IRepository<AmendmentFieldStatus>
+   public partial class AmendmentFieldStatusTypeRepository:IRepository<AmendmentFieldStatusType>
    {
    
         private ICustomContext currentContext;
-        public AmendmentFieldStatusRepository(int tenant)
+        public AmendmentFieldStatusTypeRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public AmendmentFieldStatusRepository(ICustomContext context)
+        public AmendmentFieldStatusTypeRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  AmendmentFieldStatus GetSingle(string code)
+		public  AmendmentFieldStatusType GetSingle(string code)
         {
-            return (from a in context.AmendmentFieldStatuses
+            return (from a in context.AmendmentFieldStatusTypes
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<AmendmentFieldStatus> GetAll()
+        public IQueryable<AmendmentFieldStatusType> GetAll()
         {
-            return from a in context.AmendmentFieldStatuses  
+            return from a in context.AmendmentFieldStatusTypes  
                    select a;
         }
 				 
-        public AmendmentFieldStatus GetSingle(EntityKeyFields entityKeys)
+        public AmendmentFieldStatusType GetSingle(EntityKeyFields entityKeys)
         {
-            AmendmentFieldStatusKeys keys = entityKeys as AmendmentFieldStatusKeys;
-            return (from a in context.AmendmentFieldStatuses
+            AmendmentFieldStatusTypeKeys keys = entityKeys as AmendmentFieldStatusTypeKeys;
+            return (from a in context.AmendmentFieldStatusTypes
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(AmendmentFieldStatus entity)
+        public void Add(AmendmentFieldStatusType entity)
         {
             onAdd();
-            context.AmendmentFieldStatuses.Add(entity);
+            context.AmendmentFieldStatusTypes.Add(entity);
         }
 
-        public void Remove(AmendmentFieldStatus entity)
+        public void Remove(AmendmentFieldStatusType entity)
         {
-            context.AmendmentFieldStatuses.Attach(entity);
-            context.AmendmentFieldStatuses.Remove(entity);
+            context.AmendmentFieldStatusTypes.Attach(entity);
+            context.AmendmentFieldStatusTypes.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(AmendmentFieldStatus entity)
+        public void Update(AmendmentFieldStatusType entity)
         {
             onUpdate();
-            context.AmendmentFieldStatuses.Attach(entity);
+            context.AmendmentFieldStatusTypes.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<AmendmentFieldStatus> All()
+        public List<AmendmentFieldStatusType> All()
         {
-            return context.AmendmentFieldStatuses.ToList();
+            return context.AmendmentFieldStatusTypes.ToList();
         }
 
         private ICustomContext context

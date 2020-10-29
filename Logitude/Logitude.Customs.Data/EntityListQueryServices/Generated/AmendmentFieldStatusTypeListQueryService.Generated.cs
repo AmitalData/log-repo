@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class AmendmentFieldStatusListQueryService
+    public partial class AmendmentFieldStatusTypeListQueryService
     {
          private ICustomContext context;
-        public AmendmentFieldStatusListQueryService(ICustomContext context)
+        public AmendmentFieldStatusTypeListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<AmendmentFieldStatusList> GetList(QueryOperations queryOperations, int tenant)
+        public List<AmendmentFieldStatusTypeList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<AmendmentFieldStatus> iQueryable = (from a in context.AmendmentFieldStatuses
+            IQueryable<AmendmentFieldStatusType> iQueryable = (from a in context.AmendmentFieldStatusTypes
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -39,20 +39,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<AmendmentFieldStatus>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<AmendmentFieldStatusType>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<AmendmentFieldStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<AmendmentFieldStatusTypeList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<AmendmentFieldStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<AmendmentFieldStatusTypeList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(AmendmentFieldStatusList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> AmendmentFieldStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AmendmentFieldStatus",tenant).ToList();
+                PropertyInfo propInfo = typeof(AmendmentFieldStatusTypeList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> AmendmentFieldStatusTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AmendmentFieldStatusType",tenant).ToList();
 
-                ObjectField objectField = (from a in AmendmentFieldStatusObjectFields
+                ObjectField objectField = (from a in AmendmentFieldStatusTypeObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -60,7 +60,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -69,36 +69,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<AmendmentFieldStatusTypeList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -124,21 +124,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<AmendmentFieldStatusList> GetList(int tenant)
+         public List<AmendmentFieldStatusTypeList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public AmendmentFieldStatusList GetSingle(string code)
+        public AmendmentFieldStatusTypeList GetSingle(string code)
         {
-            IQueryable<AmendmentFieldStatus> AmendmentFieldStatusQuery = (from a in context.AmendmentFieldStatuses
+            IQueryable<AmendmentFieldStatusType> AmendmentFieldStatusTypeQuery = (from a in context.AmendmentFieldStatusTypes
                                                        where a.Code == code
                                                        select a);
 
              
-            IQueryable<AmendmentFieldStatusList> AmendmentFieldStatusListQuery = GetIqueryableList( AmendmentFieldStatusQuery);
-            AmendmentFieldStatusList AmendmentFieldStatusList = AmendmentFieldStatusListQuery.FirstOrDefault();
-            return AmendmentFieldStatusList;
+            IQueryable<AmendmentFieldStatusTypeList> AmendmentFieldStatusTypeListQuery = GetIqueryableList( AmendmentFieldStatusTypeQuery);
+            AmendmentFieldStatusTypeList AmendmentFieldStatusTypeList = AmendmentFieldStatusTypeListQuery.FirstOrDefault();
+            return AmendmentFieldStatusTypeList;
            
         }
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<AmendmentFieldStatus> iQueryable = (from a in context.AmendmentFieldStatuses  select a);
+            IQueryable<AmendmentFieldStatusType> iQueryable = (from a in context.AmendmentFieldStatusTypes  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -156,11 +156,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<AmendmentFieldStatus>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<AmendmentFieldStatusType>(nonListQueryOperation, iQueryable);
 
-            IQueryable<AmendmentFieldStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<AmendmentFieldStatusTypeList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<AmendmentFieldStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<AmendmentFieldStatusTypeList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

@@ -14,15 +14,15 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class AmendmentFieldStatusDataMapping: IMapping<AmendmentFieldStatusPM, AmendmentFieldStatus>
+   public partial class AmendmentFieldStatusTypeDataMapping: IMapping<AmendmentFieldStatusTypePM, AmendmentFieldStatusType>
    {
 
-        public void CustomPMToPOCO(AmendmentFieldStatusPM entityPM, AmendmentFieldStatus entityPOCO)
+        public void CustomPMToPOCO(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusType entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(AmendmentFieldStatusPM entityPM, AmendmentFieldStatus entityPOCO)
+        public void CustomPOCOToPM(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusType entityPOCO)
         {
             //throw new NotImplementedException();
         }

@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class AmendmentFieldStatusRepository:IRepository<AmendmentFieldStatus>
+   public partial class AmendmentFieldStatusTypeRepository:IRepository<AmendmentFieldStatusType>
    {
         
-		public List<AmendmentFieldStatus> GetMulti(EntityKeyFields entityKeys)
+		public List<AmendmentFieldStatusType> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

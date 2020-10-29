@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class AmendmentFieldStatusPM {
+export class AmendmentFieldStatusTypePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -50,7 +50,7 @@ export class AmendmentFieldStatusPM {
        
 	 
 
-    public OldEntityPM: AmendmentFieldStatusPM;
+    public OldEntityPM: AmendmentFieldStatusTypePM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -58,12 +58,12 @@ export class AmendmentFieldStatusPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AmendmentFieldStatus");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AmendmentFieldStatusType");
            
         }
     }
 
-    private MyClone: AmendmentFieldStatusPM;
+    private MyClone: AmendmentFieldStatusTypePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

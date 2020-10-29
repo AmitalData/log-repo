@@ -22,44 +22,44 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class AmendmentFieldStatusUpdateService:EntityUpdateService<AmendmentFieldStatus,AmendmentFieldStatusPM,EntityPM>
+   public partial class AmendmentFieldStatusTypeUpdateService:EntityUpdateService<AmendmentFieldStatusType,AmendmentFieldStatusTypePM,EntityPM>
    {
    
-        AmendmentFieldStatusRepository entityRepository;
-        public AmendmentFieldStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        AmendmentFieldStatusTypeRepository entityRepository;
+        public AmendmentFieldStatusTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new AmendmentFieldStatusDataMapping();
-            Repository = new AmendmentFieldStatusRepository(context);
+            Mapping = new AmendmentFieldStatusTypeDataMapping();
+            Repository = new AmendmentFieldStatusTypeRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public AmendmentFieldStatusUpdateService(int tenant)
+        public AmendmentFieldStatusTypeUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public AmendmentFieldStatusUpdateService(ICustomContext context)
+        public AmendmentFieldStatusTypeUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(AmendmentFieldStatusPM entityPM)
+		protected override EntityKeyFields GetKeys(AmendmentFieldStatusTypePM entityPM)
         {
-            AmendmentFieldStatusKeys entityKeys = new AmendmentFieldStatusKeys() { Code = entityPM.Code };
+            AmendmentFieldStatusTypeKeys entityKeys = new AmendmentFieldStatusTypeKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(AmendmentFieldStatusPM entityPM)
+	    protected override void FillDefaultValuesOnCreate(AmendmentFieldStatusTypePM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(AmendmentFieldStatusPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(AmendmentFieldStatusTypePM entityPM)
 		{
  
 		}

@@ -14,12 +14,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class AmendmentFieldStatusMap : EntityTypeConfiguration<AmendmentFieldStatus>
+    public class AmendmentFieldStatusTypeMap : EntityTypeConfiguration<AmendmentFieldStatusType>
     {
 	    string dbms;
-        public AmendmentFieldStatusMap()
+        public AmendmentFieldStatusTypeMap()
         { 
-			  this.ToTable("AmendmentFieldStatuses", "Customs");
+			  this.ToTable("AmendmentFieldStatusTypes", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

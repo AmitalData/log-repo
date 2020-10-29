@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class AmendmentFieldStatusList {
+export class AmendmentFieldStatusTypeList {
    
 	Code: string;
 	EnglishName: string;

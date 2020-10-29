@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class AmendmentFieldStatusDataMapping: IMapping<AmendmentFieldStatusPM, AmendmentFieldStatus>,IMappingEncodeBase64NVARCHARFields<AmendmentFieldStatusPM>
+   public partial class AmendmentFieldStatusTypeDataMapping: IMapping<AmendmentFieldStatusTypePM, AmendmentFieldStatusType>,IMappingEncodeBase64NVARCHARFields<AmendmentFieldStatusTypePM>
    {
           public enum POCOPropertyNames
           { 
@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(AmendmentFieldStatusPM entityPM, AmendmentFieldStatus entityPOCO)
+	    public void PMToPOCO(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusType entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(AmendmentFieldStatusPM entityPM, AmendmentFieldStatus entityPOCO)
+		public void POCOToPM(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusType entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -99,7 +99,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(AmendmentFieldStatusPM entityPM, AmendmentFieldStatusPM oldEntityPM)
+		public void PMToOldPM(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusTypePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(AmendmentFieldStatusPM entityPM)
+	    public void EncodeBase64NVARCHARFields(AmendmentFieldStatusTypePM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -154,7 +154,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(AmendmentFieldStatusPM entityPM, AmendmentFieldStatus entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(AmendmentFieldStatusTypePM entityPM, AmendmentFieldStatusType entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
-		 IDbSet<AmendmentFieldStatus> AmendmentFieldStatuses { get; }
+		 IDbSet<AmendmentFieldStatusType> AmendmentFieldStatusTypes { get; }
 		 IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
 		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }

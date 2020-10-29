@@ -17,12 +17,12 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class AmendmentFieldStatusListQueryService
+    public partial class AmendmentFieldStatusTypeListQueryService
     {
-	    private IQueryable<AmendmentFieldStatusList> GetIqueryableList(IQueryable<AmendmentFieldStatus> iQueryable)
+	    private IQueryable<AmendmentFieldStatusTypeList> GetIqueryableList(IQueryable<AmendmentFieldStatusType> iQueryable)
         {
-		IQueryable<AmendmentFieldStatusList> query = (from a in iQueryable
-                                            select new AmendmentFieldStatusList()
+		IQueryable<AmendmentFieldStatusTypeList> query = (from a in iQueryable
+                                            select new AmendmentFieldStatusTypeList()
 											{
                      
 					                          Code = a.Code,
@@ -39,17 +39,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<AmendmentFieldStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmendmentFieldStatus> iQueryable)
+		private IQueryable<AmendmentFieldStatusType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmendmentFieldStatusType> iQueryable)
         {
-			 return   iQueryable; ;
-        }
-
-
-				private IQueryable<AmendmentFieldStatus> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AmendmentFieldStatus> iQueryable)
-        {
-			return iQueryable;
+			throw new NotImplementedException();
 		}
-		
 			}
 
 
