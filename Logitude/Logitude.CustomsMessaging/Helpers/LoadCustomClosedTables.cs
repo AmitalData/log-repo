@@ -1037,7 +1037,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendmentFieldStatusTypeTable = closedSystemTables.Where(d => d.id == "1431").FirstOrDefault();
-            ObjectTable amendmentFieldStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentFieldStatus", 0, false);
+            ObjectTable amendmentFieldStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentFieldStatusType", 0, false);
             InsertClosedTableRecord(amendmentFieldStatusTypeTable, amendmentFieldStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(amendmentFieldStatusTypeTable);
 
