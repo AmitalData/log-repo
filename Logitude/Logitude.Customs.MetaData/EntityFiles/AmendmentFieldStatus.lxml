@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
-  Id="&quot;c198a407-82fc-4486-a553-445309a377f5&quot;"
-  ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+  Id="&quot;d62ae2d3-12b3-4a78-9c05-0a0c783b3a09&quot;"
+  ObjectTableName="&quot;AmendmentFieldStatus&quot;"
   IsNew="true"
-  DBTableName="&quot;Customs.AmendRequestRejectReasonTypes&quot;"
-  DBTableOldNames="Customs.AmendRequestRejectReasonTypes"
-  ObjectTableSingular="&quot;Customs.AmendRequestRejectReasonType&quot;"
-  ObjectTablePlural="&quot;Customs.AmendRequestRejectReasonTypes&quot;"
+  DBTableName="&quot;AmendmentFieldStatuses&quot;"
+  DBTableOldNames="AmendmentFieldStatuses"
+  ObjectTableSingular="&quot;AmendmentFieldStatus&quot;"
+  ObjectTablePlural="&quot;AmendmentFieldStatuses&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
@@ -38,9 +38,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
-  LocalDefaultText="&quot;סוגי סיבות ביטול הצהרה&quot;"
-  DefaultText="&quot;Amendment Request Reject Reason Type&quot;"
-  Code="&quot;1b28&quot;"
+  LocalDefaultText="&quot;סטטוס לשורת תיקון הצהרה&quot;"
+  DefaultText="&quot;Amendment Field Status&quot;"
+  Code="&quot;082e&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -57,7 +57,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  Code1="&quot;892b&quot;"
+  Code1="&quot;7683&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
@@ -67,13 +67,13 @@
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
   <field
-    Id="&quot;c7df9bde-102b-44be-ba31-35632378d234&quot;"
+    Id="&quot;23a746fc-0b24-4eca-9365-7dd5604f2927&quot;"
     FieldName="&quot;Code&quot;"
     OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="3"
@@ -88,12 +88,12 @@
     SystemMaxLength="3"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Code&quot;"
     ListPropertyPath="&quot;Code&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -101,7 +101,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ValidForQuerySection1="&quot;Customs.AmendmentFieldStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -141,13 +141,13 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;b3f22125-adef-4224-b739-8aeb2ae7afe9&quot;"
+    Id="&quot;c56015b2-8c81-413e-a594-760c930912ce&quot;"
     FieldName="&quot;EnglishName&quot;"
     OldNames="EnglishName"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="100"
@@ -168,7 +168,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -176,7 +175,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ValidForQuerySection1="&quot;Customs.AmendmentFieldStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -216,13 +215,13 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;36e02b5e-13a9-40fb-b5ef-d28da97fb47d&quot;"
+    Id="&quot;9b1e1015-5c45-41c2-b7dd-3ade5b1e021c&quot;"
     FieldName="&quot;SearchFields&quot;"
     OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
@@ -242,7 +241,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -250,7 +248,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ValidForQuerySection1="&quot;AmendmentFieldStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -288,13 +286,13 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;8e99d66c-b31d-48f2-9424-dd1102499833&quot;"
+    Id="&quot;8fea4487-a7cd-47ea-8971-c5c18ce4c387&quot;"
     FieldName="&quot;LocalName&quot;"
     OldNames="LocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="100"
@@ -315,7 +313,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LocalName&quot;"
     ListPropertyPath="&quot;LocalName&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -323,7 +320,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ValidForQuerySection1="&quot;Customs.AmendmentFieldStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -347,7 +344,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -363,13 +360,13 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;7e1b3ee9-402d-442e-82a7-782bc0782717&quot;"
+    Id="&quot;d58fb8ee-ec61-4a8c-9dd0-9413a2837d43&quot;"
     FieldName="&quot;Inactive&quot;"
     OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
     MaxLength="0"
@@ -389,7 +386,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Inactive&quot;"
     ListPropertyPath="&quot;Inactive&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -397,7 +393,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ValidForQuerySection1="&quot;Customs.AmendmentFieldStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -437,35 +433,47 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;AmendRequestRejectReasonType&quot;"
-    TextCode="&quot;Amendment Request Reject Reason Type&quot;"
-    LocalTextCode="&quot;סיבות דחיה לתיקון הצהרה&quot;"
-    QueryGroupCode="&quot;1b28&quot;"
+    Code="&quot;AmendmentFieldStatus&quot;"
+    TextCode="&quot;Amendment Field Statuses&quot;"
+    LocalTextCode="&quot;סטטוסים לשורת תיקון הצהרה&quot;"
+    QueryGroupCode="&quot;5e39&quot;"
     IndexOrder="0"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
-    QuerySection="&quot;Customs.AmendRequestRejectReasonType&quot;"
+    ObjectTableName="&quot;AmendmentFieldStatus&quot;"
+    QuerySection="&quot;AmendmentFieldStatus&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AmendmentFieldStatus&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentFieldStatus&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentFieldStatus&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentFieldStatus&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="50" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen
-    Name="&quot;Customs.AmendRequestRejectReasonTypeHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+      ObjectTableName="&quot;AmendmentFieldStatus&quot;"
       EnglishName="&quot;Created&quot;"
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
@@ -478,7 +486,7 @@
       IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.AmendRequestRejectReasonType&quot;"
+      ObjectTableName="&quot;AmendmentFieldStatus&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
@@ -490,7 +498,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
