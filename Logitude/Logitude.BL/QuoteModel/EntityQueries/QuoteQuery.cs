@@ -62,6 +62,20 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return myResult;
         }
 
+        public QuotePM GetSinglePMForWorkerRole(string id, int tenant)
+        {
+            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency")
+                                where a.Id == id && a.Tenant == tenant
+                                select a).FirstOrDefault();
+
+            QuotePM entityPM = this.MapPOCOToPM(entityPOCO);
+
+            QuotePM securedPM = new QuotePM();
+            SecuredMapping.GetMappedPM(entityPM, securedPM, "Quote", tenant);
+
+            return securedPM;
+        }
+
         public QuotePM GetSinglePMByQuoteNumber(string quoteNumber, int tenant)
         {
             Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("SaleCurrency")
