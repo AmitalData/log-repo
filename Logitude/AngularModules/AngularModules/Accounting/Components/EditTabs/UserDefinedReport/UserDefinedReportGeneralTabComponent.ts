@@ -116,26 +116,32 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
                 if(IsNew){
                    this.CalculatedChartsOfAccountItemList.Insert(itemComponent);
                    this.EntityPM.AddCalculatedChartsOfAccount(calculatedChartsOfAccountPM);
-
                 }
             }
             else{
                 if(!IsNew){
-                    var IncludesLines:number[]=[];
-                      Object.assign(itemComponent.EntityPM, this.EntityCancelledCopy);
-                      this.EntityLinesCancelledCopy.forEach(s=> 
-                        itemComponent.EntityPM.CalculatedChartsOfAccountLines.forEach(q=>{ 
-                            if(q.Line == s.line){
-                                q.Line == s.line? Object.assign(q , s) : null;
-                                IncludesLines.push(q.Line);
-                            }
-                          })
-                        );
-                        IncludesLines.forEach(c=>itemComponent.EntityPM.CalculatedChartsOfAccountLines.splice(c,1));
-                      this.BuildLinesData();
+                    this.CancelledEditLine(itemComponent);
                 }
             }
         })
+    }
+
+    CancelledEditLine(itemComponent:CalculatedChartsOfAccountItem){
+        var IncludesLines=[];
+        Object.assign(itemComponent.EntityPM, this.EntityCancelledCopy);
+        this.EntityLinesCancelledCopy.forEach(s=> 
+          itemComponent.EntityPM.CalculatedChartsOfAccountLines.forEach(q=>{ 
+              if(q.Line == s.line){
+                  Object.assign(q , s) 
+                  IncludesLines.push(q);
+              }
+            })
+          );
+          itemComponent.EntityPM.CalculatedChartsOfAccountLines=[];
+          IncludesLines.forEach(c=>{
+              itemComponent.EntityPM.CalculatedChartsOfAccountLines.push(c);
+          });
+        this.BuildLinesData();
     }
 
     get EnglishName() {
@@ -296,11 +302,11 @@ export class CalculatedChartsOfAccountItem extends BaseComponent {
                 
         }
     }
-    get ChartOfAccountTypeName() { return this.isRTL ? this.EntityPM.ChartOfAccountTypeLocalName : this.EntityPM.ChartOfAccountTypeEnglishName;  }
+    get ChartOfAccountTypeName() { return this.isRTL ?this.EntityPM.ChartOfAccountTypeLocalName? this.EntityPM.ChartOfAccountTypeLocalName: this.EntityPM.ChartOfAccountTypeEnglishName : this.EntityPM.ChartOfAccountTypeEnglishName?this.EntityPM.ChartOfAccountTypeEnglishName:this.EntityPM.ChartOfAccountTypeLocalName;  }
 
-    get UpdatedByUserName() { return  this.isRTL ? this.EntityPM.UpdatedByLocalName : this.EntityPM.UpdatedByEnglishName; }
+    get UpdatedByUserName() { return  this.isRTL ? this.EntityPM.UpdatedByLocalName ? this.EntityPM.UpdatedByLocalName : this.EntityPM.UpdatedByEnglishName: this.EntityPM.UpdatedByEnglishName? this.EntityPM.UpdatedByEnglishName:this.EntityPM.UpdatedByLocalName ; }
 
-    get CreatedByUserName() { return this.isRTL ? this.EntityPM.CretedByLocalNameName : this.EntityPM.CreatedByEnglishName;  }
+    get CreatedByUserName() { return this.isRTL ? this.EntityPM.CretedByLocalNameName? this.EntityPM.CretedByLocalNameName : this.EntityPM.CreatedByEnglishName:this.EntityPM.CreatedByEnglishName ? this.EntityPM.CreatedByEnglishName:this.EntityPM.CretedByLocalNameName ;  }
   
     get CreatedByUserId() { return this.EntityPM.CreatedByUserId; }
     set CreatedByUserId(newValue: string) {
@@ -397,10 +403,28 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
             }                                                          
         }
     }
+
+    private ValidateIsCancelled():boolean{
+        var IsValid = true;
+        var ChartofAccounForGLAccount = this.GLAccount?this.GLAccount.ChartOfAccountsTypeCode:null;
+        var ParentChartOfAccountTypeCode = this.ParentEntityPM.ChartOfAccountTypeCode;
+        var ChartofAccountCodeForChartofAccount =this.ChartOfAccount? this.ChartOfAccount.TypeCode:null;
+        if((ChartofAccounForGLAccount && (ChartofAccounForGLAccount!=ParentChartOfAccountTypeCode)) ||
+           (ChartofAccountCodeForChartofAccount && (ChartofAccountCodeForChartofAccount!=ParentChartOfAccountTypeCode))){
+            IsValid = false;
+        }
+
+        return IsValid;
+    }
     get IsCancelled() { return this.EntityPM.IsCancelled; }
     set IsCancelled(newValue: boolean) {
         if (this.EntityPM.IsCancelled != newValue) {
+            var IsValid = this.ValidateIsCancelled();
+            if(!IsValid && !newValue)
+                this.ErrorLog = "Charts Of Accounts for this line differ from Charts of account type charts, please choose another GLAccount or Charts of Accounts";
+           
             this.EntityPM.IsCancelled = newValue;
+
         }
     }
 
@@ -411,15 +435,15 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         }
     }
 
-    get GLAccountName() { return this.isRTL ? this.EntityPM.GLAccountLocalName : this.EntityPM.GLAccountEnglishName;  }
+    get GLAccountName() { return this.isRTL ? this.EntityPM.GLAccountLocalName? this.EntityPM.GLAccountLocalName : this.EntityPM.GLAccountEnglishName : this.EntityPM.GLAccountEnglishName? this.EntityPM.GLAccountEnglishName : this.EntityPM.GLAccountLocalName;  }
 
-    get ChartOfAccountName() { return this.isRTL ? this.EntityPM.ChartOfAccountLocalName : this.EntityPM.ChartOfAccountEnglishName;  }
+    get ChartOfAccountName() { return this.isRTL ? this.EntityPM.ChartOfAccountLocalName? this.EntityPM.ChartOfAccountLocalName: this.EntityPM.ChartOfAccountEnglishName: this.EntityPM.ChartOfAccountEnglishName? this.EntityPM.ChartOfAccountEnglishName:this.EntityPM.ChartOfAccountLocalName;  }
  
-    get LineTypetName() { return this.isRTL ? this.EntityPM.LineTypeLocalName : this.EntityPM.LineTypeEnglishName;  }
+    get LineTypetName() { return this.isRTL ?this.EntityPM.LineTypeLocalName? this.EntityPM.LineTypeLocalName : this.EntityPM.LineTypeEnglishName : this.EntityPM.LineTypeEnglishName? this.EntityPM.LineTypeEnglishName:this.EntityPM.LineTypeLocalName ;  }
 
-    get UpdatedByUserName() { return  this.isRTL ? this.EntityPM.UpdatedByLocalName : this.EntityPM.UpdatedByEnglishName; }
+    get UpdatedByUserName() { return  this.isRTL ? this.EntityPM.UpdatedByLocalName? this.EntityPM.UpdatedByLocalName :this.EntityPM.UpdatedByEnglishName :this.EntityPM.UpdatedByEnglishName? this.EntityPM.UpdatedByEnglishName:this.EntityPM.UpdatedByLocalName; }
 
-    get CreatedByUserName() { return this.isRTL ? this.EntityPM.CreatedByLocalName : this.EntityPM.CreatedByEnglishName;  }
+    get CreatedByUserName() { return this.isRTL ? this.EntityPM.CreatedByLocalName? this.EntityPM.CreatedByLocalName : this.EntityPM.CreatedByEnglishName : this.EntityPM.CreatedByEnglishName? this.EntityPM.CreatedByEnglishName:this.EntityPM.CreatedByLocalName;  }
   
     get GLAccountId() { return this.EntityPM.GLAccountId; }
     set GLAccountId(newValue: string) {
@@ -427,6 +451,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
             this.ErrorLog=null;
             this.EntityPM.GLAccountId = newValue;
             this.GetGLAccountById(newValue);
+            this.ValidateIsCancelled();
             
         }
     }
@@ -517,11 +542,12 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
             this.ErrorLog=null;
             this.EntityPM.ChartOfAccountId = newValue;
             this.ValidateChartOfAccountLine();
+            this.ValidateIsCancelled();
         }
     }
 
     private chartOfAccount: ChartOfAccountPM;
-    get ChartOfAccount() { return this.ChartOfAccount; }
+    get ChartOfAccount() { return this.chartOfAccount; }
     set ChartOfAccount(newValue: ChartOfAccountPM) {
         if (this.chartOfAccount != newValue) {
             this.chartOfAccount = newValue;

@@ -151,8 +151,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             ChartOfAccountsTypeQueryService chartOfAccountsTypeQuery = new ChartOfAccountsTypeQueryService(calculatedChartsOfAccountPM.Tenant);
                             ChartOfAccountsTypePM Old_chartOfAccountsTypePM = chartOfAccountsTypeQuery.GetSingle(calculatedChartsOfAccountPM.ChartOfAccountTypeCode, false, true);
                             ChartOfAccountsTypePM New_chartOfAccountsTypePM = chartOfAccountsTypeQuery.GetSingle(line.ChartOfAccountTypeCode, false, true);
-                            string old_ChartName = showLocals ? Old_chartOfAccountsTypePM.LocalName : Old_chartOfAccountsTypePM.EnglishName;
-                            string new_ChartName = showLocals ? New_chartOfAccountsTypePM.LocalName : New_chartOfAccountsTypePM.EnglishName;
+                            string old_ChartName = Old_chartOfAccountsTypePM == null ? null : showLocals ? Old_chartOfAccountsTypePM.LocalName : Old_chartOfAccountsTypePM.EnglishName;
+                            string new_ChartName = New_chartOfAccountsTypePM == null ? null : showLocals ? New_chartOfAccountsTypePM.LocalName : New_chartOfAccountsTypePM.EnglishName;
                             notes += TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.ChartOfAccountTypeCode", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + old_ChartName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + new_ChartName + Environment.NewLine;
                         }
 
@@ -200,8 +200,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         CalculatedChartsLineTypeQueryService calculatedChartsLineTypeQueryService = new CalculatedChartsLineTypeQueryService(calculatedChartsOfAccountsLinePM.Tenant);
                         CalculatedChartsLineTypePM Old_calculatedChartsLineType = calculatedChartsLineTypeQueryService.GetSingle(calculatedChartsOfAccountsLinePM.LineTypeCode, false, false);
                         CalculatedChartsLineTypePM New_calculatedChartsLineType = calculatedChartsLineTypeQueryService.GetSingle(line.LineTypeCode, false, false);
-                        string old_LineTypeName = showLocals ? Old_calculatedChartsLineType.LocalName : Old_calculatedChartsLineType.EnglishName;
-                        string new_LineTypeName = showLocals ? New_calculatedChartsLineType.LocalName : New_calculatedChartsLineType.EnglishName;
+                        string old_LineTypeName = Old_calculatedChartsLineType==null? null: showLocals ? Old_calculatedChartsLineType.LocalName : Old_calculatedChartsLineType.EnglishName;
+                        string new_LineTypeName = New_calculatedChartsLineType == null ? null : showLocals ?  New_calculatedChartsLineType.LocalName : New_calculatedChartsLineType.EnglishName;
                         notes += TranslateTextsClass.Translate("CalculatedChartsOfAccountsLine.F.LineTypeCode", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + old_LineTypeName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + new_LineTypeName + Environment.NewLine;
                     }
 
@@ -211,8 +211,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(calculatedChartsOfAccountsLinePM.Tenant);
                         ChartOfAccountPM Old_chartOfAccountPM = chartOfAccountQueryService.GetSingle(calculatedChartsOfAccountsLinePM.ChartOfAccountId, false, false);
                         ChartOfAccountPM New_chartOfAccountPM = chartOfAccountQueryService.GetSingle(line.ChartOfAccountId, false, false);
-                        string old_ChartName = showLocals ? Old_chartOfAccountPM.LocalName : Old_chartOfAccountPM.EnglishName;
-                        string new_ChartName = showLocals ? New_chartOfAccountPM.LocalName : New_chartOfAccountPM.EnglishName;
+                        string old_ChartName = Old_chartOfAccountPM == null ? null : showLocals ? Old_chartOfAccountPM.LocalName : Old_chartOfAccountPM.EnglishName;
+                        string new_ChartName = New_chartOfAccountPM == null ? null : showLocals ? New_chartOfAccountPM.LocalName : New_chartOfAccountPM.EnglishName;
                         notes += TranslateTextsClass.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountTypeCode", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + old_ChartName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + new_ChartName + Environment.NewLine;
                     }
 
@@ -221,8 +221,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(calculatedChartsOfAccountsLinePM.Tenant);
                         GLAccountPM Old_GLAccountPM = gLAccountQueryService.GetSingle(calculatedChartsOfAccountsLinePM.GLAccountId, false, false);
                         GLAccountPM New_GLAccountPM = gLAccountQueryService.GetSingle(line.GLAccountId, false, false);
-                        string old_GLAccountName = showLocals ? Old_GLAccountPM.LocalName : Old_GLAccountPM.EnglishName;
-                        string new_GLAccountName = showLocals ? New_GLAccountPM.LocalName : New_GLAccountPM.EnglishName;
+                        string old_GLAccountName = Old_GLAccountPM == null ? null : showLocals ? Old_GLAccountPM.LocalName : Old_GLAccountPM.EnglishName;
+                        string new_GLAccountName = New_GLAccountPM == null ? null : showLocals ? New_GLAccountPM.LocalName : New_GLAccountPM.EnglishName;
                         notes += TranslateTextsClass.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountTypeCode", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + old_GLAccountName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + new_GLAccountName + Environment.NewLine;
                     }
 
