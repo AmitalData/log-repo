@@ -13,15 +13,18 @@
   },
   "env": {
     "TestURL": "https://test.logitudeworld.com/test/",
+	"TestCargoTrackingURL": "https://test.logitudeworld.com/test/CargoTracking",
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
+	"TestStagingCargoTrackingURL": "https://test.logitudeworld.com/staging/",
     "TestStagingEmail": "protractor2@test.com",
     "TestStagingPassword": "!P123p456",
     "ProdStagingURL": "https://staging.logitudeworld.com/",
     "ProdStagingEmail": "protractor@test.com",
     "ProdStagingPassword": "!P123t456",
     "CloudStagingURL": "https://staging.amital.co.il/",
+	"CloudStagingCargoTrackingURL": "https://staging.amital.co.il/",
     "CloudStagingEmail": "protractor@test.com",
     "CloudStagingPassword": "!P123t456",
     "LocalURL": "http://localhost:4200/",
@@ -35,6 +38,8 @@
     "ProdStagingTIEmail":"protractor2@test.com",
     "ProdStagingTIPassword":"!P123p123"
 
+
+    
 
   },
 
