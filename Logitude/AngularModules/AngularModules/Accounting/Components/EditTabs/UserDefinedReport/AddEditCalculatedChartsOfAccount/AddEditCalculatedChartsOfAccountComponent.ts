@@ -72,7 +72,9 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
 
 
     CancelButtonClicked(){
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=>s.ErrorLog=null);
         this.CurrentSession.CloseCurrentWindow();
+        
     }
     OkButtonClicked(){
         this.ValidationErrorsList= [];
@@ -159,7 +161,8 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        this.SetUIProperty();  
+        this.SetUIProperty();
+        this.SetFilterItems();  
      }
 
      ValidateChartofAccountType():boolean{
