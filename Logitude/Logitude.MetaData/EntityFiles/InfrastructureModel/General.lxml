@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;ba93&quot;"
+  Code="&quot;0de2&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5052,6 +5052,12 @@
       DefaultText="&quot;User Defined Reports&quot;"
       LocalDefaultText="&quot;הוגדר ע\&quot;י משתמש&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.NewUserDefinedReport&quot;"
+      DefaultText="&quot;New User Defined Report&quot;"
+      LocalDefaultText="&quot;הוגדר מחדש ע&quot;י&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

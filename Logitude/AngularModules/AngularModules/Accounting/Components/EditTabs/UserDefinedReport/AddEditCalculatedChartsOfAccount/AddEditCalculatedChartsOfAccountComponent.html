@@ -237,12 +237,14 @@
                                                                        [HideColumns]="true" 
                                                                        (SelectedItemChanged)="ChartOfAccountsType = $event"
                                                                        [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
+                                                                       [IsDisabled]="!IsChartOfAccountTypeCodeEnabled"
                                                                        [RunToggleMode]="true"
                                                                        [FocusOnMe]="'true'">
                                                               </LogLov>
-
+  
                                                                 
                                                             </td>
+
                                                          </tr>
                                                         <tr style="height:20px;">
                                                             <td><div></div></td>
@@ -307,6 +309,99 @@
                                             <tr><td></td></tr>
                                         </table>
                                     </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                             <tr class="FormFieldRow">
+
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+                                                            </td>
+                                                         </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <td *ngIf="!IsChartOfAccountTypeCodeEnabled">
+                                                                <LogToolTip  [float]="'none'"  [direction]="!isRTL? 'topright':'topleft'" [name]="'ChartOfAccountTypeCode'"
+                                                                             [mode]="'Info2'" [title]="''">
+                                                                             {{'UserDefinedReport.O.CantUpdateTheChartofAccountType' | TextCodeTranslationPipe}}
+                                                                </LogToolTip>
+                                                            </td>
+                                                         </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                           
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                          
+                                            <tr class="FormFieldRow">
+
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+                                                            </td>
+                                                         </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                             </td>
+                                                         </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                           
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+
                                     <td>
                                         <div></div>
                                     </td>
@@ -404,6 +499,7 @@
                                        (SelectedItemChanged)="item.ChartOfAccount = $event"
                                        [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
                                        [RunToggleMode]="true"
+                                       [QueryFilterItems]="ChartOfAccountFilterItems"
                                        [FocusOnMe]="'true'">
                                </LogLov>
                             </div>
@@ -428,6 +524,7 @@
                                    (SelectedItemChanged)="item.GLAccount = $event"
                                    [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
                                    [RunToggleMode]="true"
+                                   [QueryFilterItems]="GLAccountFilterItems"
                                    [FocusOnMe]="'true'">
                            </LogLov>
                         </div>

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "dcfd5cc27943643eb32467553da50efc";
+		public const string HashString = "2cdfe61f6e9bc8e0a35bc219bd38105c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "ba93",
+			      				    Code =  "0de2",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2408,6 +2408,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOFieldIsInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FieldIsInactive", DefaultText = "%FieldName is Inactive",LocalDefaultText = @"%FieldName  חסום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = "הוגדר ע\''י משתמש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralONewUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewUserDefinedReport", DefaultText = "New User Defined Report",LocalDefaultText = "הוגדר מחדש ע''י", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

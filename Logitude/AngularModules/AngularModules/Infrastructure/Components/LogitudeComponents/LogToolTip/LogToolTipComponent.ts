@@ -13,7 +13,7 @@ import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 export class LogToolTipComponent implements AfterViewInit {
 
     public isRTL: boolean = false;
-
+    public ArrowTop:number = 36;
 
     @Input() public title: string;
     @Input() public name: string = 'no1';
@@ -150,27 +150,38 @@ export class LogToolTipComponent implements AfterViewInit {
     }
     GetArrowClassName(){
         var className = "small-tooltip-arrow";
+        
+ 
         switch (this.direction) {
             case 'topright':
             {
 
+                var bodyItem = document.getElementById("tooltip-body" + this.name);
+                var bodyItemRect = bodyItem.getBoundingClientRect();
+                this.ArrowTop =  bodyItemRect.height +5;
+            
                 className += " arrow-top"
                 break;
             }
             case 'topleft':
-            {
+
+            {  
+                var bodyItem = document.getElementById("tooltip-body" + this.name);
+                var bodyItemRect = bodyItem.getBoundingClientRect();
+                this.ArrowTop =  bodyItemRect.height +5;
 
                 className += " arrow-topleft"
                 break;
             }
             case 'bottomright':
-            {
-
+            {   
+                this.ArrowTop =  6;
                 className += " arrow-left"
                 break;
             }
             case 'bottomleft':
-            {
+            {   
+                this.ArrowTop =  6;
                 className += " arrow-right"
                 break;
             }
