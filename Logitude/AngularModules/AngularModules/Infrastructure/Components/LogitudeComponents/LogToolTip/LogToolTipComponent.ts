@@ -14,7 +14,7 @@ export class LogToolTipComponent implements AfterViewInit {
 
     public isRTL: boolean = false;
     public ArrowTop:number = 36;
-
+ 
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
@@ -22,7 +22,8 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public float: string = null;
     @Input() public bottom: number = 0;
     @Input() public Scrollable: boolean = false;
- 
+    @Input() public MaxWidthOfToolTip: number = null;
+
     private counterId:number;
 
     constructor() {
@@ -159,7 +160,8 @@ export class LogToolTipComponent implements AfterViewInit {
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
                 this.ArrowTop =  bodyItemRect.height +5;
-            
+ 
+
                 className += " arrow-top"
                 break;
             }
@@ -169,6 +171,7 @@ export class LogToolTipComponent implements AfterViewInit {
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
                 this.ArrowTop =  bodyItemRect.height +5;
+ 
 
                 className += " arrow-topleft"
                 break;

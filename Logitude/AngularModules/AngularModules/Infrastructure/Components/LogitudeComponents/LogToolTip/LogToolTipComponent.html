@@ -7,7 +7,7 @@
     <img  *ngIf="mode == 'Warning'" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
     <img  *ngIf="mode == 'error'" src="./Images/error-16.png" alt="error" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
-    <div style="max-width: 30%;" [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
+    <div  [style.max-width.px]="MaxWidthOfToolTip? MaxWidthOfToolTip :'auto'"   [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
         <!-- <div class="popup-arrow"></div> -->
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
@@ -35,7 +35,7 @@
     <img *ngIf="mode == 'Warning'" [style.margin-bottom.px]="bottom" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
     
-    <div style="max-width: 30%;" [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
+    <div [style.max-width.px]="MaxWidthOfToolTip? MaxWidthOfToolTip :'auto'"[attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
         <!-- <div class="popup-arrow"></div> -->
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}

@@ -107,7 +107,7 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
         var logWindow = new LogitudeWindow();
         logWindow.Title = title;
         var myPath = "./Accounting/Components/Packages/EditTabs/UserDefinedReport/AddEditCalculatedChartsOfAccount/AddEditCalculatedChartsOfAccountComponent";
-        logWindow.Width = 1000;
+        logWindow.Width = 1250;
         logWindow.Height =500;
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
