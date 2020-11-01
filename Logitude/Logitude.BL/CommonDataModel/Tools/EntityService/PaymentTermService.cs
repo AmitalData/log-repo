@@ -40,7 +40,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("PaymentTerm", tenant).ToString();
             this.Poco = new PaymentTerm();
             this.Poco.Id = this.entityPM.Id;
-
+            this.entityPM.AddedManually = true;
             PaymentTermValidating.Validate(theEntityPm);
             PaymentTermTracing.Trace(theEntityPm, Poco, isNewEntity);
             PaymentTermMapping.MapEntity(theEntityPm, Poco, isNewEntity);
