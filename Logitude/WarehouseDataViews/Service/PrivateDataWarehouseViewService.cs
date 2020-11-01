@@ -18,29 +18,52 @@ namespace WarehouseDataViews.Service
 
         public void GeneratePrivateViews(PrivateViewArgs privateViewArgs)
         {
-            var  customFieldViewDataWarehouseService = new CustomFieldDataWarehouseViewService(sourceConnectionString, DwObjectFieldLists, privateViewArgs.Tenant);
-            List<WarehouseView> customFieldViewLists = customFieldViewDataWarehouseService.GetCustomFieldViewLists();
-            List<WarehouseView> allDataWarehouseViews = DataWarehouseViewLists.Concat(customFieldViewLists).ToList();
-            foreach (WarehouseView view in allDataWarehouseViews)
+            var dataWarehouseViews = GetDataWarehouseViewsListsByTenant(privateViewArgs.Tenant);
+
+            string customFieldScript = string.Empty;
+            if (dataWarehouseViews.Where(d => d.IsHaveCustomFields).FirstOrDefault() != null)
+            {
+                var customFieldViewDataWarehouseService = new CustomFieldDataWarehouseViewService(sourceConnectionString, DwObjectFieldLists, privateViewArgs.Tenant);
+                List<WarehouseView> customFieldViewLists = customFieldViewDataWarehouseService.GetCustomFieldViewLists();
+                dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
+                customFieldScript = customFieldViewDataWarehouseService.GetCustomFieldsAsSqlString();
+            }
+
+            DeleteDataWarehouseViews(privateViewArgs);
+
+            foreach (WarehouseView view in dataWarehouseViews)
             {
                 string viewscript = view.SqlString;
                 if (view.IsFactView && view.IsHaveCustomFields)
                 {
-                    string customFieldScript = customFieldViewDataWarehouseService.GetCustomFieldsAsSqlString();
                     viewscript = view.SqlString.Replace(",@CustomFields", customFieldScript);
                 }
-                DropView(view.ViewName, privateViewArgs.ConnectionString);
                 CreateView(privateViewArgs.ConnectionString, viewscript);
                 if (privateViewArgs.ApplyGrantOnViews) GrantView(view.ViewName, privateViewArgs);
             }
 
         }
 
-        private void DropView(string viewName, string connectionString)
+
+
+        private List<WarehouseView> GetDataWarehouseViewsListsByTenant(int tenant)
         {
-            string sqlstring = "if exists(select 1 from sys.views where name='" + viewName + "' and type='v') begin drop view " + viewName + ";end";
-            RunSql(connectionString, sqlstring);
+            FeaturePrivateDataWarehouseService featurePrivateDataWarehouseService = new FeaturePrivateDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString);
+            List<WarehouseView> dataWarehouseViews = new List<WarehouseView>();
+            foreach (WarehouseView factView in DataWarehouseViewLists.Where(d => d.IsFactView).ToList())
+            {
+                if (featurePrivateDataWarehouseService.CheckFeature("BIReport." + factView.ViewCode, tenant))
+                {
+                    dataWarehouseViews = dataWarehouseViews.Concat(DataWarehouseViewLists.Where(d => !d.IsFactView && d.FactConnectedCodeLists.Contains(factView.ViewCode)).ToList()).ToList();
+                    dataWarehouseViews.Add(factView);
+
+                }
+            }
+
+            return dataWarehouseViews.GroupBy(d => d.ViewName).Select(d => d.FirstOrDefault()).ToList();
         }
+
+
         private void CreateView(string connectionString, string sqlString)
         {
             RunSql(connectionString, sqlString);
@@ -52,6 +75,13 @@ namespace WarehouseDataViews.Service
             // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
             string sqlstring = "GRANT SELECT  ON [" + privateViewArgs.Catalog + "].[dbo].[" + viewName + "] TO [" + privateViewArgs.UserName + "]"; // Pre
             RunSql(privateViewArgs.ConnectionString, sqlstring);
+        }
+
+
+        private void DeleteDataWarehouseViews(PrivateViewArgs privateViewArgs)
+        {
+            string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v PRINT @sql;EXEC(@sql); ";
+            RunSql(privateViewArgs.ConnectionString, deleteViewsSql);
         }
 
     }

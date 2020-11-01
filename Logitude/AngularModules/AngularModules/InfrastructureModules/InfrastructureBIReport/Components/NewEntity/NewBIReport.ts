@@ -114,7 +114,7 @@ export class NewBIReport extends BaseComponent {
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
             var factTablesNames = response.Result;
             factTablesNames.forEach((factTable) => {
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact." + factTable.DisplayName.replace(' ', '')))
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
                     this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName));
             });
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {

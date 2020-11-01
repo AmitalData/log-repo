@@ -1667,7 +1667,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.Shipments&quot;"
+      Code="&quot;BIReport.Fact_Shipments&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.Shipments&quot;"
       FeatureDefaultText="&quot;Shipments&quot;"
@@ -1676,7 +1676,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.ShipmentCharges&quot;"
+      Code="&quot;BIReport.Fact_Charges&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.ShipmentCharges&quot;"
       FeatureDefaultText="&quot;Shipment Charges&quot;"
@@ -1685,7 +1685,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.Masters&quot;"
+      Code="&quot;BIReport.Fact_Masters&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.Masters&quot;"
       FeatureDefaultText="&quot;Masters&quot;"
@@ -1694,7 +1694,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;BIReport.Fact.MasterCharges&quot;"
+      Code="&quot;BIReport.Fact_MasterCharges&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact.MasterCharges&quot;"
       FeatureDefaultText="&quot;Master Charges&quot;"
