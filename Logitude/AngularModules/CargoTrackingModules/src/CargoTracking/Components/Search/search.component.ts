@@ -44,25 +44,39 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.InitForm();
     }
     ngOnInit()
-    {
-        if(localStorage.getItem('SearchKey') == this.SearchText){
-            if (localStorage.getItem('Shipments'))
-                this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
-            else{
-                if (this.SearchText)
-                    this.Search();
-            }
-        }
+    {      
+        
+        if(this.SearchText){
+               if(SearchComponent.Last_Search_Shipments){
+                this.Shipments = SearchComponent.Last_Search_Shipments;
+               }
+               else{
+                 this.Search();
+               }
+           }
+        // if(localStorage.getItem('SearchKey') == this.SearchText){
+        //     if (localStorage.getItem('Shipments'))
+        //         this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
+        //     else{
+        //         if (this.SearchText)
+        //             this.Search();
+        //     }
+        // }
+        // else{
+        //     this.Search();
+        // }
     }
 
     ngOnDestroy()
     {
         if (this.Shipments.length > 0) {
-            localStorage.setItem('SearchKey', this.SearchText);
-            localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
+            //localStorage.setItem('SearchKey', this.SearchText);
+            //localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
+            SearchComponent.Last_Search_Shipments = this.Shipments;
         }
     }
 
+    private static Last_Search_Shipments:CargoTrackingShipmentList[]; 
 
     private GetSearchTextFromURI()
     {
