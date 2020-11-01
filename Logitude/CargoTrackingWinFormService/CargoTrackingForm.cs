@@ -63,7 +63,8 @@ namespace CargoTrackingWinFormService.Forms
         public CargoTrackingForm()
         {
             InitializeComponent();
-            
+            label20.Hide();
+            numericUpDown1.Hide();
             tabControl1.Selecting += new TabControlCancelEventHandler(tabControl1_Selecting);
             ScreensHight = Enumerable.Repeat(this.Height, TabsNumber).ToArray();
             ScreensWidth = Enumerable.Repeat(this.Width, TabsNumber).ToArray();
@@ -84,7 +85,7 @@ namespace CargoTrackingWinFormService.Forms
             this.SleepSecounds.Value = SleepTime;
             this.MappingFromConnections.Text = dbSourceConnection;
             this.MappingToConnections.Text = dbSourceConnection;
-            this.numericUpDown1.Value =  50;
+            this.numericUpDown1.Value =  3;
             this.numericUpDown2.Value = 1;
             this.checkBox1.Checked = true;
             this.checkBox2.Checked = true;

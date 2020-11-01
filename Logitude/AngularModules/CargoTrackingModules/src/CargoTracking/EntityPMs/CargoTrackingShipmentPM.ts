@@ -334,6 +334,11 @@ export class CargoTrackingShipmentPM {
     public set ToPortCountryCode(newValue: string) { if (this.toPortCountryCode != newValue) { this.toPortCountryCode = newValue; this.MarkAsDirty("ToPortCountryCode"); } }
        
 	 
+    private isFavorite: boolean;
+    public get IsFavorite() { return this.isFavorite; }
+    public set IsFavorite(newValue: boolean) { if (this.isFavorite != newValue) { this.isFavorite = newValue; this.MarkAsDirty("IsFavorite"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

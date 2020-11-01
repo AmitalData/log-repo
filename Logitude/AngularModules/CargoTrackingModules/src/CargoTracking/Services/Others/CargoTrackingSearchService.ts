@@ -28,7 +28,9 @@ export class CargoTrackingSearchService {
 						var list = response;
 
 						return list;
-					}));
+					},catchError(error=>{
+						return error;
+					})));
 		});
 	}
     getShipment(SecurityKey: string, tenant: number) {

@@ -188,7 +188,7 @@
 	inner JOIN DIM_Incoterms  ON dw_Shipments.IncotermId = DIM_Incoterms.Id
 	inner JOIN DIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
 	inner JOIN DIM_Users AccountManagerUser ON dw_Shipments.AccountManagerUserId = AccountManagerUser.Id
-	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.StatusId = DIM_ShipmentStatuses.Id
+	inner JOIN DIM_ShipmentStatuses  ON dw_Shipments.ComputedStatusId = DIM_ShipmentStatuses.Id
 
 	inner JOIN dw_Tenants  ON dw_Shipments.Tenant = dw_Tenants.Id
     inner JOIN DIM_Ports fromPort  ON dw_Shipments.FromPortId = FromPort.Id

@@ -1,6 +1,5 @@
-<div class="app-content" [style.background-image]="BackGroundImg">
-
-    <!-- Mobile Menu -->
+<div   class="app-content"  [ngStyle]="{ 'background-image': MapImgSRC}">
+     <!-- Mobile Menu -->
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
             <img class="logo" src="./assets/menu-logo.png" width="100px" alt="" />
@@ -16,7 +15,7 @@
   
     <!-- Mobile App Bar -->
     <div class="mobile-header">
-        <div class="icon" *ngIf="showBackButton">
+        <div class="icon" *ngIf="GetBackEnabled()">
             <!-- <img src="./assets/menu.png" (click)="displayMenu = !displayMenu" /> -->
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>

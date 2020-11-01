@@ -41,7 +41,8 @@ export class TaxReportExtendedPMService {
     }
 
     DownloadPNC874FileInBatch(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

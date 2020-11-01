@@ -304,8 +304,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
                         string tenantFieldName = (Tabel != "DIM_Tenants" ? (isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
-                        sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " , " + tenantFieldName + " ";
-
+                        sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " ";
+                        if(!IsClosed)
+                            sqlCommandDefinition.SQLString += ", " + tenantFieldName + " ";
                         if (LovAdditionalFields != null)
                         {
                             int index = 0;
@@ -457,15 +458,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     }
 
 
-
-                    BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
-                    if (isParentTenant && Tabel == "DIM_Tenants")
+                    if (!IsClosed)
                     {
-                        bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable , childTenants);
-                    }
-                    else
-                    {
-                        bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+                        BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
+                        if (isParentTenant && Tabel == "DIM_Tenants")
+                        {
+                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable, childTenants);
+                        }
+                        else
+                        {
+                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+                        }
                     }
 
 

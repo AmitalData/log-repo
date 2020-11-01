@@ -51,5 +51,6 @@ export class WarehouseList {
 		OceanWeightRoundingCode: string;
 		InlandWeightRoundingCode: string;
 		GLAccountNumber: string;
+		StorageFreeDays: number;
 	
 }

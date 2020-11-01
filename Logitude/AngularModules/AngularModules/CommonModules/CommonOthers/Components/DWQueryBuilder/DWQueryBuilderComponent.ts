@@ -2077,7 +2077,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         var parentfieldCode = !AppTool.IsNullOrEmpty(DWObjectField.FieldCode) ? (DWObjectField.FieldCode.replace("[", "").replace("]", "")) : DWObjectField.DisplayName;
         var selectedDimensionDWObjectFields = SelectedDWObjectFields;
         if (SelectedDWObjectFields == null)
-            selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.DisplayName);
+            selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.Name);
         
         selectedDimensionDWObjectFields.filter(d => AppTool.IsNullOrEmpty(d.RecordType) || (!AppTool.IsNullOrEmpty(d.RecordType) && d.RecordType.split(',').indexOf(parentfieldCode) != -1)).forEach((field) => {
             if (field.DisplayInQueryBuilder == true) {
@@ -2108,7 +2108,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     LoadWithSearchValue(DWObjectField: any, newValue: any) {
-        var selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.DisplayName && d.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+        var selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.Name && d.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
         selectedDimensionDWObjectFields = selectedDimensionDWObjectFields.filter(
             (thing, i, arr) => arr.findIndex(t => t.Code === thing.Code) === i
         );

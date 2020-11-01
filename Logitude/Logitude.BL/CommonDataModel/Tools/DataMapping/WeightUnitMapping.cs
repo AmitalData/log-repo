@@ -15,7 +15,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         public static void MapEntity(WeightUnitPM entityPM, WeightUnit poco, bool isNewEntity)
         {
             poco.Code = entityPM.Code;
-            poco.Name = entityPM.Name; 
+            poco.Name = entityPM.Name;
+            poco.PrintAs = entityPM.PrintAs;
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;
             
         }

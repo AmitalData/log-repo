@@ -845,6 +845,7 @@
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentRegistryDate.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
+    <Content Include="Usefull Scripts\Fill Data\BIReport\[Abed] UpdateBIReportFactTablePackageFeaturesAndRole.sql" />
     <Content Include="Usefull Scripts\Fill Data\Document Types\[Abed] FixDocumentTypeProblem.sql" />
     <Content Include="Usefull Scripts\Fill Data\Fill Shipments FirstOperationalCloseDate.sql" />
     <Content Include="Usefull Scripts\Fill Data\Search Fields\[Abed] FillCardSearchData.sql" />

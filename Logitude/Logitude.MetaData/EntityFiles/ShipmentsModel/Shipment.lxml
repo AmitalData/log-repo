@@ -88708,6 +88708,20 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false"
       EntityStatusCode="&quot;SEEX&quot;" />
+    <EventType
+      Code="&quot;BKAR&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Booking arrangement&quot;"
+      LocalName="&quot;Booking arrangement&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;BKAR&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -95313,6 +95327,11 @@
       Code="&quot;Shipment.TH.StatusReceived&quot;"
       DefaultText="&quot;Status received from airline&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.B.Packages.AddFullTruckLoad&quot;"
+      DefaultText="&quot;Add Full Truck Load&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

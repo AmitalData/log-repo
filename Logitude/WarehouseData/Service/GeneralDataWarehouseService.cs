@@ -1,4 +1,4 @@
-﻿using Logitude.Server.Tools;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace WarehouseData.Helper
 {
@@ -293,10 +294,20 @@ namespace WarehouseData.Helper
 
         public List<IndexItem> GetDWObjectFieldIndexes(string xml)
         {
-            List<IndexItem> result = LogitudeXmlSerializer.DeserializeObject<List<IndexItem>>(xml);
+            List<IndexItem> result = DeserializeObject<List<IndexItem>>(xml);
             return result;
         }
 
+
+        public static T DeserializeObject<T>(string xmlstring)
+        {
+            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+            using (var sr = new StringReader(xmlstring))
+            {
+                return (T)serilaizer.Deserialize(sr);
+            }
+
+        }
 
     }
 

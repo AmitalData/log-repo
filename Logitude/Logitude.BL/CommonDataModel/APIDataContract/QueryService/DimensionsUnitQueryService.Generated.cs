@@ -62,7 +62,8 @@ using Simplog.Data.CommonDataModel;
 				   
 				   var temp = new DimensionsUnit(); 
 				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;					
+				   temp.Name = MyEntityPM.Name;
+                   temp.PrintAs = MyEntityPM.PrintAs;
 				   return temp;
 			}
             catch (Exception ex)

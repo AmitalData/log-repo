@@ -148,10 +148,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
             DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(tenant);
             DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, tenant);
-            if (dWObjectTablePM != null)
-                objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, dWObjectTablePM.RecordType);
-            if (dWObjectTablePM != null && dWObjectTablePM.RecordType == "Master")
-                objectFieldPMs.AddRange(objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment"));
+            if (dWObjectTablePM != null) objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment");
+
+            //if (dWObjectTablePM != null && dWObjectTablePM.RecordType == "Master")
+            //    objectFieldPMs.AddRange(objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment"));
 
             return objectFieldPMs;
         }

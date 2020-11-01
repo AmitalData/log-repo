@@ -7,15 +7,15 @@
     <img  *ngIf="mode == 'Warning'" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
     <img  *ngIf="mode == 'error'" src="./Images/error-16.png" alt="error" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
-    <div [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
+    <div  [style.max-width.px]="MaxWidthOfToolTip? MaxWidthOfToolTip :'auto'"   [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
         <!-- <div class="popup-arrow"></div> -->
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
         </div>
         <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'1px 3px 1px 20px' : '1px 20px 1px 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
 
-            <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
-            <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
+            <div [style.top.px]="ArrowTop" [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
+            <div [style.top.px]="ArrowTop" [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
 
             <ng-content ></ng-content>
 
@@ -35,15 +35,15 @@
     <img *ngIf="mode == 'Warning'" [style.margin-bottom.px]="bottom" src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
     <img  *ngIf="mode == 'Info2'" style="margin-top:2px;" class="CenterCenter"   src ="./Images/Info.png" />
     
-    <div [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
+    <div [style.max-width.px]="MaxWidthOfToolTip? MaxWidthOfToolTip :'auto'"[attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
         <!-- <div class="popup-arrow"></div> -->
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
         </div>
         <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'1px 3px 1px 20px' : '1px 20px 1px 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
 
-            <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
-            <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
+            <div [style.top.px]="ArrowTop" [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
+            <div [style.top.px]="ArrowTop" [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
 
             <ng-content ></ng-content>
 

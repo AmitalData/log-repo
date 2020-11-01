@@ -86,6 +86,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool transferToFTPActivated;
         private bool canTransferToFTP;
         private AccountingSetting accountingSetting;
+        private bool isTransferEnabled = false;
         private void GetAccountingSystem()
         {
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
@@ -99,6 +100,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
                     this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+
+                    if (accountingSetting.IsARPaymentsTransferEnabled && accountingSystem.AllowARPaymentsTransfer)
+                    {
+                        isTransferEnabled = true;
+                    }
                 }
             }
         }
@@ -499,7 +505,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARPaymentMessage(bool setApproved)
         {
-            if (setApproved)
+            if (setApproved && isTransferEnabled)
             {
                 if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated)) 
                 {
@@ -912,6 +918,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AccountingPaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))

@@ -66,7 +66,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
             this.GetAccountingSystem();
         }
-        
+
+        private bool isTransferEnabled = false;
         private void GetAccountingSystem()
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
@@ -82,6 +83,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
                     this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+
+                    if (accountingSetting.IsAPPaymentsTransferEnabled && accountingSystem.AllowAPPaymentsTransfer)
+                    {
+                        isTransferEnabled = true;
+                    }
                 }
             }
         }
@@ -138,7 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateAPPaymentMessage(bool setApproved)
         {
-            if (setApproved)
+            if (setApproved && isTransferEnabled)
             {
                 if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
@@ -1083,6 +1089,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.VendorId))
