@@ -83,7 +83,7 @@ export class DocsInDataViewModel extends BaseComponent{
 
     get SecurityId() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.SecurityId;
+            return this.CurrentDocument.SecurityId; 
         }
         else return "";
     }
