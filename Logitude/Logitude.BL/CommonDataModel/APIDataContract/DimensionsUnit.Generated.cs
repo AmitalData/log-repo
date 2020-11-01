@@ -26,7 +26,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public string Name { get; set; }
 
-    public  string  ComputingPartnerCode { get; set; }
+    public string PrintAs { get; set; }
+
+        public  string  ComputingPartnerCode { get; set; }
 
     }
 } 

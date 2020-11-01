@@ -40,4 +40,4 @@ export class WeightUnitPM {
         this.IsDirty = true;
 		  	
     }
-}
+}
