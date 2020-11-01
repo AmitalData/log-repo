@@ -74,7 +74,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 IWebFreightContext context = WebFreightContext.GetContext(tenant);
                 #region
-
+                
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
              
@@ -522,6 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
                         GlobalTenant globaltenant = globalTenantRepository.GetGlobalTenantsByTenant(0);
                         globaltenant.Version = globaltenant.Version + 1;
+                        globaltenant.LastUpdateDate = DateTime.Now;
                         globalTenantRepository.Update(globaltenant);
                         globalTenantRepository.SubmitChanges();
                         scope.Complete();
@@ -700,8 +701,11 @@ namespace WebFreight.Web.MetaDataUpdate
             TaxWithholdingAssessOfficeRepository taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(accountingContext);
             AccountingCompanyTypeRepository accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(accountingContext);
             WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(accountingContext);
+            GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
 
             #endregion
+
+            GlobalTenant globalTenant = globalTenantRepository.GetGlobalTenantsByTenant(tenant);
 
             #region Dictionaries and lists
 
@@ -712,19 +716,19 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EventType> tenantZeroEventTypes = null;
-            if (true)
-            {
+            //if (true)
+            //{
 
-                tenantZeroEventTypes = new Dictionary<string, EventType>();
-                foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
-                {
-                    tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
-                }
-            }
-            else
-            {
-                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            }
+                //tenantZeroEventTypes = new Dictionary<string, EventType>();
+                //foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
+                //{
+                    //tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
+                //}
+            //}
+            //else
+            //{
+                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).Where(e => e.UpdateDate > globalTenant.LastUpdateDate || e.UpdateDate == null).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            //}
             Dictionary<string, EventType> currentTenantEventTypes = eventTypeRepository.GetEventTypesByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             Dictionary<string, Rank> tenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, Rank> currentTenantRanks = rankRepository.GetRanks(tenant).ToDictionary(d => d.Code, a => a);
@@ -2218,6 +2222,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 GlobalTenant currentglobaltenant = globalTenantRepository.GetGlobalTenantsByTenant(tenant);
                 GlobalTenant globaltenant = globalTenantRepository.GetGlobalTenantsByTenant(0);
                 currentglobaltenant.Version = globaltenant.Version;
+                currentglobaltenant.LastUpdateDate = DateTime.Now;
                 globalTenantRepository.Update(currentglobaltenant);
                 globalTenantRepository.SubmitChanges();
                 scope.Complete();
@@ -2442,6 +2447,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     updatedEventType.SearchFields = eventType.SearchFields;
                     updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
                     updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
+                    updatedEventType.UpdateDate = DateTime.Now;
                     eventTypesRepository.Update(updatedEventType);
                 }
 
@@ -2467,6 +2473,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         Id = IdCounter.GetNumber("EventType", tenant).ToString(),
                         EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                         AllowedInAutomation = eventType.AllowedInAutomation,
+                        UpdateDate = DateTime.Now,
                     };
 
                     eventTypesRepository.Add(newEventType);
