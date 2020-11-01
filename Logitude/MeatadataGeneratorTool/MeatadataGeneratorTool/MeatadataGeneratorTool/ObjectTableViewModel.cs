@@ -707,24 +707,54 @@ namespace MeatadataGeneratorTool
             }
             rows.Clear();
 
-
-            foreach (var item in Rows)
+            if (CLoseTableDataGrid.Columns.Count == 0)
             {
-                rows.Add(item);
-                if (CLoseTableDataGrid.Columns.Count == 0)
+                var itemWithMaxColumns = Rows.OrderByDescending(r => r._data.Count).FirstOrDefault();
+                if (itemWithMaxColumns != null)
                 {
-                    foreach (var xx in item._data)
+                    foreach (var xx in itemWithMaxColumns._data)
                     {
                         var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
                         TempColumn.Header = xx.Key;
-                        Binding bind = new Binding();
-                        bind.Mode = BindingMode.OneWay;
+                        Binding bind = new Binding(xx.Key);
+                        bind.Mode = BindingMode.TwoWay;
+                      
                         bind.Converter = new RowIndexConverter();
                         bind.ConverterParameter = xx.Key;
                         TempColumn.Binding = bind;
                         CLoseTableDataGrid.Columns.Add(TempColumn);
                     }
                 }
+
+                var missingDataRows = Rows.Where(r => r._data.Count < itemWithMaxColumns._data.Count);
+                foreach(var item in missingDataRows)
+                {
+                    var list =  itemWithMaxColumns._data.Where(d => !item._data.ContainsKey(d.Key)).ToList();
+                    foreach(var missedData in list)
+                    {
+                        item._data.Add(missedData.Key, null);
+                    }
+                    //item._data.Add()
+                }
+            }
+
+            foreach (var item in Rows)
+            {
+                rows.Add(item);
+                //if (CLoseTableDataGrid.Columns.Count == 0)
+                //{
+                //    foreach (var xx in item._data)
+                //    {
+                //        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                //        TempColumn.Header = xx.Key;
+                //        Binding bind = new Binding();
+                //        bind.Mode = BindingMode.OneWay;
+                //        bind.Converter = new RowIndexConverter();
+                //        bind.ConverterParameter = xx.Key;
+                //        TempColumn.Binding = bind;
+                //        CLoseTableDataGrid.Columns.Add(TempColumn);
+                //    }
+                //}
             }
 
             CLoseTableDataGrid.ItemsSource = rows;

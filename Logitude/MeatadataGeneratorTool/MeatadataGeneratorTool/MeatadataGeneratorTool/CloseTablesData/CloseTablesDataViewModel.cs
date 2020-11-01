@@ -154,18 +154,38 @@ namespace MeatadataGeneratorTool.CloseTablesData
             {
                 ViewModel.rows = new ObservableCollection<Row>();
             }
-            Row row = new Row();
+            Row newDataRow = new Row();
             if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
             {
                 ErrorMessages = "All Fields Are Required";
             }
+            else if (ViewModel.FieldsDictionary.Count > ViewModel.CLoseTableDataGrid.Columns.Count)
+            {
+                //var itemWithMaxColumns = ViewModel.rows.OrderByDescending(r => r._data.Count).FirstOrDefault();
+                //if (newDataRow._data.Count > itemWithMaxColumns._data.Count)
+                //{
+                //    var missingDataRows = ViewModel.rows.Where(r => r._data.Count < newDataRow._data.Count);
+                //    foreach (var item in missingDataRows)
+                //    {
+                //        var list = newDataRow._data.Where(d => !item._data.ContainsKey(d.Key)).ToList();
+                //        foreach (var missedData in list)
+                //        {
+                //            item._data.Add(missedData.Key, null);
+                //        }
+
+                //    }
+                //}
+
+                AddMissingDataColumns();
+            }
+
             if (ErrorMessages == "")
             {
                 foreach (var item in ViewModel.FieldsDictionary)
                 {
-                    row[item.Key] = item.Value;
+                    newDataRow[item.Key] = item.Value;
                 }
-                ViewModel.rows.Add(row);
+                ViewModel.rows.Add(newDataRow);
 
                 if (ViewModel.CLoseTableDataGrid.Columns.Count == 0)
                 {
@@ -182,6 +202,8 @@ namespace MeatadataGeneratorTool.CloseTablesData
                         ViewModel.CLoseTableDataGrid.Columns.Add(TempColumn);
                     }
                 }
+                
+
                 ViewModel.CLoseTableDataGrid.ItemsSource = ViewModel.rows;
                 ViewModel.TableDataWindow.Close();
             }
@@ -193,6 +215,30 @@ namespace MeatadataGeneratorTool.CloseTablesData
 
 
         }
+
+        private void AddMissingDataColumns()
+        {
+            var newColumns = ViewModel.FieldsDictionary.Where(f => !ViewModel.CLoseTableDataGrid.Columns.Any(c => c.Header.ToString() == f.Key));
+            foreach (var newColumnItem in newColumns)
+            {
+                var rowsWithoutNewColumn = ViewModel.rows.Where(r => !r._data.ContainsKey(newColumnItem.Key));
+                foreach (var rowItem in rowsWithoutNewColumn)
+                {
+                    rowItem._data.Add(newColumnItem.Key, null);
+                }
+                var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                TempColumn.Header = newColumnItem.Key;
+                Binding bind = new Binding();
+                bind.Mode = BindingMode.OneWay;
+                bind.Converter = new RowIndexConverter();
+                bind.ConverterParameter = newColumnItem.Key;
+                TempColumn.Binding = bind;
+                ViewModel.CLoseTableDataGrid.Columns.Add(TempColumn);
+
+
+            }
+        }
+
         Visibility errorsVisibility = Visibility.Collapsed;
         public Visibility ErrorsVisibility
         {
