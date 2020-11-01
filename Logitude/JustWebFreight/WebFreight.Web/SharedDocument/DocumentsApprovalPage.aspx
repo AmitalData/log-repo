@@ -389,7 +389,7 @@
         </table>
     </div>
     
-    <div id="Container2" class="LogitudeWindow">
+    <div id="Container2" class="LogitudeWindow" style="display:none;">
 
         <table>
             <tr>
