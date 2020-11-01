@@ -252,7 +252,13 @@
     <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
+
     <None Include="DBScripts\QuoteModel\202010270950_AddIsRegionalTAXToQuoteTemplateTextCode.sxml" />
+
+    <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
+    <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />
+    <None Include="DBScripts\InvoiceModel\202010261230_UpdateSearchFieldsOfARPayments.sxml" />
+
     <None Include="DBScripts\ScreenField Unique index removal.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
