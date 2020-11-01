@@ -608,7 +608,7 @@
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:0px;">
                                
-                                <LogToolTip [MaxWidthOfToolTip]="470"  [float]="'none'" *ngIf="item.ErrorLog && !item.IsCancelled"  [direction]="!isRTL? 'topright':'topleft'" [name]="'ErrorLog'"
+                                <LogToolTip   [float]="'none'" *ngIf="item.ErrorLog && !item.IsCancelled"  [direction]="!isRTL? 'topright':'topleft'" [name]="'ErrorLog'"
                                     [mode]="'error'" [title]="''">
                                     {{item.ErrorLog}} 
                                 </LogToolTip>
