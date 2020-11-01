@@ -18,6 +18,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (TableName == "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
             {
                 IsValid= IsRecordFieldsValid("ShipmentLevelCode", "C", reader); // C Equal Consol not custom
+                if(IsValid)
+                IsValid = IsRecordFieldsValid("IsCancelled", true, reader); // C Equal Consol not custom
 
             }
 
