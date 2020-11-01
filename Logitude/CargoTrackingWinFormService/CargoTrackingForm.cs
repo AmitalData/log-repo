@@ -63,7 +63,8 @@ namespace CargoTrackingWinFormService.Forms
         public CargoTrackingForm()
         {
             InitializeComponent();
-            
+            label20.Hide();
+            numericUpDown1.Hide();
             tabControl1.Selecting += new TabControlCancelEventHandler(tabControl1_Selecting);
             ScreensHight = Enumerable.Repeat(this.Height, TabsNumber).ToArray();
             ScreensWidth = Enumerable.Repeat(this.Width, TabsNumber).ToArray();
