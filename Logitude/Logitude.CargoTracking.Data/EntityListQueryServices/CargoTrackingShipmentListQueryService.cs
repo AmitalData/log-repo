@@ -89,7 +89,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ClearanceDone = a.ClearanceDone,
 
                                                                PickupDate = a.PickupDate,
-
+                                                               PickupEstimationDate= a.PickupEstimationDate,
+                                                               FromWarehouseEstimationDate = a.FromWarehouseEstimationDate,
+                                                               ToWarehouseEstimationDate = a.ToWarehouseEstimationDate,
+                                                               DepartureEstimationDate = a.DepartureEstimationDate,
+                                                               ArrivalEstimationDate= a.ArrivalEstimationDate,
+                                                               DeliveredEstimationDate= a.DeliveredEstimationDate,
+                                                               
                                                                ClearanceDate = a.ClearanceDate,
 
                                                            });
@@ -272,8 +278,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             string CurrentMilestoneCode = milestones.Where(s=>s.IsEstimation==false).OrderByDescending(s => s.Date).ThenByDescending(s=>s.Id).Select(s => s.Code).FirstOrDefault();
             if (CurrentMilestoneCode == null)
             {
-                Shipment.FutureMilstoneName = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Name).FirstOrDefault();
-                Shipment.FutureMilstoneDate = milestones.Where(s => s.IsEstimation == true).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Date).FirstOrDefault();
+                Shipment.FutureMilstoneName = milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Name).FirstOrDefault();
+                Shipment.FutureMilstoneDate = milestones.Where(s => s.IsEstimation == true && s.Name == Shipment.FutureMilstoneName).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.EstimationDate).FirstOrDefault();
             }
 
             for (int i=0; i < milestones.Count; i++)

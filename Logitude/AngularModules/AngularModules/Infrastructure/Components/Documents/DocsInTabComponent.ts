@@ -73,6 +73,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     SelectedExternalViewModel: DocsInDataViewModel;
     DeleteAttachmentButtonEnable: boolean = false;
     IsStardLoadPage: boolean;
+    AllowChangeReceiveDateDocsIn : boolean =false;
     public documentsFilingPMService: DocumentsFilingPMService;
     public UndoReceivedButtonEnable: boolean;
     public TabHeaderTextCode: string;
@@ -121,10 +122,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         else this.ObjectTableName = "Shipment";
 
 
+      
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-
+            
 
         // Ayman:
         // we need this for Translation

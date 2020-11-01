@@ -2,6 +2,7 @@ declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
+import {FeatureLocator} from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import {DocumentsFilingPM} from '../../../../../../Common/EntityPMs/DocumentsFilingPM';
 import {DocsInTabComponent} from '../../../../../../Infrastructure/Components/Documents/DocsInTabComponent';
 import {SessionLocator} from '../../../../../../Infrastructure/Utilities/SessionLocator';
@@ -20,6 +21,7 @@ export class DocsInDataViewModel extends BaseComponent{
     Id: string;
     Key: string;
     DataContext: any = this;
+    AllowChangeReceiveDateDocsIn : boolean = false;
     public EntityId: string;
     public ChildEntityId: string;
     public ChildReference: string;
@@ -72,11 +74,16 @@ export class DocsInDataViewModel extends BaseComponent{
 
     }
 
-
+    private setUIProperties(){
+    if (FeatureLocator.HasFeaturePermession("General", "ChangeReceiveDateDocsIn")) {
+                this.AllowChangeReceiveDateDocsIn = true;
+        }
+     this.UIProperties.SetEnabled("ReceivedDate", this.DocsInComponent.ObjectTableName , this.AllowChangeReceiveDateDocsIn);
+}
 
     get SecurityId() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.SecurityId;
+            return this.CurrentDocument.SecurityId; 
         }
         else return "";
     }
@@ -295,12 +302,12 @@ export class DocsInDataViewModel extends BaseComponent{
             if (this.CurrentDocument.FileExtension) {
                 this.Extention = this.CurrentDocument.FileExtension.toUpperCase();
                 this.SetAttachedIconVisibility = true;
-            }
+            }   
 
             else this.SetAttachedIconVisibility = false;
 
         }
-
+          this.setUIProperties();
 
     }
 

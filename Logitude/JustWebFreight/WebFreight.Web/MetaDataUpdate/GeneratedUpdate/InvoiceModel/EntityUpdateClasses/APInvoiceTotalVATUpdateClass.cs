@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceTotalVATUpdateClass
    {  		
-		public const string HashString = "d8660f39ffcc86cd56efcdcb9fe5e4a0";
+		public const string HashString = "e9855c692822f3664856df716710b07c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Total VAT",
-			      				    Code =  "a241",
+			      				    Code =  "d41e",
 			      				    Name =  "APInvoiceTotalVAT",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "VatPercent",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
