@@ -150,19 +150,21 @@ export class ShipmentComponent implements OnInit
     }
 
     Delivered: boolean = false;
-    GetDeliveredIcon() {
-        var iconPath = "";
+    DileveredIconColor: string;
+    //GetDeliveredIconColor() {
+    //    var iconPath = "";
 
-        if (this.Shipment.CurrentMilestoneCode == "11") {
+    //    if (this.Shipment.CurrentMilestoneCode == "11") {
+
+    //        this.DileveredIconColor = this.mainColor;
           
-            iconPath = "./assets/images/misc/Delivered.png";
-        }
-        else {
-            iconPath = "./assets/images/misc/gps-marker.svg";
-        }
+    //    }
+    //    else {
+    //        this.DileveredIconColor ="#B5B5B5";
+    //    }
           
-        return iconPath;
-    }
+    //    return iconPath;
+    //}
 
     SelectedTab: string = 'steps';
     TabToggleClicked(tabName: string)
@@ -181,9 +183,11 @@ export class ShipmentComponent implements OnInit
                 this.Shipment = result.ShipmentList;
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
+                    this.DileveredIconColor = this.mainColor;
                 }
                 else {
                     this.Delivered = false;
+                    this.DileveredIconColor = "#B5B5B5";
                 }
                 this.SetMilestonesFields(result);
               
