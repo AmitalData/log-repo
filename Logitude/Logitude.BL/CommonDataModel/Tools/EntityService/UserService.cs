@@ -775,7 +775,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CheckDocumentFilingInbox(UserPM entityPM, User entityPOCO)
         {
-            if (this.isNewEntity || entityPM.Email != entityPOCO.Contact.Email)
+            if (this.isNewEntity || (entityPOCO.Contact != null && entityPM.Email != entityPOCO.Contact.Email))
             {
                 var filingInboxName = entityPM.Email.Split('@')[0] + '.' + entityPM.Email.Split('@')[1].Split('.')[0];
                 var emailIndex = 0;
