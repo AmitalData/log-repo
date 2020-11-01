@@ -20,10 +20,13 @@ export class SearchComponent implements AfterViewInit
 
     @ViewChild('input') input: ElementRef;
     isLoading: boolean = false;
+    showErrorMessage: boolean = false;
+    hasError: boolean = false;
     noResult: boolean = false;
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
+    ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
     _Tenant:number;
 
@@ -215,15 +218,27 @@ export class SearchComponent implements AfterViewInit
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
+            this.showErrorMessage = false;
+            this.hasError = false;
             this.isLoading = true;
             RootContext.StartBusyIndicatorLoading();
-            this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
+            this.searchService.getShipments(searchText, this._Tenant).subscribe(
+            (result: any) =>
             {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
                 console.log("[getShipments]", result);
                 this.Shipments = result;
                 this.noResult = this.Shipments.length == 0 && !!this.SearchText;
 
+            },
+            errorObject=>
+            { 
+                RootContext.StopBusyIndicator();
+                this.isLoading = false;
+                this.hasError = true;
+                this.ServiceError = errorObject.error;
+                console.log("[ERROR FOUND]", errorObject);
+                
             });
         }else{
             this.Shipments = [];
