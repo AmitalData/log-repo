@@ -35,7 +35,7 @@ namespace WarehouseDataViews.Service
 
         private bool IsHavePackgeFeature(string featureCode, string packageCode)
         {
-            var feature = RunSqlString(mainDBConnetionstring, ("select PackageConnectedPackages.PackageCode as PackageCode  from PackageFeatures inner join PackageConnectedPackages on PackageFeatures.PackageCode =PackageConnectedPackages.ConnectedPackageCode where FeatureId = (select Id from Features where Code = '" + featureCode + "') and PackageConnectedPackages.PackageCode = '" + packageCode + "'"));
+            var feature = RunSqlString(mainDBConnetionstring, ("select PackageConnectedPackages.PackageCode as PackageCode  from PackageFeatures inner join PackageConnectedPackages on PackageFeatures.PackageCode =PackageConnectedPackages.ConnectedPackageCode where FeatureUniqeCode = (select FeatureUniqeCode from Features where Code = '" + featureCode + "') and PackageConnectedPackages.PackageCode = '" + packageCode + "'"));
             return !string.IsNullOrEmpty(feature) ? true : false;
         }
 
