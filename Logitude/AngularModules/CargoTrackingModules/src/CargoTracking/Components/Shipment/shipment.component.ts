@@ -1,11 +1,13 @@
 import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
 import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, NavigationStart, RoutesRecognized, Event } from '@angular/router';
 import { Location } from '@angular/common';
 import { db } from '../../../app/mem.data';
 import { IfStmt } from '@angular/compiler';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
+import { filter } from 'rxjs/operators';
+import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 
 @Component({
     selector: 'shipment',
@@ -20,7 +22,9 @@ export class ShipmentComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-    _Tenant:number;
+    tenant:number;
+    previousUrl: string;
+
     constructor(private route: ActivatedRoute,
         private router: Router,
          private location: Location,
@@ -28,9 +32,35 @@ export class ShipmentComponent implements OnInit
         this.GetIdFromURI();
         this.mainColor = CargoTrackingBrandingData.MainColor;
         this.LoadShipment();
+        console.log("[referrer]",document.referrer);
+        
+        this.listenToRouterEvents();
+        
+        
+        
 
     }
+    private listenToRouterEvents()
+    {
+        this.router.events.subscribe((event: Event) =>
+        {
+            if (event instanceof RoutesRecognized) {
+                // Show loading indicator
+                // var url = window.location.pathname;
+                
 
+            }
+
+            if (event instanceof NavigationStart) {
+                var url = window.location.pathname;
+            }
+
+            if (event instanceof NavigationEnd) {
+                // Hide loading indicator
+            }
+
+        });
+    }
     @HostListener('window:resize', ['$event'])
     onResize(event) {
       this.setViews();
@@ -56,8 +86,8 @@ export class ShipmentComponent implements OnInit
     {      
         
         // var tenant = this.route.snapshot.paramMap.get('SecurityKey');
-        if(this._Tenant==null){
-            this._Tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
+        if(this.tenant==null){
+            this.tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
         }
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
@@ -69,8 +99,8 @@ export class ShipmentComponent implements OnInit
 
 
     goBack(): void {
-        // this.location.back();
-        this.router.navigate([this._Tenant,'search']);
+        AppHelper.AppBack(this.router,this.location,this.tenant);
+        
     }
     GetModeIcon()
     {
@@ -143,7 +173,7 @@ export class ShipmentComponent implements OnInit
 
     LoadShipment(){
         this.isLoading = true;
-        this.searchService.getShipment(this.SecurityKey, this._Tenant).subscribe((result: any) =>
+        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
             console.log("[getShipment]", result);

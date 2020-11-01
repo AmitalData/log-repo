@@ -30,8 +30,8 @@ const routes: Routes = [
         children: [
             // { path: "", redirectTo: "/:Tenant/search/", pathMatch: "full" },
             { path: "", component: SearchComponent }, 
-            { path: "shipment", component: ShipmentComponent },
             { path: "shipment/:SecurityKey", component: ShipmentComponent },
+            { path: "shipment", redirectTo: ':Tenant/search' },
             { path: ":searchKey", component: SearchComponent },
             {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
         ]
