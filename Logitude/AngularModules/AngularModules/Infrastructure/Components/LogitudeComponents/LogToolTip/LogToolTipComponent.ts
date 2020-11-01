@@ -22,7 +22,9 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public float: string = null;
     @Input() public bottom: number = 0;
     @Input() public Scrollable: boolean = false;
-    @Input() public MaxWidthOfToolTip: number = null;
+
+
+     public MaxWidthOfToolTip: number = null;
 
     private counterId:number;
 
@@ -104,12 +106,21 @@ export class LogToolTipComponent implements AfterViewInit {
             {
                 element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
                 element.style.left = (itemRect.left - 15) + 'px';
+ 
+                var ImgItem = document.getElementById(this.mode+this.name);
+                var ImgItemRect = ImgItem.getBoundingClientRect();
+                this.MaxWidthOfToolTip =  document.body.clientWidth - ImgItemRect.left ;
+
                 break;
             }
             case 'topleft':
             {
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
+
+                var ImgItem = document.getElementById(this.mode+this.name);
+                var ImgItemRect = ImgItem.getBoundingClientRect();
+                this.MaxWidthOfToolTip = ImgItemRect.left ;
 
                 element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
                 element.style.left = (itemRect.right - bodyItemRect.width  + 20) + 'px';
