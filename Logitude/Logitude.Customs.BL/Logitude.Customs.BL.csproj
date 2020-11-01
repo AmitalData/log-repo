@@ -141,6 +141,7 @@
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentFieldStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="EntityDataMappings\AddressPurposeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AgentTalkBackTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentFieldReasonTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AmendmentFieldStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentRequestRejectReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentStatusDataMapping.cs" />
@@ -465,6 +467,7 @@
     <Compile Include="EntityDataMappings\Generated\AddressPurposeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AgentTalkBackTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentFieldReasonTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AmendmentFieldStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestRejectReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentStatusDataMapping.Generated.cs" />
@@ -950,6 +953,7 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
@@ -1446,6 +1450,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AmendmentFieldStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendmentRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
