@@ -2284,7 +2284,7 @@
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
     InActive="false"
-    ColumnHeaderTemplateName="&quot;ActionListHeaderTemplate&quot;"
+    ColumnHeaderTemplateName="&quot;&quot;"
     DisplayLongName="false"
     FullFieldLable="&quot;Actions&quot;"
     DefaultText="&quot; &quot;"
