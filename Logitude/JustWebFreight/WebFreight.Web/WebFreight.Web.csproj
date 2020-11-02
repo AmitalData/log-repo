@@ -1004,6 +1004,12 @@
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
+    <Compile Include="Controllers\Integration\Factories\IntegrationPartnerFactory.cs" />
+    <Compile Include="Controllers\Integration\ModelIntegrationController.cs" />
+    <Compile Include="Controllers\Integration\Quote\QuoteIntegrationBuilder.cs" />
+    <Compile Include="Controllers\Integration\Quote\QuoteIntegrationVariables.cs" />
+    <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationBuilder.cs" />
+    <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
