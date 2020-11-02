@@ -2740,6 +2740,12 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.InvoiceType_label_Spanish = "Tax Invoice";
                             break;
                         }
+                    case "IT":
+                        {
+                            invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית מס";                      
+                            break;
+                        }
+
                 }
 
                 invoiceDataProvider.Status = entityPOCO.Status != null ? entityPOCO.Status.Name : "";
