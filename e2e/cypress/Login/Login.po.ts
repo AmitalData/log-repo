@@ -17,56 +17,11 @@ it('Login Successfully', () => {
     var URL = Cypress.env("TestURL");
     var Env = Cypress.env("Env");
 
-    if (Env == 'staging') {
-        URL = Cypress.env("ProdStagingURL");
-        Email = Cypress.env("ProdStagingEmail");
-        Password = Cypress.env("ProdStagingPassword");
-    }
-    else if (Env == 'cloudStaging') {
-        URL = Cypress.env("CloudStagingURL");
-        Email = Cypress.env("CloudStagingEmail");
-        Password = Cypress.env("CloudStagingPassword");
-    }
-    else if (Env == 'local') {
-        URL = Cypress.env("LocalURL");
-        Email = Cypress.env("LocalEmail");
-        Password = Cypress.env("LocalPassword");
-    }
-
-    else if ( Env == 'FATest'){
-        URL=Cypress.env("TestStagingURL");
-        Email = Cypress.env("FATestEmail");
-        Password = Cypress.env("FATestPassword");
-       }
-       else if ( Env == 'FACloud'){
-         URL = Cypress.env("CloudStagingURL");
-         Email = Cypress.env("FACloudEmail");
-         Password = Cypress.env("FACloudPassword");
-       }
-
-       else if ( Env == 'ProdStagingTI'){
-        URL = Cypress.env("ProdStagingTIURL");
-        Email = Cypress.env("ProdStagingTIEmail");
-        Password = Cypress.env("ProdStagingTIPassword");
-      }
-
-      else if ( Env == 'TestStagingTI'){
-        URL = Cypress.env("TestStagingURL");
-        Email = Cypress.env("TestStagingEmail");
-        Password = Cypress.env("TestStagingPassword");
-      }
-
-
-       
+    URL = Cypress.env("LocalURL");
+    Email = Cypress.env("LocalEmail");
+    Password = Cypress.env("LocalPassword");
    
    
-
-    else //test_staging
-    {
-        //URL = Cypress.env("TestURL");
-        //Email = Cypress.env("TestEmail");
-        //Password = Cypress.env("TestPassword");
-    }
 
     cy.visit(URL)
 

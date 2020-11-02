@@ -42,4 +42,11 @@ export class LogHelper
     public static ComboBoxSearchAndSelectFirst(code: string, searchText: string){
         throw "Not implemented method";
     }
+    
+    /* Edit Grid Should have id on any wrapper div */
+    public static AssertEditGridHaveItems(gridWrapperId: string)
+    {
+        cy.get("#" + gridWrapperId + " .ag-row").should("have.length.greaterThan", 0);
+    }
+
 }
