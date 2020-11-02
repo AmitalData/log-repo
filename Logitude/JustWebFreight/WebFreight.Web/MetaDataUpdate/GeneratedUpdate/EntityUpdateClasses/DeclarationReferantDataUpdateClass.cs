@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "67345642dc3e0d932052475243cd271c";
+		public const string HashString = "f482079c9c3c388d3287e274590be906";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1977,7 +1977,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
-					  						ColumnHeaderTemplateName =  "ActionListHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Actions",
 					  						DefaultText =  " ",
