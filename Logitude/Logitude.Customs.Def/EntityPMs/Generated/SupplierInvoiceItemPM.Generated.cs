@@ -2112,6 +2112,30 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private string documentFilingId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentFilingId  
+	   {
+	    
+	     get
+		{
+		   return documentFilingId;
+		 }
+		 set
+		 {
+		   if(documentFilingId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentFilingId",OldValue=documentFilingId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentFilingId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

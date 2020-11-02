@@ -835,6 +835,10 @@ export class SupplierInvoiceItemPM {
     private classificationCodeSource: string;
     public get ClassificationCodeSource() { return this.classificationCodeSource; }
     public set ClassificationCodeSource(newValue: string) { if (this.classificationCodeSource != newValue) { this.classificationCodeSource = newValue; this.MarkAsDirty("ClassificationCodeSource"); } }
+
+    private documentFilingId: string;
+    public get DocumentFilingId() { return this.documentFilingId; }
+    public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
        
 	 
 
@@ -873,4 +877,4 @@ export class SupplierInvoiceItemPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

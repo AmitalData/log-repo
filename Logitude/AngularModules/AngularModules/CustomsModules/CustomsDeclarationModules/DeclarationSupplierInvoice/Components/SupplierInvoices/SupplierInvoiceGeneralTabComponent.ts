@@ -2612,9 +2612,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
     }
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
-        console.log("OnSelectedItemChanged > ", selectedRow);
-       // selectedRow.entityPM.ClasifiedRemarks = this.DocumentFilingId;
-       // DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
+         console.log("OnSelectedItemChanged > ", selectedRow);
+        selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
+        DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
 
         if (selectedRow) {
 
