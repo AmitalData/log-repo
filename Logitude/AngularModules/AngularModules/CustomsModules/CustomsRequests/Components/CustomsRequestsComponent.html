@@ -77,7 +77,7 @@
                                                     <table>
                                                         <tr style="height:30px; vertical-align:bottom" >
                                                             <td style="vertical-align: bottom">
-                                                                <div (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
+                                                                <div [attr.id]="'RequestSheet_' + item.MainInterfaceCode" (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
                                                             </td>
                                                         </tr>
 

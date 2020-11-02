@@ -4,48 +4,46 @@
     "projectId": "b2kqc4",
     "integrationFolder": "cypress",
     "screenshotsFolder": "cypress/results/html/screenshots",
-  "scripts": {
-    "cypressopenlocal": "cypress run --env Env=local",
-    "cypressRun": "cypress run",
-    "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
-    "cypressopen": "node_modules\\.bin\\cypress open"
+    "scripts": {
+        "cypressopenlocal": "cypress run --env Env=local",
+        "cypressRun": "cypress run",
+        "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
+        "cypressopen": "node_modules\\.bin\\cypress open"
+    },
+    "env": {
+        "CustomsAPIURL": "http://localhost:9996/api/",
+        "_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
+        "TestURL": "https://test.logitudeworld.com/test/",
+        "TestEmail": "protractor2@test.com",
+        "TestPassword": "!P123p456",
+        "TestStagingURL": "https://test.logitudeworld.com/staging/",
+        "TestStagingEmail": "protractor2@test.com",
+        "TestStagingPassword": "!P123p456",
+        "ProdStagingURL": "https://staging.logitudeworld.com/",
+        "ProdStagingEmail": "protractor@test.com",
+        "ProdStagingPassword": "!P123t456",
+        "CloudStagingURL": "https://staging.amital.co.il/",
+        "CloudStagingEmail": "protractor@test.com",
+        "CloudStagingPassword": "!P123t456",
 
-  },
-  "env": {
+        "LocalURL": "http://localhost:4200/",
+        "LocalEmail": "angular@fnarsoft.com",
+        "LocalPassword": "1",
 
-    "CustomsAPIURL":"http://localhost:9996/api/",
-	"_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
-   "TestURL": "https://test.logitudeworld.com/test/",
-    "TestEmail": "protractor2@test.com",
-    "TestPassword": "!P123p456",
-    "TestStagingURL": "https://test.logitudeworld.com/staging/",
-    "TestStagingEmail": "protractor2@test.com",
-    "TestStagingPassword": "!P123p456",
-    "ProdStagingURL": "https://staging.logitudeworld.com/",
-    "ProdStagingEmail": "protractor@test.com",
-    "ProdStagingPassword": "!P123t456",
-    "CloudStagingURL": "https://staging.amital.co.il/",
-    "CloudStagingEmail": "protractor@test.com",
-    "CloudStagingPassword": "!P123t456",
-    "LocalURL": "http://localhost:4200/",
-    "LocalEmail": "angular@fnarsoft.com",
-    "LocalPassword": "1",
-	"TestCustomsURL": "https://test.logitudeworld.com/customs/",
-    "TestCustomsEmail": "mohammad@logitudeworld.com",
-    "TestCustomsPassword": "1",
-    "FATestEmail": "sg1209@test.com",
-    "FATestPassword": "!Sg13579",
-    "FACloudEmail": "sumaya@cloud.com",
-    "FACloudPassword": "Sg0592463934!",
-    "ProdStagingTIURL":"https://staging.logitudeworld.com/",
-    "ProdStagingTIEmail":"protractor2@test.com",
-    "ProdStagingTIPassword":"!P123p123",
-	"CustomsTenant":1
+        "_TestCustomsURL": "https://test.logitudeworld.com/customs/",
+        "TestCustomsURL": "http://192.116.221.103:593/customs593/",
+        "TestCustomsEmail": "abdullahT1@customs103.com",
+        "TestCustomsPassword": "!Abood12",
 
-
-  },
-
-    
+        "FATestEmail": "sg1209@test.com",
+        "FATestPassword": "!Sg13579",
+        "FACloudEmail": "sumaya@cloud.com",
+        "FACloudPassword": "Sg0592463934!",
+        "ProdStagingTIURL": "https://staging.logitudeworld.com/",
+        "ProdStagingTIEmail": "protractor2@test.com",
+        "ProdStagingTIPassword": "!P123p123",
+        "CustomsTenant": 1
+    },
     "chromeWebSecurity": false,
     "defaultCommandTimeout": 120000,
     "responseTimeout": 120000,
@@ -53,8 +51,7 @@
     "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
-    "trashAssetsBeforeRuns":false,
-    
+    "trashAssetsBeforeRuns": false,
     "reporter": "cypress-multi-reporters",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
@@ -65,15 +62,7 @@
             "html": true,
             "json": false,
             "timestamp": "ddmmyyyy_HHMM",
-            "reportFilename":"Report"
-            
-            
-
+            "reportFilename": "Report"
         }
     }
-
-    
-     
-       
-    
 }
