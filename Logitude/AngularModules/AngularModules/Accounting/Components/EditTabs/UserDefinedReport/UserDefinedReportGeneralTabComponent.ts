@@ -121,6 +121,7 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
                 }
             }
             else{
+                this.ClearAllErrorsLogLinewWhenCancelledPopoup();
                 if(!IsNew){
                     this.CancelledEditLine(itemComponent);
                 }
@@ -130,6 +131,17 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
                 }
             }
         })
+    }
+
+
+    private ClearAllErrorsLogLinewWhenCancelledPopoup(){
+        var MainlLines =this.CalculatedChartsOfAccountItemList.Collection;
+        for(let i =0 ;i< MainlLines.length ; i++){
+            var InerLines = MainlLines[i].CalculatedChartsOfAccountsLineItemList.Collection;
+          for(let j =0 ;j< InerLines.length ; j++){
+             InerLines[j].ErrorLog = null;
+          }
+      }
     }
 
     CancelledEditLine(itemComponent:CalculatedChartsOfAccountItem){
@@ -204,6 +216,7 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
                 this.NewCalculatedChartsOfAccount.UserDefinedReportId = this.EntityPM.Id;
             }
             this.NewCalculatedChartsOfAccountItem= new CalculatedChartsOfAccountItem(this.NewCalculatedChartsOfAccount,true, this);
+            this.NewCalculatedChartsOfAccountItem.IsNewEntity = true;
             this.LogWindowShow(TextCodeTranslator.Translate("CalculatedChartsOfAccount"), this.NewCalculatedChartsOfAccountItem,true,this.NewCalculatedChartsOfAccount);
         }
     }
@@ -215,6 +228,7 @@ export class UserDefinedReportGeneralTabComponent extends BaseComponent implemen
         item.EntityPM.CalculatedChartsOfAccountLines.forEach(S=>
             this.EntityLinesCancelledCopy.push( Object.assign({}, S))
         );
+        item.IsNewEntity =false;
        this.LogWindowShow(TextCodeTranslator.Translate("CalculatedChartsOfAccount"), item);
     }
 }
@@ -397,12 +411,13 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         for(let i =0 ;i< MainlLines.length ; i++){
             var InerLines = MainlLines[i].CalculatedChartsOfAccountsLineItemList.Collection;
           for(let j =0 ;j< InerLines.length ; j++){
-              if(!this.IsCancelled && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line)  && (
-                  (!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate)  || 
-                  (!AppTool.IsNullOrEmpty(InerLines[j].GLAccountId) && InerLines[j].GLAccountId == this.GLAccountId)))
+              if(!this.IsCancelled && this.fatherComponent.Line && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line)  && (
+                  ((!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(this.ChartOfAccountIdForValidate)) && InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate)  || 
+                  ((!AppTool.IsNullOrEmpty(InerLines[j].GLAccountId) && !AppTool.IsNullOrEmpty(this.GLAccountId)) && InerLines[j].GLAccountId == this.GLAccountId)))
                   {
                       LinesHasSameGLAccountorChartsofAccounts.push(InerLines[j].Line);
                       MainLinesHasSameGLAccountorChartsofAccounts.push(MainlLines[i].Line);
+                      if(this.fatherComponent.Line == InerLines[j].fatherComponent.Line)
                       InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+this.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
                       TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+this.fatherComponent.Line+")" ;
                       //break;
@@ -443,12 +458,13 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         for(let i =0 ;i< MainlLines.length ; i++){
             var InerLines = MainlLines[i].CalculatedChartsOfAccountsLineItemList.Collection;
           for(let j =0 ;j< InerLines.length ; j++){
-              if(!this.IsCancelled && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line) &&!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) &&(
-                  InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate  || 
-                  InerLines[j].ChartOfAccountId == this.ChartOfAccountId))
+              if(!this.IsCancelled && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line) &&(
+                (!AppTool.IsNullOrEmpty(this.ChartOfAccountIdForValidate) && !AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId)) && InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate  || 
+                (!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(this.ChartOfAccountId))&& InerLines[j].ChartOfAccountId == this.ChartOfAccountId))
                   {
                       LinesHasSameGLAccountorChartsofAccounts.push(InerLines[j].Line);
                       MainLinesHasSameGLAccountorChartsofAccounts.push(MainlLines[i].Line);
+                      if(this.fatherComponent.Line == InerLines[j].fatherComponent.Line)
                       InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+this.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
                       TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+this.fatherComponent.Line+")" ;
                      //break;
@@ -477,7 +493,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         if (this.EntityPM.IsCancelled != newValue) {
             var IsValid = this.ValidateIsCancelled();
             if(!IsValid && !newValue)
-                this.ErrorLog = "Charts Of Accounts for this line differ from Charts of account type charts, please choose another GLAccount or Charts of Accounts";
+                this.ErrorLog = "Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.";
             else if (newValue)
                 this.ErrorLog = null;
            

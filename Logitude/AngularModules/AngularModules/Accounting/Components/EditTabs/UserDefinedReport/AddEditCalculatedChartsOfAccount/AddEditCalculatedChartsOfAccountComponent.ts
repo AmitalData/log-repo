@@ -32,6 +32,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ChartOfAccountFilterItems :ApiQueryFilters;
     public GLAccountFilterItems :ApiQueryFilters;
+    public IsNewEntity:boolean =false;
 
     constructor() {
         super();
@@ -91,6 +92,8 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     SetUIProperty() {
         var IsEnabled = this.ValidateChartofAccountType();
         this.UIProperties.SetEnabled("ChartOfAccountTypeCode", this.ObjectTableName, IsEnabled);
+        this.UIProperties.SetEnabled("IsCancelled", this.ObjectTableName, !this.DataContext.IsNewEntity);
+
     }
     ValidateLine(errors: string[]){
         if(!this.DataContext.IsCancelled){
@@ -161,6 +164,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        this.IsNewEntity = this.DataContext.IsNewEntity;
         this.SetUIProperty();
         this.SetFilterItems();  
      }

@@ -289,8 +289,8 @@
                                                 <td>
                                                     <table>
                                                         <tr style="height:5px;">
-                                                            <td>
-                                                                <LogCheckBox [ObjectFieldName]="'IsCancelled'" [Checked]="DataContext.IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="DataContext.IsCancelled = $event"></LogCheckBox>
+                                                            <td> 
+                                                               <LogCheckBox [IsDisabled]="DataContext.IsNewEntity" [ObjectFieldName]="'IsCancelled'"   [Checked]="DataContext.IsCancelled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="DataContext.IsCancelled = $event"></LogCheckBox>
                                                             </td>
                                                          </tr>
                                                         <tr style="height:20px;">
@@ -584,7 +584,7 @@
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="'center'" style="margin-top: 4px;"> 
                                 <!-- <img *ngIf="item.IsCancelled" src="./Images/CheckBoxIcon.png" />     -->
-                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogCheckBox>
+                                <LogCheckBox [HideColumns]="true" [IsDisabled]="item.fatherComponent.IsCancelled" [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogCheckBox>
 
                             </div>
                         </log-cell-template>
