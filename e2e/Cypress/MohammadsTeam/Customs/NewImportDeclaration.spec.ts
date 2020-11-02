@@ -34,7 +34,7 @@ let R: RandomGenerator= new RandomGenerator();
             Tenant : Tenant,
             CustomerId : CusstomerGECUId,
             TransportModeId : 'A',
-            DeclarationOfficeCode : '14',
+            DeclarationOfficeCode : '3',
       }
      }).its('body')
      .then(ImportDeclaration => {
