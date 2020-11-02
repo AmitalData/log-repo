@@ -383,8 +383,8 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
 
 
  
-    private ValidateGLAccountLine(){
-        if(AppTool.IsNullOrEmpty(this.ErrorLog)){
+    private ValidateGLAccountLine(Line:CalculatedChartsOfAccountsLineItem, ErrorLog:string){
+        //if(AppTool.IsNullOrEmpty(this.ErrorLog)){
             //if(this.GLAccountId && this.ChartOfAccountIdForValidate){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
@@ -396,86 +396,99 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
                     MainlLines = [];
                     MainlLines.push(this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
-               this.ValidateGLAccountLines(MainlLines,LinesHasSameGLAccountorChartsofAccounts,MainLinesHasSameGLAccountorChartsofAccounts);
+                Line.ValidateGLAccountLines(MainlLines,LinesHasSameGLAccountorChartsofAccounts,MainLinesHasSameGLAccountorChartsofAccounts,Line);
                if(LinesHasSameGLAccountorChartsofAccounts.length > 0 ){
-                this.ErrorLog=TextCodeTranslator.Translate("UserDefinedReport.O.ParentCharofAccount AlreadyIncluded")+" "+LinesHasSameGLAccountorChartsofAccounts.toString()+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
+                Line.ErrorLog=TextCodeTranslator.Translate("UserDefinedReport.O.ParentCharofAccount AlreadyIncluded")+" "+LinesHasSameGLAccountorChartsofAccounts.toString()+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
                 TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+MainLinesHasSameGLAccountorChartsofAccounts.toString()+")" ;
                 }
-                else{
-                    this.ErrorLog=null
-                }                                                          
+                else if(AppTool.IsNullOrEmpty(ErrorLog)){
+                    Line.ErrorLog=null
+                }
+                
+                return  Line.ErrorLog;
             // }
-        }
+       // }
     }
-    private ValidateGLAccountLines(MainlLines:any,LinesHasSameGLAccountorChartsofAccounts:number[],MainLinesHasSameGLAccountorChartsofAccounts:number[]){
+    private ValidateGLAccountLines(MainlLines:any,LinesHasSameGLAccountorChartsofAccounts:number[],MainLinesHasSameGLAccountorChartsofAccounts:number[],Line:CalculatedChartsOfAccountsLineItem){
         for(let i =0 ;i< MainlLines.length ; i++){
             var InerLines = MainlLines[i].CalculatedChartsOfAccountsLineItemList.Collection;
           for(let j =0 ;j< InerLines.length ; j++){
-              if(!this.IsCancelled && this.fatherComponent.Line && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line)  && (
-                  ((!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(this.ChartOfAccountIdForValidate)) && InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate)  || 
-                  ((!AppTool.IsNullOrEmpty(InerLines[j].GLAccountId) && !AppTool.IsNullOrEmpty(this.GLAccountId)) && InerLines[j].GLAccountId == this.GLAccountId)))
+              if(!Line.IsCancelled && Line.fatherComponent.Line && !InerLines[j].IsCancelled && (InerLines[j].Line != Line.Line || MainlLines[i].Line != Line.fatherComponent.Line)  && (
+                  ((!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(Line.ChartOfAccountIdForValidate)) && InerLines[j].ChartOfAccountId == Line.ChartOfAccountIdForValidate)  || 
+                  ((!AppTool.IsNullOrEmpty(InerLines[j].GLAccountId) && !AppTool.IsNullOrEmpty(Line.GLAccountId)) && InerLines[j].GLAccountId == Line.GLAccountId)))
                   {
                       LinesHasSameGLAccountorChartsofAccounts.push(InerLines[j].Line);
                       MainLinesHasSameGLAccountorChartsofAccounts.push(MainlLines[i].Line);
-                      if(this.fatherComponent.Line == InerLines[j].fatherComponent.Line)
-                      InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+this.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
-                      TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+this.fatherComponent.Line+")" ;
-                      //break;
+                      if(Line.fatherComponent.Line == InerLines[j].fatherComponent.Line)
+                      InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+Line.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
+                      TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+Line.fatherComponent.Line+")" ;
+                      break;
                   }
-                  else{
-                    InerLines[j].ErrorLog  = null;
-                  }
+                //   else{
+                //     InerLines[j].ErrorLog  = null;
+                //   }
           }
       }
     }
-    private ValidateChartOfAccountLine(){
-        if(AppTool.IsNullOrEmpty(this.ErrorLog)){
+    private ValidateChartOfAccountLine(Line:CalculatedChartsOfAccountsLineItem){
+        //if(AppTool.IsNullOrEmpty(Line.ErrorLog)){
           //  if(this.ChartOfAccountId){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
-                var MainlLines = this.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
-                if(MainlLines!=null && this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
-                    MainlLines = MainlLines.concat(this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
+                var MainlLines = Line.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
+                if(MainlLines!=null && Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
+                    MainlLines = MainlLines.concat(Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
-                else if(MainlLines==null && this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
+                else if(MainlLines==null && Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
                     MainlLines = [];
-                    MainlLines.push(this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
+                    MainlLines.push(Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
-                this.ValidateChartsofAccountsLines(MainlLines,LinesHasSameGLAccountorChartsofAccounts,MainLinesHasSameGLAccountorChartsofAccounts);
+                Line.ValidateChartsofAccountsLines(MainlLines,LinesHasSameGLAccountorChartsofAccounts,MainLinesHasSameGLAccountorChartsofAccounts,Line);
                if(LinesHasSameGLAccountorChartsofAccounts.length > 0 ){
-                this.ErrorLog=TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+LinesHasSameGLAccountorChartsofAccounts.toString()+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
+                Line.ErrorLog=TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+LinesHasSameGLAccountorChartsofAccounts.toString()+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
                 TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+MainLinesHasSameGLAccountorChartsofAccounts.toString()+")" ;
                 }
                 else{
-                    this.ErrorLog=null
-                }                                                           
+                    Line.ErrorLog=null
+                } 
+                
+                return  Line.ErrorLog;
            // }
             
-        }
+        //}
     }
 
-    private ValidateChartsofAccountsLines(MainlLines:any,LinesHasSameGLAccountorChartsofAccounts:number[],MainLinesHasSameGLAccountorChartsofAccounts:number[]){
+    private ValidateChartsofAccountsLines(MainlLines:any,LinesHasSameGLAccountorChartsofAccounts:number[],MainLinesHasSameGLAccountorChartsofAccounts:number[],Line:CalculatedChartsOfAccountsLineItem){
         for(let i =0 ;i< MainlLines.length ; i++){
             var InerLines = MainlLines[i].CalculatedChartsOfAccountsLineItemList.Collection;
           for(let j =0 ;j< InerLines.length ; j++){
-              if(!this.IsCancelled && !InerLines[j].IsCancelled && (InerLines[j].Line != this.Line || MainlLines[i].Line != this.fatherComponent.Line) &&(
-                (!AppTool.IsNullOrEmpty(this.ChartOfAccountIdForValidate) && !AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId)) && InerLines[j].ChartOfAccountId == this.ChartOfAccountIdForValidate  || 
-                (!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(this.ChartOfAccountId))&& InerLines[j].ChartOfAccountId == this.ChartOfAccountId))
+              if(!Line.IsCancelled && !InerLines[j].IsCancelled && (InerLines[j].Line != Line.Line || MainlLines[i].Line != Line.fatherComponent.Line) &&(
+                ((!AppTool.IsNullOrEmpty(Line.ChartOfAccountIdForValidate) && !AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId)) && InerLines[j].ChartOfAccountId == Line.ChartOfAccountIdForValidate)  || 
+                ((!AppTool.IsNullOrEmpty(Line.ChartOfAccountId) && !AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountIdForValidate)) && InerLines[j].ChartOfAccountIdForValidate == Line.ChartOfAccountId)  || 
+                ((!AppTool.IsNullOrEmpty(InerLines[j].ChartOfAccountId) && !AppTool.IsNullOrEmpty(Line.ChartOfAccountId))&& InerLines[j].ChartOfAccountId == Line.ChartOfAccountId)))
                   {
                       LinesHasSameGLAccountorChartsofAccounts.push(InerLines[j].Line);
                       MainLinesHasSameGLAccountorChartsofAccounts.push(MainlLines[i].Line);
-                      if(this.fatherComponent.Line == InerLines[j].fatherComponent.Line)
-                      InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+this.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
-                      TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+this.fatherComponent.Line+")" ;
-                     //break;
+                      if(Line.fatherComponent.Line == InerLines[j].fatherComponent.Line)
+                      InerLines[j].ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded") +" "+Line.Line+" "+TextCodeTranslator.Translate("UserDefinedReport.O.AndCantBeAddedAgain.") +" ("+
+                      TextCodeTranslator.Translate("CalculatedChartsOfAccount")+": "+Line.fatherComponent.Line+")" ;
+                      break;
                   }
-                  else{
-                    InerLines[j].ErrorLog  = null;
-                  }
+                //   else{
+                //     InerLines[j].ErrorLog  = null;
+                //   }
           }
       }
     }
 
+    private ValidateAllLinesOnOpenSession(){
+        this.fatherComponent.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=>{
+         
+           var ErrorLog = this.ValidateChartOfAccountLine(s);
+           this.ValidateGLAccountLine(s,ErrorLog);
+
+        });
+    }             
     private ValidateIsCancelled():boolean{
         var IsValid = true;
         var ChartofAccounForGLAccount = this.GLAccount?this.GLAccount.ChartOfAccountsTypeCode:null;
@@ -498,8 +511,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
                 this.ErrorLog = null;
            
             this.EntityPM.IsCancelled = newValue;
-            this.ValidateGLAccountLine();
-            this.ValidateChartOfAccountLine();
+            this.ValidateAllLinesOnOpenSession();
         }
     }
 
@@ -536,7 +548,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         if (this.gLAccount != newValue) {
             this.gLAccount = newValue;
             this.ChartOfAccountIdForValidate =this.gLAccount? this.gLAccount.ChartOfAccountsId:null;
-            this.ValidateGLAccountLine();
+            this.ValidateAllLinesOnOpenSession();
             if (newValue)
             {
                 this.EntityPM.GLAccountLocalName = newValue.LocalName;
@@ -621,7 +633,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         if (this.EntityPM.ChartOfAccountId != newValue) {
             this.ErrorLog=null;
             this.EntityPM.ChartOfAccountId = newValue;
-            this.ValidateChartOfAccountLine();
+            this.ValidateAllLinesOnOpenSession();
             this.ValidateIsCancelled();
         }
     }
