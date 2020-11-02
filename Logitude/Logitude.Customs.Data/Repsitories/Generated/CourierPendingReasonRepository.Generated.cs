@@ -34,7 +34,12 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
+        public CourierPendingReason GetByCode(string code, int tenant)
+        {
+            return (from a in context.CourierPendingReasons
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
         public IQueryable<CourierPendingReason> GetAll(int tenant)
         {
             return from a in context.CourierPendingReasons  
