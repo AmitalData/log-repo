@@ -15,7 +15,10 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="LastMileStatus" />
         <xs:element minOccurs="0" maxOccurs="1" ref="LastMileStatusDate" />
         <xs:element minOccurs="0" maxOccurs="1" ref="LastMileStatusRemarks" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LastMileStatusName" />
         <xs:element minOccurs="0" maxOccurs="1" ref="Param" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Delivered" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IsClosedForFollowUp" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -24,5 +27,8 @@
   <xs:element name="LastMileStatus" type="xs:string" />
   <xs:element name="LastMileStatusDate" type="xs:string" />
   <xs:element name="LastMileStatusRemarks" type="xs:string" />
+  <xs:element name="LastMileStatusName" type="xs:string" />
   <xs:element name="Param" type="xs:string" />
+  <xs:element name="Delivered" type="xs:string" />
+  <xs:element name="IsClosedForFollowUp" type="xs:string" />
 </xs:schema>

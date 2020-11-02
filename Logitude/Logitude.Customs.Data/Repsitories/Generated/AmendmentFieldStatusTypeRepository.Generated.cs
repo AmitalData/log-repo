@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class AmendmentFieldStatusTypeRepository:IRepository<AmendmentFieldStatusType>
+   {
+   
+        private ICustomContext currentContext;
+        public AmendmentFieldStatusTypeRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public AmendmentFieldStatusTypeRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  AmendmentFieldStatusType GetSingle(string code)
+        {
+            return (from a in context.AmendmentFieldStatusTypes
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<AmendmentFieldStatusType> GetAll()
+        {
+            return from a in context.AmendmentFieldStatusTypes  
+                   select a;
+        }
+				 
+        public AmendmentFieldStatusType GetSingle(EntityKeyFields entityKeys)
+        {
+            AmendmentFieldStatusTypeKeys keys = entityKeys as AmendmentFieldStatusTypeKeys;
+            return (from a in context.AmendmentFieldStatusTypes
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(AmendmentFieldStatusType entity)
+        {
+            onAdd();
+            context.AmendmentFieldStatusTypes.Add(entity);
+        }
+
+        public void Remove(AmendmentFieldStatusType entity)
+        {
+            context.AmendmentFieldStatusTypes.Attach(entity);
+            context.AmendmentFieldStatusTypes.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(AmendmentFieldStatusType entity)
+        {
+            onUpdate();
+            context.AmendmentFieldStatusTypes.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<AmendmentFieldStatusType> All()
+        {
+            return context.AmendmentFieldStatusTypes.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

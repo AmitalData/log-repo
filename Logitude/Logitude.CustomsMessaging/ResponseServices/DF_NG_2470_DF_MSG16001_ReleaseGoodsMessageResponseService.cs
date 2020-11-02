@@ -22,6 +22,9 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Maman;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -147,13 +150,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationPM.CourierCustomStatusCode = "1";
 
-                        LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
-                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
-                        declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusPM.IsClosedForFollowUp = true;
-                        declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+                        string defValue = "";
+                        var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+                        CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
+                        if (_CourierMasterPM != null)
+                        {
+                            Card myCard = null;
+                            var repository = new CardRepository(requestParams.Tenant);
+                            myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
+                            if (!String.IsNullOrWhiteSpace(myCard.Code))
+                            {
+                                defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
+                            }
+                        }
+                        if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
+                        {
+
+                            LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
+                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
+                            declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationCourierStatusPM.IsClosedForFollowUp = true;
+                            declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+
+                        }
                     }
                     declarationPM.IsClose = true;
                     MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
@@ -201,6 +222,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
             declarationUpdateService.Update(declarationPM, true);
             LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
 
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
 
         private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
