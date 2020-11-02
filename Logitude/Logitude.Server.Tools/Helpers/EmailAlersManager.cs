@@ -38,8 +38,8 @@ namespace Logitude.Server.Tools.Helpers
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ContactRepository contactRepository = new ContactRepository(commonContext);
-           
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), tenant);
+
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetLoggedUserEmail(tenant), tenant);
             if (toEmails != null)
             {
                 string[] recipientEmails = toEmails.Split(';');
