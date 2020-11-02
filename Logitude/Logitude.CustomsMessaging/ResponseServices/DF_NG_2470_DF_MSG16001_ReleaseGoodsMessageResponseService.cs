@@ -150,6 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationPM.CourierCustomStatusCode = "1";
 
+                        string defValue = "";
                         var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                         CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                         if (_CourierMasterPM != null)
@@ -159,19 +160,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
                             if (!String.IsNullOrWhiteSpace(myCard.Code))
                             {
-                                string defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
-                                if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
-                                {
-
-                                    LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
-                                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
-                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
-                                    declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationCourierStatusPM.IsClosedForFollowUp = true;
-                                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
-                                }
+                                defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
                             }
+                        }
+                        if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
+                        {
+
+                            LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
+                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
+                            declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationCourierStatusPM.IsClosedForFollowUp = true;
+                            declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+
                         }
                     }
                     declarationPM.IsClose = true;
