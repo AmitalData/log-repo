@@ -30,7 +30,9 @@ namespace CommunicationWorkerRole.Tasks
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quote automatically closing worker role", null, null);
+                string errorMessage = new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
+                errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
+                throw new Exception(errorMessage);
             }
         }
 

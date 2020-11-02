@@ -139,11 +139,11 @@ namespace WebFreight.Web.QuoteModel
                 quoteQuery = new QuoteQuery(item.Tenant);
                 var email = "system@tenant" + item.Tenant + ".com";
                 quoteService = new QuoteService(quotesContext_Loop, item.Tenant, email);
-                quotePM = quoteQuery.GetSinglePM(item.Id, item.Tenant);
+                quotePM = quoteQuery.GetSinglePMForWorkerRole(item.Id, item.Tenant);
                 quotePM.IsClosed = true;
                 var quoteClosingReasonRepository = new QuoteClosingReasonRepository(item.Tenant);
                 var quoteClosing = quoteClosingReasonRepository.GetSingleQuoteClosingReasonByCode("XQ", item.Tenant);
-                quotePM.QuoteClosingReasonId = quoteClosing.Id;
+                quotePM.QuoteClosingReasonId = quoteClosing != null ? quoteClosing.Id : null;
                 quotePM.QuoteClosingReasonCode = "XQ";
                 quotePM.ActionType = "Decline";
                 quoteService.Update(quotePM, true);
