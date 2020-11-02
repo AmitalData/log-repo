@@ -82,7 +82,7 @@
 
                 <div class="title hide-mobile">Shipment Milestones Details</div>
                 <div *ngIf="MilstonesExist">
-                    <div class="tag">Future milestone</div>
+                    <div class="tag">Future milestones</div>
                     <ul *ngIf="FuturesMilestoneFields" class="steps-list">
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
@@ -95,7 +95,7 @@
                         </li>
                     </ul>
 
-                    <div class="tag">Current milestone</div>
+                    <div class="tag">Current Milestone</div>
                     <ul *ngIf="CurrentMilestoneField" class="steps-list">
                         <li class="highlighted">
                             <ng-container *ngIf="CurrentMilestoneField.Date">
