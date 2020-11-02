@@ -158,7 +158,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         if (line.IsCancelled != calculatedChartsOfAccountPM.IsCancelled)
                         {
-                            notes += TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.IsCancelled", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.IsCancelled + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + calculatedChartsOfAccountPM.IsCancelled + Environment.NewLine;
+                            notes += TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.IsCancelled", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + calculatedChartsOfAccountPM.IsCancelled + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + line.IsCancelled + Environment.NewLine;
                         }
 
 
