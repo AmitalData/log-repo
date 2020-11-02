@@ -9,9 +9,9 @@ export class APILoginComp {
  
 it('APILogin Successfully', () => {
  
-  var Email = Cypress.env("LocalEmail");
-  var Password = Cypress.env("LocalPassword");
-  var APIURL = Cypress.env("CustomsAPIURL");
+  var Email = Cypress.env("CustomsEmail");
+  var Password = Cypress.env("CustomsPassword");
+  var APIURL = Cypress.env("CustomsAPIURL")+"/api/";;
 
 
   cy.window().then(win=> {
