@@ -373,7 +373,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()"  id="{{'Save' | IdGeneratorPipe}}">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>
