@@ -191,18 +191,18 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
             if (fieldName == null) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
             }
-            this.timerToken = setTimeout(() => {
+          
                 this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
                 this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
                 this.CD.detectChanges();
-            }, 200);
+           
         }
          else {
-            this.timerToken = setTimeout(() => {
+          
 
             this.UIProperties.SetValidity("ToDate", null, true, "");
             this.UIProperties.SetValidity("FromDate", null, true, "");
-            }, 200);
+         
                 this.ReloadData();
         }
            
@@ -334,54 +334,53 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
    // this.ReloadData();
 
     }
-
-  public SelectedItemsCount: number=0;
-    onCheckBoxChecked($event:any)
-    {
-        var isChecked: boolean = $event.IsChecked == undefined ? $event.isChecked : $event.IsChecked;
-
-        var rowData = $event.rowData == undefined ? $event.line : $event.rowData;
-        if (isChecked) {
-
-            if (!this.selectedItems.Collection.includes(rowData)) {
-                this.selectedItems.Insert(rowData);
-
-              this.SelectedItemsCount += 1;
-              this.DataCount = this.DataSource.rowCount;
-              if (this.DataCount != null) {
-                  this.SelectedItemsCountText = "selected " + (this.SelectedItemsCount).toString() + " of " + this.DataCount.toString();
-
-              }
-
-              if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes(rowData.Id)) {
-                      this.ExcludedItems.Remove(rowData.Id);
-                  }
-              }
-          }
-      }
-    
-    else {
-          //  this.AllSelected=false;
-            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
-      this.SelectedItemsCount -= 1;
-
-      if (this.DataCount != null) {
-        this.SelectedItemsCountText = "selected " + (this.SelectedItemsCount).toString() + " of " + this.DataCount.toString();
-
-      }
+    private SelectingItem(rowData: any) {
+        if (!this.selectedItems.Collection.includes(rowData)) {
+            this.selectedItems.Insert(rowData);
+            this.SelectedItemsCount += 1;
+            this.DataCount = this.DataSource.rowCount;
+            if (this.DataCount != null) {
+                this.SelectedItemsCountText = "selected " + (this.SelectedItemsCount).toString() + " of " + this.DataCount.toString();
+            }
+            if (this.AllSelected) {
+                if (this.ExcludedItems.Collection.includes(rowData.Id)) {
+                    this.ExcludedItems.Remove(rowData.Id);
+                }
+            }
+        }
+    }
+    private UnSelectingItem(rowData:any) {
+        this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
+        this.SelectedItemsCount -= 1;
+        if (this.DataCount != null) {
+            this.SelectedItemsCountText = "selected " + (this.SelectedItemsCount).toString() + " of " + this.DataCount.toString();
+        }
         if (this.AllSelected) {
             if (!this.ExcludedItems.Collection.includes(rowData.Id)) {
                 this.ExcludedItems.Insert(rowData.Id);
-          }
+            }
         }
-      if (this.SelectedItemsCount == 0) {
-          this.IsSelectedItemsTextVisibile = false;
-        this.AllSelected = false;
-      }
-
-    } this.SetCreateInvoiceButtonText();
+        if (this.SelectedItemsCount == 0) {
+            this.IsSelectedItemsTextVisibile = false;
+            this.AllSelected = false;
+        }
     }
+  public SelectedItemsCount: number=0;
+    onCheckBoxChecked($event: any) {
+        var isChecked: boolean = $event.IsChecked == undefined ? $event.isChecked : $event.IsChecked;
+        var rowData = $event.rowData == undefined ? $event.line : $event.rowData;
+        if (isChecked) {
+            this.SelectingItem(rowData);
+        }
+
+        else {
+            this.UnSelectingItem(rowData);
+        }
+
+        this.SetCreateInvoiceButtonText();
+    }
+
+
     IsCloseWithoutInvoice: boolean = false;
     CloseWithoutInvoice() {
         if (this.SelectedItemsCount == 0) {

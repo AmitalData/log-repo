@@ -134,6 +134,11 @@ export class UserDefinedReportPM {
     public set CreatedByName(newValue: string) { if (this.createdByName != newValue) { this.createdByName = newValue; this.MarkAsDirty("CreatedByName"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: UserDefinedReportPM;
 		

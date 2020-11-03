@@ -51,7 +51,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 											  UpdatedByLocalName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.LocalName,
 
+											  CreatedByName = null,
 
+											  UpdatedByName = null,
 											});
             return query;
 		}

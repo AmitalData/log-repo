@@ -173,7 +173,7 @@
                                                 <button class="Button" (click)="RunQuoteWizard()" id="{{'NewQuote' | IdGeneratorPipe}}" >{{'General.B.New' | TextCodeTranslationPipe}}</button>
                                             </div>
                                             <div>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('CRT')">{{'Quote.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('CRT')" id="{{'CreatedQuote' | IdGeneratorPipe}}" >{{'Quote.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('DRF')">{{'Quote.Q.DraftQuotes' | TextCodeTranslationPipe}} ({{Quotes_Draft}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('SNT')">{{'Quote.Q.SentQuotes' | TextCodeTranslationPipe}} ({{Quotes_Sent}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('ACW')">{{'Quote.Q.AcceptedWithoutShipmentsQuotes' | TextCodeTranslationPipe}} ({{Quotes_AcceptedNOShip}})</p>

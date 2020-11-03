@@ -18,6 +18,7 @@ import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard
 import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/PanelComponent";
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
+import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -41,6 +42,7 @@ export function getBaseUrl() {
         PanelComponent,
         CheckBoxComponent,
         DetailsMenuComponent,
+        LoginComponent,
         
     ],
     imports: [

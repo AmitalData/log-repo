@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant, List<string> ExcludedIds)
         {
             
-            return (from a in context.InterestReports
+            return (from a in repository.GetAll(tenant)
                     where
                      a.Tenant == tenant&& !ExcludedIds.Contains(a.Id) && a.InterestCalculationDate >= fromDate && a.InterestCalculationDate <= toDate && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "8" || a.InterestReportStatusCode == "9")
                     select new InterestReportPM()
@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
         {
-            return (from a in context.InterestReports
+            return (from a in repository.GetAll(tenant)
                     where
                      a.Tenant == tenant && ids.Contains(a.Id)
                     select new InterestReportPM()

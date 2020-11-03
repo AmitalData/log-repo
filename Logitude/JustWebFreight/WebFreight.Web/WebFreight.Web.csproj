@@ -2629,6 +2629,7 @@
     <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
+    <Compile Include="Helpers\TaxReportHelper.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
     <Compile Include="Helpers\TFSAggregatorAnalyzer.cs" />
     <Compile Include="Helpers\TFSAnalyzer.cs" />
