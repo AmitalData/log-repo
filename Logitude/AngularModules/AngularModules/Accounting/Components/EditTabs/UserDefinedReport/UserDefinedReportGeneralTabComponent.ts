@@ -491,7 +491,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
     }             
     private ValidateIsCancelled():boolean{
         var IsValid = true;
-        var ChartofAccounForGLAccount = this.GLAccount?this.GLAccount.ChartOfAccountsTypeCode:null;
+        var ChartofAccounForGLAccount = this.GLAccount? this.GLAccount.ChartOfAccountsTypeCode:null;
         var ParentChartOfAccountTypeCode = this.ParentEntityPM.ChartOfAccountTypeCode;
         var ChartofAccountCodeForChartofAccount =this.ChartOfAccount? this.ChartOfAccount.TypeCode:null;
         if((ChartofAccounForGLAccount && (ChartofAccounForGLAccount!=ParentChartOfAccountTypeCode)) ||
@@ -506,7 +506,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
         if (this.EntityPM.IsCancelled != newValue) {
             var IsValid = this.ValidateIsCancelled();
             if(!IsValid && !newValue)
-                this.ErrorLog = "Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.";
+                this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
             else if (newValue)
                 this.ErrorLog = null;
            

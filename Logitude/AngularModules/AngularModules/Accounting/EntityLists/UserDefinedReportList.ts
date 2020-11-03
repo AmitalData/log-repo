@@ -23,6 +23,7 @@ export class UserDefinedReportList {
 	UpdatedByLocalName: string;
 	UpdatedByName: string;
 	CreatedByName: string;
+	SearchFields: string;
 	
 }
  

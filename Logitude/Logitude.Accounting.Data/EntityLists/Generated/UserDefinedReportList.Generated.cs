@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UpdatedByName  { get; set; }
        [DataMember]
        public string CreatedByName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }
