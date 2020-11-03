@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }
