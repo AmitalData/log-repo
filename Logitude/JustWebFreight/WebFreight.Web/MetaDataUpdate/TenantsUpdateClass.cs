@@ -719,16 +719,26 @@ namespace WebFreight.Web.MetaDataUpdate
             //if (true)
             //{
 
-                //tenantZeroEventTypes = new Dictionary<string, EventType>();
-                //foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
-                //{
-                    //tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
-                //}
+            //tenantZeroEventTypes = new Dictionary<string, EventType>();
+            //foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
+            //{
+            //tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
+            //}
             //}
             //else
             //{
-                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).Where(e => e.UpdateDate > globalTenant.LastUpdateDate || e.UpdateDate == null).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            //tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             //}
+
+            if(globalTenant.LastUpdateDate == null)
+            {
+                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            }
+            else
+            {
+                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).Where(e => e.UpdateDate > globalTenant.LastUpdateDate).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            }
+
             Dictionary<string, EventType> currentTenantEventTypes = eventTypeRepository.GetEventTypesByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             Dictionary<string, Rank> tenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, Rank> currentTenantRanks = rankRepository.GetRanks(tenant).ToDictionary(d => d.Code, a => a);
@@ -2427,30 +2437,30 @@ namespace WebFreight.Web.MetaDataUpdate
                
                 if (currentTenantEventTypes.Keys.Contains(eventType.Code + eventType.ObjectTableId))
                 {
-
-                    
                     EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
 
-                    updatedEventType.EnglishName = eventType.EnglishName;
-                    updatedEventType.AddedManually = eventType.AddedManually;
-                    updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
-                    updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
-                    updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
-                    updatedEventType.InActive = eventType.InActive;
-                    updatedEventType.IsFollowUp = eventType.IsFollowUp;
-                    updatedEventType.IsManualEntry = eventType.IsManualEntry;
-                    updatedEventType.LocalName = eventType.LocalName;
-                    updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
-                    updatedEventType.ObjectTableId = eventType.ObjectTableId;
-                    updatedEventType.ShortView = eventType.ShortView;
-                    updatedEventType.Tenant = tenant;
-                    updatedEventType.SearchFields = eventType.SearchFields;
-                    updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
-                    updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
-                    updatedEventType.UpdateDate = DateTime.Now;
-                    eventTypesRepository.Update(updatedEventType);
+                    if(updatedEventType.UpdateDate != eventType.UpdateDate)
+                    {
+                        updatedEventType.EnglishName = eventType.EnglishName;
+                        updatedEventType.AddedManually = eventType.AddedManually;
+                        updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
+                        updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
+                        updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
+                        updatedEventType.InActive = eventType.InActive;
+                        updatedEventType.IsFollowUp = eventType.IsFollowUp;
+                        updatedEventType.IsManualEntry = eventType.IsManualEntry;
+                        updatedEventType.LocalName = eventType.LocalName;
+                        updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
+                        updatedEventType.ObjectTableId = eventType.ObjectTableId;
+                        updatedEventType.ShortView = eventType.ShortView;
+                        updatedEventType.Tenant = tenant;
+                        updatedEventType.SearchFields = eventType.SearchFields;
+                        updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
+                        updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
+                        updatedEventType.UpdateDate = eventType.UpdateDate;
+                        eventTypesRepository.Update(updatedEventType);
+                    }
                 }
-
                 else
                 {
                     EventType newEventType = new EventType()
@@ -2473,7 +2483,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         Id = IdCounter.GetNumber("EventType", tenant).ToString(),
                         EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                         AllowedInAutomation = eventType.AllowedInAutomation,
-                        UpdateDate = DateTime.Now,
+                        UpdateDate = eventType.UpdateDate,
                     };
 
                     eventTypesRepository.Add(newEventType);
