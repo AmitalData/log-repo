@@ -20,6 +20,7 @@ import { UpdateDeleteVehicleRequestParams } from '../../../../Customs/DataContra
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomsDocumentsComponent } from '../../../CustomsDocuments/Components/CustomsDocumentsComponent';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -153,23 +154,22 @@ export class VehicleEditComponent extends BaseComponent {
 
 
                     case "CustomsDocumentsComponent": {
-                        debugger;
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 400;
+                            messageWindow.Height = 200;
+                          
+                            messageWindow.Show("יש לשמור רכבית טרם צירוף מסמכים");
+                     
+                            break;
+                        }
                         if (this.CUSTOMDOCUMENTS == null) {
                             SessionLocator.DynamicLoader.Load(
                                 './CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent',
                                 myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CUSTOMDOCUMENTS = cmpRef.instance;
-                                    var args: EntityArgs = new EntityArgs();
-                                    args.EntityPM = this.EntityPM;
-                                    args.ObjectTableName = this.ObjectTableName;
-                                    args.EntityParentPM = null;
-                                
-                                    this.CUSTOMDOCUMENTS.entityArgs = args;
-                                    //this.CUSTOMDOCUMENTS.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
-                                   // this.CUSTOMDOCUMENTS.FillValidationErrorList.subscribe((response: any) => {
-                                       // this.ValidationErrorsList = response;
-                                    //});
+                                  
                                 });
                         }
                         break;
@@ -233,7 +233,7 @@ export class VehicleEditComponent extends BaseComponent {
                                 this.ValidationErrorsList = myErrors;
                             } else {
                                 if (customSendOptionsArgs==null) {
-                                    this.CancelButtonClicked();
+                                   // this.CancelButtonClicked();
                                 } else {
                                     var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
                                     currRequestParams.LoggingEnabled = true;
@@ -250,7 +250,7 @@ export class VehicleEditComponent extends BaseComponent {
                                         "שליחת מסר עדכון פרטי רכב", true)
                                         .then((res) => {
                                             console.log(res);
-                                            this.CancelButtonClicked();
+                                             this.CancelButtonClicked();
                                         }
                                         ).catch((err) => {
                                             this.ValidationErrorsList.push(err);
