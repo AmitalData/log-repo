@@ -19,6 +19,7 @@ import { VehiclesOwnersAndSafetyTabComponent } from './VehiclesOwnersAndSafetyTa
 import { UpdateDeleteVehicleRequestParams } from '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
+import { CustomsDocumentsComponent } from '../../../CustomsDocuments/Components/CustomsDocumentsComponent';
 
 
 @Component({
@@ -71,7 +72,7 @@ export class VehicleEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("General", "Customs.Vehicle.TH.General"));
         this.TabsItemsSource.push(new TabItem("VehicleMoreDetailsTabComponent", "Customs.Vehicle.TH.MoreDetails"));
         this.TabsItemsSource.push(new TabItem("VehiclesOwnersAndSafetyTabComponent", "Customs.Vehicle.TH.OwnersAndSafety"));
-        
+        this.TabsItemsSource.push(new TabItem("CustomsDocumentsComponent", "Customs.Vehicle.TH.CustomDocuments"));
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
@@ -91,7 +92,8 @@ export class VehicleEditComponent extends BaseComponent {
     private GENERAL: VehicleGeneralComponent = null;
     private MORE: VehicleMoreDetailsTabComponent = null;
     private SAFETY: VehiclesOwnersAndSafetyTabComponent = null;
-    
+    private CUSTOMDOCUMENTS: CustomsDocumentsComponent = null;
+
 
     private CustomsRequestsSheets: any = null;
 
@@ -144,6 +146,30 @@ export class VehicleEditComponent extends BaseComponent {
                                     this.SAFETY.FillValidationErrorList.subscribe((response: any) => {
                                         this.ValidationErrorsList = response;
                                     });
+                                });
+                        }
+                        break;
+                    }
+
+
+                    case "CustomsDocumentsComponent": {
+                        debugger;
+                        if (this.CUSTOMDOCUMENTS == null) {
+                            SessionLocator.DynamicLoader.Load(
+                                './CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent',
+                                myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CUSTOMDOCUMENTS = cmpRef.instance;
+                                    var args: EntityArgs = new EntityArgs();
+                                    args.EntityPM = this.EntityPM;
+                                    args.ObjectTableName = this.ObjectTableName;
+                                    args.EntityParentPM = null;
+                                
+                                    this.CUSTOMDOCUMENTS.entityArgs = args;
+                                    //this.CUSTOMDOCUMENTS.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
+                                   // this.CUSTOMDOCUMENTS.FillValidationErrorList.subscribe((response: any) => {
+                                       // this.ValidationErrorsList = response;
+                                    //});
                                 });
                         }
                         break;
