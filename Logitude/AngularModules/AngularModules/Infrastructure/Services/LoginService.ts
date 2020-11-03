@@ -32,6 +32,21 @@ export class LoginService {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
     }
+    PostAuthentication(loginParameters: any) {
+        var url = this.baseUrlApi + "Authentication?dummy=user";
+        //loginParameters.IsAngularLogin = true;
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            })
+        };
+
+        return this._http.post(url, JSON.stringify(loginParameters), httpOptions).pipe(map(response => {
+            return response;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
 
     PostUserValidation(loginParameters: LoginParameters) {
         var url = this.baseUrlApi + "Authentication";
