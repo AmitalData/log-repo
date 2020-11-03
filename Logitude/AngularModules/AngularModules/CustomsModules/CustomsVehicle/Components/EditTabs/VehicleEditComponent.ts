@@ -205,7 +205,80 @@ export class VehicleEditComponent extends BaseComponent {
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.ValidationErrorsList = [];
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                this.CancelButtonClicked();
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+
+                //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
+
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
+                    res.subscribe((myResponse: ServiceResponse) => {
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (myResponse.HasError) {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                            //this.SaveCompleted.emit(false);
+                        }
+
+                        else {
+                            this.EntityPM = myResponse.Result;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                                var myErrors: string[] = [];
+                                myErrors.push("this.EntityPM.Id is null");
+                                this.ValidationErrorsList = myErrors;
+                            } else {
+                                if (customSendOptionsArgs == null) {
+
+                                    this.SelectedTabCode = "General";
+                                    this.SelectionChanged();
+                                    // this.CancelButtonClicked();
+                                } else {
+                                    var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
+                                    currRequestParams.LoggingEnabled = true;
+                                    currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                                    currRequestParams.Tenant = SessionLocator.Tenant;
+
+                                    currRequestParams.VehicleId = this.EntityPM.Id;
+                                    currRequestParams.IsDelete = false;
+
+
+
+                                    CustomMessageProgressComponent
+                                        .ShowProgressBar(currRequestParams.PBId,
+                                            "שליחת מסר עדכון פרטי רכב", true)
+                                        .then((res) => {
+                                            console.log(res);
+                                            this.CancelButtonClicked();
+                                        }
+                                        ).catch((err) => {
+                                            this.ValidationErrorsList.push(err);
+                                            this.CancelButtonClicked();
+                                        });
+
+                                    var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+
+                                    myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
+                                        .subscribe((myServiceResponse: ServiceResponse) => {
+                                            //this.CurrentSession.StopBusyIndicator();
+
+                                            //this.ResponseData = myServiceResponse.Result;
+                                            //this.OnMassageDisplayMethod();
+                                        });
+                                }
+
+                            }
+                        }
+
+                    }, error => {
+                        this.CurrentSession.StopBusyIndicator();
+                        var myErrors: string[] = [];
+                        myErrors.push(error.message);
+                        this.ValidationErrorsList = myErrors;
+                        //this.SaveCompleted.emit(false);
+                    });
+                });
+            //}
                 return;
             }
 
@@ -232,7 +305,10 @@ export class VehicleEditComponent extends BaseComponent {
                                 myErrors.push("this.EntityPM.Id is null");
                                 this.ValidationErrorsList = myErrors;
                             } else {
-                                if (customSendOptionsArgs==null) {
+                                if (customSendOptionsArgs == null) {
+
+                                    this.SelectedTabCode = "General";
+                                    this.SelectionChanged();
                                    // this.CancelButtonClicked();
                                 } else {
                                     var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
