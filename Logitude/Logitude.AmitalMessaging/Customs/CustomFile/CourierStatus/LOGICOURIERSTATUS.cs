@@ -60,13 +60,17 @@
 
         private string lastMileStatusField;
 
-        private string lastMileStatusNameField;
-
         private string lastMileStatusDateField;
 
         private string lastMileStatusRemarksField;
 
+        private string lastMileStatusNameField;
+
         private string paramField;
+
+        private string deliveredField;
+
+        private string isClosedForFollowUpField;
 
         /// <remarks/>
         public string DeclarationId
@@ -107,20 +111,6 @@
             }
         }
 
-
-        public string LastMileStatusName
-        {
-            get
-            {
-                return this.lastMileStatusNameField;
-            }
-            set
-            {
-                this.lastMileStatusNameField = value;
-            }
-        }
-
-
         /// <remarks/>
         public string LastMileStatusDate
         {
@@ -148,6 +138,19 @@
         }
 
         /// <remarks/>
+        public string LastMileStatusName
+        {
+            get
+            {
+                return this.lastMileStatusNameField;
+            }
+            set
+            {
+                this.lastMileStatusNameField = value;
+            }
+        }
+
+        /// <remarks/>
         public string Param
         {
             get
@@ -159,5 +162,32 @@
                 this.paramField = value;
             }
         }
+
+        /// <remarks/>
+        public string Delivered
+        {
+            get
+            {
+                return this.deliveredField;
+            }
+            set
+            {
+                this.deliveredField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string IsClosedForFollowUp
+        {
+            get
+            {
+                return this.isClosedForFollowUpField;
+            }
+            set
+            {
+                this.isClosedForFollowUpField = value;
+            }
+        }
     }
+
 }

@@ -148,7 +148,27 @@ export class LoginComponent implements OnInit {
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
-        this.StartLoginProcess();
+        let AmitalSSOAngular = this.getParameterByName("AmitalSSOAngular", window.location.href);
+        let amitaltoken = this.getParameterByName("token", window.location.href);
+        let amitaltenant = this.getParameterByName("tenant", window.location.href);
+        if (!AppTool.IsNullOrEmpty(AmitalSSOAngular) && !AppTool.IsNullOrEmpty(amitaltoken) && !AppTool.IsNullOrEmpty(amitaltenant)) {
+            let loginParameters: any = {};
+            loginParameters.Tenant = amitaltenant;
+            loginParameters.Token = amitaltoken;
+            this.loginService.PostAuthentication(loginParameters).subscribe((userData: any) => {
+
+                if (!userData.HasError) {
+                    userData.AmitalBrowserInUse = true;
+                    var data = JSON.stringify(userData);
+                    window.sessionStorage.setItem('userdata', data);
+                    SessionLocator.IsExternalParams = false;
+                    this.StartLoginProcess();
+                }
+            });
+        } else {
+            this.StartLoginProcess();
+        }
+        
     }
     IsShowLoginForm: boolean = false;
 
@@ -219,7 +239,15 @@ export class LoginComponent implements OnInit {
         //});
         //this.indexDB.add("ObjectFields", "3242", { Id: "3242", FieldName: "Name", IsRequired: true }).then((res) => { console.log("successfully", res); });
     }
-
+    getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
     StartLoading(userData: any) {
         if (userData) {
             this.HideLoginForm = true;
