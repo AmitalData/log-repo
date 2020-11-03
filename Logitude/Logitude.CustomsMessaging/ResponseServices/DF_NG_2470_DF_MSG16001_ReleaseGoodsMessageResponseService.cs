@@ -22,9 +22,9 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Maman;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Unifreight.BL.EntityPMs.UGenerated;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -83,15 +83,101 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         return;
                     }
 
-
-                    Analyze2470(customResponse, declarationPM, requestParams, dbContext, declarationNumber);
-                    if(declarationPM.IsAmendment==true)
+                    var myEventContextTagModel = new EventContextTagModel()
                     {
-                        DeclarationPM declarationPMOrg = declarationQueryService.GetSingleDeclarationById(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
+                    };
 
-                        Analyze2470(customResponse, declarationPMOrg, requestParams, dbContext, declarationNumber);
-
+                    DateTime statusDateTime = customResponse.GeneralData.releaseDate.GetValueOrDefault();
+                    if (statusDateTime == null)
+                    {
+                        statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
+                    switch (customResponse.GeneralData.ReleaseMessageCode)
+                    {
+                        case 1: // released
+                            LogMessagingUtil.Instance.AppendLine("released");
+                            //hataraDate = customResponse.GeneralData.releaseDate;
+                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
+                            myEventContextTagModel.EventCode = "RSG";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            declarationPM.DeclarationStatusTypeCode = "7";
+                            if(declarationPM.IsCourierDeclaration)
+                            {
+                                declarationPM.CourierCustomStatusCode = "1";
+
+                                string defValue = "";
+                                var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+                                CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
+                                if (_CourierMasterPM != null)
+                                {
+                                    Card myCard = null;
+                                    var repository = new CardRepository(requestParams.Tenant);
+                                    myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
+                                    if (!String.IsNullOrWhiteSpace(myCard.Code))
+                                    {
+                                         defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
+                                    }
+                                }
+                                if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
+                                {
+
+                                    LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
+                                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
+                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
+                                    declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    declarationCourierStatusPM.IsClosedForFollowUp = true;
+                                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+
+                                }
+                            }
+                            declarationPM.IsClose = true;
+                            MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
+                            break;
+                        case 5: // released cancelled
+                            LogMessagingUtil.Instance.AppendLine("released cancelled");
+                            myEventContextTagModel.EventCode = "RSC";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            declarationPM.DeclarationStatusTypeCode = "6";
+                            declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
+                            declarationPM.IsClose = false;
+                            MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
+                            break;
+                        case 9: // Pre clearance
+                            LogMessagingUtil.Instance.AppendLine("Pre clearence");
+                            myEventContextTagModel.EventCode = "PRS";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
+                            MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
+                            declarationPM.CourierCustomStatusCode = "1";
+                            Send2470ToMaman(declarationPM,customResponse, requestParams);
+                            break;
+                        case 14: // Release When Arrived
+                            LogMessagingUtil.Instance.AppendLine("Release When Arrived");
+                            myEventContextTagModel.EventCode = "PRA";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            MyRequestSheetParam.RequestDescription = "תיק מאושר להתרה לאחר הגשת טובין: " + declarationPM.CustomFileNo;
+                            //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
+                            break;
+                        default:
+                            var errMess = "Undeveloped- ReleaseMessageCode=" + customResponse.GeneralData.ReleaseMessageCode;
+                            this.MyResponseData = new ReleaseGoodsResponseData();
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.HasException = true;
+                            this.MyResponseData.UserMessage = errMess;
+                            LogMessagingUtil.Instance.AppendLine(errMess);
+                            return;
+                    }
+                    //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
+                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
+
+                    declarationPM.CurrentContextTag = myEventContextTagModel;
+
+                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationUpdateService.Update(declarationPM, true);
+                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
+
                     MyRequestSheetParam.EntityId1 = declarationPM.Id;
                     if (declarationPM.IsConvertedDeclaration)
                     {
@@ -120,108 +206,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     disposableToken.Dispose();
                 }
             }
-        }
-
-
-        public void Analyze2470(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse , DeclarationPM declarationPM , GenericRequestParams requestParams , ICustomContext dbContext, string declarationNumber)
-        {
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-
-            var myEventContextTagModel = new EventContextTagModel()
-            {
-                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
-            };
-
-            DateTime statusDateTime = customResponse.GeneralData.releaseDate.GetValueOrDefault();
-            if (statusDateTime == null)
-            {
-                statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
-            }
-            switch (customResponse.GeneralData.ReleaseMessageCode)
-            {
-                case 1: // released
-                    LogMessagingUtil.Instance.AppendLine("released");
-                    //hataraDate = customResponse.GeneralData.releaseDate;
-                    declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
-                    myEventContextTagModel.EventCode = "RSG";
-                    myEventContextTagModel.StatusDateTime = statusDateTime;
-                    declarationPM.DeclarationStatusTypeCode = "7";
-                    if (declarationPM.IsCourierDeclaration)
-                    {
-                        declarationPM.CourierCustomStatusCode = "1";
-
-                        string defValue = "";
-                        var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
-                        CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
-                        if (_CourierMasterPM != null)
-                        {
-                            Card myCard = null;
-                            var repository = new CardRepository(requestParams.Tenant);
-                            myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
-                            if (!String.IsNullOrWhiteSpace(myCard.Code))
-                            {
-                                defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
-                            }
-                        }
-                        if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
-                        {
-
-                            LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
-                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                            DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, true);
-                            declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationCourierStatusPM.IsClosedForFollowUp = true;
-                            declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
-
-                        }
-                    }
-                    declarationPM.IsClose = true;
-                    MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
-                    break;
-                case 5: // released cancelled
-                    LogMessagingUtil.Instance.AppendLine("released cancelled");
-                    myEventContextTagModel.EventCode = "RSC";
-                    myEventContextTagModel.StatusDateTime = statusDateTime;
-                    declarationPM.DeclarationStatusTypeCode = "6";
-                    declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
-                    declarationPM.IsClose = false;
-                    MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
-                    break;
-                case 9: // Pre clearance
-                    LogMessagingUtil.Instance.AppendLine("Pre clearence");
-                    myEventContextTagModel.EventCode = "PRS";
-                    myEventContextTagModel.StatusDateTime = statusDateTime;
-                    //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
-                    MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
-                    declarationPM.CourierCustomStatusCode = "1";
-                    Send2470ToMaman(declarationPM, customResponse, requestParams);
-                    break;
-                case 14: // Release When Arrived
-                    LogMessagingUtil.Instance.AppendLine("Release When Arrived");
-                    myEventContextTagModel.EventCode = "PRA";
-                    myEventContextTagModel.StatusDateTime = statusDateTime;
-                    MyRequestSheetParam.RequestDescription = "תיק מאושר להתרה לאחר הגשת טובין: " + declarationPM.CustomFileNo;
-                    //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
-                    break;
-                default:
-                    var errMess = "Undeveloped- ReleaseMessageCode=" + customResponse.GeneralData.ReleaseMessageCode;
-                    this.MyResponseData = new ReleaseGoodsResponseData();
-                    this.MyResponseData.Succeeded = true;
-                    this.MyResponseData.HasException = true;
-                    this.MyResponseData.UserMessage = errMess;
-                    LogMessagingUtil.Instance.AppendLine(errMess);
-                    return;
-            }
-            //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
-            LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
-
-            declarationPM.CurrentContextTag = myEventContextTagModel;
-
-            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            declarationUpdateService.Update(declarationPM, true);
-            LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
-
         }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)

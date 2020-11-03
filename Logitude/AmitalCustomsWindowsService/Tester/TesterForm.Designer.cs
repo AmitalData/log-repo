@@ -41,6 +41,7 @@
             this.downLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadDcaMessageSheetWRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toDcaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +100,7 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.downloadFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.commDecServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -139,21 +140,21 @@
             // bolbToolStripMenuItem
             // 
             this.bolbToolStripMenuItem.Name = "bolbToolStripMenuItem";
-            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bolbToolStripMenuItem.Text = "Bolb";
             this.bolbToolStripMenuItem.Click += new System.EventHandler(this.BlobToolStripMenuItem_Click);
             // 
             // multiBolbToolStripMenuItem
             // 
             this.multiBolbToolStripMenuItem.Name = "multiBolbToolStripMenuItem";
-            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.multiBolbToolStripMenuItem.Text = "MultiBolb";
             this.multiBolbToolStripMenuItem.Click += new System.EventHandler(this.multiBlobToolStripMenuItem_Click);
             // 
             // clearCacheToolStripMenuItem
             // 
             this.clearCacheToolStripMenuItem.Name = "clearCacheToolStripMenuItem";
-            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearCacheToolStripMenuItem.Text = "ClearCache";
             this.clearCacheToolStripMenuItem.Click += new System.EventHandler(this.clearCacheToolStripMenuItem_Click);
             // 
@@ -177,7 +178,8 @@
             this.debugStepToolStripMenuItem,
             this.reqSheetStatisticToolStripMenuItem,
             this.rePushAnalyzeToolStripMenuItem,
-            this.fTPCommunicationWorkerRoleToolStripMenuItem});
+            this.fTPCommunicationWorkerRoleToolStripMenuItem,
+            this.commDecServiceToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -226,6 +228,13 @@
             this.downloadFileToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.downloadFileToolStripMenuItem.Text = "DownloadFile";
             this.downloadFileToolStripMenuItem.Click += new System.EventHandler(this.downloadFileToolStripMenuItem_Click);
+            // 
+            // downloadFTPToolStripMenuItem
+            // 
+            this.downloadFTPToolStripMenuItem.Name = "downloadFTPToolStripMenuItem";
+            this.downloadFTPToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.downloadFTPToolStripMenuItem.Text = "DownloadFTP";
+            this.downloadFTPToolStripMenuItem.Click += new System.EventHandler(this.downloadFTPToolStripMenuItem_Click);
             // 
             // uploadToolStripMenuItem
             // 
@@ -708,12 +717,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // downloadFTPToolStripMenuItem
+            // commDecServiceToolStripMenuItem
             // 
-            this.downloadFTPToolStripMenuItem.Name = "downloadFTPToolStripMenuItem";
-            this.downloadFTPToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.downloadFTPToolStripMenuItem.Text = "DownloadFTP";
-            this.downloadFTPToolStripMenuItem.Click += new System.EventHandler(this.downloadFTPToolStripMenuItem_Click);
+            this.commDecServiceToolStripMenuItem.Name = "commDecServiceToolStripMenuItem";
+            this.commDecServiceToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.commDecServiceToolStripMenuItem.Text = "CommDecService";
+            this.commDecServiceToolStripMenuItem.Click += new System.EventHandler(this.commDecServiceToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -814,5 +823,6 @@
         private System.Windows.Forms.ToolStripTextBox _tstbMamanBaldarSTB;
         private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem commDecServiceToolStripMenuItem;
     }
 }
