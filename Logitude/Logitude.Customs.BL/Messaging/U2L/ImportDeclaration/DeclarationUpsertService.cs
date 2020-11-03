@@ -30,6 +30,7 @@ using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -337,7 +338,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                                 importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
                             }
                             string clientId = TranslateClient(importerId);
-                            if (clientId == null && mode == "UpdateNotEmpty")
+
+                            FeatureQuery featureQuery = new FeatureQuery();
+                            int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
+                            var features = featureQuery.GetAllowedFeaturesForLoggedUser( AuthenticationUtil.ResolveUserId(tenant), tenant);
+                            var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+                            if (clientId == null && mode == "UpdateNotEmpty" && feature != null)
                             {
                                 SendClientSearch();
                             }
