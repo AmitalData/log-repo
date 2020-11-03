@@ -5185,6 +5185,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             itemPM.ShipmentId = entityPM.Id;
             itemPM.Tenant = tenant;
 
+            if(this.IsFCLEntity && itemPM.Quantity == null)
+            {
+                itemPM.Quantity = 1;
+            }
+
             ShipmentPackage itemPoco = new ShipmentPackage()
             {
                 Id = itemPM.Id,

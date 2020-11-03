@@ -57,7 +57,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.Poco.Id = IdCounter.GetNumber("Country", entityPm.Tenant).ToString();
                 entityPm.Id = this.Poco.Id;
-
+                entityPm.AddedManually = true;
                 CountryValidating.Validate(entityPM);
                 if (!entityPM.IsHybrid)
                 {

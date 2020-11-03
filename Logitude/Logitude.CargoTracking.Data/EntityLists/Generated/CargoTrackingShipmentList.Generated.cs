@@ -136,6 +136,14 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string FromPortCountryCode  { get; set; }
        [DataMember]
        public string ToPortCountryCode  { get; set; }
+       [DataMember]
+       public bool IsFavorite  { get; set; }
+       [DataMember]
+       public string FutureMilstoneCode  { get; set; }
+       [DataMember]
+       public DateTime? FutureMilstoneDate  { get; set; }
+       [DataMember]
+       public string FutureMilstoneName  { get; set; }
    }
 
 }

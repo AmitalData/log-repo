@@ -9,6 +9,9 @@ import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { Location } from '@angular/common';
+import { ShipmentComponent } from '../Shipment/shipment.component';
+import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 
 
 @Component({
@@ -25,11 +28,13 @@ export class PublicGateComponent
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
-    _Tenant: number;
+    tenant: number;
     BackGroundImg:string;
 
+ 
     MapImgSRC:string ="";
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string, private router: Router)
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string, private router: Router,private location: Location)
+ 
     {
 
         this.GetDataFromURL(baseUrl);
@@ -39,7 +44,7 @@ export class PublicGateComponent
 
     private getcargoTrackingData()
     {
-        this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.get(this.tenant).subscribe((response: ServiceResponse) =>
         { 
  
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
@@ -73,7 +78,7 @@ export class PublicGateComponent
 
         this.router.events.subscribe((event: any) =>
         {
-            if (this._Tenant == null || Number.isNaN(this._Tenant)) {
+            if (this.tenant == null || Number.isNaN(this.tenant)) {
                 // var params:any[] = event.snapshot.params;
                 // var tenant = params['Tenant'];
                 // this._Tenant = tenant;
@@ -82,15 +87,15 @@ export class PublicGateComponent
 
                 for (let i = 0; i < URLParts.length; i++) {
                     if (URLParts && URLParts.length > 0 && URLParts[i]) {
-                        this._Tenant = Number(URLParts[i]);
-                        if (!Number.isNaN(this._Tenant)) {
+                        this.tenant = Number(URLParts[i]);
+                        if (!Number.isNaN(this.tenant)) {
                             break;
                         }
                     }
                 }
 
-                if (Number.isNaN(this._Tenant) || !this._Tenant || this._Tenant==null){
-                    this._Tenant=1;
+                if (Number.isNaN(this.tenant) || !this.tenant || this.tenant==null){
+                    this.tenant=1;
                     this.back();  
                 }
                 // else{
@@ -141,7 +146,12 @@ export class PublicGateComponent
 
     back()
     {
-        // this._location.back();
-        this.router.navigate([this._Tenant,'search']);
+        AppHelper.AppBack(this.router,this.location,this.tenant);
+
+    }
+ 
+    GetBackEnabled()
+    {
+        return AppHelper.GetBackEnabled(this.router);
     }
 }

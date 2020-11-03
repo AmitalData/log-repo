@@ -114,7 +114,7 @@ export class NewBIReport extends BaseComponent {
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
             var factTablesNames = response.Result;
             factTablesNames.forEach((factTable) => {
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact." + factTable.DisplayName.replace(' ', '')))
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
                     this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName));
             });
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
@@ -127,7 +127,7 @@ export class NewBIReport extends BaseComponent {
     }
 
     FillBIReportFolderNamesList() {
-        this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+        this.folderListService.GetPermittedFolders(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.BIReportFolders = myResponse.Result;
                 var selectedBIReport: string = myResponse.Result.filter(bi => bi.Id == this.EntityPM.BIReportFolderId)[0];

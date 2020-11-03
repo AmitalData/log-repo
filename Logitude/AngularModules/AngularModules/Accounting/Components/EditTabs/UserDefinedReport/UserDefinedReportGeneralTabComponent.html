@@ -297,7 +297,7 @@
                                     (Ondblclick)="OnFocus()">
 
                      <!--Line-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.Line' | TextCodeTranslationPipe" [binding]="'Line'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'50'" [header]="'CalculatedChartsOfAccount.F.Line' | TextCodeTranslationPipe" [binding]="'Line'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div   [style.text-align]="isRTL ? 'right' : 'left'">
@@ -308,7 +308,7 @@
                     </log-column>
 
                     <!--EnglishName-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'CalculatedChartsOfAccount.F.EnglishName' | TextCodeTranslationPipe" [binding]="'EnglishName'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'" [header]="'CalculatedChartsOfAccount.F.EnglishName' | TextCodeTranslationPipe" [binding]="'EnglishName'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div   [style.text-align]="isRTL ? 'right' : 'left'">
@@ -320,7 +320,7 @@
                     </log-column>
 
                     <!--LocalName-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"  [header]="'CalculatedChartsOfAccount.F.LocalName' | TextCodeTranslationPipe" [binding]="'LocalName'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'"  [header]="'CalculatedChartsOfAccount.F.LocalName' | TextCodeTranslationPipe" [binding]="'LocalName'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
@@ -332,7 +332,7 @@
                     </log-column>
 
                     <!--ChartOfAccountTypeCode-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="'CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName' | TextCodeTranslationPipe" [binding]="'ChartOfAccountTypeCode'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'150'" [header]="'CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName' | TextCodeTranslationPipe" [binding]="'ChartOfAccountTypeCode'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
 
@@ -345,7 +345,7 @@
                     </log-column>
 
                        <!--CreatedByUserName-->
-                   <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'"  [header]="'CalculatedChartsOfAccountsLine.F.CreatedByUserId' | TextCodeTranslationPipe">
+                   <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'"  [header]="'CalculatedChartsOfAccountsLine.F.CreatedByUserId' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
@@ -356,7 +356,7 @@
                     </log-column>
 
                     <!--CreateDateTime-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.CreateDateTime' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="'CalculatedChartsOfAccount.F.CreateDateTime' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CreateDateTime | DateTimeToDatePipe}} </div>
@@ -366,7 +366,7 @@
 
            
                     <!--UpdatedByUser-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'CalculatedChartsOfAccount.F.UpdatedByUserId' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'" [header]="'CalculatedChartsOfAccount.F.UpdatedByUserId' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
@@ -377,7 +377,7 @@
                     </log-column>
 
                     <!--UpdatedDateTime-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="'CalculatedChartsOfAccount.F.UpdatedDateTime' | TextCodeTranslationPipe">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="'CalculatedChartsOfAccount.F.UpdatedDateTime' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedDateTime | DateTimeToDatePipe}} </div>

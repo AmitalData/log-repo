@@ -31,12 +31,11 @@ namespace WarehouseDataViews.Service
                 string viewName = row["DataViewName"] != null ? row["DataViewName"].ToString() : "";
                 string recordType = row["RecordType"] != null ? row["RecordType"].ToString() : "";
 
-
                 if (!string.IsNullOrEmpty(viewName))
                 {
                     foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
                     {
-                        CreateDimensionDataView(field);
+                        CreateDimensionDataView(field , factCode);
                     }
 
                     CreateFactDataView(factCode, recordType,  viewName);
@@ -46,7 +45,7 @@ namespace WarehouseDataViews.Service
        
         private void CreateFactDataView(string factCode,string recordType, string viewName)
         {
-            var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(),ViewName = viewName, IsFactView = true,SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
+            var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(), ViewCode = factCode, ViewName = viewName, IsFactView = true,SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
             foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode).ToList())
             {
    
@@ -109,13 +108,14 @@ namespace WarehouseDataViews.Service
         }
 
 
-        private void CreateDimensionDataView(DWObjectFieldItem field)
+        private void CreateDimensionDataView(DWObjectFieldItem field , string factCode)
         {
             string parentfieldName = !string.IsNullOrEmpty(field.ViewFieldDisplayName) ? field.ViewFieldDisplayName : GetFieldNameFromCode(field.FieldCode);
             string viewName = !string.IsNullOrEmpty(field.DimensionDataViewName) ?  field.DimensionDataViewName: GetViewName(parentfieldName, "Dim");
             if (DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault() == null)
             {
-                var warehouseView = new WarehouseView() {ViewName = viewName , SqlString  = " CREATE VIEW " + viewName + " AS SELECT "  , Fields = new List<DWObjectFieldItem>()};
+                var warehouseView = new WarehouseView() { ViewName = viewName, SqlString = " CREATE VIEW " + viewName + " AS SELECT ", Fields = new List<DWObjectFieldItem>(), FactConnectedCodeLists = new List<string>() { factCode } };
+
                 foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Split(',').Contains(parentfieldName)))).ToList())
                 {
                     warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
@@ -132,6 +132,10 @@ namespace WarehouseDataViews.Service
                 warehouseView.SqlString  = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
                 warehouseView.SqlString += (" FROM " + field.DimensionTableCode);
                 DataWarehouseViewLists.Add(warehouseView);
+            }
+            else
+            {
+                DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault().FactConnectedCodeLists.Add(factCode);
             }
         }
 
@@ -188,11 +192,13 @@ namespace WarehouseDataViews.Service
 
     public class WarehouseView
     {
+        public string ViewCode { get; set; }
         public string ViewName { get; set; }
         public string SqlString { get; set; }
         public bool IsFactView { get; set; }
         public bool IsHaveCustomFields { get; set; }
         public List<DWObjectFieldItem> Fields { get; set; }
+        public List<string> FactConnectedCodeLists { get; set; }
 
     }
 

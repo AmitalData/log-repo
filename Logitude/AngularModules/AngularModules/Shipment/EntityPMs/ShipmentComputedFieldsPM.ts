@@ -110,6 +110,11 @@ export class ShipmentComputedFieldsPM {
     public set ContainersNumbers(newValue: string) { if (this.containersNumbers != newValue) { this.containersNumbers = newValue; this.MarkAsDirty("ContainersNumbers"); } }
        
 	 
+    private containersNumbersAndTypesArray: string;
+    public get ContainersNumbersAndTypesArray() { return this.containersNumbersAndTypesArray; }
+    public set ContainersNumbersAndTypesArray(newValue: string) { if (this.containersNumbersAndTypesArray != newValue) { this.containersNumbersAndTypesArray = newValue; this.MarkAsDirty("ContainersNumbersAndTypesArray"); } }
+       
+	 
     private firstPickupATD: Date;
     public get FirstPickupATD() { return this.firstPickupATD; }
     public set FirstPickupATD(newValue: Date) { if (this.firstPickupATD != newValue) { this.firstPickupATD = newValue; this.MarkAsDirty("FirstPickupATD"); } }

@@ -22,11 +22,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<BIReportFolderList> GetFoldersByPermittedUser(FoldersPermissionParams foldersPermissionParams)
+        public List<BIReportFolderList> GetFoldersByPermittedUser(FoldersPermissionParams foldersPermissionParams, bool isCustomerCare)
         {
             List<BIReportFolderList> query = (from a in context.BIReportFolders
                                                     where a.Tenant == foldersPermissionParams.Tenant && 
-                                                    (a.CreatedByUserId == foldersPermissionParams.LoggedUserId || a.PermissionForAll || foldersPermissionParams.PermittedFolders.Contains(a.Id))
+                                                    (a.CreatedByUserId == foldersPermissionParams.LoggedUserId || a.PermissionForAll || isCustomerCare || foldersPermissionParams.PermittedFolders.Contains(a.Id))
                                                     select new BIReportFolderList()
                                                     {
                                                         Id = a.Id,

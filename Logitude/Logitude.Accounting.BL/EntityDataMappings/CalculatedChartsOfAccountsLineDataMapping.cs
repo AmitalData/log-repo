@@ -88,6 +88,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.GLAccountEnglishName = gLAccountPM.EnglishName;
                     entityPM.GLAccountLocalName = gLAccountPM.LocalName;
+                    entityPM.ChartOfAccountIdForValidate = gLAccountPM.ChartOfAccountsId;
 
                 }
             }

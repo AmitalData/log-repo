@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "eee4c3c7392cf33c86edcca9e214962b";
+		public const string HashString = "b88db24effb6fcc936e4f0afc8f70e24";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -46260,6 +46260,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentCHVolumeInKGListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.CH.VolumeInKGListLable", DefaultText = "Volumetric Weight",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentTHStatusReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.StatusReceived", DefaultText = "Status received from airline",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesAddFullTruckLoad = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.AddFullTruckLoad", DefaultText = "Add Full Truck Load",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

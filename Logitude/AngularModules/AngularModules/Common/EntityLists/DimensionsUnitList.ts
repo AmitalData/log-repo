@@ -9,6 +9,7 @@
 export class DimensionsUnitList {
    		Code: string;
 		Name: string;
+		PrintAs: string;
 		SearchFields: string;
 	
 }
