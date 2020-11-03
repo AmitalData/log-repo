@@ -26,6 +26,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "TST", 
                 Name = "Test Toggle", 
                 SearchFields = "TST,Test Toggle", 
+                Description = "Test Toggle", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -160,13 +161,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "API,API Update", 
                 Name = "API Update", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "LIC", 
                 Name = "License Management", 
                 SearchFields = "LIC,License Management", 
 			});
-
 			
             return all;
        }
@@ -175,12 +176,13 @@ namespace Logitude.Infrastructure.BL
         {   
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
-			newPoco.SearchFields = GetSearchFields(this);    
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Description = this.Description;   
         }
 
 		public string GetSearchFields(Toggle rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.Description,",");
         }
    }
 }

@@ -28,6 +28,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(400).IsUnicode(true);
         }
     }
 }
