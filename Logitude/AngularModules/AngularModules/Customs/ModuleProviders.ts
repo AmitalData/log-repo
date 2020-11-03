@@ -236,6 +236,7 @@ import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRo
 import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
 import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
 import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamListService';
+import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendmentRequestRejectReasonTypeListService';
 
 
 
@@ -374,6 +375,7 @@ import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMServ
 import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
 import { CancellationReasonRequestTypeListService } from './Services/StandardLists/CancellationReasonRequestTypeListService';
 import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
+import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -624,6 +626,8 @@ export class ModuleProviders {
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
             case "ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
+            case "AmendRequestRejectReasonTypeListService": { myResult = new AmendRequestRejectReasonTypeListService(); break; }
+            case "AmendmentFieldStatusTypeListService": { myResult = new AmendmentFieldStatusTypeListService(); break; }
 
              //#endregion                
 

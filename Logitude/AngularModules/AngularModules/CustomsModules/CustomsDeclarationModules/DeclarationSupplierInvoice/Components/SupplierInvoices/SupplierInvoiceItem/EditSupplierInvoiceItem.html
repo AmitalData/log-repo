@@ -131,7 +131,7 @@
                 <!-- Tab Header-->
                 <div class="TabControlHead">
                     <ul>
-                        <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="LayoutDirection ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+                        <li *ngFor="let tab of TabsSource" id="{{tab.Name}}" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="LayoutDirection ? 'right' : 'left'" (click)="SelectionChanged(tab)">
 
                             <div style="position: relative; width: 100%;" class="InnerChild"
                                  [style.text-align]="'center'">
@@ -148,7 +148,7 @@
                         <div style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
 
                             <!-- #region Details Tab -->
-                            <div *ngSwitchCase="'Details'" style="height: 100%;">
+                            <div *ngSwitchCase="'Details'" style="height: 100%;" id="Details">
                                 <!--<span *ngIf="allowExport" class="LeftTop buttonelipsis"
                                       style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
                                       (click)="OpenExporterInvoiceItem()">...E</span>-->
@@ -577,7 +577,7 @@
                             </div>
                             <!-- #endregion -->
                             <!-- #region Declarations Tab -->
-                            <div *ngSwitchCase="'Declarations'" style="height: 100%;">
+                            <div *ngSwitchCase="'Declarations'" style="height: 100%;" id="Declarations">
 
                                 <table style="height: 100%;">
                                     <tr>
@@ -728,7 +728,7 @@
                             </div>
                             <!-- #endregion -->
                             <!-- #region Serial Numbers Tab -->
-                            <div *ngSwitchCase="'SerialNumbers'" style="height: 100%;">
+                            <div *ngSwitchCase="'SerialNumbers'" style="height: 100%;" id="SerialNumbers">
 
                                 <table style="height: 100%;">
                                     <tr>
@@ -960,7 +960,7 @@
                             </div>
                             <!-- #endregion -->
                             <!-- #region Levies  Tab -->
-                            <div *ngSwitchCase="'Levies'" style="height: 100%;">
+                            <div *ngSwitchCase="'Levies'" style="height: 100%;" id="Levies">
 
                                 <table style="height: 100%;">
                                     <tr>
@@ -1043,7 +1043,7 @@
                             </div>
                             <!-- #endregion -->
                             <!-- #region Package  Tab -->
-                            <div *ngSwitchCase="'Packages'" style="height: 100%;">
+                            <div *ngSwitchCase="'Packages'" style="height: 100%;" id="Packages">
 
                                 <table style="height: 30%;">
                                     <tr>
@@ -1121,10 +1121,10 @@
 
                     <td style="width: 5px;">
                         <div></div>
-                    </td>
+                    </td> 
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" id="SaveItem">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
@@ -2214,13 +2214,13 @@
                     <td style="width: 57px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
-
+                 
                     <td style="width: 5px;">
                         <div></div>
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" >{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

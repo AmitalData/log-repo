@@ -1272,7 +1272,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
-
+                            amendment.AmendmentFieldStatus = field.AmendmentFieldStatus;
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1909,7 +1909,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return isFreight;
         }
+        public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
+        {
 
+            string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
+            var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(entityKeyString, () =>
+            {
+                return this.GetDeclarationAmendmentsById(Tenant, id, orderById);
+            });
+            return res;
+        }
         public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
         {
             DeclarationDataMapping mapping = new DeclarationDataMapping();

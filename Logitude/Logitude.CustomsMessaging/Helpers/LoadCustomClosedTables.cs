@@ -1030,6 +1030,17 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CancellationReasonRequestType, CancellationReasonRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CancellationReasonRequestType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendRequestRejectReasonTypeTable = closedSystemTables.Where(d => d.id == "1606").FirstOrDefault();
+            ObjectTable amendRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendRequestRejectReasonType", 0, false);
+            InsertClosedTableRecord(amendRequestRejectReasonTypeTable, amendRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(amendRequestRejectReasonTypeTable);
+
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendmentFieldStatusTypeTable = closedSystemTables.Where(d => d.id == "1431").FirstOrDefault();
+            ObjectTable amendmentFieldStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentFieldStatusType", 0, false);
+            InsertClosedTableRecord(amendmentFieldStatusTypeTable, amendmentFieldStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(amendmentFieldStatusTypeTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

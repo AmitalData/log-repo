@@ -764,8 +764,8 @@
   </Column>
   <Column
     Name="AmendmentRejectionReason"
-    Type="nvarchar"
-    Size="512">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>

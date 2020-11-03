@@ -74,7 +74,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.DocumentsFilingId != null)
             {
                 DocumentsFilingRepository documentInRep = new DocumentsFilingRepository(entityPOCO.Tenant);
-                DocumentsFiling documentsFiling = documentInRep.GetSingleDocumentsFiling(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
+                var documentsFiling = 
+                    documentInRep.GetSingleDocumentsFilingDocument(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
                 if (documentsFiling != null)
                 {
                     entityPM.CurrentEntityId = documentsFiling.EntityId;

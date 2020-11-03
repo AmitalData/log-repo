@@ -43,6 +43,8 @@ import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/Supplier
 import {VendorCommissionService} from '../../../../../Customs/Services/WebServices/VendorCommissionService';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+import { defer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     
@@ -149,7 +151,6 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 this.IsSelectedRowTextBoxVisibile = true; 
             }
             // Document Filing
-            this.GetDocumentFilingId();
 
             if (this.EntityPM.IsAccumalated) {
                 this.AccumulatedFilter = "parent";
@@ -256,27 +257,30 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ")) { // If FRITZ always check insurance- Task 37656
                 this._SkipAutoInsurance = false;
             }
-            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceFreightAmount").subscribe((response:any) => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response:any) => {
-                        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoicePayment").subscribe((response: any) => {
-                                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceUCR").subscribe((response: any) => {
-                                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsPrice").subscribe((response: any) => {
-                                        this.entityResourceService.getEntityResourceByTableName("Customs.SuppInvoiceItemsAbachStatement").subscribe((response: any) => {
+            this.GetDocumentFilingId().subscribe((res: any) => {
 
-                            this.BuildTabs();
-                            this.RunComponent();
-                            for (var i = 0; i < this.EntityPM.SupplierInvoiceItems.length; i++) {
-                                this.itemsLineNumbers = this.itemsLineNumbers + "," + this.EntityPM.SupplierInvoiceItems[i].LineNumber;
-                            }
+                this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceFreightAmount").subscribe((response: any) => {
+                        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response: any) => {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response: any) => {
+                                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoicePayment").subscribe((response: any) => {
+                                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceUCR").subscribe((response: any) => {
+                                        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsPrice").subscribe((response: any) => {
+                                            this.entityResourceService.getEntityResourceByTableName("Customs.SuppInvoiceItemsAbachStatement").subscribe((response: any) => {
+
+                                                this.BuildTabs();
+                                                this.RunComponent();
+                                                for (var i = 0; i < this.EntityPM.SupplierInvoiceItems.length; i++) {
+                                                    this.itemsLineNumbers = this.itemsLineNumbers + "," + this.EntityPM.SupplierInvoiceItems[i].LineNumber;
+                                                }
 
 
 
-                            //    this.itemsLineNumbers = this.itemsLineNumbers.substring(0);
+                                                //    this.itemsLineNumbers = this.itemsLineNumbers.substring(0);
 
-                            this.GetPointers();
-                            });
+                                                this.GetPointers();
+                                            });
+                                        });
                                     });
                                 });
                             });
@@ -284,7 +288,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     });
                 });
             });
-        });
+            });
+
+           
 
         this.IsNextButtonEnabled = true;
         this.IsPreviousButtonEnabled = false;
@@ -2224,26 +2230,48 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
     }
 
-    //#region DocumentFiling
-    DocumentFilingId: string;
     GetDocumentFilingId() {
         console.log(" --->> Getting related document filing ...");
-        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.declarationPM.Id, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
-            console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
-            var result = response.Result;
-            if (result) {
-                this.DocumentFilingId = response.Result;
-                console.log("sending document filing document filing ...");
-                DeclarationEventManager.DeclarationSplitDocumentSelection.emit(this.DocumentFilingId);
+        return defer(() => {
+            return this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.declarationPM.Id, this.EntityPM.InvoiceCounterKey).pipe(
+                map((response: ServiceResponse) => {
+                    console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
+                    var result = response.Result;
+                    if (result) {
+                        this.DocumentFilingId = response.Result;
+                        console.log("sending document filing document filing ...");
+                        DeclarationEventManager.DeclarationSplitDocumentSelection.emit(this.DocumentFilingId);
 
-                //(new MessageWindow()).Show("document filing found: " + this.DocumentFilingId);
-            }
-            else
-                console.log("[!] No related document filing found!!");
+                        //(new MessageWindow()).Show("document filing found: " + this.DocumentFilingId);
+                    }
+                    else
+                        console.log("[!] No related document filing found!!");
 
-
+                }));
         });
     }
+ 
+
+    //#region DocumentFiling
+    DocumentFilingId: string;
+    //GetDocumentFilingId() {
+    //    console.log(" --->> Getting related document filing ...");
+    //    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.declarationPM.Id, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
+    //        console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
+    //        var result = response.Result;
+    //        if (result) {
+    //            this.DocumentFilingId = response.Result;
+    //            console.log("sending document filing document filing ...");
+    //            DeclarationEventManager.DeclarationSplitDocumentSelection.emit(this.DocumentFilingId);
+
+    //            //(new MessageWindow()).Show("document filing found: " + this.DocumentFilingId);
+    //        }
+    //        else
+    //            console.log("[!] No related document filing found!!");
+
+
+    //    });
+    //}
     //#endregion
 
     //#region Commission Code
