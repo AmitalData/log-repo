@@ -13,9 +13,9 @@
     "env": {
         "CustomsAPIURL": "http://192.116.221.103/customs56/api/",
         "_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",
-        "TestURL": "http://192.116.221.103:593/customs593/",
-        "TestEmail": "mohammad@fnarsoft.com",
-        "TestPassword": "1",
+        "TestURL": "https://test.logitudeworld.com/test/",
+        "TestEmail": "protractor@test.com",
+        "TestPassword": "!P123p456",
         "TestStagingURL": "https://test.logitudeworld.com/staging/",
         "TestStagingEmail": "protractor2@test.com",
         "TestStagingPassword": "!P123p456",

@@ -17,9 +17,9 @@ it('Login Successfully', () => {
     var URL = Cypress.env("TestURL");
     var Env = Cypress.env("Env");
 
-    URL = Cypress.env("LocalURL");
-    Email = Cypress.env("LocalEmail");
-    Password = Cypress.env("LocalPassword");
+   // URL = Cypress.env("LocalURL");
+   // Email = Cypress.env("LocalEmail");
+   // Password = Cypress.env("LocalPassword");
    
    
 
