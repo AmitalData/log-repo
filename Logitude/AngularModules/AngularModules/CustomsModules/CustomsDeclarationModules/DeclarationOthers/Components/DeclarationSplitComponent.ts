@@ -249,13 +249,13 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                             rect.className = 'rectangle';
                             rect.id = 'rectangle-' + "rectangle-1";
                             rect.style.position = 'absolute';
-                            rect.style.border = '2px solid #ed1c31';
+                            rect.style.border = '1px solid #ed1c31';
                             rect.style.borderRadius = '3px';
                             rect.style.left = 0 + 'px';
                             var percent = (elem.height / elem.naturalHeight);
-                            rect.style.top = (this.invoiceItem.OcrTop * percent)  + 'px';
+                            rect.style.top = (this.invoiceItem.OcrTop * percent)- 1   + 'px';
                                 rect.style.width = '100%';
-                            rect.style.height = (this.invoiceItem.OcrHeight * percent)  + 'px';
+                            rect.style.height = (this.invoiceItem.OcrHeight * percent) +2 + 'px';
                                 document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
 
                                 console.log(this.base64Image);
