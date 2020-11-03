@@ -3,23 +3,24 @@ import  { NewImportDeclaration } from './NewImportDeclaration.spec';
 import { LoginComp } from "../../login/Login.po";
 import { LogHelper } from '../../Helpers/LogHelper';
 export class SupplierInvoice {
+  //    private importer: NewImportDeclaration = new NewImportDeclaration();  
   private login: LoginComp = new LoginComp();
- // private importer: NewImportDeclaration = new NewImportDeclaration();  
+
 }
 describe('New  SupplierInvoice', () => {
   it('New  SupplierInvoice Created Successfully', function () {
 
 
    cy.window().then(win=> {
-      //const CustomFileNo= win.sessionStorage.getItem('CustomFileNo')
+      const CustomFileNo= win.sessionStorage.getItem('CustomFileNo')
        cy.get('li[id=GeneralMHDeclarations]').click();
    //    LogHelper.QuerySearchAndSelectFirst('91340214');
 cy.get('input[id=SearchFieldsId_0_1]').should('be.visible').then( a=> {
-    cy.get('input[id=SearchFieldsId_0_1]').type('91340214',{ force: true });
+    cy.get('input[id=SearchFieldsId_0_1]').type('91340218',{ force: true });
     cy.get('div[id=ListDataLoaded]').then( a=> {
           cy.get('div[id=LogGrid_0_1row0]').click({ force: true });
       })});
-
+cy.get('#CustomsDeclarationTHGeneral').click();
 cy.get('#CustomsDeclarationTHInvoices').click();
 cy.get('#Add_2').click();
 
@@ -222,8 +223,8 @@ cy.get('#Add_2').click();
     })
 
     it('save', () => {
-        cy.get('#button-drp-down').click();
-        cy.get('#CopyInvoiceWithItems').click();
+        //cy.get('#button-drp-down').click();
+       // cy.get('#CopyInvoiceWithItems').click();
         cy.get('#SaveSupplierInvoice').click();
     })
 });
