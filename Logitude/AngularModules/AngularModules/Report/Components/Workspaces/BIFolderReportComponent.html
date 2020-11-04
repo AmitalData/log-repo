@@ -23,7 +23,7 @@
             <table>
                 <tr>
                     <td style="width: 300px;">
-                        <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                        <SearchBox id="{{'SearchBoxBIReport' | IdGeneratorPipe}}" (TextChanged)="SearchTextChanged($event)"></SearchBox>
                     </td>
 
                     <td style="width: 10px;">
@@ -75,7 +75,7 @@
                                 </td>
 
                                 <td style="width:230px; top:2px;">
-                                    <p class="QueryLink" style="font-size:14px;" [ngStyle]="{color: item.LinkColor}" (click)="ViewFolderClicked(item)">{{item.Title}}</p>
+                                    <p id="{{'BIReportFolder' | IdGeneratorPipe}}" class="QueryLink" style="font-size:14px;" [ngStyle]="{color: item.LinkColor}" (click)="ViewFolderClicked(item)">{{item.Title}}</p>
                                 </td>
 
                                 <td>

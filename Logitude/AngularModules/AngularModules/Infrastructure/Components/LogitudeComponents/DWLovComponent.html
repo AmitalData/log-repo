@@ -576,8 +576,8 @@
 
             <!-- Search Icon Button -->
             <td style="width: 18px; position: relative;">
-                <img (click)="SearchButtonClicked()" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" style="width: 14px; height: 14px; cursor: pointer;"
-                     src="./Images/LOVSearch.png" [class.FlipImgHoriz]="LayoutDirection == 'rtl'"  [ngStyle]="imgNgStyle" [id]="SearchIconId"/>
+                <img (click)="SearchButtonClicked()" class="{{LayoutDirectionClassName}} {{'LogLovDIMTable' | IdGeneratorPipe}}"  style="width: 14px; height: 14px; cursor: pointer;"
+                     src="./Images/LOVSearch.png" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [ngStyle]="imgNgStyle" [id]="SearchIconId"/>
             </td>
              
         </tr>
