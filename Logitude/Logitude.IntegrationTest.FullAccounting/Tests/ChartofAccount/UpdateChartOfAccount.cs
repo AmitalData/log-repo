@@ -16,10 +16,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.IntegrationTest.FullAccounting.Tests
+namespace Logitude.IntegrationTest.FullAccounting.Tests.ChartofAccount
 {
     [TestClass]
-    public class ChartOfAccountIntegrationTests
+    public class UpdateChartOfAccount
     {
         [TestMethod]
         public async Task UpdateChartOfAccount_Put_Successful()
@@ -31,6 +31,8 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
                 ChartOfAccountPM chartOfAccountPM = RestClientService.ParseResponse<ChartOfAccountPM>(response);
                 Assert.AreEqual(entityPM.Id, chartOfAccountPM.Id);
         }
+        [TestMethod]
+      
         private async Task<ChartOfAccountPM> GetSingle()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ FullAccountingVariables.ChartOfAccountVendor1PMCFId);
