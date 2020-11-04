@@ -1226,6 +1226,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+        public HttpResponseMessage GetDeclarationDocumentWithConnectNotValid(string parentEntityId, string parentEntityCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CustomsDocumentQueryService customsDocumentQuery = new CustomsDocumentQueryService(customContext);
+                List<CustomsDocumentPM> documents = customsDocumentQuery.GetDeclarationDocumentWithConnectNotValid(parentEntityId, parentEntityCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, documents);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationMandatoryTicketList(string parentEntityId, string parentEntityCode)
         {
             try

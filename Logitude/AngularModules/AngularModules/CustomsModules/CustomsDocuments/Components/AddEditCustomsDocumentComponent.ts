@@ -592,11 +592,23 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             }
         }
 
+        if (this.connectTo == null)
+            this.connectTo = this.SelectedIndex;
+
+        var err = this.iCustomsDocumentsController.ValidationBeforeSave(this.CustomsDocumentsTicket, this.connectTo.toString());
+        if (err!="") {
+                 this.ValidationErrorsList = [];
+
+            this.ValidationErrorsList.push(err);
+                return;
+            }
+        
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (this.ViewDisableMessageVisibility) {
             this.CancelButtonClicked();
             return;
         }
+
         var requiredFieldsErrors: string[] = [];
 
         if (this.CustomsDocument != null) {
@@ -795,13 +807,18 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SetDefaultConnectedEntityNumber() {
         this.iCustomsDocumentsController.SetDefaultConnectedEntityNumber(this.CustomsDocumentsTicket, this.EntityPM);
     }
-  
+
+
+    connectTo: number;  
+
     ConnectedItemSelectionChanged(index: number) {
         if (index != 0) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
+
+            this.connectTo = index;
             this.ShowSelectionComponent(selectInvoicesOnly);
 
         }
