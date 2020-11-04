@@ -22,15 +22,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     {
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
-            IQueryable<CargoTrackingPortList> ports = (from p in context.CargoTrackingPorts
-                                                 join c in context.CargoTrackingCountries on p.CountryId equals c.Id
-                                                 select new CargoTrackingPortList() {
-                                                     Id = p.Id ,
-                                                     EnglishName = p.EnglishName,
-                                                     CountryCode = c.Code,
-
-
-                                                 });
+            IQueryable<CargoTrackingPortList> ports = GetPorts();
             IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
                                                            join tp in ports on a.ToPortId equals tp.Id
                                                            join s in context.CargoTrackingShipmentSearches  on a.EntityId equals s.ShipmentId 
@@ -102,6 +94,17 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return query;
         }
 
+        private IQueryable<CargoTrackingPortList> GetPorts()
+        {
+            return  (from p in context.CargoTrackingPorts
+                                                       join c in context.CargoTrackingCountries on p.CountryId equals c.Id
+                                                       select new CargoTrackingPortList()
+                                                       {
+                                                           Id = p.Id,
+                                                           EnglishName = p.EnglishName,
+                                                           CountryCode = c.Code,
+                                                       });
+        }
         public CargoTrackingShipmentList GetEntityList(CargoTrackingShipment poco)
         {
             CargoTrackingShipmentList list = null;

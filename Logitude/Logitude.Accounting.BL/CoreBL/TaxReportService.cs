@@ -67,8 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
-            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+            FullAccountingSetting setting= GetTenantFullAccountingSetting(tenant);           
             JournalQueryService journalQueryService = new JournalQueryService(tenant);
             JournalRepository journalRepository = new JournalRepository(tenant);
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
@@ -346,6 +345,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        private static FullAccountingSetting GetTenantFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            return fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+        }
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card GetGLAccountCard(GLAccountPM account)
         {
             Simplog.Data.CommonDataModel.EntityPOCOs.Card card = null;

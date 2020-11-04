@@ -39,6 +39,11 @@ export class TogglePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private description: string;
+    public get Description() { return this.description; }
+    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+       
+	 
 
     public OldEntityPM: TogglePM;
 		

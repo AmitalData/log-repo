@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;               
-                CheckWithoutTransmitLines(authToken,entityPM);
-                CheckErrorsInLines(authToken, entityPM);
+               TaxReportHelper.CheckWithoutTransmitLines(authToken,entityPM);
+                TaxReportHelper.CheckErrorsInLines(authToken, entityPM);
                 BatchTaskExecutionPM btePM = TaxReportService.CreatePNCFileInBatch(entityPM.Id, tenant);
 
 
@@ -261,60 +261,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        private void CheckErrorsInLines(AuthenticationToken authToken, TaxReportPM taxreport)
-        {
-            List<string> errorsCodes = new List<string>() { "2" };
-            TaxReportQueryService taxReportQuery = new TaxReportQueryService(taxreport.Tenant);
-            int[] linesWithError = taxReportQuery.CheckErrorsInLines(taxreport.Id, taxreport.Tenant, errorsCodes).ToArray();
-            if (linesWithError.Length > 0)
-            {
-                ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
-                bool showlocal = !loggedContact.DontShowLocal;
-                string error = TextCodesTranslator.TranslateText("TaxReport.O.CantDownload", taxreport.Tenant, showlocal);
-                string[] errorParts = error.Split(',');
-                string lines = null;
-                for (int x = 0; x < linesWithError.Length; x++)
-                {
-                    lines =lines + linesWithError[x].ToString() + ',';
-
-                }
-                throw new Exception(errorParts[0] + " ( " + lines.TrimEnd(',') + " ) " + errorParts[1]);
-            }
-        }
-
-        private void CheckWithoutTransmitLines(AuthenticationToken authToken,TaxReportPM taxreport)
-        {
-            bool IsWithoutTransmitLineExist = CheckIfWithoutTransmitLineExist(taxreport.Id, taxreport.Tenant);
-            ContactPM loggedContact = GetLoggedContact(authToken.Email, taxreport.Tenant);
-            bool showlocal = !loggedContact.DontShowLocal;
-            if (IsWithoutTransmitLineExist)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("TaxReport.O.CantApprove", taxreport.Tenant, showlocal));
-            }
-        }
-
-        private  bool CheckIfWithoutTransmitLineExist(string taxReportId, int tenant)
-        {
-            TaxReportQueryService taxReportQuery = new TaxReportQueryService(tenant);
-            return taxReportQuery.CheckIfThereIsLineWithoutTransmit(taxReportId, tenant);
-
-        }
-
-       
-
-        private ContactPM GetLoggedContact(string loggedUserEmail, int tenant)
-        {
-
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
-            if (loggedContactPM == null)
-            {
-                loggedContactPM = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-            }
-
-
-            return loggedContactPM;
-        }
         public HttpResponseMessage PutCreateTaxReportLine(TaxReportPM entityPM)
         {
 

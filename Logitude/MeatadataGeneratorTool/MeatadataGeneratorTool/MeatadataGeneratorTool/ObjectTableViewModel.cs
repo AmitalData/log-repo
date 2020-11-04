@@ -707,24 +707,67 @@ namespace MeatadataGeneratorTool
             }
             rows.Clear();
 
+            if (CLoseTableDataGrid.Columns.Count == 0)
+            {
+
+                foreach (var objectField in this.ObsList)
+                {
+                    var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                    TempColumn.Header = objectField.FieldName;
+                    Binding bind = new Binding();
+                    bind.Mode = BindingMode.OneWay;
+
+                    bind.Converter = new RowIndexConverter();
+                    bind.ConverterParameter = objectField.FieldName;
+                    TempColumn.Binding = bind;
+                    CLoseTableDataGrid.Columns.Add(TempColumn);
+                }
+               var itemWithMaxColumns = Rows.OrderByDescending(r => r._data.Count).FirstOrDefault();
+                //if (itemWithMaxColumns != null)
+                //{
+                //    foreach (var xx in itemWithMaxColumns._data)
+                //    {
+                //        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                //        TempColumn.Header = xx.Key;
+                //        Binding bind = new Binding();
+                //        bind.Mode = BindingMode.OneWay;
+                      
+                //        bind.Converter = new RowIndexConverter();
+                //        bind.ConverterParameter = xx.Key;
+                //        TempColumn.Binding = bind;
+                //        CLoseTableDataGrid.Columns.Add(TempColumn);
+                //    }
+                //}
+
+                var missingDataRows = Rows.Where(r => r._data.Count < itemWithMaxColumns._data.Count);
+                foreach(var item in missingDataRows)
+                {
+                    var list =  itemWithMaxColumns._data.Where(d => !item._data.ContainsKey(d.Key)).ToList();
+                    foreach(var missedData in list)
+                    {
+                        item._data.Add(missedData.Key, null);
+                    }
+                    //item._data.Add()
+                }
+            }
 
             foreach (var item in Rows)
             {
                 rows.Add(item);
-                if (CLoseTableDataGrid.Columns.Count == 0)
-                {
-                    foreach (var xx in item._data)
-                    {
-                        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                        TempColumn.Header = xx.Key;
-                        Binding bind = new Binding();
-                        bind.Mode = BindingMode.OneWay;
-                        bind.Converter = new RowIndexConverter();
-                        bind.ConverterParameter = xx.Key;
-                        TempColumn.Binding = bind;
-                        CLoseTableDataGrid.Columns.Add(TempColumn);
-                    }
-                }
+                //if (CLoseTableDataGrid.Columns.Count == 0)
+                //{
+                //    foreach (var xx in item._data)
+                //    {
+                //        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                //        TempColumn.Header = xx.Key;
+                //        Binding bind = new Binding();
+                //        bind.Mode = BindingMode.OneWay;
+                //        bind.Converter = new RowIndexConverter();
+                //        bind.ConverterParameter = xx.Key;
+                //        TempColumn.Binding = bind;
+                //        CLoseTableDataGrid.Columns.Add(TempColumn);
+                //    }
+                //}
             }
 
             CLoseTableDataGrid.ItemsSource = rows;
@@ -1890,6 +1933,36 @@ namespace MeatadataGeneratorTool
             TableDataWindow.Content = TablesDataUserControl;
             TableDataWindow.Show();
         }
+
+
+
+        public RelayCommand EditTableDataCommand
+        {
+            get { return new RelayCommand(() => this.EditTableDataMethod()); }
+        }
+        private void EditTableDataMethod()
+        {
+
+            if (CLoseTableDataGrid.SelectedItem != null)
+            {
+                CloseTablesDataViewModel model = new CloseTablesDataViewModel(this, true);
+                var rowData =  (CLoseTableDataGrid.SelectedItem as Row)._data;
+                foreach(var k in rowData.Keys)
+                {
+                    if (!this.FieldsDictionary.ContainsKey(k))
+                        this.FieldsDictionary.Add(k, rowData[k] != null ? rowData[k].ToString() : null);
+                }
+                TablesDataUserControl = new TablesDataUserControl();
+                TablesDataUserControl.DataContext = model;
+
+                TableDataWindow = new Window();
+                TableDataWindow.Width = 500;
+                TableDataWindow.Height = 400;
+                TableDataWindow.Content = TablesDataUserControl;
+                TableDataWindow.Show();
+            }
+        }
+
 
         public EventTypesControl EventsControl;
         public Window EventsWindow = new Window();

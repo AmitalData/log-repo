@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
 		  If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -20,7 +20,7 @@
       declare @Tenant as int
       declare @ARInvoiceId as varchar(15)
 			declare @PrintNotes as nvarchar(250)
-      declare @MySearchFields as nvarchar(1000)
+      declare @MySearchFields as nvarchar(4000)
 			declare @Count as int
       set @Count = 0;
                 BEGIN

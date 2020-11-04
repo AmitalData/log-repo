@@ -33,13 +33,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnCreating(UserDefinedReportPM entityPM, EntityPM entityParentPM)
         {
 
- 
+            BuildSearchFields(entityPM);
         }
         protected override void OnUpdating(UserDefinedReportPM entityPM, UserDefinedReport entityPOCO)
-        { 
-        
-        
-        
+        {
+            BuildSearchFields(entityPM);
         }
 
         protected override void UpdateComposition(UserDefinedReportPM entityPM)
@@ -158,7 +156,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         if (line.IsCancelled != calculatedChartsOfAccountPM.IsCancelled)
                         {
-                            notes += TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.IsCancelled", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.IsCancelled + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + calculatedChartsOfAccountPM.IsCancelled + Environment.NewLine;
+                            notes += TranslateTextsClass.Translate("CalculatedChartsOfAccount.F.IsCancelled", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + calculatedChartsOfAccountPM.IsCancelled + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + line.IsCancelled + Environment.NewLine;
                         }
 
 
@@ -176,6 +174,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        private void BuildSearchFields(UserDefinedReportPM entityPM)
+        {
+            entityPM.SearchFields =   entityPM.EnglishName + "," + entityPM.LocalName;
+        }
         private string UpdateEnventsForCalculatedChartsOfAccountLines(CalculatedChartsOfAccountPM entityPM, bool showLocals)
         {
             string notes = "";

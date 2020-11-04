@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARPayments">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[  
 		  If(OBJECT_ID('tempdb..#temp') Is Not Null)
       Begin
@@ -11,7 +11,7 @@
         Drop Table #temp_Payments
       End
 
-      CREATE TABLE #temp_Payments(ARPaymentId varchar(15) not null,SearchFields nvarchar(4000) not null)
+      CREATE TABLE #temp_Payments(ARPaymentId varchar(15) not null,SearchFields nvarchar(MAX) not null)
       
       select Id,Tenant,PrintNotes,SearchFields
       into #temp
@@ -19,7 +19,7 @@
       declare @Tenant as int
       declare @ARPaymentId as varchar(15)
 			declare @PrintNotes as nvarchar(250)
-      declare @MySearchFields as nvarchar(1000)
+      declare @MySearchFields as nvarchar(MAX)
 			declare @Count as int
       set @Count = 0;
                 BEGIN

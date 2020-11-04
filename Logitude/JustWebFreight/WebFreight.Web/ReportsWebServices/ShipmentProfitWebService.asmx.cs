@@ -833,6 +833,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (country != null)
                         {
                             provider.OriginCountryCode = country.Code;
+                            provider.OriginCountryName = country.EnglishName;
                         }
                     }
 
@@ -845,14 +846,17 @@ namespace WebFreight.Web.ReportsWebServices
                         if (country != null)
                         {
                             provider.DestinationCountryCode = country.Code;
+                            provider.DestinationCountryName = country.EnglishName;
                         }
                     }
 
                     provider.POLLocation = provider.OriginLocation;
                     provider.POLCountryCode = provider.OriginCountryCode;
+                    provider.POLCountryName = provider.OriginCountryName;
 
                     provider.PODLocation = provider.DestinationLocation;
                     provider.PODCountryCode = provider.DestinationCountryCode;
+                    provider.PODCountryName = provider.DestinationCountryName;
 
                     DateTime? polATD = masterData == null ? null : masterData.MainCarriageATD;
                     DateTime? podATA = masterData == null ? null : (!string.IsNullOrEmpty(masterData.Transshipment3ToPortId) ? masterData.Transshipment3ATA : (!string.IsNullOrEmpty(masterData.Transshipment2ToPortId) ? masterData.Transshipment2ATA : (!string.IsNullOrEmpty(masterData.Transshipment1ToPortId) ? masterData.Transshipment1ATA : masterData.MainCarriageATA)));
@@ -881,6 +885,8 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             provider.POLCountryCode = country.Code;
                             provider.OriginCountryCode = country.Code;
+                            provider.POLCountryName = country.EnglishName;
+                            provider.OriginCountryName = country.EnglishName;
                         }
                     }
 
@@ -895,6 +901,8 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             provider.PODCountryCode = country.Code;
                             provider.DestinationCountryCode = country.Code;
+                            provider.PODCountryName = country.EnglishName;
+                            provider.DestinationCountryName = country.EnglishName;
                         }
                     }
 
@@ -909,6 +917,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (country != null)
                             {
                                 provider.OriginCountryCode = country.Code;
+                                provider.OriginCountryName= country.EnglishName;
                             }
                         }
                     }
@@ -924,6 +933,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (country != null)
                             {
                                 provider.DestinationCountryCode = country.Code;
+                                provider.DestinationCountryName = country.EnglishName;
                             }
                         }
                     }
