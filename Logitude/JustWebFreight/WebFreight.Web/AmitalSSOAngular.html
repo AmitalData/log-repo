@@ -430,8 +430,12 @@
                 event = new CustomEvent('UnifaceRequestEvent', { 'detail': JSON.stringify(objParams), });
             }
 
+            ///document.getElementById("myFrame").contentWindow.dispatchEvent(event);
 
-            document.getElementById("myFrame").contentWindow.dispatchEvent(event);
+            this.setTimeout(() => {
+                document.getElementById("myFrame").contentWindow.dispatchEvent(event);
+            }, 100)
+
         }
         function DefaultLogIn() {
             //..call LP_UNIFACEREQUEST("","","GoUrlLoginWithToken",LF_GOURLLOGINWITHTOKEN(0),MOREPARAMS)
