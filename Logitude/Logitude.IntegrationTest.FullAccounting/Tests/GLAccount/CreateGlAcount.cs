@@ -16,27 +16,18 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.IntegrationTest.FullAccounting.Tests
+namespace Logitude.IntegrationTest.FullAccounting.Tests.GLAccount
 {
     [TestClass]
-    public class GlAcountIntegrationTests
+    public class CreateGlAcount
     {
-        [TestMethod]
-        public async Task UpdateGlAcount_Put_Successful()
-        {
-            GLAccountPM entityPM = await GetSingle();
-            entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);
-            entityPM.EnglishName = "GE:" + VariablesGenerater.GetRandomString(5);
-            HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "GLAccounts");
-            GLAccountPM GLAccountPM = RestClientService.ParseResponse<GLAccountPM>(response);
-            Assert.AreEqual(GLAccountPM.Id, entityPM.Id);
-        }
         [TestMethod]
         public  async Task CreateGlAcount_Post_Successful()
         {
             GLAccountPM entityPM = GetNewGlAccountPM();
             HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "GLAccounts");
             GLAccountPM gLAccountPM = RestClientService.ParseResponse<GLAccountPM>(response);
+            Assert.IsNotNull(gLAccountPM);
             Assert.IsNotNull(gLAccountPM.Id);
         }
         private static GLAccountPM GetNewGlAccountPM()
@@ -57,14 +48,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             gLAccountPM.NewGLAccountCardId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
             return gLAccountPM;
         }
-
-        private async Task<GLAccountPM> GetSingle()
-        {
-            HttpResponseMessage response = await RestClientService.GetAsync("GLAccounts/GetSingle?id=" + FullAccountingVariables.GLAccountVendor458GLPMId);
-            GLAccountPM GLAccount = RestClientService.ParseResponse<GLAccountPM>(response);
-            return GLAccount;
-        }
-
+ 
 
     }
 }

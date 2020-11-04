@@ -18,29 +18,30 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.IntegrationTest.FullAccounting.Tests
+namespace Logitude.IntegrationTest.FullAccounting.Tests.ARInvoice
 {
     [TestClass]
-    public class ARInvoiceIntegrationTests
+    public class CreateARInvoice
     {
 
         [TestMethod]
-        public async Task CreateARInvoice_Post_Failed()
+        public async Task CreateARInvoice_Post_Successful()
         {
 
                 ARInvoicePM entityPM = GetNewARInvoice();
                 HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "ARInvoices");
                 ARInvoicePM ARInvoicePM = RestClientService.ParseResponse<ARInvoicePM>(response);
-                Assert.AreEqual(entityPM.Id, ARInvoicePM.Id);
+                Assert.IsNotNull(ARInvoicePM);
+                Assert.IsNotNull(ARInvoicePM.Id);
         }
 
         private ARInvoicePM GetNewARInvoice()
         {
             ARInvoicePM ARInvoicePM = new ARInvoicePM();
             ARInvoicePM.Tenant = IntegrationTestLoginParameters.Tenant;
-            ARInvoicePM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate() ;
+            ARInvoicePM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate();
             ARInvoicePM.ARInvoiceTypeCode = "IN";
-            ARInvoicePM.BillToId = "1-53459";
+            ARInvoicePM.BillToId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
             ARInvoicePM.BillToPartnerTypeId = "CS";
             ARInvoicePM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
             ARInvoicePM.InvoiceDate = DateTime.UtcNow;
@@ -63,7 +64,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             ARInvoicePM.SearchFields = "12PMCS,AccountingCustomer2";
             ARInvoicePM.IsGeneralInvoice = true;
             ARInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
-            ARInvoicePM.ProfitCurrencyExchangeRate =2;
+            ARInvoicePM.ProfitCurrencyExchangeRate = 2;
             ARInvoicePM.AmountDueInLocalCurrency = 40000;
             ARInvoicePM.AmountDueInProfitCurrency = 2000;
             ARInvoicePM.BranchId = FullAccountingVariables.BranchMainOfficeId;
@@ -74,7 +75,14 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             ARInvoicePM.IsFullAccounting = true;
             ARInvoicePM.AmountDue = 4000;
             ARInvoicePM.InvoiceLines = new List<ARInvoiceLinePM>();
-            ARInvoicePM.InvoiceLines.Add(new ARInvoiceLinePM {
+            ARInvoicePM.InvoiceLines.Add(GetNewARInvoiceLine());
+            return ARInvoicePM;
+        }
+
+        private ARInvoiceLinePM GetNewARInvoiceLine()
+        {
+            ARInvoiceLinePM Line = new ARInvoiceLinePM
+            {
                 Tenant = IntegrationTestLoginParameters.Tenant,
                 ChargesTypeId = FullAccountingVariables.ChargeTypesAirFreightId,
                 ForiegnCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId,
@@ -85,18 +93,19 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
                 VatPercentage = 0.0,
                 VatTypeName = "Exempt",
                 ForiegnExchangeRate = 1,
-                LineNumber=1,
-                Quantity=20,
-                UnitPrice=200,
-                ViewOrder=0,
-                ProfitCurrencyAmount=200,
+                LineNumber = 1,
+                Quantity = 20,
+                UnitPrice = 200,
+                ViewOrder = 0,
+                ProfitCurrencyAmount = 200,
                 CreditAccount = FullAccountingVariables.GLAccountCustomer54l4CSPMId,
                 Description = "Air Freight",
                 LocalDescription = "Air Freight",
                 GLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId,
-                LineActionCode="1"
-            });
-            return ARInvoicePM;
+                LineActionCode = "1"
+            };
+
+            return Line;
         }
     }
 }
