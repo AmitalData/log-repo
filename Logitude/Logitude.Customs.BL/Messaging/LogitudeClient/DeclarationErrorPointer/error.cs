@@ -13,5 +13,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer
         public string ConstraintID { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
+        public string AmendmentFieldStatus { get; set; }
+
     }
 }

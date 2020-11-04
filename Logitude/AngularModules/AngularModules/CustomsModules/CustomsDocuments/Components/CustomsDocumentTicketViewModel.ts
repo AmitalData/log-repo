@@ -24,6 +24,7 @@ import {CustDocRelatedDocsWebService} from '../../../Customs/Services/WebService
 import {CustDocMetaDataValuesWebService} from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {DeclarationPM} from "../../../Customs/EntityPMs/DeclarationPM";
+import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
 
 export class CustomsDocumentTicketViewModel {
 
@@ -120,7 +121,7 @@ export class CustomsDocumentTicketViewModel {
     private EntityResourceService: EntityResourceService;
     //*****************************************//
     constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
-        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
+        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController ) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
             this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
@@ -408,7 +409,7 @@ export class CustomsDocumentTicketViewModel {
 
     }
 
-    ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent) {
+    ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent, isExport: boolean) {
         if (SessionLocator.SelectedSession.CurrentEditComponent) {
             if (SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.IsDirty) {
                 SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
@@ -429,6 +430,8 @@ export class CustomsDocumentTicketViewModel {
         }
         this.DataContext = dataContext;
         var documentFilingPMId = event.dataTransfer.getData("Id");
+             var _DocumentTypeCustomsDataPMService: DocumentTypeCustomsDataPMService = new DocumentTypeCustomsDataPMService();
+
         if (!AppTool.IsNullOrEmpty(documentFilingPMId)) {
             var relatedDocumentViewModel: RelatedDocumentViewModel = RelatedDocuments.filter(d => d.Id == documentFilingPMId)[0];
             if (!this.isDisplayOnly || !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
@@ -438,50 +441,75 @@ export class CustomsDocumentTicketViewModel {
                         var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
                         var docId = encodeURIComponent(relatedDocumentViewModel.Id);
                         customsDocumentPMService.get(docId).subscribe((response: ServiceResponse) => {
-                            relatedDocumentViewModel.CustomDocument = response.Result;
-                            if (relatedDocumentViewModel.CustomDocument) {
-                                this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
-                            }
-                            else {
-                                var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
-                                customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
-                                customsDocumentPM.Tenant = SessionLocator.Tenant;
-                                customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-                                customsDocumentPM.DeclarationId = this.EntityPM.Id;
-                                customsDocumentPM.IsPartOfDeclaration = true;
-                                relatedDocumentViewModel.CustomDocument = customsDocumentPM;
-                                customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
-                                    if (!resp.HasError) {
-                                        this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
-                                    }
-                                    else {
-                                        SessionLocator.SelectedSession.StopBusyIndicator();
-                                        if (SessionLocator.SelectedSession.CurrentEditComponent) {
-                                            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                           _DocumentTypeCustomsDataPMService.get(relatedDocumentViewModel.DocumentTypeCode).subscribe(res => {
+
+                                relatedDocumentViewModel.CustomDocument = response.Result;
+                                if (relatedDocumentViewModel.CustomDocument) {
+                                    this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                                }
+                                else {
+                                    var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
+                                    customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
+                                    customsDocumentPM.Tenant = SessionLocator.Tenant;
+                                     isExport = relatedDocumentViewModel.DocumentCategoryCode=='E' ?true :false;
+                                    if (isExport) {
+                                        if (!AppTool.IsNullOrEmpty(res.Result)) {
+                                            customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
+                                            this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
+
                                         }
                                         else {
-                                            var messageWindow = new MessageWindow();
-                                            messageWindow.Width = 400;
-                                            messageWindow.Height = 200;
-                                            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                            if (resp.ErrorsArray && resp.ErrorsArray.length > 0) {
-                                                messageWindow.Show(resp.ErrorsArray[0]);
-                                            }
-                                            else {
-                                                messageWindow.Show("Server Error");
-                                            }
-                                            messageWindow.WindowClosed.subscribe((event: any) => {
+                                            customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
 
-                                                messageWindow.Close();
-
-                                            });
                                         }
                                     }
-                                    //SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-                                    //                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                    else {
+                                        customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
 
-                                });
+                                    }
+                                    customsDocumentPM.DeclarationId = this.EntityPM.Id;
+                                    customsDocumentPM.IsPartOfDeclaration = true;
+                                    relatedDocumentViewModel.CustomDocument = customsDocumentPM;
+                                    customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
+                                        if (!resp.HasError) {
+                                            this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                                            if (isExport) {
+                                                var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+
+                                                customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe();
+                                            }
+                                        }
+                                        else {
+                                            SessionLocator.SelectedSession.StopBusyIndicator();
+                                            if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                                SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                                            }
+                                            else {
+                                                var messageWindow = new MessageWindow();
+                                                messageWindow.Width = 400;
+                                                messageWindow.Height = 200;
+                                                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                                if (resp.ErrorsArray && resp.ErrorsArray.length > 0) {
+                                                    messageWindow.Show(resp.ErrorsArray[0]);
+                                                }
+                                                else {
+                                                    messageWindow.Show("Server Error");
+                                                }
+                                                messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                                    messageWindow.Close();
+
+                                                });
+                                            }
+                                        }
+                                        //SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+                                        //                                SessionLocator.SelectedSession.StopBusyIndicator();
+
+                                    });
+                                }
                             }
+                            );
+                          
 
                         });
                     }

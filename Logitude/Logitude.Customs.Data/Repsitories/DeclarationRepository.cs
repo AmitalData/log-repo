@@ -280,6 +280,13 @@ namespace Logitude.Customs.Data.Repsitories
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
 
+        public IQueryable<Declaration> GetQSingle(EntityKeyFields entityKeys)
+        {
+            DeclarationKeys keys = entityKeys as DeclarationKeys;
+            return (from a in context.Declarations
+                    where a.Id == keys.Id
+                    select a);
+        }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
          

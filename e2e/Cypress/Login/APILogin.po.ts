@@ -9,9 +9,9 @@ export class APILoginComp {
  
 it('APILogin Successfully', () => {
  
-  var Email = Cypress.env("LocalEmail");
-  var Password = Cypress.env("LocalPassword");
-  var APIURL = Cypress.env("CustomsAPIURL");
+  var Email = Cypress.env("CustomsEmail");
+  var Password = Cypress.env("CustomsPassword");
+  var APIURL = Cypress.env("CustomsAPIURL")+"/api/";;
 
 
   cy.window().then(win=> {
@@ -44,6 +44,7 @@ it('APILogin Successfully', () => {
        win.sessionStorage.setItem('Token', identity.Token);
        win.sessionStorage.setItem('LoginUserId', identity.Id);
        win.sessionStorage.setItem('LoginUserName', identity.UserName);
+       assert.notEqual(identity.Token, null, 'Authonticatin error on  Email , Password or this user have more than one tenant')
        cy.log("New Token: "+identity.Token+"\n");
        cy.log("LoginUserId: "+identity.LoginUserId+"\n");
        cy.log("LoginUserName: "+identity.LoginUserName+"\n");

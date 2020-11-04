@@ -73,6 +73,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityId = dirtyEntityPM.DeclarationId;
                     customFile = dirtyEntityPM.CustomFileNo;
                 }
+           
+
+                var comments = eventContextTagModel.FUStatusRemarks;
+                if (statusId == "LIK")
+                {
+                    comments = dirtyEntityPM.Remarks;
+                }
+
 
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
@@ -95,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = eventContextTagModel.FUStatusRemarks,
+                        comments = comments,
                     }
                 };
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);

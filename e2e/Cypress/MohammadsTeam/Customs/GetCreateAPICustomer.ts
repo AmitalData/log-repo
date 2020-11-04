@@ -14,7 +14,7 @@ it('Get or Create API Customer Successfully', () => {
  
    
   var Tenant  = Cypress.env("CustomsTenant");
-  var APIURL = Cypress.env("CustomsAPIURL");
+  var APIURL = Cypress.env("CustomsAPIURL")+"/api/";;
 
 	cy.window().then(win=> {
     const Token = win.sessionStorage.getItem('Token');

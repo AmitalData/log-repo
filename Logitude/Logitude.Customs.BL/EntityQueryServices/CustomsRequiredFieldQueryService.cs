@@ -16,17 +16,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
     public partial class CustomsRequiredFieldQueryService : EntityQueryService<CustomsRequiredField, CustomsRequiredFieldKeys, CustomsRequiredFieldPM, object, CustomsRequiredFieldKeys>
     {
 
-        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableFromCache(string ObjectTableId, int Tenant,string type="A")
+
+        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
         {
             string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
             var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
             {
-                return this.GetCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant,type);
+
+                return this.GetCustomRequiredFieldsByObjectTableCore(ObjectTableId, Tenant,type);
+
             });
             return res;
         }
 
-        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
+        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")
+
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId,Tenant, type);

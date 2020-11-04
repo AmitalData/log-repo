@@ -1043,6 +1043,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101A":
                                 case "5101E":
                                 case "5101D":
+
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -1133,7 +1134,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לא נמצאה ישות להצגה");
+                                        msg.Show("לם נמצםה ישות להצגה");
                                         break;
                                     }
 
@@ -1168,7 +1169,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לא נמצאה ישות להצגה");
+                                        msg.Show("לם נמצםה ישות להצגה");
                                         break;
                                     }
 
@@ -1198,7 +1199,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                     //            default:
                     //                {
                     //                    var msg = new MessageWindow();
-                    //                    msg.Show("לא נמצאה ישות להצגה");
+                    //                    msg.Show("לם נמצםה ישות להצגה");
                     //                    break;
                     //                }
 
@@ -1235,7 +1236,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לא נמצאה ישות להצגה");
+                                        msg.Show("לם נמצםה ישות להצגה");
                                         break;
                                     }
 
@@ -1303,7 +1304,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לא נמצאה ישות להצגה");
+                                        msg.Show("לם נמצםה ישות להצגה");
                                         break;
                                     }
 
@@ -1332,7 +1333,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                     //            default:
                     //                {
                     //                    SimplogMessageWindow msgWindow = new SimplogMessageWindow();
-                    //                    msgWindow.Show("לא נמצאה ישות להצגה");
+                    //                    msgWindow.Show("לם נמצםה ישות להצגה");
                     //                    break;
                     //                }
                     //        }
@@ -1606,7 +1607,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התראות שנבחרות סומנו כנקראו");
+                    msg.Show("1000 התרםות שנבחרות סומנו כנקרםו");
                 }
             });
         }
@@ -1697,7 +1698,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התראות שנבחרו סומנו כ-לא נקראו");
+                    msg.Show("1000 התרםות שנבחרו סומנו כ-לם נקרםו");
                 }
             });
         }
@@ -1779,7 +1780,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התראות שנבחרו סומנו כסגורות");
+                    msg.Show("1000 התרםות שנבחרו סומנו כסגורות");
                 }
             });
         }
@@ -1865,7 +1866,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התראות שנבחרו סומנו כפתוחות");
+                    msg.Show("1000 התרםות שנבחרו סומנו כפתוחות");
                 }
 
             });

@@ -40,6 +40,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.DocumentsFilings 
                     select record);
         }
+        public DocumentsFiling GetSingleDocumentsFilingDocument(string id, int tenant)
+        {
+            var q = (from a in context.DocumentsFilings.Include("Document").Include("DocumentType")
+                     where a.Id == id && a.Tenant == tenant
+                                 select a);
+            return q.FirstOrDefault();
+        }
 
         public DocumentsFiling GetSingleDocumentsFiling(string id, int tenant)
         {

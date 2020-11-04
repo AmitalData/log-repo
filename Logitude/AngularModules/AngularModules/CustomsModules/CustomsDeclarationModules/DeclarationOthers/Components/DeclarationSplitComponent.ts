@@ -121,6 +121,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
             this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
+             
                 this.invoiceItem = data;
                 if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
@@ -195,6 +196,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         }
     }
 
+
+ 
+
     LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
         if (this.SelectedTicket) {
 
@@ -232,22 +236,26 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         //SessionLocator.SelectedSession.StopBusyIndicator();
 
                         this.base64Image = "data:image/png;base64," + result.Page;
-                         //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
+
+                        //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
                         var elements = document.getElementsByClassName("rectangle");
                         while (elements.length > 0) {
                             elements[0].parentNode.removeChild(elements[0]);
                         }
-                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0   && selectItem) {
-                                let rect = document.createElement('div');
-                                rect.className = 'rectangle';
-                                rect.id = 'rectangle-' + "rectangle-1";
-                                rect.style.position = 'absolute';
-                            rect.style.border = '2px solid #ed1c31';
-                                rect.style.borderRadius = '3px';
-                                rect.style.left = 0 + 'px';
-                                rect.style.top = this.invoiceItem.OcrTop + 'px';
+                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0 && selectItem) {
+                            var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
+
+                            let rect = document.createElement('div');
+                            rect.className = 'rectangle';
+                            rect.id = 'rectangle-' + "rectangle-1";
+                            rect.style.position = 'absolute';
+                            rect.style.border = '1px solid #ed1c31';
+                            rect.style.borderRadius = '3px';
+                            rect.style.left = 0 + 'px';
+                            var percent = (elem.height / elem.naturalHeight);
+                            rect.style.top = (this.invoiceItem.OcrTop * percent)- 1   + 'px';
                                 rect.style.width = '100%';
-                                rect.style.height = this.invoiceItem.OcrHeight + 'px';
+                            rect.style.height = (this.invoiceItem.OcrHeight * percent) +2 + 'px';
                                 document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
 
                                 console.log(this.base64Image);

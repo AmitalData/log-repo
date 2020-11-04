@@ -15,7 +15,7 @@ let R: RandomGenerator= new RandomGenerator();
 
   var GetUniqueId = R.GenerateRandomNumberByDate();
   var Tenant  = Cypress.env("CustomsTenant");
-  var APIURL = Cypress.env("CustomsAPIURL");
+  var APIURL = Cypress.env("CustomsAPIURL")+"/api/";
 
 	cy.window().then(win=> {
       const Token = win.sessionStorage.getItem('Token')
@@ -34,11 +34,12 @@ let R: RandomGenerator= new RandomGenerator();
             Tenant : Tenant,
             CustomerId : CusstomerGECUId,
             TransportModeId : 'A',
-            DeclarationOfficeCode : '14',
+            DeclarationOfficeCode : '3',
       }
      }).its('body')
      .then(ImportDeclaration => {
       win.sessionStorage.setItem('ImportDeclarationId', ImportDeclaration.Id);
+      win.sessionStorage.setItem('CustomFileNo', ImportDeclaration.CustomFileNo);
       cy.log("Declaration Id: "+ImportDeclaration.Id);
      });
    }); 

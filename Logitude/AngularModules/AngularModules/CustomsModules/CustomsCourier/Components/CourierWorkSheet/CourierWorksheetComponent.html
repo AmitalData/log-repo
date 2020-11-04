@@ -180,7 +180,7 @@
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
 
                                                         <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
-                                                        <button style="text-align:right" (click)="SendALLSVG()">בקרת סיווגים</button>
+                                                        <button style="text-align:right" (click)="SendALLSVG(true)">בקרת סיווגים</button>
 
                                                     </div>
 
@@ -470,7 +470,7 @@
                                                                 <!--SVG-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='SVG' ">
                                                                     <tr>
-                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG()" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
+                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG(false)" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
