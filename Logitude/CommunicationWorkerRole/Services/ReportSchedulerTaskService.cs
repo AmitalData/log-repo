@@ -118,7 +118,7 @@ namespace CommunicationWorkerRole.Services
         private MemoryStream GetMemoryStreamAfterExportDocument(TasksSchedulerPM reportTask, ReportFliter reportFilter)
         {
 
-            string schedulerFormat = reportTask.Format == "PDF" ? "pdf" : "Excel";
+            string schedulerFormat = (string.IsNullOrEmpty(reportTask.Format) || reportTask.Format == "PDF") ? "pdf" : "Excel";
             StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
             MemoryStream memoryStream = new MemoryStream();
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to " + schedulerFormat + " file"));
