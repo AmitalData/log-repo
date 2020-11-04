@@ -249,4 +249,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Format"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AdvancedFormat"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

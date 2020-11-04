@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Stimulsoft.Report;
+using Stimulsoft.Report.Export;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,10 +87,7 @@ namespace CommunicationWorkerRole.Services
         private void SendPdfReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
-            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-            MemoryStream memoryStream = new MemoryStream();
-            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-            stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
             if (memoryStream != null && schedulerDetails.FTPDetails != null)
@@ -101,7 +99,8 @@ namespace CommunicationWorkerRole.Services
 
                 string p_message = "";
                 string p_status = "";
-                var fileName = reportTask.Name + ".pdf";
+                string schedulerFormatExtension = reportTask.Format == "PDF" ? "pdf" : "xlsx";
+                var fileName = reportTask.Name + "." + schedulerFormatExtension;
                 FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
                 ftpService.Upload(fileName, schedulerDetails.FTPDetails.Folder, memoryStream.ToArray(), out p_message, out p_status, true, true);
 
@@ -113,9 +112,32 @@ namespace CommunicationWorkerRole.Services
                 {
                     currentTask.LogInfo(p_message);
                 }
-
-
             }
+        }
+
+        private MemoryStream GetMemoryStreamAfterExportDocument(TasksSchedulerPM reportTask, ReportFliter reportFilter)
+        {
+
+            string schedulerFormat = reportTask.Format == "PDF" ? "pdf" : "Excel";
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            MemoryStream memoryStream = new MemoryStream();
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to " + schedulerFormat + " file"));
+            if (schedulerFormat == "Excel")
+            {
+                StiExcel2007ExportSettings stiExcelSettings = new StiExcel2007ExportSettings();
+                bool useOnePageHeaderAndFooter = reportTask.Format == "EXCL" || reportTask.AdvancedFormat == "OP";
+                bool exportDataOnly =  reportTask.AdvancedFormat == "DO";
+                stiExcelSettings.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
+                stiExcelSettings.ExportDataOnly = exportDataOnly;
+                StiExcel2007ExportService stiExcelService = new StiExcel2007ExportService();
+                stiExcelService.ExportExcel(stiReport, memoryStream, stiExcelSettings);
+            }
+            else
+            {
+                stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            }
+
+            return memoryStream;
         }
 
         private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
