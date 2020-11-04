@@ -40,10 +40,17 @@ namespace Logitude.IntegrationTest.FullAccounting
         public static string BankCodeBK14Id { get; set; }
         public static string BankCodeBK14Code { get; set; }
         public static string BranchCashBookBK14Id { get; set; }
+        public static string NewBranchCashBookBK14Id { get; set; }
+
         public static string InvoiceNumber12PMCSId { get; set; }
         public static string InvoiceNumber12PMCSNumber { get; set; }
         public static string APInvoice1205Id { get; set; }
         public static string APInvoice1205Number { get; set; }
+        public static string ARPayment12PMCSId { get; set; }
+        public static string AdressMain { get; set; }
+        public static string CashBook1421TestId { get; set; }
+        public static string ARPayment12PMCSNumber { get; set; }
+
 
     }
 }

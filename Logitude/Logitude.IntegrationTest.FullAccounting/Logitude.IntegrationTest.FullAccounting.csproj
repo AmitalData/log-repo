@@ -59,6 +59,12 @@
     <Compile Include="Tests\ARInvoice\GetARInvoice.cs" />
     <Compile Include="Tests\ARInvoice\CreateARInvoice.cs" />
     <Compile Include="Tests\ARInvoice\UpdateARInvoice.cs" />
+    <Compile Include="Tests\ARPayment\CreateARPayment.cs" />
+    <Compile Include="Tests\ARPayment\GetARPayment.cs" />
+    <Compile Include="Tests\ARPayment\UpdateARPayment.cs" />
+    <Compile Include="Tests\CashBook\CreateCashBook.cs" />
+    <Compile Include="Tests\CashBook\GetCashBook.cs" />
+    <Compile Include="Tests\CashBook\UpdateCashBook.cs" />
     <Compile Include="Tests\ChartofAccount\GetChartOfAccount.cs" />
     <Compile Include="Tests\GLAccount\UpdateGlAcount.cs" />
     <Compile Include="Tests\GLAccount\GetGlAcount.cs" />
