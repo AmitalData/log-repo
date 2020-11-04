@@ -155,7 +155,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClaimReasonName, 
 	         ItemFOBAmountForeign, 
 	         ItemFOBAmountNIS, 
-	         ClassificationCodeSource,
+	         ClassificationCodeSource, 
 	         DocumentFilingId,
 	      }
 
