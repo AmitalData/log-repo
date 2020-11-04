@@ -205,6 +205,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LandingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnifreightLeadingFile"
+    Type="nvarchar"
+    Size="12">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

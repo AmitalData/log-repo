@@ -60,6 +60,10 @@ export class CourierMasterList {
 	IsEstimatedArrivalToDay: boolean;
 	EstimatedArrivalColor: string;
 	PackageQuantityInMAWB: number;
+	LandingDate: Date;
+	UnifreightLeadingFile: string;
+	LandingDateDateOnly: Date;
+	LandingDateTimeOnly: Date;
 	
 }
  

@@ -184,6 +184,26 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
             this.EntityPM.EstimatedArrivalDate = value;
         }
     }
+    get LandingDateDateOnly() { return this.EntityPM.LandingDateDateOnly; }
+    set LandingDateDateOnly(value: Date) {
+        if (this.EntityPM.LandingDateDateOnly != value) {
+            this.EntityPM.LandingDateDateOnly = value;
+        }
+    }
+
+    get LandingDateTimeOnly() { return this.EntityPM.LandingDateTimeOnly; }
+    set LandingDateTimeOnly(value: Date) {
+        if (this.EntityPM.LandingDateTimeOnly != value) {
+            this.EntityPM.LandingDateTimeOnly = value;
+        }
+    }
+
+    get LandingDate() { return this.EntityPM.LandingDate; }
+    set LandingDate(value: Date) {
+        if (this.EntityPM.LandingDate != value) {
+            this.EntityPM.LandingDate = value;
+        }
+    }
 
     get WeightValueCode() { return this.EntityPM.WeightValueCode; }
     set WeightValueCode(value: string) {
@@ -279,6 +299,8 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         //this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EstimatedArrivalDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("LandingDateTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("LandingDateDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);

@@ -289,6 +289,26 @@ export class CourierMasterPM {
     public set PackageQuantityInMAWB(newValue: number) { if (this.packageQuantityInMAWB != newValue) { this.packageQuantityInMAWB = newValue; this.MarkAsDirty("PackageQuantityInMAWB"); } }
        
 	 
+    private landingDate: Date;
+    public get LandingDate() { return this.landingDate; }
+    public set LandingDate(newValue: Date) { if (this.landingDate != newValue) { this.landingDate = newValue; this.MarkAsDirty("LandingDate"); } }
+       
+	 
+    private unifreightLeadingFile: string;
+    public get UnifreightLeadingFile() { return this.unifreightLeadingFile; }
+    public set UnifreightLeadingFile(newValue: string) { if (this.unifreightLeadingFile != newValue) { this.unifreightLeadingFile = newValue; this.MarkAsDirty("UnifreightLeadingFile"); } }
+       
+	 
+    private landingDateDateOnly: Date;
+    public get LandingDateDateOnly() { return this.landingDateDateOnly; }
+    public set LandingDateDateOnly(newValue: Date) { if (this.landingDateDateOnly != newValue) { this.landingDateDateOnly = newValue; this.MarkAsDirty("LandingDateDateOnly"); } }
+       
+	 
+    private landingDateTimeOnly: Date;
+    public get LandingDateTimeOnly() { return this.landingDateTimeOnly; }
+    public set LandingDateTimeOnly(newValue: Date) { if (this.landingDateTimeOnly != newValue) { this.landingDateTimeOnly = newValue; this.MarkAsDirty("LandingDateTimeOnly"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
