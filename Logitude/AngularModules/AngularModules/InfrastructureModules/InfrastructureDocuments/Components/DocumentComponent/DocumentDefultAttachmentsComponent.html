@@ -44,7 +44,7 @@
         <td style="height:45%" class="CellStretch">
 
             <div class="SystemDefaultsBox">
-                <logitude-edit-grid *ngIf="!IsNotDocumentOutFound"
+                <logitude-edit-grid  
                                     GridWidth="100%" GridHeight="100%"
                                     [HeaderHeight]="25" [ItemSource]="DocOutItemsSource">
 
@@ -79,8 +79,8 @@
                         <ng-template let-item>
 
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <div style="width: 100%; height: 100%; position: relative;">
-                                    <div class="CenterCenter">
+                                <div style="width: 100%; height: 100%; position: relative; text-align: center;">
+                                    <div class="CenterCenter" style="padding-left:35px">
                                         <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@
 
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                 <div style="width: 100%; height: 100%; position: relative;">
-                                    <div class="CenterCenter">
+                                    <div class="CenterCenter" style="padding-left:35px">
                                         <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
                                     </div>
                                 </div>

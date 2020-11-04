@@ -8,6 +8,7 @@ import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { SearchComponent } from 'src/CargoTracking/Components/Search/search.component';
 import { ShipmentComponent } from 'src/CargoTracking/Components/Shipment/shipment.component';
+import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
 
 const routes: Routes = [
     
@@ -33,14 +34,16 @@ const routes: Routes = [
             { path: "shipment/:SecurityKey", component: ShipmentComponent },
             { path: "shipment", redirectTo: ':Tenant/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
+            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
         ]
     },
     
  
-    {path: '', component: PublicGateComponent, pathMatch: 'full' },
+    {path: 'login', component: LoginComponent },
+    {path: '', component: LoginComponent },
+    // {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
+    {path: '**', component: LoginComponent },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  

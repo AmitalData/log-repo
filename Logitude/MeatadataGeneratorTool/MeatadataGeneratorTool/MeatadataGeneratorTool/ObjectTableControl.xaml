@@ -2443,6 +2443,11 @@
                                         Margin="0 0 5 0"
                                         Command="{Binding AddTableDataCommand}"
                                         Content="Add" />
+                                <Button x:Name="editTableDataBtn"
+                                        Width="50"
+                                        Margin="0 0 5 0"
+                                        Command="{Binding EditTableDataCommand}"
+                                        Content="Edit" />
                                 <Button x:Name="removeTableDataBtn"
                                         Width="50"
                                         Command="{Binding RemoveTableDataCommand}"
