@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Volume Unit&quot;"
-  Code="&quot;30cf&quot;"
+  Code="&quot;a1c0&quot;"
   Name="&quot;VolumeUnit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -411,7 +411,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;PrintAs&quot;"
-    DefaultText="&quot;PrintAs&quot;"
+    DefaultText="&quot;Print as&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -477,18 +477,18 @@
     <Record
       SearchFields="&quot;cbf,cbf&quot;"
       Code="&quot;CBF&quot;"
-      Name="&quot;CBF&quot;" 
-     PrintAs="&quot;CBF&quot;"/>
+      Name="&quot;CBF&quot;"
+      PrintAs="&quot;CBF&quot;" />
     <Record
       SearchFields="&quot;cbi,cbi&quot;"
       Code="&quot;CBI&quot;"
-      Name="&quot;CBI&quot;" 
-       PrintAs="&quot;CBI&quot;"/>
+      Name="&quot;CBI&quot;"
+      PrintAs="&quot;CBI&quot;" />
     <Record
       SearchFields="&quot;cbm,cbm&quot;"
       Code="&quot;CBM&quot;"
       Name="&quot;CBM&quot;"
-       PrintAs="&quot;CBM&quot;"/>
+      PrintAs="&quot;CBM&quot;" />
   </Records>
   <DataContracts>
     <DataContract

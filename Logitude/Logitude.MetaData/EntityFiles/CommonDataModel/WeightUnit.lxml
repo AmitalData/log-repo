@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Weight Unit&quot;"
-  Code="&quot;e69f&quot;"
+  Code="&quot;ab18&quot;"
   Name="&quot;WeightUnit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -337,7 +337,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;PrintAs&quot;"
-    DefaultText="&quot;PrintAs&quot;"
+    DefaultText="&quot;Print as&quot;"
     ListFieldLable="&quot;PrintAsListLable&quot;"
     ListLableDefaultText="&quot;PrintAs&quot;"
     IsNullable="false"
@@ -410,13 +410,13 @@
     <Record
       SearchFields="&quot;mt,metric ton&quot;"
       Code="&quot;MT&quot;"
-      Name="&quot;Metric Ton&quot;" 
-      PrintAs="&quot;Mt&quot;"/>
+      Name="&quot;Metric Ton&quot;"
+      PrintAs="&quot;Mt&quot;" />
     <Record
       SearchFields="&quot;lb,pound&quot;"
       Code="&quot;LB&quot;"
       Name="&quot;Pound&quot;"
-      PrintAs="&quot;lb&quot;"/>
+      PrintAs="&quot;lb&quot;" />
   </Records>
   <DataContracts>
     <DataContract
