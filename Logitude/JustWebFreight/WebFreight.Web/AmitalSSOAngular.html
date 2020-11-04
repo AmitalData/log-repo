@@ -429,7 +429,7 @@
                 event = new CustomEvent('UnifaceRequestEvent', { 'detail': JSON.stringify(objParams), });
             }
 
-            document.getElementById("myFrame").contentWindow.dispatchEvent(event);
+            ///document.getElementById("myFrame").contentWindow.dispatchEvent(event);
 
             this.setTimeout(() => {
                 document.getElementById("myFrame").contentWindow.dispatchEvent(event);
