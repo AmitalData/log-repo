@@ -177,7 +177,7 @@ export class AddEditReportTaskSchedulerComponent {
         if (this.isFTP != newValue) {
             this.isFTP = newValue;
             this.DataContext.IsFTP = newValue;
-            if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.SelectedFormat = this.SchedulerFormats.filter(format => format.Code == 'PDF')[0];
+            if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.FormatSelectionChanged(this.SchedulerFormats.filter(format => format.Code == 'PDF')[0]);
         }
     }
 
