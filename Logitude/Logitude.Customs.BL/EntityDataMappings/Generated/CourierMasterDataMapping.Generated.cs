@@ -51,7 +51,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsReadyForInvoice, 
 	         NoOfCourierHawb, 
 	         IsAutomaticManifestSent, 
-	         PackageQuantityInMAWB,
+	         PackageQuantityInMAWB, 
+	         LandingDate, 
+	         UnifreightLeadingFile,
 	      }
 
 
@@ -110,7 +112,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CalcSuspendedDeclarations, 
 	         NoOfCourierHawb, 
 	         IsAutomaticManifestSent, 
-	         PackageQuantityInMAWB,
+	         PackageQuantityInMAWB, 
+	         LandingDate, 
+	         UnifreightLeadingFile, 
+	         LandingDateDateOnly, 
+	         LandingDateTimeOnly,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -262,6 +268,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantityInMAWB))
             {
 				entityPOCO.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LandingDate))
+            {
+				entityPOCO.LandingDate = entityPM.LandingDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightLeadingFile))
+            {
+				entityPOCO.UnifreightLeadingFile = entityPM.UnifreightLeadingFile;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -420,6 +436,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PackageQuantityInMAWB = entityPOCO.PackageQuantityInMAWB;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LandingDate))
+            {
+					entityPM.LandingDate = entityPOCO.LandingDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnifreightLeadingFile))
+            {
+					entityPM.UnifreightLeadingFile = entityPOCO.UnifreightLeadingFile;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -571,6 +597,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LandingDate))
+            {
+                oldEntityPM.LandingDate = entityPM.LandingDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightLeadingFile))
+            {
+                oldEntityPM.UnifreightLeadingFile = entityPM.UnifreightLeadingFile;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CourierMasterPM entityPM)
@@ -599,6 +635,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.FlightNumber)) //T4 find type == nText 
             {
                 entityPM.FlightNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FlightNumber));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile)) //T4 find type == nText 
+            {
+                entityPM.UnifreightLeadingFile = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UnifreightLeadingFile));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

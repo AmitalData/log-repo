@@ -215,7 +215,17 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 entityPM.EstimatedArrivalDate = date;
             }
 
-            if(!string.IsNullOrWhiteSpace(entityPM.HAWB))
+            if (entityPM.LandingDateDateOnly != null && entityPM.LandingDateDateOnly.HasValue)
+            {
+                DateTime date = (DateTime)entityPM.LandingDateDateOnly;
+                if (entityPM.LandingDateTimeOnly != null && entityPM.LandingDateTimeOnly.HasValue)
+                {
+                    date = DateTime.Parse(string.Format("{0} {1}:{2}", entityPM.LandingDateDateOnly.Value.ToString("dd-MM-yyyy"), entityPM.LandingDateTimeOnly.Value.Hour, entityPM.LandingDateTimeOnly.Value.Minute));
+                }
+                entityPM.LandingDate = date;
+            }
+
+            if (!string.IsNullOrWhiteSpace(entityPM.HAWB))
             {
                 entityPM.ShortHAWB = entityPM.HAWB;
                 int indexStart = entityPM.ShortHAWB.IndexOf("-");
