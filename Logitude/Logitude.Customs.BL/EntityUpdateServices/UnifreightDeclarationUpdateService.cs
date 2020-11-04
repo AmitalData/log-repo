@@ -1215,7 +1215,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.CUSTOMERID = null;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomerId))
             {
-                Card myCard = cardRepository.GetSingleCard(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
+                Card myCard = cardRepository.GetSingleCardCache(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
                 if (myCard != null)
                 {
                     _CCUFILEMPM.CUSTOMERID = myCard.Code;
