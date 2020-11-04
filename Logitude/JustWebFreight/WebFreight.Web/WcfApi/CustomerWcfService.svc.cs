@@ -57,6 +57,11 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
+                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    {
+                        entityPM.PaymentTermId = "--";
+                    }
+                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -79,6 +84,7 @@ namespace WebFreight.Web.WcfApi
                     ContactRepository contactRepository = new ContactRepository(objectContext);
                     RankRepository rankRepository = new RankRepository(objectContext);
                     Tenant tenantEntity = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     CustomerService service = new CustomerService(objectContext, entityPM);
 
@@ -240,6 +246,23 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+                   
+
 
 
 
