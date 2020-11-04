@@ -23,7 +23,12 @@ code review : by mohammad+ ihab
             let unifreightMessage = JSON.parse(MessageJSON);
             _JavascriptGateway.LastRequestFromAngular.UnifreightMessage = unifreightMessage;
             //RefreshResponseDiv(_JavascriptGateway.LastRequestFromAngular);
-            RaiseUnifaceRequestEvent(unifreightMessage);
+            this.setTimeout(() => {
+                //RaiseUnifaceRequestEvent(unifreightMessage);
+                var event = new CustomEvent('UnifaceRequestEvent', { 'detail': unifreightMessage, });
+                window.dispatchEvent(event);
+            }, 100)
+            
         }
 
         var _JavascriptGateway = new Object();
