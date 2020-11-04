@@ -219,7 +219,8 @@ namespace CustomsWorkerRole
 
                 
             }
-            // CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
+            CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
+ 
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 LogitudeSettings.ProductInfo = ProductInfo;
