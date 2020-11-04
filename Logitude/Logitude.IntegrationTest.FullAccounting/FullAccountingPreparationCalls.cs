@@ -343,7 +343,7 @@ namespace Logitude.IntegrationTest.FullAccounting
         }
         private static async Task GetCustomerTestGlCustomer12PMCS()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("CustomerViews"+ QueryFiltersPreparation.GetUrlParameters("12PMCS"));
+            HttpResponseMessage response = await RestClientService.GetAsync("CustomerViews"+ QueryFiltersPreparation.GetUrlParameters("122PMCS"));
             CustomerList customerTestGlCustomerList = RestClientService.ParseResponse<CustomerList>(response);
             if (customerTestGlCustomerList == null)
                 await CreateCustomerTestGlCustomer12PMCS();
@@ -375,9 +375,9 @@ namespace Logitude.IntegrationTest.FullAccounting
             customerPM.Tenant = IntegrationTestLoginParameters.Tenant;
             customerPM.EnglishName = "GE:Customer";
             customerPM.LocalName = "GE:Customer";
-            customerPM.SearchFields = "12PMCS,GE:Customer";
+            customerPM.SearchFields = "122PMCS,GE:Customer";
             customerPM.GLAccountId = FullAccountingVariables.GLAccountCustomer54l4CSPMId;
-            customerPM.Code = "12PMCS";
+            customerPM.Code = "122PMCS";
             customerPM.PartnerTypeId = "CS";
             customerPM.CityName = "TEST";
             customerPM.CountryId = FullAccountingVariables.CountryAXId;
@@ -389,7 +389,7 @@ namespace Logitude.IntegrationTest.FullAccounting
         }
         private static async Task GetVendorTestGlVendor1s5PMV2()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("VendorViews"+QueryFiltersPreparation.GetUrlParameters("1s5PMV2"));
+            HttpResponseMessage response = await RestClientService.GetAsync("VendorViews"+QueryFiltersPreparation.GetUrlParameters("1ss5PMV2"));
             VendorList VendorTestGlVendorList = RestClientService.ParseResponse<VendorList>(response);
             if (VendorTestGlVendorList == null)
                 await CreateVendorTestGlVend1s5PMV2();
@@ -421,8 +421,8 @@ namespace Logitude.IntegrationTest.FullAccounting
             vendorPM.EnglishName = "GE:Vendor";
             vendorPM.LocalName = "GE:Vendor";
             vendorPM.GLAccountId = FullAccountingVariables.GLAccountVendor458GLPMId;
-            vendorPM.SearchFields = "1s5PMV2,GE:Vendor";
-            vendorPM.Code = "1s5PMV2";
+            vendorPM.SearchFields = "1ss5PMV2,GE:Vendor";
+            vendorPM.Code = "1ss5PMV2";
             vendorPM.PartnerTypeId = "VD";
             vendorPM.CityName = "TEST";
             vendorPM.CountryId = FullAccountingVariables.CountryAXId;
@@ -812,7 +812,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             ARInvoicePM.InvoiceCurrencyExchangeRate = 1;
             ARInvoicePM.PaymentTermId = FullAccountingVariables.PaymentTermCashId;
             ARInvoicePM.CreateDate = DateTime.UtcNow;
-            ARInvoicePM.SearchFields = "12PMCS,AccountingCustomer2";
+            ARInvoicePM.SearchFields = "122PMCS,AccountingCustomer2";
             ARInvoicePM.IsGeneralInvoice = true;
             ARInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
             ARInvoicePM.ProfitCurrencyExchangeRate = 2;
@@ -900,7 +900,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             APInvoicePM.IsClosed = false;
             APInvoicePM.JournalNumber = "1230";
             APInvoicePM.CreateDate = DateTime.UtcNow;
-            APInvoicePM.SearchFields = "1205,test";
+            APInvoicePM.SearchFields = "12205,test";
             APInvoicePM.IsGeneralInvoice = true;
             APInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
             APInvoicePM.ProfitCurrencyExchangeRate = 2;
