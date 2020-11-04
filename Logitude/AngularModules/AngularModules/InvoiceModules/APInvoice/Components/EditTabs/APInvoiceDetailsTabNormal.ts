@@ -456,7 +456,9 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             var otherLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(d => d.VendorId != this.VendorId);
 
             defaultConnectedLines.forEach(line => {
-                this.ItemsSource.Insert(new APInvoiceLineItem(line, this, false));
+                var aPInvoiceLineItem = new APInvoiceLineItem(line, this, false);
+                aPInvoiceLineItem.Exists = true;
+                this.ItemsSource.Insert(aPInvoiceLineItem);
             });
 
             otherLines.forEach(line => {
@@ -1473,17 +1475,21 @@ export class APInvoiceLineItem extends BaseComponent {
 
     set Exists(newValue: boolean) {
         if (newValue == true) {
+            this.SetForiegnCurrencyAmountTheSameAsOpenAmount();
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
         }
-
         else {
             this.InvoiceCurrencyAmount = null;
             this.invoicePM.RemoveAPInvoiceLinePM(this.invoiceLinePM);
         }
-
         this.RefreshLine();
         this.setColors();
         this.fatherComponent.ComputeTotals();
+    }
+
+    private SetForiegnCurrencyAmountTheSameAsOpenAmount() {
+        this.invoiceLinePM.ForiegnCurrencyAmount = this.OpenAmount;
+        this.ComputeOtherAmounts();
     }
 
     private setColors() {
