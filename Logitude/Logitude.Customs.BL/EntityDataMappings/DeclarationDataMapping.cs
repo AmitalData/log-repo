@@ -131,7 +131,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                var declarations = declarationQuery.GetDeclarationAmendmentsByIdCache(entityPOCO.Tenant, entityPOCO.Id);
+                var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
 
                 var declaration = declarations.FirstOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
                 if (declaration != null)

@@ -42,4 +42,10 @@
     ReferencedTable="CourierMasters"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
+  <Index
+    Columns="DeclarationId" />
+
+  <Index
+    Columns="CourierMasterId" />
+
 </Table>
