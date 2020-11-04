@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .FlipImgHoriz {
         transform: rotate(180deg);
     }
@@ -50,20 +50,24 @@
                                     <div class="ScrollContent">
                                         <div class="FillParent" style="padding:7px;">
 
-                                            
+
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'General'">
                                                 <div LocationDirective Code="General"></div>
                                             </div>
 
-                                            
+
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'VehicleMoreDetailsTabComponent'">
                                                 <div LocationDirective Code="VehicleMoreDetailsTabComponent"></div>
                                             </div>
-                                            
+
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'VehiclesOwnersAndSafetyTabComponent'">
                                                 <div LocationDirective Code="VehiclesOwnersAndSafetyTabComponent"></div>
                                             </div>
-                                            
+
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'CustomsDocumentsComponent'">
+                                                <div LocationDirective Code="CustomsDocumentsComponent"></div>
+                                            </div>
+
 
 
                                         </div>
