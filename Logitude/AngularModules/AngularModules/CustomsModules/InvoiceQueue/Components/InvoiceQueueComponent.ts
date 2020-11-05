@@ -34,7 +34,8 @@ export class InvoiceQueueComponent
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
     public declaration: DeclarationPM;
-    ErrorMessages: boolean ;
+    CreateQInvoiceButtonDim: boolean;
+    ErrorMessages: boolean;
     WarningMessages: boolean;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
@@ -53,7 +54,7 @@ export class InvoiceQueueComponent
         //this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
-            if (this.declaration==null) {
+            if (this.declaration == null) {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show("declaration NOT FOUND");
             }
@@ -75,22 +76,26 @@ export class InvoiceQueueComponent
                 });
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
+                        if (x.InvoiceTypeCode != null && x.InvoiceTypeCode == "R") { // חשבונית קבלה- סוג R
+                            this.CreateQInvoiceButtonDim = true; // מקש הפקת חשבונית ב DIM
+                        }
                         x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                         this.InvoiceListList.Insert(x);
                     });
                 }
-              
+
                 if ((data.Result.Invoice as AllInvoices).Messages != null) {
                     (data.Result.Invoice as AllInvoices).Messages.forEach(x => {
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM אם יש שגאיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
                             this.ErrorMessages = true;
                         }
-                   });
+                    });
                 }
                 this.WMessagesList.Collection.forEach(x => {
                     this.EMessagesList.Insert(x);
@@ -101,6 +106,7 @@ export class InvoiceQueueComponent
 
 
     ResetVariables() {
+        this.CreateQInvoiceButtonDim = false;
         this.InvoiceLineList = new ObservableCollection([]);
         this.IntegratedInvoiceList = new ObservableCollection([]);
         this.StatusList = new ObservableCollection([]);
@@ -178,7 +184,7 @@ export class InvoiceQueueComponent
         }
     }
     ShowDisbursement() {
-     
+
         let myDeclaration: DeclarationPM = this.declaration;
         let myViewModelName = "InvoiceQueueComponent.ts-ShowDisbursement";
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -261,7 +267,7 @@ export class InvoiceQueueComponent
             alert("ShowPayments");
         }
     }
-   
+
     ShowCustomFileOPCFromDeclaration() {
 
         let myDeclaration: DeclarationPM = this.declaration;
