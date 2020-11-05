@@ -1,74 +1,107 @@
-import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { CargoTrackingSearchService } from '../../../Services/Others/CargoTrackingSearchService';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
-import { db } from '../../../app/mem.data';
-import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { Location } from '@angular/common';
+import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShipmentList';
 
 
 @Component({
-    selector: 'dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    selector: 'SearchComponent',
+    templateUrl: './SearchComponent.html',
+    styleUrls: ['./SearchComponent.css']
 })
-export class DashboardComponent implements AfterViewInit
+export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 {
 
     @ViewChild('input') input: ElementRef;
     isLoading: boolean = false;
+    showErrorMessage: boolean = false;
+    hasError: boolean = false;
     noResult: boolean = false;
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
+    ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-    _Tenant:number;
+    _Tenant: number;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
+        private location: Location,
         private searchService: CargoTrackingSearchService)
     {
-        // this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-       
-         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+        this.GetVariablesFromURI();
+        this.GetSearchTextFromURI();
+        this.listenToRouterEvents();
 
+
+        
+
+        this.InitForm();
+    }
+    ngOnInit()
+    {      
+        
+        if(this.SearchText){
+               if(SearchComponent.Last_Search_Shipments){
+                this.Shipments = SearchComponent.Last_Search_Shipments;
+               }
+               else{
+                 this.Search();
+               }
+           }
+        // if(localStorage.getItem('SearchKey') == this.SearchText){
+        //     if (localStorage.getItem('Shipments'))
+        //         this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
+        //     else{
+        //         if (this.SearchText)
+        //             this.Search();
+        //     }
+        // }
+        // else{
+        //     this.Search();
+        // }
     }
 
-    isNavOpened = false;
-    openNav(){
-        this.isNavOpened = !this.isNavOpened;
+    ngOnDestroy()
+    {
+        if (this.Shipments.length > 0) {
+            //localStorage.setItem('SearchKey', this.SearchText);
+            //localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
+            SearchComponent.Last_Search_Shipments = this.Shipments;
+        }
     }
+
+    private static Last_Search_Shipments:CargoTrackingShipmentList[]; 
 
     private GetSearchTextFromURI()
-    {   
+    {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
         this.SearchText = searchKey;
- 
+
     }
 
 
     private GetVariablesFromURI()
-    {   
-        let searchKey = this.route.snapshot.paramMap.get('searchKey');
-      
+    {
 
-        var tenant = this.route.snapshot.paramMap.get('Tenant');
-        if(tenant!=null && tenant!=""){
-           this._Tenant = Number(tenant);
-         }
-         else{
-             if(searchKey!=null && searchKey!=""){
-                this.router.navigate([1,'search',searchKey]);
-             }
-             else{
-                this.router.navigate([1,'search']);
-             }
-            
-         }
+
+        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
+        if (tenant != null && tenant != "") {
+            this._Tenant = Number(tenant);
+        }
+        else {
+            //  if(searchKey!=null && searchKey!=""){
+            //     this.router.navigate([1,'search',searchKey]);
+            //  }
+            //  else{
+            //     this.router.navigate([1,'search']);
+            //  }
+
+        }
     }
     private InitForm()
     {
@@ -78,8 +111,8 @@ export class DashboardComponent implements AfterViewInit
     }
 
     ngAfterViewInit()
-    { 
-     //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+    {
+        //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
     SubscribeInputTextChanges()
@@ -134,9 +167,9 @@ export class DashboardComponent implements AfterViewInit
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
-                if (url == "/"+this._Tenant+"/search/") {
+                if (url == "/" + this._Tenant + "/search/") {
                     this._SearchText = '';
-                    this.FilterItems();
+                    // this.FilterItems();
                 }
 
             }
@@ -165,69 +198,61 @@ export class DashboardComponent implements AfterViewInit
     }
     Search()
     {
-        if(this._Tenant){
-            this.router.navigate([this._Tenant,'search', this.SearchText]);
-            // this.FilterItems();
+        if (this._Tenant && this.SearchText) {
+            this.location.go(this._Tenant + '/search/' + this.SearchText);
+            // this.router.navigate([this._Tenant,'search', this.SearchText]);
             this.LoadShipments();
         }
-            
-    }
-    FilterItems()
-    {
-        this.noResult = false;
-        var searchText = this._SearchText.toLowerCase();
-        this.FilteredItems = [];
-        if (searchText) {
-            var items = db.Shipments;
-            // var items =  this.Items;
-            items.forEach((item) =>
-            {
 
-                Object.keys(item).forEach(k =>
-                {
-                    var itemProperty = item[k].toString().toLowerCase();
-                    if (itemProperty.includes(searchText)) {
-                        if (this.FilteredItems.indexOf(item) < 0)
-                            this.FilteredItems.push(item);
-                    }
-                });
-            });
-            this.noResult = this.FilteredItems.length == 0 && !!this.SearchText;
-            this.isLoading = false;
-        }
     }
-
+    
     ItemClicked(item)
     {
-        var SecurityKey = item.SecurityKey;
+        var selection = window.getSelection();
+        if (selection.toString().length === 0) {
+            var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
-
+            this.router.navigate([this._Tenant, 'search', 'shipment', SecurityKey]);
+        }
     }
     LoadShipments()
     {
 
+
+
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
+            this.showErrorMessage = false;
+            this.hasError = false;
             this.isLoading = true;
-            this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {
+            RootContext.StartBusyIndicatorLoading();
+            this.searchService.getShipments(searchText, this._Tenant).subscribe(
+            (result: any) =>
+            {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
+
                 console.log("[getShipments]", result);
                 this.Shipments = result;
                 this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-
+            },
+            errorObject=>
+            { 
+                RootContext.StopBusyIndicator();
+                this.isLoading = false;
+                this.hasError = true;
+                this.ServiceError = errorObject.error;
+                console.log("[ERROR FOUND]", errorObject);
+                
             });
-        }else{
+        } else {
             this.Shipments = [];
         }
 
     }
     references: string[];
     SplitReference(reference: string){
-      this.references =reference!= null?  reference.split(','): null;
-    
+        this.references = reference != null ? reference.split(',').slice(0, 6) : null;
     }
 
     GetModeIcon(mode: string)

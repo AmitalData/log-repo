@@ -1,18 +1,16 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 
 
 @Component({
-    selector: 'dashboard-shipments',
-    templateUrl: './dashboard-shipments.component.html',
-    styleUrls: ['./dashboard-shipments.component.min.css']
+    selector: 'ShipmentsList',
+    templateUrl: './ShipmentsListComponent.html',
+    styleUrls: ['./ShipmentsListComponent.min.css']
 })
-export class DashboardShipmentsComponent 
+export class ShipmentsListComponent 
 {
 
 
