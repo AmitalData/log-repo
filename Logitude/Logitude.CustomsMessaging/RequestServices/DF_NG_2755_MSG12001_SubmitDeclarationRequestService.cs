@@ -448,6 +448,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 var declarationQueryService = new DeclarationQueryService(this.dbContext);
                 DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
+                if (connectedDeclarationPM.IsCourierDeclaration) return;
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = declarationPaymentPM.Tenant,
