@@ -96,7 +96,7 @@
                                                                                 <input type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
                                                                             </td>
                                                                         </tr>
-                                                                        <tr  *ngIf="!IsShowAutomationCodeField" style="height:5px">
+                                                                        <tr *ngIf="!IsShowAutomationCodeField" style="height:5px">
                                                                             <td colspan="2"></td>
                                                                         </tr>
                                                                         <tr style="height:20px;">
@@ -252,20 +252,20 @@
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
                                                                                                             <!--<div class="RadioButton" style="width:100px;display:inline">
-                                                                                                    <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
-                                                                                                    <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
-                                                                                                        Immediately
-                                                                                                    </label>
-                                                                                                </div>-->
+                            <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
+                            <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
+                                Immediately
+                            </label>
+                        </div>-->
                                                                                                         </td>
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
                                                                                                             <!--<div class="Delayed" style="width:100px;display:inline">
-                                                                                                    <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
-                                                                                                    <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
-                                                                                                        Delayed
-                                                                                                    </label>
-                                                                                                </div>-->
+                            <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
+                            <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
+                                Delayed
+                            </label>
+                        </div>-->
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -304,7 +304,7 @@
                                                                                                                                         <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'97px'" class="CellStretched">
 
                                                                                                                                             <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'60px'">
-                                                                                                                                                <LogTextBox  [FocusOnMe]="'true'"  [IsFreeText]="true" [InputType]="'integer'" [ObjectFieldName]="'DelayTime'" [NoObjectField]="true" [Text]="DelayTime" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                                                                <LogTextBox [FocusOnMe]="'true'" [IsFreeText]="true" [InputType]="'integer'" [ObjectFieldName]="'DelayTime'" [NoObjectField]="true" [Text]="DelayTime" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                                                             </div>
 
                                                                                                                                             <!--  <input [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'75px':'100px'" type="number" (chang)="ChangeDelayTime()" [(ngModel)]="DelayTime" style="height:22px;border-radius:2px;border:1px solid #a8a8a8;color:gray;opacity:1;font-size:12px">-->
@@ -314,18 +314,18 @@
                                                                                                                                         </td>
                                                                                                                                         <!--<td class="CellStretched" style="width:100px;">
 
-                                                                                                                                <div style="height:22px;width:100px">
-                                                                                                                                    <LogLov style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
-                                                                                                                                            [ObjectTableName]="'TimeUnit'"
-                                                                                                                                            [DataContext]="DataContext"
-                                                                                                                                            [NoValidation]="true"
-                                                                                                                                            [LookUpTableName]="'TimeUnit'"
-                                                                                                                                            [SelectedValue]="DelaytimeIndicator"
-                                                                                                                                            [IsFreeText]="true"
-                                                                                                                                            [HideColumns]="true">
-                                                                                                                                    </LogLov>
-                                                                                                                                </div>
-                                                                                                                            </td>-->
+                                                        <div style="height:22px;width:100px">
+                                                            <LogLov style="display:inline;" [ObjectFieldName]="'DelaytimeIndicator'"
+                                                                    [ObjectTableName]="'TimeUnit'"
+                                                                    [DataContext]="DataContext"
+                                                                    [NoValidation]="true"
+                                                                    [LookUpTableName]="'TimeUnit'"
+                                                                    [SelectedValue]="DelaytimeIndicator"
+                                                                    [IsFreeText]="true"
+                                                                    [HideColumns]="true">
+                                                            </LogLov>
+                                                        </div>
+                                                    </td>-->
                                                                                                                                         <td style="width:70px;">
                                                                                                                                             <div style="height:22px;width:70px">
                                                                                                                                                 <ComboBox style="width:70px;" (SelectedItemChanged)="DelaytimeIndicator = $event" [SelectedItem]="DelaytimeIndicator" [ItemsSource]="TimeUnits" [Binding]="'Name'"></ComboBox>
@@ -403,8 +403,8 @@
                                                                                                 <div style="height:3px"></div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:1px">
-                                                                                     
+                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:25px">
+
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
                                                                                             </td>
@@ -468,12 +468,12 @@
                                                                                             </td>
                                                                                         </tr>
 
-                                                                                             <tr>
-                                                                                <td colspan="4">
-                                                                                    <div class="LocationDirective" LocationDirective Code="SEIR"> </div>
-                                                                                </td>
-                                                                            </tr>
 
+                                                                                        <tr style="height:1px">
+        <td colspan="4">
+            <div class="LocationDirective" LocationDirective Code="EMAIL"> </div>
+        </td>
+    </tr>
 
 
                                                                                         <tr>
@@ -486,8 +486,6 @@
                                                                                 </td>
 
                                                                             </tr>
-
-                                                                       
 
                                                                             <!--Recipients-->
                                                                             <tr style="width:100%" *ngIf="ResultCodeSelected.Code =='EMAIL'">
@@ -918,8 +916,8 @@
                                                                                                                         <td style="width:90px;">
                                                                                                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'FollowDateUniteCode'" [NoObjectField]="true" [Text]="FollowDateUniteCode" [ObjectTableName]="'Automation'" [DataContext]="DataContext"></LogTextBox>
                                                                                                                             <!--<div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
-                                                                                                                    <div  style="vertical-align:central;margin-top:2px;font-size:12px;color:#45494A">Days</div>
-                                                                                                                </div>-->
+                                                                                                                                <div  style="vertical-align:central;margin-top:2px;font-size:12px;color:#45494A">Days</div>
+                                                                                                                            </div>-->
 
                                                                                                                         </td>
                                                                                                                         <td>
@@ -1386,4 +1384,4 @@
             </table>
         </td>
     </tr>
-</table> 
+</table>
