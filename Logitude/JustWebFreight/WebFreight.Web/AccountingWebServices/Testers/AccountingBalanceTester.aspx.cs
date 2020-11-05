@@ -1874,7 +1874,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 string fileSystem1000 = _TextBoxParam.Text;
 
                 var mySystem1000FlatFileAnalyser = new System1000FlatFileAnalyser();
-                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000);
+                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000,null);
 
                 _LabelResult.Text = JsonConvert.SerializeObject(mySystem1000FlatFileAnalyser.MyResultLoadFlatFile); ;
 
