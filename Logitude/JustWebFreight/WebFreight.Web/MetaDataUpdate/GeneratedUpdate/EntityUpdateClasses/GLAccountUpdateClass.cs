@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "5c44848c33edb6e25c440da9c6c565b8";
+		public const string HashString = "f7c23e7b4a59cb90998182397d00ec7f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9009,6 +9009,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "GLRC",
                 EnglishName =  "Reporting as Another Document Changed",
                 LocalName =  " דיווח תשומות - מסמך אחר - עודכן",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "IRCH",
+                EnglishName =  "Interest Credit Changed",
+                LocalName =  "Interest Credit Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
