@@ -819,7 +819,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'CancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -827,7 +827,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'SaveButton' | IdGeneratorPipe}}" class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -844,7 +844,7 @@
                                         <div style="width: 5px;height:20px;"></div>
                                     </td>
                                     <td>
-                                        <button class="RedButton" (click)="EditButtonClicked()">Edit</button>
+                                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton" (click)="EditButtonClicked()">Edit</button>
                                     </td>
                                 </tr>
                             </table>

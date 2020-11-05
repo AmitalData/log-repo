@@ -81,6 +81,9 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Main Carriage ATA')
         cy.get('#AddQBRootColumnMainCarriageATA').click({ force: true })
         cy.get('#DWQueryBuilderSearchFields_0_0').clear();
+        cy.get('#DWQueryBuilderSearchFields_0_0').type('Source Tenant')
+        cy.get('#AddQBRootColumnSourceTenant').click({ force: true })
+        cy.get('#DWQueryBuilderSearchFields_0_0').clear();
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Create Date')
         cy.get('#AddQBRootFilterCreateDate').click({ force: true })
         cy.get('#ComboBox_0_6').click({ force: true })
@@ -93,21 +96,26 @@ import { LoginComp } from "../../../login/Login.po";
 
         cy.get('.LogLovDIMTable').should('be.visible')
         cy.get('.LogLovDIMTable').click()
+        cy.server();
+        cy.route('**/dwobjectfields/**').as('LoadDWObjectFieldsCompleted');
+        cy.wait('@LoadDWObjectFieldsCompleted'); 
+        
 
-        cy.get('#LogGrid_0_2LogGridRows_0_2').should('be.visible')
-        cy.get('#SearchFieldsId_0_2').click({ force: true })
-        cy.get('#SearchFieldsId_0_2').type('Export')
-        cy.get('#LogGrid_0_22rowtemplate0').click({ force: true })
+        cy.get('#SearchFieldsId_0_1').click({ force: true })
+        cy.get('#SearchFieldsId_0_1').type('Export')
+       
+        cy.server();
+        cy.route('**/dwquerybuilder/**').as('LoaddwquerybuilderCompleted');
+        cy.wait('@LoaddwquerybuilderCompleted'); 
+        
+        cy.get('.Link').click()
+        cy.get('#OKButton').click()
         cy.get('#LoadPreviewData').click()
         
-        
 
-        
-        
-        
-
-
-        
+        cy.server();
+        cy.route('**/PostGetDWQueryData/**').as('LoaddwquerybuilderCompleted');
+        cy.wait('@LoaddwquerybuilderCompleted'); 
         
       
     });
