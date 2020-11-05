@@ -178,7 +178,7 @@ export class PublicShipmentDetailsComponent implements OnInit
                 this.Shipment = result.ShipmentList;
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
-                    this.DileveredIconColor = this.mainColor;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }
                 else {
                     this.Delivered = false;
