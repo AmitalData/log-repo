@@ -67,7 +67,7 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Total Volume (CBM)')
         cy.get('#AddQBRootColumnTotalVolumeCBM').click({ force: true })
         cy.get('#DWQueryBuilderSearchFields_0_0').clear();
-        cy.get('#DWQueryBuilderSearchFields_0_0').type('Accounted Payables(Local).')
+        cy.get('#DWQueryBuilderSearchFields_0_0').type('accounted payables ( local )')
         cy.get('#AddQBRootColumnAccountedPayablesLocal').click({ force: true })
         cy.get('#DWQueryBuilderSearchFields_0_0').clear();
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Accounted Receivables ( Local )')
