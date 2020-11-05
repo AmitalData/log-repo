@@ -18,6 +18,7 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#null_Search').should('be.visible')
         cy.get('#BI').click()
         cy.get('#null_Search_1').should('be.visible')
+        cy.get('#BIReportFolder').should('be.visible')
         cy.get('#null_Search_1').click()
         cy.get('#null_Search_1').type('E2E-Automation')
         cy.get('#BIReportFolder').click()
