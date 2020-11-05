@@ -13,7 +13,7 @@
   },
   "env": {
 
-    "CustomsAPIURL":"http://192.116.221.103/customs56/",
+    "CustomsAPIURL":"http://192.116.221.103:593/customs593/",
 	"CustomsEmail": "mohammad@fnarsoft.com",
     "CustomsPassword": "1",
 	"_comment_CustomsAPIURL": "https://test.logitudeworld.com/customs/api/",

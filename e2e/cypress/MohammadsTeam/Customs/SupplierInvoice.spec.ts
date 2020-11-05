@@ -1,22 +1,29 @@
-
-import  { NewImportDeclaration } from './NewImportDeclaration.spec';
+ 
 import { LoginComp } from "../../login/Login.po";
 import { LogHelper } from '../../Helpers/LogHelper';
+import { APILoginHelper } from '../../login/APIHelperMethode/APILoginHelper.po';
+import { APICustomerHelper } from './API/APIHelperMethode/APICustomerHelper';
+import { APIImportDeclarationHelper } from './API/APIHelperMethode/APIImportDeclarationHelper.spec';
+import {NewAPIImportDeclaration} from './API/NewAPIImportDeclaration.spec';
 export class SupplierInvoice {
-  //    private importer: NewImportDeclaration = new NewImportDeclaration();  
-  private login: LoginComp = new LoginComp();
-
+    public login: LoginComp = new LoginComp();
 }
 describe('New  SupplierInvoice', () => {
+
+    
+    it('New API Import Declarations ', () => { 
+      var newAPIImportDeclaration = new NewAPIImportDeclaration();
+    })
+
   it('New  SupplierInvoice Created Successfully', function () {
 
-
+   
    cy.window().then(win=> {
       const CustomFileNo= win.sessionStorage.getItem('CustomFileNo')
        cy.get('li[id=GeneralMHDeclarations]').click();
    //    LogHelper.QuerySearchAndSelectFirst('91340214');
 cy.get('input[id=SearchFieldsId_0_1]').should('be.visible').then( a=> {
-    cy.get('input[id=SearchFieldsId_0_1]').type('91340218',{ force: true });
+    cy.get('input[id=SearchFieldsId_0_1]').type(CustomFileNo,{ force: true });
     cy.get('div[id=ListDataLoaded]').then( a=> {
           cy.get('div[id=LogGrid_0_1row0]').click({ force: true });
       })});

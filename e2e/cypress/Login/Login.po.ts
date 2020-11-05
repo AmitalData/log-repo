@@ -12,9 +12,9 @@ it('Login Successfully', () => {
     //cy.visit('http://localhost:4200/')
 
     //cy.visit('https://test.logitudeworld.com/test')
-    var Email = Cypress.env("TestEmail");
-    var Password = Cypress.env("TestPassword");
-    var URL = Cypress.env("TestURL");
+    var Email = Cypress.env("CustomsEmail");
+    var Password = Cypress.env("CustomsPassword");
+    var URL = Cypress.env("CustomsAPIURL");
     var Env = Cypress.env("Env");
 
     if (Env == 'staging') {

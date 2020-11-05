@@ -2,60 +2,22 @@
 
 
 import {AppTool} from '../MohammadsTeam/Helper/AppTool'
+import {APILoginHelper} from './APIHelperMethode/APILoginHelper.po'
 export class APILoginComp {
  
 
 }
  
 it('APILogin Successfully', () => {
- 
-  var Email = Cypress.env("CustomsEmail");
-  var Password = Cypress.env("CustomsPassword");
-  var APIURL = Cypress.env("CustomsAPIURL")+"/api/";;
-
-
-  cy.window().then(win=> {
-    const Token = win.sessionStorage.getItem('Token')
-    cy.log("Old Token: "+Token+"\n");
-    if(AppTool.IsNullOrEmpty(Token)){
-      cy.request({
-        method: 'POST',
-        url: APIURL+'Authentication',  
-       headers: {
-          'Content-Type': 'application/json',
-         },
-        body: {
-          Email: Email,
-          Password: Password,
-          ByToken : false,
-          CardId : null,
-          CardType : null,
-          IsMobileLogin : false,
-          IsUser : true,
-          GetToken : true,
-          IsAngularLogin : true,
-          ClientType : "Web"
-        },
-       
+  let waited = false
+  var aPILoginHelper = new APILoginHelper();
+      aPILoginHelper.APILoginSubmit().then((str) => {});
+      cy.wrap(null).then(() => {
+        return aPILoginHelper.APILoginSubmit().then((str) => {
+          expect(str).to.eq('foo')
+          expect(waited).to.be.true
+        })
       })
-      .its('body')
-      .then(identity => {
-       cy.window().then(win => { 
-       win.sessionStorage.setItem('Token', identity.Token);
-       win.sessionStorage.setItem('LoginUserId', identity.Id);
-       win.sessionStorage.setItem('LoginUserName', identity.UserName);
-       assert.notEqual(identity.Token, null, 'Authonticatin error on  Email , Password or this user have more than one tenant')
-       cy.log("New Token: "+identity.Token+"\n");
-       cy.log("LoginUserId: "+identity.LoginUserId+"\n");
-       cy.log("LoginUserName: "+identity.LoginUserName+"\n");
-       });
-      });
-    }
-  });
-
+});
  
-
-})
-
-
 
