@@ -148,6 +148,10 @@
             font-size: 18px;
             line-height: 24px;
         }
+
+        .error{
+            margin-top: 47px;
+        }
         
     }
 
