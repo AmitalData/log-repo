@@ -1,25 +1,18 @@
-import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute, Event, RoutesRecognized, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
-import { FormBuilder } from '@angular/forms';
-import { db } from '../../../app/mem.data';
-import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
-import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
-import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { Component, Inject } from '@angular/core';
+import { Router, Event, RoutesRecognized, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { CargoTrackingBrandingDataExtendedService } from '../../../Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { Location } from '@angular/common';
-import { ShipmentComponent } from '../Shipment/shipment.component';
-import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
+import { AppHelper } from '../../../Utilities/AppHelper';
+import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
-    selector: 'PublicGate',
-    templateUrl: './PublicGate.component.html',
-    styleUrls: ['./PublicGate.component.css']
+    selector: 'HomeComponent',
+    templateUrl: './HomeComponent.html',
+    styleUrls: ['./HomeComponent.css']
 })
-export class PublicGateComponent
+export class HomeComponent
 {
 
     IsBrandingDataLoaded: boolean = false;
@@ -66,7 +59,7 @@ export class PublicGateComponent
     {
 
         this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
-        this.router.events.subscribe((event: any) =>
+        this.router.events.subscribe(() =>
         {
             if (this.tenant == null || Number.isNaN(this.tenant)) {
                 // var params:any[] = event.snapshot.params;

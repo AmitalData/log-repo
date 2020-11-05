@@ -1,13 +1,13 @@
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
-import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
-import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
-import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/ShipmentDetailsComponent';
-import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
-import { SearchComponent } from 'src/CargoTracking/Components/Search/search.component';
-import { ShipmentComponent } from 'src/CargoTracking/Components/Shipment/shipment.component';
+import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
+import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
+import { SearchComponent } from 'src/CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
+import { FavoritesPageComponent } from 'src/CargoTracking/Components/UserDashboard/FavoritesPage/FavoritesPageComponent';
+import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
+import { ShipmentsListComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
+import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboard/UserDashboardComponent';
 
 const routes: Routes = [
     
@@ -15,22 +15,22 @@ const routes: Routes = [
       
     { 
         path: ':Tenant/dashboard', 
-        component: DashboardComponent,
+        component: UserDashboardComponent,
         children: [
             { path: "", redirectTo: "shipments", pathMatch: "full" }, 
-            { path: "shipments", component: DashboardShipmentsComponent }, 
+            { path: "shipments", component: ShipmentsListComponent }, 
             { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
-            { path: "favorites", component: FavoritesComponent }, 
+            { path: "favorites", component: FavoritesPageComponent }, 
            
         ]
     },
     {
         path: ':Tenant/search',
-        component: PublicGateComponent,
-        children: [
+        component: HomeComponent,
+        children: [ 
             // { path: "", redirectTo: "/:Tenant/search/", pathMatch: "full" },
             { path: "", component: SearchComponent }, 
-            { path: "shipment/:SecurityKey", component: ShipmentComponent },
+            { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
             { path: "shipment", redirectTo: ':Tenant/search' },
             { path: ":searchKey", component: SearchComponent },
             {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
@@ -38,7 +38,7 @@ const routes: Routes = [
     },
     
  
-    {path: '', component: PublicGateComponent, pathMatch: 'full' },
+    {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
     {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },

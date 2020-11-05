@@ -1,7 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
@@ -35,7 +33,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private formBuilder: FormBuilder,
         private searchService: CargoTrackingSearchService)
     {
         this.GetVariablesFromURI();
@@ -48,7 +45,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     }
     @HostListener('window:resize', ['$event'])
-    onResize(event) {
+    onResize() {
         //event.target.innerWidth;
         this.InitSlider();
     }
