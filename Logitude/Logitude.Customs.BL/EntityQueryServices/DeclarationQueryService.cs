@@ -1272,7 +1272,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
-
+                            amendment.AmendmentFieldStatus = field.AmendmentFieldStatus;
                             generalData.AmendmentViews.Add(amendment);
 
                         }

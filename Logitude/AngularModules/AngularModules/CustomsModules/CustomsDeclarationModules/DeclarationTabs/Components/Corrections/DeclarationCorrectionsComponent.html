@@ -656,6 +656,21 @@
 
                                                     </log-column>
 
+
+                                                    <!-- NewValue -->
+                                                    <log-column [header]="'Customs.General.O.AmendmentFieldStatus' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'AmendmentFieldStatus'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentFieldStatus}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
                                                 </logitude-edit-grid>
                                             </td>
                                         </tr>
