@@ -259,7 +259,7 @@
                                             </td>
 
                                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                                <button [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
+                                                <button id="{{'RunBIReport' | IdGeneratorPipe}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
                                             </td>
 
                                             <td style="width: 5px;">

@@ -81,8 +81,8 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Main Carriage ATA')
         cy.get('#AddQBRootColumnMainCarriageATA').click({ force: true })
         cy.get('#DWQueryBuilderSearchFields_0_0').clear();
-        cy.get('#DWQueryBuilderSearchFields_0_0').type('Source Tenant')
-        cy.get('#AddQBRootColumnSourceTenant').click({ force: true })
+        cy.get('#DWQueryBuilderSearchFields_0_0').type('Tenant Number')
+        cy.get('#AddQBColumnTenantNumber').click({ force: true })
         cy.get('#DWQueryBuilderSearchFields_0_0').clear();
         cy.get('#DWQueryBuilderSearchFields_0_0').type('Create Date')
         cy.get('#AddQBRootFilterCreateDate').click({ force: true })
@@ -111,13 +111,11 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('.Link').click()
         cy.get('#OKButton').click()
         cy.get('#LoadPreviewData').click()
+        cy.get('#SaveButton').click()
+        cy.get('#RunBIReport').click()
         
 
-        cy.server();
-        cy.route('**/PostGetDWQueryData/**').as('LoaddwquerybuilderCompleted');
-        cy.wait('@LoaddwquerybuilderCompleted'); 
         
-      
     });
 
     it('RunBIReport', function () {
