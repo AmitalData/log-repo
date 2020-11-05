@@ -270,6 +270,8 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 //Add New Fields Error
                 var myFieldError = new field();
                 myFieldError.Code = amendmentItem.ChangeReasonCode.Value;
+                myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+
                 myFieldError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
                 {
