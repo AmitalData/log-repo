@@ -113,7 +113,7 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#OKButton').click()
         cy.get('#LoadPreviewData').click()
         cy.get('#SaveButton').click()
-        cy.get('#RunBIReport').click()
+        
         
 
         
@@ -121,7 +121,8 @@ import { LoginComp } from "../../../login/Login.po";
 
     it('RunBIReport', function () {
 
-
+        cy.get('#RunBIReport').click()
+        cy.get('#myGrid').should('be.visible')
     });
 
     it('EditBIReport', function () {
