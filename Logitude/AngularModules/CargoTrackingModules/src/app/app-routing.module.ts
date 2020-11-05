@@ -31,19 +31,18 @@ const routes: Routes = [
         children: [
             // { path: "", redirectTo: "/:Tenant/search/", pathMatch: "full" },
             { path: "", component: SearchComponent }, 
+            { path: "shipment", component: ShipmentComponent },
             { path: "shipment/:SecurityKey", component: ShipmentComponent },
-            { path: "shipment", redirectTo: ':Tenant/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
+            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
         ]
     },
     
  
     {path: 'login', component: LoginComponent },
-    {path: '', component: LoginComponent },
-    // {path: '', component: PublicGateComponent, pathMatch: 'full' },
+    {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    {path: '**', component: LoginComponent },
+    {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  

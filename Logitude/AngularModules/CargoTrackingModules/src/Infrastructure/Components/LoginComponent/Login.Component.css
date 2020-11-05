@@ -6,7 +6,7 @@
 
 body, html {
     height: 100%;
-    font-family: sans-serif;
+    font-family: 'Open Sans';
 }
 
 /*---[ Form ]---*/
@@ -70,7 +70,7 @@ body, html {
 }
 
 .input {
-    font-family: serif;
+    font-family: 'Open Sans';
     font-size: 15px;
     color: #555555;
     line-height: 1.2;
@@ -126,7 +126,7 @@ body, html {
 }
 
 .login-form-btn {
-    font-family: Georgia;
+    font-family: 'Open Sans';
     font-size: 15px;
     color: #fff;
     line-height: 1.2;
@@ -162,7 +162,7 @@ input {
 }
 
 a {
-    font-family: serif;
+    font-family: 'Open Sans';
     font-size: 14px;
     line-height: 1.7;
     color: #6a7dfe;
@@ -180,7 +180,7 @@ a {
 
 
 p {
-    font-family: serif;
+    font-family: 'Open Sans';
     font-size: 14px;
     line-height: 1.7;
     color: #666666;
@@ -204,7 +204,7 @@ button {
 }
 
 .txt2 {
-    font-family: serif;
+    font-family: 'Open Sans';
     font-size: 13px;
     color: #4B5DFA;
     line-height: 1.5;
@@ -230,6 +230,7 @@ button {
 @media screen and (max-width: 480px) {
     .container-login {
         min-height: initial;
+        background: #fff;
     }
     .wrap-login {
         width: initial;

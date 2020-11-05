@@ -19,6 +19,7 @@ import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/Pan
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
+import { LoginService } from 'src/Infrastructure/Services/Extended/LoginService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -55,6 +56,7 @@ export function getBaseUrl() {
     providers: [
         CargoTrackingSearchService,
         CargoTrackingBrandingDataExtendedService,
+        LoginService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]
