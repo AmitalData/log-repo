@@ -68,7 +68,7 @@ namespace CommunicationWorkerRole.Services
                 }
                 else if(reportTask.ResultType == "FTP")
                 {
-                    SendPdfReportToFTP(reportTask, schedulerDetails, reportFilter);
+                    SendReportToFTP(reportTask, schedulerDetails, reportFilter);
                 }
 
 
@@ -84,7 +84,7 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private void SendPdfReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        private void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
@@ -127,6 +127,7 @@ namespace CommunicationWorkerRole.Services
                 StiExcel2007ExportSettings stiExcelSettings = new StiExcel2007ExportSettings();
                 bool useOnePageHeaderAndFooter = reportTask.Format == "EXCL" || reportTask.AdvancedFormat == "OP";
                 bool exportDataOnly =  reportTask.AdvancedFormat == "DO";
+                stiExcelSettings.ExportObjectFormatting = false;
                 stiExcelSettings.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
                 stiExcelSettings.ExportDataOnly = exportDataOnly;
                 StiExcel2007ExportService stiExcelService = new StiExcel2007ExportService();
