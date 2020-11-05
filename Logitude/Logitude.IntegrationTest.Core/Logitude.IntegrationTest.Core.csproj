@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\IntegrationService.cs" />
     <Compile Include="CorePreparationCalls.cs" />
     <Compile Include="CorePreparationVariables.cs" />
     <Compile Include="IntegrationTestException.cs" />
