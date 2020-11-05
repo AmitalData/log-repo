@@ -396,14 +396,18 @@ namespace Logitude.XSD.CW_API.ABM
             if (EORIRefrence)
             {
                 Customer customer = iCustomerRepository.GetSingleCustomer(this.Shipment.CustomerId, Tenant, false);
-                CWXSD.Reference iRefrenceBTW = new CWXSD.Reference()
+                if(customer != null)
                 {
-                    RefCode = "EORI",
-                    RefText = customer.Field1,
-                };
+                    CWXSD.Reference iRefrenceBTW = new CWXSD.Reference()
+                    {
+                        RefCode = "EORI",
+                        RefText = customer.Field1,
+                    };
 
-                list.Add(iRefrenceBTW);
+                    list.Add(iRefrenceBTW);
+                }
             }
+              
         
             if (!string.IsNullOrEmpty(iReference1) || !string.IsNullOrEmpty(iReference2))
             {
