@@ -1,21 +1,17 @@
-import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
-import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
+import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingSearchService } from '../../../Services/Others/CargoTrackingSearchService';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, NavigationStart, RoutesRecognized, Event } from '@angular/router';
 import { Location } from '@angular/common';
-import { db } from '../../../app/mem.data';
-import { IfStmt } from '@angular/compiler';
-import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
-import { filter } from 'rxjs/operators';
+import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 
-
 @Component({
-    selector: 'shipment',
-    styleUrls: ['./shipment.component.css'],
-    templateUrl: './shipment.component.html'
+    selector: 'PublicShipmentDetailsComponent',
+    styleUrls: ['./PublicShipmentDetailsComponent.css'],
+    templateUrl: './PublicShipmentDetailsComponent.html'
 })
-export class ShipmentComponent implements OnInit
+export class PublicShipmentDetailsComponent implements OnInit
 {
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentList = null;
@@ -53,7 +49,6 @@ export class ShipmentComponent implements OnInit
             }
 
             if (event instanceof NavigationStart) {
-                var url = window.location.pathname;
             }
 
             if (event instanceof NavigationEnd) {
@@ -63,7 +58,7 @@ export class ShipmentComponent implements OnInit
         });
     }
     @HostListener('window:resize', ['$event'])
-    onResize(event) {
+    onResize() {
       this.setViews();
     }
     ngOnInit(): void

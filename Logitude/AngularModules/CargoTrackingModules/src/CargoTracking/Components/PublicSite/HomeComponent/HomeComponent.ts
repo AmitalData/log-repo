@@ -1,25 +1,18 @@
-import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute, Event, RoutesRecognized, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
-import { FormBuilder } from '@angular/forms';
-import { db } from '../../../app/mem.data';
-import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
-import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
-import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { Component, Inject } from '@angular/core';
+import { Router, Event, RoutesRecognized, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { CargoTrackingBrandingDataExtendedService } from '../../../Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { Location } from '@angular/common';
-import { ShipmentComponent } from '../Shipment/shipment.component';
-import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
+import { AppHelper } from '../../../Utilities/AppHelper';
+import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
-    selector: 'PublicGate',
-    templateUrl: './PublicGate.component.html',
-    styleUrls: ['./PublicGate.component.css']
+    selector: 'HomeComponent',
+    templateUrl: './HomeComponent.html',
+    styleUrls: ['./HomeComponent.css']
 })
-export class PublicGateComponent
+export class HomeComponent
 {
 
     IsBrandingDataLoaded: boolean = false;
@@ -30,16 +23,14 @@ export class PublicGateComponent
     companyName: string = "Unifreight Cloud Services";
     tenant: number;
     BackGroundImg:string;
-
- 
     MapImgSRC:string ="";
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string, private router: Router,private location: Location)
- 
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router, 
+        private location: Location)
     {
 
         this.GetDataFromURL(baseUrl);
+        
     }
-
 
 
     private getcargoTrackingData()
@@ -60,23 +51,15 @@ export class PublicGateComponent
 
             }
             this.IsBrandingDataLoaded = true;
-
-
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
-
-
             this.listenToRouterEvents();
         });
     }
-
     private GetDataFromURL(baseUrl: string)
-
     {
 
-
         this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
-
-        this.router.events.subscribe((event: any) =>
+        this.router.events.subscribe(() =>
         {
             if (this.tenant == null || Number.isNaN(this.tenant)) {
                 // var params:any[] = event.snapshot.params;
