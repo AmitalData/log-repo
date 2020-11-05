@@ -36,6 +36,7 @@ namespace Logitude.XSD.CW_API.ABM
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrencyCode { get; set; }
         public string TransportConveyance { get; set; }
+        public string TransportTPMode { get; set; }
 
         public string MainCarriageFromPortCountryCode { get; set; }
         public string FinalDestinationPortCountryCode { get; set; }
@@ -75,6 +76,7 @@ namespace Logitude.XSD.CW_API.ABM
         private ICommonDataContext iCommonContext;
         private AddressRepository iAddressRepository;
         private CountryRepository iCountryRepository;
+        private CustomerRepository iCustomerRepository;
         public ABMDataContext(string shipmentId, int tenant, ICommonDataContext commonContext)
         {
             this.Tenant = tenant;
@@ -83,7 +85,7 @@ namespace Logitude.XSD.CW_API.ABM
             this.iAddressRepository = new AddressRepository(commonContext);
             this.iCountryRepository = new CountryRepository(commonContext);
             this.computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
-
+            this.iCustomerRepository = new CustomerRepository(Tenant);
             this.GetCredentialsData();
             this.GetShipmentObject();
 
@@ -154,6 +156,30 @@ namespace Logitude.XSD.CW_API.ABM
             }
 
             this.BuildGeneralData_TransportConveyance();
+            this.BuildGeneralData_TransportTPMode();
+        }
+        private void BuildGeneralData_TransportTPMode()
+        {
+            switch (this.Shipment.TransportModeId)
+            {
+                case "A":
+                    {
+                        this.TransportTPMode = "4";
+                        break;
+                    }
+
+                case "O":
+                    {
+                        this.TransportTPMode = "1";
+                        break;
+                    }
+
+                case "I":
+                    {
+                        this.TransportTPMode = "";
+                        break;
+                    }
+            }
         }
         private void BuildGeneralData_TransportConveyance()
         {
@@ -161,7 +187,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 case "A":
                     {
-                        this.TransportConveyance = this.Shipment.MainCarriageCarrierNumber;
+                        this.TransportConveyance = this.Shipment.MainCarriageCarrierPrefix + this.Shipment.MainCarriageCarrierNumber;
                         break;
                     }
 
@@ -173,7 +199,7 @@ namespace Logitude.XSD.CW_API.ABM
                         {
                             if (string.IsNullOrEmpty(this.TransportConveyance))
                             {
-                                this.TransportConveyance= this.Shipment.MainCarriageCarrierNumber;
+                                this.TransportConveyance = this.Shipment.MainCarriageCarrierNumber;
                             }
 
                             else
@@ -317,6 +343,7 @@ namespace Logitude.XSD.CW_API.ABM
                     {
                         iParty.Reference = partyReference.ToArray<CWXSD.Reference>();
                     }
+                    
                 }
             }
 
@@ -328,6 +355,8 @@ namespace Logitude.XSD.CW_API.ABM
 
             string iReference1 = null;
             string iReference2 = null;
+            string BTWRefrence = null;
+            bool EORIRefrence = false ;
 
             switch (partyType)
             {
@@ -342,6 +371,8 @@ namespace Logitude.XSD.CW_API.ABM
                     {
                         iReference1 = this.Shipment.ConsigneeReference1;
                         iReference2 = this.Shipment.ConsigneeReference2;
+                        BTWRefrence = this.Shipment.ConsigneeVatNumber;
+                        EORIRefrence = true;
                         break;
                     }
 
@@ -352,6 +383,28 @@ namespace Logitude.XSD.CW_API.ABM
                     }
             }
 
+            if (!string.IsNullOrEmpty(BTWRefrence))
+            {
+                CWXSD.Reference iRefrenceEORI = new CWXSD.Reference()
+                {
+                    RefCode = "BTW",
+                    RefText = BTWRefrence,
+                };
+                list.Add(iRefrenceEORI);
+            }
+
+            if (EORIRefrence)
+            {
+                Customer customer = iCustomerRepository.GetSingleCustomer(this.Shipment.CustomerId, Tenant, false);
+                CWXSD.Reference iRefrenceBTW = new CWXSD.Reference()
+                {
+                    RefCode = "EORI",
+                    RefText = customer.Field1,
+                };
+
+                list.Add(iRefrenceBTW);
+            }
+        
             if (!string.IsNullOrEmpty(iReference1) || !string.IsNullOrEmpty(iReference2))
             {
                 if (!string.IsNullOrEmpty(iReference1))
