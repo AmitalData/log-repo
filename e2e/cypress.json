@@ -35,8 +35,10 @@
     "FACloudPassword": "Sg0592463934!",
     "ProdStagingTIURL":"https://staging.logitudeworld.com/",
     "ProdStagingTIEmail":"protractor2@test.com",
-    "ProdStagingTIPassword":"!P123p123"
-
+    "ProdStagingTIPassword":"!P123p123",
+    "TestStagingURLTIQ4": "https://test.logitudeworld.com/staging",
+    "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
+    "TestStagingPasswordTIQ4": "!A123a456",
 
     
 
