@@ -19,6 +19,8 @@ import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/Pan
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -50,7 +52,8 @@ export function getBaseUrl() {
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        FormsModule, HttpClientModule
+        ScrollingModule,
+        FormsModule, HttpClientModule, NoopAnimationsModule
     ],
     providers: [
         CargoTrackingSearchService,

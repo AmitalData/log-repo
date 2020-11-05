@@ -36,7 +36,19 @@ namespace Logitude.CargoTracking.Data.Repositories
 
             return shipmentsSearchEntities;
         }
+        public IQueryable<CargoTrackingShipmentSearch> GetShipmentSearchs( int tenant)
+        {
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
+                                                                               where
 
+                                                                                  searchEntity.Tenant == tenant 
+                                                                               orderby searchEntity.ShipmentDate descending
+                                                                               select searchEntity
+
+                            );
+
+            return shipmentsSearchEntities;
+        }
         public List<CargoTrackingShipmentSearch> GetShipmentSearchBySecurityKeys(string ShipmentId, int tenant)
         {
             List<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches

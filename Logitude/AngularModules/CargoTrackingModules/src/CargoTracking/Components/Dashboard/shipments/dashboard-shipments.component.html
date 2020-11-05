@@ -77,118 +77,142 @@
 
     </div>
 
+    <div class="error" *ngIf="error">
+        Something wrong! Please try again later.
+    </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="Shipments.length>0"> 
         {{Shipments.length}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
-    <div *ngIf="Shipments.length>0" class="scrollable-table">
+    <div class="scrollable-table">
         <div class="table">
-
-            <div *ngFor="let shipment of Shipments" class="row record-row" (click)="ItemClicked(shipment)"
-                style="cursor: pointer;">
-                <div class="column mode-icon" style="width: 8%;">
-                    <div class="circle-image">
-                        <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " />
+            
+            <cdk-virtual-scroll-viewport class="shipment-cards-holder" [itemSize]="170">
+            
+            
+                <div *cdkVirtualFor="let shipment of ShipmentsDS" class="row record-row" (click)="ItemClicked(shipment)"
+                    style="cursor: pointer;">
+            
+                    <!-- Shipment Skelton -->
+                    <div *ngIf="!shipment" class="shipment-skelton">
+            
+                        <div class="skelton-wrapper">
+                            <div class="circle"></div>
+                            <div class="label1"></div>
+                            <div class="label2"></div>
+                            <div class="label3"></div>
+                            <div class="label4"></div>
+                        </div>
+            
+                    </div>
+            
+                    <!-- Shipment Data -->
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;">
+                        <div class="column mode-icon" style="width: 8%;">
+                            <div class="circle-image">
+                                <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " />
+                            </div>
+                        </div>
+                        <!-- References -->
+                        <div class="column col-md-2 reference" style="width: 14%;">
+                            <div>
+                                <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">
+                                    Reference NO.
+                                    <span *ngIf="shipment.IsFavorite">&nbsp;<img src="/assets/images/icons/favoritesicon@1x.png"
+                                            alt=""></span>
+                                </div>
+                                <div class="truncateText" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i > 0}">
+                                        {{item}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="column seperator"></div>
+            
+                        <!-- Sender -->
+                        <div class="column col-md-2 sender" style="width: 14%;">
+                            <div>
+                                <div class="subtitle">Origin Port</div>
+                                <div class="value truncateText">
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} ,
+                                    {{shipment.FromPortCountryCode}}
+                                </div>
+            
+            
+                                <div class="subtitle hide-mobile">Destination Port</div>
+                                <div class="value truncateText hide-mobile">
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} ,
+                                    {{shipment.ToPortCountryCode}}
+                                </div>
+            
+                            </div>
+                        </div>
+                        <!-- Pickup -->
+                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
+                                            <div>
+                                                <div class="subtitle">Pickup</div>
+                                                <div class="value uppercase">
+                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
+                                                </div>
+                    
+                                                <div class="subtitle">Delivery Location</div>
+                                                <div class="value uppercase">
+                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
+                                                </div>
+                    
+                                            </div>
+                                        </div>-->
+            
+            
+                        <!-- Shipment Id -->
+                        <div class="column col-md-2 hide-mobile" style="width: 12%;">
+                            <div>
+                                <div class="subtitle">Shipment ID</div>
+                                <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
+            
+                            </div>
+                        </div>
+            
+                        <div class="column seperator"></div>
+            
+                        <!-- From -->
+                        <!-- <div class="column col-md-2">
+                                            <div>
+                                                <div class="header subtitle">From</div>
+                                                {{ shipment.From | date: " MMMM d, y, h:mm" }}
+                                            </div>
+                                        </div> -->
+            
+                        <!-- To -->
+                        <!-- <div class="column col-md-2">
+                                            <div>
+                                                <div class="header subtitle">To</div>
+                                                {{ shipment.To | date: " MMMM d, y, h:mm" }}
+                                            </div>
+                                        </div> -->
+            
+                        <!-- Status -->
+                        <div class="column col-md-1 status" style="width: 17%;">
+                            <div>
+                                <div class="subtitle">Status</div>
+                                <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
+            
+            
+                                <div class="subtitle hide-mobile">Last Updated</div>
+                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                            </div>
+                        </div>
+            
+                        <div class="more-btn mobile-only" (click)="ShipmentMoreButtonClicked(shipment,$event)">
+                            <img src="/assets/images/icons/more.png" alt="">
+                        </div>
                     </div>
                 </div>
-
-                <!-- References -->
-                <div class="column col-md-2 reference" style="width: 14%;">
-                    <div>
-                        <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">
-                            Reference NO. 
-                            <span *ngIf="shipment.IsFavorite">&nbsp;<img src="/assets/images/icons/favoritesicon@1x.png" alt=""></span>
-                        </div>
-                        <div class="truncateText" *ngFor="let item of references; let i = index">
-                            <span [ngClass]="{'hide-mobile': i > 0}">
-                                {{item}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column seperator"></div>
-
-                <!-- Sender -->
-                <div class="column col-md-2 sender" style="width: 14%;">
-                    <div>
-                        <div class="subtitle">Origin Port</div>
-                        <div class="value truncateText">
-                            <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} ,
-                            {{shipment.FromPortCountryCode}}
-                        </div>
-
-
-                        <div class="subtitle hide-mobile">Destination Port</div>
-                        <div class="value truncateText hide-mobile">
-                            <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} ,
-                            {{shipment.ToPortCountryCode}}
-                        </div>
-
-                    </div>
-                </div>
-                <!-- Pickup -->
-                <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
-                    <div>
-                        <div class="subtitle">Pickup</div>
-                        <div class="value uppercase">
-                            <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
-                        </div>
-
-                        <div class="subtitle">Delivery Location</div>
-                        <div class="value uppercase">
-                            <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
-                        </div>
-
-                    </div>
-                </div>-->
-
-
-                <!-- Shipment Id -->
-                <div class="column col-md-2 hide-mobile" style="width: 12%;">
-                    <div>
-                        <div class="subtitle">Shipment ID</div>
-                        <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
-
-                    </div>
-                </div>
-
-                <div class="column seperator"></div>
-
-                <!-- From -->
-                <!-- <div class="column col-md-2">
-                    <div>
-                        <div class="header subtitle">From</div>
-                        {{ shipment.From | date: " MMMM d, y, h:mm" }}
-                    </div>
-                </div> --> 
-
-                <!-- To -->
-                <!-- <div class="column col-md-2">
-                    <div>
-                        <div class="header subtitle">To</div>
-                        {{ shipment.To | date: " MMMM d, y, h:mm" }}
-                    </div>
-                </div> -->
-
-                <!-- Status -->
-                <div class="column col-md-1 status" style="width: 17%;">
-                    <div>
-                        <div class="subtitle">Status</div>
-                        <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
-
-
-                        <div class="subtitle hide-mobile">Last Updated</div>
-                        <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
-                    </div>
-                </div>
-
-                <div class="more-btn mobile-only" (click)="ShipmentMoreButtonClicked(shipment,$event)">
-                    <img src="/assets/images/icons/more.png" alt="">
-                </div>
-            </div>
+            </cdk-virtual-scroll-viewport>
 
             <br>
             <br>
