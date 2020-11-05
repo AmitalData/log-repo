@@ -180,6 +180,8 @@ import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownM
 import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
 
 import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
+import { SendInterfaceResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent';
+
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
     [
@@ -289,7 +291,8 @@ export const ControlsComponents =
         DropdownMenuComponent,
         MultiSelectLOVComponent,
         
-        FTBSchedulerTemplateComponent
+        FTBSchedulerTemplateComponent,
+        SendInterfaceResultComponent,
     ];
 export const Components =
     [
@@ -466,6 +469,12 @@ export class ModuleDeclarations {
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
+            case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
+
+
+
+
+                
 
         }
 

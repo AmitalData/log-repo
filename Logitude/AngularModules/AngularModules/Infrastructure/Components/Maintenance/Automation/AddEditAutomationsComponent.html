@@ -403,8 +403,8 @@
                                                                                                 <div style="height:3px"></div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:25px">
-
+                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:1px">
+                                                                                     
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
                                                                                             </td>
@@ -468,6 +468,14 @@
                                                                                             </td>
                                                                                         </tr>
 
+                                                                                             <tr>
+                                                                                <td colspan="4">
+                                                                                    <div class="LocationDirective" LocationDirective Code="SEIR"> </div>
+                                                                                </td>
+                                                                            </tr>
+
+
+
                                                                                         <tr>
                                                                                             <td colspan="4">
                                                                                                 <div></div>
@@ -478,6 +486,8 @@
                                                                                 </td>
 
                                                                             </tr>
+
+                                                                       
 
                                                                             <!--Recipients-->
                                                                             <tr style="width:100%" *ngIf="ResultCodeSelected.Code =='EMAIL'">

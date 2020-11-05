@@ -1,3 +1,4 @@
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -578,7 +579,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (this.SelectedTabCode == "EVE") {
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'EVE');
                 let myLocation: LocationDirective = locs.filter(f => f.Code == "EVE")[0];
-                if (myLocation != null) {
+                if (myLocation != null){
 
                     if (this.PageChild_EVE == null) {
                         SessionLocator.DynamicLoader.Load('./Common/Components/Events/EventsTabComponent', myLocation.viewContainerRef)
@@ -1081,6 +1082,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.DelayTimeOp = null;
             this.SelectedDelaytimeFieldCode = null;
         }
+
+        if (value.Code == "EMAIL") {
+            this.LoadSendInterfaceResultComponent();
+
+
+        }
+
     }
     
     get TypeWidth() {
@@ -1632,6 +1640,36 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         else this.DataContext.UIProperties.SetEnabled("FollowDateEscalationTime", "Automation", true);
     }
+
+
+
+
+
+    PageChild_SEIR: any = null;
+    LoadSendInterfaceResultComponent() {
+
+        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "SEIR")[0];
+        if (myGeneratedComponentLocation != null) {
+            if (this.PageChild_SEIR == null) {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent', myGeneratedComponentLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_SEIR = cmpRef.instance;
+                        cmpRef.instance.Run(this);
+                        cmpRef.instance.LoadCompleted.subscribe(s => {
+
+                        });
+                    });
+            }
+            else {
+                this.PageChild_SEIR.Run();
+            }
+        }
+    }
+
+
+
+
+
 
     //Queued Task
     public IsQueueRequired: boolean = false;

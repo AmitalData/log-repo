@@ -100,6 +100,11 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationSetSLAValue AutomationSetSLAValue { get; set; }
+
+
+        [DataMember]
+        public AutomationSendInterface AutomationSendInterface { get; set; }
+
     }
 
 
@@ -112,10 +117,60 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string ObjectFieldId { get; set; }
 
-
         [DataMember]
         public string ObjectFieldCode { get; set; }
 
-        
     }
+
+
+    [DataContract(Namespace = "")]
+    public class AutomationSendInterface
+    {
+       
+        [DataMember]
+        public string InterfaceName { get; set; }
+
+        [DataMember]
+        public string SendVia { get; set; }
+
+
+        [DataMember]
+        public string Format { get; set; }
+
+        [DataMember]
+        public string ComputingPartnerId { get; set; }
+
+        [DataMember]
+        public FTPAutomationDetails FTPDetails { get; set; }
+    }
+
+
+    [DataContract(Namespace = "")]
+    public class FTPAutomationDetails
+    {
+        [DataMember]
+        public string Host { get; set; }
+        [DataMember]
+        public string Folder { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+        [DataMember]
+        public string From { get; set; }
+        [DataMember]
+        public string Subject { get; set; }
+        [DataMember]
+        public string Prefix { get; set; }
+        [DataMember]
+        public string Suffix { get; set; }
+        [DataMember]
+        public string Extension { get; set; }
+
+        [DataMember]
+        public bool IsSFTP { get; set; }
+
+    }
+
+
 }
