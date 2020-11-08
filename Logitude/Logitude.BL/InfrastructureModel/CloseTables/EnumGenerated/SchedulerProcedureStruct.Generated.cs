@@ -30,6 +30,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string TestLogToFileTask = "TestLogToFileTask";  
        public const string GLAccountsCSVTask = "GLAccountsCSVTask";  
        public const string QuoteAutomaticallyClosingTask = "QuoteAutomaticallyClosingTask";  
+       public const string DeleteOldCargoTrackingData = "DeleteOldCargoTrackingData";  
     }
 }
 
