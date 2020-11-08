@@ -863,6 +863,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ConsigneeId, shipment.Tenant, true);
                 shipmentPM.ConsigneeName = loadedCard.EnglishName;
                 shipmentPM.ConsigneeNote = loadedCard.Notes;
+                shipmentPM.ConsigneeVatNumber = loadedCard.VatNumber;
 
                 if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
                 {
