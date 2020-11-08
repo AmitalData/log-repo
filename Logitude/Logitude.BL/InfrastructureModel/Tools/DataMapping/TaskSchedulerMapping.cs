@@ -54,7 +54,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.EntityId = TaskSchedulerPM.EntityId;
             TaskScheduler.MonthlyDay = 0;
             TaskScheduler.ResultType = TaskSchedulerPM.ResultType;
-
+            TaskScheduler.Format = TaskSchedulerPM.Format;
+            TaskScheduler.AdvancedFormat = TaskSchedulerPM.AdvancedFormat;
         }
     }
 }

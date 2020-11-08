@@ -71,6 +71,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             shipmentPM.ShipmentReceivables.Add((ShipmentReceivablePM)initializer.Create(args));
 
             shipmentPM = await service.UpdateShipment(shipmentPM);
+
             Assert.IsTrue(this.IsNullOrZero(shipmentPM.OpenPayablesInLocalCurrency));
             Assert.IsTrue(this.IsNullOrZero(shipmentPM.OpenPayablesInProfitCurrency));
             Assert.IsTrue(this.IsNullOrZero(shipmentPM.OpenReceivablesInLocalCurrency));
@@ -114,6 +115,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             shipmentPM.ShipmentReceivables.Add((ShipmentReceivablePM)initializer.Create(args2));
 
             shipmentPM = await service.UpdateShipment(shipmentPM);
+
             Assert.IsTrue(shipmentPM.OpenPayablesInLocalCurrency == 50);
             Assert.IsTrue(shipmentPM.OpenPayablesInProfitCurrency == 12.5);
             Assert.IsTrue(shipmentPM.OpenReceivablesInLocalCurrency == 200);

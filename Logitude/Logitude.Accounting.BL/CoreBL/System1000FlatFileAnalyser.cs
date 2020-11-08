@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private Contact _contact;
         private const bool useLocal = true;
 
-        public void Analyse(int? ptenant, string FileContent)
+        public void Analyse(int? ptenant, string FileContent,string LoggingUserId)
         {
             try
             {

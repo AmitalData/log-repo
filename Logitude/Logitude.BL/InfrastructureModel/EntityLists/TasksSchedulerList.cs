@@ -54,5 +54,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Recepients { get; set; }
 
         public string ResultType { get; set; }
+        public string Format { get; set; }
+        public string AdvancedFormat { get; set; }
     }
 }

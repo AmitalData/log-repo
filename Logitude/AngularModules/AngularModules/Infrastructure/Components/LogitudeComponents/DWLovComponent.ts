@@ -79,6 +79,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public IsOpen: boolean;
     public LayoutDirection = 'ltr'
+    public LayoutDirectionClassName = 'RightCenter';
     public SelectedItem: any;
     @Input() SelectedItemObject: any;
     public ItemsSource: any[];
@@ -164,6 +165,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this.TenantPM = InfraSettings.TenantPM;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this.LayoutDirectionClassName = this.LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter';
     }
 
     DropPopUpStyle: any;

@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;dc2e&quot;"
+  Code="&quot;72b0&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -52,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5189,15 +5190,6 @@
       FeatureDefaultText="&quot;Customs&quot;"
       IsPackagable="true"
       IsOld="true"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureDefaultText="&quot;Customs Interface Settings&quot;"
-      IsPackagable="true"
-      IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature

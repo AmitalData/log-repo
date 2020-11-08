@@ -390,7 +390,7 @@ export class DocsInDataViewModel extends BaseComponent{
                             case "Upload":
 
                                 this.DocsInComponent.IsClickToUpload = false;
-                                this.UploadButtonClicked();
+                                this.UploadDocument();
                                 break;
                         }
 
@@ -570,29 +570,37 @@ export class DocsInDataViewModel extends BaseComponent{
 
         if (!this.DocsInComponent.IsClickToUpload) {
             this.DocsInComponent.IsClickToUpload = true;
-            if (this.CurrentDocument != null) this.ShowAttachExternal();
+            if (this.CurrentSession.CurrentEditComponent && this.CurrentSession.CurrentEditComponent.EntityPM && this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+                this.DocsInComponent.AttachExternalRequested(this);
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
             else {
-                this.isUpload = true;
-                this.Exists = true;
-               // this.DocsInComponent.IsClickToUpload = false;
+                this.UploadDocument();
             }
 
         }
+    }
+
+
+    public UploadDocument() {
+
+        if (this.CurrentDocument != null) {
+            this.ShowAttachExternal();
+
+        }
+        else {
+            this.isUpload = true;
+            this.Exists = true;
+            // this.DocsInComponent.IsClickToUpload = false;
+        }
+
     }
 
     IsEnableLinkAttachExternal: boolean;
 
     ShowAttachExternal() {
  
-        //var OnCloseAttachmentUploadEvent= new EventEmitter();
 
-
-        //OnCloseAttachmentUploadEvent.subscribe(($event: any) => {
-
-        //    this.OnUploadComplete();
-        //    AppTool.KillEventEmitter(OnCloseAttachmentUploadEvent);
-
-        //});
 
         this.IsEnableLinkAttachExternal = false;
         var windowArgs: any = {};

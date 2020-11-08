@@ -29,8 +29,8 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
             await GetShipment();
 
-            //await UpdateShipmentWithInvalidFutureATD();
-            //await UpdateShipmentWithInvalidFutureATA();
+            await UpdateShipmentWithInvalidFutureATD();
+            await UpdateShipmentWithInvalidFutureATA();
             await UpdateShipmentWithValidDates();
         }
 
@@ -134,11 +134,6 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 MasterNumber = "456",
                 CarrierNumber = "123",
-
-                ETD = new DateTime(2020,7,1),
-                ETA = new DateTime(2020, 7, 2),
-                ATD = new DateTime(2020, 7, 3),
-                ATA = new DateTime(2020, 7, 4),
             });
 
             shipmentId = await service.CreateDirect(entityPM);
@@ -149,23 +144,25 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
             shipmentPM = await service.GetDirect(shipmentId);
         }
 
-        //private async Task UpdateShipmentWithInvalidFutureATD()
-        //{
-        //    shipmentPM.MainCarriageLegs.First().ETD = new DateTime(2021, 10, 1);
-        //    shipmentPM.MainCarriageLegs.First().ATD = new DateTime(2021, 10, 2);
-        //    shipmentPM.MainCarriageLegs.First().ETA = new DateTime(2021, 10, 3);
-        //    shipmentPM.MainCarriageLegs.First().ATA = new DateTime(2021, 10, 4);
-        //    shipmentPM = await service.UpdateDirect(shipmentPM, "Can't set MainCarriageATD to future date");
-        //}
+        private async Task UpdateShipmentWithInvalidFutureATD()
+        {
+            shipmentPM.MainCarriageLegs.First().ATD = new DateTime(2021, 10, 2);
+            shipmentPM = await service.UpdateDirect(shipmentPM, false);
+            
+            Assert.IsTrue(service.HasException == true);
+            Assert.IsTrue(service.ExceptionMessage == "Can't set MainCarriageATD to future date");
+            shipmentPM.MainCarriageLegs.First().ATD = null;
+        }
 
-        //private async Task UpdateShipmentWithInvalidFutureATA()
-        //{
-        //    //shipmentPM.MainCarriageLegs.First().ETD = new DateTime(2020, 10, 1);
-        //    //shipmentPM.MainCarriageLegs.First().ATD = new DateTime(2020, 10, 2);
-        //    //shipmentPM.MainCarriageLegs.First().ETA = new DateTime(2020, 10, 3);
-        //    //shipmentPM.MainCarriageLegs.First().ATA = new DateTime(2021, 10, 4);
-        //    //shipmentPM = await service.UpdateDirect(shipmentPM, "Can't set MainCarriageATA to future date");
-        //}
+        private async Task UpdateShipmentWithInvalidFutureATA()
+        {
+            shipmentPM.MainCarriageLegs.First().ATA = new DateTime(2021, 10, 4);
+            shipmentPM = await service.UpdateDirect(shipmentPM, false);
+
+            Assert.IsTrue(service.HasException == true);
+            Assert.IsTrue(service.ExceptionMessage == "Can't set MainCarriageATA to future date");
+            shipmentPM.MainCarriageLegs.First().ATA = null;
+        }
 
         private async Task UpdateShipmentWithValidDates()
         {
@@ -174,7 +171,6 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
             shipmentPM.MainCarriageLegs.First().ETA = new DateTime(2020, 10, 7);
             shipmentPM.MainCarriageLegs.First().ATA = new DateTime(2020, 10, 8);
 
-            // Can't set MainCarriageATD to future date
             shipmentPM = await service.UpdateDirect(shipmentPM);
             shipmentPM = await service.GetDirect(shipmentId);
 

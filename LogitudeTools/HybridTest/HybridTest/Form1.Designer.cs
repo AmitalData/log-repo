@@ -48,9 +48,10 @@
             // 
             // btnSendXml
             // 
-            this.btnSendXml.Location = new System.Drawing.Point(61, 278);
+            this.btnSendXml.Location = new System.Drawing.Point(81, 342);
+            this.btnSendXml.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSendXml.Name = "btnSendXml";
-            this.btnSendXml.Size = new System.Drawing.Size(144, 34);
+            this.btnSendXml.Size = new System.Drawing.Size(192, 42);
             this.btnSendXml.TabIndex = 0;
             this.btnSendXml.Text = "Send Xml";
             this.btnSendXml.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -59,9 +60,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(61, 240);
+            this.button1.Location = new System.Drawing.Point(81, 295);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 32);
+            this.button1.Size = new System.Drawing.Size(192, 39);
             this.button1.TabIndex = 1;
             this.button1.Text = "Test Service";
             this.button1.UseVisualStyleBackColor = true;
@@ -69,9 +71,10 @@
             // 
             // btnThreads
             // 
-            this.btnThreads.Location = new System.Drawing.Point(61, 328);
+            this.btnThreads.Location = new System.Drawing.Point(81, 404);
+            this.btnThreads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnThreads.Name = "btnThreads";
-            this.btnThreads.Size = new System.Drawing.Size(144, 33);
+            this.btnThreads.Size = new System.Drawing.Size(192, 41);
             this.btnThreads.TabIndex = 2;
             this.btnThreads.Text = "Start Threadeds";
             this.btnThreads.UseVisualStyleBackColor = true;
@@ -79,9 +82,10 @@
             // 
             // btnUploadQuoteDocument
             // 
-            this.btnUploadQuoteDocument.Location = new System.Drawing.Point(61, 200);
+            this.btnUploadQuoteDocument.Location = new System.Drawing.Point(81, 246);
+            this.btnUploadQuoteDocument.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUploadQuoteDocument.Name = "btnUploadQuoteDocument";
-            this.btnUploadQuoteDocument.Size = new System.Drawing.Size(144, 34);
+            this.btnUploadQuoteDocument.Size = new System.Drawing.Size(192, 42);
             this.btnUploadQuoteDocument.TabIndex = 3;
             this.btnUploadQuoteDocument.Text = "Upload Xml File";
             this.btnUploadQuoteDocument.UseVisualStyleBackColor = true;
@@ -89,9 +93,10 @@
             // 
             // btnDocsIn
             // 
-            this.btnDocsIn.Location = new System.Drawing.Point(275, 200);
+            this.btnDocsIn.Location = new System.Drawing.Point(367, 246);
+            this.btnDocsIn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDocsIn.Name = "btnDocsIn";
-            this.btnDocsIn.Size = new System.Drawing.Size(161, 33);
+            this.btnDocsIn.Size = new System.Drawing.Size(215, 41);
             this.btnDocsIn.TabIndex = 4;
             this.btnDocsIn.Text = "Upload Docs In";
             this.btnDocsIn.UseVisualStyleBackColor = true;
@@ -99,9 +104,10 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(275, 239);
+            this.btnTest.Location = new System.Drawing.Point(367, 294);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(161, 33);
+            this.btnTest.Size = new System.Drawing.Size(215, 41);
             this.btnTest.TabIndex = 5;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -109,9 +115,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(248, 427);
+            this.button2.Location = new System.Drawing.Point(331, 526);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 75);
+            this.button2.Size = new System.Drawing.Size(251, 92);
             this.button2.TabIndex = 6;
             this.button2.Text = "Send Xml To Cloud";
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -120,9 +127,10 @@
             // 
             // btnTestCloud
             // 
-            this.btnTestCloud.Location = new System.Drawing.Point(275, 288);
+            this.btnTestCloud.Location = new System.Drawing.Point(367, 354);
+            this.btnTestCloud.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTestCloud.Name = "btnTestCloud";
-            this.btnTestCloud.Size = new System.Drawing.Size(161, 42);
+            this.btnTestCloud.Size = new System.Drawing.Size(215, 52);
             this.btnTestCloud.TabIndex = 7;
             this.btnTestCloud.Text = "Test Cloud";
             this.btnTestCloud.UseVisualStyleBackColor = true;
@@ -130,9 +138,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(515, 199);
+            this.button3.Location = new System.Drawing.Point(687, 245);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(162, 73);
+            this.button3.Size = new System.Drawing.Size(216, 90);
             this.button3.TabIndex = 8;
             this.button3.Text = "Test Customer Queue";
             this.button3.UseVisualStyleBackColor = true;
@@ -140,9 +149,10 @@
             // 
             // btnMultiTaskQueueTest
             // 
-            this.btnMultiTaskQueueTest.Location = new System.Drawing.Point(515, 288);
+            this.btnMultiTaskQueueTest.Location = new System.Drawing.Point(687, 354);
+            this.btnMultiTaskQueueTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMultiTaskQueueTest.Name = "btnMultiTaskQueueTest";
-            this.btnMultiTaskQueueTest.Size = new System.Drawing.Size(162, 73);
+            this.btnMultiTaskQueueTest.Size = new System.Drawing.Size(216, 90);
             this.btnMultiTaskQueueTest.TabIndex = 9;
             this.btnMultiTaskQueueTest.Text = "Start MultiTask Queue Test";
             this.btnMultiTaskQueueTest.UseVisualStyleBackColor = true;
@@ -150,9 +160,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(553, 472);
+            this.button4.Location = new System.Drawing.Point(737, 581);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(200, 30);
+            this.button4.Size = new System.Drawing.Size(267, 37);
             this.button4.TabIndex = 10;
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
@@ -160,9 +171,10 @@
             // 
             // btnCustomerWD
             // 
-            this.btnCustomerWD.Location = new System.Drawing.Point(37, 441);
+            this.btnCustomerWD.Location = new System.Drawing.Point(49, 543);
+            this.btnCustomerWD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCustomerWD.Name = "btnCustomerWD";
-            this.btnCustomerWD.Size = new System.Drawing.Size(168, 61);
+            this.btnCustomerWD.Size = new System.Drawing.Size(224, 75);
             this.btnCustomerWD.TabIndex = 11;
             this.btnCustomerWD.Text = "Customer WD";
             this.btnCustomerWD.UseVisualStyleBackColor = true;
@@ -170,9 +182,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(515, 388);
+            this.button5.Location = new System.Drawing.Point(687, 478);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(191, 39);
+            this.button5.Size = new System.Drawing.Size(255, 48);
             this.button5.TabIndex = 12;
             this.button5.Text = "upload trace events";
             this.button5.UseVisualStyleBackColor = true;
@@ -180,9 +193,10 @@
             // 
             // btnRunTest
             // 
-            this.btnRunTest.Location = new System.Drawing.Point(360, 35);
+            this.btnRunTest.Location = new System.Drawing.Point(480, 43);
+            this.btnRunTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRunTest.Name = "btnRunTest";
-            this.btnRunTest.Size = new System.Drawing.Size(153, 30);
+            this.btnRunTest.Size = new System.Drawing.Size(204, 37);
             this.btnRunTest.TabIndex = 13;
             this.btnRunTest.Text = "Run Service Test";
             this.btnRunTest.UseVisualStyleBackColor = true;
@@ -192,17 +206,21 @@
             // 
             this.cmdServices.FormattingEnabled = true;
             this.cmdServices.Items.AddRange(new object[] {
-            "Warehouse"});
-            this.cmdServices.Location = new System.Drawing.Point(37, 41);
+            "Warehouse",
+            "Customer"});
+            this.cmdServices.Location = new System.Drawing.Point(49, 50);
+            this.cmdServices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmdServices.Name = "cmdServices";
-            this.cmdServices.Size = new System.Drawing.Size(298, 21);
+            this.cmdServices.Size = new System.Drawing.Size(396, 24);
             this.cmdServices.TabIndex = 14;
+            this.cmdServices.SelectedIndexChanged += new System.EventHandler(this.cmdServices_SelectedIndexChanged);
             // 
             // btnPaymentTerms
             // 
-            this.btnPaymentTerms.Location = new System.Drawing.Point(361, 84);
+            this.btnPaymentTerms.Location = new System.Drawing.Point(481, 103);
+            this.btnPaymentTerms.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPaymentTerms.Name = "btnPaymentTerms";
-            this.btnPaymentTerms.Size = new System.Drawing.Size(152, 30);
+            this.btnPaymentTerms.Size = new System.Drawing.Size(203, 37);
             this.btnPaymentTerms.TabIndex = 15;
             this.btnPaymentTerms.Text = "Payment Term Test";
             this.btnPaymentTerms.UseVisualStyleBackColor = true;
@@ -210,9 +228,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 571);
+            this.ClientSize = new System.Drawing.Size(1352, 703);
             this.Controls.Add(this.btnPaymentTerms);
             this.Controls.Add(this.cmdServices);
             this.Controls.Add(this.btnRunTest);
@@ -229,6 +247,7 @@
             this.Controls.Add(this.btnThreads);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSendXml);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

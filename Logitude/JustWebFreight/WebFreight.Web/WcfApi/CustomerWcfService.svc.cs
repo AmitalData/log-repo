@@ -57,6 +57,11 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
+                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    {
+                        entityPM.PaymentTermId = "--";
+                    }
+                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -79,6 +84,7 @@ namespace WebFreight.Web.WcfApi
                     ContactRepository contactRepository = new ContactRepository(objectContext);
                     RankRepository rankRepository = new RankRepository(objectContext);
                     Tenant tenantEntity = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     CustomerService service = new CustomerService(objectContext, entityPM);
 
@@ -240,6 +246,23 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+                   
+
 
 
 
@@ -441,7 +464,13 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
                     {
-                        entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
+                        Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                        if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
+                        {
+                            entity = customer;
+                        }
+                        else
+                            entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -596,6 +625,7 @@ namespace WebFreight.Web.WcfApi
                 {
                     entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
                     //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+
                     if (entity != null && (entity.Card.Code != entityPM.Code))
                     {
                         throw new ApplicationException("A customer with the same vat and different code already exists.");
@@ -603,6 +633,8 @@ namespace WebFreight.Web.WcfApi
                         //response.ErrorMessage = "A customer with the same vat and different code already exists.";
                         //return response;
                     }
+
+
                 }
             }
 
