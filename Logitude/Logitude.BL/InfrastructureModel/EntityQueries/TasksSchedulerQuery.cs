@@ -86,6 +86,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Duration = a.AverageRunTime,
                         EntityId = a.EntityId,
                         ResultType = a.ResultType,
+                        Format = a.Format,
+                        AdvancedFormat = a.AdvancedFormat,
 
                     }).FirstOrDefault();
         }
@@ -134,6 +136,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Duration = a.AverageRunTime,
                         EntityId = a.EntityId,
                         ResultType = a.ResultType,
+                        Format = a.Format,
+                        AdvancedFormat = a.AdvancedFormat,
                     }).FirstOrDefault();
         }
 
@@ -182,6 +186,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                         EntityId = a.EntityId,
                         ResultType = a.ResultType,
+                        Format = a.Format,
+                        AdvancedFormat = a.AdvancedFormat,
                     }).ToList();
         }
 
@@ -229,6 +235,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              SchedulerDetailsXML = a.SchedulerDetailsXML,
                              EntityId = a.EntityId,
                              ResultType = a.ResultType,
+                             Format = a.Format,
+                             AdvancedFormat = a.AdvancedFormat,
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             //foreach (var Task in Tasks)
@@ -318,6 +326,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         AverageRunTime = a.AverageRunTime,
                                                         EntityId = a.EntityId,
                                                         ResultType = a.ResultType,
+                                                        Format = a.Format,
+                                                        AdvancedFormat = a.AdvancedFormat,
                                                         Recepients = (a.SchedulerDetailsXML.IndexOf("<To>") > -1 ? a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<To>") + 4, a.SchedulerDetailsXML.IndexOf("</To>") - 4 - a.SchedulerDetailsXML.IndexOf("<To>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Cc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Cc>") + 4, a.SchedulerDetailsXML.IndexOf("</Cc>") - 4 - a.SchedulerDetailsXML.IndexOf("<Cc>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Bcc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Bcc>") + 5, a.SchedulerDetailsXML.IndexOf("</Bcc>") - 5 - a.SchedulerDetailsXML.IndexOf("<Bcc>")) : null)
                                                     };
             return result;
@@ -367,6 +377,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Duration = a.AverageRunTime,
                         EntityId = a.EntityId,
                         ResultType = a.ResultType,
+                        Format = a.Format,
+                        AdvancedFormat = a.AdvancedFormat,
                     }).FirstOrDefault();
         }
 
@@ -414,6 +426,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                         EntityId = a.EntityId,
                         ResultType = a.ResultType,
+                        Format = a.Format,
+                        AdvancedFormat = a.AdvancedFormat,
 
                     }).ToList();
         }

@@ -16,6 +16,7 @@ import {
 } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
@@ -27,6 +28,9 @@ export class AddEditReportTaskSchedulerComponent {
     public ObjectTableName: string = 'TasksScheduler';
     public ValidationErrorsList: string[];
     public DisplayFTPOption: boolean = false;
+    public SchedulerFormats: CodeNameClass[] = [];
+    public SelectedFormat: CodeNameClass;
+    public SelectedFormatAdvanced: string;
     schedulerExtendedPMService: SchedulerExtendedPMService;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -41,12 +45,25 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext = DataContext['DataContext'];
         this.EntityPM = DataContext['DataContext'].EntityPM;
         this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
+        this.FillSchedulerFormats();
+        this.SetSchedulerFormat();
         this.SetSchedulerResultType();
         this.EntityPM.ProcedureCode = 'ReportSchedulerTask';
 
         this.BuildSchedulerDetailsData();
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
+    }
+
+    private FillSchedulerFormats() {
+        this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
+        this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
+        this.SchedulerFormats.push(new CodeNameClass("EXCLA", "Excel File (Advanced)"));
+    }
+
+    private SetSchedulerFormat() {
+        this.SelectedFormat = this.SchedulerFormats.filter(format => format.Code == this.EntityPM.Format)[0];
+        this.SelectedFormatAdvanced = this.EntityPM.AdvancedFormat;
     }
 
     private SetSchedulerResultType() {
@@ -160,6 +177,7 @@ export class AddEditReportTaskSchedulerComponent {
         if (this.isFTP != newValue) {
             this.isFTP = newValue;
             this.DataContext.IsFTP = newValue;
+            if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.FormatSelectionChanged(this.SchedulerFormats.filter(format => format.Code == 'PDF')[0]);
         }
     }
 
@@ -171,6 +189,11 @@ export class AddEditReportTaskSchedulerComponent {
         if (this.isEmail != newValue) {
             this.isEmail = newValue;
         }
+    }
+
+    SetFormatAdvanced(formatAdvanced: string) {
+        this.SelectedFormatAdvanced = formatAdvanced;
+        this.EntityPM.AdvancedFormat = formatAdvanced;
     }
 
     SetTaskType(taskType: string) {
@@ -285,6 +308,19 @@ export class AddEditReportTaskSchedulerComponent {
             });
     }
 
+    FormatSelectionChanged(selectControl: any) {
+        if (selectControl) {
+            this.SelectedFormat = selectControl;
+            this.EntityPM.Format = selectControl.Code;
+            if (AppTool.IsNullOrEmpty(this.SelectedFormatAdvanced) && selectControl.Code == 'EXCLA') {
+                this.SetFormatAdvanced('DO');
+            }
+            else if (selectControl.Code != 'EXCLA') {
+                this.SetFormatAdvanced('');
+            }
+        }
+    }
+
     SaveButtonClicked(
         reportFilterItems: Array<QueryFilterItem>,
         reportTemplateId: string,
@@ -383,6 +419,8 @@ export class AddEditReportTaskSchedulerComponent {
         this.myCloner.AddField('Thursday');
         this.myCloner.AddField('Friday');
         this.myCloner.AddField('TriggerType');
+        this.myCloner.AddField('Format');
+        this.myCloner.AddField('AdvancedFormat');
 
         this.myCloner.AddEntity(this.EntityPM);
     }
