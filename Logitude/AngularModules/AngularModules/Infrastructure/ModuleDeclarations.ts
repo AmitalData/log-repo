@@ -181,6 +181,12 @@ import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSe
 
 import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
 import { SendInterfaceResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent';
+import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
+
+
+
+
+
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -293,6 +299,7 @@ export const ControlsComponents =
         
         FTBSchedulerTemplateComponent,
         SendInterfaceResultComponent,
+        FTPAutomationDetailsComponent,
     ];
 export const Components =
     [
@@ -470,8 +477,9 @@ export class ModuleDeclarations {
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
+            case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
 
-
+                
 
 
                 

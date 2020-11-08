@@ -202,7 +202,7 @@
                                                                         <table>
 
                                                                             <!--Result-->
-                                                                            <tr [style.height]="ResultCodeSelected.Code =='EMAIL' ?'100px':(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment') ? '50px' : '70px'">
+                                                                            <tr [style.height]="IsResultEmail ?'100px':(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment') ? '50px' : '70px'">
                                                                                 <td>
                                                                                     <table>
 
@@ -396,14 +396,24 @@
 
                                                                                         </tr>
 
+
+
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="SENDINTERFACE"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
+
                                                                                         <!--Documen tType Area-->
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:2px;">
+                                                                                        <tr *ngIf="IsResultEmail" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
 
                                                                                                 <div style="height:3px"></div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL'" style="height:25px">
+                                                                                        <tr *ngIf="IsResultEmail" style="height:25px">
 
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
@@ -469,11 +479,7 @@
                                                                                         </tr>
 
 
-                                                                                        <tr style="height:1px">
-        <td colspan="4">
-            <div class="LocationDirective" LocationDirective Code="EMAIL"> </div>
-        </td>
-    </tr>
+
 
 
                                                                                         <tr>
@@ -488,7 +494,7 @@
                                                                             </tr>
 
                                                                             <!--Recipients-->
-                                                                            <tr style="width:100%" *ngIf="ResultCodeSelected.Code =='EMAIL'">
+                                                                            <tr style="width:100%" *ngIf="IsResultEmail">
 
                                                                                 <td colspan="2">
                                                                                     <table>

@@ -10,7 +10,7 @@ import {AutomationExtendedPMService} from '../../../../Common/Services/ExtendedP
 import {AutomationPMService} from '../../../../Common/Services/StandardPMs/AutomationPMService';
 import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import {AutomatedBackup, AutomationSetSLAValue} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
+import {AutomatedBackup, AutomationSetSLAValue, AutomationSendInterface} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
 import {AutomationSetValue} from '../../../../Infrastructure/DataContracts/AutomationSetValue';
 import {EventTypeArgs} from '../../../../Infrastructure/DataContracts/EventTypeArgs';
 import {AutomationFollowUp} from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
@@ -60,6 +60,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     AutomationSetSLAValue: AutomationSetSLAValue = new AutomationSetSLAValue();
     AutomationFollowUp: AutomationFollowUp = new AutomationFollowUp();
     AutomationQueuedTask: AutomationQueuedTask = new AutomationQueuedTask();
+
+    AutomationSendInterface: AutomationSendInterface = new AutomationSendInterface();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     ObjectFieldsLists: ObjectFieldPM[] = [];
     AllowedinAutomationConditionsFieldLists: ObjectFieldPM[] = [];
@@ -660,6 +662,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue")) {
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
                 }
+
+                this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
@@ -768,6 +773,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.LoadAutomationHistory();
             this.LoadDocumentType();
             this.LoadNotifyBack();
+
+            if (this.AutomatedBackupClass.AutomationSendInterface && this.ResultCodeSelected.Code == "SENDINTERFACE") {
+                this.MapAutomationSendInterface();
+            }
+
+
             this.LoadAuomationResultComponent(this.ResultCodeSelected.Code);
 
             
@@ -776,7 +787,16 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.IsLoadingComplete = true;
     }
 
+    MapAutomationSendInterface() {
+        this.AutomationSendInterface.ComputingPartnerId = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerId;
+        this.AutomationSendInterface.Format = this.AutomatedBackupClass.AutomationSendInterface.Format;
+        this.AutomationSendInterface.FTBFolderId = this.AutomatedBackupClass.AutomationSendInterface.FTBFolderId;
+        this.AutomationSendInterface.FTPDetails = this.AutomatedBackupClass.AutomationSendInterface.FTPDetails;
+        this.AutomationSendInterface.InterfaceName = this.AutomatedBackupClass.AutomationSendInterface.InterfaceName;
+        this.AutomationSendInterface.SendVia = this.AutomatedBackupClass.AutomationSendInterface.SendVia;
 
+
+    }
 
     RunAuomationResultComponent(resultCode: string) {
 
@@ -793,7 +813,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     CheckIfAutomationResultHasLocations(resultCode: string) {
 
-        return resultCode == "EMAIL" ? true:false;
+        return resultCode == "SENDINTERFACE" ? true:false;
 
     }
 
@@ -1163,6 +1183,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (myGeneratedComponentLocation != null) {
             myGeneratedComponentLocation.viewContainerRef.clear();
         }
+
     }
 
     
@@ -1272,6 +1293,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         var isFollowUp: boolean = this.IsFollowUp();
 
+   
+
         if (isFollowUp) {
             this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldCode : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
@@ -1342,7 +1365,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Please add at least one set Value");
         }
 
-        if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.CurrentEntityPM.ResultCode == "EMAIL") {
+        if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.IsResultEmail) {
             if (!this.IsAutomationResultEmailAllActiveUsers) {
                 this.ValidationErrorsList.push("Please add at least one recipient");
             }
@@ -1424,7 +1447,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             else {
-                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) || (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange())) {
+                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || this.CheckIfAutomationSendInterFaceChange() || (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) || (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange())) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                     this.CurrentEntityPM.Version += 1;
                     this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
@@ -1452,9 +1475,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+    CheckIfAutomationSendInterFaceChange() {
+        var isChange =false;
+        if (this.AutomatedBackupClass.AutomationSendInterface) {
+            isChange = this.AutomatedBackupClass.AutomationSendInterface.IsChanged;
+        }
+        return isChange;
+    }
+
+
     SaveAutomationResultEmailRecipientLists() {
 
-        if (this.CurrentEntityPM.ResultCode == "EMAIL") { this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient(); }
+        if (this.IsResultEmail) { this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient(); }
     }
 
 
@@ -1611,6 +1643,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSetValueLists = this.CurrentEntityPM.ResultCode == "FIELDSET" ? automationSetValuelist : null;
         automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
+        automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
+
+
+
+
         automatedBackup.AutomationFollowUp = this.IsFollowUp() ? this.AutomationFollowUp : null;
         this.CurrentEntityPM.AutomatedDataBackup = automatedBackup;
     }
@@ -1719,7 +1756,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
-
     LoadSendInterfaceResultComponent(resultCode:string) {
 
         if (this.AllLocations && this.AllLocations.length > 0) {
@@ -1728,10 +1764,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent', myGeneratedComponentLocation.viewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run(this);
-                        cmpRef.instance.LoadCompleted.subscribe(s => {
-
-                        });
+                        cmpRef.instance.Run(this.AutomationSendInterface);
+                      
                     });
             }
         }
@@ -1740,6 +1774,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
+
+    private isResultEmail: boolean;
+    get IsResultEmail() {
+        this.isResultEmail = false;
+        if (this.ResultCodeSelected) {
+            if (this.ResultCodeSelected.Code == "EMAIL" || (this.ResultCodeSelected.Code == "SENDINTERFACE" && this.AutomationSendInterface && this.AutomationSendInterface.SendVia == "EMAIL")) {
+                this.isResultEmail = true;
+            }
+        }
+        return this.isResultEmail;
+    }
 
 
     //Queued Task
