@@ -356,15 +356,16 @@
 
             </td>
         </tr>
+        <br />
         <tr *ngIf="ErrorMessages">
             <td colspan="13">
-                <table style="min-height: 42px;">
+                <table style="min-height: 40px;">
                     <tr>
                         <td>
                             <div class="ValidationSummary" style="overflow-y: auto ; overflow-x: hidden ; direction:ltr">
                                 <table>
                                     <tr>
-                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
+                                        <td style="position: relative; vertical-align:top;">
                                             <ul style="direction:rtl; left:90%; overflow:hidden;">
                                                 <li class="ValidationItem" *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
                                                     <div *ngIf="item.E != null ">
@@ -394,14 +395,9 @@
         </tr>
     </table>
     <br />
-    <br />
+    <table style=" height: 620px;padding-top: 10px;">
 
-    <div style="height:20px;margin-bottom: 20px;" class="AppHeaderBackground">
-
-    </div>
-    <table style=" height: 600px;padding-top: 10px;">
-
-        <tr style="height:260px">
+        <tr>
             <td style="width: 55% ; height : 100%" rowspan="2">
                 <div style="height : 100%">
 
@@ -410,7 +406,7 @@
                     <br />
                     <br />
 
-                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                    <div class="GeneratedGridContainer" style="width: 100% ;">
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" [GridHeight]="5" [ItemSource]="InvoiceLineList">
 
@@ -510,7 +506,7 @@
             </td>
             <td style="width: 5% ; height : 100%" rowspan="2">
             </td>
-            <td style="width: 40% ; height : 50%">
+            <td style="width: 40% ; height : 35%">
                 <div style="height : 100%">
 
                     <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">סטטוסים</span>
@@ -595,7 +591,7 @@
 
         </tr>
 
-        <tr style="height:150px">
+        <tr>
 
             <td style="width: 35%;">
                 <div style="height : 100%">
@@ -605,7 +601,7 @@
                     <br />
                     <br />
 
-                    <div class="GeneratedGridContainer" style="width: 100% ; height : 35%; overflow-x:hidden;">
+                    <div class="GeneratedGridContainer" style="width: 100% ; height : 35%;">
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="IntegratedInvoiceList">
 
@@ -665,8 +661,12 @@
             </td>
 
         </tr>
-        <tr style="height:190px;">
+        <tr>
             <td style="width: 55%; top:50px;">
+                <span style="font-size: 14px;">סה"כ בש"ח: </span>
+                <span style="font-size: 14px; direction:ltr; unicode-bidi:bidi-override;"> {{LabelSumAmountNIS}} </span>
+                <br />
+                <br />
                 <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> הערות לחשבוניות </span>
                 <br />
                 <br />
