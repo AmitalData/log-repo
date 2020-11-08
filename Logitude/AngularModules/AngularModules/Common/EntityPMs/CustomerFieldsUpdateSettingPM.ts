@@ -64,7 +64,10 @@ export class CustomerFieldsUpdateSettingPM {
     public OldEntityPM: CustomerFieldsUpdateSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -72,6 +75,7 @@ export class CustomerFieldsUpdateSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerFieldsUpdateSetting");
            
         }
+	 }
     }
     private MyClone: CustomerFieldsUpdateSettingPM;
 

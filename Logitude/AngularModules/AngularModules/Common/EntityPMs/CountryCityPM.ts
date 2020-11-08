@@ -119,7 +119,10 @@ export class CountryCityPM {
     public OldEntityPM: CountryCityPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -127,6 +130,7 @@ export class CountryCityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CountryCity");
            
         }
+	 }
     }
     private MyClone: CountryCityPM;
 

@@ -181,7 +181,10 @@ export class AgentSharedManifestPM {
     public OldEntityPM: AgentSharedManifestPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -189,6 +192,7 @@ export class AgentSharedManifestPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AgentSharedManifest");
            
         }
+	 }
     }
     private MyClone: AgentSharedManifestPM;
 

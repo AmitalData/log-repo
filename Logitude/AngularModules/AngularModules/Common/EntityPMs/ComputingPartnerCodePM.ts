@@ -79,7 +79,10 @@ export class ComputingPartnerCodePM {
     public OldEntityPM: ComputingPartnerCodePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -87,6 +90,7 @@ export class ComputingPartnerCodePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ComputingPartnerCode");
            
         }
+	 }
     }
     private MyClone: ComputingPartnerCodePM;
 

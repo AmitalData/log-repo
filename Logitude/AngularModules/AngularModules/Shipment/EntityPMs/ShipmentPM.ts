@@ -5069,12 +5069,15 @@ export class ShipmentPM {
     public ShipmentAPInvoices: Array<any>;
     public ShipmentCarrierStatuses: Array<any>;
 
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+            }
         }
     }
 

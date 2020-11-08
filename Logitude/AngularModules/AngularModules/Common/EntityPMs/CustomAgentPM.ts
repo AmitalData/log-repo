@@ -376,7 +376,10 @@ export class CustomAgentPM {
     public OldEntityPM: CustomAgentPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -384,6 +387,7 @@ export class CustomAgentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomAgent");
            
         }
+	 }
     }
     private MyClone: CustomAgentPM;
 

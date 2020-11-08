@@ -156,6 +156,7 @@ export class DocumentTypePMService {
         if (!entityPM) {
             
             entityPM = new DocumentTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -226,6 +227,8 @@ export class DocumentTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -240,7 +243,7 @@ export class DocumentTypePMService {
             }
             var newDocumentTypeCustomFieldPM: DocumentTypeCustomFieldPM;
             newDocumentTypeCustomFieldPM = new DocumentTypeCustomFieldPM();
-				                
+		    newDocumentTypeCustomFieldPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -250,6 +253,7 @@ export class DocumentTypePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newDocumentTypeCustomFieldPM[pmProperty] = jItem[pmProperty];
             }
+			newDocumentTypeCustomFieldPM.DisableMarkAsDirty = false;
             newDocumentTypeCustomFieldPM.IsDirty = false;
             entityPM.DocumentTypeCustomFields.push(newDocumentTypeCustomFieldPM);
         }
@@ -276,7 +280,8 @@ export class DocumentTypePMService {
             {
                 newDocumentTypeCopyPM = new DocumentTypeCopyPM(null);
             }
-                
+ 			newDocumentTypeCopyPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -308,7 +313,7 @@ export class DocumentTypePMService {
                 newDocumentTypeCopyPM.OldEntityPM = null;
                 newDocumentTypeCopyPM.EntityParentPM = null;
             }
-			
+			 newDocumentTypeCopyPM.DisableMarkAsDirty = false;
 			 newDocumentTypeCopyPM.IsDirty = false;
             entityPM.DocumentTypeCopies.push(newDocumentTypeCopyPM);
         }
@@ -322,6 +327,7 @@ export class DocumentTypePMService {
                         //entityPM.DocumentTypeCopies.push(oldDocumentTypeCopies[itemKey]);
 						var oldItemJson = oldDocumentTypeCopies[itemKey];
                         var deletedPM: DocumentTypeCopyPM = new DocumentTypeCopyPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -333,7 +339,7 @@ export class DocumentTypePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -355,7 +361,7 @@ export class DocumentTypePMService {
             }
             var newDocumentTypeTemplatePM: DocumentTypeTemplatePM;
             newDocumentTypeTemplatePM = new DocumentTypeTemplatePM();
-				                
+		    newDocumentTypeTemplatePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -365,6 +371,7 @@ export class DocumentTypePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newDocumentTypeTemplatePM[pmProperty] = jItem[pmProperty];
             }
+			newDocumentTypeTemplatePM.DisableMarkAsDirty = false;
             newDocumentTypeTemplatePM.IsDirty = false;
             entityPM.DocumentTypeTemplates.push(newDocumentTypeTemplatePM);
         }

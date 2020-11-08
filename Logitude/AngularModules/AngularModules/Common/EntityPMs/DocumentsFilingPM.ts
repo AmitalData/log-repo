@@ -402,6 +402,11 @@ export class DocumentsFilingPM {
     public set LastVersion(newValue: number) { if (this.lastVersion != newValue) { this.lastVersion = newValue; this.MarkAsDirty("LastVersion"); } }
        
 	 
+    private isUoloadedField: boolean;
+    public get IsUoloadedField() { return this.isUoloadedField; }
+    public set IsUoloadedField(newValue: boolean) { if (this.isUoloadedField != newValue) { this.isUoloadedField = newValue; this.MarkAsDirty("IsUoloadedField"); } }
+       
+	 
     private lastShareDate: Date;
     public get LastShareDate() { return this.lastShareDate; }
     public set LastShareDate(newValue: Date) { if (this.lastShareDate != newValue) { this.lastShareDate = newValue; this.MarkAsDirty("LastShareDate"); } }
@@ -421,14 +426,7 @@ export class DocumentsFilingPM {
     public get IsUpdateSharedDocument() { return this.isUpdateSharedDocument; }
     public set IsUpdateSharedDocument(newValue: boolean) { if (this.isUpdateSharedDocument != newValue) { this.isUpdateSharedDocument = newValue; this.MarkAsDirty("IsUpdateSharedDocument"); } }
        
-
-
-
-    private isUoloadedField: boolean;
-    public get IsUoloadedField() { return this.isUoloadedField; }
-    public set IsUoloadedField(newValue: boolean) { if (this.isUoloadedField != newValue) { this.isUoloadedField = newValue; this.MarkAsDirty("IsUoloadedField"); } }
-
-
+	 
      
 	private documentsFilingMetaDataValues: DocumentsFilingMetaDataValuePM[];
     get  DocumentsFilingMetaDataValues() {
@@ -584,7 +582,10 @@ export class DocumentsFilingPM {
     public OldEntityPM: DocumentsFilingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -592,6 +593,7 @@ export class DocumentsFilingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentsFiling");
            
         }
+	 }
     }
     private MyClone: DocumentsFilingPM;
 

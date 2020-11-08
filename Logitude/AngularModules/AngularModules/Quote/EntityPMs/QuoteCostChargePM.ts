@@ -299,7 +299,10 @@ export class QuoteCostChargePM {
     public OldEntityPM: QuoteCostChargePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -307,6 +310,7 @@ export class QuoteCostChargePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteCostCharge");
            
         }
+	 }
     }
     private MyClone: QuoteCostChargePM;
 

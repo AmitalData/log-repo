@@ -64,7 +64,10 @@ export class BusinessUnitPM {
     public OldEntityPM: BusinessUnitPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -72,6 +75,7 @@ export class BusinessUnitPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessUnit");
            
         }
+	 }
     }
     private MyClone: BusinessUnitPM;
 

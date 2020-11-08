@@ -153,6 +153,7 @@ export class ObjectTablePMService {
         if (!entityPM) {
             
             entityPM = new ObjectTablePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ObjectTablePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

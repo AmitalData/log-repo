@@ -59,7 +59,10 @@ export class AWBAdditionalHandlingInfoPM {
     public OldEntityPM: AWBAdditionalHandlingInfoPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +70,7 @@ export class AWBAdditionalHandlingInfoPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AWBAdditionalHandlingInfo");
            
         }
+	 }
     }
     private MyClone: AWBAdditionalHandlingInfoPM;
 

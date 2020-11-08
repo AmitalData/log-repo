@@ -184,7 +184,10 @@ export class LogitudeLeadPM {
     public OldEntityPM: LogitudeLeadPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -192,6 +195,7 @@ export class LogitudeLeadPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LogitudeLead");
            
         }
+	 }
     }
     private MyClone: LogitudeLeadPM;
 

@@ -119,15 +119,18 @@ export class QuoteDocumentVersionPM {
 
 
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
-        if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteDocumentVersionPM");
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteDocumentVersionPM");
 
+            }
         }
     }
     private MyClone: QuoteDocumentVersionPM;

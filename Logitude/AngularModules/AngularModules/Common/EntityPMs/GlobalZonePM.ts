@@ -84,7 +84,10 @@ export class GlobalZonePM {
     public OldEntityPM: GlobalZonePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -92,6 +95,7 @@ export class GlobalZonePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GlobalZone");
            
         }
+	 }
     }
     private MyClone: GlobalZonePM;
 

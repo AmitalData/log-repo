@@ -244,7 +244,10 @@ export class TasksSchedulerPM {
     public OldEntityPM: TasksSchedulerPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -252,6 +255,7 @@ export class TasksSchedulerPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TasksScheduler");
            
         }
+	 }
     }
     private MyClone: TasksSchedulerPM;
 

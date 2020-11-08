@@ -517,7 +517,10 @@ export class APPaymentPM {
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -525,6 +528,7 @@ export class APPaymentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APPayment");
            
         }
+	 }
     }
     private MyClone: APPaymentPM;
 

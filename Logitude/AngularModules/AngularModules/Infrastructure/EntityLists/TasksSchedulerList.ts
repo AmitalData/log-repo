@@ -45,7 +45,5 @@ export class TasksSchedulerList {
 		EntityId: string;
 		Recepients: string;
 		ResultType: string;
-		Format: string;
-		AdvancedFormat: string;
 	
 }

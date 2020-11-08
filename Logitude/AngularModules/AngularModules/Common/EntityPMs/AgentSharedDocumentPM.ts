@@ -84,7 +84,10 @@ export class AgentSharedDocumentPM {
     public OldEntityPM: AgentSharedDocumentPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -92,6 +95,7 @@ export class AgentSharedDocumentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AgentSharedDocument");
            
         }
+	 }
     }
     private MyClone: AgentSharedDocumentPM;
 

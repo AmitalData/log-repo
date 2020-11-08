@@ -159,6 +159,7 @@ export class WarehousePMService {
         if (!entityPM) {
             
             entityPM = new WarehousePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -246,6 +247,8 @@ export class WarehousePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -260,7 +263,7 @@ export class WarehousePMService {
             }
             var newAddressPM: AddressPM;
             newAddressPM = new AddressPM();
-				                
+		    newAddressPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -270,6 +273,7 @@ export class WarehousePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newAddressPM[pmProperty] = jItem[pmProperty];
             }
+			newAddressPM.DisableMarkAsDirty = false;
             newAddressPM.IsDirty = false;
             entityPM.Addresses.push(newAddressPM);
         }
@@ -285,7 +289,7 @@ export class WarehousePMService {
             }
             var newContactPM: ContactPM;
             newContactPM = new ContactPM();
-				                
+		    newContactPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -295,6 +299,7 @@ export class WarehousePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newContactPM[pmProperty] = jItem[pmProperty];
             }
+			newContactPM.DisableMarkAsDirty = false;
             newContactPM.IsDirty = false;
             entityPM.Contacts.push(newContactPM);
         }
@@ -321,7 +326,8 @@ export class WarehousePMService {
             {
                 newCardExternalCodeByCurrencyPM = new CardExternalCodeByCurrencyPM(null);
             }
-                
+ 			newCardExternalCodeByCurrencyPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -353,7 +359,7 @@ export class WarehousePMService {
                 newCardExternalCodeByCurrencyPM.OldEntityPM = null;
                 newCardExternalCodeByCurrencyPM.EntityParentPM = null;
             }
-			
+			 newCardExternalCodeByCurrencyPM.DisableMarkAsDirty = false;
 			 newCardExternalCodeByCurrencyPM.IsDirty = false;
             entityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
         }
@@ -367,6 +373,7 @@ export class WarehousePMService {
                         //entityPM.CardExternalCodeByCurrencies.push(oldCardExternalCodeByCurrencies[itemKey]);
 						var oldItemJson = oldCardExternalCodeByCurrencies[itemKey];
                         var deletedPM: CardExternalCodeByCurrencyPM = new CardExternalCodeByCurrencyPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -378,7 +385,7 @@ export class WarehousePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -411,7 +418,8 @@ export class WarehousePMService {
             {
                 newWarehouseStoragePricingPM = new WarehouseStoragePricingPM(null);
             }
-                
+ 			newWarehouseStoragePricingPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -443,7 +451,7 @@ export class WarehousePMService {
                 newWarehouseStoragePricingPM.OldEntityPM = null;
                 newWarehouseStoragePricingPM.EntityParentPM = null;
             }
-			
+			 newWarehouseStoragePricingPM.DisableMarkAsDirty = false;
 			 newWarehouseStoragePricingPM.IsDirty = false;
             entityPM.WarehouseStoragePricings.push(newWarehouseStoragePricingPM);
         }
@@ -457,6 +465,7 @@ export class WarehousePMService {
                         //entityPM.WarehouseStoragePricings.push(oldWarehouseStoragePricings[itemKey]);
 						var oldItemJson = oldWarehouseStoragePricings[itemKey];
                         var deletedPM: WarehouseStoragePricingPM = new WarehouseStoragePricingPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -468,7 +477,7 @@ export class WarehousePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

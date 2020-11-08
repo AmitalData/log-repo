@@ -168,6 +168,7 @@ export class APPaymentPMService {
         if (!entityPM) {
             
             entityPM = new APPaymentPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -218,6 +219,8 @@ export class APPaymentPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -243,7 +246,8 @@ export class APPaymentPMService {
             {
                 newAPPaymentInvoicePM = new APPaymentInvoicePM(null);
             }
-                
+ 			newAPPaymentInvoicePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -277,7 +281,7 @@ export class APPaymentPMService {
                 newAPPaymentInvoicePM.OldEntityPM = null;
                 newAPPaymentInvoicePM.EntityParentPM = null;
             }
-			
+			 newAPPaymentInvoicePM.DisableMarkAsDirty = false;
 			 newAPPaymentInvoicePM.IsDirty = false;
             entityPM.PaymentInvoices.push(newAPPaymentInvoicePM);
         }
@@ -291,6 +295,7 @@ export class APPaymentPMService {
                         //entityPM.PaymentInvoices.push(oldPaymentInvoices[itemKey]);
 						var oldItemJson = oldPaymentInvoices[itemKey];
                         var deletedPM: APPaymentInvoicePM = new APPaymentInvoicePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -302,7 +307,7 @@ export class APPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -89,15 +89,20 @@ export class QuoteTemplateTextDesignPM {
     public get HideAlignment() { return this.hideAlignment; }
     public set HideAlignment(newValue: boolean) { if (this.hideAlignment != newValue) { this.hideAlignment = newValue; this.MarkAsDirty("HideAlignment"); } }
        
+	 
     private sampleText: string;
     public get SampleText() { return this.sampleText; }
     public set SampleText(newValue: string) { if (this.sampleText != newValue) { this.sampleText = newValue; this.MarkAsDirty("SampleText"); } }
-
+       
+	 
 
     public OldEntityPM: QuoteTemplateTextDesignPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -105,6 +110,7 @@ export class QuoteTemplateTextDesignPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateTextDesign");
            
         }
+	 }
     }
     private MyClone: QuoteTemplateTextDesignPM;
 

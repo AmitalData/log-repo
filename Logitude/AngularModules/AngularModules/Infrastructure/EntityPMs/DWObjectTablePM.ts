@@ -104,7 +104,10 @@ export class DWObjectTablePM {
     public OldEntityPM: DWObjectTablePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -112,6 +115,7 @@ export class DWObjectTablePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DWObjectTable");
            
         }
+	 }
     }
     private MyClone: DWObjectTablePM;
 

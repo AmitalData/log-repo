@@ -153,6 +153,7 @@ export class AirlineMessagingRulePMService {
         if (!entityPM) {
             
             entityPM = new AirlineMessagingRulePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class AirlineMessagingRulePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

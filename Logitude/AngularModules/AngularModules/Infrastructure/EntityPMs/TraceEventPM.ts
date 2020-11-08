@@ -154,7 +154,10 @@ export class TraceEventPM {
     public OldEntityPM: TraceEventPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -162,6 +165,7 @@ export class TraceEventPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TraceEvent");
            
         }
+	 }
     }
     private MyClone: TraceEventPM;
 

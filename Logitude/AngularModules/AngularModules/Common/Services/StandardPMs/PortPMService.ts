@@ -166,6 +166,7 @@ export class PortPMService {
         if (!entityPM) {
             
             entityPM = new PortPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -206,6 +207,8 @@ export class PortPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

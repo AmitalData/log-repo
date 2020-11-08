@@ -154,6 +154,7 @@ export class FilingInboxPMService {
         if (!entityPM) {
             
             entityPM = new FilingInboxPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class FilingInboxPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -218,7 +221,7 @@ export class FilingInboxPMService {
             }
             var newFilingInboxAttachmentPM: FilingInboxAttachmentPM;
             newFilingInboxAttachmentPM = new FilingInboxAttachmentPM();
-				                
+		    newFilingInboxAttachmentPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -228,6 +231,7 @@ export class FilingInboxPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newFilingInboxAttachmentPM[pmProperty] = jItem[pmProperty];
             }
+			newFilingInboxAttachmentPM.DisableMarkAsDirty = false;
             newFilingInboxAttachmentPM.IsDirty = false;
             entityPM.FilingInboxAttachments.push(newFilingInboxAttachmentPM);
         }

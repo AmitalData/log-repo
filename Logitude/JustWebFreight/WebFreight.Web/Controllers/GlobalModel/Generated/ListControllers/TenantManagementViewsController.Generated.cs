@@ -180,7 +180,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -217,6 +217,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IGlobalContext MyContext = GlobalContext.GetContext();
                 TenantManagementRepository  tenantManagementRepository = new TenantManagementRepository(MyContext);
                 IQueryable<TenantManagement> entityPocos = tenantManagementRepository.GetTenantManagements();
@@ -237,7 +238,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<TenantManagementList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(TenantManagementList).GetProperty(queryOperations.SortByColumnName);
@@ -301,18 +303,18 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Id);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 
