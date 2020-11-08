@@ -11,4 +11,4 @@ export class WarehouseWeightMeasurementList {
 		Name: string;
 		SearchFields: string;
 	
-}
+}
