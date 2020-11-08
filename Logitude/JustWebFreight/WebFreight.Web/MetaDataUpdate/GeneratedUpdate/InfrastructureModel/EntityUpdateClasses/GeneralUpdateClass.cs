@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "557e3390777a67bc6ff8462bb57c54dc";
-		
+		public const string HashString = "6b42d0b3ce36d616fe1b3ff447f7b36b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "2d3a",
+			      				    Code =  "ffa3",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -613,6 +612,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_UserDefinedReportFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReportFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.UserDefinedReportFeature", NameTextCodeDefaultText = @"User Defined Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_ChangeReceiveDateDocsIn = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChangeReceiveDateDocsIn", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ChangeReceiveDateDocsIn", NameTextCodeDefaultText = @"Allow Changing Docs-in receive date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_CUSTOMSINTERFACESETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSINTERFACESETTINGS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSINTERFACESETTINGS", NameTextCodeDefaultText = @"Customs Interface Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
