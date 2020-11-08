@@ -306,7 +306,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                                            <button id="{{'EditQueryBuilder' | IdGeneratorPipe}}" [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                                         </td>
 
                                                         <td style="width: 2px;">
