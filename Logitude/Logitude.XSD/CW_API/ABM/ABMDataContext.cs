@@ -395,7 +395,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             if (EORIRefrence)
             {
-                Customer customer = iCustomerRepository.GetSingleCustomer(this.Shipment.CustomerId, Tenant, false);
+                Customer customer = iCustomerRepository.GetSingleCustomer(this.Shipment.ConsigneeId, Tenant, false);
                 if(customer != null)
                 {
                     CWXSD.Reference iRefrenceBTW = new CWXSD.Reference()
