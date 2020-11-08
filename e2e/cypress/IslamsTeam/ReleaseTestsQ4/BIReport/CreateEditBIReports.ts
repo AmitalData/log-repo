@@ -126,7 +126,29 @@ import { LoginComp } from "../../../login/Login.po";
     });
 
     it('EditBIReport', function () {
+        cy.get('#EditQueryBuilder').should('be.visible')
+        cy.get('#EditQueryBuilder').click()
+
+        cy.server();
+        cy.route('**/dwobjectfields/**').as('LoadDWObjectFieldsCompleted');
+        cy.wait('@LoadDWObjectFieldsCompleted'); 
+
+        cy.get('#DWQueryBuilderSearchFields_0_1').type('Arrived')
+        cy.get('#AddQBRootColumnArrived').click({ force: true })
+        cy.get('#AddQBRootFilterArrived').should('be.visible')
+        cy.get('#AddQBRootFilterArrived').click()
+
+      
+        cy.get('#ComboBox_0_22').click({ force: true })
   
+        cy.get('#ComboBox_0_22').contains('Yes').click({ force: true })
+       
+        cy.get('#LoadPreviewData').click()
+        cy.get('#SaveButton').click()
+
+        cy.get('#RunBIReport').click()
+        cy.get('#myGrid').should('be.visible')
+
     });
 
 
