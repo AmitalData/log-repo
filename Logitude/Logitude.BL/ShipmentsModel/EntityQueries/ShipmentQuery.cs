@@ -13085,6 +13085,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return isCFS;
         }
 
+        public string GetMasterNumberFromHouseShipmentByShipmentNumber(string shipmentNumber, int tenant)
+        {
+            var masterNumber = "";
+            var shipment = (from a in repository.context.Shipments
+                            where a.ShipmentNumber == shipmentNumber && a.Tenant == tenant
+                            select a).FirstOrDefault();
+            if(shipment != null && shipment.ShipmentLevelCode == "H")
+            {
+                masterNumber = (from a in repository.context.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).Select(a=>a.ShipmentNumber).FirstOrDefault();
+            }
+            return masterNumber;
+        }
     }
 
     public class DeparturesArrivalsDataItem

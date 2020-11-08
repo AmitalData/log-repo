@@ -1047,7 +1047,8 @@ namespace WebFreight.Web.Helpers
 
                 case "ARID":
                     {
-                        dataProvider = logitudeReportsWebService.LoadARInvoicesDepositReportData(filters, reportFliter.tenant);
+                        AccountingDepositReportManager accountingDepositReportManager = new AccountingDepositReportManager(filters, reportFliter.tenant);
+                        dataProvider = accountingDepositReportManager.GetData();
                         break;
                     }
 

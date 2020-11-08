@@ -5640,6 +5640,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
