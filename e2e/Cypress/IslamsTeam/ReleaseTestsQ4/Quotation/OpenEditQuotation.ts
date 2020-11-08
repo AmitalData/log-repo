@@ -40,6 +40,7 @@ it('Search For Specific Quote', () => {
 
     cy.get('#CreatedQuote').click()
     cy.get('#LogGrid_0_0row0').click({force:true})
+    cy.get('#BusyIndicator_0').should('not.be.visible')
 
 })
 
@@ -83,15 +84,22 @@ it('Open Quotation Successfully', () => {
 })
 
 it('Edit Quotation', () => {
-  cy.wait(3000)
-  cy.get('#EdiitTempalte').should('be.visible')
+  //cy.wait(3000)
+  cy.get('.RefreshButton').should('be.visible')
   cy.get('#EdiitTempalte').click({force:true})
   cy.get('#EditId').click({force:true})
- // cy.get('#BusyIndicator_0').should('not.be.visible')
- // cy.get('.BusyIndicatorControlInner').should('not.be.visible')
  cy.wait(3000)
  cy.get('#EditSection2').click()
-  //cy.get('.fr-view').click()
+ cy.get('#AddDataField').click({force:true})
+ cy.get('#SystemData').click({force:true})
+ cy.get('#Expand3').click({force:true})
+ //cy.get('.iwanttohover').eq(0).click();
+ cy.get('#OkButton').click({force:true})
+ cy.get('#Savee').click({force:true})
+ cy.get('#Setting_3').should('be.visible')
+ cy.get('#Setting_3').click()
+cy.get('.LeftCenter').click()
+
 
 })
 
