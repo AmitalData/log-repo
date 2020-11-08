@@ -881,6 +881,7 @@ namespace WebFreight.Web.WcfApi
                 ContactRepository contactRepository = new ContactRepository(objectContext);
                 CountryRepository countryRepository = new CountryRepository(objectContext);
                 RankRepository rankRepository = new RankRepository(objectContext);
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
                 CustomerQuery query = new CustomerQuery(tenant);
                 if (filters.ById)
                 {
@@ -1002,6 +1003,16 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.RankCode = rank.Code;
                             entityPM.RankName = rank.Name;
+                        }
+                    }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Code;
+                            
                         }
                     }
 
