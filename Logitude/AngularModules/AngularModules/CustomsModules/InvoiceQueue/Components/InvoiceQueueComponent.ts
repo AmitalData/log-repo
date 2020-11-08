@@ -17,6 +17,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -37,6 +38,8 @@ export class InvoiceQueueComponent
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
     WarningMessages: boolean;
+    SumAmountNIS: number;
+    LabelSumAmountNIS: string;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
     UnifreightMessage: any;
@@ -44,7 +47,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                //this.GetData();
+             //   this.GetData();
             });
         });
     }
@@ -61,15 +64,19 @@ export class InvoiceQueueComponent
             this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
+                        if (x.AmountNIS != "") {
+                            this.SumAmountNIS += Number(x.AmountNIS);
+                        }
                         x = this.setClientForwarder(x);
                         x.AmountForeign = this.SetFixedValue(x.AmountForeign);
                         x.AmountNIS = this.SetFixedValue(x.AmountNIS);
                         this.InvoiceLineList.Insert(x);
                     });
                 }
+                this.LabelSumAmountNIS = this.SetFixedValue(String(this.SumAmountNIS));
                 (data.Result.Invoice as AllInvoices).Statuses.forEach(x => {
                     this.StatusList.Insert(x);
-                });
+                }); 
                 (data.Result.Invoice as AllInvoices).IntegratedInvoices.forEach(x => {
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
@@ -100,12 +107,15 @@ export class InvoiceQueueComponent
                 this.WMessagesList.Collection.forEach(x => {
                     this.EMessagesList.Insert(x);
                 });
+
             });
         });
     }
 
 
     ResetVariables() {
+        this.SumAmountNIS = 0;
+        this.LabelSumAmountNIS = "";
         this.CreateQInvoiceButtonDim = false;
         this.InvoiceLineList = new ObservableCollection([]);
         this.IntegratedInvoiceList = new ObservableCollection([]);
