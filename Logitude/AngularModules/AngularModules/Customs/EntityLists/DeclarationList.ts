@@ -190,6 +190,8 @@ export class DeclarationList {
 	CreateDateForExport: Date;
 	TransportModeForExport: string;
 	CustomFileForExport: string;
+	TransshipmentApprovalDateTime: Date;
+	FinalLoadingSite: string;
 	
 }
  

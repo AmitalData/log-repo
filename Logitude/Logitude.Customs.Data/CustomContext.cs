@@ -474,6 +474,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
 	
+            modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
+	
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
@@ -864,6 +866,10 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<SupplierInvoice>().Property(x => x.VendorComissionPercentage).HasPrecision(7, 4);
 				
 			modelBuilder.Entity<SupplierInvoice>().Property(x => x.InvoiceAmountInUSD).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoice>().Property(x => x.ItemFOBAmountForeign).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoice>().Property(x => x.ItemFOBAmountNIS).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceFreightAmount>().Property(x => x.Amount).HasPrecision(16, 2);
 				
@@ -2442,6 +2448,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LeadDocumentType> LeadDocumentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LoadingSiteType> LoadingSiteTypes 
 	 {
 	      get; set;
 	 

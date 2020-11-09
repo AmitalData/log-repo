@@ -470,6 +470,7 @@
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\ExporterRoleType.lxml" />
+    <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

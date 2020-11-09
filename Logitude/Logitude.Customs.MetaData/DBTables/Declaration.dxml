@@ -956,6 +956,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TransshipmentApprovalDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalLoadingSite"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
