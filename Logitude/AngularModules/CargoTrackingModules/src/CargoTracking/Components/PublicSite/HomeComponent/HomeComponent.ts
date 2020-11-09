@@ -56,8 +56,7 @@ export class HomeComponent
             this.listenToRouterEvents();
         });
     }
-    public Logo: string;
-    public LogoImg: string;
+    public Logo: string; 
     private GetDataFromURL(baseUrl: string)
     {
        

@@ -31,34 +31,20 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                     MainColor = tenantManagementPM.MainColor,
                     SecondaryColor = tenantManagementPM.SecondaryColor,
                     BackgroundId = tenantManagementPM.BackgroundId,
-                    
+                    Logo = CargoTrackingHelper.SetBrandingLogo(tenantManagementPM)
                 };
                 if (filedata != null)
                 {
                     data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
                 }
-                data.Logo = SetBrandingLogo(tenantManagementPM);            
                 ServiceResponse response = new ServiceResponse();
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
-            
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-       private string SetBrandingLogo(TenantManagementPM tenantManagement)
-        {
-            Uploader uploaderService = new Uploader();
-            byte[] logodata = uploaderService.DownloadFile("sharedLogtsitcslogo" + tenantManagement.Id, "png", "logos", tenantManagement.Id);
-            if (logodata != null)
-            {
-                return "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(logodata);
-            }
-            else return null;
         }
     }
 }
