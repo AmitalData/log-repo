@@ -294,6 +294,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         AmountInLocalCurrency = myline.LocalCurrencyAmount == null ? 0 : (decimal)myline.LocalCurrencyAmount,
                         ChargeTypeCode = myline.ChargesType == null ? "" : myline.ChargesType.Code,
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
+                        PayableLineId = myline.EntityPayableId == null ? "" : myline.EntityPayableId,
                         Quantity = null,
                         IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
                     };
