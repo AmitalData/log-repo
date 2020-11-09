@@ -156,20 +156,7 @@ namespace Simplog.Data.Helpers
         public string UserName { get; set; }
         [DataMember]
         public string Password { get; set; }
-        [DataMember]
-        public string From { get; set; }
-        [DataMember]
-        public string Subject { get; set; }
-        [DataMember]
-        public string Prefix { get; set; }
-        [DataMember]
-        public string Suffix { get; set; }
-        [DataMember]
-        public string Extension { get; set; }
-
-        [DataMember]
-        public bool IsSFTP { get; set; }
-
+       
     }
 
 

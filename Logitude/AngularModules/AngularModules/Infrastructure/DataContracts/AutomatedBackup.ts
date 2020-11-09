@@ -65,10 +65,10 @@ export class FTPAutomationDetails {
     public Folder :string;
     public  UserName :string;
     public   Password :string;
-    public    From :string;
-    public   Subject :string;
-    public   Prefix :string;
-    public Suffix :string;
-    public   Extension :string;
+    //public    From :string;
+    //public   Subject :string;
+    //public   Prefix :string;
+    //public Suffix :string;
+    //public   Extension :string;
 
     }

@@ -39,7 +39,7 @@
 
     <td style="width:200px" >
     <div style="text-align:left;width:200px;" >
-    <ComboBox style="width:200px;" (SelectedItemChanged)="SendInterfaceSelected = $event" [ItemsSource]="SendInterfaceClassLists" [SelectedItem]="SendInterfaceSelected" [Binding]="'Name'" > </ComboBox >
+    <ComboBox [IsDisabled] ="true" style="width:200px;" (SelectedItemChanged)="SendInterfaceSelected = $event" [ItemsSource]="SendInterfaceClassLists" [SelectedItem]="SendInterfaceSelected" [Binding]="'Name'" > </ComboBox >
     </div >
     </td >
     <td >
@@ -115,19 +115,19 @@
 
     <td style="width:202px" >
     <div style="text-align:left;width:202px;" >
-    <ComboBox style="width:200px;" (SelectedItemChanged)="FTPFolderSelected = $event" [ItemsSource]="FTPFolderLists" [SelectedItem]="FTPFolderSelected" [Binding]="'Name'" > </ComboBox >
+    <ComboBox [IsDisabled] ="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="FTPFolderSelected = $event" [ItemsSource]="FTPFolderLists" [SelectedItem]="FTPFolderSelected" [Binding]="'Name'" > </ComboBox >
     </div >
     </td >
     <td style="width:8px" > </td >
     <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central" >
 
-    <IconButton IsEnabled="false" [Name]="'Add'" [IsSmall]="true" (click)="AddFTPFolder()" > </IconButton >
+    <IconButton [IsEnabled]="IsCustomerCare" [Name]="'Add'" [IsSmall]="true" (click)="AddFTPFolder()" > </IconButton >
 
     </td >
     <td style="width:10px" > </td >
 
     <td style="width:70px" >
-    <a class="Link" style="font-size:13px;" (click)="ShowFTPDetails()" > FTP Details</a >
+    <a [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()" > FTP Details</a >
     </td >
     <td > </td >
     </tr >
@@ -164,8 +164,8 @@
 
     <td style="width:200px" >
     <div style="text-align:left;width:200px;" >
-    <LogLov *ngIf="!IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
-    <LogLov *ngIf="IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
+    <LogLov [ObjectTableName]="'SendInterface'"  *ngIf="!IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
+    <LogLov  [ObjectTableName]="'SendInterface'"  *ngIf="IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
 
 
 
@@ -174,7 +174,7 @@
     <td style="width:8px" > </td >
     <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central" >
 
-    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddComputingPartner()" > </IconButton >
+    <IconButton [IsEnabled]="IsCustomerCare" [Name]="'Add'" [IsSmall]="true" (click)="AddComputingPartner()" > </IconButton >
 
     </td >
     <td >

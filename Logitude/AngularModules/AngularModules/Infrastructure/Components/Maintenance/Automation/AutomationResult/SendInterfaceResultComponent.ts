@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../../../Infrastructure/Components/Logitude
 import { Operator } from '../ViewModel/AutomationConditionViewModel';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { AutomationSendInterface } from '../../../../DataContracts/AutomatedBackup';
+import { SessionLocator } from '../../../../Utilities/SessionLocator';
 
 @Component({
     selector: 'SendInterfaceResult',
@@ -22,20 +23,22 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     SendFormatLists: Operator[] = [];
     SendViaClassLists: Operator[] = [];
     FTPFolderLists: Operator[] = [];
+    IsCustomerCare: boolean = false;
 
     DataContext: any;
     IsRefreshComputingPartner: boolean = false;
     constructor() {
         super();
         this.DataContext = this;
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
+
         this.InitializeSendInterfaceResultComponent();
 
     }
     item: any;
     ngOnInit() {
       
-
-
+        this.UIProperties.SetEnabled("ComputingPartnerId", "SendInterface", this.IsCustomerCare);
 
     }
 

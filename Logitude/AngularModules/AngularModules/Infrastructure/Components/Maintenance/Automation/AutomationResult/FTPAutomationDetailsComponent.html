@@ -6,166 +6,174 @@
 </style>
 
 
-    <table>
-        <tr>
-            <td>
-                <div class="MediaFill">
-
-                    <table *ngIf="FTPAutomationDetails">
-                        <tr class="FormFieldRow">
-
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Host'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Host'" [Text]="DataContext.Host" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
-                        </tr>
-
-                        <tr class="FormFieldRow">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Folder'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Folder'" [Text]="DataContext.Folder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
-
-                        </tr>
+<table>
 
 
-                        <tr class="FormFieldRow">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'UserName'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'UserName'" [Text]="DataContext.UserName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
 
-                        </tr>
+    <tr>
+        <td>
+            <div class="MediaFill">
 
-                        <tr class="FormFieldRow">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Password'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Password'" [Text]="DataContext.Password" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+                <table *ngIf="FTPAutomationDetails">
+                    <tr class="FormFieldRow">
 
-                        </tr>
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Host'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Host'" [Text]="DataContext.Host" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
 
-                        <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'From'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'From'" [Text]="DataContext.From" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+                    <tr class="FormFieldRow">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Folder'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Folder'" [Text]="DataContext.Folder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
 
-                        </tr>
-
-                        <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Subject'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Subject'" [Text]="DataContext.Subject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
-
-                        </tr>
+                    </tr>
 
 
-                        <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Prefix'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="DataContext.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+                    <tr class="FormFieldRow">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'UserName'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'UserName'" [Text]="DataContext.UserName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
 
-                        </tr>
+                    </tr>
 
-                        <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Suffix'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="DataContext.Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+                    <tr class="FormFieldRow">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Password'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Password'" [Text]="DataContext.Password" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
 
-                        </tr>
+                    </tr>
+
+                    <!--<tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'From'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'From'" [Text]="DataContext.From" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Subject'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Subject'" [Text]="DataContext.Subject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+
+                    </tr>
 
 
-                        <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
-                            <td style="width:90px;vertical-align:central">
-                                <LogLabel [Text]="'Extension'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:250px;">
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'Extension'" [Text]="DataContext.Extension" (LostFocus)="ExtensionLostFocus($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </div>
-                            </td>
-                            <td></td>
+                    <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Prefix'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="DataContext.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
 
-                        </tr>
+                    </tr>
 
-                        <tr>
-                            <td colspan="3"> </td>
-                        </tr>
-                    </table>
+                    <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Suffix'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="DataContext.Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+
+                    </tr>
 
 
-                </div>
-            </td>
-        </tr>
-     
+                    <tr class="FormFieldRow" *ngIf="!BasicDisplayMode">
+                        <td style="width:90px;vertical-align:central">
+                            <LogLabel [Text]="'Extension'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'Extension'" [Text]="DataContext.Extension" (LostFocus)="ExtensionLostFocus($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
 
-        <tr style="height: 32px;">
-            <td style="vertical-align: bottom">
-                <table style="height: 22px;">
+                    </tr>-->
+
                     <tr>
-                        <td>
-                            <div></div>
-                        </td>
-
-                        <td style="width: 57px;">
-                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
-                        </td>
-
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 57px;">
-                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
-                        </td>
+                        <td colspan="3"> </td>
                     </tr>
                 </table>
-            </td>
-        </tr>
 
-    </table>
+
+            </div>
+        </td>
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
 

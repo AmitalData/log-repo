@@ -148,12 +148,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsShowAutomationCodeField: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     entityResourceService: EntityResourceService = new EntityResourceService();
-    constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
+
+
+    constructor(public _automationResultEmailRecipientExtendedService:
+
+        AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
         if (SessionLocator.TenantPM.Id == 0) this.IsShowAutomationCodeField = true;
 
         this._documentTypeListService = new DocumentTypeListService();
+
     }
 
     ngOnInit() {
