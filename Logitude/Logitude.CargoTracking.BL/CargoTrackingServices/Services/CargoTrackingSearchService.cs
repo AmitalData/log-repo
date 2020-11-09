@@ -52,7 +52,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 {
                     DataRow TableRow1 = dataTable.NewRow();
                     TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchArr[i]);
+                    TableRow1.SetField("SearchFields", SearchArr[i].Trim());
                     if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                         dataTable.Rows.Add(TableRow1);
                 }
@@ -69,7 +69,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     string SearchField = (string)Value;
                     DataRow TableRow1 = dataTable.NewRow();
                     TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchField);
+                    TableRow1.SetField("SearchFields", SearchField.Trim());
                     if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                         dataTable.Rows.Add(TableRow1);
  
