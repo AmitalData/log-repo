@@ -24,7 +24,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
                 Uploader uploaderService = new Uploader();
-                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);
+                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);            
                 CargoTrackingBrandingData data = new CargoTrackingBrandingData()
                 {
                     Tenant = tenant,
@@ -37,6 +37,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 {
                     data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
                 }
+                data.Logo = SetBrandingLogo(tenantManagementPM);            
                 ServiceResponse response = new ServiceResponse();
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -47,6 +48,17 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+       private string SetBrandingLogo(TenantManagementPM tenantManagement)
+        {
+            Uploader uploaderService = new Uploader();
+            byte[] logodata = uploaderService.DownloadFile("sharedLogtsitcslogo" + tenantManagement.Id, "png", "logos", tenantManagement.Id);
+            if (logodata != null)
+            {
+                return "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(logodata);
+            }
+            else return null;
         }
     }
 }

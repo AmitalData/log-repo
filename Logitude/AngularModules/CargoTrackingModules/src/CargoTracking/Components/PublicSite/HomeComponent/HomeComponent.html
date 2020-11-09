@@ -3,13 +3,13 @@
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
             <img class="logo" src="./assets/menu-logo.png" width="100px" alt="" />
-  
-            <ul class="nav-mobile">
-                <li (click)="displayMenu = false" routerLink="/search">Home</li>
-                <li (click)="displayMenu = false" routerLink="/pageb">Page B</li>
-                <li (click)="displayMenu = false" routerLink="/login" style="float: right;">Login</li>
-            </ul>
-        </div>
+         
+                <ul class="nav-mobile">
+                    <li (click)="displayMenu = false" routerLink="/search">Home</li>
+                    <li (click)="displayMenu = false" routerLink="/pageb">Page B</li>
+                    <li (click)="displayMenu = false" routerLink="/login" style="float: right;">Login</li>
+                </ul>
+            </div>
         <div style="width: 40%; float: right;" (click)="displayMenu = false"></div>
     </div>
   
@@ -20,7 +20,7 @@
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>
         <!-- <div class="title">Cargo Tracking</div> -->
-        <img src="./assets/images/logo/path3410@1x.png" routerLink="/search" alt="" />
+        <img   style="width:76px;height:26px" [attr.src]="Logo" routerLink="/search" alt="" />
   
   
     </div>
@@ -29,9 +29,10 @@
     <div class="web-header-wrapper">
         <div class="web-header hide-mobile">
             <div class="logo">
-                <img src="./assets/images/logo/path3410@1x.png" alt="" />
+                <img style="width:76px;height:26px" [attr.src]="Logo" alt="" />
             </div>
-  
+           
+
             <div class="nav">
                 <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;">
                     <!-- <li routerLink="/search" routerLinkActive="active">Home</li> -->
@@ -39,7 +40,7 @@
                     <li routerLink="/1/dashboard" routerLinkActive="active" style="float: right;">User Dashboard</li>
                 </ul>
             </div>
-  
+
         </div>
     </div>
   
@@ -57,4 +58,3 @@
     </footer>
   
   </div>
-  
