@@ -724,6 +724,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
         public string VATExternalId { get; set; }
+        public string PayableLineId { get; set; }
 
         public string DebitAccount { get; set; }
         public decimal? Quantity { get; set; }
