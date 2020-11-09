@@ -458,18 +458,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
-    get WarehouseLegLastFreeDate() { return this.EntityPM.WarehouseLegLastFreeDate; }
-    set WarehouseLegLastFreeDate(newValue: Date) {
-        if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
-            this.EntityPM.WarehouseLegLastFreeDate = newValue;
-            if (newValue == null) {
-                this.WarehouseLegLastFreeDate = null;
-            } else {
-                this.SetStorageFreeDays();
-            }
-        }
-    }
-
     get WarehouseLegExpectedEntryDate() { return this.EntityPM.WarehouseLegExpectedEntryDate; }
     set WarehouseLegExpectedEntryDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedEntryDate != value) {
@@ -489,11 +477,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualEntryDate != value) {
             this.EntityPM.WarehouseLegActualEntryDate = value;
             this.SetUIProperties_ValidateActualDates();
+
             if (value == null) {
-                this.WarehouseLegActualEntryDate == null;
                 this.StorageDays = null;
                 this.Days = null;
-            } else {
+            }
+
+            else {
                 this.SetLastFreeDate();
                 this.SetStorageDays();
             }
@@ -507,8 +497,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualReleaseDate != value) {
             this.EntityPM.WarehouseLegActualReleaseDate = value;
             this.SetUIProperties_ValidateActualDates();
+
             if (value == null) {
-                this.WarehouseLegActualReleaseDate = null;
                 this.StorageDays = null;
                 this.Days = null;
             }
@@ -517,6 +507,37 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
 
             this.PricesChanged = true;
+            this.ComputeGrossWeight_PerStorageDays();
+        }
+    }
+
+    get WarehouseLegLastFreeDate() { return this.EntityPM.WarehouseLegLastFreeDate; }
+    set WarehouseLegLastFreeDate(newValue: Date) {
+        if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
+            this.EntityPM.WarehouseLegLastFreeDate = newValue;
+
+            if (newValue) {                
+                this.SetStorageFreeDays();
+            }
+        }
+    }
+
+    private SetStorageFreeDays() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
+            if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
+                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
+
+                if (days == null) {
+                    days = 0;
+                }
+
+                this.EntityPM.WarehouseStorageFreeDays = days;
+            }
+
+            else {
+                this.EntityPM.WarehouseStorageFreeDays = 0;
+            }
+
             this.ComputeGrossWeight_PerStorageDays();
         }
     }
@@ -554,14 +575,21 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseStorageFreeDays(value: number) {
         if (this.EntityPM.WarehouseStorageFreeDays != value) {
             this.EntityPM.WarehouseStorageFreeDays = value;
-            if (value == null) {
-                this.WarehouseStorageFreeDays = null;
+
+            this.SetLastFreeDate();
+            this.PricesChanged = true;
+        }
+    }
+
+    private SetLastFreeDate() {
+        if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
+            var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
+            if (date == null) {
+                this.EntityPM.WarehouseStorageFreeDays = 0;
             }
             else {
-                this.SetLastFreeDate();
+                this.EntityPM.WarehouseLegLastFreeDate = date;
             }
-
-            this.PricesChanged = true;
         }
     }
 
@@ -669,35 +697,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     this.CurrentSession.FireEvent("StorageReceivableCurrencyChanged");
                 }
             });            
-        }
-    }
-    private SetLastFreeDate() {
-        if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
-            var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
-            if (date == null) {
-                this.WarehouseStorageFreeDays = 0;
-            }
-            else {
-                this.WarehouseLegLastFreeDate = date;
-            }
-        }
-    } 
-
-    private SetStorageFreeDays() {
-        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
-            if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
-                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
-                if (days == null) {
-                    this.WarehouseStorageFreeDays = 0;
-                } else if (this.WarehouseStorageFreeDays != days) {
-                    this.WarehouseStorageFreeDays = days;
-                }
-            }
-            else {
-                this.WarehouseStorageFreeDays = 0;
-            }
-
-            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
