@@ -1319,6 +1319,11 @@ export class DeclarationPM {
     public set AmendmentRejectionReasonName(newValue: string) { if (this.amendmentRejectionReasonName != newValue) { this.amendmentRejectionReasonName = newValue; this.MarkAsDirty("AmendmentRejectionReasonName"); } }
        
 	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
