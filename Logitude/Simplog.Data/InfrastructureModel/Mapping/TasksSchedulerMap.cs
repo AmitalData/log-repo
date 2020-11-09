@@ -74,6 +74,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .HasMaxLength(10)
                .IsUnicode(false);
 
+            this.Property(t => t.Format)
+                .HasMaxLength(20)
+                .IsUnicode(true);
+
+            this.Property(t => t.AdvancedFormat)
+               .HasMaxLength(20)
+               .IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -119,6 +127,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AverageRunTime).HasColumnName("AverageRunTime");
             this.Property(t => t.EntityId).HasColumnName("EntityId");
             this.Property(t => t.ResultType).HasColumnName("ResultType");
+            this.Property(t => t.Format).HasColumnName("Format");
+            this.Property(t => t.AdvancedFormat).HasColumnName("AdvancedFormat");
 
 
         }

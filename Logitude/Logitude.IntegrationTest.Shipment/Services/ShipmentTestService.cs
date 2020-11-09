@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.IntegrationTest.Core;
+using Logitude.IntegrationTest.Core.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -10,40 +11,62 @@ using System.Threading.Tasks;
 
 namespace Logitude.IntegrationTest.Shipment.Services
 {
-    public class ShipmentTestService
+    public class ShipmentTestService: IntegrationService
     {
-        private string apiController;
-        public HttpResponseMessage HttpResponseMessage { get; private set; }
-        public ShipmentTestService()
-        {
-            this.apiController = "Shipment";
-        }
-
-        public async Task<string> CreateShipment(ShipmentPM entityPM)
-        {
-            HttpResponseMessage = await RestClientService.PostAsync(entityPM, apiController);
-            Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
-
-            ShipmentPM servedShipment = RestClientService.ParseResponse<ShipmentPM>(HttpResponseMessage);
-            return servedShipment.Id;
-        }
-
-        public async Task<ShipmentPM> UpdateShipment(ShipmentPM entityPM)
-        {
-            HttpResponseMessage = await RestClientService.PutAsync(entityPM, apiController);
-            Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
-
-            ShipmentPM servedShipment = RestClientService.ParseResponse<ShipmentPM>(HttpResponseMessage);
-            return servedShipment;
-        }
+        protected override string ApiController => "Shipment";
 
         public async Task<ShipmentPM> GetShipment(string id)
         {
-            HttpResponseMessage = await RestClientService.GetAsync(apiController + "/GetSingle?id=" + id);
-            Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
+            Response = await RestClientService.GetAsync(ApiController + "/GetSingle?id=" + id);
 
-            ShipmentPM servedShipment = RestClientService.ParseResponse<ShipmentPM>(HttpResponseMessage);
-            return servedShipment;
+            Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+
+            ShipmentPM responseEntity = RestClientService.ParseResponse<ShipmentPM>(Response);
+            return responseEntity;
         }
+
+        public async Task<string> CreateShipment(ShipmentPM entityPM, bool isAsserting = true)
+        {
+            Response = await RestClientService.PostAsync(entityPM, ApiController);
+
+            if (isAsserting)
+            {
+                Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+            }
+
+            if (HasException)
+            {
+                return null;
+            }
+
+            else
+            {
+                ShipmentPM responseEntity = RestClientService.ParseResponse<ShipmentPM>(Response);
+                return responseEntity.Id;
+            }
+        }
+
+        public async Task<ShipmentPM> UpdateShipment(ShipmentPM entityPM, bool isAsserting = true)
+        {
+            Response = await RestClientService.PutAsync(entityPM, ApiController);
+
+            if (isAsserting)
+            {
+                Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+            }
+
+            if (HasException)
+            {
+                return entityPM;
+            }
+
+            else
+            {
+                ShipmentPM responseEntity = RestClientService.ParseResponse<ShipmentPM>(Response);
+                return responseEntity;
+            }
+        }
+
+
     }
 }

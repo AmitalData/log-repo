@@ -135,7 +135,7 @@ namespace WebFreight.Web.DataProviders
             public DateTime? InvocieDate { get; set; }
             public DateTime? DueDate { get; set; }
             public string MasterNumber { get; set; }
-            
+            public string MasterShipmentNumber { get; set; }
 
         }
     }

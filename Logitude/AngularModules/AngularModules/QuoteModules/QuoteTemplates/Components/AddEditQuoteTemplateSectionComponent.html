@@ -31,10 +31,10 @@
                   <td style="width:50px"><div>{{'QuoteTemplate.S.Name' | TextCodeTranslationPipe}}:</div></td>
                   <td style="width:5px"><div></div></td>
         
-                  <td style="width:150px"><input  type="text" [(ngModel)]="Name" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:150px" /></td>
+                  <td style="width:150px"><input id="{{'DisplayName' | IdGeneratorPipe}}" type="text" [(ngModel)]="Name" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:150px" /></td>
 
                   <td style="height:22px;">
-                      <div  style="width:auto;height:22px;position:relative;text-align:left;float:right;margin-right:3px"><button (click)="AddDataField()" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">{{'QuoteTemplate.B.AddDataField' | TextCodeTranslationPipe}} </button></div>
+                      <div  style="width:auto;height:22px;position:relative;text-align:left;float:right;margin-right:3px"><button (click)="AddDataField()" style="width:auto;background-color:#E6E6E6;height:22px;" id="{{'AddDataField' | IdGeneratorPipe}}" class="Button">{{'QuoteTemplate.B.AddDataField' | TextCodeTranslationPipe}} </button></div>
                   </td>
 
 
@@ -83,7 +83,7 @@
                     <td  style="width: 7px;"></td>
 
                     <td  style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()"id="{{'Savee' | IdGeneratorPipe}}">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
 
                    

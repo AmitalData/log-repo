@@ -449,6 +449,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
     }
 
+    GetIdWithoutSpecialCharacters(value: string){
+        let specialCharacters = ['/','(',')'];
+        specialCharacters.forEach(ch => {
+            value = value.replace(ch,'');
+        });
+
+        return value;
+    }
+
     private SearchFieldChanged(newValue: string) {
         this.AllGroupsDataSource.forEach((Group) => {
             var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || a.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);

@@ -202,7 +202,14 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
     private userIdNumber;
     public get UserIdNumber() { return this.userIdNumber }
-    public set UserIdNumber(newValue: string) { this.userIdNumber = newValue; }
+    public set UserIdNumber(newValue: string) {
+        var id = String(newValue).trim();
+        if (id.length <= 9 && id.length >= 5) {
+            // Pad string with zeros up to 9 digits
+            newValue = id.length < 9 ? ("00000000" + id).slice(-9) : id;
+        }
+        this.userIdNumber = newValue;
+    }
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;

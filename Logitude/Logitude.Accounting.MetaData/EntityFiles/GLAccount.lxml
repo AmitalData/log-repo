@@ -11357,6 +11357,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCH&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;Interest Credit Changed&quot;"
+      LocalName="&quot;Interest Credit Changed&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -13789,22 +13802,18 @@
       LocalDefaultText="&quot;לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-  <TextCode
+    <TextCode
       Code="&quot;GLAccount.O.ThereIsExternalTrans&quot;"
       DefaultText="&quot;Includes ledger transactions from external system&quot;"
       LocalDefaultText="&quot;כולל תנועות ממערכת חיצונית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;GLAccount.O.InterestForeignCurrencyAccount&quot;"
       DefaultText="&quot;Interest cannot be defined for a foreign currency account&quot;"
       LocalDefaultText="&quot;לא ניתן להגדיר תנאי ריבית לכרטיס במטבע זר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
-    
-    
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.IntegrationTest.Core;
+using Logitude.IntegrationTest.Core.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,53 +12,62 @@ using System.Threading.Tasks;
 
 namespace Logitude.IntegrationTest.Shipment.Services
 {
-    public class ExternalDirectAPITestService
+    public class ExternalDirectAPITestService : IntegrationService
     {
-        private string apiController;
-        public HttpResponseMessage HttpResponseMessage { get; private set; }
-        public ExternalDirectAPITestService()
+        protected override string ApiController => "Direct";
+
+        public async Task<Direct> GetDirect(string id)
         {
-            this.apiController = "Direct";
+            Response = await RestClientService.GetAsync(ApiController + "/GetSingleDirect?id=" + id);
+
+            Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+
+            Direct responseEntity = RestClientService.ParseResponse<Direct>(Response);
+            return responseEntity;
         }
 
-        public async Task<string> CreateDirect(Direct entityPM)
+        public async Task<string> CreateDirect(Direct entityPM, bool isAsserting = true)
         {
-            HttpResponseMessage = await RestClientService.PostAsync(entityPM, apiController);
-            Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
+            Response = await RestClientService.PostAsync(entityPM, ApiController);
 
-            Direct servedShipment = RestClientService.ParseResponse<Direct>(HttpResponseMessage);
-            return servedShipment.Id;
-        }
-
-        public async Task<Direct> UpdateDirect(Direct entityPM, string errorMessage = null)
-        {
-            HttpResponseMessage = await RestClientService.PutAsync(entityPM, apiController);
-
-            if (errorMessage != null)
+            if (isAsserting)
             {
-                IntegrationTestException ex = RestClientService.ParseResponse<IntegrationTestException>(HttpResponseMessage);
+                Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+            }
 
-                Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "400");
-                Assert.IsTrue(ex.ErrorMessage == errorMessage);
+            if (HasException)
+            {
+                return null;
+            }
+
+            else
+            {
+                Direct responseEntity = RestClientService.ParseResponse<Direct>(Response);
+                return responseEntity.Id;
+            }
+        }
+
+        public async Task<Direct> UpdateDirect(Direct entityPM, bool isAsserting = true)
+        {
+            Response = await RestClientService.PutAsync(entityPM, ApiController);
+
+            if (isAsserting)
+            {
+                Assert.IsTrue(Response.StatusCode == System.Net.HttpStatusCode.OK);
+            }
+
+            if (HasException)
+            {
                 return entityPM;
             }
 
             else
             {
-                Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
-
-                Direct servedShipment = RestClientService.ParseResponse<Direct>(HttpResponseMessage);
-                return servedShipment;
-            }
+                Direct responseEntity = RestClientService.ParseResponse<Direct>(Response);
+                return responseEntity;
+            }            
         }
 
-        public async Task<Direct> GetDirect(string id)
-        {
-            HttpResponseMessage = await RestClientService.GetAsync(apiController + "/GetSingleDirect?id=" + id);
-            Assert.IsTrue(HttpResponseMessage.StatusCode.ToString() == "OK");
 
-            Direct servedShipment = RestClientService.ParseResponse<Direct>(HttpResponseMessage);
-            return servedShipment;
-        }
     }
 }

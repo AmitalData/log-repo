@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class WeightUnitUpdateClass
    {  		
-		public const string HashString = "7d3a284c0667dde16b9bc11b4754fea6";
+		public const string HashString = "23fd9c4c8aa929e42b1ec16fb05280ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Weight Unit",
-			      				    Code =  "e69f",
+			      				    Code =  "ab18",
 			      				    Name =  "WeightUnit",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -373,7 +373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrintAs",
-					  						DefaultText =  "PrintAs",
+					  						DefaultText =  "Print as",
 					  						ListFieldLable =  "PrintAsListLable",
 					  						ListLableDefaultText =  "PrintAs",
 					  						IsMaxLength =  false,

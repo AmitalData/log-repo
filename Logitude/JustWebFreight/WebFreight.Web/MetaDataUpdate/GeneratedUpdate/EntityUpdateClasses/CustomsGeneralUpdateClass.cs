@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "af7f342948d150b444ebf8735eca226e";
+		public const string HashString = "4e6f3e22d83c55ccf10e14b312983dd5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "dc2e",
+			      				    Code =  "72b0",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -287,8 +287,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CustomsGeneralFeature_CUSTOMS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customs", NameTextCodeDefaultText = @"Customs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
-
-		   Feature CustomsGeneralFeature_CUSTOMSINTERFACESETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSINTERFACESETTINGS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSINTERFACESETTINGS", NameTextCodeDefaultText = @"Customs Interface Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
 		   Feature CustomsGeneralFeature_CUSTOMSETTING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomsSetting", NameTextCodeDefaultText = @"Customs Setting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 

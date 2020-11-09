@@ -45,6 +45,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string House { get; set; }
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
         public string Master { get; set; }
         public string Shipper { get; set; }
         public string Consignee { get; set; }
@@ -60,6 +61,9 @@ namespace WebFreight.Web.DataProviders
         public string PackageReference3 { get; set; }
         public string PackageReference4 { get; set; }
         public string Dimensions { get; set; }
+        public string MasterLong { get; set; }
+        public DateTime? ETD { get; set; }
+        public DateTime? ATD { get; set; }
 
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }

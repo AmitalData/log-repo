@@ -119,6 +119,7 @@ namespace Logitude.XSD.CW_API.ABM
             CWXSD.Transport iTransportItem = new Transport()
             {
                 Conveyance = this.Context.TransportConveyance,
+                TPMode = this.Context.TransportTPMode,
                 TransportType = TransportTransportType.Border,
                 TransportTypeSpecified = true,
             };
@@ -144,6 +145,8 @@ namespace Logitude.XSD.CW_API.ABM
                 RefText = this.Context.MasterNumber,
             });
 
+            
+
             myItem.ConsignmentHeader.Reference = references.ToArray<Reference>();
             #endregion
 
@@ -165,7 +168,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             myItem.ConsignmentHeader.Country = countries.ToArray<Country>();
             #endregion
-
+            
             #region  Port
             List<Port> ports = new List<Port>();
             ports.Add(new Port()

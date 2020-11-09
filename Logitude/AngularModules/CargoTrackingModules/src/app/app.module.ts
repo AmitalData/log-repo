@@ -1,6 +1,4 @@
-import { CargoTrackingSearchService } from './../CargoTracking/Services/Others/CargoTrackingSearchService';
-import { SearchComponent } from './../CargoTracking/Components/Search/search.component';
-import { ShipmentComponent } from './../CargoTracking/Components/Shipment/shipment.component';
+import { CargoTrackingSearchService } from '../CargoTracking/Services/Others/CargoTrackingSearchService';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule  } from '@angular/core';
@@ -19,6 +17,19 @@ import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/Pan
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BusyIndicator } from '../CargoTracking/Materials/BusyIndicator/BusyIndicator';
+import { FavoritesPageComponent } from '../CargoTracking/Components/UserDashboard/FavoritesPage/FavoritesPageComponent';
+import { PanelComponent } from "../Infrastructure/Components/PanelComponent/PanelComponent";
+import { CheckBoxComponent } from '../Infrastructure/Components/CheckBox/CheckBoxComponent';
+import { DetailsMenuComponent } from '../Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
+import { UserDashboardComponent } from '../CargoTracking/Components/UserDashboard/UserDashboardComponent';
+import { ShipmentDetailsComponent } from '../CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
+import { ShipmentsListComponent } from '../CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
+import { PublicShipmentDetailsComponent } from '../CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
+import { SearchComponent } from '../CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
+import { HomeComponent } from '../CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 
@@ -29,15 +40,15 @@ export function getBaseUrl() {
 @NgModule({
     declarations: [
         AppComponent,
-        ShipmentComponent,
+        PublicShipmentDetailsComponent,
         SearchComponent,
         BusyIndicator,
-        PublicGateComponent,
+        HomeComponent,
         
         // Dashboard
-        DashboardComponent,
-        DashboardShipmentsComponent,
-        FavoritesComponent, 
+        UserDashboardComponent,
+        ShipmentsListComponent,
+        FavoritesPageComponent, 
         ShipmentDetailsComponent,
 
         // Infra
@@ -52,7 +63,8 @@ export function getBaseUrl() {
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        FormsModule, HttpClientModule
+        ScrollingModule,
+        FormsModule, HttpClientModule, NoopAnimationsModule
     ],
     providers: [
         CargoTrackingSearchService,
