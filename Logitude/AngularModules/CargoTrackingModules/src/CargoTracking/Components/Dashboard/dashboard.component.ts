@@ -7,6 +7,7 @@ import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/opera
 import { FormBuilder } from '@angular/forms';
 import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -33,7 +34,10 @@ export class DashboardComponent implements AfterViewInit
     {
         // this.GetVariablesFromURI();
         // this.listenToRouterEvents();
-       
+       if(!sessionStorage.getItem("Token")){
+            this._Tenant = this.route.snapshot.params.Tenant;
+            this.router.navigate([this._Tenant, 'login'])
+       }
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
 
     }
@@ -43,6 +47,12 @@ export class DashboardComponent implements AfterViewInit
         this.isNavOpened = !this.isNavOpened;
     }
 
+    SignOutClicked(){
+        this._Tenant = +sessionStorage.getItem("LoggedUserTenant");
+        sessionStorage.clear();
+        if(!this._Tenant) this._Tenant = 0;
+        this.router.navigate([this._Tenant, 'login'])
+    }
     private GetSearchTextFromURI()
     {   
         let searchKey = this.route.snapshot.paramMap.get('searchKey');

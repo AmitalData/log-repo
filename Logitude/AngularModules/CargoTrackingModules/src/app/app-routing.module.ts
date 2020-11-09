@@ -39,7 +39,7 @@ const routes: Routes = [
     },
     
  
-    {path: 'login', component: LoginComponent },
+    {path: ':Tenant/login', component: LoginComponent },
     {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
     {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },

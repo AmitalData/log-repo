@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginService } from 'src/Infrastructure/Services/Extended/LoginService';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
+import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -9,41 +11,57 @@ import { LoginService } from 'src/Infrastructure/Services/Extended/LoginService'
     styleUrls: ['./Login.Component.css']
 })
 
-export class LoginComponent implements OnInit
-{
-    public LogoImg: string = "";
+export class LoginComponent implements OnInit {
+    public LogoImgSrc: string = "";
     public Email: string = "";
     public Password: string = "";
     public CloseEyePass: boolean = true;
     public PasswordType: string = "password";
     public PassEyeIcon: string = "./assets/images/icons/password_eye_closed.png";
     public PassEyeIconTitle: string = "Show Password";
-
-    constructor(private router: Router, private loginService: LoginService) {
-        
+    public IsShowAreaCaptcha: boolean = false;
+    public CaptchaKey: string = "";
+    public CaptchaImageUrl: string = "";
+    public CaptchaTextValue: string = "";
+    public errorMessage: string = "";
+    public Tenant: number;
+    constructor(private router: Router,
+        private route: ActivatedRoute,
+        private loginExtendedService: LoginExtendedService,
+        private commonDataExtendedService: CommonDataExtendedService) {
+        if (sessionStorage.getItem("Token")) {
+            this.router.navigate([sessionStorage.getItem("LoggedUserTenant"), "dashboard"])
+        }
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.initForm();
     }
 
-
-    private initForm()
-    {
-        document.body.style.background = '#fff';
-        this.LogoImg = "./assets/images/logo/UnifreightLogo.jpg";
+    private initForm() {
+        document.body.style.background = "#fff";
+        this.GetLoginLogoImg();
     }
 
-    public passEyeClicked(){
+    private GetLoginLogoImg() {
+        this.LogoImgSrc = "./assets/images/logo/White.jpg";
+        this.Tenant =  this.route.snapshot.params.Tenant;
+        this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
+            if (logoImage && !logoImage.HasError)
+                this.LogoImgSrc = logoImage;
+            else  
+                this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
+        });
+    }
+
+    public passEyeClicked() {
         this.CloseEyePass = !this.CloseEyePass;
         this.PassEyeIcon = this.CloseEyePass ? "./assets/images/icons/password_eye_closed.png" : "./assets/images/icons/password_eye_opened.png";
         this.PassEyeIconTitle = this.CloseEyePass ? "Show Password" : "Hide Password";
         this.PasswordType = this.CloseEyePass ? "password" : "text";
     }
 
-    public LogInClicked()
-    {   
+    public LogInClicked() {
         let LoginParams = {
             Email: this.Email,
             Password: this.Password,
@@ -56,30 +74,79 @@ export class LoginComponent implements OnInit
             IsAngularLogin: true,
             MobileVersion: "",
             ClientType: "Web",
-            CaptchaKey: "",//"this.CaptchaKey",
-            CaptchaCode: "",//this.CaptchaTextValue,
-
+            CaptchaKey: this.CaptchaKey,
+            CaptchaCode: this.CaptchaTextValue
         };
-        this.loginService.PostUserValidation(LoginParams).subscribe((userData: any) => {
-            if(userData){
-                console.log(userData);
-                let tenantList = userData.CompanyLogins;
-                let tenant = tenantList[0].Tenant;
-                this.PostLoginData(LoginParams, tenant);
-            }
 
-
+        this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
+            if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) this.LoginFailed(userData);
+            else this.LoginSucceeded(LoginParams, userData);
         });
-        //this.router.navigate([0,'dashboard'])
     }
 
-    PostLoginData(LoginParams: any, tenant: number){
-        this.loginService.PostLoginData(LoginParams, tenant).subscribe((userData: any) => {
-            if(userData){
-                console.log(userData);
+    private LoginFailed(userData: any) {
+        this.CaptchaKey = userData ? userData.CaptchaKey : "";
+
+        if (userData && userData.ExceptionMessage) {
+            alert(userData.ExceptionMessage);
+        }
+
+        if (userData.MustChangePassword) {
+            //Must Change Password
+            this.errorMessage = "Must Change Password";
+        } else if (userData.PasswordExpirationDateMessage) {
+            //Password Expired
+            this.errorMessage = "Password Expired";
+        }
+        else {
+            if (userData.InValidCaptcha) this.SetCaptchaImage(userData.CaptchaImage);
+
+            this.SetErrorMessage(userData);
+        }
+    }
+
+    private SetCaptchaImage(captchaImage) {
+        if (this.IsShowAreaCaptcha) this.CaptchaTextValue = "";
+
+        this.IsShowAreaCaptcha = true;
+        this.CaptchaImageUrl = captchaImage;
+    }
+
+    private SetErrorMessage(userData: any) {
+        this.errorMessage = "";
+
+        if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
+        else if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+        else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+        else if (userData.InValidMailOrPassword) this.errorMessage = "Login failed! invalid user name or password.";
+        else if (userData.InValidCaptcha && userData.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
+        else this.errorMessage = "Login failed! invalid user name or password.";
+    }
+
+    private LoginSucceeded(LoginParams: any, userData: any) {
+        let tenantList = userData.CompanyLogins;
+        let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
+        if(!LogInToTenant) LogInToTenant= tenantList[0];
+
+        this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+            if (userData) {
+                this.FillSessionInfoData(userData);
+                this.router.navigate([userData.CurrentTenant, "dashboard"])
             }
-
-
         });
+    }
+
+    private FillSessionInfoData(userData: any) {
+        sessionStorage.setItem("Token", userData.Token);
+        sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
+        sessionStorage.setItem("LoggedUserEmail", userData.UserName);
+        sessionStorage.setItem("LoggedUserId", userData.Id);
+        sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
+
+        SessionInfo.LoggedUserEmail = userData.UserName;
+        SessionInfo.LoggedUserId = userData.Id;
+        SessionInfo.LoggedUserTenant = userData.CurrentTenant;
+        SessionInfo.Token = userData.Token;
+        SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
     }
 }

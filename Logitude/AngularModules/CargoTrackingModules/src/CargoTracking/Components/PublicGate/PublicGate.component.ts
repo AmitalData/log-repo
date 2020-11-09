@@ -40,7 +40,9 @@ export class PublicGateComponent
         this.GetDataFromURL(baseUrl);
     }
 
-
+    public UserDashboardClicked(){
+        this.router.navigate([this.tenant, 'dashboard']);
+    }
 
     private getcargoTrackingData()
     {
