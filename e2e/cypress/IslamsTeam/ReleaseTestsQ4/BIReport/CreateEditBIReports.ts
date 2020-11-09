@@ -21,7 +21,20 @@ import { LoginComp } from "../../../login/Login.po";
         cy.get('#BIReportFolder').should('be.visible')
         cy.get('#null_Search_1').click()
         cy.get('#null_Search_1').type('E2E-Automation')
-        cy.get('#BIReportFolder').click()
+
+       
+        if (cy.get('#BIReportFolder').should('exist')) {
+            cy.get('#BIReportFolder').click();
+            }
+            else {
+
+                cy.get('#NewBIReportFolder').click()
+                cy.get('textboxdiv_BIReportFolder_Name').click()
+                cy.get('textboxdiv_BIReportFolder_Name').type('E2E-Automation')
+                cy.get('BIReportFolder_Description').type('E2E-Automation')
+                
+            }
+        //cy.get('#BIReportFolder').click()
 
     });
 
@@ -135,8 +148,8 @@ import { LoginComp } from "../../../login/Login.po";
 
         cy.get('#DWQueryBuilderSearchFields_0_1').type('Arrived')
         cy.get('#AddQBRootColumnArrived').click({ force: true })
-        cy.get('#AddQBRootFilterArrived').should('be.visible')
-        cy.get('#AddQBRootFilterArrived').click()
+        //cy.get('#AddQBRootFilterArrived').should('be.visible')
+        cy.get('#AddQBRootFilterArrived').click({ force: true })
 
       
         cy.get('#ComboBox_0_22').click({ force: true })
