@@ -160,7 +160,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar,
+	         FOBValueDollar, 
+	         TruckerId,
 	      }
 
 
@@ -381,7 +382,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
 	         FOBValueDollar, 
-	         AmendmentRejectionReasonName,
+	         AmendmentRejectionReasonName, 
+	         TruckerId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1078,6 +1080,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
             {
 				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+				entityPOCO.TruckerId = entityPM.TruckerId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1781,6 +1788,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FOBValueDollar = entityPOCO.FOBValueDollar;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
+            {
+					entityPM.TruckerId = entityPOCO.TruckerId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2477,6 +2489,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+                oldEntityPM.TruckerId = entityPM.TruckerId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2581,6 +2598,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
             {
                 entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TruckerId)) //T4 find type == nText 
+            {
+                entityPM.TruckerId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TruckerId));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

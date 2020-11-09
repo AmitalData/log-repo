@@ -956,6 +956,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TruckerId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1151,6 +1158,11 @@
     ReferencedTable="CancellationRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TruckerId"
+    ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index
