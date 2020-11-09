@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Logitude.IntegrationTest.Automation.EntitiesInitializer;
 using Logitude.IntegrationTest.Core.Login;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,11 +12,11 @@ namespace Logitude.IntegrationTest.Automation.Initializers
     public class LoginInitializer
     {
         [AssemblyInitialize]
-        public static async Task PrepareAutomationTest(TestContext context)
+        public static async Task AssemblyInitialize(TestContext context)
         {
-            string email = IntegrationTestLoginParameters.Email;
             await LoginService.GetLoginTokenByUserEmailAndTenant();
-            string testToken = IntegrationTestLoginParameters.Token;
+            //ShipmentInitializer shipmentInitializer = new ShipmentInitializer();
+            //shipmentInitializer.CreateShipment();
         }
     }
 }

@@ -51,13 +51,13 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomationVariables.cs" />
     <Compile Include="Initializers\Entities\ShipmentInitializer.cs" />
     <Compile Include="Initializers\Entities\TicketInitializer.cs" />
     <Compile Include="Initializers\LoginInitializer.cs" />
-    <Compile Include="Tests\Automations\OnUpdate_Email.cs" />
-    <Compile Include="Tests\Automations\OnCreate_Email.cs" />
-    <Compile Include="Tests\Automations\OnUpdate_SetFieldsValue.cs" />
-    <Compile Include="Tests\Automations\OnCreate_SetFieldsValue.cs" />
+    <Compile Include="Services\AutomationTestServices.cs" />
+    <Compile Include="Tests\Automations\EmailTest.cs" />
+    <Compile Include="Tests\Automations\SetFieldsValueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
