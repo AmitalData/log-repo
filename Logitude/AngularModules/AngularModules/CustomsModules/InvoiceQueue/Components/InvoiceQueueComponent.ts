@@ -38,6 +38,7 @@ export class InvoiceQueueComponent
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
     WarningMessages: boolean;
+    IsPaymentDateGreaterThanInvoiceDate: boolean;
     SumAmountNIS: number;
     LabelSumAmountNIS: string;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
@@ -47,13 +48,13 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-             //   this.GetData();
+                //this.GetData();
             });
         });
     }
     private GetData() {
         this.ResetVariables();
-        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
         //this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -83,6 +84,16 @@ export class InvoiceQueueComponent
                 });
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
+                        if (x.InvoiceDate != null && x.InvoiceDate != "") {
+                            var InvoiceDate = this.BuildDateFromString(x.InvoiceDate);
+                            if (this.declaration.PaymentDate != null && InvoiceDate != null) {
+                                var InvoiceDateMonth = InvoiceDate.getMonth();
+                                var PaymentDateMonth = new Date(this.declaration.PaymentDate).getMonth();
+                                if (InvoiceDateMonth < PaymentDateMonth) {
+                                    this.IsPaymentDateGreaterThanInvoiceDate = true;
+                                }
+                            }
+                        }
                         if (x.InvoiceTypeCode != null && x.InvoiceTypeCode == "R") { // חשבונית קבלה- סוג R
                             this.CreateQInvoiceButtonDim = true; // מקש הפקת חשבונית ב DIM
                         }
@@ -112,8 +123,12 @@ export class InvoiceQueueComponent
         });
     }
 
+    BuildDateFromString(date: string) {
+        return new Date(date.replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
+    }
 
     ResetVariables() {
+        this.IsPaymentDateGreaterThanInvoiceDate = false;
         this.SumAmountNIS = 0;
         this.LabelSumAmountNIS = "";
         this.CreateQInvoiceButtonDim = false;
@@ -126,6 +141,7 @@ export class InvoiceQueueComponent
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }
+
     SetWindowArgs(args: any) {
         //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 

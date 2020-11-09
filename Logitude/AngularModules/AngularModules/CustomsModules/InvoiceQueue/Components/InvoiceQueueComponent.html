@@ -353,10 +353,17 @@
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
                     {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
-
+                <br />
             </td>
         </tr>
-        <br />
+        <tr *ngIf="IsPaymentDateGreaterThanInvoiceDate">
+            <td colspan="12" style="right:55%">
+                <br />
+                <b>
+                    <span style="font-size: 16px;color:red;">הפקת חשבונית לתיק תבוצע בפתיחת חודש חשבונאי</span>
+                </b>
+            </td>
+        </tr>
         <tr *ngIf="ErrorMessages">
             <td colspan="13">
                 <table style="min-height: 40px;">
@@ -737,7 +744,7 @@
                             <ng-template let-item>
 
                                 <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                    <div style="text-align:right ;direction: ltr; display: inline-block;">
+                                    <div style="text-align:right ;">
                                         <span>{{item.InvoiceAmount}}</span>
                                     </div>
                                 </log-cell-template>
