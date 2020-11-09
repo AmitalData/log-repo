@@ -1173,7 +1173,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DeclarationCorrection declarationCorrection = (DeclarationCorrection)serializer.Deserialize(memorystream);
                 correctionView = new DeclarationCorrectionView() { Id = Guid.NewGuid().ToString(), DeclarationId = declaration.Id };
                 correctionView.GeneralDataViews = new List<GeneralDataView>();
-
+             
 
 
                 foreach (General item in declarationCorrection.GeneralData)
@@ -1272,7 +1272,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
-                            amendment.AmendmentFieldStatus = field.AmendmentFieldStatus;
+                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
+                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(field.AmendmentFieldStatus,false,true);
+                            if (amendmentFieldStatusTypePM != null)
+                            {
+                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
+
+                            }
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1348,7 +1354,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
+                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
+                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(error.AmendmentFieldStatus, false, true);
+                            if (amendmentFieldStatusTypePM != null)
+                            {
+                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
+                            }
                             generalData.AmendmentViews.Add(amendment);
 
                         }

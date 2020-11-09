@@ -16755,6 +16755,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AmendmentRejectionReasonName&quot;"
     ListPropertyPath="&quot;AmendmentRejectionReasonName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21608,6 +21609,12 @@
       Code="&quot;Customs.Declarations.O.UnSavedRemarks&quot;"
       DefaultText="&quot;Remarks wont be saved&quot;"
       LocalDefaultText="&quot;ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.AmendmentFieldStatus&quot;"
+      DefaultText="&quot;Status&quot;"
+      LocalDefaultText="&quot;סטטוס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
