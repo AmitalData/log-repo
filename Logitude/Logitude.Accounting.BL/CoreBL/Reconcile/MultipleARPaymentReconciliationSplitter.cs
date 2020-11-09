@@ -38,7 +38,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                 remainingPaymentRecoLines.Remove(paymentReconcileLine);
                 ReconciliationPM newReconciliation = CreateReconciliationForPayment(nonPaymentsRecoLines, paymentReconcileLine);
                 paymentReconciliations.Add(newReconciliation);
+
+                if(nonPaymentsRecoLines.Count == 0 && paymentsRecoLines.Count == 2)
+                {
+                    ReconciliationPM twoPaymentReconciliation = InitNewReconciliation();
+                    twoPaymentReconciliation.ReconciliationLines.AddRange(paymentsRecoLines);
+                    paymentReconciliations.Add(twoPaymentReconciliation);
+                    break;
+                }
+
+
             }
+
+
+
             return paymentReconciliations;
         }
 
