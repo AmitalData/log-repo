@@ -4632,6 +4632,11 @@ export class ShipmentPM {
     public get WeightRoundingCode() { return this.weightRoundingCode; }
     public set WeightRoundingCode(newValue: string) { if (this.weightRoundingCode != newValue) { this.weightRoundingCode = newValue; this.MarkAsDirty("WeightRoundingCode"); } }
 
+    private viewSharedDocuments: string;
+    public get ViewSharedDocuments() { return this.viewSharedDocuments; }
+    public set ViewSharedDocuments(newValue: string) { if (this.viewSharedDocuments != newValue) { this.viewSharedDocuments = newValue; this.MarkAsDirty("ViewSharedDocuments"); } }
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
