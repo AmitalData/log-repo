@@ -958,7 +958,7 @@
   </Column>
   <Column
     Name="TruckerId"
-    Type="nvarchar"
+    Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
