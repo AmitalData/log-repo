@@ -123,49 +123,51 @@ namespace CommunicationWorkerRole
                         if (upgradableTenants.Count > 0)
                         {
                             StringBuilder str1 = new StringBuilder();
-                            foreach (GlobalTenant tenant in upgradableTenants)
-                            {
-                                if (tenant.Id != 0)//&&tenant.Id!=1&&tenant.Id!=2&&tenant.Id!=3
-                                {
-                                    try
-                                    {
-                                        long StartTime;
-                                        long EndTime;
+                            //foreach (GlobalTenant tenant in upgradableTenants)
+                            //{
+                            //    if (tenant.Id != 0)//&&tenant.Id!=1&&tenant.Id!=2&&tenant.Id!=3
+                            //    {
+                            //        try
+                            //        {
+                            //            long StartTime;
+                            //            long EndTime;
 
-                                        str1.AppendLine(DateTime.Now.ToString());
+                            //            str1.AppendLine(DateTime.Now.ToString());
 
-                                        StartTime = System.DateTime.Now.Ticks;
+                            //            StartTime = System.DateTime.Now.Ticks;
 
-                                        TenantsUpdateClass.UpdateDataForTenant(tenant.Id, "");
+                            //            TenantsUpdateClass.UpdateDataForTenant(tenant.Id, "");
 
-                                        EndTime = System.DateTime.Now.Ticks;
+                            //            EndTime = System.DateTime.Now.Ticks;
 
-                                         string Duration = Convert.ToString((EndTime - StartTime) / TimeSpan.TicksPerMillisecond);
-                                         string emailbody = "Updating tenant " + tenant.Id + " completed successfully. " + Duration;
-                                         str1.AppendLine(emailbody);
-                                        AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
-                                    }
+                            //             string Duration = Convert.ToString((EndTime - StartTime) / TimeSpan.TicksPerMillisecond);
+                            //             string emailbody = "Updating tenant " + tenant.Id + " completed successfully. " + Duration;
+                            //             str1.AppendLine(emailbody);
+                            //            AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
+                            //        }
 
-                                    catch (Exception e)
-                                    {
-                                        GlobaltenantRep = new GlobalTenantRepository();
-                                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole",null);
-                                        string emailbody = "Updating tenant " + tenant.Id + " Failed!.";
-                                        str1.AppendLine(emailbody);
+                            //        catch (Exception e)
+                            //        {
+                            //            GlobaltenantRep = new GlobalTenantRepository();
+                            //            ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole",null);
+                            //            string emailbody = "Updating tenant " + tenant.Id + " Failed!.";
+                            //            str1.AppendLine(emailbody);
 
-                                        tenant.Version = -1;
-                                        GlobalTenant updatedTenant = GlobaltenantRep.GetGlobalTenantsByTenant(tenant.Id);
-                                        updatedTenant.Version = -1;
-                                        GlobaltenantRep.Update(updatedTenant);
-                                        GlobaltenantRep.SubmitChanges();
+                            //            tenant.Version = -1;
+                            //            GlobalTenant updatedTenant = GlobaltenantRep.GetGlobalTenantsByTenant(tenant.Id);
+                            //            updatedTenant.Version = -1;
+                            //            GlobaltenantRep.Update(updatedTenant);
+                            //            GlobaltenantRep.SubmitChanges();
 
-                                        if (LogitudeSettings.DeploymentStage == "Dev")
-                                        {
-                                            //throw e;
-                                        }
-                                    }
-                                }
-                            }
+                            //            if (LogitudeSettings.DeploymentStage == "Dev")
+                            //            {
+                            //                //throw e;
+                            //            }
+                            //        }
+                            //    }
+                            //}
+
+                            TenantsUpdateClass.UpdateTenants();
 
                             if (LogitudeSettings.DeploymentStage != "Dev")
                             {

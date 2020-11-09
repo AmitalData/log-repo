@@ -65,6 +65,22 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static bool runOldUpdateCode = false;
         private static PerformanceTimerLogger performanceTimerLogger = new PerformanceTimerLogger();
+
+        public static Dictionary<string, Measurement> TenantZeroMeasurements;
+        public static Dictionary<string, EntityStatus> TenantZeroEntityStatus;
+        public static Dictionary<string, EventType> TenantZeroEventTypes;
+        public static Dictionary<string, Rank> TenantZeroRanks;
+        public static Dictionary<string, DocumentTypePM> TenantZeroDocumentTypes;
+        public static List<DocumentTypeCustomField> TenantZeroCustomFields;
+        public static Dictionary<string, CreditCardType> TenantZeroCreditCardTypes;
+        public static Dictionary<string, MoveType> TenantZeroMoveTypes;
+        public static Dictionary<string, EmailAlertSetting> TenantZeroEmailAlertSettings;
+        public static Dictionary<string, JournalActionType> TenantZeroJournalActionTypes;
+        public static Dictionary<string, TaxWithholdingAssessOffice> TenantZeroTaxWithholdingAssessOffices;
+        public static Dictionary<string, AccountingCompanyType> TenantZeroAccountingCompanyTypes;
+        public static Dictionary<string, WithholdingTaxDeductionType> TenantZeroWithholdingTaxDeductionTypes;
+        public static Dictionary<string, ChargesGroup> TenantZeroChargesGroups;
+
         public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
         {
 
@@ -545,10 +561,89 @@ namespace WebFreight.Web.MetaDataUpdate
                 //TenantsUpdateClass.GenerateBackupData();
                 #endregion
             }
-
             else
             {
                 UpdateTenantData(tenant);
+            }
+        }
+
+        public static void UpdateTenants()
+        {
+            List<GlobalTenant> globalTenants;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                globalTenants = GlobalTenantRepository.GetGlobalTenants();
+
+            }
+
+            if (globalTenants != null)
+            {
+                GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
+                List<GlobalTenant> upgradableTenants = (from a in globalTenants
+                                                        where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
+                                                        select a).ToList();
+                if (upgradableTenants.Count > 0)
+                {
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    ICommonDataContext commonContext = CommonDataContext.GetContext(0);
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(0);
+                    IAccountingContext accountingContext = AccountingContext.GetContext(0);
+
+                    MeasurementRepository measurementsRepository = new MeasurementRepository(commonContext);
+                    EntityStatusRepository entityStatusRepository = new EntityStatusRepository(context);
+                    EventTypeRepository eventTypeRepository = new EventTypeRepository(context);
+                    RankRepository rankRepository = new RankRepository(commonContext);
+                    DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
+                    DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
+                    DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(commonContext);
+                    CreditCardTypeRepository creditCardTypeRepositoryRepository = new CreditCardTypeRepository(invoiceContext);
+                    MoveTypeRepository moveTypeRepository = new MoveTypeRepository(context);
+                    EmailAlertSettingRepository emailAlertSettingRepository = new EmailAlertSettingRepository(context);
+                    JournalActionTypeRepository journalActionTypeRepository = new JournalActionTypeRepository(accountingContext);
+                    TaxWithholdingAssessOfficeRepository taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(accountingContext);
+                    AccountingCompanyTypeRepository accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(accountingContext);
+                    WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(accountingContext);
+                    ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
+
+                    TenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+                    TenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+                    TenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
+                    TenantZeroCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroMoveTypes = moveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroJournalActionTypes = journalActionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroChargesGroups = chargesGroupRepository.GetChargesGroups(0).ToDictionary(d => d.Code, a => a);
+
+                    foreach (GlobalTenant tenant in upgradableTenants)
+                    {
+                        if (tenant.Id != 0)
+                        {
+                            try
+                            {
+                                UpdateDataForTenant(tenant.Id, "");
+
+                                AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
+                            }
+                            catch (Exception e)
+                            {
+                                GlobalTenantRepository GlobaltenantRep = new GlobalTenantRepository();
+                                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole", null);
+
+                                tenant.Version = -1;
+                                GlobalTenant updatedTenant = GlobaltenantRep.GetGlobalTenantsByTenant(tenant.Id);
+                                updatedTenant.Version = -1;
+                                GlobaltenantRep.Update(updatedTenant);
+                                GlobaltenantRep.SubmitChanges();
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -711,11 +806,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
             // Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
             //Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
-            Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> tenantZeroMeasurements = TenantZeroMeasurements;
             Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EventType> tenantZeroEventTypes = null;
+            //Dictionary<string, EventType> tenantZeroEventTypes = null;
             //if (true)
             //{
 
@@ -730,37 +825,39 @@ namespace WebFreight.Web.MetaDataUpdate
             //tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             //}
 
-            if(globalTenant.LastUpdateDate == null)
+            Dictionary<string, EventType> tenantZeroEventTypes;
+
+            if (globalTenant.LastUpdateDate != null)
             {
-                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+                tenantZeroEventTypes = TenantZeroEventTypes.Values.Where(e => e.UpdateDate > globalTenant.LastUpdateDate).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             }
             else
             {
-                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).Where(e => e.UpdateDate > globalTenant.LastUpdateDate).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+                tenantZeroEventTypes = TenantZeroEventTypes;
             }
 
             Dictionary<string, EventType> currentTenantEventTypes = eventTypeRepository.GetEventTypesByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, Rank> tenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Rank> tenantZeroRanks = TenantZeroRanks;
             Dictionary<string, Rank> currentTenantRanks = rankRepository.GetRanks(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes = TenantZeroDocumentTypes;
             Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
-            Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
+            List<DocumentTypeCustomField> tenantZeroCustomFields = TenantZeroCustomFields;
+            Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = TenantZeroCreditCardTypes;
             Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, MoveType> tenantZeroMoveTypes = moveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, MoveType> tenantZeroMoveTypes = TenantZeroMoveTypes;
             Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = TenantZeroEmailAlertSettings;
             Dictionary<string, EmailAlertSetting> currentEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, JournalActionType> tenantZeroJournalActionTypes = journalActionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, JournalActionType> tenantZeroJournalActionTypes = TenantZeroJournalActionTypes;
             Dictionary<string, JournalActionType> currentJournalActionTypes = journalActionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = TenantZeroTaxWithholdingAssessOffices;
             Dictionary<string, TaxWithholdingAssessOffice> currentTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, AccountingCompanyType> tenantZeroAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, AccountingCompanyType> tenantZeroAccountingCompanyTypes = TenantZeroAccountingCompanyTypes;
             Dictionary<string, AccountingCompanyType> currentAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, WithholdingTaxDeductionType> tenantZeroWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, WithholdingTaxDeductionType> tenantZeroWithholdingTaxDeductionTypes = TenantZeroWithholdingTaxDeductionTypes;
             Dictionary<string, WithholdingTaxDeductionType> currentWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
 
-            Dictionary<string, ChargesGroup> tenantZeroChargesGroups = chargesGroupRepository.GetChargesGroups(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, ChargesGroup> tenantZeroChargesGroups = TenantZeroChargesGroups;
             Dictionary<string, ChargesGroup> currentTenantChargesGroups = chargesGroupRepository.GetChargesGroups(tenant).ToDictionary(d => d.Code, a => a);
 
 
