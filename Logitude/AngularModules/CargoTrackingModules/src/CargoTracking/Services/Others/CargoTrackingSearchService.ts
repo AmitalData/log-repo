@@ -28,7 +28,29 @@ export class CargoTrackingSearchService {
 						var list = response;
 
 						return list;
-					}));
+					},catchError(error=>{
+						return error;
+					})));
+		});
+	}
+    GetUserShipments(pageIndex: number, pageSize: number, tenant: number) {
+        var authHeaders = ServiceHelper.GetHeaders();
+
+
+		return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserShipments/?tenant=' + tenant 
+            + '&pageIndex=' + pageIndex
+            + '&pageSize=' + pageSize,
+             {headers: authHeaders})
+				.pipe(
+					map((response: HttpResponse<any>) => {
+
+						var list = response;
+
+						return list;
+					},catchError(error=>{
+						return error;
+					})));
 		});
 	}
     getShipment(SecurityKey: string, tenant: number) {

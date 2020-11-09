@@ -43,6 +43,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string LocalName { get; set; }
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

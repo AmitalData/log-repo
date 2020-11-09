@@ -58,6 +58,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string EntityId { get; set; }
 
         public string ResultType { get; set; }
+        public string Format { get; set; }
+        public string AdvancedFormat { get; set; }
 
     }
 }

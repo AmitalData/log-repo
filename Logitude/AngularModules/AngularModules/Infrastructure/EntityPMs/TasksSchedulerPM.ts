@@ -225,6 +225,16 @@ export class TasksSchedulerPM {
     public set ResultType(newValue: string) { if (this.resultType != newValue) { this.resultType = newValue; this.MarkAsDirty("ResultType"); } }
        
 	 
+    private format: string;
+    public get Format() { return this.format; }
+    public set Format(newValue: string) { if (this.format != newValue) { this.format = newValue; this.MarkAsDirty("Format"); } }
+       
+	 
+    private advancedFormat: string;
+    public get AdvancedFormat() { return this.advancedFormat; }
+    public set AdvancedFormat(newValue: string) { if (this.advancedFormat != newValue) { this.advancedFormat = newValue; this.MarkAsDirty("AdvancedFormat"); } }
+       
+	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }

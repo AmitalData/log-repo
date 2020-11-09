@@ -1732,5 +1732,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return usersIds;
         }
+
+        public string GetSystemUserIdIfItIsCustomerCare(int tenant)
+        {
+            if (HttpContext.Current != null && HttpContext.Current.User != null)
+            {
+                string email = HttpContext.Current.User.Identity.Name;
+                User user = repository.GetSingleUserByEmail(email, 0, false);
+                if (user != null)
+                {
+                    User systemUser = repository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+                    if (systemUser != null)
+                    {
+                        return systemUser.Id;
+                    }
+
+                }
+            }
+
+            return "";
+        }
+
     }
 }

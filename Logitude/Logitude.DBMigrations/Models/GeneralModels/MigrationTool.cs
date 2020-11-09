@@ -1468,6 +1468,10 @@ namespace Logitude.DBMigrations.Models
                     {
                         InsertIntoDBMigrationsDataScripts(scriptDefinition);
                     }
+                    else
+                    {
+                        UpdateIntoDBMigrationsDataScripts(scriptDefinition);
+                    }
                 }
             }
 
@@ -2250,6 +2254,41 @@ namespace Logitude.DBMigrations.Models
                     "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName], [BatchSize]) " +
                     "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
                     (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "', " + (scriptDefinition.BatchSize > 0 ? scriptDefinition.BatchSize.ToString() : "NULL") + ");";
+
+                SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = queryString;
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+        }
+
+        protected void UpdateIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        {
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+                int sxmlVersion = scriptDefinition.Sql.Version;
+                string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
+
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [StartDate] = NULL, [EndDate] = NULL, " +
+                    "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
+                    "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 
                 SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 

@@ -25,6 +25,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("Description")]
+	    public string Description { get; set; }
     }
 }
 	 

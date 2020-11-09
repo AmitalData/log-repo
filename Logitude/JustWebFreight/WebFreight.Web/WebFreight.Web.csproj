@@ -1004,6 +1004,12 @@
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
+    <Compile Include="Controllers\Integration\Factories\IntegrationPartnerFactory.cs" />
+    <Compile Include="Controllers\Integration\ModelIntegrationController.cs" />
+    <Compile Include="Controllers\Integration\Quote\QuoteIntegrationBuilder.cs" />
+    <Compile Include="Controllers\Integration\Quote\QuoteIntegrationVariables.cs" />
+    <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationBuilder.cs" />
+    <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
@@ -2629,6 +2635,7 @@
     <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
+    <Compile Include="Helpers\TaxReportHelper.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
     <Compile Include="Helpers\TFSAggregatorAnalyzer.cs" />
     <Compile Include="Helpers\TFSAnalyzer.cs" />
@@ -5633,6 +5640,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />

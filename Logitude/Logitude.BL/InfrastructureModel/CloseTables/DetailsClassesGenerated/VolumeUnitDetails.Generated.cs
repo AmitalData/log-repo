@@ -26,6 +26,7 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "cbf,cbf", 
                 Code = "CBF", 
                 Name = "CBF", 
+                PrintAs = "CBF", 
 			});
 			 
             all.Add(new VolumeUnitDetails()
@@ -33,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "cbi,cbi", 
                 Code = "CBI", 
                 Name = "CBI", 
+                PrintAs = "CBI", 
 			});
 			 
             all.Add(new VolumeUnitDetails()
@@ -40,6 +42,7 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "cbm,cbm", 
                 Code = "CBM", 
                 Name = "CBM", 
+                PrintAs = "CBM", 
 			});
 			
             return all;
@@ -49,12 +52,13 @@ namespace Logitude.BL.InfrastructureModel
         {   
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Code = this.Code;  
-		    newPoco.Name = this.Name;   
+		    newPoco.Name = this.Name;  
+		    newPoco.PrintAs = this.PrintAs;   
         }
 
 		public string GetSearchFields(VolumeUnit rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.PrintAs,",");
         }
    }
 }

@@ -157,6 +157,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomAgentImportId { get; set; }
         public string CustomAgentImportName { get; set; }
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
         public int? PackageQuantity { get; set; }
         public string MoveTypeName { get; set; }
         public double? PackageVolumeitricWeight { get; set; }

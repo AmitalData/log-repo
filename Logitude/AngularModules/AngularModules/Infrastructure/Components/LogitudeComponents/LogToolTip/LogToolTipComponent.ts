@@ -13,8 +13,8 @@ import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 export class LogToolTipComponent implements AfterViewInit {
 
     public isRTL: boolean = false;
-
-
+    public ArrowTop:number = 36;
+ 
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
@@ -22,7 +22,10 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public float: string = null;
     @Input() public bottom: number = 0;
     @Input() public Scrollable: boolean = false;
- 
+
+
+     public MaxWidthOfToolTip: number = null;
+
     private counterId:number;
 
     constructor() {
@@ -103,12 +106,21 @@ export class LogToolTipComponent implements AfterViewInit {
             {
                 element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
                 element.style.left = (itemRect.left - 15) + 'px';
+ 
+                var ImgItem = document.getElementById(this.mode+this.name);
+                var ImgItemRect = ImgItem.getBoundingClientRect();
+                this.MaxWidthOfToolTip =  document.body.clientWidth - ImgItemRect.left ;
+
                 break;
             }
             case 'topleft':
             {
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
+
+                var ImgItem = document.getElementById(this.mode+this.name);
+                var ImgItemRect = ImgItem.getBoundingClientRect();
+                this.MaxWidthOfToolTip = ImgItemRect.left ;
 
                 element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
                 element.style.left = (itemRect.right - bodyItemRect.width  + 20) + 'px';
@@ -150,27 +162,40 @@ export class LogToolTipComponent implements AfterViewInit {
     }
     GetArrowClassName(){
         var className = "small-tooltip-arrow";
+        
+ 
         switch (this.direction) {
             case 'topright':
             {
+
+                var bodyItem = document.getElementById("tooltip-body" + this.name);
+                var bodyItemRect = bodyItem.getBoundingClientRect();
+                this.ArrowTop =  bodyItemRect.height +5;
+ 
 
                 className += " arrow-top"
                 break;
             }
             case 'topleft':
-            {
+
+            {  
+                var bodyItem = document.getElementById("tooltip-body" + this.name);
+                var bodyItemRect = bodyItem.getBoundingClientRect();
+                this.ArrowTop =  bodyItemRect.height +5;
+ 
 
                 className += " arrow-topleft"
                 break;
             }
             case 'bottomright':
-            {
-
+            {   
+                this.ArrowTop =  6;
                 className += " arrow-left"
                 break;
             }
             case 'bottomleft':
-            {
+            {   
+                this.ArrowTop =  6;
                 className += " arrow-right"
                 break;
             }

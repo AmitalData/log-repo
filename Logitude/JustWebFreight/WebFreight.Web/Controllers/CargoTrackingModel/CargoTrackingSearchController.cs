@@ -35,6 +35,7 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.BL.EntityUpdateServices;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.BL.EntityQueryServices;
+using System.Threading;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 { 
@@ -56,6 +57,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s=>s.CreateDate).ToList();
 
+                //throw new ApplicationException("Hi, I am an error!! okay!");
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
@@ -87,6 +89,63 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 };
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, int tenant)
+        {
+            try
+            {
+                // for now, it gets top 500 shipments by tenant
+
+                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
+                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+
+                List<CargoTrackingShipmentList> shipments 
+                    = cargoTrackingShipmentSearchQuery
+                    .GetTop500Shipments(pageIndex, pageSize, tenant)
+                    .OrderByDescending(s => s.CreateDate)
+                    .ToList();
+
+                //Thread.Sleep(700);
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        [HttpGet]
+        public HttpResponseMessage GetUserShipmentsCount(int pageIndex, int pageSize, int tenant)
+        {
+            try
+            {
+                // for now, it gets top 500 shipments by tenant
+
+                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
+                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+
+                List<CargoTrackingShipmentList> shipments
+                    = cargoTrackingShipmentSearchQuery
+                    .GetTop500Shipments(pageIndex, pageSize, tenant)
+                    .OrderByDescending(s => s.CreateDate)
+                    .ToList();
+
+                //Thread.Sleep(700);
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
                 return reponseMessage;
             }

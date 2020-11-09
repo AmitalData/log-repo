@@ -364,7 +364,7 @@ export class BanksPageComponent {
         logWindow.IsShowCloseButton = true;
         logWindow.Width = 900;
         logWindow.Height = 400;
-        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
+        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.LoadBankPage");
         logWindow.WindowArgs = {};
         logWindow.WindowClosed.subscribe(($event: any) => {
 

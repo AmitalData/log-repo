@@ -33,23 +33,40 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         super();
 
-
-        // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
+        this.GetResources();
 
         this.GetSalesmanFeature();
 
-        // salesman lov field filtera
-        this.SalesmanFilterItems = new ApiQueryFilters();
-        this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
+        this.InitComponent();
 
-        // set default value for no of months
+    }
+
+    private InitComponent()
+    {
+        this.InitFilters();
+
+        this.SetMonthFilterDefaults();
+
+        this.FillAgingMethodList();
+    }
+
+    private SetMonthFilterDefaults()
+    {
         var newDate = new Date();
         var currentMonth = newDate.getMonth() + 1;
         //this.NumberOfMonths = currentMonth - 6; // 6 backward
-        this.NumberOfMonths = 6; // 6 backward
-        this.FillAgingMethodList();
+        this.NumberOfMonths = 6;
+    }
 
+    private InitFilters()
+    {
+        this.SalesmanFilterItems = new ApiQueryFilters();
+        this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
+    }
+
+    private GetResources()
+    {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
     }
 
     GetSalesmanFeature()

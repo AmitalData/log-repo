@@ -58,6 +58,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public double AverageRunTime { get; set; }
 
         public string ResultType { get; set; }
+        public string Format { get; set; }
+        public string AdvancedFormat { get; set; }
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }
         

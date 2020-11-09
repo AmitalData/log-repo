@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
 
 .QuoteTemplateSettingButton:hover:not(:disabled) {
@@ -91,11 +91,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                                                                             <td style="width: 45px;">
                                                                                 <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" class="ToggleButton" tabindex="0">
-                                                                                    <label  style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
+                                                                                    <label id="{{'MainAdd' | IdGeneratorPipe}}" style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
                                                                                     <img style="right: 5px;margin-top:1px" src="./Images/ToggleIcon.png" />
                                                                                 
                                                                                     <div  class="ToggleButtonMenu">
-                                                                                        <button [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
+                                                                                        <button id="{{'AddSection' | IdGeneratorPipe}}" [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
                                                                                              
                                                                                             {{'QuoteTemplate.B.Section' | TextCodeTranslationPipe}}
                                                                                         </button>
@@ -158,7 +158,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                          
                                                                                         <td class="CellStretched" style="width:93px;position:relative">
                                                                                             <div *ngIf="!item.IsSection && !item.IsPagebrackSession " style="vertical-align:central;margin-top:2px">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteTemplateSettingButton" id="{{'Setting' | IdGeneratorPipe}}" (click)="EditSectionButtonClicked(item)" >
 
                                                                                                     <span><img style="margin-top:-1px"  src="./Images/Buttons/SettingGray.png" /></span>
                                                                                                     <span>{{'QuoteTemplate.B.Settings' | TextCodeTranslationPipe}} </span>
@@ -168,11 +168,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                             </div>
 
                                                                                             <div *ngIf="item.IsSection && !item.IsPagebrackSession" style="vertical-align:central;margin-top:2px;width:80px;">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" id="{{'EditSection2' | IdGeneratorPipe}}" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
                                                                                                     <table>
                                                                                                         <tr>
-                                                                                                            <td style="width:20px;"><img   src="./Images/Buttons/EditBlack.png" /></td>
-                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </td>
+                                                                                                            <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
+                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}</td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -373,7 +373,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()"  id="{{'Save' | IdGeneratorPipe}}">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

@@ -449,6 +449,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
     }
 
+    GetIdWithoutSpecialCharacters(value: string){
+        let specialCharacters = ['/','(',')'];
+        specialCharacters.forEach(ch => {
+            value = value.replace(ch,'');
+        });
+
+        return value;
+    }
+
     private SearchFieldChanged(newValue: string) {
         this.AllGroupsDataSource.forEach((Group) => {
             var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || a.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
@@ -2108,7 +2117,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     LoadWithSearchValue(DWObjectField: any, newValue: any) {
-        var selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.DisplayName && d.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+        var selectedDimensionDWObjectFields = DWObjectField.MyParentClass.DWObjectFields.filter(d => d.DimensionTableCode == DWObjectField.DimensionTableCode && d.DimensionTableDisplayName == DWObjectField.Name && d.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
         selectedDimensionDWObjectFields = selectedDimensionDWObjectFields.filter(
             (thing, i, arr) => arr.findIndex(t => t.Code === thing.Code) === i
         );

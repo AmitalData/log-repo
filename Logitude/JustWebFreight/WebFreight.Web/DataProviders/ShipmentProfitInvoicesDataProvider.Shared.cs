@@ -16,14 +16,18 @@ namespace WebFreight.Web.DataProviders
         public string ProfitCurrencyCode { get; set; }
         public string OriginLocation { get; set; }
         public string OriginCountryCode { get; set; }
+        public string OriginCountryName { get; set; }
         public string DestinationLocation { get; set; }
         public string DestinationCountryCode { get; set; }
+        public string DestinationCountryName { get; set; }
         public DateTime? POLATD { get; set; }
         public string POLLocation { get; set; }
         public string POLCountryCode { get; set; }
+        public string POLCountryName { get; set; }
         public DateTime? PODATA { get; set; }
         public string PODLocation { get; set; }
         public string PODCountryCode { get; set; }
+        public string PODCountryName { get; set; }
         public string ContainersLabel { get; set; }
         public string ContainersValue { get; set; }
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPackageUpdateClass
    {  		
-		public const string HashString = "af00abc088b4ef1ef2353632b7c883ad";
+		public const string HashString = "c778fbf44c9f03752e90c663cee0e458";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "20f1",
+			      				    Code =  "9c18",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -5746,6 +5746,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOAddContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.AddContainer", DefaultText = "Add Container",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageOEditContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.EditContainer", DefaultText = "Edit Container",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOAddFullTruckLoad = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.AddFullTruckLoad", DefaultText = "Add Full Truck Load",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOEditFullTruckLoad = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.EditFullTruckLoad", DefaultText = "Edit Full Truck Load",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

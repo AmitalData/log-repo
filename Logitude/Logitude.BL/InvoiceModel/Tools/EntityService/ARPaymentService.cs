@@ -918,6 +918,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AccountingPaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
@@ -1902,15 +1903,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void CreateVoidedARPaymentEvent(string note)
         {
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = entityPM.Tenant,
-                EventTypeCode = "CAAR",
-                UserId = loggedContact.Id,
-                EntityId = entityPM.Id,
-                ObjectTableName = "ARPayment",
-                Notes = note,
-            });
+            //EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //{
+            //    Tenant = entityPM.Tenant,
+            //    EventTypeCode = "CAAR",
+            //    UserId = loggedContact.Id,
+            //    EntityId = entityPM.Id,
+            //    ObjectTableName = "ARPayment",
+            //    Notes = note,
+            //});
         }
 
         public void CancelledInterestTransactions(ARPaymentPM entityPm)

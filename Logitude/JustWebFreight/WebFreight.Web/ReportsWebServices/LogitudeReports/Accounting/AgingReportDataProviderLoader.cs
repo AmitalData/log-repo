@@ -35,7 +35,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
-            CheckSalesmanAbilities(BuildReportParameters());
+            EnsureSalesmanIdIfSalesmanRestricted(BuildReportParameters());
 
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
@@ -72,7 +72,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return dataProvider;
         }
-        private void CheckSalesmanAbilities(AgingReportParam args)
+        private void EnsureSalesmanIdIfSalesmanRestricted(AgingReportParam args)
         {
             bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
             UserPM loggedUser = GetLoggerUser();

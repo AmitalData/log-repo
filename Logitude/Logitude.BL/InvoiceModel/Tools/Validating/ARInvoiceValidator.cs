@@ -497,7 +497,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
-                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    if ( Math.Abs((decimal)( entityPM.InvoiceCurrencyExchangeRate- entityPOCO.InvoiceCurrencyExchangeRate)) > (decimal) 0.00001)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
                         throw new ApplicationException("Can't update " + fieldLabel);

@@ -16,12 +16,14 @@
     "TestEmail": "protractor2@test.com",
     "TestPassword": "!P123p456",
     "TestStagingURL": "https://test.logitudeworld.com/staging/",
+	"TestStagingCargoTrackingURL": "https://test.logitudeworld.com/staging/CargoTracking/948/",
     "TestStagingEmail": "protractor2@test.com",
     "TestStagingPassword": "!P123p456",
     "ProdStagingURL": "https://staging.logitudeworld.com/",
     "ProdStagingEmail": "protractor@test.com",
     "ProdStagingPassword": "!P123t456",
     "CloudStagingURL": "https://staging.amital.co.il/",
+	"CloudStagingCargoTrackingURL": "https://staging.amital.co.il/CargoTracking",
     "CloudStagingEmail": "protractor@test.com",
     "CloudStagingPassword": "!P123t456",
     "LocalURL": "http://localhost:4200/",
@@ -33,8 +35,12 @@
     "FACloudPassword": "Sg0592463934!",
     "ProdStagingTIURL":"https://staging.logitudeworld.com/",
     "ProdStagingTIEmail":"protractor2@test.com",
-    "ProdStagingTIPassword":"!P123p123"
+    "ProdStagingTIPassword":"!P123p123",
+    "TestStagingURLTIQ4": "https://test.logitudeworld.com/staging",
+    "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
+    "TestStagingPasswordTIQ4": "!A123a456"
 
+    
 
   },
 

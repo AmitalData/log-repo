@@ -324,6 +324,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddContainer");
+            if(this.EntityPM.TransportModeId == "I")
+                this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddFullTruckLoad");
             this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.ContainerTypeId");
             this.QuantityLabel = TextCodeTranslator.Translate("Shipment.F.NumberOfContainers");
         }
@@ -1493,6 +1495,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             itemPM.IsContainer = false;
             itemPM.Tenant = SessionLocator.Tenant;
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddPackage");
+
         }
 
         else {
@@ -1502,6 +1505,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             itemPM.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
             itemPM.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
+            if(this.EntityPM.TransportModeId == "I")
+              logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddFullTruckLoad");
         }
 
         var myPath: string;
@@ -1530,6 +1535,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.EditContainer");
+            if(this.EntityPM.TransportModeId == "I")
+              logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.EditFullTruckLoad");
         }
 
         var myPath: string;

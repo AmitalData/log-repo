@@ -1,0 +1,68 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APPayments">
+  <Sql Version="2">
+    <![CDATA[
+
+		  If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Payments') Is Not Null)
+      Begin
+        Drop Table #temp_Payments
+      End
+
+      CREATE TABLE #temp_Payments(APPaymentId varchar(15) not null,SearchFields nvarchar(MAX) not null)
+      
+      select Id,Tenant,PrintNotes,SearchFields
+      into #temp
+      from APPayments where PrintNotes is not null and $LastCounterWhere$
+      declare @Tenant as int
+      declare @APPaymentId as varchar(15)
+			declare @PrintNotes as nvarchar(250)
+      declare @MySearchFields as nvarchar(MAX)
+			declare @Count as int
+      set @Count = 0;
+                BEGIN
+                    DECLARE DataCursor CURSOR READ_ONLY
+                    FOR
+                    SELECT Id, Tenant, PrintNotes, SearchFields
+                    FROM #temp
+                    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @APPaymentId, @Tenant, @PrintNotes, @MySearchFields
+                    WHILE @@FETCH_STATUS = 0
+                    BEGIN
+                          set @MySearchFields = @MySearchFields +',' + @PrintNotes;
+                          insert into #temp_Payments(APPaymentId, SearchFields) values (@APPaymentId, @MySearchFields)
+                          set @Count = @Count + 1;
+                          if(@Count = 1000)
+                    begin
+                                  update APPayments
+                                  set SearchFields = #temp_Payments.SearchFields 
+                                  FROM APPayments
+                                  INNER JOIN #temp_Payments
+                                  on APPayments.Id = #temp_Payments.APPaymentId
+                                  truncate table #temp_Payments
+                                  set @Count = 0
+                          end
+
+                    FETCH NEXT FROM DataCursor INTO @APPaymentId, @Tenant, @PrintNotes, @MySearchFields
+                    END
+                    CLOSE DataCursor
+                    DEALLOCATE DataCursor
+              END
+              
+              if (@Count > 0)
+              begin
+                    update APPayments
+                    set
+                    SearchFields = #temp_Payments.SearchFields 
+                    FROM APPayments
+                    INNER JOIN #temp_Payments
+                    on APPayments.Id = #temp_Payments.APPaymentId
+              end
+
+        drop table #temp
+        drop table #temp_Payments
+    ]]>
+  </Sql>
+</Script>

@@ -1729,22 +1729,27 @@ namespace MeatadataGeneratorTool
                     foreach (var item in f._data)
                     {
                         int n = 0;
-                        if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
+                        if (item.Value != null)
                         {
-                            SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
-                        }
-                        else
-                        {
-                            if (item.Value.ToString().StartsWith("\""))
+                            if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
                             {
                                 SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
                             }
                             else
                             {
-                                SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
-                            }
+                                if (item.Value.ToString().StartsWith("\""))
+                                {
+                                    SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
+                                }
+                                else
+                                {
+                                    SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
+                                }
 
+                            }
                         }
+                        else
+                            SetAttribute(item.Key, null, RecordElement, null);
 
                     }
                 }
