@@ -20,6 +20,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {ChargesTypeList} from '../../EntityLists/ChargesTypeList';
+import {ChargesTypeCustomFilter} from '../../CustomFilters/ChargesTypeCustomFilter';
 
 @Injectable()
 
@@ -284,6 +285,9 @@ export class ChargesTypeListService {
                     serviceResponse = new ServiceResponse();
 
                      if (!filters.GetAll) {
+					  if (addtionalFiltersValues) {
+                            _mappedListsArray = ChargesTypeCustomFilter.GetFilteredQuery(addtionalFiltersValues, _mappedListsArray);
+                        }
                         _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                     }
 
@@ -320,6 +324,9 @@ export class ChargesTypeListService {
 								}
 
 								else {
+                            if (addtionalFiltersValues) {
+								_mappedListsArray = ChargesTypeCustomFilter.GetFilteredQuery(addtionalFiltersValues, _mappedListsArray);
+                            }
 							
 									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 								}
@@ -341,6 +348,9 @@ export class ChargesTypeListService {
         else {
             var filteredData = ChargesTypeListService.CachedData;
             if (!filters.GetAll) {
+                if (addtionalFiltersValues) {
+                    filteredData = ChargesTypeCustomFilter.GetFilteredQuery(addtionalFiltersValues, filteredData);
+                }
 	
                 filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
             }
