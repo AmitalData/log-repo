@@ -44,8 +44,8 @@
             this.rdbJson = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.ClearButton = new System.Windows.Forms.Button();
+            this.PasteButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtCredentialsPrimary = new System.Windows.Forms.TextBox();
@@ -75,7 +75,6 @@
             this.actionCombo.Size = new System.Drawing.Size(180, 24);
             this.actionCombo.TabIndex = 86;
             this.actionCombo.Visible = false;
-            this.actionCombo.SelectedIndexChanged += new System.EventHandler(this.actionCombo_SelectedIndexChanged);
             // 
             // ActionLabel
             // 
@@ -158,6 +157,7 @@
             this.btnCopyResponseBody.TabIndex = 80;
             this.btnCopyResponseBody.Text = "Copy to Clipboard";
             this.btnCopyResponseBody.UseVisualStyleBackColor = true;
+            this.btnCopyResponseBody.Click += new System.EventHandler(this.btnCopyResponseBody_Click);
             // 
             // btnCopyToClipboard
             // 
@@ -168,6 +168,7 @@
             this.btnCopyToClipboard.TabIndex = 79;
             this.btnCopyToClipboard.Text = "Copy to Clipboard";
             this.btnCopyToClipboard.UseVisualStyleBackColor = true;
+            this.btnCopyToClipboard.Click += new System.EventHandler(this.btnCopyToClipboard_Click);
             // 
             // btnConnect
             // 
@@ -178,6 +179,7 @@
             this.btnConnect.TabIndex = 76;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // rdbJson
             // 
@@ -190,6 +192,7 @@
             this.rdbJson.TabIndex = 1;
             this.rdbJson.Text = "json";
             this.rdbJson.UseVisualStyleBackColor = true;
+            this.rdbJson.CheckedChanged += new System.EventHandler(this.rdbJson_CheckedChanged);
             // 
             // label2
             // 
@@ -213,25 +216,27 @@
             this.label4.TabIndex = 82;
             this.label4.Text = "Operation";
             // 
-            // button2
+            // ClearButton
             // 
-            this.button2.Location = new System.Drawing.Point(1069, 384);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 28);
-            this.button2.TabIndex = 78;
-            this.button2.Text = "Clear";
-            this.button2.UseVisualStyleBackColor = true;
+            this.ClearButton.Location = new System.Drawing.Point(1069, 384);
+            this.ClearButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(137, 28);
+            this.ClearButton.TabIndex = 78;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
-            // button3
+            // PasteButton
             // 
-            this.button3.Location = new System.Drawing.Point(1069, 420);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(137, 28);
-            this.button3.TabIndex = 77;
-            this.button3.Text = "Paste";
-            this.button3.UseVisualStyleBackColor = true;
+            this.PasteButton.Location = new System.Drawing.Point(1069, 420);
+            this.PasteButton.Margin = new System.Windows.Forms.Padding(4);
+            this.PasteButton.Name = "PasteButton";
+            this.PasteButton.Size = new System.Drawing.Size(137, 28);
+            this.PasteButton.TabIndex = 77;
+            this.PasteButton.Text = "Paste";
+            this.PasteButton.UseVisualStyleBackColor = true;
+            this.PasteButton.Click += new System.EventHandler(this.PasteButton_Click);
             // 
             // groupBox2
             // 
@@ -290,7 +295,7 @@
             // 
             // txtReponseCode
             // 
-            this.txtReponseCode.Location = new System.Drawing.Point(210, 541);
+            this.txtReponseCode.Location = new System.Drawing.Point(183, 539);
             this.txtReponseCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtReponseCode.Name = "txtReponseCode";
             this.txtReponseCode.ReadOnly = true;
@@ -308,6 +313,7 @@
             this.btnCallApi.TabIndex = 69;
             this.btnCallApi.Text = "Send";
             this.btnCallApi.UseVisualStyleBackColor = true;
+            this.btnCallApi.Click += new System.EventHandler(this.btnCallApi_Click);
             // 
             // txtServerUrl
             // 
@@ -409,8 +415,8 @@
             this.Controls.Add(this.btnCopyToClipboard);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.ClearButton);
+            this.Controls.Add(this.PasteButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.label7);
@@ -448,8 +454,8 @@
         private System.Windows.Forms.RadioButton rdbJson;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.Button PasteButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtCredentialsPrimary;

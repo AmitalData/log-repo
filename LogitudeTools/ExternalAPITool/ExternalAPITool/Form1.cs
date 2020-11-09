@@ -15,13 +15,17 @@ namespace ExternalAPITool
     {
         private string token;
         private bool isConnected;
-        private bool isSendButtonEnabled;
         private string apiName = "";
 
         public Form1()
         {
             InitializeComponent();
             Application.EnableVisualStyles();
+
+            this.SetDefaultValues();
+        }
+        private void SetDefaultValues()
+        {
             this.apiCombo.Items.Add("Shipment");
             this.operationCombo.Items.Add("POST");
             this.actionCombo.Items.Add("Accept");
@@ -29,6 +33,26 @@ namespace ExternalAPITool
             this.actionCombo.Items.Add("Cancel");
             this.apiCombo.SelectedIndex = 0;
             this.operationCombo.SelectedIndex = 0;
+            actionCombo.Visible = false;
+            ActionLabel.Visible = false;
+            txtServerUrl.Text = "http://localhost:9996/api/";
+            txtCredentialsPrimary.Text = "bae2aaf0-29b1-4762-aa4d-e04788d78e95";
+            string requestText = @"<ShipmentNumbers>
+	                               <FromDate>2020-10-24T00:00:00</FromDate>
+	                               <ToDate>2020-11-24T00:00:00</ToDate>
+	                               <Direction Code='E' />
+	                               <TransportMode Code='A' />
+	                               <ShipmentType Code='D' />
+	                               <Master>UQWE3284234</Master>
+	                               <House></House>
+	                               <Carrier></Carrier>
+	                               <Containers>
+				                            <Container Number = 'AAAA2348234'/>
+				                            <Container Number = 'BBBB2348234'/>
+	                               </Containers>                                     
+                                 </ShipmentNumbers>";
+            txtRequestBody.Text = requestText;
+            this.apiName = "ShipmentNumbers";
         }
         private async void LoginWithCredentials()
         {
@@ -76,39 +100,13 @@ namespace ExternalAPITool
                 lblMessage.ForeColor = Color.Red;
             }
         }
-        private void apiCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.CheckAPI();
-            isSendButtonEnabled = false;
-            if (apiCombo.SelectedIndex != -1)
-            {
-                isSendButtonEnabled = true;
-            }
-            this.ChangeFormState();
-        }
-        private void operationCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            isSendButtonEnabled = false;
-            if (operationCombo.SelectedIndex != -1)
-            {
-                isSendButtonEnabled = true;
-            }
-
-            this.ChangeFormState();
-            this.CheckAPI();
-        }
-        private void actionCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.CheckAPI();
-        }
         private void ChangeFormState()
         {
-            if (!isSendButtonEnabled && !isConnected)
+            if (!isConnected)
             {
                 this.Cursor = Cursors.WaitCursor;
                 this.btnCallApi.Enabled = false;
             }
-
             else
             {
                 this.Cursor = Cursors.Default;
@@ -117,22 +115,6 @@ namespace ExternalAPITool
                     this.btnCallApi.Enabled = true;
                 }
             }
-        }
-        private void CheckAPI()
-        {
-            actionCombo.Visible = false;
-            ActionLabel.Visible = false;
-            string requestText = "";
-            if (requestText != "")
-                txtRequestBody.Text = requestText;
-        }
-        private void btnCallApi_Click(object sender, EventArgs e)
-        {
-            this.xmlBrowser1.DocumentText = "";
-            this.xmlBrowser1.XmlText = "";
-            txtReponseCode.Text = "";
-
-            this.CallEntityApi(apiName);
         }
         private async void CallEntityApi(string api)
         {
@@ -143,15 +125,10 @@ namespace ExternalAPITool
                 using (var client = new HttpClient())
                 {
                     client.Timeout = new TimeSpan(0, 10, 0); // 10 minutes
-
                     client.DefaultRequestHeaders.Add("Token", token);
                     var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
                     HttpResponseMessage response = new HttpResponseMessage();
-
-                    if (operationCombo.SelectedIndex == 0)
-                    {
-                        response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
-                    }
+                    response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
@@ -174,31 +151,6 @@ namespace ExternalAPITool
 
             this.Cursor = Cursors.Default;
         }
-        private void rdbJson_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdbJson.Checked)
-            {
-                txtRequestContentType.Text = "application/json";
-            }
-            else
-            {
-                txtRequestContentType.Text = "application/xml";
-            }
-        }
-        private void btnConnect_Click_1(object sender, EventArgs e)
-        {
-            txtServerUrl.Text = "http://test.logitudeworld.com/test/api/";
-            txtCredentialsPrimary.Text = "8234e5d4-e6c5-47c8-8c2d-67875e5a3edf";
-            this.LoginWithCredentials();
-        }
-        private void btnCopyToClipboard_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(txtRequestBody.Text);
-        }
-        private void btnCopyResponseBody_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(xmlBrowser1.XmlText);
-        }
         private void SetXmlBrouserXml(string xmlString)
         {
             System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
@@ -212,18 +164,44 @@ namespace ExternalAPITool
             _xd.Load(xReader);
             xmlBrowser1.XmlDocument = _xd;
         }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            txtRequestBody.Text = "";
-        }
-        private void button3_Click(object sender, EventArgs e)
-        {
-            txtRequestBody.Text = Clipboard.GetText();
-
-        }
         private void btnConnect_Click(object sender, EventArgs e)
         {
             this.LoginWithCredentials();
+        }
+        private void btnCallApi_Click(object sender, EventArgs e)
+        {
+            this.xmlBrowser1.DocumentText = "";
+            this.xmlBrowser1.XmlText = "";
+            txtReponseCode.Text = "";
+
+            this.CallEntityApi(apiName);
+        }
+        private void rdbJson_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdbJson.Checked)
+            {
+                txtRequestContentType.Text = "application/json";
+            }
+            else
+            {
+                txtRequestContentType.Text = "application/xml";
+            }
+        }
+        private void btnCopyToClipboard_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtRequestBody.Text);
+        }
+        private void btnCopyResponseBody_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(xmlBrowser1.XmlText);
+        }
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            txtRequestBody.Text = "";
+        }
+        private void PasteButton_Click(object sender, EventArgs e)
+        {
+            txtRequestBody.Text = Clipboard.GetText();
         }
     }
 }

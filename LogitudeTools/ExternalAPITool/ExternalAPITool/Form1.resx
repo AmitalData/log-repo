@@ -127,33 +127,19 @@
     <value>931, 17</value>
   </metadata>
   <data name="txtRequestBody.Text" xml:space="preserve">
-    <value>&lt;APInvoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-    &lt;Vendor Code="1000"&gt;&lt;/Vendor&gt;
-    &lt;VATNumber&gt;100&lt;/VATNumber&gt;
-    &lt;InvoiceNumber&gt;ABC1237&lt;/InvoiceNumber&gt;
-    &lt;AmountInInvoiceCurrency&gt;100&lt;/AmountInInvoiceCurrency&gt;
-    &lt;AmountInLocalCurrency&gt;100&lt;/AmountInLocalCurrency&gt;
-    &lt;SubTotalInLocalCurrency&gt;100&lt;/SubTotalInLocalCurrency&gt;
-    &lt;SubTotalInInvoiceCurrency&gt;100&lt;/SubTotalInInvoiceCurrency&gt;
-    &lt;ProfitCurrencyExchangeRate&gt;1&lt;/ProfitCurrencyExchangeRate&gt;
-    &lt;InvoiceCurrency Code="EUR"&gt;&lt;/InvoiceCurrency&gt;
-    &lt;InvoiceDate&gt;2019-10-30T00:00:00&lt;/InvoiceDate&gt;
-    &lt;EntityReference&gt;1000&lt;/EntityReference&gt;
-    &lt;EntityType&gt;Shipment&lt;/EntityType&gt;
-    &lt;InvoiceLines&gt;
-        &lt;APInvoiceLine&gt;
-            &lt;ChargesType Code="AFT"&gt;&lt;/ChargesType&gt;
-            &lt;InvoiceCurrencyAmount&gt;100&lt;/InvoiceCurrencyAmount&gt;
-            &lt;LocalCurrencyAmount&gt;100&lt;/LocalCurrencyAmount&gt;
-            &lt;ProfitCurrencyAmount&gt;100&lt;/ProfitCurrencyAmount&gt;
-            &lt;ForiegnCurrencyAmount&gt;100&lt;/ForiegnCurrencyAmount&gt;
-            &lt;ForiegnCurrency  Code="EUR"/&gt;
-            &lt;ForiegnExchangeRate&gt;1&lt;/ForiegnExchangeRate&gt;
-        &lt;/APInvoiceLine&gt;
-    &lt;/InvoiceLines&gt;
-&lt;/APInvoice&gt;
-
-
-</value>
+    <value>&lt;ShipmentNumbers&gt;
+	                               &lt;FromDate&gt;2020-10-24T00:00:00&lt;/FromDate&gt;
+	                               &lt;ToDate&gt;2020-11-24T00:00:00&lt;/ToDate&gt;
+	                               &lt;Direction Code='E' /&gt;
+	                               &lt;TransportMode Code='A' /&gt;
+	                               &lt;ShipmentType Code='D' /&gt;
+	                               &lt;Master&gt;UQWE3284234&lt;/Master&gt;
+	                               &lt;House&gt;&lt;/House&gt;
+	                               &lt;Carrier&gt;&lt;/Carrier&gt;
+	                               &lt;Containers&gt;
+				                            &lt;Container Number = 'AAAA2348234'/&gt;
+				                            &lt;Container Number = 'BBBB2348234'/&gt;
+	                               &lt;/Containers&gt;                                     
+                                 &lt;/ShipmentNumbers&gt;</value>
   </data>
 </root>
