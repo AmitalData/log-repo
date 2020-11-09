@@ -43,7 +43,7 @@ namespace CommunicationWorkerRole.Tasks
         }
         private void ExecuteCommand(string sql)
         {
-            string strConnString = BuildConnectionString();
+            string strConnString = GetCargoTrackingConnectionString();
             using (SqlConnection cn = new SqlConnection(strConnString))
             {
                 SqlCommand cmd = new SqlCommand(sql, cn);
@@ -54,18 +54,39 @@ namespace CommunicationWorkerRole.Tasks
                 cn.Close();
             }
         }
-        private string BuildConnectionString()
+        private string GetCargoTrackingConnectionString()
         {
-             string dbConnectionTo = ConfigurationManager.ConnectionStrings["CargoTrackingStr"].ConnectionString;
-             string[] destinationConnectionArray = dbConnectionTo.Split(',');
-             string destinationConnectionString = BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
-
+            string dbConnectionTo = ConfigurationManager.ConnectionStrings["CargoTrackingStr"].ConnectionString;
+            string destinationConnectionString = BuildConnectionString(GetConnectionStringArguments(dbConnectionTo));
             return destinationConnectionString;
         }
-        private string BuildConnectionString(string catalog, string userName, string password, string server)
+        private ConnectionStringArguments GetConnectionStringArguments(string dbConnectionTo)
         {
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            string[] destinationConnectionArray = dbConnectionTo.Split(',');
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = destinationConnectionArray[0],
+                UserName = destinationConnectionArray[1],
+                Password = destinationConnectionArray[2],
+                Server = destinationConnectionArray[3],
+            };
+
+            return connectionStringArguments;
+        }
+        private string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
+        {
+            string result = "Data Source=" + connectionStringArguments.Server + ";Initial Catalog=" + connectionStringArguments.Catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName + ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
         }
+    }
+
+    public class ConnectionStringArguments
+    {
+        public string Server { get; set;}
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Catalog { get; set; }
+
+
     }
 }
