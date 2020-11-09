@@ -684,6 +684,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ConsigneeContactId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeVatNumber { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeReference1 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
