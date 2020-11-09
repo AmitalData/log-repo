@@ -829,7 +829,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (declarationPM.LoadingDateTime != null)
             {
-                DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value =declarationPM.LoadingDateTime.Value };
+            //    DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value =declarationPM.LoadingDateTime.Value };
             }
             DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.ExportAutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
@@ -1344,7 +1344,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                    // declarationGoodsShipmentAdditionalDocument.DMExtensions.requirementLicenseType = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensionsRequirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID = SetIDTypeValue<ExternalAttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumeric = CertificateItem.SequenceNumeric; // moran 1.8.16 - Task 21933
-                    declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
+                 //   declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
                     goodsItemAdditionalDocumentList.Add(declarationGoodsShipmentAdditionalDocument);
                 }
             }
@@ -1379,7 +1379,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //goodsItemAdditionalDocumentDMExtensions.requirementLicenseType = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensionsRequirementLicenseType>(supplierInvoiceItemsCertificatesPM.ReqConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(supplierInvoiceItemsCertificatesPM.ResConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.SequenceNumeric = supplierInvoiceItemsCertificatesPM.SequenceNumeric; // moran 1.8.16 - Task 21933
-            goodsItemAdditionalDocumentDMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
+          //  goodsItemAdditionalDocumentDMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
             return goodsItemAdditionalDocumentDMExtensions;
         }
 
@@ -1520,7 +1520,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                      //},
                         IdentificationTypeCode = SetCodeTypeValue < ClassificationIdentificationTypeCodeType>(supplierInvoiceItemPM.ClassificationTypeCode),
                         DangerousGoodsStatement = GetDangerousGoodsStatement(supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements),
-                        TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),
+                      //  TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),
                         ProductName = GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(supplierInvoiceItemPM),
                         ProductIdentification =  GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification(supplierInvoiceItemPM),
                         SerialNumbers= GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers(supplierInvoiceItemPM),
@@ -1590,7 +1590,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var supplierInvoiceItemsTax = supplierInvoiceItemPM.SupplierInvoiceItemTaxes[itemsTaxSeq];
                 var goodsItemCommodityDutyTaxFees = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee();
                 goodsItemCommodityDutyTaxFees.TypeCode = SetCodeTypeValue<DutyTaxFeeTypeCodeType>(supplierInvoiceItemsTax.TaxTypeCode);
-                goodsItemCommodityDutyTaxFees.DutyRegimeCode = SetCodeTypeValue<DutyTaxFeeDutyRegimeCodeType>(supplierInvoiceItemsTax.TradeAgreementTypeCode);
+              //  goodsItemCommodityDutyTaxFees.DutyRegimeCode = SetCodeTypeValue<DutyTaxFeeDutyRegimeCodeType>(supplierInvoiceItemsTax.TradeAgreementTypeCode);
                 if (supplierInvoiceItemsTax.TaxRate.HasValue)
                 {
                     goodsItemCommodityDutyTaxFees.TaxRate = supplierInvoiceItemsTax.TaxRate.Value;
