@@ -1172,6 +1172,11 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
+    ForeignKeyColumn="FinalLoadingSite"
+    ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
     ForeignKeyColumn="TruckerId"
     ReferencedTable="Truckers"
     ReferencedColumn="Id"

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LoadingSiteTypeUpdateClass
    {  		
-		public const string HashString = "5e61c642efe98d9b76ad0804fa44295a";
+		public const string HashString = "2926c2d9862800caa52af28913ca8534";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אתרי טעינה",
 			      				    DefaultText =  "Loading Site Type",
-			      				    Code =  "617f",
+			      				    Code =  "5be3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -168,6 +168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -228,6 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -287,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -348,6 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -408,6 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -447,11 +452,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup LoadingSiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5be3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LoadingSiteTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "882a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable LoadingSiteTypeObjectTable = objectTables.ContainsKey("Customs.LoadingSiteType") ? objectTables["Customs.LoadingSiteType"] : null;
+            if (LoadingSiteTypeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                LoadingSiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LoadingSiteType" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode LoadingSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LoadingSiteType.Q.LoadingSiteTypes", DefaultText = @"Loading Site Types",LocalDefaultText = "אתרי טעינה", ObjectTableId = LoadingSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LoadingSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoadingSiteType.Q.LoadingSiteTypes", ObjectTableId = LoadingSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "LoadingSiteTypeFeatures.LoadingSiteTypes", NameTextCodeDefaultText = "LoadingSiteTypes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LoadingSiteTypeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query LoadingSiteTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LoadingSiteTypeTextCode_0.Id, NameTextCodeCode = LoadingSiteTypeTextCode_0.Code, ObjectTableName = "Customs.LoadingSiteType", Code = "LoadingSiteTypes",  QueryGroupCode = "5be3", IndexOrder = 0, Tenant = 0, ObjectTableId = LoadingSiteTypeObjectTable.Id, QuerySection = "Customs.LoadingSiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LoadingSiteTypeFeature_0.Id,FeatureUniqeCode= LoadingSiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn LoadingSiteTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LoadingSiteTypesQuery.Id,QueryCode = LoadingSiteTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LoadingSiteType.Code" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn LoadingSiteTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LoadingSiteTypesQuery.Id,QueryCode = LoadingSiteTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LoadingSiteType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn LoadingSiteTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LoadingSiteTypesQuery.Id,QueryCode = LoadingSiteTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LoadingSiteType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn LoadingSiteTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LoadingSiteTypesQuery.Id,QueryCode = LoadingSiteTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LoadingSiteType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable LoadingSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LoadingSiteType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> LoadingSiteTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LoadingSiteType").ToList();
+		       
+	      
+
+	         Screen LoadingSiteTypeCustomsLoadingSiteTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LoadingSiteType.HeaderScreen", Name = "Customs.LoadingSiteTypeHeaderScreen", ObjectTableId = LoadingSiteTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    LoadingSiteTypeObjectTable.HeaderScreenId = LoadingSiteTypeCustomsLoadingSiteTypeHeaderScreenScreen0.Id;
+		    LoadingSiteTypeObjectTable.HeaderScreenCode = LoadingSiteTypeCustomsLoadingSiteTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

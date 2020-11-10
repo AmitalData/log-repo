@@ -190,9 +190,9 @@ export class DeclarationList {
 	CreateDateForExport: Date;
 	TransportModeForExport: string;
 	CustomFileForExport: string;
-	TruckerId: string;
 	TransshipmentApprovalDateTime: Date;
 	FinalLoadingSite: string;
+	TruckerId: string;
 	
 }
  
