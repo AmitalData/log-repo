@@ -86,7 +86,16 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.Amount = item.ExpectedAmount;					
+				   temp.Amount = item.ExpectedAmount; 
+
+			  
+				   if(item.VendorId != null)
+				   {
+					   VendorQueryService VendorService4 = new VendorQueryService(Tenant);
+					   					   temp.Vendor = VendorService4.GetVendorById(item.VendorId,Tenant); 
+			       
+					   				   }
+				   					
 					MyList.Add(temp);
 				}
 					
@@ -249,6 +258,27 @@ using Simplog.Data.ShipmentsModel;
 
 										}  
 
+					
+					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
+					if(item.Vendor != null)
+					{
+						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(item.Vendor,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myVendorPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Vendor Can't be update"); 
+								temp.VendorId = myVendorPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 						MyList.Add(temp);
 					}

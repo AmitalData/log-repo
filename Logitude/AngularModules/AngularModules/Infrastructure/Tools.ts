@@ -1383,14 +1383,36 @@ export class DateTool {
 
         return myResult;
     }
-    public static AddDays(myDate: Date, days: number) {
-        var myResult = this.GetDateParts(myDate).DateObject;
+    public static AddDays(input: Date, days: number) {
 
-        if (myResult != null) {
-            myResult.setUTCDate(myResult.getDate() + days);
+        if (days) {
+            if (input) {
+                var output: Date = null;
+                var dateParts = this.GetDateParts(input);
+
+                if (typeof (input) == "string") {
+                    output = dateParts.DateObject;
+                    output.setUTCDate(output.getDate() + days);                   
+                }
+
+                else {
+                    output = new Date();
+                    output.setUTCMonth(0);
+                    output.setUTCDate(1);
+                    output.setUTCFullYear(dateParts.Year);
+                    output.setUTCMonth((dateParts.Month - 1));
+                    output.setUTCDate(dateParts.Day + days);
+                    output.setUTCHours(dateParts.Hours);
+                    output.setUTCMinutes(dateParts.Minutes);
+                    output.setUTCSeconds(dateParts.Seconds);
+                    output.setUTCMilliseconds(dateParts.Milliseconds);
+                }
+
+                return output;
+            }
         }
 
-        return myResult;
+        return input;
     }
     public static NextDay(myDate: Date, days: number) {
         var myResult = this.GetDateParts(myDate).DateObject;

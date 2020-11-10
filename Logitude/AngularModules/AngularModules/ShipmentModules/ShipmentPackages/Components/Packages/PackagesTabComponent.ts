@@ -1762,7 +1762,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
                     if (insidePackage.InsidePackageHarmonizes != null && insidePackage.InsidePackageHarmonizes.length > 0) {
                         for (var f = insidePackage.InsidePackageHarmonizes.length - 1; f >= 0; f--) {
-                            insidePackage.RemoveInsidePackageHarmonizePM(insidePackage.InsidePackageHarmonizes[f]);
+                            insidePackage.RemoveShipmentPackageHarmonizePM(insidePackage.InsidePackageHarmonizes[f]);
                         }
                     }
 

@@ -59,7 +59,10 @@ export class FBLStockPM {
     public OldEntityPM: FBLStockPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +70,7 @@ export class FBLStockPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FBLStock");
            
         }
+	 }
     }
     private MyClone: FBLStockPM;
 

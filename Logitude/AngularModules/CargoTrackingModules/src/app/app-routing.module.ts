@@ -34,16 +34,16 @@ const routes: Routes = [
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
             { path: "shipment", redirectTo: ':Tenant/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
+            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
         ]
     },
     
  
-    {path: 'login', component: LoginComponent },
+    { path: ':Tenant/login', component: LoginComponent },
     // {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    {path: '**', component: LoginComponent },
+    {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  

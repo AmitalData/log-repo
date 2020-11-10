@@ -8,13 +8,14 @@
 //------------------------------------------------------------------------------
 
 import {ShipmentPackagePM} from './ShipmentPackagePM';
+
+import {ShipmentPackageHarmonizePM} from './ShipmentPackageHarmonizePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ShipmentPackageHarmonizePM } from './ShipmentPackageHarmonizePM';
 
 
 export class InsideShipmentPackagePM {
@@ -243,52 +244,56 @@ export class InsideShipmentPackagePM {
     public get CountryCode() { return this.countryCode; }
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
        
+	 
     private harmonize: string;
     public get Harmonize() { return this.harmonize; }
     public set Harmonize(newValue: string) { if (this.harmonize != newValue) { this.harmonize = newValue; this.MarkAsDirty("Harmonize"); } }
-
+       
+	 
     private isMultiHarmonize: boolean;
     public get IsMultiHarmonize() { return this.isMultiHarmonize; }
     public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
-
-
-    private insidePackageHarmonizes: ShipmentPackageHarmonizePM[];
-    get InsidePackageHarmonizes() {
+       
+	 
+     
+	private insidePackageHarmonizes: ShipmentPackageHarmonizePM[];
+    get  InsidePackageHarmonizes() {
         if (this.insidePackageHarmonizes == null) {
             this.insidePackageHarmonizes = [];
         }
 
         return this.insidePackageHarmonizes;
     }
-    set InsidePackageHarmonizes(newValue: ShipmentPackageHarmonizePM[]) {
+    set  InsidePackageHarmonizes(newValue: ShipmentPackageHarmonizePM[]) {
         if (this.insidePackageHarmonizes != newValue) {
             this.insidePackageHarmonizes = newValue;
         }
     }
-    public AddInsidePackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
+    public AddShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
         if (item != null) {
             var index = this.InsidePackageHarmonizes.indexOf(item);
             if (index == -1) {
 
                 item.EntityParentPM = this;
 
-                this.InsidePackageHarmonizes.push(item);
+                this. InsidePackageHarmonizes.push(item);
                 this.MarkAsDirty();
             }
         }
     }
-    public RemoveInsidePackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
+    public RemoveShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
         if (item != null) {
             var index = this.InsidePackageHarmonizes.indexOf(item);
             if (index > -1) {
-                this.InsidePackageHarmonizes.splice(index, 1);
+                this. InsidePackageHarmonizes.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
-
-    public InsidePackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM> = [];
-
+	    //public InsidePackageHarmonizes: Array<ShipmentPackageHarmonizePMPM>= [];
+ 
+    public InsidePackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM>= [];
+		 
     public OldEntityPM: InsideShipmentPackagePM;
 	    
 	private entityParentPM: any;
@@ -298,7 +303,10 @@ export class InsideShipmentPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -308,6 +316,7 @@ export class InsideShipmentPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InsideShipmentPackage");
            
         }
+	 }
     }
     private MyClone: InsideShipmentPackagePM;
 

@@ -150,7 +150,10 @@ export class PackageTypePM {
     public OldEntityPM: PackageTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -159,6 +162,7 @@ export class PackageTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PackageType");
            
         }
+	 }
     }
     private MyClone: PackageTypePM;
 

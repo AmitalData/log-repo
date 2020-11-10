@@ -59,7 +59,10 @@ export class BluesnapTransactionPM {
     public OldEntityPM: BluesnapTransactionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -67,6 +70,7 @@ export class BluesnapTransactionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BluesnapTransaction");
            
         }
+	 }
     }
     private MyClone: BluesnapTransactionPM;
 

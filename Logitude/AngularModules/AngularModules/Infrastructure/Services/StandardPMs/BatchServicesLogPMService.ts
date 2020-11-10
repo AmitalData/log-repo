@@ -153,6 +153,7 @@ export class BatchServicesLogPMService {
         if (!entityPM) {
             
             entityPM = new BatchServicesLogPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class BatchServicesLogPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -288,13 +288,16 @@ export class LedgerTransactionPM {
     public OldEntityPM: LedgerTransactionPM;
 		
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
-        this.IsDirty = true;
-		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
-           
+    public DisableMarkAsDirty: boolean = false;
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
+
+            }
         }
     }
 

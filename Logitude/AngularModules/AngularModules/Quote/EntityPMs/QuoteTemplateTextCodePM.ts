@@ -74,7 +74,10 @@ export class QuoteTemplateTextCodePM {
     public OldEntityPM: QuoteTemplateTextCodePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -82,6 +85,7 @@ export class QuoteTemplateTextCodePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateTextCode");
            
         }
+	 }
     }
     private MyClone: QuoteTemplateTextCodePM;
 

@@ -99,7 +99,10 @@ export class VesselPM {
     public OldEntityPM: VesselPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -107,6 +110,7 @@ export class VesselPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Vessel");
            
         }
+	 }
     }
     private MyClone: VesselPM;
 

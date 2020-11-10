@@ -10,169 +10,168 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {DocumentTypePM} from '../../EntityPMs/DocumentTypePM';
+import { DocumentTypePM } from '../../EntityPMs/DocumentTypePM';
 
-import {DocumentTypeCustomFieldPM} from '../../EntityPMs/DocumentTypeCustomFieldPM';
-import {DocumentTypeCopyPM} from '../../EntityPMs/DocumentTypeCopyPM';
-import {DocumentTypeTemplatePM} from '../../EntityPMs/DocumentTypeTemplatePM';
+import { DocumentTypeCustomFieldPM } from '../../EntityPMs/DocumentTypeCustomFieldPM';
+import { DocumentTypeCopyPM } from '../../EntityPMs/DocumentTypeCopyPM';
+import { DocumentTypeTemplatePM } from '../../EntityPMs/DocumentTypeTemplatePM';
 
 @Injectable()
 
 export class DocumentTypePMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documenttypes';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documenttypes';
     }
 
-	get(id: string) {       
+    get(id: string) {
 
-		var callTime = new Date();		
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-				
-						var entity: DocumentTypePM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
-              
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "GetSinglePM", 'id=' + id);
-				 
-						return serviceResponse;
+                        var entity: DocumentTypePM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});                    
-	}
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-	insert(entityPM: DocumentTypePM) {
- 
-		var callTime = new Date();  
-		
-		return defer(() => {
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "GetSinglePM", 'id=' + id);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("DocumentType", entityPM);
+                        return serviceResponse;
 
+                    }),
 
-			if (errorsArray.length == 0) {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-				var mappedEntity: DocumentTypePM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+    insert(entityPM: DocumentTypePM) {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: DocumentTypePM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+        var callTime = new Date();
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+        return defer(() => {
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
-
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
-
-	update(entityPM: DocumentTypePM) {
-
-		var callTime = new Date();     
-		
-		return defer(() => {
-
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("DocumentType", entityPM);
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("DocumentType", entityPM);
 
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: DocumentTypePM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-                 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: DocumentTypePM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
-							 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "SaveChanges", "");                    
-					                           
-							return serviceResponse;
-						}),
+                var mappedEntity: DocumentTypePM = this.MapJsonToEntityPM(entityPM, false);
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: DocumentTypePM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-   
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "SaveChanges", "");
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DocumentTypePM = null) {
+                            return serviceResponse;
+                        }),
 
-         
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+    update(entityPM: DocumentTypePM) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("DocumentType", entityPM);
+
+
+            if (errorsArray.length == 0) {
+
+                var mappedEntity: DocumentTypePM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: DocumentTypePM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentType", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DocumentTypePM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new DocumentTypePM();
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -181,51 +180,51 @@ export class DocumentTypePMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapDocumentTypeCustomFields(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapDocumentTypeCopies(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapDocumentTypeTemplates(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapDocumentTypeCustomFields(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapDocumentTypeCopies(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapDocumentTypeTemplates(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.DocumentTypeCustomFields = [];
             for (var item in entityPM.DocumentTypeCustomFields) {
-            var myDocumentTypeCustomFieldPM = entityPM.DocumentTypeCustomFields[item];
-            var newDocumentTypeCustomFieldPM: DocumentTypeCustomFieldPM = this.clone(myDocumentTypeCustomFieldPM);
-						
-							 
-            entityPM.OldEntityPM.DocumentTypeCustomFields.push(newDocumentTypeCustomFieldPM);
+                var myDocumentTypeCustomFieldPM = entityPM.DocumentTypeCustomFields[item];
+                var newDocumentTypeCustomFieldPM: DocumentTypeCustomFieldPM = this.clone(myDocumentTypeCustomFieldPM);
+
+
+                entityPM.OldEntityPM.DocumentTypeCustomFields.push(newDocumentTypeCustomFieldPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.DocumentTypeCopies = [];
             for (var item in entityPM.DocumentTypeCopies) {
-            var myDocumentTypeCopyPM = entityPM.DocumentTypeCopies[item];
-            var newDocumentTypeCopyPM: DocumentTypeCopyPM = this.clone(myDocumentTypeCopyPM);
-						
-							 
-            entityPM.OldEntityPM.DocumentTypeCopies.push(newDocumentTypeCopyPM);
+                var myDocumentTypeCopyPM = entityPM.DocumentTypeCopies[item];
+                var newDocumentTypeCopyPM: DocumentTypeCopyPM = this.clone(myDocumentTypeCopyPM);
+
+
+                entityPM.OldEntityPM.DocumentTypeCopies.push(newDocumentTypeCopyPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.DocumentTypeTemplates = [];
             for (var item in entityPM.DocumentTypeTemplates) {
-            var myDocumentTypeTemplatePM = entityPM.DocumentTypeTemplates[item];
-            var newDocumentTypeTemplatePM: DocumentTypeTemplatePM = this.clone(myDocumentTypeTemplatePM);
-						
-							 
-            entityPM.OldEntityPM.DocumentTypeTemplates.push(newDocumentTypeTemplatePM);
+                var myDocumentTypeTemplatePM = entityPM.DocumentTypeTemplates[item];
+                var newDocumentTypeTemplatePM: DocumentTypeTemplatePM = this.clone(myDocumentTypeTemplatePM);
+
+
+                entityPM.OldEntityPM.DocumentTypeTemplates.push(newDocumentTypeTemplatePM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
+        entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -240,11 +239,11 @@ export class DocumentTypePMService {
             }
             var newDocumentTypeCustomFieldPM: DocumentTypeCustomFieldPM;
             newDocumentTypeCustomFieldPM = new DocumentTypeCustomFieldPM();
-				                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -268,32 +267,31 @@ export class DocumentTypePMService {
                 continue;
             }
             var newDocumentTypeCopyPM: DocumentTypeCopyPM;
-	  
+
             if (mapParent) {
                 newDocumentTypeCopyPM = new DocumentTypeCopyPM(entityPM);
             }
-            else
-            {
+            else {
                 newDocumentTypeCopyPM = new DocumentTypeCopyPM(null);
             }
-                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newDocumentTypeCopyPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newDocumentTypeCopyPM.UniqueKey = Guid.newGuid();
                 newDocumentTypeCopyPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newDocumentTypeCopyPM.OldEntityPM = this.clone(newDocumentTypeCopyPM);
 
-				
+
             }
             else {
                 if (newDocumentTypeCopyPM.UniqueKey) {
@@ -302,25 +300,25 @@ export class DocumentTypePMService {
                         newDocumentTypeCopyPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newDocumentTypeCopyPM.ChangeSetOp = "Insert";
+                    newDocumentTypeCopyPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newDocumentTypeCopyPM.OldEntityPM = null;
                 newDocumentTypeCopyPM.EntityParentPM = null;
             }
-			
-			 newDocumentTypeCopyPM.IsDirty = false;
+
+            newDocumentTypeCopyPM.IsDirty = false;
             entityPM.DocumentTypeCopies.push(newDocumentTypeCopyPM);
         }
         if (oldDocumentTypeCopies) {
-            
+
             for (var itemKey in oldDocumentTypeCopies) {
-                if (entityPM.DocumentTypeCopies.filter(p=> p.UniqueKey === oldDocumentTypeCopies[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.DocumentTypeCopies.filter(p => p.UniqueKey === oldDocumentTypeCopies[itemKey].UniqueKey).length === 0) {
+
                     if (oldDocumentTypeCopies[itemKey]) {
                         //oldDocumentTypeCopies[itemKey].ChangeSetOp = "Delete";
                         //entityPM.DocumentTypeCopies.push(oldDocumentTypeCopies[itemKey]);
-						var oldItemJson = oldDocumentTypeCopies[itemKey];
+                        var oldItemJson = oldDocumentTypeCopies[itemKey];
                         var deletedPM: DocumentTypeCopyPM = new DocumentTypeCopyPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -333,10 +331,10 @@ export class DocumentTypePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.DocumentTypeCopies.push(deletedPM);
                     }
@@ -355,11 +353,11 @@ export class DocumentTypePMService {
             }
             var newDocumentTypeTemplatePM: DocumentTypeTemplatePM;
             newDocumentTypeTemplatePM = new DocumentTypeTemplatePM();
-				                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -370,13 +368,13 @@ export class DocumentTypePMService {
         }
     }
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -388,12 +386,12 @@ export class DocumentTypePMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: DocumentTypePM;
-			entityPM = new DocumentTypePM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+    public GetNewEntityPM() {
+        var entityPM: DocumentTypePM;
+        entityPM = new DocumentTypePM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
     }
-		 
+
 
 }

@@ -32,6 +32,9 @@ export class HomeComponent
         
     }
 
+    public UserDashboardClicked(){
+        this.router.navigate([this.tenant, 'dashboard']);
+    }
 
     private getcargoTrackingData()
     {

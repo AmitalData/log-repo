@@ -153,6 +153,7 @@ export class LeadSourcePMService {
         if (!entityPM) {
             
             entityPM = new LeadSourcePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class LeadSourcePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

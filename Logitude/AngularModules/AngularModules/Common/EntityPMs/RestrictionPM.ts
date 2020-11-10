@@ -74,7 +74,10 @@ export class RestrictionPM {
     public OldEntityPM: RestrictionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -82,6 +85,7 @@ export class RestrictionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Restriction");
            
         }
+	 }
     }
     private MyClone: RestrictionPM;
 

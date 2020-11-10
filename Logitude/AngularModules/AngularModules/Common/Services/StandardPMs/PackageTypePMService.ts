@@ -169,6 +169,7 @@ export class PackageTypePMService {
         if (!entityPM) {
             
             entityPM = new PackageTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -209,6 +210,8 @@ export class PackageTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

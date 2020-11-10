@@ -70,10 +70,13 @@ export class APPaymentInvoicePM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        this.IsDirty = true;
-        if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
         }
     }
 

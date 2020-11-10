@@ -153,6 +153,7 @@ export class ChargesGroupPMService {
         if (!entityPM) {
             
             entityPM = new ChargesGroupPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ChargesGroupPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

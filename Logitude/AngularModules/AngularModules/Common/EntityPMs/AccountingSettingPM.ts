@@ -299,7 +299,10 @@ export class AccountingSettingPM {
     public OldEntityPM: AccountingSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -307,6 +310,7 @@ export class AccountingSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingSetting");
            
         }
+	 }
     }
     private MyClone: AccountingSettingPM;
 

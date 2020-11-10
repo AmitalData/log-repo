@@ -156,6 +156,7 @@ export class BankAccountLitePMService {
         if (!entityPM) {
             
             entityPM = new BankAccountLitePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class BankAccountLitePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
