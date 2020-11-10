@@ -2500,7 +2500,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(shipment.CustomerId))
                 {
-                    myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference2 : "";
+                    myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1: "";
 
                     Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
                     if (customer != null)
