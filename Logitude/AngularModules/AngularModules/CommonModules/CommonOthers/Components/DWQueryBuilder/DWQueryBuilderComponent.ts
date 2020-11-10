@@ -2143,6 +2143,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
             view.displayname = DWObjectField.Name + " " + item;
             view.ParentDataTypeCode = "DateParts";
+            view.parentDimTabelName = DWObjectField.ParentDimTabelName;
 
             ObsList.push(view);
             this.Items = ObsList;
