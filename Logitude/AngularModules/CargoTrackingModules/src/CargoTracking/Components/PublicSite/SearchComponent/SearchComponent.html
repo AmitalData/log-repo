@@ -191,12 +191,11 @@
                         </div> -->
 
                         <!-- Status -->
-                        <div class="column col-md-1 status" style="width: 17%;">
+                        <div class="column col-md-1 status" style="width: 25%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value truncateText">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }}</div>
-
-
+                                <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</span></div>   
+                           
                                 <div class="subtitle">Last Updated</div>
                                 <div class="value">{{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
