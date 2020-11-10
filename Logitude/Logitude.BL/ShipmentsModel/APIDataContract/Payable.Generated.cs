@@ -38,6 +38,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public PrepaidCollect PrepaidCollect { get; set; }
     
     public double? Amount { get; set; }
+    
+    public Vendor Vendor { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
