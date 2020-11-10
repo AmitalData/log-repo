@@ -1,12 +1,9 @@
-﻿<Script DBType="Main">
+﻿
+<Script DBType="Main"  Module="common" >
   <Sql Version="1">
     <![CDATA[
-
- 
-
-update reports set AvailableForScheduling=1 where code='CSSR' 
- 
-
-    ]]>
+   update reports set AvailableForScheduling=1 where code='CSSR' 
+    ]]>      
   </Sql>
 </Script>
+ 
