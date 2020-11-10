@@ -592,9 +592,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
            // _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactor.Value;
             //_MyDeclarationPM.DealValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value;
-            _MyDeclarationPM.DealValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value, 2);
+           // _MyDeclarationPM.DealValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value, 2);
             //_MyDeclarationPM.CIFValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value;
-            _MyDeclarationPM.CIFValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value, 2);
+           // _MyDeclarationPM.CIFValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value, 2);
             //_MyDeclarationPM.TotalTax = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value;
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             //_MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
@@ -1594,10 +1594,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //supplierInvoiceItemsTaxPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey; //Removed by Yuval Chalup 26.05.2015 TASK-13473 (Move to SupplierInvoiceItemsTaxUpdateService.OnUpdating)
                         //supplierInvoiceItemsTaxPM.LineNumber = supplierInvoiceItemPM.LineNumber; //Removed by Yuval Chalup 26.05.2015 TASK-13473 (Move to SupplierInvoiceItemsTaxUpdateService.OnUpdating)
                         supplierInvoiceItemsTaxPM.TaxTypeCode = dutyTaxFee.TypeCode.Value;
-                        if (dutyTaxFee.DutyRegimeCode != null)
-                        {
-                            supplierInvoiceItemsTaxPM.TradeAgreementTypeCode = dutyTaxFee.DutyRegimeCode.Value;
-                        }
+                        //if (dutyTaxFee.DutyRegimeCode != null)
+                        //{
+                        //    supplierInvoiceItemsTaxPM.TradeAgreementTypeCode = dutyTaxFee.DutyRegimeCode.Value;
+                        //}
                         supplierInvoiceItemsTaxPM.TaxRate = dutyTaxFee.TaxRate;
                         supplierInvoiceItemsTaxPM.TaxBaseAmount = dutyTaxFee.AdValoremTaxBaseAmount.Value;
                         //supplierInvoiceItemsTaxPM.TaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.Amount.Value;

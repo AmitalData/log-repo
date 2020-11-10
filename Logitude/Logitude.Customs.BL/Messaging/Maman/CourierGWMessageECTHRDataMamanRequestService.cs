@@ -149,10 +149,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //Get Trucker details - Task 49270
             string distributorHP = "";
             string distributorName = "";
-            if (!string.IsNullOrWhiteSpace(myCourierMasterPM.TruckerId))
+            if (!string.IsNullOrWhiteSpace(myDeclarationPM.TruckerId)) // TruckerId PER Declarations instead of CourierMaster - task 74183
             { 
-                CardRepository cardRep = new CardRepository(myCourierMasterPM.Tenant);
-                Card card = cardRep.GetSingleCardCache(myCourierMasterPM.TruckerId, myCourierMasterPM.Tenant);
+                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant); 
+                Card card = cardRep.GetSingleCardCache(myDeclarationPM.TruckerId, myDeclarationPM.Tenant);
                 if (card != null)
                 {
                     distributorHP = card.VatNumber;
