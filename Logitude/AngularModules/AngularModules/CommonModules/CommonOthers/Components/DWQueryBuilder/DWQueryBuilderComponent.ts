@@ -1753,7 +1753,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             }
         }
         else {
-            if (newValue == "DateTime" && this.DWObjectTableCode.indexOf("DIM_") == -1) {
+            if (newValue == "DateTime" && this.DWObjectTableCode.indexOf("DIM_Date") == -1) {
                 this.HasTree = true;
 
             }
@@ -2066,6 +2066,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     LoadItems(DWObjectField: any) {
         if (this.IsViewTree) {
             this.IsViewTree = false;
+            this.Items = [];
         }
         else {
             if (this.Items.length == 0 || AppTool.IsNullOrEmpty(DWObjectField.MyParentClass.searchText)) {
@@ -2137,6 +2138,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             dWObjectFieldPM.DataTypeCode = item;
             dWObjectFieldPM.CannotFilter = true;
             dWObjectFieldPM.Name = item;
+            dWObjectFieldPM.DimensionTableDisplayName = DWObjectField.DimensionTableDisplayName;
             dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
             view.displayname = DWObjectField.Name + " " + item;

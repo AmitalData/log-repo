@@ -490,6 +490,31 @@
                                                                                                                                         </td>
 
                                                                                                                                     </tr>
+
+                                                                                                                                    <tr *ngFor="let innerItem of item.Items">
+                                                                                                                                        <td *ngIf="innerItem" class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == innerItem" (click)="SetSelectedItem(innerItem)" style="width:100px;height:20px">
+                                                                                                                                            <table>
+                                                                                                                                                <tr class="OutterLink">
+
+                                                                                                                                                    <td style="width:10%"></td>
+
+                                                                                                                                                    <td style="width:60%;">
+                                                                                                                                                        <p style="display:inline-block;">{{innerItem.TranslationText}}</p>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td style="width:5%;"></td>
+                                                                                                                                                    <td class="LinkBtn" style="width:10%;">
+                                                                                                                                                        <span class="LinkBtn" (click)="btnAdd_Click(innerItem)">Add Column</span>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td style="width:1%;"></td>
+                                                                                                                                                    <td *ngIf="!innerItem.CannotFilter" class="LinkBtn" style="width:10%;">
+                                                                                                                                                        <span class="LinkBtn" (click)="btnAddFilter_Click(innerItem)">Add Filter</span>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td style="width:14%;"></td>
+                                                                                                                                                </tr>
+                                                                                                                                            </table>
+                                                                                                                                        </td>
+
+                                                                                                                                    </tr>
                                                                                                                                 </table>
                                                                                                                             </td>
                                                                                                                         </tr>
