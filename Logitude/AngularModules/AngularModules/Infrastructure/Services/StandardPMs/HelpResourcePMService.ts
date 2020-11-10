@@ -166,6 +166,7 @@ export class HelpResourcePMService {
         if (!entityPM) {
             
             entityPM = new HelpResourcePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -206,6 +207,8 @@ export class HelpResourcePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

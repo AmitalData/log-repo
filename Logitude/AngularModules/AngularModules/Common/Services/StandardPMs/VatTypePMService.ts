@@ -168,6 +168,7 @@ export class VatTypePMService {
         if (!entityPM) {
             
             entityPM = new VatTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -228,6 +229,8 @@ export class VatTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -253,7 +256,8 @@ export class VatTypePMService {
             {
                 newVatTypePercentagePM = new VatTypePercentagePM(null);
             }
-                
+ 			newVatTypePercentagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -285,7 +289,7 @@ export class VatTypePMService {
                 newVatTypePercentagePM.OldEntityPM = null;
                 newVatTypePercentagePM.EntityParentPM = null;
             }
-			
+			 newVatTypePercentagePM.DisableMarkAsDirty = false;
 			 newVatTypePercentagePM.IsDirty = false;
             entityPM.VatTypePercentages.push(newVatTypePercentagePM);
         }
@@ -299,6 +303,7 @@ export class VatTypePMService {
                         //entityPM.VatTypePercentages.push(oldVatTypePercentages[itemKey]);
 						var oldItemJson = oldVatTypePercentages[itemKey];
                         var deletedPM: VatTypePercentagePM = new VatTypePercentagePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -310,7 +315,7 @@ export class VatTypePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -343,7 +348,8 @@ export class VatTypePMService {
             {
                 newVATTypesGroupPM = new VATTypesGroupPM(null);
             }
-                
+ 			newVATTypesGroupPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -375,7 +381,7 @@ export class VatTypePMService {
                 newVATTypesGroupPM.OldEntityPM = null;
                 newVATTypesGroupPM.EntityParentPM = null;
             }
-			
+			 newVATTypesGroupPM.DisableMarkAsDirty = false;
 			 newVATTypesGroupPM.IsDirty = false;
             entityPM.VatTypeGroups.push(newVATTypesGroupPM);
         }
@@ -389,6 +395,7 @@ export class VatTypePMService {
                         //entityPM.VatTypeGroups.push(oldVatTypeGroups[itemKey]);
 						var oldItemJson = oldVatTypeGroups[itemKey];
                         var deletedPM: VATTypesGroupPM = new VATTypesGroupPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -400,7 +407,7 @@ export class VatTypePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

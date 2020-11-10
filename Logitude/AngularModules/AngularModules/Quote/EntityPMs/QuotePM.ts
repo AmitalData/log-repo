@@ -1672,7 +1672,10 @@ export class QuotePM {
     public OldEntityPM: QuotePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -1680,6 +1683,7 @@ export class QuotePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Quote");
            
         }
+	 }
     }
     private MyClone: QuotePM;
 

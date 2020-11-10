@@ -281,7 +281,10 @@ PrintPMProperties(elements,properties,tableName);
 	 #>
 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  <#+
 	 if(hasParent){
@@ -302,6 +305,7 @@ PrintPMProperties(elements,properties,tableName);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "<#=tableName #>");
            
         }
+	 }
     }
     private MyClone: <#=tableName #>PM;
 

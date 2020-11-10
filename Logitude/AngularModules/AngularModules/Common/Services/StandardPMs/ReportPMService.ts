@@ -156,6 +156,7 @@ export class ReportPMService {
         if (!entityPM) {
             
             entityPM = new ReportPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class ReportPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

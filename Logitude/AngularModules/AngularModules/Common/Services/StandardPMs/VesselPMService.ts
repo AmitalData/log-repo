@@ -156,6 +156,7 @@ export class VesselPMService {
         if (!entityPM) {
             
             entityPM = new VesselPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class VesselPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

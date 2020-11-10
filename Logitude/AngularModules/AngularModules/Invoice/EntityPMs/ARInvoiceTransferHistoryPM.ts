@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 
 export class ARInvoiceTransferHistoryPM {
@@ -31,7 +31,9 @@ export class ARInvoiceTransferHistoryPM {
     public OldEntityPM: ARInvoiceTransferHistoryPM;
 
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
+
         this.IsDirty = true;
 
     }

@@ -84,7 +84,10 @@ export class WebhookKeysPM {
     public OldEntityPM: WebhookKeysPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -92,6 +95,7 @@ export class WebhookKeysPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WebhookKeys");
            
         }
+	 }
     }
     private MyClone: WebhookKeysPM;
 

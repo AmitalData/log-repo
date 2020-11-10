@@ -93,7 +93,10 @@ export class APInvoicePaymentPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -103,6 +106,7 @@ export class APInvoicePaymentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoicePayment");
            
         }
+	 }
     }
     private MyClone: APInvoicePaymentPM;
 

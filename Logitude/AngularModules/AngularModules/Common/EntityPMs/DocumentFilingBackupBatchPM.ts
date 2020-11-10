@@ -89,7 +89,10 @@ export class DocumentFilingBackupBatchPM {
     public OldEntityPM: DocumentFilingBackupBatchPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +100,7 @@ export class DocumentFilingBackupBatchPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentFilingBackupBatch");
            
         }
+	 }
     }
     private MyClone: DocumentFilingBackupBatchPM;
 

@@ -144,7 +144,10 @@ export class FollowUpPM {
     public OldEntityPM: FollowUpPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -152,6 +155,7 @@ export class FollowUpPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FollowUp");
            
         }
+	 }
     }
     private MyClone: FollowUpPM;
 

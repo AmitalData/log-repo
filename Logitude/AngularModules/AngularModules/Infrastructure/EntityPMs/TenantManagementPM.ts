@@ -844,7 +844,10 @@ export class TenantManagementPM {
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -852,6 +855,7 @@ export class TenantManagementPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantManagement");
            
         }
+	 }
     }
     private MyClone: TenantManagementPM;
 

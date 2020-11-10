@@ -392,7 +392,10 @@ export class ShippingLinePM {
     public OldEntityPM: ShippingLinePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -400,6 +403,7 @@ export class ShippingLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShippingLine");
            
         }
+	 }
     }
     private MyClone: ShippingLinePM;
 

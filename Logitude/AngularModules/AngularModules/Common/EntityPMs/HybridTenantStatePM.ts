@@ -54,7 +54,10 @@ export class HybridTenantStatePM {
     public OldEntityPM: HybridTenantStatePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -62,6 +65,7 @@ export class HybridTenantStatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "HybridTenantState");
            
         }
+	 }
     }
     private MyClone: HybridTenantStatePM;
 

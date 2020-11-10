@@ -89,7 +89,10 @@ export class MoveTypePM {
     public OldEntityPM: MoveTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -97,6 +100,7 @@ export class MoveTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MoveType");
            
         }
+	 }
     }
     private MyClone: MoveTypePM;
 

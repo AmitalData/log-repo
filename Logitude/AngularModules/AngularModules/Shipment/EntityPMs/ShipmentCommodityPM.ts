@@ -151,7 +151,10 @@ export class ShipmentCommodityPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -161,6 +164,7 @@ export class ShipmentCommodityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentCommodity");
            
         }
+	 }
     }
     private MyClone: ShipmentCommodityPM;
 

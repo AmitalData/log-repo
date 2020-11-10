@@ -54,7 +54,10 @@ export class DocumentFilingBackupSettingPM {
     public OldEntityPM: DocumentFilingBackupSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -62,6 +65,7 @@ export class DocumentFilingBackupSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentFilingBackupSetting");
            
         }
+	 }
     }
     private MyClone: DocumentFilingBackupSettingPM;
 
