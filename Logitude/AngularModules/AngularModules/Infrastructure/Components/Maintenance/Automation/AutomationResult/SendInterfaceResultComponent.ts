@@ -30,7 +30,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     constructor() {
         super();
         this.DataContext = this;
-        this.IsCustomerCare = true;// SessionLocator.LoggedUserPM.IsCustomerCare;
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
 
         this.InitializeSendInterfaceResultComponent();
 

@@ -1730,6 +1730,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendInterface.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ChangePasswordParameter.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
