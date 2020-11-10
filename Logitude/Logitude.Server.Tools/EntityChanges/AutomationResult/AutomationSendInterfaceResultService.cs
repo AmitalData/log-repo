@@ -20,16 +20,17 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     {
         private AutomationResultArgs automationResultArgs { get; set; }
         private int tenant;
+        private EntityChange entityChange;
+
         private List<Automation> sendInterfaceAutomations = new List<Automation>();
-        public AutomationSendInterfaceResultService()
-        {
-        }
+
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
-            this.tenant = automationResultArgs.EntityChange.Tenant;
+            this.entityChange = automationResultArgs.EntityChange;
+            this.tenant = this.entityChange.Tenant;
+
             this.sendInterfaceAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "SENDINTERFACE").ToList();
-           
             if (sendInterfaceAutomations.Count > 0)
             {
                 WriteEntityPMOnStorage(automationResultArgs);
@@ -42,16 +43,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlString(automationResultArgs.EntityPM, true);
             byte[] xmlFile = Encoding.UTF8.GetBytes(xmlString);
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = (automationResultArgs.EntityChange.Id + automationResultArgs.EntityChange.EntityId + "Entity"), FolderName = "Others", Tenant = automationResultArgs.EntityChange.Tenant, FileData = xmlFile });
+            StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant =tenant, FileData = xmlFile });
         }
 
         private void ExecuteSendInterfaceAutomations()
         {
-          
             foreach (Automation automation in sendInterfaceAutomations)
             {
                 string lastAuomationUpdateDate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
-                AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, automationResultArgs.EntityChange, lastAuomationUpdateDate);
+                AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastAuomationUpdateDate);
                 TimeSpan? automationDelayTime = null;
                 if (automatedBackup.Type == "Delayed")
                 {
@@ -59,7 +59,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     automationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists);
                 }
 
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.EntityId, Tenant = automation.Tenant,  AutomationDelayTime = automationDelayTime  , ExecutedImmediately = (automatedBackup.Type == "Delayed" ? false:true)});
+                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant,  AutomationDelayTime = automationDelayTime  , ExecutedImmediately = (automatedBackup.Type == "Delayed" ? false:true) });
             }
         }
 

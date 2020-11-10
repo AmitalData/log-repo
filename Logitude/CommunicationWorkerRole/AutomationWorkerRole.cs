@@ -264,7 +264,7 @@ namespace CommunicationWorkerRole
                                         }
                                         else if (automationSendInterface.SendVia == "FTP")
                                         {
-                                            new AutomationSendFTPService().SendAutomationFTP(automationSendInterface.FTPDetails, documentId, Tenant);
+                                            new FTPAutomationService().Run(automationSendInterface.FTPDetails, documentId, Tenant);
                                         }
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
@@ -475,10 +475,12 @@ namespace CommunicationWorkerRole
 
         private static string GetSendInterfaceDataContractDocumentId(EntityChange entityChange, AutomationSendInterface automationSendInterface)
         {
-            byte[] objectData = StorageDataService.ReadFileFromStorage(new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant });
+            StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant };
+            byte[] objectData = StorageDataService.ReadFileFromStorage(storageDataArgs);
             ShipmentPM shipmentPM = LogitudeXmlSerializer.DeserializeObject<ShipmentPM>(objectData);
             SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface.ComputingPartnerId, entityChange.Tenant);
             string documentId = sendInterfaceDataContractService.GetSendInterfaceDataContractDocumentId(automationSendInterface.Format);
+            //StorageDataService.DeleteFileFromStorage(storageDataArgs);
             return documentId;
         }
 
@@ -762,12 +764,12 @@ namespace CommunicationWorkerRole
             return entityChangeAutomationList;
         }
 
-        private List<EntityChangeAutomation> GetEntityChangeAutomationList(string emailAutomationSsucceedXml)
+        private List<EntityChangeAutomation> GetEntityChangeAutomationList(string entityChangeAutomationXml)
         {
             List<EntityChangeAutomation> entityChangeAutomationList = new List<EntityChangeAutomation>();
-            if (!string.IsNullOrEmpty(emailAutomationSsucceedXml))
+            if (!string.IsNullOrEmpty(entityChangeAutomationXml))
             {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(emailAutomationSsucceedXml);
+                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangeAutomationXml);
                 foreach (EntityChangeAutomation item in lists)
                 {
                     entityChangeAutomationList.Add(item);

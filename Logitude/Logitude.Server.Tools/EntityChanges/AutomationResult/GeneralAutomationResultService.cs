@@ -435,8 +435,6 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
 
 
-
-        
     }
 
 

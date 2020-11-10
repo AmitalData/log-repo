@@ -489,7 +489,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                         }
 
 
-
+                                        var extarnalAattachments = [];
                                         logAttachments.forEach((attachment) => {
                                             if (attachment.CommunicationLogId == this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id) {
 
@@ -524,20 +524,32 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                                                 }
 
-                                                if (attachmentlog) {
+                                                if (attachmentlog == null) {
+                                                    extarnalAattachments.push(attachment);
+                                                } else {
                                                     attachmentsLogList.push(attachmentlog);
                                                 }
+
+                                              
 
                                             }
 
                                         });
 
-                                        this.AttachmentsLists = attachmentsLogList;
-                                        if (attachmentsLogList) {
-                                            this.BliudAttachmentList(attachmentsLogList);
+
+                                        if (extarnalAattachments.length > 0) this.FillExternalAttachments(extarnalAattachments, attachmentsLogList);
+                                        else {
+                                            this.AttachmentsLists = attachmentsLogList;
+                                            if (attachmentsLogList) this.BliudAttachmentList(attachmentsLogList);
+                                            this.CurrentSession.StopBusyIndicator();
+
                                         }
 
-                                         this.CurrentSession.StopBusyIndicator();
+
+
+                                       
+                                 
+
                                     //end region 
                                     }
 
@@ -577,6 +589,48 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
     }
+    private FillExternalAttachments(extarnalAattachments: any[], attachmentsLogList: AttachmentsList[]) {
+
+        var count: number = 0;
+        var numberOfAttachment = extarnalAattachments.length;
+        extarnalAattachments.forEach((attachment) => {
+            this._documentExtendedService.GetDocumentById(attachment.DocumentId, attachment.Tenant).subscribe((res: any) => {
+                var pmResponse: ServiceResponse = res;
+                count += 1;
+                if (!pmResponse.HasError) {
+                    var myResult = pmResponse.Result;
+                    if (myResult) {
+                        var document: any = myResult;
+
+                        var fileName: string = !AppTool.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+                        var attachmentlog = this.GetAttachmentList(fileName, document.Id, document.FileSize, attachment.Tenant);
+                        if (attachmentlog) {
+                            attachmentsLogList.push(attachmentlog);
+                        }
+
+
+                        if (count == numberOfAttachment) {
+                            this.AttachmentsLists = attachmentsLogList;
+                            if (attachmentsLogList) {
+                                this.BliudAttachmentList(attachmentsLogList);
+
+                            }
+                        }
+                    }
+
+                }
+
+                if (count == numberOfAttachment) {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+
+
+
+            });
+        });
+        return count;
+    }
+
     //  (copy.DocoumentTypeCopyName, attachment.DocumentId, copy.FileSize, SelectedInternalDocument.Tenant, false);
     GetAttachmentList(name: string, documentId: string, fileSize: any, tenant: number) {
 

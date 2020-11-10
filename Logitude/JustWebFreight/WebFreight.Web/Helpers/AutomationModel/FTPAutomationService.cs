@@ -13,10 +13,10 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers.AutomationModel
 {
-    public class AutomationSendFTPService
+    public class FTPAutomationService
     {
 
-        public void SendAutomationFTP(FTPAutomationDetails fTPDetails, string documentId , int tenant)
+        public void Run(FTPAutomationDetails fTPDetails, string documentId , int tenant)
         {
             DocumentRepository documentRepository = new DocumentRepository(tenant);
             var document =   documentRepository.GetSingleDocument(tenant , documentId);
