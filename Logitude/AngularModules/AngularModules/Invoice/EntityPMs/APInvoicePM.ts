@@ -793,7 +793,10 @@ export class APInvoicePM {
     public OldEntityPM: APInvoicePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -802,6 +805,7 @@ export class APInvoicePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoice");
            
         }
+	 }
     }
     private MyClone: APInvoicePM;
 

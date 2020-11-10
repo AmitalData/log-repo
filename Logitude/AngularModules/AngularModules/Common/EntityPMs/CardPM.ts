@@ -478,7 +478,10 @@ export class CardPM {
     public OldEntityPM: CardPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -486,6 +489,7 @@ export class CardPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Card");
            
         }
+	 }
     }
     private MyClone: CardPM;
 

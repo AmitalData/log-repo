@@ -157,6 +157,7 @@ export class ParticipantPMService {
         if (!entityPM) {
             
             entityPM = new ParticipantPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -224,6 +225,8 @@ export class ParticipantPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -238,7 +241,7 @@ export class ParticipantPMService {
             }
             var newAddressPM: AddressPM;
             newAddressPM = new AddressPM();
-				                
+		    newAddressPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -248,6 +251,7 @@ export class ParticipantPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newAddressPM[pmProperty] = jItem[pmProperty];
             }
+			newAddressPM.DisableMarkAsDirty = false;
             newAddressPM.IsDirty = false;
             entityPM.Addresses.push(newAddressPM);
         }
@@ -263,7 +267,7 @@ export class ParticipantPMService {
             }
             var newContactPM: ContactPM;
             newContactPM = new ContactPM();
-				                
+		    newContactPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -273,6 +277,7 @@ export class ParticipantPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newContactPM[pmProperty] = jItem[pmProperty];
             }
+			newContactPM.DisableMarkAsDirty = false;
             newContactPM.IsDirty = false;
             entityPM.Contacts.push(newContactPM);
         }

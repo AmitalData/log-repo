@@ -308,7 +308,10 @@ export class ParticipantPM {
     public OldEntityPM: ParticipantPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -316,6 +319,7 @@ export class ParticipantPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Participant");
            
         }
+	 }
     }
     private MyClone: ParticipantPM;
 

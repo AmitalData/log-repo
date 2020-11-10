@@ -54,7 +54,10 @@ export class AdditionalServicePM {
     public OldEntityPM: AdditionalServicePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -62,6 +65,7 @@ export class AdditionalServicePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AdditionalService");
            
         }
+	 }
     }
     private MyClone: AdditionalServicePM;
 

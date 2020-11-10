@@ -123,7 +123,10 @@ export class CommodityPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -133,6 +136,7 @@ export class CommodityPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CommodityPackage");
            
         }
+	 }
     }
     private MyClone: CommodityPackagePM;
 

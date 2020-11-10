@@ -153,6 +153,7 @@ export class TariffCarrierTranslationPMService {
         if (!entityPM) {
             
             entityPM = new TariffCarrierTranslationPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TariffCarrierTranslationPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -115,15 +115,18 @@ export class ARInvoiceTotalVATPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
-        this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARInvoiceTotalVAT");
-           
+    public DisableMarkAsDirty: boolean = false;
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARInvoiceTotalVAT");
+
+            }
         }
     }
     private MyClone: ARInvoiceTotalVATPM;

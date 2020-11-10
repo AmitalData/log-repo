@@ -153,6 +153,7 @@ export class ExternalSystemsTablesCodePMService {
         if (!entityPM) {
             
             entityPM = new ExternalSystemsTablesCodePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ExternalSystemsTablesCodePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

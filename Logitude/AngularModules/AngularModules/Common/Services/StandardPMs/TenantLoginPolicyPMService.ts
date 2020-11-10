@@ -153,6 +153,7 @@ export class TenantLoginPolicyPMService {
         if (!entityPM) {
             
             entityPM = new TenantLoginPolicyPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TenantLoginPolicyPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

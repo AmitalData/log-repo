@@ -179,6 +179,7 @@ export class QuotePMService {
         if (!entityPM) {
             
             entityPM = new QuotePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -316,6 +317,8 @@ export class QuotePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -330,7 +333,7 @@ export class QuotePMService {
             }
             var newQuoteCostChargePM: QuoteCostChargePM;
             newQuoteCostChargePM = new QuoteCostChargePM();
-				                
+		    newQuoteCostChargePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -340,6 +343,7 @@ export class QuotePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteCostChargePM[pmProperty] = jItem[pmProperty];
             }
+			newQuoteCostChargePM.DisableMarkAsDirty = false;
             newQuoteCostChargePM.IsDirty = false;
             entityPM.QuoteCostCharges.push(newQuoteCostChargePM);
         }
@@ -355,7 +359,7 @@ export class QuotePMService {
             }
             var newQuoteSaleChargePM: QuoteSaleChargePM;
             newQuoteSaleChargePM = new QuoteSaleChargePM();
-				                
+		    newQuoteSaleChargePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -365,6 +369,7 @@ export class QuotePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteSaleChargePM[pmProperty] = jItem[pmProperty];
             }
+			newQuoteSaleChargePM.DisableMarkAsDirty = false;
             newQuoteSaleChargePM.IsDirty = false;
             entityPM.QuoteSaleCharges.push(newQuoteSaleChargePM);
         }
@@ -391,7 +396,8 @@ export class QuotePMService {
             {
                 newQuoteChargePM = new QuoteChargePM(null);
             }
-                
+ 			newQuoteChargePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -434,7 +440,7 @@ export class QuotePMService {
                 newQuoteChargePM.OldEntityPM = null;
                 newQuoteChargePM.EntityParentPM = null;
             }
-			
+			 newQuoteChargePM.DisableMarkAsDirty = false;
 			 newQuoteChargePM.IsDirty = false;
             entityPM.QuoteCharges.push(newQuoteChargePM);
         }
@@ -448,6 +454,7 @@ export class QuotePMService {
                         //entityPM.QuoteCharges.push(oldQuoteCharges[itemKey]);
 						var oldItemJson = oldQuoteCharges[itemKey];
                         var deletedPM: QuoteChargePM = new QuoteChargePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -459,7 +466,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -495,7 +502,8 @@ export class QuotePMService {
             {
                 newQuotePriceStepsPM = new QuotePriceStepsPM(null);
             }
-                
+ 			newQuotePriceStepsPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -532,7 +540,7 @@ export class QuotePMService {
                 newQuotePriceStepsPM.OldEntityPM = null;
                 newQuotePriceStepsPM.EntityParentPM = null;
             }
-			
+			 newQuotePriceStepsPM.DisableMarkAsDirty = false;
 			 newQuotePriceStepsPM.IsDirty = false;
             entityPM.QuoteChargePriceSteps.push(newQuotePriceStepsPM);
         }
@@ -546,6 +554,7 @@ export class QuotePMService {
                         //entityPM.QuoteChargePriceSteps.push(oldQuoteChargePriceSteps[itemKey]);
 						var oldItemJson = oldQuoteChargePriceSteps[itemKey];
                         var deletedPM: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -557,7 +566,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -591,7 +600,8 @@ export class QuotePMService {
             {
                 newQuotePackagePM = new QuotePackagePM(null);
             }
-                
+ 			newQuotePackagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -623,7 +633,7 @@ export class QuotePMService {
                 newQuotePackagePM.OldEntityPM = null;
                 newQuotePackagePM.EntityParentPM = null;
             }
-			
+			 newQuotePackagePM.DisableMarkAsDirty = false;
 			 newQuotePackagePM.IsDirty = false;
             entityPM.QuotePackages.push(newQuotePackagePM);
         }
@@ -637,6 +647,7 @@ export class QuotePMService {
                         //entityPM.QuotePackages.push(oldQuotePackages[itemKey]);
 						var oldItemJson = oldQuotePackages[itemKey];
                         var deletedPM: QuotePackagePM = new QuotePackagePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -648,7 +659,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -670,7 +681,7 @@ export class QuotePMService {
             }
             var newQuoteSalesTotalPM: QuoteSalesTotalPM;
             newQuoteSalesTotalPM = new QuoteSalesTotalPM();
-				                
+		    newQuoteSalesTotalPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -680,6 +691,7 @@ export class QuotePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteSalesTotalPM[pmProperty] = jItem[pmProperty];
             }
+			newQuoteSalesTotalPM.DisableMarkAsDirty = false;
             newQuoteSalesTotalPM.IsDirty = false;
             entityPM.QuoteSalesTotals.push(newQuoteSalesTotalPM);
         }
@@ -695,7 +707,7 @@ export class QuotePMService {
             }
             var newQuoteVATsTotalPM: QuoteVATsTotalPM;
             newQuoteVATsTotalPM = new QuoteVATsTotalPM();
-				                
+		    newQuoteVATsTotalPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -705,6 +717,7 @@ export class QuotePMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteVATsTotalPM[pmProperty] = jItem[pmProperty];
             }
+			newQuoteVATsTotalPM.DisableMarkAsDirty = false;
             newQuoteVATsTotalPM.IsDirty = false;
             entityPM.TotalVATPerQuote.push(newQuoteVATsTotalPM);
         }
@@ -731,7 +744,8 @@ export class QuotePMService {
             {
                 newQuoteFollowUpPM = new QuoteFollowUpPM(null);
             }
-                
+ 			newQuoteFollowUpPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -765,7 +779,7 @@ export class QuotePMService {
                 newQuoteFollowUpPM.OldEntityPM = null;
                 newQuoteFollowUpPM.EntityParentPM = null;
             }
-			
+			 newQuoteFollowUpPM.DisableMarkAsDirty = false;
 			 newQuoteFollowUpPM.IsDirty = false;
             entityPM.FollowUps.push(newQuoteFollowUpPM);
         }
@@ -779,6 +793,7 @@ export class QuotePMService {
                         //entityPM.FollowUps.push(oldFollowUps[itemKey]);
 						var oldItemJson = oldFollowUps[itemKey];
                         var deletedPM: QuoteFollowUpPM = new QuoteFollowUpPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -790,7 +805,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -825,7 +840,8 @@ export class QuotePMService {
             {
                 newQuoteDocumentVersionPM = new QuoteDocumentVersionPM(null);
             }
-                
+ 			newQuoteDocumentVersionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -859,7 +875,7 @@ export class QuotePMService {
                 newQuoteDocumentVersionPM.OldEntityPM = null;
                 newQuoteDocumentVersionPM.EntityParentPM = null;
             }
-			
+			 newQuoteDocumentVersionPM.DisableMarkAsDirty = false;
 			 newQuoteDocumentVersionPM.IsDirty = false;
             entityPM.QuoteDocumentVersions.push(newQuoteDocumentVersionPM);
         }
@@ -873,6 +889,7 @@ export class QuotePMService {
                         //entityPM.QuoteDocumentVersions.push(oldQuoteDocumentVersions[itemKey]);
 						var oldItemJson = oldQuoteDocumentVersions[itemKey];
                         var deletedPM: QuoteDocumentVersionPM = new QuoteDocumentVersionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -884,7 +901,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -919,7 +936,8 @@ export class QuotePMService {
             {
                 newQuoteTotalVATPM = new QuoteTotalVATPM(null);
             }
-                
+ 			newQuoteTotalVATPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -951,7 +969,7 @@ export class QuotePMService {
                 newQuoteTotalVATPM.OldEntityPM = null;
                 newQuoteTotalVATPM.EntityParentPM = null;
             }
-			
+			 newQuoteTotalVATPM.DisableMarkAsDirty = false;
 			 newQuoteTotalVATPM.IsDirty = false;
             entityPM.TotalVATs.push(newQuoteTotalVATPM);
         }
@@ -965,6 +983,7 @@ export class QuotePMService {
                         //entityPM.TotalVATs.push(oldTotalVATs[itemKey]);
 						var oldItemJson = oldTotalVATs[itemKey];
                         var deletedPM: QuoteTotalVATPM = new QuoteTotalVATPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -976,7 +995,7 @@ export class QuotePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

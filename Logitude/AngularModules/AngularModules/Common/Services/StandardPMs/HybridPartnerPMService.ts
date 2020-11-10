@@ -153,6 +153,7 @@ export class HybridPartnerPMService {
         if (!entityPM) {
             
             entityPM = new HybridPartnerPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class HybridPartnerPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -44,7 +44,10 @@ export class HybridTenantThresholdPM {
     public OldEntityPM: HybridTenantThresholdPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -52,6 +55,7 @@ export class HybridTenantThresholdPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "HybridTenantThreshold");
            
         }
+	 }
     }
     private MyClone: HybridTenantThresholdPM;
 

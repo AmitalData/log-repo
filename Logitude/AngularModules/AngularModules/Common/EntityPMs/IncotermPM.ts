@@ -99,7 +99,10 @@ export class IncotermPM {
     public OldEntityPM: IncotermPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -107,6 +110,7 @@ export class IncotermPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Incoterm");
            
         }
+	 }
     }
     private MyClone: IncotermPM;
 

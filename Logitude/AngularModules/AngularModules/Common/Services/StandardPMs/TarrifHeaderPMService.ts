@@ -155,6 +155,7 @@ export class TarrifHeaderPMService {
         if (!entityPM) {
             
             entityPM = new TarrifHeaderPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -215,6 +216,8 @@ export class TarrifHeaderPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -240,7 +243,8 @@ export class TarrifHeaderPMService {
             {
                 newTarrifChargePM = new TarrifChargePM(null);
             }
-                
+ 			newTarrifChargePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -272,7 +276,7 @@ export class TarrifHeaderPMService {
                 newTarrifChargePM.OldEntityPM = null;
                 newTarrifChargePM.EntityParentPM = null;
             }
-			
+			 newTarrifChargePM.DisableMarkAsDirty = false;
 			 newTarrifChargePM.IsDirty = false;
             entityPM.TarrifCharges.push(newTarrifChargePM);
         }
@@ -286,6 +290,7 @@ export class TarrifHeaderPMService {
                         //entityPM.TarrifCharges.push(oldTarrifCharges[itemKey]);
 						var oldItemJson = oldTarrifCharges[itemKey];
                         var deletedPM: TarrifChargePM = new TarrifChargePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -297,7 +302,7 @@ export class TarrifHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -330,7 +335,8 @@ export class TarrifHeaderPMService {
             {
                 newTarrifFromToPM = new TarrifFromToPM(null);
             }
-                
+ 			newTarrifFromToPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -362,7 +368,7 @@ export class TarrifHeaderPMService {
                 newTarrifFromToPM.OldEntityPM = null;
                 newTarrifFromToPM.EntityParentPM = null;
             }
-			
+			 newTarrifFromToPM.DisableMarkAsDirty = false;
 			 newTarrifFromToPM.IsDirty = false;
             entityPM.TarrifFromToes.push(newTarrifFromToPM);
         }
@@ -376,6 +382,7 @@ export class TarrifHeaderPMService {
                         //entityPM.TarrifFromToes.push(oldTarrifFromToes[itemKey]);
 						var oldItemJson = oldTarrifFromToes[itemKey];
                         var deletedPM: TarrifFromToPM = new TarrifFromToPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -387,7 +394,7 @@ export class TarrifHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

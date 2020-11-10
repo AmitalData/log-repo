@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {DocumentDefultAttachment} from './../../Data/EntityPMs/DocumentDefultAttachment';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -218,42 +220,41 @@ export class DocumentTypeTemplatePM {
     private bCC: string;
     public get BCC() { return this.bCC; }
     public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
-
-
-
-
-
-    private defultAttachmentsXML : string;
+       
+	 
+    private defultAttachmentsXML: string;
     public get DefultAttachmentsXML() { return this.defultAttachmentsXML; }
-    public set DefultAttachmentsXML(newValue: string) { if (this.defultAttachmentsXML != newValue) { this.defultAttachmentsXML = newValue; this.MarkAsDirty("DefultAttachmentsXML "); } }
-
-
-     
+    public set DefultAttachmentsXML(newValue: string) { if (this.defultAttachmentsXML != newValue) { this.defultAttachmentsXML = newValue; this.MarkAsDirty("DefultAttachmentsXML"); } }
+       
+	 
     private isDefultAttachmentsXMLChanged: boolean;
     public get IsDefultAttachmentsXMLChanged() { return this.isDefultAttachmentsXMLChanged; }
     public set IsDefultAttachmentsXMLChanged(newValue: boolean) { if (this.isDefultAttachmentsXMLChanged != newValue) { this.isDefultAttachmentsXMLChanged = newValue; this.MarkAsDirty("IsDefultAttachmentsXMLChanged"); } }
-
-
-
-
-    private documentDefultAttachments: any[];
-    get DocumentDefultAttachments () {
+       
+	 
+     
+	private documentDefultAttachments: DocumentDefultAttachment[];
+    get  DocumentDefultAttachments() {
         if (this.documentDefultAttachments == null) {
             this.documentDefultAttachments = [];
         }
 
         return this.documentDefultAttachments;
     }
-    set DocumentDefultAttachments(newValue: any[]) {
+    set  DocumentDefultAttachments(newValue: DocumentDefultAttachment[]) {
         if (this.documentDefultAttachments != newValue) {
             this.documentDefultAttachments = newValue;
         }
     }
-
+    //public DocumentDefultAttachments: Array<DocumentDefultAttachmentPM>= [];
+ 
     public OldEntityPM: DocumentTypeTemplatePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -261,6 +262,7 @@ export class DocumentTypeTemplatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentTypeTemplate");
            
         }
+	 }
     }
     private MyClone: DocumentTypeTemplatePM;
 

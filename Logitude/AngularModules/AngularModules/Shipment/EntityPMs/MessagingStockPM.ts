@@ -162,7 +162,10 @@ export class MessagingStockPM {
     public OldEntityPM: MessagingStockPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -170,6 +173,7 @@ export class MessagingStockPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MessagingStock");
            
         }
+	 }
     }
     private MyClone: MessagingStockPM;
 

@@ -391,7 +391,10 @@ export class ShippingAgentPM {
     public OldEntityPM: ShippingAgentPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -399,6 +402,7 @@ export class ShippingAgentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShippingAgent");
            
         }
+	 }
     }
     private MyClone: ShippingAgentPM;
 

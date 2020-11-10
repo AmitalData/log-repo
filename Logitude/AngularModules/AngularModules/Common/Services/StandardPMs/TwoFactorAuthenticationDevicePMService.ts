@@ -153,6 +153,7 @@ export class TwoFactorAuthenticationDevicePMService {
         if (!entityPM) {
             
             entityPM = new TwoFactorAuthenticationDevicePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TwoFactorAuthenticationDevicePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

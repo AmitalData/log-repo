@@ -538,7 +538,10 @@ export class AirlinePM {
     public OldEntityPM: AirlinePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -547,6 +550,7 @@ export class AirlinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Airline");
            
         }
+	 }
     }
     private MyClone: AirlinePM;
 

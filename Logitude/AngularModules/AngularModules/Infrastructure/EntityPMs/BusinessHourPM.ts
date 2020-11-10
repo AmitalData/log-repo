@@ -297,7 +297,10 @@ export class BusinessHourPM {
     public OldEntityPM: BusinessHourPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -305,6 +308,7 @@ export class BusinessHourPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessHour");
            
         }
+	 }
     }
     private MyClone: BusinessHourPM;
 
