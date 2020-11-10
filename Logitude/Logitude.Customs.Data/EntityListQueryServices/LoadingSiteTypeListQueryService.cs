@@ -41,8 +41,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<LoadingSiteType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<LoadingSiteType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+
+        }
 			}
 
 
