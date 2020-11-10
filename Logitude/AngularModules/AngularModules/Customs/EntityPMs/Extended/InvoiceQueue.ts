@@ -39,9 +39,11 @@ export class IntegratedInvoice {
 }
 export class Invoice {
     InvoiceBillTo: string;
+    InvoiceBillToCard: string;
     InvoiceType: string;
     InvoiceDate: string;
     InvoiceCurrency: string;
+    InvoiceTypeCode: string;
     InvoiceAmount: any;
 }
 export class MessagesData {

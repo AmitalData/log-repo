@@ -459,7 +459,17 @@ export class SupplierInvoicePM {
         }
     }
     //public SupplierInvoiceUCRs: Array<SupplierInvoiceUCRPM>= [];
- 
+     private itemFOBAmountForeign: number;
+    public get ItemFOBAmountForeign() { return this.itemFOBAmountForeign; }
+    public set ItemFOBAmountForeign(newValue: number) { if (this.itemFOBAmountForeign != newValue) { this.itemFOBAmountForeign = newValue; this.MarkAsDirty("ItemFOBAmountForeign"); } }
+       
+	 
+    private itemFOBAmountNIS: number;
+    public get ItemFOBAmountNIS() { return this.itemFOBAmountNIS; }
+    public set ItemFOBAmountNIS(newValue: number) { if (this.itemFOBAmountNIS != newValue) { this.itemFOBAmountNIS = newValue; this.MarkAsDirty("ItemFOBAmountNIS"); } }
+       
+	 
+
     public OldEntityPM: SupplierInvoicePM;
 		
     public IsDirty: boolean;

@@ -5239,6 +5239,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? transshipmentApprovalDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? TransshipmentApprovalDateTime  
+	   {
+	    
+	     get
+		{
+		   return transshipmentApprovalDateTime;
+		 }
+		 set
+		 {
+		   if(transshipmentApprovalDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransshipmentApprovalDateTime",OldValue=transshipmentApprovalDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   transshipmentApprovalDateTime=value;
+		   }
+			
+		 }
+	   }
+	  private string finalLoadingSite ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalLoadingSite  
+	   {
+	    
+	     get
+		{
+		   return finalLoadingSite;
+		 }
+		 set
+		 {
+		   if(finalLoadingSite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalLoadingSite",OldValue=finalLoadingSite,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalLoadingSite=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

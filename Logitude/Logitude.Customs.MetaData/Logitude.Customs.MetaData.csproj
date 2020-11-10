@@ -337,6 +337,7 @@
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
     <None Include="DBTables\MamanStatus.dxml" />
@@ -470,6 +471,7 @@
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\ExporterRoleType.lxml" />
+    <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

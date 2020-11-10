@@ -1041,6 +1041,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(amendmentFieldStatusTypeTable, amendmentFieldStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(amendmentFieldStatusTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData loadingSiteTypeTable = closedSystemTables.Where(d => d.id == "23774").FirstOrDefault();
+            ObjectTable loadingSiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.LoadingSiteType", 0, false);
+            InsertClosedTableRecord(loadingSiteTypeTable, loadingSiteTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(loadingSiteTypeTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

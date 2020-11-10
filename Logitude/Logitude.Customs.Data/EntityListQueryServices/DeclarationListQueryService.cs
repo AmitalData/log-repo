@@ -462,7 +462,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsExporterConfirmation = a.IsExporterConfirmation,
                                                      CreateDateForExport=a.CreateDateTime,
                                                      TransportModeForExport=a.TransportModeId,
-                                                     CustomFileForExport=a.CustomFileNo
+                                                     CustomFileForExport=a.CustomFileNo,
+                                                     TruckerId=a.Trucker.Card.Code
                                                  });
 
 
