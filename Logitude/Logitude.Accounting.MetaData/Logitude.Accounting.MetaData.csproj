@@ -74,6 +74,7 @@
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
     <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
+    <None Include="DBScripts\202011101210_AvailableForScheduling.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
