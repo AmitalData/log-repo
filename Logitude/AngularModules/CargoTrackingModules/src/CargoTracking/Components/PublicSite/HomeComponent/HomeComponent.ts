@@ -51,16 +51,18 @@ export class HomeComponent
                 document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
-
+             
             }
+            this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
             this.IsBrandingDataLoaded = true;
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
             this.listenToRouterEvents();
         });
     }
+    public Logo: string; 
     private GetDataFromURL(baseUrl: string)
     {
-
+       
         this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
         this.router.events.subscribe(() =>
         {
