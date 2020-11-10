@@ -84,6 +84,8 @@ public partial class LogitudeMasterCourier
 
     private string truckerIdField;
 
+    private string packageQuantityInMAWBField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -289,6 +291,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.truckerIdField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string PackageQuantityInMAWB
+    {
+        get
+        {
+            return this.packageQuantityInMAWBField;
+        }
+        set
+        {
+            this.packageQuantityInMAWBField = value;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<!ELEMENT LOGIMASTERCOUR (LogitudeMasterCourier*)>
-<!ELEMENT LogitudeMasterCourier (AirlineId?, MAWB?, HAWB?, EstimatedArrivalDate?, DepartureDate?, GatewayPortCode?, OriginPortCode?, PackageQuantityTy?, GrossMassMeasure?, Tenant?, FlightNumber?, WeightValueCode?, StorageSiteCode?, IntegratorIndex?, NoOfCourierHawb?, TruckerId?)>
+<!ELEMENT LogitudeMasterCourier (AirlineId?, MAWB?, HAWB?, EstimatedArrivalDate?, DepartureDate?, GatewayPortCode?, OriginPortCode?, PackageQuantityTy?, GrossMassMeasure?, Tenant?, FlightNumber?, WeightValueCode?, StorageSiteCode?, IntegratorIndex?, NoOfCourierHawb?, TruckerId?,PackageQuantityInMAWB?)>
 <!ELEMENT AirlineId (#PCDATA)>
 <!ELEMENT MAWB (#PCDATA)>
 <!ELEMENT HAWB (#PCDATA)>
@@ -16,3 +16,4 @@
 <!ELEMENT IntegratorIndex (#PCDATA)>
 <!ELEMENT NoOfCourierHawb (#PCDATA)>
 <!ELEMENT TruckerId (#PCDATA)>
+<!ELEMENT PackageQuantityInMAWB (#PCDATA)>
