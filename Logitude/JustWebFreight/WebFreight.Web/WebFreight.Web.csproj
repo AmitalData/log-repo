@@ -2569,6 +2569,7 @@
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
+    <Compile Include="Helpers\AutomationModel\AutomationSendFTPService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />

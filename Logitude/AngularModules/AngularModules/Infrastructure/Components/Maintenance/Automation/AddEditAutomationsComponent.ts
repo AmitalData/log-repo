@@ -10,7 +10,9 @@ import {AutomationExtendedPMService} from '../../../../Common/Services/ExtendedP
 import {AutomationPMService} from '../../../../Common/Services/StandardPMs/AutomationPMService';
 import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import {AutomatedBackup, AutomationSetSLAValue, AutomationSendInterface} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
+import { AutomatedBackup, AutomationSetSLAValue } from '../../../../Infrastructure/DataContracts/AutomatedBackup';
+import { AutomationSendInterface } from '../../../../Infrastructure/DataContracts/AutomationSendInterface';
+
 import {AutomationSetValue} from '../../../../Infrastructure/DataContracts/AutomationSetValue';
 import {EventTypeArgs} from '../../../../Infrastructure/DataContracts/EventTypeArgs';
 import {AutomationFollowUp} from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
@@ -793,7 +795,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     MapAutomationSendInterface() {
-        this.AutomationSendInterface.ComputingPartnerId = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerId;
+        this.AutomationSendInterface.ComputingPartnerCode = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerCode;
         this.AutomationSendInterface.Format = this.AutomatedBackupClass.AutomationSendInterface.Format;
         this.AutomationSendInterface.FTBFolderId = this.AutomatedBackupClass.AutomationSendInterface.FTBFolderId;
         this.AutomationSendInterface.FTPDetails = this.AutomatedBackupClass.AutomationSendInterface.FTPDetails;

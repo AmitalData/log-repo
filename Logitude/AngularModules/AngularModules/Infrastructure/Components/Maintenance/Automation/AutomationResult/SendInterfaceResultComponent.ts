@@ -8,7 +8,7 @@ import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureL
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { Operator } from '../ViewModel/AutomationConditionViewModel';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { AutomationSendInterface } from '../../../../DataContracts/AutomatedBackup';
+import { AutomationSendInterface } from '../../../../DataContracts/AutomationSendInterface';
 import { SessionLocator } from '../../../../Utilities/SessionLocator';
 
 @Component({
@@ -30,7 +30,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     constructor() {
         super();
         this.DataContext = this;
-        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
+        this.IsCustomerCare = true;//SessionLocator.LoggedUserPM.IsCustomerCare;
 
         this.InitializeSendInterfaceResultComponent();
 
@@ -38,7 +38,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     item: any;
     ngOnInit() {
       
-        this.UIProperties.SetEnabled("ComputingPartnerId", "SendInterface", this.IsCustomerCare);
+        this.UIProperties.SetEnabled("ComputingPartnerCode", "SendInterface", this.IsCustomerCare);
 
     }
 
@@ -122,13 +122,13 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
 
 
-    private computingPartnerId: string;
-    get ComputingPartnerId() { return this.computingPartnerId; }
-    set ComputingPartnerId(newValue: string) {
-        if (newValue != this.computingPartnerId) {
-            this.computingPartnerId = newValue;
-            if (this.automationSendInterface.ComputingPartnerId != newValue) {
-                this.automationSendInterface.ComputingPartnerId = newValue;
+    private computingPartnerCode: string;
+    get ComputingPartnerCode() { return this.computingPartnerCode; }
+    set ComputingPartnerCode(newValue: string) {
+        if (newValue != this.computingPartnerCode) {
+            this.computingPartnerCode = newValue;
+            if (this.automationSendInterface.ComputingPartnerCode != newValue) {
+                this.automationSendInterface.ComputingPartnerCode = newValue;
                 this.automationSendInterface.IsChanged = true;
             }
 
@@ -137,8 +137,8 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
     SelectedComputedPartnerChange(value) {
         let newComputedPartnerValue;
-        if (value) newComputedPartnerValue = value.Id;
-        this.ComputingPartnerId = newComputedPartnerValue;
+        if (value) newComputedPartnerValue = value.Code;
+        this.ComputingPartnerCode = newComputedPartnerValue;
 
     }
 
@@ -158,7 +158,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == this.automationSendInterface.SendVia)[0];
             } else this.SendViaSelected = this.SendViaClassLists[0];
 
-            this.ComputingPartnerId = this.automationSendInterface.ComputingPartnerId;
+            this.ComputingPartnerCode = this.automationSendInterface.ComputingPartnerCode;
 
         }
 

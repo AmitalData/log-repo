@@ -412,7 +412,7 @@
     <Compile Include="CustomerTenantAccessRequestWorkerRole.cs" />
     <Compile Include="CustomerTenantAccessWorkerRole.cs" />
     <Compile Include="DataBackupWR.cs" />
-    <Compile Include="DelayAutomationWorkerRole.cs" />
+    <Compile Include="AutomationWorkerRole.cs" />
     <Compile Include="EmailingHelper.cs" />
     <Compile Include="EmailsWorkerRole.cs">
       <SubType>Code</SubType>

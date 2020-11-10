@@ -73,12 +73,11 @@ namespace Logitude.Server.Tools
         }
 
 
-
-        public static string SerializeObjectToXmlString<T>(T myObject)
+        
+        public static string SerializeObjectToXmlString<T>(T myObject , bool useObjectGetType = false)
         {
-
             MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+            XmlSerializer serilaizer = new XmlSerializer(useObjectGetType ? myObject.GetType() : typeof(T));
             serilaizer.Serialize(memstream, myObject);
             memstream.Seek(0, SeekOrigin.Begin);
             var reader = new StreamReader(memstream);

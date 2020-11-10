@@ -60,6 +60,9 @@ namespace Logitude.Server.Tools.EntityChanges
             result.Add(new AutomationSetValueResultService());
             result.Add(new AutomationSLAResultService());
             result.Add(new AutomationQueuedTaskResultService());
+            result.Add(new AutomationSendInterfaceResultService());
+
+            
 
             return result;
         }
@@ -84,7 +87,7 @@ namespace Logitude.Server.Tools.EntityChanges
                     AutomationConditionFields automationConditionFields = automationObjectFieldService.GetAutomationConditionFields(automationFieldLists, automationObjectTable, otherAutomationObjectTable);
                     entityChange.AutomationConditionFieldsXml = LogitudeXmlSerializer.SerializeObjectToXmlString(automationConditionFields);
 
-                    AutomationResultArgs automationResultArgs = new AutomationResultArgs() { EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this };
+                    AutomationResultArgs automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this };
                     foreach (IAutomationResultService service in AutomationResultLists)
                     {
                         service.Run(automationResultArgs);
@@ -223,8 +226,10 @@ namespace Logitude.Server.Tools.EntityChanges
         public List<Automation> AutomationLists { get; set; }
         public List<Field> AutomationFieldLists { get; set; }
         public MainEntityChangeService MainEntityChangeService { get; set; }
+        public Object EntityPM { get; set; }
 
-        
+
+
     }
 
     public class AutomationObjectTableClass

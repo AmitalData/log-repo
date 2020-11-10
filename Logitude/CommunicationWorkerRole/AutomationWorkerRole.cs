@@ -51,27 +51,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.AutomationModel;
 
 namespace CommunicationWorkerRole
 {
-    class DelayAutomationWorkerRole : WorkerEntryPoint
+    class AutomationWorkerRole : WorkerEntryPoint
     {
         IQueueService queueservice;
         int Tenant = 0;
-
         string entityChangeId = string.Empty;
         string automationId = string.Empty;
         string entityId = string.Empty;
         int AutomationCount = 0;
         string type = string.Empty;
-        public DelayAutomationWorkerRole(string tenant)
+        private  string externalAttachmentDocumentId = string.Empty;
+        bool executedImmediately = false;
+
+        public AutomationWorkerRole(string tenant)
         {
         }
 
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "DelayAutomation";
+            BatchServiceCode = "AutomationWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
             return base.OnStart();
@@ -97,7 +100,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("DelayAutomationQueue", 0);
+                        queueservice.InitializeQueue("AutomationQueue", 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
 
@@ -109,7 +112,11 @@ namespace CommunicationWorkerRole
                                 type = response.MessageValues["Type"].ToString();
                                 automationId = response.MessageValues["AutomationId"].ToString();
                                 entityId = response.MessageValues["EntityId"];
+                                executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false ;
+                                externalAttachmentDocumentId = response.MessageValues["ExternalAttachmentDocumentId"] != null ? response.MessageValues["ExternalAttachmentDocumentId"].ToString() : "";
+
                                 string tenant = response.MessageValues["Tenant"].ToString();
+
                                 Tenant = int.Parse(tenant);
 
                                 if (string.IsNullOrEmpty(entityChangeId) || string.IsNullOrEmpty(automationId))
@@ -219,7 +226,8 @@ namespace CommunicationWorkerRole
                                 {
                                     entityChangesAutomation.ResultCode = "Queued Task";
                                 }
-
+                                else if (automation.ResultCode == "SENDINTERFACE") entityChangesAutomation.ResultCode = "Send Interface";
+                
                                 string dateString = "";
                                 if (automationConditionFields.LastUpdateDate != null)
                                 {
@@ -231,13 +239,45 @@ namespace CommunicationWorkerRole
                                     dateString = otherObjectTableLastUpdateDate;
                                 }
 
-                                ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, "Delayed");
+                                ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, executedImmediately ? "": "Delayed");
                                 List<EntityChangeAutomation> ChangesAutomationsLists = FullEntityChangeAutomationList(entityChange, null);
 
                                 List<EntityChangeAutomation> entityChangesAutomationsLists = ChangesAutomationsLists.Where(d => d.ResultCode == entityChangesAutomation.ResultCode).ToList();
                                 entityChangesAutomation.IsConditionTrue = validateResult.IsAutomationValid;
                                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(Tenant);
                                 ObjectTable objectTable = objectTabelRepository.GetSingleObjectTable(entityChange.ObjectTableId, Tenant, true);
+
+                                #region Send Interface
+
+
+                                if (automation.ResultCode == "SENDINTERFACE")
+                                {
+                                    entityChangesAutomation.type = validateResult.IsAutomationValid ? "SendInterfaceSsucceed" : "SendInterfaceFailed";
+                                    if (validateResult.IsAutomationValid)
+                                    {
+                                        AutomationSendInterface automationSendInterface = GetAutomationSendInterface(automation, dateString);
+                                        if (automationSendInterface.SendVia == "EMAIL")
+                                        {
+                                            AutomationHelper automationHelper = new AutomationHelper();
+                                            entityChangesAutomation.ComunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTable != null ? objectTable.Name : "", ExternalAttachmentDocumentId = externalAttachmentDocumentId });
+                                        }
+                                        else if (automationSendInterface.SendVia == "FTP")
+                                        {
+                                            AutomationSendFTPService automationSendFTPService = new AutomationSendFTPService();
+                                            automationSendFTPService.SendAutomationFTP(automationSendInterface.FTPDetails, externalAttachmentDocumentId , Tenant);
+                                        }
+                                        MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
+                                    }
+                                    else
+                                    {
+                                        entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                                        entityChangesAutomationsLists.Add(entityChangesAutomation);
+                                    }
+                                    entityChange.SendInterfaceAutomationFailedXml = entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList()) : "";
+                                    entityChange.SendInterfaceAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
+                                }
+                                #endregion
+
 
                                 #region E-mail
                                 if (automation.ResultCode == "EMAIL")
@@ -248,7 +288,9 @@ namespace CommunicationWorkerRole
                                     {
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
                                         AutomationHelper automationHelper = new AutomationHelper();
-                                        automationHelper.ExecuteEmailAutomation(entityChange, AutomationConditionFieldLists, automation, entityChangesAutomation, entityChangesAutomationsLists, objectTableName);
+                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName});
+                                        entityChange.EmailAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
+                                        MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                         entityChange.EmailAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
                                     }
                                     else
@@ -256,7 +298,6 @@ namespace CommunicationWorkerRole
                                         entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                                         entityChangesAutomationsLists.Add(entityChangesAutomation);
                                         entityChange.EmailAutomationFailedXml = entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList()) : "";
-
                                     }
                                 }
                                 #endregion
@@ -378,7 +419,7 @@ namespace CommunicationWorkerRole
                             catch (Exception ex)
                             {
                                 #region HandleException
-                                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Delay Automation Queue worker role start", null, null);
+                                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Automation Queue worker role start", null, null);
                                 if (response.MessageValues.Keys.Contains("EntityChangeId"))
                                 {
                                     if (!string.IsNullOrEmpty(entityChangeId))
@@ -420,7 +461,7 @@ namespace CommunicationWorkerRole
 
                     catch (Exception ex)
                     {
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Delay Automation Queue worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Automation Queue worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -432,12 +473,54 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private static void MarkEntityChangeExecutedRecord(EntityChange entityChange, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsLists)
+        {
+            entityChange.HasExecutedRecord = true;
+            entityChangesAutomation.IsConditionTrue = true;
+            entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
+            entityChangesAutomationsLists.Add(entityChangesAutomation);
+        }
+
+        private  AutomationSendInterface GetAutomationSendInterface(Automation automation, string dateString)
+        {
+            string automationSendInterfaceName = "AutomationSendInterface" + dateString + automation.Id + automation.Tenant;
+
+            AutomationSendInterface automationSendInterface = null;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(automationSendInterfaceName) == null)
+                {
+                    if (!string.IsNullOrEmpty(automation.AutomationXML))
+                    {
+                        AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
+                        automationSendInterface = AutomatedBackup.AutomationSendInterface;
+
+                        CacheManager.CacheWrapper.Insert(automationSendInterfaceName, automationSendInterface, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                    }
+                }
+                else
+                {
+                    automationSendInterface = (AutomationSendInterface)CacheManager.CacheWrapper.Get(automationSendInterfaceName);
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(automation.AutomationXML))
+                {
+                    AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
+                    automationSendInterface = AutomatedBackup.AutomationSendInterface;
+                }
+            }
+
+            return automationSendInterface;
+        }
+
         private void ConnectClient()
         {
             try
             {
                 queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DelayAutomationQueue", Tenant);
+                queueservice.InitializeQueue("AutomationQueue", Tenant);
             }
 
             catch (Exception ex)
@@ -655,98 +738,35 @@ namespace CommunicationWorkerRole
         public List<EntityChangeAutomation> FullEntityChangeAutomationList(EntityChange entityChange, List<EntityChangeAutomation> changeAutomationList)
         {
             List<EntityChangeAutomation> entityChangeAutomationList = new List<EntityChangeAutomation>();
-
-            if (!string.IsNullOrEmpty(entityChange.EmailAutomationSsucceedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.EmailAutomationSsucceedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.EmailAutomationFailedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.EmailAutomationFailedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.SetAutomationSsucceedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.SetAutomationSsucceedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.SetAutomationFailedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.SetAutomationFailedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.FollowUpAutomationSsucceedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.FollowUpAutomationSsucceedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.FollowUpAutomationFailedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.FollowUpAutomationFailedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.SetSLAAutomationSsucceedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.SetSLAAutomationSsucceedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.SetSLAAutomationFailedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.SetSLAAutomationFailedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.QueuedTaskAutomationSsucceedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.QueuedTaskAutomationSsucceedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityChange.QueuedTaskAutomationFailedXml))
-            {
-                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChange.QueuedTaskAutomationFailedXml);
-                foreach (EntityChangeAutomation item in lists)
-                {
-                    entityChangeAutomationList.Add(item);
-                }
-            }
-
+            entityChangeAutomationList =  entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.EmailAutomationSsucceedXml)).ToList() ;
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.EmailAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SetAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SetAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.FollowUpAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.FollowUpAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SetSLAAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SetSLAAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.QueuedTaskAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.QueuedTaskAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationFailedXml)).ToList();
             return entityChangeAutomationList;
         }
+
+        private List<EntityChangeAutomation> GetEntityChangeAutomationList(string emailAutomationSsucceedXml)
+        {
+            List<EntityChangeAutomation> entityChangeAutomationList = new List<EntityChangeAutomation>();
+            if (!string.IsNullOrEmpty(emailAutomationSsucceedXml))
+            {
+                var lists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(emailAutomationSsucceedXml);
+                foreach (EntityChangeAutomation item in lists)
+                {
+                    entityChangeAutomationList.Add(item);
+                }
+            }
+            return entityChangeAutomationList;
+        }
+
+   
     }
 }

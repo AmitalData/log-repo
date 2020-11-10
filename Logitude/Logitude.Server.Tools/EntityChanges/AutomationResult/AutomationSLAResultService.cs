@@ -39,7 +39,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
 
                 entityChangesAutomation.ResultCode = "Set SLA Value";
-                string lastUpdate = GetLastUpdateDate(lastupdateautomation, otherLastupdateautomation, automation);
+                string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
                 ValidateAutomationResultClass validateResult = ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
                 entityChangesAutomation.type = validateResult.IsAutomationValid ? "SetSsucceed" : "SetFailed";
 
