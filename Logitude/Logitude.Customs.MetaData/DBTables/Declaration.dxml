@@ -965,7 +965,7 @@
   <Column
     Name="FinalLoadingSite"
     Type="varchar"
-    Size="20">
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
