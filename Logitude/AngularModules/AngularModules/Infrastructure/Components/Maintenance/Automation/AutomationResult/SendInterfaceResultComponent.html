@@ -163,13 +163,13 @@
     </td >
 
     <td style="width:200px" >
-    <div style="text-align:left;width:200px;" >
-    <LogLov [ObjectTableName]="'SendInterface'"  *ngIf="!IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerCode'" [SelectedValuePath]="'ComputingPartnerCode'" [DisplayMemberPath] ="Code" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
-    <LogLov  [ObjectTableName]="'SendInterface'"  *ngIf="IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue] ="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerCode'" [SelectedValuePath]="'ComputingPartnerCode'" [DisplayMemberPath] ="Code" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'" > </LogLov >
+        <div style="text-align:left;width:200px;">
+            <LogLov [ObjectTableName]="'SendInterface'" *ngIf="!IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue]="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'"> </LogLov>
+            <LogLov [ObjectTableName]="'SendInterface'" *ngIf="IsRefreshComputingPartner" (SelectedItemChanged)="SelectedComputedPartnerChange($event)" style="width:200px" [SelectedValue]="ComputingPartnerId" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ComputingPartnerId'" [SelectedValuePath]="'ComputingPartnerId'" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'"> </LogLov>
 
 
 
-    </div >
+        </div>
     </td >
     <td style="width:8px" > </td >
     <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central" >

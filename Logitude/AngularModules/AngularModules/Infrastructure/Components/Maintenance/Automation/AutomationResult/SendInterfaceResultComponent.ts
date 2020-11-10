@@ -30,15 +30,15 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     constructor() {
         super();
         this.DataContext = this;
-        this.IsCustomerCare = true;//SessionLocator.LoggedUserPM.IsCustomerCare;
+        this.IsCustomerCare = true;// SessionLocator.LoggedUserPM.IsCustomerCare;
 
         this.InitializeSendInterfaceResultComponent();
 
     }
     item: any;
     ngOnInit() {
-      
-        this.UIProperties.SetEnabled("ComputingPartnerCode", "SendInterface", this.IsCustomerCare);
+
+        this.UIProperties.SetEnabled("ComputingPartnerId", "SendInterface", this.IsCustomerCare);
 
     }
 
@@ -73,7 +73,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
             }
         }
     }
-    
+
 
 
 
@@ -122,13 +122,13 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
 
 
-    private computingPartnerCode: string;
-    get ComputingPartnerCode() { return this.computingPartnerCode; }
-    set ComputingPartnerCode(newValue: string) {
-        if (newValue != this.computingPartnerCode) {
-            this.computingPartnerCode = newValue;
-            if (this.automationSendInterface.ComputingPartnerCode != newValue) {
-                this.automationSendInterface.ComputingPartnerCode = newValue;
+    private computingPartnerId: string;
+    get ComputingPartnerId() { return this.computingPartnerId; }
+    set ComputingPartnerId(newValue: string) {
+        if (newValue != this.computingPartnerId) {
+            this.computingPartnerId = newValue;
+            if (this.automationSendInterface.ComputingPartnerId != newValue) {
+                this.automationSendInterface.ComputingPartnerId = newValue;
                 this.automationSendInterface.IsChanged = true;
             }
 
@@ -138,7 +138,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     SelectedComputedPartnerChange(value) {
         let newComputedPartnerValue;
         if (value) newComputedPartnerValue = value.Code;
-        this.ComputingPartnerCode = newComputedPartnerValue;
+        this.ComputingPartnerId = newComputedPartnerValue;
 
     }
 
@@ -158,14 +158,14 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == this.automationSendInterface.SendVia)[0];
             } else this.SendViaSelected = this.SendViaClassLists[0];
 
-            this.ComputingPartnerCode = this.automationSendInterface.ComputingPartnerCode;
+            this.ComputingPartnerId = this.automationSendInterface.ComputingPartnerId;
 
         }
 
     }
 
 
-   
+
 
 
     AddFTPFolder() {
@@ -188,7 +188,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent");
         logWindow.WindowClosed.subscribe((message: any) => {
-            if (message == "Changed") this.automationSendInterface.IsChanged = true      
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
         });
     }
 
@@ -207,7 +207,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
         logitudeWindow.WindowClosed.subscribe((computingPartner: any) => {
             if (computingPartner) {
-                this.ComputingPartnerId =computingPartner;
+                this.ComputingPartnerId = computingPartner;
                 this.IsRefreshComputingPartner = !this.IsRefreshComputingPartner;
 
             }

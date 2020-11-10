@@ -795,7 +795,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     MapAutomationSendInterface() {
-        this.AutomationSendInterface.ComputingPartnerCode = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerCode;
+        this.AutomationSendInterface.ComputingPartnerId = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerId;
         this.AutomationSendInterface.Format = this.AutomatedBackupClass.AutomationSendInterface.Format;
         this.AutomationSendInterface.FTBFolderId = this.AutomatedBackupClass.AutomationSendInterface.FTBFolderId;
         this.AutomationSendInterface.FTPDetails = this.AutomatedBackupClass.AutomationSendInterface.FTPDetails;
@@ -1429,6 +1429,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Code field is required");
         }
 
+        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE") {
+
+            if (this.AutomationSendInterface.SendVia == "FTP" && (!this.AutomationSendInterface.FTPDetails || (this.AutomationSendInterface.FTPDetails && AppTool.IsNullOrEmpty(this.AutomationSendInterface.FTPDetails.Host)))) {
+                this.ValidationErrorsList.push("FTP Details are missing. Please contact your administrator.");
+
+            }
+        }
+       
+
+
+
         if (this.ValidationErrorsList.length == 0) {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
@@ -1651,7 +1662,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
         automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
-
 
 
 

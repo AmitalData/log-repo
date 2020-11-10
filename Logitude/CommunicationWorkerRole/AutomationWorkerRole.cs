@@ -20,6 +20,7 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.EntityChanges.AutomationResult;
+using Logitude.Server.Tools.EntityChanges.Service;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
@@ -113,7 +114,7 @@ namespace CommunicationWorkerRole
                                 automationId = response.MessageValues["AutomationId"].ToString();
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false ;
-                                externalAttachmentDocumentId = response.MessageValues["ExternalAttachmentDocumentId"] != null ? response.MessageValues["ExternalAttachmentDocumentId"].ToString() : "";
+                                //externalAttachmentDocumentId = response.MessageValues["ExternalAttachmentDocumentId"] != null ? response.MessageValues["ExternalAttachmentDocumentId"].ToString() : "";
 
                                 string tenant = response.MessageValues["Tenant"].ToString();
 
@@ -256,15 +257,14 @@ namespace CommunicationWorkerRole
                                     if (validateResult.IsAutomationValid)
                                     {
                                         AutomationSendInterface automationSendInterface = GetAutomationSendInterface(automation, dateString);
+                                        string documentId = GetSendInterfaceDataContractDocumentId(entityChange, automationSendInterface);
                                         if (automationSendInterface.SendVia == "EMAIL")
                                         {
-                                            AutomationHelper automationHelper = new AutomationHelper();
-                                            entityChangesAutomation.ComunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTable != null ? objectTable.Name : "", ExternalAttachmentDocumentId = externalAttachmentDocumentId });
+                                            entityChangesAutomation.ComunicationLogId = new AutomationHelper().ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTable != null ? objectTable.Name : "", ExternalAttachmentDocumentId = documentId });
                                         }
                                         else if (automationSendInterface.SendVia == "FTP")
                                         {
-                                            AutomationSendFTPService automationSendFTPService = new AutomationSendFTPService();
-                                            automationSendFTPService.SendAutomationFTP(automationSendInterface.FTPDetails, externalAttachmentDocumentId , Tenant);
+                                            new AutomationSendFTPService().SendAutomationFTP(automationSendInterface.FTPDetails, documentId, Tenant);
                                         }
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
@@ -471,6 +471,15 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private static string GetSendInterfaceDataContractDocumentId(EntityChange entityChange, AutomationSendInterface automationSendInterface)
+        {
+            byte[] objectData = StorageDataService.ReadFileFromStorage(new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant });
+            ShipmentPM shipmentPM = LogitudeXmlSerializer.DeserializeObject<ShipmentPM>(objectData);
+            SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface.ComputingPartnerId, entityChange.Tenant);
+            string documentId = sendInterfaceDataContractService.GetSendInterfaceDataContractDocumentId(automationSendInterface.Format);
+            return documentId;
         }
 
         private static void MarkEntityChangeExecutedRecord(EntityChange entityChange, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsLists)

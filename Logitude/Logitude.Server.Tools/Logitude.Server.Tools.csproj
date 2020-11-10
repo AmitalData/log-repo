@@ -298,6 +298,7 @@
     <Compile Include="Helpers\PerformanceLogger.cs" />
     <Compile Include="Helpers\QuerySortClass.cs" />
     <Compile Include="Helpers\SearchFieldsFinder.cs" />
+    <Compile Include="Helpers\StorageDataService.cs" />
     <Compile Include="Helpers\SystemLogoHelper.cs" />
     <Compile Include="Helpers\TableLastUpdateClass.cs" />
     <Compile Include="Helpers\TextCodesTranslator.cs" />

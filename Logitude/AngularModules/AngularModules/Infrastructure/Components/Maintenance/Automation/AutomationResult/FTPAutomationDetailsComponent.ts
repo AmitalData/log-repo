@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { BaseComponent } from '../../../LogitudeComponents/BaseComponent';
-import { FTPAutomationDetails } from '../../../../DataContracts/AutomatedBackup';
+import { FTPAutomationDetails } from '../../../../DataContracts/AutomationSendInterface';
 import { SessionLocator } from '../../../../Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Utilities/TextCodeTranslator';
 import { AppTool } from '../../../../Tools';

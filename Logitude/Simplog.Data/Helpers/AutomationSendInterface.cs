@@ -23,7 +23,7 @@ namespace Simplog.Data.Helpers
             public string Format { get; set; }
 
             [DataMember]
-            public string ComputingPartnerCode { get; set; }
+            public string ComputingPartnerId { get; set; }
 
             [DataMember]
             public FTPAutomationDetails FTPDetails { get; set; }

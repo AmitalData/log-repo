@@ -8,7 +8,7 @@ export class AutomationSendInterface {
     public InterfaceName: string;
     public SendVia: string;
     public Format: string;
-    public ComputingPartnerCode: string;
+    public ComputingPartnerId: string;
     public FTBFolderId: string;
     public FTPDetails: FTPAutomationDetails;
     public IsChanged: boolean;

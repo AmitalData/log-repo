@@ -1,4 +1,5 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -20,14 +21,14 @@ namespace Logitude.Server.Tools.EntityChanges.Service
         private DocumentRepository documentRepository = null;
         private string sendInterfaceDataContractFileName = string.Empty;
 
-        public SendInterfaceDataContractService(object entityPM, int tenant , string computingPartnerCode)
+        public SendInterfaceDataContractService(object entityPM,  string computingPartnerId , int tenant)
         {
             this.tenant = tenant;
+            string computingPartnerCode = GetComputingPartnerCode(tenant, computingPartnerId);
             sendInterfaceDataContractFileName = GetSendInterfaceDataContractFileName(entityPM);
-            sendInterfaceDataContractObject = GetSendInterfaceDataContractObject(entityPM , computingPartnerCode);
+            sendInterfaceDataContractObject = GetSendInterfaceDataContractObject(entityPM, computingPartnerCode);
             documentRepository = new DocumentRepository(tenant);
         }
-
 
         public string GetSendInterfaceDataContractDocumentId(string format)
         {
@@ -37,7 +38,6 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             return dataContractDocumentId;
         }
 
-
         private string GetSendInterfaceDataContractXMLDocumentId()
         {
             string sendInterfaceDataContractXMLDocumentId = string.Empty;
@@ -45,9 +45,9 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             {
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(sendInterfaceDataContractObject, true);
                 byte[] xmlfile = Encoding.UTF8.GetBytes(xmlstring);
-                Document docment = CreateDocument(xmlfile, "xml");
-                WriteDocumentOnStorage(docment, xmlfile);
-                sendInterfaceDataContractXMLDocumentId = docment.Id ;
+                Document document = CreateDocument(xmlfile, "xml");
+                StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = document.Id, Extension = document.Extension, FolderName = document.Folder, FileData = xmlfile, Tenant = document.Tenant });
+                sendInterfaceDataContractXMLDocumentId = document.Id;
             }
 
             return sendInterfaceDataContractXMLDocumentId;
@@ -61,13 +61,12 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             {
                 string josnString = LogitudeXmlSerializer.SerializeObjectToJosnString(sendInterfaceDataContractObject);
                 byte[] josnfile = Encoding.UTF8.GetBytes(josnString);
-                Document docment = CreateDocument(josnfile, "Josn");
-                WriteDocumentOnStorage(docment, josnfile);
-                sendInterfaceDataContractJosnDocumentId = docment.Id;
+                Document document = CreateDocument(josnfile, "Josn");
+                StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = document.Id, Extension = document.Extension, FolderName = document.Folder, FileData = josnfile, Tenant = document.Tenant });
+                sendInterfaceDataContractJosnDocumentId = document.Id;
             }
             return sendInterfaceDataContractJosnDocumentId;
         }
-
 
         private object GetSendInterfaceDataContractObject(object entityPM , string computingPartnerCode)
         {
@@ -102,22 +101,6 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             return document;
         }
 
-        private  void WriteDocumentOnStorage(Document document , byte[] fileData)
-        {
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                Tenant = document.Tenant,
-                FileSize = document.FileSize,
-                IsEncrypted = true,
-            };
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(fileData, fileInfo);
-        }
-
         private string GetSendInterfaceDataContractFileName(object entityPM)
         {
             string sendInterfaceDataContractFileName = GetPropertyValueFromObject("ShipmentLevelName" , entityPM);
@@ -135,5 +118,13 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             }
             return propertyValue;
         }
+
+        private static string GetComputingPartnerCode(int tenant, string computingPartnerId)
+        {
+            ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(tenant);
+            string computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(computingPartnerId);
+            return computingPartnerCode;
+        }
+
     }
 }
