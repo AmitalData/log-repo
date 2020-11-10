@@ -163,6 +163,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueDollar, 
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite,
+	         TruckerId,
 	      }
 
 
@@ -386,6 +387,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReasonName, 
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite,
+	         TruckerId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1092,6 +1094,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalLoadingSite))
             {
 				entityPOCO.FinalLoadingSite = entityPM.FinalLoadingSite;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+				entityPOCO.TruckerId = entityPM.TruckerId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1804,6 +1811,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.FinalLoadingSite = entityPOCO.FinalLoadingSite;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
+            {
+					entityPM.TruckerId = entityPOCO.TruckerId;
+            }
 
 		}
 
@@ -2499,6 +2510,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
             {
                 oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+                oldEntityPM.TruckerId = entityPM.TruckerId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))

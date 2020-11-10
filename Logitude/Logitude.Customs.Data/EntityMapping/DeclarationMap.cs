@@ -304,6 +304,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.TransshipmentApprovalDateTime).HasColumnName("TransshipmentApprovalDateTime");
 
             this.Property(t => t.FinalLoadingSite).HasColumnName("FinalLoadingSite").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

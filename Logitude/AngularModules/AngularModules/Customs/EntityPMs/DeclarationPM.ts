@@ -1329,6 +1329,11 @@ export class DeclarationPM {
     public set FinalLoadingSite(newValue: string) { if (this.finalLoadingSite != newValue) { this.finalLoadingSite = newValue; this.MarkAsDirty("FinalLoadingSite"); } }
        
 	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

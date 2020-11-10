@@ -5285,6 +5285,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
