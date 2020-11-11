@@ -37,20 +37,17 @@ export class HomeComponent
     {
         this.cargoTrackingDataExtendedService.get(this.tenant).subscribe((response: ServiceResponse) =>
         { 
- 
-            CargoTrackingBrandingData.MainColor = response.Result.MainColor;
-            if(CargoTrackingBrandingData.MainColor) {
 
-                CargoTrackingBrandingData.MainColor = this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
-    
+            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? this.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
+            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? this.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
                 document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
-                document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
-                document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
+               // document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
+              //  document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
-             
-            }
+                        
             this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
+            document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
             this.IsBrandingDataLoaded = true;
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
             this.listenToRouterEvents();
@@ -94,9 +91,10 @@ export class HomeComponent
     }
     private ConvertHexaToRGBA(color: string)
     {
-        var alpha = parseInt(color.slice(1, 3), 16) / 255;
-        return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
-
+        if (color) {
+            var alpha = parseInt(color.slice(1, 3), 16) / 255;
+            return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
+        }
     }
     private listenToRouterEvents()
     {
