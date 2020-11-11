@@ -359,7 +359,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.ReferentUserId = TranslateUser(_AmitalCustomsFile.ReferentUserId);
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
-
+                string truckerId = null;
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
+                {
+                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, _CourierMasterPM.Tenant);
+                    if (card != null)
+                    {
+                        truckerId = _AmitalCustomsFile.TruckerId;
+                    }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
+                        if (card != null)
+                        {
+                            truckerId = card.Id;
+                        }
+                    }
+                }
+                this._MyDeclarationPM.TruckerId = truckerId;
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;

@@ -223,6 +223,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.NoOfCourierHawb) && string.IsNullOrWhiteSpace(_CourierMasterPM.NoOfCourierHawb)) _CourierMasterPM.NoOfCourierHawb = _LogitudeMasterCourier.NoOfCourierHawb;
+                /*
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.TruckerId) && string.IsNullOrWhiteSpace(_CourierMasterPM.TruckerId))
                 {
                     CardRepository cardRep = new CardRepository(_CourierMasterPM.Tenant);
@@ -238,6 +239,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         {
                             _CourierMasterPM.TruckerId = card.Id;
                         }
+                    }
+                }
+                */
+                int packageQuantityInMAWB = 0;
+                if (_CourierMasterPM.PackageQuantityInMAWB == null)
+                {
+                    if (int.TryParse(_LogitudeMasterCourier.PackageQuantityInMAWB, out packageQuantityInMAWB) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityInMAWB))
+                    {
+                        _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
                     }
                 }
 
