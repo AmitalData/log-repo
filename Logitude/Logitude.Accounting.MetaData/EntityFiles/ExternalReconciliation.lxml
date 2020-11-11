@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;fb32&quot;"
+  Code="&quot;47bd&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1331,8 +1331,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExternalReconciliation.O.CantAdjustLedgersOnly&quot;"
-      DefaultText="&quot;Cant adjust only bank lines&quot;"
-      LocalDefaultText="&quot;לא ניתן לבצע התאמה עם שורות כרטיס בנק בלבד&quot;"
+      DefaultText="&quot;Cant adjust only transaction lines&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע התאמה עם שורות מהכרטיס בלבד&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
