@@ -237,35 +237,52 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     //#endregion
 
     //#region Buttons Handlers
-    ReconcilButton() {
+    ReconcileButtonClicked() {
+        if (Math.abs(this.totalDifference) > 0.001)
+            this.MakeAdjustment();
+        else
+            this.MakeReconciliation();
+    }
+
+    private MakeAdjustment()
+    {
+        if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
+            this.AdjustBankFeeWithNewJournalScreen();
+        }
+    }
+
+    private MakeReconciliation()
+    {
+        var errors: string[] = this.ValidateReconciliation();
+
+        if (errors.length == 0) {
+            var reconciliation = this.CreateReconciliation();
+            this.SubmitChanges(reconciliation);
+        }
+        else
+            this.ValidationErrorsList = errors;
+    }
+
+    private ValidateReconciliation()
+    {
         var errors: string[] = [];
 
-        // Local Validate
-        if (Math.abs(this.totalDifference) > 0.001) 
-        {
-            if(this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length > 0) {
-                errors.push(TextCodeTranslator.Translate("ExternalReconciliation.O.CantAdjustLedgersOnly"));  
-            }
-            if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) { 
-                this.AdjustBankFeeWithNewJournalScreen();
-                return;
-            }
-        }
-        else 
-        {
+        this.BlockAdjustLedgerTransactionOnly(errors);
+        this.CheckEmptyReconcile(errors);
+        return errors;
+    }
 
-        }
-
+    private CheckEmptyReconcile(errors: string[])
+    {
         if (this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length == 0)
             errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
+    }
 
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
-            var entity = this.CreateReconciliation();
-            this.SubmitChanges(entity);
-
+    private BlockAdjustLedgerTransactionOnly(errors: string[])
+    {
+        if (Math.abs(this.totalDifference) > 0.001 && this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length > 0) {
+            errors.push(TextCodeTranslator.Translate("ExternalReconciliation.O.CantAdjustLedgersOnly"));
         }
-
     }
 
     SaveAsDraftButton() {
@@ -1374,6 +1391,66 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     //#endregion
 
     CreateReconciliation() {
+        var newReconciliation: ExternalReconciliationPM = this.InitNewReconciliation();
+
+        this.AddLines(newReconciliation);
+
+        return newReconciliation;
+    }
+    private AddLines(newEntity: ExternalReconciliationPM)
+    {
+        newEntity.ExternalReconciliationLines = [];
+        var lineNumber = 1;
+
+        for (var i = 0; i < this.TransactionSelectedLines.Length; i++) {
+            var newLine: ExternalReconciliationLinePM = this.CreateLedgerLine(i, newEntity, lineNumber);
+
+            newEntity.AddExternalReconciliationLine(newLine);
+
+            lineNumber++;
+        }
+
+        for (var i = 0; i < this.ExtPageSelectedLines.Length; i++) {
+            var newLine: ExternalReconciliationLinePM = this.CreateExternalTransactionLine(i, newLine, newEntity, lineNumber);
+            newEntity.AddExternalReconciliationLine(newLine);
+
+            lineNumber++;
+        }
+    }
+
+    private CreateExternalTransactionLine(i: number, newLine: ExternalReconciliationLinePM, newEntity: ExternalReconciliationPM, lineNumber: number)
+    {
+        let selectedTransaction = this.ExtPageSelectedLines.Collection[i];
+        var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
+
+        newLine.ChangeSetOp = "1";
+        newLine.ReconciliationId = newEntity.Id;
+        newLine.Tenant = newEntity.Tenant;
+        newLine.Line = lineNumber;
+        newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
+        newLine.ExternalPageLineId = selectedTransaction.Id;
+        newLine.LedgerTransactionId = null;
+        return newLine;
+    }
+
+    private CreateLedgerLine(i: number, newEntity: ExternalReconciliationPM, lineNumber: number)
+    {
+        let selectedTransaction: TransactionLineModel = this.TransactionSelectedLines.Collection[i];
+        var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
+
+        newLine.ChangeSetOp = "1";
+        newLine.ReconciliationId = newEntity.Id;
+        newLine.Tenant = newEntity.Tenant;
+        newLine.Line = lineNumber;
+        newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
+        newLine.LedgerTransactionId = selectedTransaction.Id;
+        newLine.ExternalPageLineId = null;
+        newLine.LedgerGLAccountId = selectedTransaction.LedgerTransactionPM.AccountId;
+        return newLine;
+    }
+
+    private InitNewReconciliation()
+    {
         var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
 
         newEntity.Id = "new";
@@ -1382,47 +1459,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         newEntity.Tenant = this.BankAccountPM.Tenant;
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
-
-        newEntity.ExternalReconciliationLines = [];
-        var lineNumber = 1;
-
-        //insert glaccount transaction lines
-        for (var i = 0; i < this.TransactionSelectedLines.Length; i++) {
-            let selectedTransaction: TransactionLineModel = this.TransactionSelectedLines.Collection[i];
-            var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
-
-            newLine.ChangeSetOp = "1";
-            newLine.ReconciliationId = newEntity.Id;
-            newLine.Tenant = newEntity.Tenant;
-            newLine.Line = lineNumber;
-            newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
-            newLine.LedgerTransactionId = selectedTransaction.Id;
-            newLine.ExternalPageLineId = null;
-            newLine.LedgerGLAccountId = selectedTransaction.LedgerTransactionPM.AccountId;
-            newEntity.AddExternalReconciliationLine(newLine);
-
-            lineNumber++;
-        }
-
-        //insert ExtPage transaction lines
-        for (var i = 0; i < this.ExtPageSelectedLines.Length; i++) {
-            let selectedTransaction = this.ExtPageSelectedLines.Collection[i];
-            var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
-
-            newLine.ChangeSetOp = "1";
-            newLine.ReconciliationId = newEntity.Id;
-            newLine.Tenant = newEntity.Tenant;
-            newLine.Line = lineNumber;
-            newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
-            newLine.ExternalPageLineId = selectedTransaction.Id;
-            newLine.LedgerTransactionId = null;
-            newEntity.AddExternalReconciliationLine(newLine);
-
-            lineNumber++;
-        }
-
         return newEntity;
     }
+
     SubmitChanges(entity) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
