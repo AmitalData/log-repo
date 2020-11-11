@@ -241,20 +241,21 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var errors: string[] = [];
 
         // Local Validate
-        if (Math.abs(this.totalDifference) > 0.001) {//if (this.totalDifference != 0) {
-            if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) { // only ONE ROW external pages adjustments WITH ZERO OR MANY TransactionSelectedLines
-
-            //if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) { // only external pages adjustments
-            // if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) { // to enable ledgertransactions and external page adjustments
-
-                //errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
+        if (Math.abs(this.totalDifference) > 0.001) 
+        {
+            if(this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length > 0) {
+                errors.push(TextCodeTranslator.Translate("ExternalReconciliation.O.CantAdjustLedgersOnly"));  
+            }
+            if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) { 
                 this.AdjustBankFeeWithNewJournalScreen();
                 return;
             }
-            //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-        } else {
-            //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         }
+        else 
+        {
+
+        }
+
         if (this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length == 0)
             errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
 
