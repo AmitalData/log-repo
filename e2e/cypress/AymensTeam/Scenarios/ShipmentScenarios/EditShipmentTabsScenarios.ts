@@ -15,11 +15,11 @@ export class EditShipmentTabsScenarios {
     public OrderTab: OrderTab = new OrderTab();
 
     public RunEditTabsScenarios(levelCode: string, transportMode: string, direction: string, shipmentType: string = null) {
-      //  this.FillGeneralTab();
-     //   this.OrderTab.RunOrderTabScenarios(shipmentType);
-      //  this.PartnersTab.RunPartnersTabScenarios(levelCode,direction, transportMode);
-      //  this.PackagesTab.RunPackagesTabsScenarios(shipmentType, transportMode);
-      //  this.RoutingTab.RunRoutingTabScenarios(levelCode,transportMode);
+        this.FillGeneralTab();
+        this.OrderTab.RunOrderTabScenarios(shipmentType);
+        this.PartnersTab.RunPartnersTabScenarios(levelCode,direction, transportMode);
+        this.PackagesTab.RunPackagesTabsScenarios(shipmentType, transportMode);
+        this.RoutingTab.RunRoutingTabScenarios(levelCode,transportMode);
         this.PayablesTab.RunPayablesTabScenarios();
         this.ReceivablesTab.RunReceivablesTabScenarios();
     }
