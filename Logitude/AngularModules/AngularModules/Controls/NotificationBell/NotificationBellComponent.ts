@@ -214,6 +214,8 @@ export class NotificationBellComponent {
                                 case "5101D":
                                 case "5101A":
                                 case "5101E":
+                                case "5101D":
+
                                     {
                                         currentScreenCode = "DCNT";
                                         break;

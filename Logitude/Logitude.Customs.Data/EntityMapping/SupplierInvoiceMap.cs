@@ -94,6 +94,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.BuyerRoleCode).HasColumnName("BuyerRoleCode").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.PartyRelationshipCode).HasColumnName("PartyRelationshipCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ItemFOBAmountForeign).HasColumnName("ItemFOBAmountForeign").HasPrecision(16, 2);
+
+            this.Property(t => t.ItemFOBAmountNIS).HasColumnName("ItemFOBAmountNIS").HasPrecision(16, 2);
         }
     }
 }

@@ -577,7 +577,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
                     this.CurrentSession.StopBusyIndicator();
-                    if (this.Parent.IsNewEntity) {
+                    if (this.Parent.IsNewEntity && this.declarationPM.Direction != "E") {
                         let autoFillAccountType = customsSettingList.Result ? customsSettingList.Result.AutoFillAccountType : false;
                         if (autoFillAccountType) {
                             this.AccountTypeCode = "380";
@@ -2612,9 +2612,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
     }
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
-        console.log("OnSelectedItemChanged > ", selectedRow);
-       // selectedRow.entityPM.ClasifiedRemarks = this.DocumentFilingId;
-       // DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
+         console.log("OnSelectedItemChanged > ", selectedRow);
+        selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
+        DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
 
         if (selectedRow) {
 

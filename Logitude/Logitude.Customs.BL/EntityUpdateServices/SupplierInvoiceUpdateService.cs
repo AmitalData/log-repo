@@ -205,7 +205,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string remarks = "";
             foreach (SupplierInvoiceItemPM itemPM in entityPM.SupplierInvoiceItems)
             {
-                if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource)
+                if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource && itemPM.ClassificationCodeSource != null)
                 {
                     if(remarks != "")
                     {

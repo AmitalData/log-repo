@@ -146,6 +146,8 @@
     <None Include="DBTables\AddressPurpose.dxml" />
     <None Include="DBTables\AgentTalkBackType.dxml" />
     <None Include="DBTables\AmendmentFieldReasonType.dxml" />
+    <None Include="DBTables\AmendmentFieldStatusType.dxml" />
+    <None Include="DBTables\AmendmentRequestRejectReasonType.dxml" />
     <None Include="DBTables\AmendmentRequestStatus.dxml" />
     <None Include="DBTables\AmendmentStatus.dxml" />
     <None Include="DBTables\AmountType.dxml" />
@@ -335,6 +337,7 @@
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
     <None Include="DBTables\MamanStatus.dxml" />
@@ -459,6 +462,8 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\AmendmentRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
@@ -466,6 +471,7 @@
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\ExporterRoleType.lxml" />
+    <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

@@ -155,7 +155,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClaimReasonName, 
 	         ItemFOBAmountForeign, 
 	         ItemFOBAmountNIS, 
-	         ClassificationCodeSource,
+	         ClassificationCodeSource, 
+	         DocumentFilingId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

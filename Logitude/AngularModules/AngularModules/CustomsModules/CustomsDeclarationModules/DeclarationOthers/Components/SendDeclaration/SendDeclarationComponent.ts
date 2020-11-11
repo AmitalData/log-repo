@@ -37,6 +37,7 @@ import {CustomsDocumentPM} from '../../../../../Customs/EntityPMs/CustomsDocumen
 import { AnalyzeUnifreightInsuranceService } from '../../../DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -587,40 +588,27 @@ export class SendDeclarationService implements OnDestroy {
         if (declarationValidator.ValidationErrorMessageCodes.length == 0) {
             this.DeclarationService.GetDeclarationDocumentList(this.EntityPM.Id, "Declaration").subscribe((myResponse: ServiceResponse) => {
                 var myCustomsDocumentPMList: CustomsDocumentPM[] = myResponse.Result;
-                if (!myCustomsDocumentPMList) {
-                    this.CheckMandatoryTickets();
-                }
-                else if (myCustomsDocumentPMList.length == 0) {
-                    this.CheckMandatoryTickets();
-                }
-                else {
-                    var notSendList = myCustomsDocumentPMList.filter(r => AppTool.IsNullOrEmpty(r.CustomsDocId));
-                    if (notSendList.length == 0) {
-                        this.CheckMandatoryTickets();
-                        return;
+                this.DeclarationService.GetDeclarationDocumentWithConnectNotValid(this.EntityPM.Id, "Declaration").subscribe((myResponse2: ServiceResponse) => {
+                    var myCustomsDocumentPMList2: CustomsDocumentPM[] = myResponse2.Result;
+                    if (myCustomsDocumentPMList2 && myCustomsDocumentPMList2.length > 0) {
+
+                        myCustomsDocumentPMList2.forEach(x =>  {
+                            //TextCodeTranslator.Translate("Customs.General.O.NotConnectInvoiceToDoc")
+                            this.ValidationErrors.push("חסר קישור לחשבון/שורת פרט מכס לצרופה : " + x.ExternalAttachmentId);
+
+                        })
+                    }
+                    if (myCustomsDocumentPMList && myCustomsDocumentPMList.filter(x => x.DocumentStatusCode == '7').length > 0) {
+                        //TextCodeTranslator.Translate("Customs.General.O.DocumentInProgress")
+                        this.ValidationErrors.push("קיימים מסמכים בתהליך שליחה.");
+                 
                     }
 
-                    var errorMessage = "";
-                    // this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                    myCustomsDocumentPMList.forEach((customsDocumentPM) => {
-                        if (AppTool.IsNullOrEmpty(customsDocumentPM.CustomsDocId)) {
-                            errorMessage = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploaded");
-                        }
-                    });
-
-                    if (AppTool.IsNullOrEmpty(errorMessage)) {
-                        //this.SendDeclaration();
-                        this.CheckMandatoryTickets();
-                    }
-                    else {
-
-                        this.ValidationErrors.push(errorMessage);
+                    if (this.ValidationErrors && this.ValidationErrors.length > 0) {
                         var windowArgs: any = {};
                         windowArgs.Errors = this.ValidationErrors;
-                        windowArgs.NoButtonVisibility = false;
-                        windowArgs.CancelButtonVisibility = true;
-                        windowArgs.ComponentHeight = '328px';
-                        var windowTitle = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploadedCheck");
+                        windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
+                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
 
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 600;
@@ -628,12 +616,62 @@ export class SendDeclarationService implements OnDestroy {
                         logWindow.Title = windowTitle;
                         logWindow.ShowCloseButton = false;
                         logWindow.WindowArgs = windowArgs;
-                        logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
+                        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
                         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
-                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        this.StopMyBusyIndicator();
+
+                        return;
                     }
-                }
+                    if (!myCustomsDocumentPMList) {
+                        this.CheckMandatoryTickets();
+                    }
+                    else if (myCustomsDocumentPMList.length == 0) {
+                        this.CheckMandatoryTickets();
+                    }
+                    else {
+                        var notSendList = myCustomsDocumentPMList.filter(r => AppTool.IsNullOrEmpty(r.CustomsDocId));
+                        if (notSendList.length == 0) {
+                            this.CheckMandatoryTickets();
+                            return;
+                        }
+
+                        var errorMessage = "";
+                        // this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        myCustomsDocumentPMList.forEach((customsDocumentPM) => {
+                            if (AppTool.IsNullOrEmpty(customsDocumentPM.CustomsDocId)) {
+                                errorMessage = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploaded");
+                            }
+                        });
+
+                        if (AppTool.IsNullOrEmpty(errorMessage)) {
+                            //this.SendDeclaration();
+                            this.CheckMandatoryTickets();
+                        }
+                        else {
+
+                            this.ValidationErrors.push(errorMessage);
+                            var windowArgs: any = {};
+                            windowArgs.Errors = this.ValidationErrors;
+                            windowArgs.NoButtonVisibility = false;
+                            windowArgs.CancelButtonVisibility = true;
+                            windowArgs.ComponentHeight = '328px';
+                            var windowTitle = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploadedCheck");
+
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 600;
+                            logWindow.Height = 400;
+                            logWindow.Title = windowTitle;
+                            logWindow.ShowCloseButton = false;
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
+
+                            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                            this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        }
+                    }
+                });
+              
             });
         }
         else {

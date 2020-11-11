@@ -176,6 +176,8 @@ public partial class LogitudeCustomsFile
 
     private string fileOpenDateField;
 
+    private string truckerIdField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -979,6 +981,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.fileOpenDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string TruckerId
+    {
+        get
+        {
+            return this.truckerIdField;
+        }
+        set
+        {
+            this.truckerIdField = value;
         }
     }
 }

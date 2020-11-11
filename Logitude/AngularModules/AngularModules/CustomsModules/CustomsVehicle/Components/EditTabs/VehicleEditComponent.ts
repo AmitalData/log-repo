@@ -19,6 +19,8 @@ import { VehiclesOwnersAndSafetyTabComponent } from './VehiclesOwnersAndSafetyTa
 import { UpdateDeleteVehicleRequestParams } from '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
+import { CustomsDocumentsComponent } from '../../../CustomsDocuments/Components/CustomsDocumentsComponent';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -71,7 +73,7 @@ export class VehicleEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("General", "Customs.Vehicle.TH.General"));
         this.TabsItemsSource.push(new TabItem("VehicleMoreDetailsTabComponent", "Customs.Vehicle.TH.MoreDetails"));
         this.TabsItemsSource.push(new TabItem("VehiclesOwnersAndSafetyTabComponent", "Customs.Vehicle.TH.OwnersAndSafety"));
-        
+        this.TabsItemsSource.push(new TabItem("CustomsDocumentsComponent", "Customs.Vehicle.TH.CustomDocuments"));
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
@@ -91,7 +93,8 @@ export class VehicleEditComponent extends BaseComponent {
     private GENERAL: VehicleGeneralComponent = null;
     private MORE: VehicleMoreDetailsTabComponent = null;
     private SAFETY: VehiclesOwnersAndSafetyTabComponent = null;
-    
+    private CUSTOMDOCUMENTS: CustomsDocumentsComponent = null;
+
 
     private CustomsRequestsSheets: any = null;
 
@@ -148,6 +151,29 @@ export class VehicleEditComponent extends BaseComponent {
                         }
                         break;
                     }
+
+
+                    case "CustomsDocumentsComponent": {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 400;
+                            messageWindow.Height = 200;
+                          
+                            messageWindow.Show("יש לשמור רכבית טרם צירוף מסמכים");
+                     
+                            break;
+                        }
+                        if (this.CUSTOMDOCUMENTS == null) {
+                            SessionLocator.DynamicLoader.Load(
+                                './CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent',
+                                myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CUSTOMDOCUMENTS = cmpRef.instance;
+                                  
+                                });
+                        }
+                        break;
+                    }
                         
                 }
 
@@ -179,7 +205,80 @@ export class VehicleEditComponent extends BaseComponent {
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.ValidationErrorsList = [];
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                this.CancelButtonClicked();
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+
+                //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
+
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
+                    res.subscribe((myResponse: ServiceResponse) => {
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (myResponse.HasError) {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                            //this.SaveCompleted.emit(false);
+                        }
+
+                        else {
+                            this.EntityPM = myResponse.Result;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                                var myErrors: string[] = [];
+                                myErrors.push("this.EntityPM.Id is null");
+                                this.ValidationErrorsList = myErrors;
+                            } else {
+                                if (customSendOptionsArgs == null) {
+
+                                    this.SelectedTabCode = "General";
+                                    this.SelectionChanged();
+                                    // this.CancelButtonClicked();
+                                } else {
+                                    var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
+                                    currRequestParams.LoggingEnabled = true;
+                                    currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                                    currRequestParams.Tenant = SessionLocator.Tenant;
+
+                                    currRequestParams.VehicleId = this.EntityPM.Id;
+                                    currRequestParams.IsDelete = false;
+
+
+
+                                    CustomMessageProgressComponent
+                                        .ShowProgressBar(currRequestParams.PBId,
+                                            "שליחת מסר עדכון פרטי רכב", true)
+                                        .then((res) => {
+                                            console.log(res);
+                                            this.CancelButtonClicked();
+                                        }
+                                        ).catch((err) => {
+                                            this.ValidationErrorsList.push(err);
+                                            this.CancelButtonClicked();
+                                        });
+
+                                    var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+
+                                    myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
+                                        .subscribe((myServiceResponse: ServiceResponse) => {
+                                            //this.CurrentSession.StopBusyIndicator();
+
+                                            //this.ResponseData = myServiceResponse.Result;
+                                            //this.OnMassageDisplayMethod();
+                                        });
+                                }
+
+                            }
+                        }
+
+                    }, error => {
+                        this.CurrentSession.StopBusyIndicator();
+                        var myErrors: string[] = [];
+                        myErrors.push(error.message);
+                        this.ValidationErrorsList = myErrors;
+                        //this.SaveCompleted.emit(false);
+                    });
+                });
+            //}
                 return;
             }
 
@@ -206,8 +305,11 @@ export class VehicleEditComponent extends BaseComponent {
                                 myErrors.push("this.EntityPM.Id is null");
                                 this.ValidationErrorsList = myErrors;
                             } else {
-                                if (customSendOptionsArgs==null) {
-                                    this.CancelButtonClicked();
+                                if (customSendOptionsArgs == null) {
+
+                                    this.SelectedTabCode = "General";
+                                    this.SelectionChanged();
+                                   // this.CancelButtonClicked();
                                 } else {
                                     var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
                                     currRequestParams.LoggingEnabled = true;
@@ -224,7 +326,7 @@ export class VehicleEditComponent extends BaseComponent {
                                         "שליחת מסר עדכון פרטי רכב", true)
                                         .then((res) => {
                                             console.log(res);
-                                            this.CancelButtonClicked();
+                                             this.CancelButtonClicked();
                                         }
                                         ).catch((err) => {
                                             this.ValidationErrorsList.push(err);

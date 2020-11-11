@@ -97,6 +97,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.IsAmendmentDisplayOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
             var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
             var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus,false,true);
@@ -105,6 +106,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.AmendmentStatusName = amendmentStatus.Name;
 
             }
+
+
+           if(entityPOCO.IsAmendment == true)
+            {
+                AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
+                AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
+                if (amendRequestRejectReasonType != null)
+                {
+                    entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
+
+                }
+            }
+          
 
             CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
             CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
@@ -131,12 +145,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                var declarations = declarationQuery.GetDeclarationAmendmentsByIdCache(entityPOCO.Tenant, entityPOCO.Id);
+                var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
 
-                var declaration = declarations.FirstOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
+                var declaration = declarations.FirstOrDefault(x => new string[] { "1",  "3", "6" }.Contains(x.AmendmentStatus));
                 if (declaration != null)
                 {
                     entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                }
+
+                else
+                {
+                    declaration = declarations.FirstOrDefault(x => new string[] { "2", "4", }.Contains(x.AmendmentStatus));
+                    if (declaration != null)
+                    {
+                        entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true);
+                    }
                 }
                 //else
                 //{

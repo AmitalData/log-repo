@@ -41,6 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.AirlineName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalDateOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalTimeOnly);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.LandingDateDateOnly);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.LandingDateTimeOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.OriginPortName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.GatewayPortName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.WeightValueName);
@@ -73,6 +75,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.EstimatedArrivalDateOnly = entityPOCO.EstimatedArrivalDate.Value.Date;
                 entityPM.EstimatedArrivalTimeOnly = (DateTime)entityPOCO.EstimatedArrivalDate;
+            }
+
+            if (entityPOCO.LandingDate != null && entityPOCO.LandingDate.HasValue)
+            {
+                entityPM.LandingDateDateOnly = entityPOCO.LandingDate.Value.Date;
+                entityPM.LandingDateTimeOnly = (DateTime)entityPOCO.LandingDate;
             }
 
             if (entityPOCO.OriginPortCode != null)
