@@ -185,7 +185,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                }).ToList();
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
-                                                                     group p by new { p.Master, p.CommodityNumber ,p.CustomAgentImportId, p.CustomAgentImportName } 
+                                                                     group p by new { p.Master, p.CommodityNumber ,p.CustomAgentImportId, p.CustomAgentImportName ,p.CommodityName ,p.MasterLong , p.ATD , p.ETD } 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -194,6 +194,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          CustomAgentImportId = g.Key.CustomAgentImportId,
                                                                          CustomAgentImportName = g.Key.CustomAgentImportName,
                                                                          CommodityNumber = g.Key.CommodityNumber,
+                                                                         CommodityName = g.Key.CommodityName,
+                                                                         MasterLong = g.Key.MasterLong,
+                                                                         ATD = g.Key.ATD,
+                                                                         ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
                                                                      }).ToList();
 

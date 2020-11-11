@@ -29,6 +29,10 @@ namespace WebFreight.Web.DataProviders
     public class ReportGroup
     {
         public string CommodityNumber { get; set; }
+        public string CommodityName { get; set; }
+        public string MasterLong { get; set; }
+        public DateTime? ETD { get; set; }
+        public DateTime? ATD { get; set; }
         public string MasterNumber { get; set; }
         public string Reference4 { get; set; }
         public string CustomAgentImportId { get; set; }
