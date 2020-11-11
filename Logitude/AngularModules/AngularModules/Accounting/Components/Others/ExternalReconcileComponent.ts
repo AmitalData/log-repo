@@ -249,6 +249,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
             this.AdjustBankFeeWithNewJournalScreen();
         }
+        this.CheckAdjustLedgerTransactionsOnly();
+    }
+
+    private CheckAdjustLedgerTransactionsOnly() {
+        if (this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length > 0) {
+            this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantAdjustLedgersOnly")];
+        }
     }
 
     private MakeReconciliation()
