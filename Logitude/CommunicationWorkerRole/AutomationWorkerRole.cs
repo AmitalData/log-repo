@@ -65,7 +65,6 @@ namespace CommunicationWorkerRole
         string entityId = string.Empty;
         int AutomationCount = 0;
         string type = string.Empty;
-        private  string externalAttachmentDocumentId = string.Empty;
         bool executedImmediately = false;
 
         public AutomationWorkerRole(string tenant)
@@ -114,7 +113,6 @@ namespace CommunicationWorkerRole
                                 automationId = response.MessageValues["AutomationId"].ToString();
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false ;
-                                //externalAttachmentDocumentId = response.MessageValues["ExternalAttachmentDocumentId"] != null ? response.MessageValues["ExternalAttachmentDocumentId"].ToString() : "";
 
                                 string tenant = response.MessageValues["Tenant"].ToString();
 
@@ -198,65 +196,48 @@ namespace CommunicationWorkerRole
                                     AutomationDescription = automation.Description,
                                 };
 
-                                if (automation.ResultCode == "EMAIL")
-                                {
-                                    entityChangesAutomation.ResultCode = "E-mail";
-                                }
-
-                                else if (automation.ResultCode == "FIELDSET")
-                                {
-                                    entityChangesAutomation.ResultCode = "Set Fields Value";
-                                }
-
-                                else if (automation.ResultCode == "FOLLOWUP")
-                                {
-                                    entityChangesAutomation.ResultCode = "F/U Creation";
-                                }
-
-                                else if (automation.ResultCode == "DOCOUTFOLLOWUP")
-                                {
-                                    entityChangesAutomation.ResultCode = "Docs Out F/U Creation";
-                                }
-
-                                else if (automation.ResultCode == "DOCINFOLLOWUP")
-                                {
-                                    entityChangesAutomation.ResultCode = "Docs In F/U Creation";
-                                }
-
-                                else if (automation.ResultCode == "QUEUE")
-                                {
-                                    entityChangesAutomation.ResultCode = "Queued Task";
-                                }
-                                else if (automation.ResultCode == "SENDINTERFACE") entityChangesAutomation.ResultCode = "Send Interface";
-                
-                                string dateString = "";
+                                entityChangesAutomation.ResultCode = GetentityChangesResultCode(automation.ResultCode);
+                                string automationLastUpdateDate = "";
                                 if (automationConditionFields.LastUpdateDate != null)
                                 {
-                                    dateString = automationConditionFields.LastUpdateDate.ToString();
+                                    automationLastUpdateDate = automationConditionFields.LastUpdateDate.ToString();
                                 }
 
                                 if (!string.IsNullOrEmpty(otherObjectTableId) && automation.ObjectTableId == otherObjectTableId)
                                 {
-                                    dateString = otherObjectTableLastUpdateDate;
+                                    automationLastUpdateDate = otherObjectTableLastUpdateDate;
                                 }
 
-                                ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, dateString, executedImmediately ? "": "Delayed");
-                                List<EntityChangeAutomation> ChangesAutomationsLists = FullEntityChangeAutomationList(entityChange, null);
+                                ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, executedImmediately ? "": "Delayed");
 
+                                if (validateResult.IsAutomationValid && executedImmediately && validateResult.Type == "Delayed")
+                                {
+                                    DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
+                                    generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists) });
+                                    queueservice.Complete();
+                                    LogDoneItemInMemory();
+
+                                    continue;
+                                }
+
+
+
+                                List<EntityChangeAutomation> ChangesAutomationsLists = FullEntityChangeAutomationList(entityChange, null);
                                 List<EntityChangeAutomation> entityChangesAutomationsLists = ChangesAutomationsLists.Where(d => d.ResultCode == entityChangesAutomation.ResultCode).ToList();
                                 entityChangesAutomation.IsConditionTrue = validateResult.IsAutomationValid;
                                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(Tenant);
                                 ObjectTable objectTable = objectTabelRepository.GetSingleObjectTable(entityChange.ObjectTableId, Tenant, true);
 
                                 #region Send Interface
-
+                             
 
                                 if (automation.ResultCode == "SENDINTERFACE")
                                 {
                                     entityChangesAutomation.type = validateResult.IsAutomationValid ? "SendInterfaceSsucceed" : "SendInterfaceFailed";
                                     if (validateResult.IsAutomationValid)
                                     {
-                                        AutomationSendInterface automationSendInterface = GetAutomationSendInterface(automation, dateString);
+
+                                        AutomationSendInterface automationSendInterface = GetAutomationSendInterface(automation, automationLastUpdateDate);
                                         string documentId = GetSendInterfaceDataContractDocumentId(entityChange, automationSendInterface);
                                         if (automationSendInterface.SendVia == "EMAIL")
                                         {
@@ -332,7 +313,7 @@ namespace CommunicationWorkerRole
                                                 }
 
 
-                                                new AutomationSetValueResultService().SetValue(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, changesFields, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationSetValueResultService().SetValue(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, changesFields, automation, entityChangesAutomation, dateBefore);
                                                 UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                                 rFields.cs = changesFields;
                                                 entityChange.ChangesAutomationFieldsXml = rFields.cs != null && rFields.cs.Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(rFields) : "";
@@ -370,7 +351,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                new AutomationFollowUpResultService().AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationFollowUpResultService().AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                // UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
@@ -402,7 +383,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                new AutomationQueuedTaskResultService().AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationQueuedTaskResultService().AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                 UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
@@ -427,6 +408,13 @@ namespace CommunicationWorkerRole
 
                                 if (automationList.Count() == ChangesAutomationsLists.Count())
                                 {
+
+                                    if (automationList.Where(d => d.ResultCode == "SENDINTERFACE").Any())
+                                    {
+                                        StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant };
+                                        StorageDataService.DeleteFileFromStorage(storageDataArgs);
+                                    }
+
                                     entityChange.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                                 }
 
@@ -494,14 +482,28 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private string GetentityChangesResultCode(string resultCode)
+        {
+            string result = string.Empty;
+            if (resultCode == "EMAIL") result = "E-mail";
+            else if (resultCode == "FIELDSET") result = "Set Fields Value";
+            else if (resultCode == "FOLLOWUP") result = "F/U Creation";
+            else if (resultCode == "DOCOUTFOLLOWUP") result = "Docs Out F/U Creation";
+            else if (resultCode == "DOCINFOLLOWUP") result = "Docs In F/U Creation";
+            else if (resultCode == "QUEUE") result = "Queued Task";
+            else if (resultCode == "SENDINTERFACE") result = "Send Interface";
+
+            return result;
+
+        }
+
         private static string GetSendInterfaceDataContractDocumentId(EntityChange entityChange, AutomationSendInterface automationSendInterface)
         {
             StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant };
             byte[] objectData = StorageDataService.ReadFileFromStorage(storageDataArgs);
             ShipmentPM shipmentPM = LogitudeXmlSerializer.DeserializeObject<ShipmentPM>(objectData);
             SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface.ComputingPartnerId, entityChange.Tenant);
-            string documentId = sendInterfaceDataContractService.GetSendInterfaceDataContractDocumentId(automationSendInterface.Format);
-            //StorageDataService.DeleteFileFromStorage(storageDataArgs);
+            string documentId = sendInterfaceDataContractService.GetDataContractDocumentId(automationSendInterface.Format);
             return documentId;
         }
 
@@ -513,9 +515,9 @@ namespace CommunicationWorkerRole
             entityChangesAutomationsLists.Add(entityChangesAutomation);
         }
 
-        private  AutomationSendInterface GetAutomationSendInterface(Automation automation, string dateString)
+        private  AutomationSendInterface GetAutomationSendInterface(Automation automation, string automationLastUpdateDate)
         {
-            string automationSendInterfaceName = "AutomationSendInterface" + dateString + automation.Id + automation.Tenant;
+            string automationSendInterfaceName = "AutomationSendInterface" + automationLastUpdateDate + automation.Id + automation.Tenant;
 
             AutomationSendInterface automationSendInterface = null;
             if (CacheManager.CacheWrapper != null)

@@ -11,11 +11,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationEmailResultService : GeneralAutomationResultService, IAutomationResultService
     {
-        private AutomationResultArgs automationResultArgs { get; set; }
-        private int tenant;
-        private EntityChange entityChange;
 
-        private List<Automation> automationsEmail = new List<Automation>();
 
         public AutomationEmailResultService()
         {
@@ -23,36 +19,17 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
-            this.automationResultArgs = automationResultArgs;
-            this.entityChange = automationResultArgs.EntityChange;
-            this.tenant = this.entityChange.Tenant;
-
-            this.automationsEmail = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "EMAIL").ToList();
+            var automationsEmail = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "EMAIL").ToList();
             if (automationsEmail.Count > 0)
             {
-                ExecuteEmailAutomations();
-            }
-
-
-        }
-
-        private void ExecuteEmailAutomations()
-        {
-            foreach (Automation automation in automationsEmail)
-            {
-                string lastAuomationUpdateDate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
-                AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastAuomationUpdateDate);
-                TimeSpan? automationDelayTime = null;
-                if (automatedBackup.Type == "Delayed")
+                foreach (Automation automation in automationsEmail)
                 {
-                    DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = automatedBackup.Type, Delaytime = automatedBackup.Delaytime, DelaytimeIndicator = automatedBackup.DelaytimeIndicator, DelaytimeOp = automatedBackup.DelaytimeOp, SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode };
-                    automationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists);
+                    AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.Id, Tenant = automation.Tenant, ExecutedImmediately = true });
                 }
-
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, AutomationDelayTime = automationDelayTime, ExecutedImmediately = (automatedBackup.Type == "Delayed" ? false : true) });
             }
         }
 
+  
     }
 
 }
