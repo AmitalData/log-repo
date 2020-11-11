@@ -704,7 +704,7 @@ namespace WebFreight.Web.Helpers
                 {
                     string parameterTenantName = "@ShipmentLevel" + shipmentType.ToString();
                     recordTypeCondation += parameterTenantName + ",";
-                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = shipmentType.ToString() });
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = shipmentType.ToString() ,DataType = "MultiValue" });
                 }
                 recordTypeCondation = recordTypeCondation.Remove(recordTypeCondation.Length - 1);
                 recordTypeCondation += ") ";
