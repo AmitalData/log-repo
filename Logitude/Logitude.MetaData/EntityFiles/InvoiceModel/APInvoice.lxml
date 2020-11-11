@@ -11225,6 +11225,12 @@
       DefaultText="&quot;Additional Fields&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.ValidateInvoiceNumber&quot;"
+      DefaultText="&quot;The invoice number entered is invalid, it should only contain numbers or letters.&quot;"
+      LocalDefaultText="&quot;מספר החשבונית שהוקלד אינו תקין , ניתן לרשום רק אותיות ומספרים.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -11250,6 +11256,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;APInvoice.Features.EditExchangeRate&quot;"
       FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;INSC&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APInvoice.Features.INSC&quot;"
+      FeatureDefaultText="&quot;Don't Allow Special Characters&quot;"
       IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
