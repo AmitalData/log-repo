@@ -132,6 +132,7 @@ namespace WebFreight.Web.Helpers
         List<XmlNode> shipmentNumbersNodes = new List<XmlNode>();
 
         List<HtmlNode> shipmentNumbersNodesHtml = new List<HtmlNode>();
+        List<HtmlNode> SharedDocumentsNodesHTML = new List<HtmlNode>();
 
         ObjectTableRepository tablesRepository;
         Tenant CurrentTenant = null;
@@ -952,6 +953,8 @@ namespace WebFreight.Web.Helpers
             securityKey = "";
             //securityKeyNode = null;
             shipmentNumbersNodesHtml = new List<HtmlNode>();
+            SharedDocumentsNodesHTML = new List<HtmlNode>();
+
             string childEntityName = "";
             if (childEntityId != null && childEntityObjectTableId != null)
             {
@@ -1371,6 +1374,34 @@ namespace WebFreight.Web.Helpers
                 }
 
 
+            }
+
+            foreach (HtmlNode securityKeyNode in SharedDocumentsNodesHTML)
+            {
+                if (securityKeyNode != null && !string.IsNullOrEmpty(securityKey))
+                {
+                    if (securityKeyNode.ParentNode != null)
+                    {
+                        HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, entityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
+                        
+                        foreach (HtmlNode childNode in newLogoSection.ChildNodes)
+                        {
+                            if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
+                            {
+                                securityKeyNode.ParentNode.ParentNode.InsertBefore(childNode, securityKeyNode.ParentNode);
+                            }
+
+                        }
+
+                        if (securityKeyNode.ParentNode != null)
+                        {
+                            if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
+                            {
+                                securityKeyNode.ParentNode.ParentNode.RemoveChild(securityKeyNode.ParentNode);
+                            }
+                        }
+                    }
+                }
             }
 
 
@@ -5300,8 +5331,17 @@ namespace WebFreight.Web.Helpers
                                         //this.securityKeyNode = node;
                                         shipmentNumbersNodesHtml.Add(node);
                                     }
-
                                 }
+
+                                else if (propertyName == "ViewSharedDocuments" && ObjectTableName == "Shipment" && CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink)
+                                {
+                                    this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+
+                                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+
+                                    SharedDocumentsNodesHTML.Add(node);
+                                }
+
                                 else if (propertyName == "TicketHeader" || propertyName == "TicketFooter")
                                 {
                                     if (propertyName == "TicketHeader")
@@ -5807,6 +5847,34 @@ namespace WebFreight.Web.Helpers
 
             return reslut;
         }
+        public string GetSharedDocumentLinkHtml(string key, string entityId, string originalNodeInnerText, int tenant, bool hideSharedlogistics, string systemUrl)
+        {
+            //   "<t:Span FontFamily=\"Verdana\" FontSize=\"13.3299999237061\" Text=\"Our File  : SHIP_7180 \" UnderlineColor=\"#FF000000\" UnderlineDecoration=\"None\" xmlns:t=\"clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents\" />"
+            originalNodeInnerText = originalNodeInnerText.Replace("\"", "'");
+
+            //   string serverPath = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationManager.AppSettings.Get("LogitudeURL");//HttpContext.Current.Request.UrlReferrer.AbsoluteUri.Replace(HttpContext.Current.Request.UrlReferrer.PathAndQuery, "");
+            string url = systemUrl;
+            if (systemUrl.Contains("login.aspx"))
+            {
+                string[] test = systemUrl.Split('/');
+                if (test != null && test.Length > 0)
+                {
+                    url = systemUrl.Replace("/" + test[test.Length - 1], "");
+                }
+            }
+
+
+
+            string pageLink = (url + @"/SharedDocuments.aspx").ToLower() + "?securitykey=" + key + ":" + entityId + ":" + tenant + ":" + hideSharedlogistics;
+            string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
+
+            string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View Documents</a>";
+
+            string reslut = "<p>" + originalNodeInnerText + Textlink + "</p>";
+
+            return reslut;
+        }
+
         #endregion
 
         #endregion
