@@ -145,7 +145,6 @@ namespace CommunicationWorkerRole
                                 List<EntityChangeAutomation> EntityChangesAutomationsSsucceedList = new List<EntityChangeAutomation>();
                                 GeneralAutomationResultService generalAutomationResultService = new GeneralAutomationResultService();
                                 AutomationHistoryQuery automationHistoryQuery = new AutomationHistoryQuery(tenant);
-
                                 bool IsEntityChageContainAnyDelay = false;
                                 foreach (Automation automation in AutomationsList)
                                 {
@@ -178,13 +177,21 @@ namespace CommunicationWorkerRole
                                         if (validateResult.Type == "Delayed")
                                         {
                                             IsEntityChageContainAnyDelay = true;
-                                            generalAutomationResultService.AddDelayedAutomationQueue(entityChange.Id, type, automation.Tenant, automation.Id, validateResult, AutomationConditionFieldLists, entityChange.EntityId);
+                                            DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
+                                            generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityChange.EntityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists) });
+
                                         }
                                         else
                                         {
                                             AutomationHelper automationHelper = new AutomationHelper();
-                                            automationHelper.ExecuteEmailAutomation(entityChange, AutomationConditionFieldLists, automation, entityChangesAutomation, EntityChangesAutomationsSsucceedList);
+                                            entityChangesAutomation.ComunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation });
                                             entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
+                   
+                                            entityChangesAutomation.IsConditionTrue = true;
+                                            entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                            entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
+                                            EntityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
+
                                         }
                                     }
 

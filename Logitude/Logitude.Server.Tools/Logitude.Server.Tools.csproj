@@ -238,6 +238,7 @@
     <Compile Include="EntityChanges\AutomationResult\AutomationEmailResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationFollowUpResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationQueuedTaskResultService.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationSendInterfaceResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationSetValueResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationSLAResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\GeneralAutomationResultService.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="EntityChanges\GeneralEntityChangeService.cs" />
     <Compile Include="EntityChanges\MainEntityChangeService.cs" />
     <Compile Include="EntityChanges\ResolverAutomationObjectFieldService.cs" />
+    <Compile Include="EntityChanges\AutomationResultExternalServices\SendInterfaceDataContractService.cs" />
     <Compile Include="EntityPM.cs" />
     <Compile Include="EntityPMBase.cs" />
     <Compile Include="EntityQueryService.cs" />
@@ -296,6 +298,7 @@
     <Compile Include="Helpers\PerformanceLogger.cs" />
     <Compile Include="Helpers\QuerySortClass.cs" />
     <Compile Include="Helpers\SearchFieldsFinder.cs" />
+    <Compile Include="Helpers\StorageDataService.cs" />
     <Compile Include="Helpers\SystemLogoHelper.cs" />
     <Compile Include="Helpers\TableLastUpdateClass.cs" />
     <Compile Include="Helpers\TextCodesTranslator.cs" />

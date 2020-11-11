@@ -1,0 +1,33 @@
+﻿<Script DBType="Global" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+    
+delete BatchServicesDefinitionMods where Code ='DelayAutomationWR'
+delete BatchServicesDefinitions where Code ='DelayAutomationWR'
+
+    INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2] ,
+           [QueueDefinitionCode])
+     VALUES
+           ('AutomationWR'
+           ,'AutomationWorkerRole'
+           ,0
+           ,NULL
+           ,'AutomationQueue')
+
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('AutomationWR'
+           ,0
+           ,1)
+  
+    ]]>
+  </Sql>
+</Script>
+

@@ -31,8 +31,14 @@ namespace WebFreight.Web.Helpers
 {
     public class AutomationHelper
     {
-        public void ExecuteEmailAutomation(EntityChange entityChange, List<Field> AutomationConditionFieldLists, Automation automation, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsSsucceedList, string objectTableName = null)
+        public string ExecuteEmailAutomation(AutomationSendEmailArgs automationSendEmailArgs)
         {
+            string comunicationLogId = string.Empty;
+            List<Field> AutomationConditionFieldLists = automationSendEmailArgs.AutomationConditionFieldLists;
+            Automation automation = automationSendEmailArgs.Automation;
+
+            string objectTableName = automationSendEmailArgs.ObjectTableName;
+
 
             AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(automation.Tenant);
             List<AutomationResultEmailRecipientList> automationResultEmailRecipientLists = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientListsByAutomationId(automation.Id, automation.Tenant).Where(d=>!string.IsNullOrEmpty(d.RecipientValue)).ToList();
@@ -47,7 +53,7 @@ namespace WebFreight.Web.Helpers
                 if (!string.IsNullOrEmpty(automation.TemplateId))
                 {
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                    DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(entityChange.Tenant);
+                    DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(automationSendEmailArgs.Tenant);
                     DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
 
 
@@ -61,12 +67,12 @@ namespace WebFreight.Web.Helpers
                         string cc = template.CC;
                         string bcc = template.BCC;
                         string userId = template.LastUpdatedByUserId;
-                        if (!string.IsNullOrEmpty(entityChange.CreateByUserId)) userId = entityChange.CreateByUserId;
+                        if (!string.IsNullOrEmpty(automationSendEmailArgs.CreateByUserId)) userId = automationSendEmailArgs.CreateByUserId;
                         byte[] htmldata = null;
                         try
                         {
 
-                            string html = htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
+                            string html = htmlEditorHelper.GetEditorHtmlData("", automationSendEmailArgs.EntityId, automationSendEmailArgs.ObjectTableId, "", "", automationSendEmailArgs.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
 
                             if (!string.IsNullOrEmpty(html))
                             {
@@ -98,8 +104,8 @@ namespace WebFreight.Web.Helpers
 
                         if (allActiveUsers)
                         {
-                            UserQuery userQuery = new UserQuery(entityChange.Tenant);
-                            contactIds = userQuery.GetUserIdsByTenant(entityChange.Tenant);
+                            UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
+                            contactIds = userQuery.GetUserIdsByTenant(automationSendEmailArgs.Tenant);
                         }
 
 
@@ -180,8 +186,8 @@ namespace WebFreight.Web.Helpers
 
                         if (!string.IsNullOrEmpty(Emails) && htmldata != null)
                         {
-                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc,bcc, subject);
-                            entityChangesAutomation.ComunicationLogId = communicationLog;
+                            string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, htmldata, Emails, from, replyTo, cc,bcc, subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
+                            comunicationLogId = communicationLog;
                         }
 
                         if (!string.IsNullOrEmpty(NotifyBackEmails))
@@ -192,15 +198,12 @@ namespace WebFreight.Web.Helpers
                     }
 
 
-                    entityChange.HasExecutedRecord = true;
-                    entityChangesAutomation.IsConditionTrue = true;
-                    entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(automation.Tenant);
-                    entityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
+     
 
 
                 }
             }
-
+            return comunicationLogId;
             //  #endregion
         }
 
@@ -273,12 +276,12 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc, string bcc, string subject, string objectTableName = null)
+        public string AddAutomationToQueue(Automation automation , AutomationSendEmailArgs automationSendEmailArgs,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc, string bcc, string subject,string externalAttachmentDocumentId, string objectTableName = null)
         {
-            string entityId = entityChange.EntityId;
-            string objectTableId = entityChange.ObjectTableId;
-            string userId = entityChange.CreateByUserId;
-            int tenant = entityChange.Tenant;
+            string entityId = automationSendEmailArgs.EntityId;
+            string objectTableId = automationSendEmailArgs.ObjectTableId;
+            string userId = automationSendEmailArgs.CreateByUserId;
+            int tenant = automationSendEmailArgs.Tenant;
             string automationId = automation.Id;
             string documentOutId = null;
 
@@ -375,17 +378,16 @@ namespace WebFreight.Web.Helpers
             {
                 foreach (var item in attachments)
                 {
-                    CommunicationAttachment attachment = new CommunicationAttachment()
-                    {
-                        Id = IdCounter.GetNumber("CommunicationAttachment", tenant).ToString(),
-                        CommunicationLogId = log.Id,
-                        DocumentId = item.Id,
-                        Tenant = tenant,
-                    };
+                    CommunicationAttachment attachment = GetNewCommunicationAttachment(tenant, log, item.Id);
                     context.CommunicationAttachments.Add(attachment);
 
                 }
 
+            }
+
+            if (!string.IsNullOrEmpty(externalAttachmentDocumentId))
+            {
+                context.CommunicationAttachments.Add(GetNewCommunicationAttachment(tenant, log, externalAttachmentDocumentId));
             }
 
             context.SaveChanges();
@@ -395,6 +397,17 @@ namespace WebFreight.Web.Helpers
 			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
 
             return log.Id;
+        }
+
+        private static CommunicationAttachment GetNewCommunicationAttachment(int tenant, CommunicationLog log, string documentId)
+        {
+            return new CommunicationAttachment()
+            {
+                Id = IdCounter.GetNumber("CommunicationAttachment", tenant).ToString(),
+                CommunicationLogId = log.Id,
+                DocumentId = documentId,
+                Tenant = tenant,
+            };
         }
 
         public void CopyAutomationFromTenantZeroToMyTenant(int tenant, List<DocumentTypePM> tenantZeroDocumentTypePms)
@@ -703,4 +716,26 @@ namespace WebFreight.Web.Helpers
         public string AutomationCode { get; set; }
         public int Tenant { get; set; }
     }
+
+
+
+    public class AutomationSendEmailArgs
+    {
+        public List<Field> AutomationConditionFieldLists { get; set; }
+        public Automation Automation { get; set; }
+
+        public  string ObjectTableName { get; set; }
+        public string ExternalAttachmentDocumentId { get; set; }
+
+        public string EntityId { get; set; }
+        public string ObjectTableId { get; set; }
+
+        public string CreateByUserId { get; set; }
+        public int Tenant { get; set; }
+
+
+
+    }
+
+
 }

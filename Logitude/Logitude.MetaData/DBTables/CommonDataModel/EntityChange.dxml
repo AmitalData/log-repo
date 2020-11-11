@@ -162,6 +162,25 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+      Name="SendInterfaceAutomationFailedXml"
+      ShortName="SendInterfaceFailedXml"
+
+      Type="nvarchar"
+      Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SendInterfaceAutomationSsucceedXml"
+    ShortName="SendInterfaceSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+
   <Relation
     ForeignKeyColumn="CreateByUserId"
     ReferencedTable="Users"
