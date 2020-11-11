@@ -137,7 +137,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
     SelectedComputedPartnerChange(value) {
         let newComputedPartnerValue;
-        if (value) newComputedPartnerValue = value.Code;
+        if (value) newComputedPartnerValue = value.Id;
         this.ComputingPartnerId = newComputedPartnerValue;
 
     }

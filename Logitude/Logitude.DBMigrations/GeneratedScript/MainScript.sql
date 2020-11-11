@@ -1,11 +1,11 @@
+-- Add New Column With Name SendInterfaceAutomationFailedXml
+ALTER TABLE [dbo].[EntityChanges] ADD [SendInterfaceAutomationFailedXml] NVARCHAR(MAX) NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e3905bec-0289-4e61-a77c-7cf9a925e845', 'EntityChange.dxml', 'EntityChanges', 'SendInterfaceAutomationFailedXml', 'Add Column', GETDATE(), '-- Add New Column With Name SendInterfaceAutomationFailedXmlALTER TABLE [dbo].[EntityChanges] ADD [SendInterfaceAutomationFailedXml] NVARCHAR(MAX) NULL;');
+
 -- Add New Column With Name SendInterfaceAutomationSsucceedXml
 ALTER TABLE [dbo].[EntityChanges] ADD [SendInterfaceAutomationSsucceedXml] NVARCHAR(MAX) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('df8fcff5-2254-423c-979d-23e094533e0e', 'EntityChange.dxml', 'EntityChanges', 'SendInterfaceAutomationSsucceedXml', 'Add Column', GETDATE(), '-- Add New Column With Name SendInterfaceAutomationSsucceedXmlALTER TABLE [dbo].[EntityChanges] ADD [SendInterfaceAutomationSsucceedXml] NVARCHAR(MAX) NULL;');
-
--- Drop Column SendInterfacekAutomationSsucceedXml
-EXEC SP_RENAME 'dbo.EntityChanges.SendInterfacekAutomationSsucceedXml', 'Drop_SendInterfacekAutomationSsucceedXml', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('82b788a5-0267-4afa-af59-33757e3b48ba', 'EntityChange.dxml', 'EntityChanges', 'SendInterfacekAutomationSsucceedXml', 'Drop Column', GETDATE(), '-- Drop Column SendInterfacekAutomationSsucceedXmlEXEC SP_RENAME ''dbo.EntityChanges.SendInterfacekAutomationSsucceedXml'', ''Drop_SendInterfacekAutomationSsucceedXml'', ''COLUMN'';');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c46309e8-72e9-4282-98dd-9d2bbe7d658b', 'EntityChange.dxml', 'EntityChanges', 'SendInterfaceAutomationSsucceedXml', 'Add Column', GETDATE(), '-- Add New Column With Name SendInterfaceAutomationSsucceedXmlALTER TABLE [dbo].[EntityChanges] ADD [SendInterfaceAutomationSsucceedXml] NVARCHAR(MAX) NULL;');
 
 
