@@ -36,15 +36,11 @@ export class PartnersTab {
         }
     }
     private DeletePartner() {
-        Resolvers.ButtonResolver.Selector('#Delete_3').ThenConfirmButtonText("Yes").Click();
-        //cy.get('iconbutton')
-        //    .find('.LogitudeIconButton')
-        //    .eq(2)
-        //    .click({ force: true })
-        //    .then(() => {
-        //        cy.get('#ConfirmWindow_Yes_0').click({ force: true })
-        //    })
-
+        if (this.isInlandDomestic) {
+            Resolvers.ButtonResolver.Selector('#Delete_1').ThenConfirmButtonText("Yes").Click();
+        } else {
+            Resolvers.ButtonResolver.Selector('#Delete_3').ThenConfirmButtonText("Yes").Click();
+        }
     }
     private FillShipper(name: string) {
         cy.contains('label', 'Add Partners').click({force:true});
