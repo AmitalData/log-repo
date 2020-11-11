@@ -385,23 +385,27 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     }
 
     PrepareContactList() {
-        //var cardExtendedPMService = new CardExtendedPMService();
-        //var glAccountId = this.GetLookUpFieldValue(this.Collector);
-        //if (glAccountId != null) {
-        //    cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
-        //        if (!response.HasError) {
-        //            var allContacts = response.Result;
-        //            if (allContacts != null && allContacts.length > 0) {
-        //                allContacts.forEach(contact => {
-        //                    if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
-        //                });
-        //                this.ReportsPreview.PartnersObslist.reverse();
-        //            }
-        //        }
-        //    });
-        //}
+     
+        var glAccountId = this.GetLookUpFieldValue(this.Customer);
+        if (glAccountId != null) {
+            this.GLAccountCardContacts(glAccountId);
+           
+        }
     }
-
+    GLAccountCardContacts(glAccountId:string) {
+        var cardExtendedPMService = new CardExtendedPMService();
+        cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var allContacts = response.Result;
+                if (allContacts != null && allContacts.length > 0) {
+                    allContacts.forEach(contact => {
+                        if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                    });
+                    this.ReportsPreview.PartnersObslist.reverse();
+                }
+            }
+        });
+    }
     RunButtonClicked() {
         this.SetUIProperties();
       this.LoadAccSettings().then(res => { 
