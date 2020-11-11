@@ -110,23 +110,26 @@
                                                                     <ScrollViewer>
                                                                         <ul>
                                                                             <li class="RecentEntityItem" style="position: relative; " *ngFor="let item of OpportunityObsList" (click)="ViewEntity('Opportunity',item.Id)" [ngStyle]="{background: item.ListBoxBackground}">
-                                                                                <table>
+                                                                                <table style="table-layout:fixed">
                                                                                     <tr>
                                                                                         <td style="width:5px;min-width:5px; overflow:hidden;">
                                                                                             <div [title]="item.RatingName" class="MediaFill" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}"></div>
                                                                                         </td>
-                                                                                        <td style="width:120px;min-width:120px; position: relative; padding-left:5px;" rowspan="2">
+
+                                                                                        <td style="padding-left:5px;" rowspan="2">
                                                                                             <div style="width:auto;height:50%;color:black">{{item.Topic}}</div>
                                                                                             <div style="width:120px; max-width:120px; color:#282E30; font-size:11px;">{{item.DisplayDate| DateTimeToDatePipe}}</div>
                                                                                         </td>
-                                                                                        <td>
+
+                                                                                        <td style="width: 5px;">
                                                                                             <div></div>
                                                                                         </td>
-                                                                                        <td style="text-align:right;padding-right:5px;">
-                                                                                            <div style="font-size:10px;height:50%;width:100%;vertical-align:central;">
+
+                                                                                        <td style="text-align:right;padding-right:5px; width: 85px;">
+                                                                                            <div style="font-size:10px;height:50%;vertical-align:central;">
                                                                                                 <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}" style="width:60%">{{item.StageName}}</label>
                                                                                             </div>
-                                                                                            <div style="width:100px;min-width:100px;height:50%;vertical-align:central; float:right;" *ngIf="item.NumberOfShipments != 0 && item.NumberOfShipments != null">
+                                                                                            <div style="height:50%;vertical-align:central; text-align:right" *ngIf="item.NumberOfShipments != 0 && item.NumberOfShipments != null">
                                                                                                 <label style="color:#282E30;font-size:12px;">{{item.NumberOfShipments}}</label>
                                                                                             </div>
                                                                                             <div *ngIf="item.NumberOfShipments == null" style="height:50%;width:100%"></div>
