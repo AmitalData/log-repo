@@ -303,41 +303,79 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     //#endregion
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
-            if (queryFilterItem.FieldName == "AgingForDate") {
-                this.AgingForDate = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "CustomerId") {
-                this.Customer = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "NumberOfMonths") {
-                this.NumberOfMonths =5;
-            }
-            else if (queryFilterItem.FieldName == "CollectorId") {
-                this.Collector = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "SalesmanId") {
-                this.Salesman = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "Detailed") {
-                this.CurrenciesDetailed = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "IsCreditLimitSet") {
-                this.IsCreditLimitSet = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "BalanceFilter") {
-                this.SelectedBalanceTypeItem.Code = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "BalanceFilterValue") {
-                this.balance = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "SortField") {
-                this.SelectedSortTypeItem.Code = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "SortDirection") {
-                this.SelectedSortDirectionCode = queryFilterItem.FieldValue;
-            }
+            this.SetAgingForDateFilter(queryFilterItem);
+            this.SetCustomerIdFilter(queryFilterItem);            
+            this.SetCollectorIdFilter(queryFilterItem);          
+            this.SetSalesmanIdFilter(queryFilterItem);        
+            this.SetDetailedFilter(queryFilterItem);          
+            this.SetIsCreditLimitFilter(queryFilterItem);          
+            this.SetBalanceFilter(queryFilterItem);
+            this.SetBalanceFilterValue(queryFilterItem);
+            this.SetSortFieldFilter(queryFilterItem);          
+            this.SetSortDirectionFilter(queryFilterItem);          
         }
     }
+
+    SetAgingForDateFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "AgingForDate") {
+            this.AgingForDate = queryFilterItem.FieldValue;
+        }
+    }
+    SetCustomerIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CustomerId") {
+            this.Customer = queryFilterItem.FieldValue;
+        }
+    }
+    SetNumberOfMonthsFilter(queryFilterItem: QueryFilterItem) {
+        if(queryFilterItem.FieldName == "NumberOfMonths") {
+            this.NumberOfMonths = 5;
+        }
+    }
+    SetCollectorIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CollectorId") {
+            this.Collector = queryFilterItem.FieldValue;
+        }
+    }
+    SetSalesmanIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SalesmanId") {
+            this.Salesman = queryFilterItem.FieldValue;
+        }
+    }
+    SetDetailedFilter(queryFilterItem: QueryFilterItem) {
+    if (queryFilterItem.FieldName == "Detailed") {
+        this.CurrenciesDetailed = queryFilterItem.FieldValue;
+    }
+    }
+
+    SetIsCreditLimitFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "IsCreditLimitSet") {
+            this.IsCreditLimitSet = queryFilterItem.FieldValue;
+        }
+    }
+
+
+    SetSortDirectionFilter(queryFilterItem: QueryFilterItem) {
+          if (queryFilterItem.FieldName == "SortDirection") {
+            this.SelectedSortDirectionCode = queryFilterItem.FieldValue;
+        }
+    }
+    SetSortFieldFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SortField") {
+            this.SelectedSortTypeItem.Code = queryFilterItem.FieldValue;
+        }
+    }
+    SetBalanceFilterValue(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "BalanceFilterValue") {
+            this.balance = queryFilterItem.FieldValue;
+        }
+    }
+    SetBalanceFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "BalanceFilter") {
+            this.SelectedBalanceTypeItem.Code = queryFilterItem.FieldValue;
+        }
+    }
+
+
     GetLookUpFieldValue(field) {
         if (field) {
             if (field[0]["@nil"] != "true")
@@ -397,15 +435,30 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
+        this.ValidateFutureDate(isValid);
+        this.ValidateAgingMonth(isValid);
+        this.ValidateDebitBalance(isValid);      
+        return isValid;
+    }
+
+    ValidateFutureDate(isValid:boolean){
         var isDateValid = this.ValidateDate();
         if (!isDateValid) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
             isValid = false;
         }
-        if (!this.accSettings.NumberOfAgingMonths) {
+        return isValid;
+    }
+
+    ValidateAgingMonth(isValid: boolean) {
+
+        if (this.accSettings && !this.accSettings.NumberOfAgingMonths) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet"));
             isValid = false;
         }
+        return isValid;
+    }
+    ValidateDebitBalance(isValid: boolean) {
         if (this.SelectedBalanceTypeCode == "debt" && !this.Balance) {
             this.ValidationErrorsList.push(this.showLocals ? "נא לבחור סכום לשדה ''מעל חוב" : "Please enter an amount for the 'Debt Above' field");
             isValid = false;
@@ -428,16 +481,23 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
         queryFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
         queryFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
-        if (this.SelectedCategory) {
-          var  categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-            if (categoryIndex)
-              var  categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-        }
-        queryFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex));
-        queryFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+        this.SetCategoryIndexAndValueFilters(queryFilterItems);   
+        queryFilterItems.push(new QueryFilterItem("CategoryIndex", this.categoryIndex));
+        queryFilterItems.push(new QueryFilterItem("CategoryValue", this.categoryValue));
         return queryFilterItems;
     }
-  
+    categoryIndex: any = null;
+    categoryValue: any = null;
+    SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
+       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;      
+        if (this.categoryIndex)       
+        this.SetCategoryValueFilter( );      
+    }
+   
+    SetCategoryValueFilter() {
+        this.categoryValue = this.DataContext[this.categoryIndex];      
+    }
+
     IsBalanceTypeDisabled = false;
 
     SelectedBalanceTypeItem = { Code: "all", EnglishName: "All", LocalName: "הכל" };
