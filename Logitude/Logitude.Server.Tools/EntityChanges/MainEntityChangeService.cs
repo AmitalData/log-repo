@@ -55,14 +55,12 @@ namespace Logitude.Server.Tools.EntityChanges
         private List<IAutomationResultService> GetAutomationResultLists()
         {
             var result = new List<IAutomationResultService>();
-            result.Add(new AutomationEmailResultService());
             result.Add(new AutomationFollowUpResultService());
             result.Add(new AutomationSetValueResultService());
             result.Add(new AutomationSLAResultService());
             result.Add(new AutomationQueuedTaskResultService());
             result.Add(new AutomationSendInterfaceResultService());
-
-            
+            result.Add(new AutomationEmailResultService());
 
             return result;
         }

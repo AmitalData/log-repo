@@ -185,8 +185,7 @@ namespace CommunicationWorkerRole
                                         {
                                             AutomationHelper automationHelper = new AutomationHelper();
                                             entityChangesAutomation.ComunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation });
-                                            entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
-                   
+                                            entityChange.HasExecutedRecord = true;
                                             entityChangesAutomation.IsConditionTrue = true;
                                             entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                             entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
