@@ -721,7 +721,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
             }
         }
-        if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
+        if (view.DWObjectTableCode.indexOf("DIM_") != -1 && (view.DataTypeCode != "DateTime" || view.DWObjectTableCode.indexOf("DIM_Date") != -1)) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]' || view.Code == '[Full Date US]') {
 
