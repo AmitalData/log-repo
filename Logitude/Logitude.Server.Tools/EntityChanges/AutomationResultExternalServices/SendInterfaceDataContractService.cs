@@ -25,20 +25,20 @@ namespace Logitude.Server.Tools.EntityChanges.Service
         {
             this.tenant = tenant;
             string computingPartnerCode = GetComputingPartnerCode(tenant, computingPartnerId);
-            sendInterfaceDataContractFileName = GetSendInterfaceDataContractFileName(entityPM);
-            sendInterfaceDataContractObject = GetSendInterfaceDataContractObject(entityPM, computingPartnerCode);
+            sendInterfaceDataContractFileName = GetDataContractFileName(entityPM);
+            sendInterfaceDataContractObject = GetDataContractObject(entityPM, computingPartnerCode);
             documentRepository = new DocumentRepository(tenant);
         }
 
-        public string GetSendInterfaceDataContractDocumentId(string format)
+        public string GetDataContractDocumentId(string format)
         {
             string dataContractDocumentId = string.Empty;
-            if (format == "XML") dataContractDocumentId = GetSendInterfaceDataContractXMLDocumentId();
-            else dataContractDocumentId = GetSendInterfaceDataContractJosnDocumentId();
+            if (format == "XML") dataContractDocumentId = GetDataContractXMLDocumentId();
+            else dataContractDocumentId = GetDataContractJosnDocumentId();
             return dataContractDocumentId;
         }
 
-        private string GetSendInterfaceDataContractXMLDocumentId()
+        private string GetDataContractXMLDocumentId()
         {
             string sendInterfaceDataContractXMLDocumentId = string.Empty;
             if ( sendInterfaceDataContractObject!=null)
@@ -54,7 +54,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
 
         }
 
-        private string GetSendInterfaceDataContractJosnDocumentId()
+        private string GetDataContractJosnDocumentId()
         {
             string sendInterfaceDataContractJosnDocumentId = string.Empty;
             if (sendInterfaceDataContractObject != null)
@@ -68,7 +68,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             return sendInterfaceDataContractJosnDocumentId;
         }
 
-        private object GetSendInterfaceDataContractObject(object entityPM , string computingPartnerCode)
+        private object GetDataContractObject(object entityPM , string computingPartnerCode)
         {
             object sendInterfaceDataContractObject = null;
             Assembly blAssembly = Assembly.Load("Logitude.BL");
@@ -83,7 +83,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             return sendInterfaceDataContractObject;
         }
 
-        private string GetSendInterfaceDataContractFileName(object entityPM)
+        private string GetDataContractFileName(object entityPM)
         {
             string sendInterfaceDataContractFileName = GetPropertyValueFromObject("ShipmentLevelName", entityPM);
             if (sendInterfaceDataContractFileName == "Consol") sendInterfaceDataContractFileName = "Master";

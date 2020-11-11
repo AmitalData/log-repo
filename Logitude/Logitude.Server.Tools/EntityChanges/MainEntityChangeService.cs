@@ -95,7 +95,7 @@ namespace Logitude.Server.Tools.EntityChanges
 
                     entityChange.ChangesAutomationFieldsXml = GetChangesAutomationFieldsXml(entityChange);
 
-                    if (!IsDelayAutomation && automationLists.Where(d => d.ResultCode == "EMAIL").ToList().Count == 0)
+                    if (!IsDelayAutomation && automationLists.Where(d => d.ResultCode == "EMAIL" && d.ResultCode == "SENDINTERFACE").ToList().Count == 0)
                     {
                         entityChange.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                     }
@@ -161,7 +161,7 @@ namespace Logitude.Server.Tools.EntityChanges
         {
             if (isHaveAutomation || (!isHaveAutomation && automationObjectTable.Name != "Shipment" && automationObjectTable.Name != "Master"))
             {
-                entityChange.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant);
+                if(!isHaveAutomation) entityChange.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant);
                 entityChange.ExecutionTime = (int)((DateTime.Now.Ticks - startDate.Ticks) / TimeSpan.TicksPerMillisecond);
                 entityChangeRepository.SubmitChanges();
             }

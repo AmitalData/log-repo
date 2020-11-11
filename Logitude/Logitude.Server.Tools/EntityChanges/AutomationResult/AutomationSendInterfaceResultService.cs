@@ -50,16 +50,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             foreach (Automation automation in sendInterfaceAutomations)
             {
-                string lastAuomationUpdateDate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
-                AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastAuomationUpdateDate);
-                TimeSpan? automationDelayTime = null;
-                if (automatedBackup.Type == "Delayed")
-                {
-                    DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = automatedBackup.Type, Delaytime = automatedBackup.Delaytime, DelaytimeIndicator = automatedBackup.DelaytimeIndicator, DelaytimeOp = automatedBackup.DelaytimeOp, SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode };
-                    automationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists);
-                }
-
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant,  AutomationDelayTime = automationDelayTime  , ExecutedImmediately = (automatedBackup.Type == "Delayed" ? false:true) });
+                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant,   ExecutedImmediately = true });
             }
         }
 
