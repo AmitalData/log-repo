@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
 import {NumbersPipe} from '../../../../../Infrastructure/Pipes/NumbersPipe';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPayablePM} from '../../../../../Shipment/EntityPMs/ShipmentPayablePM';
 import {ShipmentReceivablePM} from '../../../../../Shipment/EntityPMs/ShipmentReceivablePM';
@@ -18,6 +19,7 @@ export class ProfitComponent {
     public EntityPM: ShipmentPM;
     public IsByLocalCurrency: boolean = false;
     public IsCurrencyFilterVisible: boolean = false;
+    public IsAccrualsApprovingVisible: boolean = false;
     public LocalCurrencyCode: string = null;
     public ProfitCurrencyCode: string = null;
     public SelectedCurrencyCode: string = null;
@@ -35,6 +37,11 @@ export class ProfitComponent {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.SelectedCurrencyCode = this.IsByLocalCurrency ? this.LocalCurrencyCode : this.ProfitCurrencyCode;
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Action.AccrualsApprovement")) {
+            this.IsAccrualsApprovingVisible = true;
+        }
+
         this.SetLabels();
         this.BuildBaseData();
     }
@@ -466,6 +473,40 @@ export class ProfitComponent {
 
         this.SetLabels();
         this.BuildProfitData();
+    }
+
+    private SaveCompletedEvent: any = null;
+    OnAccrualsApprovingClicked() {
+
+        if (!this.EntityPM.IsAccrualsApproved) {
+
+            this.EntityPM.IsAccrualsApproved = true;
+
+            if (!this.SaveCompletedEvent) {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = null;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        //this.SetUIProperties_MainCarriage();
+                        //this.myCloner.AddField('Master');
+                        //this.myCloner.AddField('MAWBOBLDate');
+                        //this.myCloner.AddField('MAWBStackNumber');
+                        //this.myCloner.AddField('MAWBTakenFromStack');
+                        //this.myCloner.AddField('MAWBReturnedToStack');
+                        //this.myCloner.AddField('MainCarriageIsFromStack');
+                    }
+
+                    else {
+                        //this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                    }
+
+                    AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                    this.SaveCompletedEvent = null;
+                });
+
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        }
     }
 }
 

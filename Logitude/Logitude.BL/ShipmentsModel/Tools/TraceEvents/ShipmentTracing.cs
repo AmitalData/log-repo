@@ -193,6 +193,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceRoutingData();
                 this.TraceCustomsData();
                 this.TraceTerminalData();
+                this.TraceAccruals();
+            }
+        }
+
+        private void TraceAccruals()
+        {
+            if (!entityPoco.IsAccrualsApproved && entityPM.IsAccrualsApproved)
+            {
+                this.CreateTraceEvent("CCPP", entityPM.EventNote);
             }
         }
 
