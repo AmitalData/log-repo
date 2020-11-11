@@ -229,6 +229,7 @@
     <Compile Include="Contracts\GenericResponseObj.NetPart.cs" />
     <Compile Include="Contracts\ICustomsSendManifestService.cs" />
     <Compile Include="Contracts\ICustomsCloseCourierMasterService.cs" />
+    <Compile Include="Contracts\ICustomsSendDeclarationStatus.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="Counters\CodeCounter.cs" />
     <Compile Include="Counters\IdCounter.cs" />
