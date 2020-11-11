@@ -1944,7 +1944,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
-            UserRepository userRepository = new UserRepository();
+            UserRepository userRepository = new UserRepository(tenant);
             var amendmentStatuses = amendmentStatusRepository.GetAll();
             var users = userRepository.GetAll();
             var i = 1;
