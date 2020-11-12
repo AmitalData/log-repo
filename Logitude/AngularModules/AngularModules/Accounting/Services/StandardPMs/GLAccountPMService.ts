@@ -169,6 +169,7 @@ export class GLAccountPMService {
         if (!entityPM) {
             
             entityPM = new GLAccountPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -239,6 +240,8 @@ export class GLAccountPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -264,7 +267,8 @@ export class GLAccountPMService {
             {
                 newGLAccountWithholdingTaxPM = new GLAccountWithholdingTaxPM(null);
             }
-                
+ 			newGLAccountWithholdingTaxPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -296,7 +300,7 @@ export class GLAccountPMService {
                 newGLAccountWithholdingTaxPM.OldEntityPM = null;
                 newGLAccountWithholdingTaxPM.EntityParentPM = null;
             }
-			
+			 newGLAccountWithholdingTaxPM.DisableMarkAsDirty = false;
 			 newGLAccountWithholdingTaxPM.IsDirty = false;
             entityPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
         }
@@ -310,6 +314,7 @@ export class GLAccountPMService {
                         //entityPM.GLAccountWithholdingTaxes.push(oldGLAccountWithholdingTaxes[itemKey]);
 						var oldItemJson = oldGLAccountWithholdingTaxes[itemKey];
                         var deletedPM: GLAccountWithholdingTaxPM = new GLAccountWithholdingTaxPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -321,7 +326,7 @@ export class GLAccountPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -354,7 +359,8 @@ export class GLAccountPMService {
             {
                 newGLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(null);
             }
-                
+ 			newGLAccountInterestPeriodPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -386,7 +392,7 @@ export class GLAccountPMService {
                 newGLAccountInterestPeriodPM.OldEntityPM = null;
                 newGLAccountInterestPeriodPM.EntityParentPM = null;
             }
-			
+			 newGLAccountInterestPeriodPM.DisableMarkAsDirty = false;
 			 newGLAccountInterestPeriodPM.IsDirty = false;
             entityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
         }
@@ -400,6 +406,7 @@ export class GLAccountPMService {
                         //entityPM.GLAccountInterestPeriods.push(oldGLAccountInterestPeriods[itemKey]);
 						var oldItemJson = oldGLAccountInterestPeriods[itemKey];
                         var deletedPM: GLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -411,7 +418,7 @@ export class GLAccountPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -444,7 +451,8 @@ export class GLAccountPMService {
             {
                 newGLAccountCurrencyPM = new GLAccountCurrencyPM(null);
             }
-                
+ 			newGLAccountCurrencyPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -476,7 +484,7 @@ export class GLAccountPMService {
                 newGLAccountCurrencyPM.OldEntityPM = null;
                 newGLAccountCurrencyPM.EntityParentPM = null;
             }
-			
+			 newGLAccountCurrencyPM.DisableMarkAsDirty = false;
 			 newGLAccountCurrencyPM.IsDirty = false;
             entityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
         }
@@ -490,6 +498,7 @@ export class GLAccountPMService {
                         //entityPM.GLAccountCurrencies.push(oldGLAccountCurrencies[itemKey]);
 						var oldItemJson = oldGLAccountCurrencies[itemKey];
                         var deletedPM: GLAccountCurrencyPM = new GLAccountCurrencyPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -501,7 +510,7 @@ export class GLAccountPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

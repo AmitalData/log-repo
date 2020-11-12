@@ -169,6 +169,7 @@ export class JournalPMService {
         if (!entityPM) {
             
             entityPM = new JournalPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -239,6 +240,8 @@ export class JournalPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -264,7 +267,8 @@ export class JournalPMService {
             {
                 newJournalLinePM = new JournalLinePM(null);
             }
-                
+ 			newJournalLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -296,7 +300,7 @@ export class JournalPMService {
                 newJournalLinePM.OldEntityPM = null;
                 newJournalLinePM.EntityParentPM = null;
             }
-			
+			 newJournalLinePM.DisableMarkAsDirty = false;
 			 newJournalLinePM.IsDirty = false;
             entityPM.JournalLines.push(newJournalLinePM);
         }
@@ -310,6 +314,7 @@ export class JournalPMService {
                         //entityPM.JournalLines.push(oldJournalLines[itemKey]);
 						var oldItemJson = oldJournalLines[itemKey];
                         var deletedPM: JournalLinePM = new JournalLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -321,7 +326,7 @@ export class JournalPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -354,7 +359,8 @@ export class JournalPMService {
             {
                 newJournalReconcilePM = new JournalReconcilePM(null);
             }
-                
+ 			newJournalReconcilePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -386,7 +392,7 @@ export class JournalPMService {
                 newJournalReconcilePM.OldEntityPM = null;
                 newJournalReconcilePM.EntityParentPM = null;
             }
-			
+			 newJournalReconcilePM.DisableMarkAsDirty = false;
 			 newJournalReconcilePM.IsDirty = false;
             entityPM.JournalReconciles.push(newJournalReconcilePM);
         }
@@ -400,6 +406,7 @@ export class JournalPMService {
                         //entityPM.JournalReconciles.push(oldJournalReconciles[itemKey]);
 						var oldItemJson = oldJournalReconciles[itemKey];
                         var deletedPM: JournalReconcilePM = new JournalReconcilePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -411,7 +418,7 @@ export class JournalPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -444,7 +451,8 @@ export class JournalPMService {
             {
                 newJournalExternalReconcilePM = new JournalExternalReconcilePM(null);
             }
-                
+ 			newJournalExternalReconcilePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -476,7 +484,7 @@ export class JournalPMService {
                 newJournalExternalReconcilePM.OldEntityPM = null;
                 newJournalExternalReconcilePM.EntityParentPM = null;
             }
-			
+			 newJournalExternalReconcilePM.DisableMarkAsDirty = false;
 			 newJournalExternalReconcilePM.IsDirty = false;
             entityPM.JournalExternalReconciles.push(newJournalExternalReconcilePM);
         }
@@ -490,6 +498,7 @@ export class JournalPMService {
                         //entityPM.JournalExternalReconciles.push(oldJournalExternalReconciles[itemKey]);
 						var oldItemJson = oldJournalExternalReconciles[itemKey];
                         var deletedPM: JournalExternalReconcilePM = new JournalExternalReconcilePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -501,7 +510,7 @@ export class JournalPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

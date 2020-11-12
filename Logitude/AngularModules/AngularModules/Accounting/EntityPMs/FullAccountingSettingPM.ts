@@ -258,7 +258,10 @@ export class FullAccountingSettingPM {
     public OldEntityPM: FullAccountingSettingPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -266,6 +269,7 @@ export class FullAccountingSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FullAccountingSetting");
            
         }
+       }
     }
 
     private MyClone: FullAccountingSettingPM;

@@ -146,7 +146,10 @@ export class InterestReportLinesByDatePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -156,6 +159,7 @@ export class InterestReportLinesByDatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestReportLinesByDate");
            
         }
+       }
     }
 
     private MyClone: InterestReportLinesByDatePM;

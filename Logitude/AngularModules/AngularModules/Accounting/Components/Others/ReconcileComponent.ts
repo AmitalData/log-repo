@@ -30,6 +30,8 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 
 
 export class LineModel extends BaseComponent {
@@ -228,6 +230,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
     public ChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
+    public filterAgrs: ApiQueryFilters;
+
     //public SelectedLines: LineModel[] = [];
     SelectedLines: ObservableCollection;//SelectedLines[];
     public isRTL: boolean = false;
@@ -250,7 +255,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
-
+        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
         this.SelectedLines = new ObservableCollection([]);
 
         var filters = new ApiQueryFilters();
@@ -273,6 +278,26 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ];
         //#endregion
 
+    }
+
+    public ExportToExcelClick(){
+         this.AddAccountIdFilterForFilterAgrs();
+        this.AddIsReconciledFiltersForFilterAgrs();
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("LedgerTransaction",this.filterAgrs,this.QueryColumns);
+    }
+
+    private AddAccountIdFilterForFilterAgrs(){
+        var AccountFilter = new FilterItem("AccountId", this.GLAccountPM.Id, null, null, "Equals", false, false, false, "string", false);
+        this.filterAgrs.AdditionalFilters.push(AccountFilter);
+    }
+
+    private AddIsReconciledFiltersForFilterAgrs(){
+        var IsReconciledFilter = new FilterItem("IsReconciled", false, null, null, "Equals", false, false, false, "boolean", false);
+        var IsExternalReconcileFilter = new FilterItem("IsExternalReconcile", false, null, null, "Equals", false, false, false, "boolean", false);
+        var InReconcileProgressFilter = new FilterItem("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean", false);
+        this.filterAgrs.AdditionalFilters.push(IsReconciledFilter);
+        this.filterAgrs.AdditionalFilters.push(IsExternalReconcileFilter);
+        this.filterAgrs.AdditionalFilters.push(InReconcileProgressFilter);
     }
 
     SetWindowArgs(args: any) {
@@ -580,21 +605,21 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
 
         //#region filters
-        var filters = new ApiQueryFilters;
+        var filterAgrs = new ApiQueryFilters;
         if (this.currencyFilter) {
-            filters.AdditionalFilters.push(this.currencyFilter);
+            filterAgrs.AdditionalFilters.push(this.currencyFilter);
         }
         if (this.searchFieldFilter) {
-            filters.AdditionalFilters.push(this.searchFieldFilter);
+            filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this.openAmountFilter) {
-            filters.AdditionalFilters.push(this.openAmountFilter);
+             filterAgrs.AdditionalFilters.push(this.openAmountFilter);
         }
 
-        filters.PageSize = 30;
-        filters.PageIndex = 1; // decremented 1 in the service
-        filters.GetAll = true;
-        filters.GetCount = true;
+             filterAgrs.PageSize = 30;
+             filterAgrs.PageIndex = 1; // decremented 1 in the service
+             filterAgrs.GetAll = true;
+             filterAgrs.GetCount = true;
         //#endregion
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
@@ -610,7 +635,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             m3 = this.AutomaticReconcileMethodList.AutomaticReconcile3;
         }
 
-        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filterAgrs).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;
@@ -735,6 +760,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     openAmountFilter: FilterItem;
 
     public columns: any[] = null;
+    public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -746,6 +772,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
+        
         this.columns.push({
             FieldName: 'SelectCheckBox',
             DataTypeCode: 'Boolean',
@@ -766,6 +793,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'AccountingDate'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountingDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate")));
+
         this.columns.push({
             FieldName: 'DocumentDate',
             DataTypeCode: 'DateTime',
@@ -777,6 +806,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'DocumentDate'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DocumentDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate")));
+
         this.columns.push({
             FieldName: 'DueDate',
             DataTypeCode: 'DateTime',
@@ -788,6 +819,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'DueDate'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DueDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DueDate")));
+
         this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
@@ -799,6 +832,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Source'
         });
+       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+
         //this.columns.push({
         //    FieldName: 'SourceType',
         //    DataTypeCode: 'String',
@@ -820,6 +855,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
+       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
+
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
         //    DataTypeCode: 'String',
@@ -841,6 +878,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'OpenAmount'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount",'Text', TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')'));
+
         this.columns.push({
             FieldName: 'Reference1',
             DataTypeCode: 'String',
@@ -850,6 +889,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Reference1'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
+
         this.columns.push({
             FieldName: 'Reference2',
             DataTypeCode: 'String',
@@ -859,6 +900,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Reference2'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
+
         this.columns.push({
             FieldName: 'Reference3',
             DataTypeCode: 'String',
@@ -868,6 +911,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Reference3'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
+
         this.columns.push({
             FieldName: 'JournalNumber',
             DataTypeCode: 'String',
@@ -879,6 +924,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'JournalNumber'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
 
         this.columns.push({
             FieldName: 'Notes',
@@ -891,6 +937,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             // ServerSideSortable: true,
             // SortByName: 'Notes'
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
@@ -941,7 +988,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        var filters = new ApiQueryFilters;
+        this.filterAgrs  = new ApiQueryFilters;
         //if (this.dateFilter) {
         //    filters.AdditionalFilters.push(this.dateFilter);
         //} else {
@@ -950,26 +997,26 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
 
         if (this.currencyFilter) {
-            filters.AdditionalFilters.push(this.currencyFilter);
+            this.filterAgrs.AdditionalFilters.push(this.currencyFilter);
         }
         if (this.searchFieldFilter) {
-            filters.AdditionalFilters.push(this.searchFieldFilter);
+            this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this.openAmountFilter) {
-            filters.AdditionalFilters.push(this.openAmountFilter);
+            this.filterAgrs.AdditionalFilters.push(this.openAmountFilter);
         }
 
-        filters.PageSize = take;
-        filters.PageIndex = skip + 1; // decremented 1 in the service
-        filters.GetAll = true;
-        filters.GetCount = true;
+        this.filterAgrs.PageSize = take;
+        this.filterAgrs.PageIndex = skip + 1; // decremented 1 in the service
+        this.filterAgrs.GetAll = true;
+        this.filterAgrs.GetCount = true;
 
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
+        this.filterAgrs.SortBy = sortingCol;
+        this.filterAgrs.SortDirection = sortingDir;
 
         //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
 
-        return this._entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.GLAccountPM.Id, filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+        return this._entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.GLAccountPM.Id, this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
     OnSortInvoked(event){

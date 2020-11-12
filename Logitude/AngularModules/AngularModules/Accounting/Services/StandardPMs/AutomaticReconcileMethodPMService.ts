@@ -153,6 +153,7 @@ export class AutomaticReconcileMethodPMService {
         if (!entityPM) {
             
             entityPM = new AutomaticReconcileMethodPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class AutomaticReconcileMethodPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

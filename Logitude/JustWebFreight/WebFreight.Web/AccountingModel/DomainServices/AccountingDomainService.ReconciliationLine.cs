@@ -18,15 +18,28 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 {
     public partial class AccountingDomainService
     {
-        //[Invoke]
-        //public List<ReconciliationLineList> ReconciliationLineListsById(string id, int tenant)
-        //{
-        //    SecurityUtility.AuthenticationOnTenant(tenant);
-        //    accountingContext = AccountingContext.GetContext(tenant);
-        //    ReconciliationLineListQueryService listService = new ReconciliationLineListQueryService(accountingContext);
-        //    List<ReconciliationLineList> rvList = listService.GetReconciliationLineListsById(id, tenant);
-        //    return rvList;
-        //}
+        public List<ReconciliationLineList> GetReconciliationLineFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //    SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
+
+            accountingContext = AccountingContext.GetContext(tenant);
+            ReconciliationLineListQueryService listService = new ReconciliationLineListQueryService(accountingContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+
+        }
+
+        public int GetReconciliationLineFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //  SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
+            accountingContext = AccountingContext.GetContext(tenant);
+            ReconciliationLineListQueryService queryService = new ReconciliationLineListQueryService(accountingContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations, tenant);
+
+        }
 
     }
 }

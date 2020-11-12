@@ -163,7 +163,10 @@ export class TaxReportLinePM {
     public OldEntityPM: TaxReportLinePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -171,6 +174,7 @@ export class TaxReportLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TaxReportLine");
            
         }
+       }
     }
 
     private MyClone: TaxReportLinePM;
