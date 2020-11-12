@@ -41,8 +41,31 @@
         </div>
 
         <div class="field">
-            <div class="label">Booking ID</div>
-            <div class="value">{{ Shipment.ShipmentNumber }}</div>
+            <div class="label">
+                References 
+                &nbsp;
+                <a *ngIf="ShipmentReferences.length > 2" 
+                    (click)="showMoreReferences=!showMoreReferences" 
+                    style="cursor: pointer;text-decoration: underline; font-size: 11px;">
+                    {{showMoreReferences?'Show Less':'See all'}}
+                </a> 
+            
+            </div>
+            <div class="value">
+
+                <div  *ngIf="IsLoadingReferences">
+                    Loading...
+                </div>
+
+                <ul *ngIf="showMoreReferences">
+                    <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
+                </ul>
+                <ul *ngIf="!showMoreReferences">
+                    <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
+                </ul>
+
+
+            </div>
         </div>
 
         <div class="field">

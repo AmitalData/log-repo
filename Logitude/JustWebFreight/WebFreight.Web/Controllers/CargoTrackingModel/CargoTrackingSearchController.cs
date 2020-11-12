@@ -155,7 +155,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+        [HttpGet]
+        public HttpResponseMessage GetShipmentReferences(string securityKey, int tenant)
+        {
+            try
+            {
+                List<string> references = GetShipmentPublicReferences(securityKey, tenant);
 
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, references);
+
+                Thread.Sleep(4000);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private static List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)
+        {
+            ICargoTrackingContext AccountingContext = CargoTrackingContext.GetContext(tenant);
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(AccountingContext);
+
+            List<string> references = shipmentsQuery.GetShipmentPublicReferences(SecurityKey, tenant);
+            return references;
+        }
     }
 
     public class CargoTrackingSearchArgs

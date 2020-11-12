@@ -306,6 +306,28 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipmentList;
         }
 
+        public List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)
+        {
+            CargoTrackingShipment shipment = GetShipmentBySecurityKey(SecurityKey, tenant);
+
+            List<string> references = GetPublicReferencesForShipment(shipment);
+
+            return references;
+        }
+
+        private static List<string> GetPublicReferencesForShipment(CargoTrackingShipment shipment)
+        {
+            CargoTrackingShipmentRepository repository = new CargoTrackingShipmentRepository(shipment.Tenant);
+            List<string> references = repository.GetPublicReferencesForShipment(shipment.EntityId, shipment.Tenant);
+            return references;
+        }
+
+        private static CargoTrackingShipment GetShipmentBySecurityKey(string SecurityKey, int tenant)
+        {
+            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
+            CargoTrackingShipment shipment = repo.GetBySecurityKey(SecurityKey, tenant);
+            return shipment;
+        }
     }
 
 
