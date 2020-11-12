@@ -14,9 +14,10 @@ a {
     background: #EDEEFA;
     border-radius: 3px;
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     margin-top: 10px;
     position: relative;
+    overflow: auto;
 }
 
 .box-header .icon {
@@ -41,6 +42,15 @@ a {
     right: 10vw;
     width: 168px;
 }
+
+.box-header ul{
+    padding: 0;
+    margin: 0;
+  }
+  .box-header ul li{
+    list-style: none;
+    font-size: 15px;
+  }
 
 .circle-image {
    background: #ffffff; /*#E0E3F2;*/
