@@ -558,7 +558,6 @@ export class CourierWorksheetListTemplate {
 
                         var args: any = {
                             EntityPM: entitypm,
-                            isFromPayCourier : this._CourierWorksheetSharedDataService.SelectedTabFilterCode == "PAY" ? true : false,
                         };
 
                         var logWindow = new LogitudeWindow();

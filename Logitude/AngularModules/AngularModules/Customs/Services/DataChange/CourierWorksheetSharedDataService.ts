@@ -11,7 +11,6 @@ export class CourierWorksheetSharedDataService {
     CurrentMessage = this.messageSource.asObservable();
     WebAPICourierGWMessageECTHRDataMaman: string;
     public IsDisplayOnly: boolean = false;
-    SelectedTabFilterCode: string;
     constructor() { }
 
     SendNextMessage(message: string) {
