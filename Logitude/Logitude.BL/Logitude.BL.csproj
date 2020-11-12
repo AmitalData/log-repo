@@ -2414,6 +2414,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\House.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\InsidePackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Messages\ShipmentNumbersXML.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUp.Generated.cs" />

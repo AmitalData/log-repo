@@ -36,9 +36,9 @@ namespace ExternalAPITool
             actionCombo.Visible = false;
             ActionLabel.Visible = false;
             txtServerUrl.Text = "http://localhost:9996/api/";
-            txtCredentialsPrimary.Text = "bae2aaf0-29b1-4762-aa4d-e04788d78e95";
+            txtCredentialsPrimary.Text = "518eb8ea-ad91-48ea-8b0a-fe7b736ea0c8";
             string requestText = @"<ShipmentNumbers>
-	                               <FromDate>2020-10-24T00:00:00</FromDate>
+	                               <FromDate>2019-10-24T00:00:00</FromDate>
 	                               <ToDate>2020-11-24T00:00:00</ToDate>
 	                               <Direction Code='E' />
 	                               <TransportMode Code='A' />

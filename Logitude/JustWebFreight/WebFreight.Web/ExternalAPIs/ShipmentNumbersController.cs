@@ -1,9 +1,15 @@
 ﻿using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.Messages;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -25,28 +31,8 @@ namespace WebFreight.Web.ExternalAPIs
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-
-                    // Validate the tags 
-
-
-                    // return the response 
-                    var response = new Shipments
-                    {
-                        ShipmentList = new List<ShipmentResponseItem> {
-        new ShipmentResponseItem {
-            ShipmentNumber ="123",
-            MasterShipmentNumber = "Event 1"
-        },
-        new ShipmentResponseItem {
-            ShipmentNumber ="123",
-            MasterShipmentNumber = "Event 2"
-        },
-
-
-    }
-                    };
-                    string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(response);
+                    SecurityUtility.AuthenticateAPICall(tenant);
+                    var response = ShipmentNumbersXML.GetShipmentNumbersXMLMessage(entity, tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
                 catch (Exception ex)
@@ -63,22 +49,5 @@ namespace WebFreight.Web.ExternalAPIs
             }
         }
     }
-    [XmlRoot("ShipmentNumbers")]
-    public class Shipments
-    {
-        [XmlArray("Shipments")]
-        [XmlArrayItem("Shipment")]
-        public List<ShipmentResponseItem> ShipmentList { get; set; }
 
-        public Shipments()
-        {
-            this.ShipmentList = new List<ShipmentResponseItem>();
-        }
-    }
-    public class ShipmentResponseItem
-    {
-        public string ShipmentNumber { get; set; }
-        public string MasterShipmentNumber { get; set; }
-        public DateTime? CreateDate { get; set; }
-    }
 }
