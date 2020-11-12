@@ -49,8 +49,8 @@ export class ReconciliationExtendedPMService {
 
     }
 
-    delsertDraftLedgerTransaction(transactions: string[]) {
-        return this.httpClient .put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
+    UpdateDraftReconciliationTransactions(transactions: LedgerTransactionPM[]) {
+        return this.httpClient .put(this._apiUrl + '/PutDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
