@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnUpdating(entityPM, entityPOCO);
         }
 
-        public void DelSertOpenRecilationDrafts(List<LedgerTransactionList> OpenRecilationDrafts)
+        public void DelSertOpenRecilationDrafts(List<LedgerTransactionPM> OpenRecilationDrafts)
         {
 
             string gLAccountId; int tenant ;
