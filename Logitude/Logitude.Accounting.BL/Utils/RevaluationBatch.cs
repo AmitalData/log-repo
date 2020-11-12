@@ -191,7 +191,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 foreach (GLAccountCurrencyBalance item in allBalances)
                 {
-                    if (!String.IsNullOrEmpty(item.CurrencyId) && !String.IsNullOrEmpty(accountingCurrencyId) && item.CurrencyId != accountingCurrencyId && (decimal)item.ForeignAmount != 0m)
+                    if (!String.IsNullOrEmpty(item.CurrencyId) && !String.IsNullOrEmpty(accountingCurrencyId) && item.CurrencyId != accountingCurrencyId) // && (decimal)item.ForeignAmount != 0m)
                     {
                         AccountingLogger.LogMe(" Balance in " + item.CurrencyId + " = " + item.ForeignAmount, false, "REV");
 
