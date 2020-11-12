@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
-		public const string HashString = "d285d0ed774404154bc0036f46a38c42";
+		public const string HashString = "7b14cf130054921b3abecb2efad3aa59";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "משגור",
 			      				    DefaultText =  "Consignment",
-			      				    Code =  "6529",
+			      				    Code =  "0272",
 			      				    Name =  "Customs.Consignment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
