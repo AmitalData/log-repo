@@ -589,6 +589,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             //Update Declaration 
             _MyDeclarationPM.VersionId = customResponse.Response.Declaration.DMExtensions.VersionID.Value;
+ 
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
            // _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactor.Value;
             //_MyDeclarationPM.DealValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value;

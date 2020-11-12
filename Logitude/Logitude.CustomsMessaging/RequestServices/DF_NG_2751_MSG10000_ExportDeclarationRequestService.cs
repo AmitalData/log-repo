@@ -729,8 +729,7 @@ namespace Logitude.CustomsMessaging.RequestServices
  
 
             customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
-
-            customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
+             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
             customDeclaration.AdditionalDocument = GetDeclarationAdditionalDocuments(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
             customDeclaration.Exporter = GetImporter(declarationPM);
@@ -817,6 +816,24 @@ namespace Logitude.CustomsMessaging.RequestServices
             DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(DateTime.Today);
             ;
 
+
+            DMExtensions.DeclarationClosingDetails = new DeclarationDMExtensionsDeclarationClosingDetails();
+
+            if (declarationPM.FinalLoadingSite != null)
+            {
+                DMExtensions.DeclarationClosingDetails.FinalLoadingSite = SetIDTypeValue<FinalLoadingSiteIDType>(declarationPM.FinalLoadingSite);
+            }
+
+            if (declarationPM.ShipCode != null)
+            {
+                DMExtensions.DeclarationClosingDetails.ShipID = SetIDTypeValue<SeaTransportationIDType>(declarationPM.ShipCode);
+            }
+
+            //if (declarationPM.DepartureDateTime != null)
+            //{
+            //    DMExtensions.DeclarationClosingDetails.DepartureDateTime =  declarationPM.DepartureDateTime;
+            //}
+
             DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
             // moran 25.5.14 - Bug 6059 - commented -->
              DMExtensions.VersionID = SetIDTypeValue<DeclarationVersionIDType>(declarationPM.VersionId); // new DeclarationDMExtensionsVersionID() { Value = declarationPM.VersionId };
@@ -833,10 +850,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.ExportAutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
+           
+
             if (declarationPM.DestinationCountryCode != null)
             {
-                DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>( declarationPM.DestinationCountryCode);
+                DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>(declarationPM.DestinationCountryCode);
             }
+
 
             //if (declarationPM.LoadingFactor.HasValue)
             //{
