@@ -1896,15 +1896,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void CreateVoidedARPaymentEvent(string note)
         {
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = entityPM.Tenant,
-                EventTypeCode = "CAAR",
-                UserId = loggedContact.Id,
-                EntityId = entityPM.Id,
-                ObjectTableName = "ARPayment",
-                Notes = note,
-            });
+            //EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //{
+            //    Tenant = entityPM.Tenant,
+            //    EventTypeCode = "CAAR",
+            //    UserId = loggedContact.Id,
+            //    EntityId = entityPM.Id,
+            //    ObjectTableName = "ARPayment",
+            //    Notes = note,
+            //});
         }
 
         public void CancelledInterestTransactions(ARPaymentPM entityPm)
