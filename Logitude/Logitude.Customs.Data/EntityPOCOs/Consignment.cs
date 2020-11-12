@@ -101,7 +101,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ExportLoadingPortCode")]
 	    public string ExportLoadingPortCode { get; set; }
 	      
-        public virtual UnloadingSiteType ExportLoadingPort { get; set; }
+        public virtual LoadingSiteType ExportLoadingPort { get; set; }
     }
 }
 	 
