@@ -69,7 +69,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             {
                 return new ValidationResult(validationResults);
             }
-
             return ValidationResult.Success;
         }
     }

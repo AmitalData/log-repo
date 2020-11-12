@@ -34,9 +34,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
                 shipments = shipments.Where(o => o.House == entity.House).ToList();
 
             if (!string.IsNullOrEmpty(entity.Master))
-
+            { }
             if (entity.Containers != null && entity.Containers.Count() > 0)
-
+            { }
             var response = new Shipments()
             {
                 ShipmentList = shipments.Select(x => new ShipmentResponseItem()
