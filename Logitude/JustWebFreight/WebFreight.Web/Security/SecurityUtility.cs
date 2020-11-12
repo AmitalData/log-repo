@@ -31,11 +31,11 @@ namespace WebFreight.Web.Security
 		{
 			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
             {
-                //bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
-                //if (!exist)
-                //{
-                    //throw new AutenticationException("API is not activated. Please contact your system administrator");
-                //}
+                bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+                if (!exist)
+                {
+                    throw new AutenticationException("API is not activated. Please contact your system administrator");
+                }
             }
 		}
 
