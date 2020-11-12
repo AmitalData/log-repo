@@ -11,6 +11,8 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
 import { FullAccountingSettingList } from 'Accounting/EntityLists/FullAccountingSettingList';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
+import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 
 @Component({
     templateUrl: './CustomerStatusReportFilterComponent.html',
@@ -24,20 +26,21 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
+    public ReportsPreview: ReportsPreviewComponent;
     public _FullAccountingSettingListService: FullAccountingSettingListService = new FullAccountingSettingListService();
-
+    public IsSchedulerReport: boolean;
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-
-
+    public RunReportTitle: string;
+    CardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     constructor() {
         super();
 
         // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; });
-        this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => {  });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; this.SetRunReportTitle();  });
+        this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => { });
 
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();
@@ -49,7 +52,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         // this.NumberOfMonths = 6; // 6 backward
 
     }
-
+    InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
+        this.ReportsPreview = myReportsPreview;
+    }
     ngOnInit() {
         this.SetUIProperties();
     }
@@ -69,8 +74,27 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     }
 
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+
     //#region Filters
 
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+        this.IsSchedulerReport = true;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
     //row 1
     private agingForDate: Date = null;
     public get AgingForDate() { return this.agingForDate; }
@@ -148,7 +172,11 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         }
         return true;
     }
-
+    IsPartnersChanged(SelectedTab) {
+        if (SelectedTab == '2')
+            this.GLAccountChanged = false;
+        return this.GLAccountChanged;
+    }
     //private chartOfAccount: string;
     //public get ChartOfAccount() { return this.chartOfAccount; }
     //public set ChartOfAccount(value: string) {
@@ -167,12 +195,13 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
 
     //row 2
-
+    GLAccountChanged: boolean;
     private collector: string;
     public get Collector() { return this.collector; }
     public set Collector(value: string) {
         if (this.collector != value) {
             this.collector = value;
+            this.GLAccountChanged = true;
         }
     }
 
@@ -272,14 +301,117 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
               });
             }
     //#endregion
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            this.SetAgingForDateFilter(queryFilterItem);
+            this.SetCustomerIdFilter(queryFilterItem);            
+            this.SetCollectorIdFilter(queryFilterItem);          
+            this.SetSalesmanIdFilter(queryFilterItem);        
+            this.SetDetailedFilter(queryFilterItem);          
+            this.SetIsCreditLimitFilter(queryFilterItem);          
+            this.SetBalanceFilter(queryFilterItem);
+            this.SetBalanceFilterValue(queryFilterItem);
+            this.SetSortFieldFilter(queryFilterItem);          
+            this.SetSortDirectionFilter(queryFilterItem);          
+        }
+    }
 
+    SetAgingForDateFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "AgingForDate") {
+            this.AgingForDate = queryFilterItem.FieldValue;
+        }
+    }
+    SetCustomerIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CustomerId") {
+            this.Customer = queryFilterItem.FieldValue;
+        }
+    }
+    SetNumberOfMonthsFilter(queryFilterItem: QueryFilterItem) {
+        if(queryFilterItem.FieldName == "NumberOfMonths") {
+            this.NumberOfMonths = 5;
+        }
+    }
+    SetCollectorIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CollectorId") {
+            this.Collector = queryFilterItem.FieldValue;
+        }
+    }
+    SetSalesmanIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SalesmanId") {
+            this.Salesman = queryFilterItem.FieldValue;
+        }
+    }
+    SetDetailedFilter(queryFilterItem: QueryFilterItem) {
+    if (queryFilterItem.FieldName == "Detailed") {
+        this.CurrenciesDetailed = queryFilterItem.FieldValue;
+    }
+    }
+
+    SetIsCreditLimitFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "IsCreditLimitSet") {
+            this.IsCreditLimitSet = queryFilterItem.FieldValue;
+        }
+    }
+
+
+    SetSortDirectionFilter(queryFilterItem: QueryFilterItem) {
+          if (queryFilterItem.FieldName == "SortDirection") {
+            this.SelectedSortDirectionCode = queryFilterItem.FieldValue;
+        }
+    }
+    SetSortFieldFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SortField") {
+            this.SelectedSortTypeItem.Code = queryFilterItem.FieldValue;
+        }
+    }
+    SetBalanceFilterValue(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "BalanceFilterValue") {
+            this.balance = queryFilterItem.FieldValue;
+        }
+    }
+    SetBalanceFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "BalanceFilter") {
+            this.SelectedBalanceTypeItem.Code = queryFilterItem.FieldValue;
+        }
+    }
+
+
+    GetLookUpFieldValue(field) {
+        if (field) {
+            if (field[0]["@nil"] != "true")
+                return field;
+        }
+        return null
+    }
+
+    PrepareContactList() {
+     
+        var glAccountId = this.GetLookUpFieldValue(this.Customer);
+        if (glAccountId != null) {
+            this.GLAccountCardContacts(glAccountId);
+           
+        }
+    }
+    GLAccountCardContacts(glAccountId:string) {
+        var cardExtendedPMService = new CardExtendedPMService();
+        cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var allContacts = response.Result;
+                if (allContacts != null && allContacts.length > 0) {
+                    allContacts.forEach(contact => {
+                        if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                    });
+                    this.ReportsPreview.PartnersObslist.reverse();
+                }
+            }
+        });
+    }
     RunButtonClicked() {
         this.SetUIProperties();
       this.LoadAccSettings().then(res => { 
 
         var errors: string[] = [];
-        var categoryValue = null;
-        var categoryIndex = null;
+     
         this.ValidationErrorsList = [];
 
         //#region requierd fields
@@ -289,70 +421,85 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         //#endregion
 
         //#region Date validation
-        var isDateValid = this.ValidateDate();
-        if (!isDateValid)
-            errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
-        //#endregion
+          if (this.ValidateSelectedFilters()) {
+              var myReportFliter: ReportFliter = new ReportFliter();
+              myReportFliter.NumberOfPage = 1;
+              myReportFliter.ProcessType = "GenerateReport";
+              myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
-
-
-
-        if (!this.accSettings.NumberOfAgingMonths){
-            errors.push(TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet"));
-        }
-
-        if(this.SelectedBalanceTypeCode == "debt" && !this.Balance)
-            errors.push(this.showLocals ? "נא לבחור סכום לשדה ''מעל חוב" : "Please enter an amount for the 'Debt Above' field");
-            // errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
-
-
-
-        if (errors.length == 0) {
-
-
-            // Selecting category
-            if (this.SelectedCategory) {
-                categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-
-                if (categoryIndex)
-                    categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-            }
-
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("AgingForDate", new Date(), "Date"));
-            myFilterItems.push(new QueryFilterItem("GLAccountType", "2"));
-            myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            myFilterItems.push(new QueryFilterItem("NumberOfMonths", 5, "Number"));
-            myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-            myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-            myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-            myFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet));
-
-            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
-            myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-            myFilterItems.push(new QueryFilterItem("GroupByDate", ""));
-
-            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0,"decimal"));
-
-            myFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
-            myFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
-
-
-            var myReportFliter: ReportFliter = new ReportFliter();
-            myReportFliter.NumberOfPage = 1;
-            myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
-
-            this.RunReportEvent.emit(myReportFliter);
-
-        } else {
-            if(errors.includes("AgingReport.O.FutureDate")){
-
-            }
+              this.RunReportEvent.emit(myReportFliter);
+          }
+        else {
+          
             this.ValidationErrorsList = errors;
         }
       }); 
+    }
+   
+    ValidateSelectedFilters() {
+        this.ValidationErrorsList = [];
+        var isValid: boolean = true;
+        this.ValidateFutureDate(isValid);
+        this.ValidateAgingMonth(isValid);
+        this.ValidateDebitBalance(isValid);      
+        return isValid;
+    }
+
+    ValidateFutureDate(isValid:boolean){
+        var isDateValid = this.ValidateDate();
+        if (!isDateValid) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    ValidateAgingMonth(isValid: boolean) {
+
+        if (this.accSettings && !this.accSettings.NumberOfAgingMonths) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet"));
+            isValid = false;
+        }
+        return isValid;
+    }
+    ValidateDebitBalance(isValid: boolean) {
+        if (this.SelectedBalanceTypeCode == "debt" && !this.Balance) {
+            this.ValidationErrorsList.push(this.showLocals ? "נא לבחור סכום לשדה ''מעל חוב" : "Please enter an amount for the 'Debt Above' field");
+            isValid = false;
+        }
+        return isValid;
+    }
+    GetQueryFilterItems() {
+        var queryFilterItems = new Array<QueryFilterItem>();
+        var queryFilterItem: QueryFilterItem;              
+        queryFilterItems.push(new QueryFilterItem("AgingForDate", new Date(), "Date"));
+        queryFilterItems.push(new QueryFilterItem("GLAccountType", "2"));
+        queryFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
+        queryFilterItems.push(new QueryFilterItem("NumberOfMonths", 5, "Number"));
+        queryFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
+        queryFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
+        queryFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+        queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet));       
+        queryFilterItems.push(new QueryFilterItem("GroupByDate", ""));
+        queryFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
+        queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+        queryFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
+        queryFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
+        this.SetCategoryIndexAndValueFilters(queryFilterItems);   
+        queryFilterItems.push(new QueryFilterItem("CategoryIndex", this.categoryIndex));
+        queryFilterItems.push(new QueryFilterItem("CategoryValue", this.categoryValue));
+        return queryFilterItems;
+    }
+    categoryIndex: any = null;
+    categoryValue: any = null;
+    SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
+       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;      
+        if (this.categoryIndex)       
+        this.SetCategoryValueFilter( );      
+    }
+   
+    SetCategoryValueFilter() {
+        this.categoryValue = this.DataContext[this.categoryIndex];      
     }
 
     IsBalanceTypeDisabled = false;
