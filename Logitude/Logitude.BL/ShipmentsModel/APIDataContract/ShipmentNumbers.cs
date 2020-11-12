@@ -12,9 +12,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ShipmentNumbers
     {
         public string Id { get; set; }
-        [XmlIgnore]
         public DateTime? FromDate { get; set; }
-        [XmlIgnore]
         public DateTime? ToDate { get; set; }
         public Direction Direction { get; set; }
         public TransportMode TransportMode { get; set; }
