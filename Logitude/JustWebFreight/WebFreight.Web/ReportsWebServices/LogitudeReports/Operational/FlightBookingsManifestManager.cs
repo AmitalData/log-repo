@@ -148,9 +148,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.VolumetricWeight = shipmentPackage.PackageVolumeitricWeight;
                     myDataRecord.MoveType = shipmentPackage.MoveTypeName;
                     myDataRecord.CustomAgentImportId = shipmentPackage.CustomAgentImportId;
-                    myDataRecord.MasterLong = shipmentPackage.MainCarriageCarrierPrefix +"-"+shipmentPackage.MainCarriageCarrierNumber;
+                    myDataRecord.MasterLong = shipmentPackage.AirlinePrefix + "-" + shipmentPackage.MasterNumber;
                     myDataRecord.ATD = shipmentPackage.MainCarriageATD;
-                    myDataRecord.ATD = shipmentPackage.MainCarriageETD;
+                    myDataRecord.ETD = shipmentPackage.MainCarriageETD;
                     myDataRecord.CustomAgentImportName = shipmentPackage.CustomAgentImportName;
                     myDataRecord.PackageReference1 = shipmentPackage.ShipmentPackageReference1;
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
@@ -331,7 +331,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
                      MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-
+                     AirlinePrefix = master.AirlinePrefix,
                      //Package
                      PackageId = package.Id,
                      CommodityNumber = package.CommodityNumber,
