@@ -1,4 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
@@ -42,6 +45,49 @@ namespace CommunicationWorkerRole.Tasks
                 LogInfo(LogMessagingUtil.Instance.ToString());
 
             }
+        }
+
+        private void SendDeclarationStatusRequest(DeclarationPM declarationPM)
+        {
+            var loggedUserId = AuthenticationUtil.ResolveUserId(_SeedDefaultTenant);
+            var requestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "8250",
+                CustomFileNo = declarationPM.CustomFileNo,
+                DeclarationNumber = declarationPM.DeclarationNumber,
+                Tenant = _SeedDefaultTenant,
+                RequestName = "Declaration Status Search",
+                ResponseName = "Declaration Status Search",
+                CargoRadio = false,
+                DeclarationRadio = true,
+                OldReshimonRadio = false,
+                OldReshimonNumber = null,
+                LoggingEntityId = declarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true
+            };
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8520 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
+         
+        }
+
+       private void GetOpenCourierMasters()
+        {
+
         }
     }
 }
