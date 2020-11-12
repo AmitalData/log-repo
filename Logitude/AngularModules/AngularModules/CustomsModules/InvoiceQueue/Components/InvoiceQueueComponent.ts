@@ -88,8 +88,10 @@ export class InvoiceQueueComponent
                             var InvoiceDate = this.BuildDateFromString(x.InvoiceDate);
                             if (this.declaration.PaymentDate != null && InvoiceDate != null) {
                                 var InvoiceDateMonth = InvoiceDate.getMonth();
+                                var InvoiceDateYear = InvoiceDate.getFullYear();
                                 var PaymentDateMonth = new Date(this.declaration.PaymentDate).getMonth();
-                                if (InvoiceDateMonth < PaymentDateMonth) {
+                                var PaymentDateYear = new Date(this.declaration.PaymentDate).getFullYear();
+                                if ((InvoiceDateMonth < PaymentDateMonth && InvoiceDateYear == PaymentDateYear) || InvoiceDateYear < PaymentDateYear) {
                                     this.IsPaymentDateGreaterThanInvoiceDate = true;
                                 }
                             }

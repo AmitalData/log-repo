@@ -70,6 +70,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CheckTypeName = a.CheckTypeLookup != null? a.CheckTypeLookup.LocalName : null,
                                                                 VehicleChassisNumber = a.VehicleChassisNumber,
                                                                 CustomerId = a.CustomerId,
+                                                                NoEscortRequired=a.NoEscortRequired,
 
                                                             });
         
