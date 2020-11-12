@@ -1,6 +1,5 @@
 import { Resolvers } from "../../Resolvers/Resolvers";
 
-
 export class QuoteActions {
     public RunQuoteActions(quoteType: string) {
         this.QuoteSave()
@@ -10,7 +9,9 @@ export class QuoteActions {
         this.QuoteAccepted();
         if (quoteType == 'SR') {
             this.BuildShipmentFromQuote();
+            Resolvers.EditComponentResolver.Index(1).Close();
         }
+        Resolvers.EditComponentResolver.Index(0).Close();
     }
     private QuoteSave() { 
         cy.server();

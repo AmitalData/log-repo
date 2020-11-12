@@ -22,13 +22,14 @@ describe('Quotes Modules', () => {
     });
 
     it('Test New Quote ', () => {
-        quoteType = 'SR'; // RR: Routing Rate , SR : spot Rate 
+        quoteType = 'RR'; // RR: Routing Rate , SR : spot Rate 
         direction = 'E';
         transportMode = 'A';
         shipmentType = '';
 
         scenarios.RunScenario(direction, transportMode, shipmentType, quoteType);
         editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType, quoteType);
-        quoteActions.RunQuoteActions(quoteType);
+        quoteActions.RunQuoteActions(quoteType);     
     });
+   
 });
