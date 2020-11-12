@@ -12,11 +12,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ShipmentNumbers
     {
         public string Id { get; set; }
-        [Required]
+        [XmlIgnore]
         public DateTime? FromDate { get; set; }
-        [Required]
+        [XmlIgnore]
         public DateTime? ToDate { get; set; }
-        [Required]
         public Direction Direction { get; set; }
         public TransportMode TransportMode { get; set; }
         public ShipmentType ShipmentType { get; set; }
@@ -44,31 +43,37 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             PropertyInfo property_Containers = shipmentInstanceType.GetProperty("Containers");
             PropertyInfo property_FromDate = shipmentInstanceType.GetProperty("FromDate");
             PropertyInfo property_ToDate = shipmentInstanceType.GetProperty("ToDate");
+            PropertyInfo property_TransportMode = shipmentInstanceType.GetProperty("TransportMode");
             string propertyValue_Master = (string)property_Master.GetValue(shipmentInstance);
             string propertyValue_House = (string)property_House.GetValue(shipmentInstance);
+            TransportMode propertyValue_TransportMode = (TransportMode)property_TransportMode.GetValue(shipmentInstance);
             DateTime? propertyValue_FromDate = (DateTime?)property_FromDate.GetValue(shipmentInstance);
             DateTime? propertyValue_ToDate = (DateTime?)property_ToDate.GetValue(shipmentInstance);
             List<Container> propertyValue_Containers = (List<Container>)property_Containers.GetValue(shipmentInstance);
 
             if (string.IsNullOrEmpty(propertyValue_Master) && string.IsNullOrEmpty(propertyValue_House) && (propertyValue_Containers == null || (propertyValue_Containers!= null && propertyValue_Containers.Count == 0)))
-                validationResults += "One of the master, house, container number is required.";
+                validationResults += " One of the master, house, container number is required. ";
+
+            if((propertyValue_Containers != null && propertyValue_Containers.Count > 0) && (propertyValue_TransportMode != null && propertyValue_TransportMode.Code != "O") )
+                validationResults += " The Containers should be sent with the transport mode ocean. ";
 
             if (propertyValue_FromDate == null)
-                validationResults += "From Date is required.";
+                validationResults += " From Date is required. ";
 
             if (propertyValue_ToDate == null)
-                validationResults += "To Date is required.";
+                validationResults += " To Date is required. ";
 
             if (propertyValue_FromDate > propertyValue_ToDate)
-                validationResults += "To Date can not be less than From date.";
+                validationResults += " To Date can not be less than From date. ";
 
             else if (propertyValue_FromDate != null && propertyValue_ToDate != null && (propertyValue_ToDate.Value.Year - propertyValue_FromDate.Value.Year) < 1)
-                validationResults += "The Dates range must be larger than 1 year.";
+                validationResults += " The Dates range must be larger than 1 year. ";
 
             if (!string.IsNullOrEmpty(validationResults))
             {
                 return new ValidationResult(validationResults);
             }
+
             return ValidationResult.Success;
         }
     }

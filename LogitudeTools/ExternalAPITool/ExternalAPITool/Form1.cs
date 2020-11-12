@@ -42,8 +42,8 @@ namespace ExternalAPITool
 	                               <ToDate>2020-11-24T00:00:00</ToDate>
 	                               <Direction Code='E' />
 	                               <TransportMode Code='A' />
-	                               <ShipmentType Code='D' />
-	                               <Master>UQWE3284234</Master>
+	                               <ShipmentType Code='Air' />
+	                               <Master></Master>
 	                               <House></House>
 	                               <Carrier></Carrier>
 	                               <Containers>
