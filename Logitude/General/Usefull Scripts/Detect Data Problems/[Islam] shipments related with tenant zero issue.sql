@@ -1,4 +1,125 @@
 ﻿
+
+
+
+	-- SELECT count(*)
+	--From Shipments where (DepartmentId in (select id from Departments  where Tenant = 0)or BranchId in (select id from Branches  where Tenant = 0)
+	--or CreatedByUserId in (select id from users where Tenant = 0)  or UpdatedByUserId in (select id from users where Tenant = 0)
+	--or SalesmanUserId in (select id from users where Tenant = 0)
+	--or AccountManagerUserId in (select id from users where Tenant = 0)) and Tenant <> 0
+
+
+
+
+	
+
+	select a.id as addressId,a.address1, a.tenant as addressTenant,a.AddressTypeId,c.id as cardid,c.englishname,c.tenant as cardtenant,t.company 
+	from addresses a 
+	inner join cards c on c.id = a.cardid
+	inner join tenants t on t.id = a.tenant
+	where a.tenant <> c.tenant
+
+	update Addresses set CardId = null where cardid in (
+	select c.id
+	from addresses a 
+	inner join cards c on c.id = a.cardid
+	inner join tenants t on t.id = a.tenant
+	where a.tenant <> c.tenant
+	)
+
+	select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as cardId,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.consigneeid
+	where sh.tenant <> c.tenant
+
+
+	select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as cardId,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.customerid
+	where sh.tenant <> c.tenant
+
+	update shipments set CustomerId = (select top 1 id from Customers where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.customerid
+	where sh.tenant <> c.tenant
+	)
+
+
+
+    select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as cardId,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.shipperid
+	where sh.tenant <> c.tenant
+
+   update shipments set shipperid = (select top 1 id from Customers where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.shipperid
+	where sh.tenant <> c.tenant
+	)
+
+
+	select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as cardId,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join cards c on c.id = sh.agentid
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+
+
+	   update shipments set agentid = (select top 1 id from Agents where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join cards c on c.id = sh.agentid
+	where sh.tenant <> c.tenant
+	)
+
+	select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as departmentID,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join Departments c on c.id = sh.departmentid
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+
+	   update shipments set DepartmentId = (select top 1 id from Departments where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join Departments c on c.id = sh.DepartmentId
+	where sh.tenant <> c.tenant
+	)
+
+
+    select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as brancId,c.englishname,c.tenant as cardTenant 
+	from shipments sh
+	inner join Branches c on c.id = sh.branchid
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+
+	   update shipments set BranchId = (select top 1 id from Branches where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join tenants t on t.id = sh.tenant
+	inner join Branches c on c.id = sh.BranchId
+	where sh.tenant <> c.tenant
+	)
+	
+
+
+
+
+
+
 -- select count(*) as Zero_Deprtments from Shipments where (DepartmentId in (select id from Departments where Tenant = 0)
 --or BranchId in (select id from Branches where Tenant = 0) or (UpdatedByUserId in (select id from users where Tenant = 0) )or (CreatedByUserId in (select id from users where Tenant = 0) )) and Tenant <> 0
 
@@ -29,6 +150,9 @@ set @ZeroContactId= (select id from Contacts where email =@ZeroContactemail)
 --	From Shipments where (DepartmentId in (select id from #@ZeroDepartments)or BranchId in (select id from #@ZeroBranches)
 --	or CreatedByUserId in (select id from users where Tenant = 0)  or UpdatedByUserId in (select id from users where Tenant = 0)) and Tenant <> 0
 	 
+
+
+
  
 	 
 print @ZeroContactemail +' ' + @ZeroContactId + ' ' +@ZeroDepartmentId + ' '+  @ZeroBranchId
