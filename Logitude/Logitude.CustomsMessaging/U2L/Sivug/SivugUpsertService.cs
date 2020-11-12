@@ -1014,7 +1014,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
 
-                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantityType))
+                if (!string.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantityType))
                 {
                     SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.AdditionalQuantityType);
                 }
@@ -1028,8 +1028,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         }
                         else
                         {
-                            throw new BusinessErrorException("Error in parsing Statistic Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
+                            throw new BusinessErrorException("Error in parsing Additional Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
                         }
+                    }
+                    else if(!SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
+                    {
+                        SupplierInvoiceItemPM.AdditionalQuantityType = null;
                     }
                 }
                 else if (SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
