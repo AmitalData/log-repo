@@ -30,11 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.actionCombo = new System.Windows.Forms.ComboBox();
-            this.ActionLabel = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.operationCombo = new System.Windows.Forms.ComboBox();
-            this.apiCombo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRequestContentType = new System.Windows.Forms.TextBox();
             this.rdbXml = new System.Windows.Forms.RadioButton();
@@ -62,55 +58,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtRequestBody = new System.Windows.Forms.TextBox();
             this.xmlBrowser1 = new XmlRender.XmlBrowser();
+            this.APILabel = new System.Windows.Forms.Label();
+            this.OperationLabel = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // actionCombo
-            // 
-            this.actionCombo.FormattingEnabled = true;
-            this.actionCombo.Location = new System.Drawing.Point(183, 107);
-            this.actionCombo.Margin = new System.Windows.Forms.Padding(4);
-            this.actionCombo.Name = "actionCombo";
-            this.actionCombo.Size = new System.Drawing.Size(180, 24);
-            this.actionCombo.TabIndex = 86;
-            this.actionCombo.Visible = false;
-            // 
-            // ActionLabel
-            // 
-            this.ActionLabel.AutoSize = true;
-            this.ActionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ActionLabel.Location = new System.Drawing.Point(20, 110);
-            this.ActionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ActionLabel.Name = "ActionLabel";
-            this.ActionLabel.Size = new System.Drawing.Size(62, 20);
-            this.ActionLabel.TabIndex = 85;
-            this.ActionLabel.Text = "Action";
-            this.ActionLabel.Visible = false;
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // operationCombo
-            // 
-            this.operationCombo.FormattingEnabled = true;
-            this.operationCombo.Location = new System.Drawing.Point(183, 75);
-            this.operationCombo.Margin = new System.Windows.Forms.Padding(4);
-            this.operationCombo.Name = "operationCombo";
-            this.operationCombo.Size = new System.Drawing.Size(180, 24);
-            this.operationCombo.TabIndex = 84;
-            // 
-            // apiCombo
-            // 
-            this.apiCombo.FormattingEnabled = true;
-            this.apiCombo.Location = new System.Drawing.Point(183, 43);
-            this.apiCombo.Margin = new System.Windows.Forms.Padding(4);
-            this.apiCombo.Name = "apiCombo";
-            this.apiCombo.Size = new System.Drawing.Size(180, 24);
-            this.apiCombo.TabIndex = 83;
             // 
             // label1
             // 
@@ -276,10 +234,10 @@
             // lblMessage
             // 
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.Location = new System.Drawing.Point(928, 17);
+            this.lblMessage.Location = new System.Drawing.Point(719, 9);
             this.lblMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(175, 48);
+            this.lblMessage.Size = new System.Drawing.Size(381, 84);
             this.lblMessage.TabIndex = 74;
             // 
             // label7
@@ -400,16 +358,32 @@
             this.xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSLT10Basic;
             this.xmlBrowser1.XmlText = "";
             // 
+            // APILabel
+            // 
+            this.APILabel.AutoSize = true;
+            this.APILabel.Location = new System.Drawing.Point(180, 48);
+            this.APILabel.Name = "APILabel";
+            this.APILabel.Size = new System.Drawing.Size(64, 17);
+            this.APILabel.TabIndex = 88;
+            this.APILabel.Text = "APILabel";
+            // 
+            // OperationLabel
+            // 
+            this.OperationLabel.AutoSize = true;
+            this.OperationLabel.Location = new System.Drawing.Point(183, 75);
+            this.OperationLabel.Name = "OperationLabel";
+            this.OperationLabel.Size = new System.Drawing.Size(106, 17);
+            this.OperationLabel.TabIndex = 89;
+            this.OperationLabel.Text = "OperationLabel";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 913);
+            this.Controls.Add(this.OperationLabel);
+            this.Controls.Add(this.APILabel);
             this.Controls.Add(this.xmlBrowser1);
-            this.Controls.Add(this.actionCombo);
-            this.Controls.Add(this.ActionLabel);
-            this.Controls.Add(this.operationCombo);
-            this.Controls.Add(this.apiCombo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCopyResponseBody);
             this.Controls.Add(this.btnCopyToClipboard);
@@ -440,11 +414,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.ComboBox actionCombo;
-        private System.Windows.Forms.Label ActionLabel;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ComboBox operationCombo;
-        private System.Windows.Forms.ComboBox apiCombo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRequestContentType;
         private System.Windows.Forms.RadioButton rdbXml;
@@ -472,6 +442,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtRequestBody;
         private XmlRender.XmlBrowser xmlBrowser1;
+        private System.Windows.Forms.Label APILabel;
+        private System.Windows.Forms.Label OperationLabel;
     }
 }
 

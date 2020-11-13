@@ -26,31 +26,21 @@ namespace ExternalAPITool
         }
         private void SetDefaultValues()
         {
-            this.apiCombo.Items.Add("Shipment");
-            this.operationCombo.Items.Add("POST");
-            this.actionCombo.Items.Add("Accept");
-            this.actionCombo.Items.Add("Decline");
-            this.actionCombo.Items.Add("Cancel");
-            this.apiCombo.SelectedIndex = 0;
-            this.operationCombo.SelectedIndex = 0;
-            actionCombo.Visible = false;
-            ActionLabel.Visible = false;
+            this.APILabel.Text = "Shipment Numbers";
+            this.OperationLabel.Text = "POST";
             txtServerUrl.Text = "http://localhost:9996/api/";
             txtCredentialsPrimary.Text = "518eb8ea-ad91-48ea-8b0a-fe7b736ea0c8";
-            string requestText = @"<ShipmentNumbers>
-	                               <FromDate>2019-10-24T00:00:00</FromDate>
-	                               <ToDate>2020-11-24T00:00:00</ToDate>
-	                               <Direction Code='E' />
-	                               <TransportMode Code='A' />
-	                               <ShipmentType Code='Air' />
-	                               <Master></Master>
-	                               <House></House>
-	                               <Carrier></Carrier>
-	                               <Containers>
-				                            <Container Number = 'AAAA2348234'/>
-				                            <Container Number = 'BBBB2348234'/>
-	                               </Containers>                                     
-                                 </ShipmentNumbers>";
+            string requestText = @"<GetShipmentNumbers>
+                                       <FromDate>2013-10-24T00:00:00</FromDate>
+                                       <ToDate>2014-11-24T00:00:00</ToDate>
+                                       <Direction>I</Direction> 
+                                       <TransportMode>A</TransportMode>
+                                       <ShipmentLevel>H</ShipmentLevel>
+                                       <Master></Master>
+                                       <House></House>
+                                       <Carrier></Carrier>
+                                       <ContainerNumber></ContainerNumber>
+            </GetShipmentNumbers>";
             txtRequestBody.Text = requestText;
             this.apiName = "ShipmentNumbers";
         }
@@ -110,10 +100,7 @@ namespace ExternalAPITool
             else
             {
                 this.Cursor = Cursors.Default;
-                if (operationCombo.SelectedIndex != -1 && apiCombo.SelectedIndex != -1)
-                {
-                    this.btnCallApi.Enabled = true;
-                }
+                this.btnCallApi.Enabled = true;
             }
         }
         private async void CallEntityApi(string api)

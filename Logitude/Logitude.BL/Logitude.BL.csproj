@@ -2446,7 +2446,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MainCarriageLegQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
-    <Compile Include="ShipmentsModel\APIDataContract\ShipmentNumbers.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\GetShipmentNumbers.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\MainCarriageLeg.cs" />

@@ -12,6 +12,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using System.Xml.Serialization;
@@ -22,7 +23,7 @@ namespace WebFreight.Web.ExternalAPIs
 {
     public class ShipmentNumbersController : ApiController
     {
-        public HttpResponseMessage Post(ShipmentNumbers entity)
+        public HttpResponseMessage Post(GetShipmentNumbers entity)
         {
             if (ModelState.IsValid)
             {
@@ -32,6 +33,9 @@ namespace WebFreight.Web.ExternalAPIs
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(tenant);
+
+                    entity = RemoveSpaces(entity);
+                    ShipmentNumbersXML.ShipmentDataMappingValidating(entity, tenant);
                     var response = ShipmentNumbersXML.GetShipmentNumbersXMLMessage(entity, tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
@@ -47,6 +51,19 @@ namespace WebFreight.Web.ExternalAPIs
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Shipment Numbers API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private GetShipmentNumbers RemoveSpaces(GetShipmentNumbers entity)
+        {
+            GetShipmentNumbers newEntity = entity;
+            newEntity.Direction = Regex.Replace(newEntity.Direction, @"\s+", "");
+            newEntity.TransportMode = Regex.Replace(newEntity.TransportMode, @"\s+", "");
+            newEntity.ShipmentLevel = Regex.Replace(newEntity.ShipmentLevel, @"\s+", "");
+            newEntity.House = Regex.Replace(newEntity.House, @"\s+", "");
+            newEntity.Master = Regex.Replace(newEntity.Master, @"\s+", "");
+            newEntity.Carrier = Regex.Replace(newEntity.Carrier, @"\s+", "");
+            newEntity.ContainerNumber = Regex.Replace(newEntity.ContainerNumber, @"\s+", "");
+            return newEntity;
         }
     }
 }
