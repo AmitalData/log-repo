@@ -1014,6 +1014,33 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
 
+                if (!string.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantityType))
+                {
+                    SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.AdditionalQuantityType);
+                }
+                if (!string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType))
+                {
+                    if (invoiceItem.AdditionalQuantity != null)
+                    {
+                        if (decimal.TryParse(invoiceItem.AdditionalQuantity, out decimal1))
+                        {
+                            if (decimal1 > 0) SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
+                        }
+                        else
+                        {
+                            throw new BusinessErrorException("Error in parsing Additional Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
+                        }
+                    }
+                    else if(!SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
+                    {
+                        SupplierInvoiceItemPM.AdditionalQuantityType = null;
+                    }
+                }
+                else if (SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
+                {
+                    SupplierInvoiceItemPM.AdditionalQuantity = null;
+                }
+
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     try

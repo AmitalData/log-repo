@@ -729,8 +729,7 @@ namespace Logitude.CustomsMessaging.RequestServices
  
 
             customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
-
-            customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
+             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
             customDeclaration.AdditionalDocument = GetDeclarationAdditionalDocuments(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
             customDeclaration.Exporter = GetImporter(declarationPM);
@@ -817,6 +816,24 @@ namespace Logitude.CustomsMessaging.RequestServices
             DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(DateTime.Today);
             ;
 
+
+            DMExtensions.DeclarationClosingDetails = new DeclarationDMExtensionsDeclarationClosingDetails();
+
+            if (declarationPM.FinalLoadingSite != null)
+            {
+                DMExtensions.DeclarationClosingDetails.FinalLoadingSite = SetIDTypeValue<FinalLoadingSiteIDType>(declarationPM.FinalLoadingSite);
+            }
+
+            if (declarationPM.ShipCode != null)
+            {
+                DMExtensions.DeclarationClosingDetails.ShipID = SetIDTypeValue<SeaTransportationIDType>(declarationPM.ShipCode);
+            }
+
+            if (declarationPM.LoadingDateTime != null)
+            {
+                DMExtensions.DeclarationClosingDetails.DepartureDateTime = new DepartureDateTimeType() { Value =  Convert.ToDateTime( declarationPM.LoadingDateTime)  };
+            }
+
             DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
             // moran 25.5.14 - Bug 6059 - commented -->
              DMExtensions.VersionID = SetIDTypeValue<DeclarationVersionIDType>(declarationPM.VersionId); // new DeclarationDMExtensionsVersionID() { Value = declarationPM.VersionId };
@@ -833,10 +850,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.ExportAutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
+           
+
             if (declarationPM.DestinationCountryCode != null)
             {
-                DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>( declarationPM.DestinationCountryCode);
+                DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>(declarationPM.DestinationCountryCode);
             }
+
 
             //if (declarationPM.LoadingFactor.HasValue)
             //{
@@ -1479,30 +1499,25 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification()
                 {
                     ID = SetIDTypeValue<ClassificationIdentificationIDType>(supplierInvoiceItemPM.DangerousClassificationCode), // new ClassificationIdentificationIDType()
-                    //{
-                    //    Value = supplierInvoiceItemPM.DangerousClassificationCode
-                    //},
+              
+
                     IdentificationTypeCode = SetCodeTypeValue<ClassificationIdentificationTypeCodeType>("SSO"),
 
-                    //{
-                    //    Value = "SSO"
-                    //}
-                    // moran 12.4.16 - Bug 20650 -->
-                    //DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions()
-                    //{
-                    //    DangerousGoodsPackingRequirementsGroupCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDangerousGoodsPackingRequirementsGroupCode>(supplierInvoiceItemPM.DangerousPackingGroupTypeCode)
-                    //}
-                    // moran 12.4.16 - Bug 20650 <--
+
                 };
+
+                myDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions()
+                {
+                    DutyRegimeCode = SetCodeTypeValue<DutyTaxFeeDutyRegimeCodeType>(supplierInvoiceItemPM.TradeAgreementCode),
+                    TaxExemptCode= SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),
+                };
+
+
+
             }
            var declarationGoodsItemCommodity = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodity();
-            //declarationGoodsItemCommodity.DMExtensions = GetGoodsItemCommodityDMExtensions(supplierInvoiceItemPM);
-            // moran 25.5.14 - Bug 6059 - commented -->
-            //declarationGoodsItemCommodity.DutyTaxFee = GetGoodsItemCommodityDutyTaxFees(supplierInvoiceItemPM);
-            //declarationGoodsItemCommodity.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensions()
-            //{
-            //    DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value = supplierInvoiceItemPM.TariffCode }
-            //};
+       
+
             if (!string.IsNullOrWhiteSpace(supplierInvoiceItemPM.ClassificationCode))
             {
                 if (supplierInvoiceItemPM.ClassificationCode.Length == 11) // moran 1.9.14 - uncommented
@@ -1937,7 +1952,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 ///if (!String.IsNullOrWhiteSpace(consignmentPM.ManifestNumber) || !String.IsNullOrWhiteSpace(consignmentPM.CargoTypeCode))
                 //{
-                declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
+
+                 declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
                 {
                     TypeCode = SetCodeTypeValue<TransportContractDocumentTypeCodeType>(consignmentPM.CargoTypeCode), //new TransportContractDocumentTypeCodeType() {Value =  "IL1"}, //hardcoded ask yaron + consignmentPM.CargoTypeCode },
                    // IssueDateTime = consignmentPM.ManifestDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.ManifestDate.Value) : null, // DataTypeConvertorUtil.Convert(declarationPM.IssueDateTime.Value), // hard coded
