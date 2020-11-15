@@ -194,6 +194,8 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceBillTo { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceDate { get; set; }
+            public string InvoiceBillToCard { get; set; }
+            public string InvoiceTypeCode { get; set; }
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
 
