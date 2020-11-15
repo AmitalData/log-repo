@@ -132,17 +132,32 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
            
-            bool accumalateV2 = true;
-            if (accumalateV2)
-            {
+            //bool accumalateV2 = true;
+            //if (accumalateV2)
+            //{
                 decimal PageLineForeignAmount = listOfpageLineList.Sum(r => r.DebitAmount - r.CreditAmount);
-                decimal PageLineLocalAmount = Convert2LocalAmountFast(tenant, PageLineForeignAmount, bankGLAccountList.CurrencyId, accountingCurrencyId, listOfpageLineList.First().ReferenceDate);
+                //decimal PageLineLocalAmount = Convert2LocalAmountFast(tenant, PageLineForeignAmount, bankGLAccountList.CurrencyId, accountingCurrencyId, listOfpageLineList.First().ReferenceDate);
                 var ledgerForeignAmount = ledgerTransactionList.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit);
-                var ledgerLocalAmountDebit = ledgerTransactionList.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit);
-                bool creditTheBank = (ledgerForeignAmount + PageLineForeignAmount > 0);
-                var firstJL=GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+                //var ledgerLocalAmountDebit = ledgerTransactionList.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit);
 
-                var LstJL = GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+                decimal foreignTotalAmount = (ledgerForeignAmount + PageLineForeignAmount);
+                bool creditTheBank =
+                    //(ledgerForeignAmount + PageLineForeignAmount > 0);
+                    (foreignTotalAmount > 0);
+
+                
+                decimal localTotalAmountConvertFromforeign = Convert2LocalAmountFast(tenant, foreignTotalAmount, bankGLAccountList.CurrencyId, accountingCurrencyId,
+                    ///listOfpageLineList.First().ReferenceDate
+                    accountingDate
+                    );
+
+
+                var firstJL =
+                    //GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+                    GetFirstJournalLineSum(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, foreignTotalAmount, localTotalAmountConvertFromforeign, creditTheBank);
+                var LstJL =
+                    //GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
+                    GetFirstJournalLineSum(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, foreignTotalAmount, localTotalAmountConvertFromforeign, creditTheBank);
                 LstJL.Line = 2;
                 LstJL.ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
 
@@ -151,13 +166,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 TheNewJournal.JournalLines.Add(LstJL); 
 
                 
-            }
-            else
-            {
-                CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
-                CreateFromLedger(adjustGLAccountId, bankGLAccountList, accountingCurrencyId, screenNotes, ledgerTransactionList);
+            //}
+            //else
+            //{
+            //    CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
+            //    CreateFromLedger(adjustGLAccountId, bankGLAccountList, accountingCurrencyId, screenNotes, ledgerTransactionList);
 
-            }
+            //}
 
 
 
@@ -170,13 +185,62 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             TheNewJournal.JournalExternalReconciles.AddRange(GetJournalExternalReconcileFromLedger(ledgerTransactionList));
             
-            if (!accumalateV2)
-            {
-                CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
-                Accumalation2jounrnalLine();
-            }
+            //if (!accumalateV2)
+            //{
+            //    CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
+            //    Accumalation2jounrnalLine();
+            //}
             
         }
+        private JournalLinePM GetFirstJournalLineSum(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal ForeignAmount, decimal LocalAmount, bool creditTheBank)
+        {
+            /*
+             *צד הלדג'ר (GLACCOUNT בצד) כל תנועה  בקרדיט
+מכפילים במינוס 1
+מחברים את כל התנועות (גם הדביט וגם הקרדיט
++ 
+צד דפי הבנק כל תנועה  בקרדיט
+מכפיל ב מינוס 1
+מחבר את כל התונעות_גם הדביט וגם הקרדיט) 
+
+ 
+
+
+אם התוצאה קטנה מאפס יש להכפילה במינוס אחד ולחייב את צד הלדג'ר
+אחרת
+נזכה את צד הלדג'ר בתוצאה
+             */
+            return
+new JournalLinePM()
+{
+    Tenant = tenant,
+    JournalId = TheNewJournal.Id,
+    Line = 1,
+
+
+    DocumentDate = listOfpageLineList.First().ReferenceDate,
+    DueDate = listOfpageLineList.First().ReferenceDate,
+    AccountingDate = TheNewJournal.AccountingDate,
+
+
+
+    CurrencyId = bankGLAccountList.CurrencyId,
+
+
+
+    ///if r.DebitAmount != 0 then credit else debit 
+    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
+    DebitAccountId = creditTheBank ? adjustGLAccountId : bankGLAccountList.Id,
+    LocalAmount = creditTheBank ? (LocalAmount ) : -1 * (LocalAmount),
+    ForeignAmount = creditTheBank ? (ForeignAmount) : -1 * (ForeignAmount),
+    Notes = screenNotes + Environment.NewLine + listOfpageLineList.First().Notes,
+    Reference1 = listOfpageLineList.First().Reference,
+    ChangeSetOp = ChangeSetOperation.Insert
+};
+        }
+
+
 
         private JournalLinePM GetFirstJournalLine(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal PageLineForeignAmount, decimal PageLineLocalAmount, decimal ledgerForeignAmount, decimal ledgerLocalAmountDebit, bool creditTheBank)
         {
