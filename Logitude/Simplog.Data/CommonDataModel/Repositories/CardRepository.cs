@@ -113,7 +113,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             string entityKeyString = $"GetSingleCard({id},{Tenant})";
             var res = CacheManager.GetOrInsertNewObject<Card>(entityKeyString, () =>
             {
-                return this.GetSingleCard(id, Tenant);
+                //return this.GetSingleCard(id, Tenant);
+                Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards
+                                                              
+                                                              //.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
+
+                                                              where a.Id == id
+                                                              select a));
+
+                return entity;
+
             });
             return res;
         }

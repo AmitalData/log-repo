@@ -1,13 +1,17 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -32,7 +36,28 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
         private void RunPerTenant(CustomsSettingPM t)
         {
             LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
-            Console.Write("hello");
+            CourierMasterRepository MyCourierMasterRepository = new CourierMasterRepository(t.Tenant);
+            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(t.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(t.Tenant);
+            var OpenCourierMasters = MyCourierMasterRepository.GetAllOpenCourierMastersWithLandingDate(t.Tenant);
+            foreach (var courierMaster in OpenCourierMasters)
+            {
+                var decIdsList = courierDeclarationRepository.GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(courierMaster.Id, t.Tenant);
+                foreach (var dec in decIdsList)
+                {
+                    var decPM = declarationQueryService.GetSingleDeclarationById(dec, t.Tenant);
+                    if (decPM != null)
+                    {
+                        SendDeclarationStatusRequest(decPM);
+                    }
+                }
+                if (decIdsList != null)
+                {
+                    SendNatr(t.Tenant,"",courierMaster.UnifreightLeadingFile);
+                }
+            }
+
+
             /*CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
             List<CourierMaster> courierMasters = courierMasterQueryService.GetAllCourierMastersToSendAutoManifest(t.Tenant);
 
@@ -77,6 +102,70 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             //    LogMessagingUtil.Instance.AppendLine($"לא נמצאו טיסות פתוחות לסגירה");
             //}
         }
-    }
+        private void SendDeclarationStatusRequest(DeclarationPM declarationPM)
+        {
+            var loggedUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant);
+            var requestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "8250",
+                CustomFileNo = declarationPM.CustomFileNo,
+                DeclarationNumber = declarationPM.DeclarationNumber,
+                Tenant = declarationPM.Tenant,
+                RequestName = "Declaration Status Search",
+                ResponseName = "Declaration Status Search",
+                CargoRadio = false,
+                DeclarationRadio = true,
+                OldReshimonRadio = false,
+                OldReshimonNumber = null,
+                LoggingEntityId = declarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true
+            };
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8520 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
 
+        }
+        public void SendNatr(int Tenant, string remarks, string UnifreightLeadingFile)
+        {
+            string loggedContactId = null;
+            ContactRepository contactRepository = new ContactRepository(Tenant);
+            var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
+
+            string unifrieghtEvent = "NATR";
+            string eventRemarks = remarks;
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = UnifreightLeadingFile,
+                EventRemarks = eventRemarks,
+            };
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
+        }
+    }
 }

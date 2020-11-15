@@ -80,9 +80,10 @@ export class SchedulerExtendedPMService {
         var errorsArray = validator.Validate("TasksScheduler", entityPM);
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
+        var mappedEntity: TasksSchedulerPM = this.MapJsonToEntityPM(entityPM, false);
 
         if (errorsArray.length == 0) {
-            return this.httpClient.put(url, entityPM, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+            return this.httpClient.put(url, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     serviceResponse.Result = response;
                     var servertime = response.headers.get('ServerExecutionTime');
