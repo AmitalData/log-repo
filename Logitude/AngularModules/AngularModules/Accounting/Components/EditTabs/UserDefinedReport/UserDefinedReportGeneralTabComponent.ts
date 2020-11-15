@@ -504,16 +504,22 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
     get IsCancelled() { return this.EntityPM.IsCancelled; }
     set IsCancelled(newValue: boolean) {
         if (this.EntityPM.IsCancelled != newValue) {
-            var IsValid = this.ValidateIsCancelled();
-            if(!IsValid && !newValue)
-                this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
-            else if (newValue)
-                this.ErrorLog = null;
-           
+            this.LineCancelledValidation(newValue);
             this.EntityPM.IsCancelled = newValue;
-            this.ValidateAllLinesOnOpenSession();
+            
         }
     }
+
+
+public LineCancelledValidation(newValue:boolean){
+    var IsValid = this.ValidateIsCancelled();
+    if(!IsValid && !newValue)
+        this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
+    else if (newValue)
+        this.ErrorLog = null;
+    else if (IsValid)
+        this.ValidateAllLinesOnOpenSession();
+}
 
     get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
     set UpdatedByUserId(newValue: string) {
