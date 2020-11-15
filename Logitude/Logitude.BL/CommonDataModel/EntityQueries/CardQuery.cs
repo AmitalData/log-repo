@@ -124,6 +124,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
+        public CardPM GetSinglePMFromCache(string id, int tenant)
+        {
+            string entityKeyString = $"GetSinglePMFromCache({id},{tenant})";
+            var res=CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () =>
+             {
+                 return this.GetSinglePM(id, tenant);
+             });
+            return res;
+        }
+
         public CardPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))

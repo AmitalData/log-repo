@@ -1112,7 +1112,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             //using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 var repository = new CardRepository(ResolvedTenant());
-                myCard = repository.GetSingleCardByCode(amitalCustomerCode, ResolvedTenant(), false);
+                myCard = repository.GetSingleCardByCode(amitalCustomerCode, ResolvedTenant(), false);// why not from cache - maybe just now updated !!
 
                 if (myCard == null)
                 {

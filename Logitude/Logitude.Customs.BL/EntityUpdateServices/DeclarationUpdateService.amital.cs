@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
 
             IsUpdateUnifreight = true; // moran 14.6.16 - Task 21737 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM.Id, dirtyDeclarationPM.Tenant);
 
             //<--- Yuval Chalup 10.05.2015 TASK-13252
             string xmlStatus = null;
@@ -1264,16 +1264,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
-
-        private DeclarationPM GetDBEntity(DeclarationPM dirtyDeclarationPM)
+        DeclarationPM _DBEntityB4Commit = null;
+        DeclarationPM _DBEntityAfterCommit = null;
+        bool _AfterCommitUpdate = false;
+        public DeclarationPM GetDBEntity(string DeclarationId, int Tenant)
         {
-            
-            var declarationQueryService = new DeclarationQueryService(dirtyDeclarationPM.Tenant);
+            if (_DBEntityB4Commit!=null && !_AfterCommitUpdate)
+            {
+                return _DBEntityB4Commit;
+            }
+            if (_DBEntityAfterCommit!=null)
+            {
+                return _DBEntityAfterCommit;
+            }
+            var declarationQueryService = new DeclarationQueryService(Tenant);
            // declarationQueryService.LoadSupplierInvoices = false;
             declarationQueryService.LoadSupplierInvoicesWithItems = false;
             //if (IsUpdateUnifreight == true) ; //declarationQueryService.LoadSupplierInvoices = true; // moran 14.6.16 - Task 21737
-            var myDBEntity = declarationQueryService.GetSingle(dirtyDeclarationPM.Id, true, false);
-            return myDBEntity ?? new DeclarationPM();
+            var myDBEntity = declarationQueryService.GetSingle(DeclarationId, true, false);
+            if (!_AfterCommitUpdate)
+            {
+                _DBEntityB4Commit= myDBEntity ?? new DeclarationPM();
+                return _DBEntityB4Commit;
+            }
+            else
+            {
+                _DBEntityAfterCommit = myDBEntity ?? new DeclarationPM();
+                return _DBEntityAfterCommit;
+            }
+            
   
         }
         void UpdateUnifreightCustomFile(DeclarationPM entityPM)

@@ -48,22 +48,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorNumber);
 
-            CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
+            var rep = new CustomsAirlineQueryService(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
-            CustomsAirline customsAirline = rep.GetSingle(entityPOCO.AirlineId, entityPOCO.Tenant);
+            var customsAirline = rep.GetSingle(entityPOCO.AirlineId, false,true);
             if (customsAirline != null)
             {
                 entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
                 entityPM.AirlineName = customsAirline.LocalName;
             }
 
-            User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant);
+            User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant,true);
             if(user != null)
             {
                 entityPM.CreatedByUserName = user.Contact.LocalName != null ? user.Contact.LocalName : user.Contact.EnglishName;
             }
 
-            User UpdatedByUser = userRep.GetSingleUser(entityPM.UpdatedByUserId, entityPM.Tenant);
+            User UpdatedByUser = userRep.GetSingleUser(entityPM.UpdatedByUserId, entityPM.Tenant, true);
             if (UpdatedByUser != null)
             {
                 entityPM.UpdatedByUserName = UpdatedByUser.Contact.LocalName != null ? UpdatedByUser.Contact.LocalName : UpdatedByUser.Contact.EnglishName;
@@ -118,7 +118,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.IntegratorCode != null)
             {
                 CardQuery cardQuery = new CardQuery(entityPOCO.Tenant);
-                CardPM cardPM = cardQuery.GetSinglePM(entityPOCO.IntegratorCode, entityPOCO.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePMFromCache(entityPOCO.IntegratorCode, entityPOCO.Tenant);
                 if (cardPM != null)
                 {
                     entityPM.IntegratorName = cardPM.LocalName;

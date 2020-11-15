@@ -1740,7 +1740,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return isFreight;
         }
+        //public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
+        //{
 
+        //    string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
+        //    var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(entityKeyString, () =>
+        //    {
+        //        return this.GetDeclarationAmendmentsById(Tenant, id, orderById);
+        //    });
+        //    return res;
+        //}
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
 
