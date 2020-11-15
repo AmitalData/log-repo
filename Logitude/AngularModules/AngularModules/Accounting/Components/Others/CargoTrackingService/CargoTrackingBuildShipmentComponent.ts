@@ -24,6 +24,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
   constructor() {
        super();
        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+       this.SetUIProperty();
    } 
   ngOnInit(): void {
      this.InitializeDate();
@@ -42,11 +43,17 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
     }
 
     if(this.ValidationErrorsList == null || this.ValidationErrorsList.length==0){
+         this.OpenConfirmMessage();
+    }
+ }
+ 
 
-var MessageText:string = "This action will delete all cargo tracking shipments and their related records from all tenants in the system and will create new ones for all tenants only for the selected dates";
-if(this.SelectedValue ==="S"){
-     MessageText = "This action will delete all cargo tracking shipments and their related records from (Tenant "+this.Tenant+") in the system and will create new ones in that Tenant only for the selected dates";
-}
+ private OpenConfirmMessage(){
+
+    var MessageText:string = "This action will delete all cargo tracking shipments and their related records from all tenants in the system and will create new ones for all tenants only for the selected dates";
+    if(this.SelectedValue ==="S"){
+        MessageText = "This action will delete all cargo tracking shipments and their related records from (Tenant "+this.Tenant+") in the system and will create new ones in that Tenant only for the selected dates";
+    }
 
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
@@ -54,13 +61,10 @@ if(this.SelectedValue ==="S"){
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
             this.CargoTrackingBuilder();
-          } else if (confirmWindow.No) {
-
           }
       });
-    }
  }
- 
+
   private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
@@ -106,23 +110,51 @@ if(this.SelectedValue ==="S"){
  
   ValidateDate(fieldName: any) {
     
-    if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
+     if(!this.FromDate || !this.ToDate){
+        if (fieldName == null) {
+            this.ValidationErrorsList.push("Please Fill All Dates Fields");
+        }
+        
+            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field is required");
+            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field is required");
+    }
+    else if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
         if (fieldName == null) {
             this.ValidationErrorsList.push("''To date'' field must be greater than or equal to ''From date'' field");
         }
         
             this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field must be greater than or equal to ''From date'' field");
             this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field must be less than or equal to ''To date'' field");
-         
-    }
+     }
      else {
-    
-        this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-        this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
-         
+       this.CheckDateDifferenceEqualOrLessThan6Months(fieldName);
     }
        
     
+}
+SetUIProperty() {
+    this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+}
+
+CheckDateDifferenceEqualOrLessThan6Months(fieldName){
+    if( this.FromDate &&  this.ToDate){
+        var DateDifference =  this.toDate.getTime() - this.FromDate.getTime() ;
+        var DayByMilliSecounds = 1000 * 60 * 60 * 24;
+        var DifferenceByDays =  DateDifference/DayByMilliSecounds ;
+        var DifferenceByMonths = DifferenceByDays/31 ;
+        if (DifferenceByMonths > 6) {
+            if (fieldName == null) {
+                this.ValidationErrorsList.push("The date difference must be less than 6 months");
+            }
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "The date difference must be less than 6 months");
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "The date difference must be less than 6 months");
+        }
+        else{
+            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
+            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
+        }
+    }
+
 }
 
 CargoTrackingBuilder() {
@@ -135,10 +167,10 @@ CargoTrackingBuilder() {
     this.CurrentSession.StopBusyIndicator();
       var mm: ServiceResponse = response;
       if (!mm.HasError) {
-          
+          this.CurrentSession.CloseCurrentWindow();
       }
       else {
-
+        this.ValidationErrorsList.push(mm.ErrorsArray.toString());
       }
 
     });
@@ -151,7 +183,7 @@ InitializeDate(){
     var Day = new Date().getDate();
     this.ToDate = this.SetDate(Year, month, Day);
     this.FromDate = this.SetDate(Year, month, Day);
-    this.FromDate.setUTCDate(this.ToDate.getDate() - 30);
+    this.FromDate.setMonth(this.ToDate.getMonth()- 6);
   }
 
   SetDate(year: number, month: number, day: number) {
