@@ -33,8 +33,9 @@ namespace CargoTrackingWinFormService.Forms
         private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
         private string ToTestConectionstring = "CargoTracking,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         private string ToCloudConectionstring = "CargoTracking,amitaladmin,London2015!London2015!,amital.database.windows.net";
-
-
+        private List<string> ErrorsValidatons = new List<string>();
+        string SelectedTable = null;
+        List<CargoTable> CargoTableLists;
         private int[] ScreensHight;
         private int[] ScreensWidth;
         private int[] ScreensTotalIncreasing;
@@ -86,13 +87,21 @@ namespace CargoTrackingWinFormService.Forms
             this.MappingFromConnections.Text = dbSourceConnection;
             this.MappingToConnections.Text = dbSourceConnection;
             this.numericUpDown1.Value =  3;
-            this.numericUpDown2.Value = 1;
-            this.checkBox1.Checked = true;
             this.checkBox2.Checked = true;
+            //this.textBox3.Text = "Shipments";
+            this.BuildFrom.Value = BuildTo.Value.AddMonths(-6);
+            this.checkBox1.Checked = false;
+            this.checkBox1.Enabled = false;
+            this.numericUpDown2.Value = 1;
+            this.numericUpDown2.Enabled = false;
             this.checkBox3.Checked = true;
-            this.textBox3.Text = "Shipments";
+            this.checkBox3.Enabled = false;
+            CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            string [] DBTabkeNames = CargoTableLists.Select(s=>s.DBTableName).ToArray();
+            this.comboBox2.Items.AddRange(DBTabkeNames);
+            this.comboBox2.SelectedIndex = DBTabkeNames.Count() - 1;
         }
-  
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -210,7 +219,7 @@ namespace CargoTrackingWinFormService.Forms
                     ToDate = checkBox1.Checked ? new DateTime(2500, 1, 1) : BuildTo.Value,
                     Tenant = SelectedTenant,
                     ThreadNumber = (int)numericUpDown1.Value,
-                    FormTableName = checkBox2.Checked ? null:textBox3.Text,
+                    FormTableName = checkBox2.Checked ? null: SelectedTable,
                 };
             }
             
@@ -319,11 +328,12 @@ namespace CargoTrackingWinFormService.Forms
 
         private void UpdateCargoTables(bool IsFromBuild)
         {
-            
-            List<CargoTable> CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+            CargoTableLists = CargoTrackingTableList.FillCargoTableList();
+
             if (!checkBox2.Checked)
             {
-                 CargoTableLists = CargoTableLists.Where(s => s.DBTableName == this.textBox3.Text).ToList();
+                SelectedTable = (string)comboBox2.SelectedItem;
+                CargoTableLists = CargoTableLists.Where(s => s.DBTableName == SelectedTable).ToList();
             }
 
             if (CargoTableLists==null || CargoTableLists.Count ==0)
@@ -417,31 +427,37 @@ namespace CargoTrackingWinFormService.Forms
 
                 if (checkBox2.Checked)
                 {
-                    this.textBox3.Enabled = !IsEnabled;
+                    //this.textBox3.Enabled = !IsEnabled;
+                    //comboBox2.Enabled = !IsEnabled;
+
                 }
                 else
                 {
-                    this.textBox3.Enabled = IsEnabled;
+                    //this.textBox3.Enabled = IsEnabled;
+                    //comboBox2.Enabled =  IsEnabled;
+
                 }
 
                 if (checkBox1.Checked)
                 {
                     this.BuildFrom.Enabled = !IsEnabled;
-                    this.BuildTo.Enabled = !IsEnabled;
+                    //this.BuildTo.Enabled = !IsEnabled;
                 }
                 else
                 {
                     this.BuildFrom.Enabled = IsEnabled;
-                    this.BuildTo.Enabled = IsEnabled;
+                    //this.BuildTo.Enabled = IsEnabled;
 
                 }
             }
             else
             {
                 this.numericUpDown2.Enabled = IsEnabled;
-                this.textBox3.Enabled = IsEnabled;
+               // this.textBox3.Enabled = IsEnabled;
+               // comboBox2.Enabled =  IsEnabled;
+
                 this.BuildFrom.Enabled = IsEnabled;
-                this.BuildTo.Enabled = IsEnabled;
+               // this.BuildTo.Enabled = IsEnabled;
             }
         }
 
@@ -757,15 +773,48 @@ namespace CargoTrackingWinFormService.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            cargoTrackingService = new CargoTrackingMainService();
-           // this.EnableDisabledAllData(false);
-            if (FirstInit)
+            ErrorsValidatons = new List<string>();
+
+            CheckBuildDateIsValid();
+            if (ErrorsValidatons.Count == 0)
             {
-                this.Height += 40;
-                FirstInit = false;
+                cargoTrackingService = new CargoTrackingMainService();
+                if (FirstInit)
+                {
+                    this.Height += 40;
+                    FirstInit = false;
+                }
+
+                BuildData(true);
+                
             }
+            else
+            {
+                MessageBox.Show(string.Join(",", ErrorsValidatons));
+            }
+         
+        }
+
+        private void CheckBuildDateIsValid()
+        {
+            if (!checkBox1.Checked && (BuildTo.Value == null || BuildFrom.Value == null))
+            {
+                this.ErrorsValidatons.Add("Add Valid Dates");
  
-            BuildData(true);
+            }
+            else
+            {
+                var dateSpan = BuildTo.Value - BuildFrom.Value;
+                if (dateSpan.TotalDays > (31*6))
+                {
+                    this.ErrorsValidatons.Add("The date difference must be less than 6 months");
+                }
+                if (dateSpan.TotalDays < 0)
+                {
+                    this.ErrorsValidatons.Add("'From date' must be less than 'to date'");
+                }
+            }
+            
         }
 
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
@@ -1285,12 +1334,12 @@ namespace CargoTrackingWinFormService.Forms
             if (checkBox1.Checked)
             {
                 BuildFrom.Enabled = false;
-                BuildTo.Enabled = false;
+                //BuildTo.Enabled = false;
             }
             else
             {
                 BuildFrom.Enabled = true;
-                BuildTo.Enabled = true;
+                //BuildTo.Enabled = true;
             }
         }
 
@@ -1316,11 +1365,13 @@ namespace CargoTrackingWinFormService.Forms
         {
             if (checkBox2.Checked)
             {
-                textBox3.Enabled = false;
+                //textBox3.Enabled = false;
+                comboBox2.Enabled = false;
              }
             else
             {
-                textBox3.Enabled = true;
+                //textBox3.Enabled = true;
+                comboBox2.Enabled = true;
             }
         }
 
@@ -1331,6 +1382,11 @@ namespace CargoTrackingWinFormService.Forms
             this.BuildConnectionStrings(false);
             ServiceHelper.DeleteWatermarks(this.dbDestinationConnection);
             this.label22.Text = "Watermarks Deleted";
+        }
+
+        private void BuildTo_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
