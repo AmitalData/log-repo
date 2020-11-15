@@ -1518,7 +1518,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount&quot;"
-      DefaultText="&quot;Chart Of Account Type for this line differs from the Chart of Account&quot;"
+      DefaultText="&quot;Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.&quot;"
       LocalDefaultText="&quot;סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
