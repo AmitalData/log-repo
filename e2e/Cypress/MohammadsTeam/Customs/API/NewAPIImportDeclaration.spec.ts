@@ -16,13 +16,10 @@ it('New API Import Declarations ', () => {
 
   cy.wrap(null).then(() => {
     return aPILoginHelper.APILoginSubmit().then((str) => {
-      expect(str).to.eq('foo')
       cy.wrap(null).then(() => {
         return aPICustomerHelper.GetCreateAPICustomer().then((str) => {
-          expect(str).to.eq('foo')
           cy.wrap(null).then(() => {
             return aPIImportDeclarationHelper.NewAPIImportDeclaration().then((str) => {
-              expect(str).to.eq('foo')
             })
           })
         })

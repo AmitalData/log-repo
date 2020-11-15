@@ -60,7 +60,7 @@ public GetCreateAPICustomer(){
       const Token = win.sessionStorage.getItem('Token');
       var filters = new ApiQueryFilters();
            filters.GetAll = true;
-           filters.addAdditionalFilter("EnglishName", "GE:Cusstomer", null, null, "Equal", false, false, false, "number");
+           filters.addAdditionalFilter("EnglishName", "OCR Client", null, null, "Equal", false, false, false, "number");
   
             var _APIHelper = new APIHelper();
             var URLParameter = _APIHelper.CreateParametersUrl(filters);
@@ -90,8 +90,8 @@ public GetCreateAPICustomer(){
               'Token': Token,
              },
             body: {
-              EnglishName: "GE:Cusstomer",
-              LocalName: "GE:Cusstomer",
+              EnglishName: "OCR Client",
+              LocalName: "OCR Client",
               CityName : "Guaynabo",
               CountryName : "Guaynabo",
               Tenant : Tenant,
