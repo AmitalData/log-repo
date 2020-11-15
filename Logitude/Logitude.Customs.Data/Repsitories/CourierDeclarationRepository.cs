@@ -88,6 +88,13 @@ namespace Logitude.Customs.Data.Repsitories
                            select a.DeclarationId).ToList();
             return decList;
         }
+        public List<string> GetDeclarationIdsByCourierMasterIDWithNoCourierCustomStatus(string courierMasterId, int tenant)
+        {
+            var decList = (from a in context.CourierDeclarations 
+                           where a.CourierMasterId == courierMasterId && a.Tenant == tenant && a.Declaration.CourierCustomStatus== null
+                           select a.DeclarationId).ToList();
+            return decList;
+        }
     }
 
 }
