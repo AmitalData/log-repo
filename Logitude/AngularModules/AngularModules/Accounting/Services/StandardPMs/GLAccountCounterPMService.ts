@@ -153,6 +153,7 @@ export class GLAccountCounterPMService {
         if (!entityPM) {
             
             entityPM = new GLAccountCounterPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class GLAccountCounterPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

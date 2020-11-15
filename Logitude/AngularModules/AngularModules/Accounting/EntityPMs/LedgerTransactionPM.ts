@@ -289,16 +289,17 @@ export class LedgerTransactionPM {
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName: string = null) {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
-
-            }
+    MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
+        this.IsDirty = true;
+		  	
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
+           
         }
+       }
     }
 
     private MyClone: LedgerTransactionPM;

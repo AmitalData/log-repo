@@ -83,9 +83,10 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidateErrorLogsLines();
         this.ValidateLine(errors);
-         if (errors.length == 0) {
+        if (errors.length == 0) {
             this.CurrentSession.CloseCurrentWindowEmit("Ok");
-        } else {
+        }
+         else {
             this.ValidationErrorsList = errors;
         }
     }
@@ -177,14 +178,8 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         for (var i = 0; i < this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length; i++) {
             var line = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[i];
             if(!line.IsCancelled && (line.GLAccountId ||line.ChartOfAccountId) 
-             && (line.GLAccount? line.GLAccount.ChartOfAccountsTypeCode == this.ChartOfAccountTypeCode :
-                line.ChartOfAccount? line.ChartOfAccount.TypeCode == this.ChartOfAccountTypeCode:true) 
+             && (line.ChartOfAccountTypeCode == this.ChartOfAccountTypeCode)
                 ){
-                    var mm =line.GLAccount? line.GLAccount.ChartOfAccountsTypeCode:null ;
-                    var mm2 =line.ChartOfAccount? line.ChartOfAccount.TypeCode:null;
-                    var mm3 = this.ChartOfAccountTypeCode;
-
-                    console.log(mm+" "+mm2+" "+mm3);
                 IsValid = false;
                 break;
             }

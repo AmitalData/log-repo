@@ -48,7 +48,10 @@ export class InterestEntityTypePM {
     public OldEntityPM: InterestEntityTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class InterestEntityTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestEntityType");
            
         }
+       }
     }
 
     private MyClone: InterestEntityTypePM;

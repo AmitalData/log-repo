@@ -153,6 +153,7 @@ export class ARPaymentChequePMService {
         if (!entityPM) {
             
             entityPM = new ARPaymentChequePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ARPaymentChequePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

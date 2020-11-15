@@ -491,11 +491,11 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
     }             
     private ValidateIsCancelled():boolean{
         var IsValid = true;
-        var ChartofAccounForGLAccount = this.GLAccount? this.GLAccount.ChartOfAccountsTypeCode:null;
+        var ChartofAccounForGLAccount = this.ChartOfAccountTypeCode;
         var ParentChartOfAccountTypeCode = this.ParentEntityPM.ChartOfAccountTypeCode;
-        var ChartofAccountCodeForChartofAccount =this.ChartOfAccount? this.ChartOfAccount.TypeCode:null;
-        if((ChartofAccounForGLAccount && (ChartofAccounForGLAccount!=ParentChartOfAccountTypeCode)) ||
-           (ChartofAccountCodeForChartofAccount && (ChartofAccountCodeForChartofAccount!=ParentChartOfAccountTypeCode))){
+       // var ChartofAccountCodeForChartofAccount =this.ChartOfAccount? this.ChartOfAccount.TypeCode:null;
+        if((ChartofAccounForGLAccount && (ChartofAccounForGLAccount!=ParentChartOfAccountTypeCode)) ){
+       // ||(ChartofAccountCodeForChartofAccount && (ChartofAccountCodeForChartofAccount!=ParentChartOfAccountTypeCode))){
             IsValid = false;
         }
 
@@ -559,6 +559,7 @@ public LineCancelledValidation(newValue:boolean){
             {
                 this.EntityPM.GLAccountLocalName = newValue.LocalName;
                 this.EntityPM.GLAccountEnglishName = newValue.EnglishName;
+                this.ChartOfAccountTypeCode= newValue.ChartOfAccountsTypeCode;
             }
              
             else{
@@ -653,6 +654,7 @@ public LineCancelledValidation(newValue:boolean){
             {
                 this.EntityPM.ChartOfAccountLocalName = newValue.LocalName;
                 this.EntityPM.ChartOfAccountEnglishName = newValue.EnglishName;
+                this.ChartOfAccountTypeCode= newValue.TypeCode;
             }
              
             else{
@@ -676,6 +678,13 @@ public LineCancelledValidation(newValue:boolean){
     set CreatedByUserId(newValue: string) {
         if (this.EntityPM.CreatedByUserId != newValue) {
             this.EntityPM.CreatedByUserId = newValue;
+        }
+    }
+
+    get ChartOfAccountTypeCode() { return this.EntityPM.ChartOfAccountTypeCode; }
+    set ChartOfAccountTypeCode(newValue: string) {
+        if (this.EntityPM.ChartOfAccountTypeCode != newValue) {
+            this.EntityPM.ChartOfAccountTypeCode = newValue;
         }
     }
 

@@ -298,7 +298,10 @@ export class JournalPM {
     public OldEntityPM: JournalPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -306,6 +309,7 @@ export class JournalPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Journal");
            
         }
+       }
     }
 
     private MyClone: JournalPM;

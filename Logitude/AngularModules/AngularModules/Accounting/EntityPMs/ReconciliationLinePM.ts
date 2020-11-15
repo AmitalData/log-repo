@@ -176,7 +176,10 @@ export class ReconciliationLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -186,6 +189,7 @@ export class ReconciliationLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ReconciliationLine");
            
         }
+       }
     }
 
     private MyClone: ReconciliationLinePM;
