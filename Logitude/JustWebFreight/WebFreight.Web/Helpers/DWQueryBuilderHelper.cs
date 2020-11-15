@@ -561,6 +561,7 @@ namespace WebFreight.Web.Helpers
             bool HasMeasurement = sqlStatmentDetails.Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             bool HasMultipleSelection = sqlStatmentDetails.Columns.Where(a => a.IsMultipleSelection && a.MultiSelectedValueLists.Count()>0).Count() > 0;
             string FinalSelectStmt = sqlStatmentDetails.FinalSelectStmt;
+            string selectFieldTenantSql = string.Empty;
             string FinalGroupByStmt = sqlStatmentDetails.FinalGroupByStmt;
             string Fact = sqlStatmentDetails.FromTables.Find(a => a == "Fact");
             DWObjectTablePM dWObjectTablePM = null;
@@ -580,9 +581,8 @@ namespace WebFreight.Web.Helpers
             var DWSettings = new DWHSettingRepository(Tenant);
             var isParentTenant = DWSettings.IsParentTenant(Tenant);
 
-
-            //FinalSelectStmt +="," + ( !isParentTenant ?  (Fact + ".[Source Tenant]  ") : (Fact  +".[Parent Tenant]")) + "as Tenant";
-            FinalSelectStmt += " from " + Fact;
+            selectFieldTenantSql = "," + (!isParentTenant ? (Fact + ".[Source Tenant]  ") : (Fact + ".[Parent Tenant]")) + "as Tenant";
+            FinalSelectStmt += "@SelectFieldTenantSql from " + Fact;
 
             if (Filters != null)
             {
@@ -749,6 +749,8 @@ namespace WebFreight.Web.Helpers
             }
 
             sqlCommandDefinition.SQLString = FinalQuery + PagingString + offsetPagingString;
+            if (sqlCommandDefinition.SQLString.Contains("group by")) selectFieldTenantSql = "";
+            sqlCommandDefinition.SQLString = sqlCommandDefinition.SQLString.Replace("@SelectFieldTenantSql", selectFieldTenantSql);
 
             return sqlCommandDefinition;
         }
