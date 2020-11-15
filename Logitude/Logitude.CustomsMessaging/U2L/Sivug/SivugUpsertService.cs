@@ -1020,7 +1020,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 if (!string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType))
                 {
-                    if (invoiceItem.AdditionalQuantity != null)
+                    if (invoiceItem.AdditionalQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantity))
                     {
                         if (decimal.TryParse(invoiceItem.AdditionalQuantity, out decimal1))
                         {
