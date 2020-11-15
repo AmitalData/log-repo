@@ -595,6 +595,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string chartOfAccountTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartOfAccountTypeCode  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountTypeCode;
+		 }
+		 set
+		 {
+		   if(chartOfAccountTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountTypeCode",OldValue=chartOfAccountTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -153,6 +153,7 @@ export class LedgerTransactionPMService {
         if (!entityPM) {
             
             entityPM = new LedgerTransactionPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class LedgerTransactionPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

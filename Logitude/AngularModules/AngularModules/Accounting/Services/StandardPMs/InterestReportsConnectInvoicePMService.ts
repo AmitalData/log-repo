@@ -153,6 +153,7 @@ export class InterestReportsConnectInvoicePMService {
         if (!entityPM) {
             
             entityPM = new InterestReportsConnectInvoicePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class InterestReportsConnectInvoicePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

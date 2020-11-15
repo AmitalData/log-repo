@@ -83,9 +83,10 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidateErrorLogsLines();
         this.ValidateLine(errors);
-         if (errors.length == 0) {
+        if (errors.length == 0) {
             this.CurrentSession.CloseCurrentWindowEmit("Ok");
-        } else {
+        }
+         else {
             this.ValidationErrorsList = errors;
         }
     }
@@ -120,8 +121,8 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             }
         }
     }
-
     
+  
     ValidateErrorLogsLines(){
         var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         var RequiredChartsofAccountFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountId"));
@@ -160,6 +161,9 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
       }
     }
 
+    ValidateLinesAfterChangedChartsofAccountTypeCode(){
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> s.LineCancelledValidation());
+    }
  
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
         this.DataContext = dataContext;
@@ -173,7 +177,9 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         var IsValid:boolean=true;
         for (var i = 0; i < this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length; i++) {
             var line = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[i];
-            if(!line.IsCancelled && (line.GLAccountId ||line.ChartOfAccountId)){
+            if(!line.IsCancelled && (line.GLAccountId ||line.ChartOfAccountId) 
+             && (line.ChartOfAccountTypeCode == this.ChartOfAccountTypeCode)
+                ){
                 IsValid = false;
                 break;
             }
@@ -186,6 +192,7 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             var IsValid= this.ValidateChartofAccountType();
             if(IsValid){
                 this.DataContext.ChartOfAccountTypeCode = newValue;
+                this.ValidateLinesAfterChangedChartsofAccountTypeCode();
                 this.SetFilterItems();
             }
             else{

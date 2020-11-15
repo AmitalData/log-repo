@@ -136,7 +136,10 @@ export class GLAccountInterestPeriodPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -146,6 +149,7 @@ export class GLAccountInterestPeriodPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccountInterestPeriod");
            
         }
+       }
     }
 
     private MyClone: GLAccountInterestPeriodPM;

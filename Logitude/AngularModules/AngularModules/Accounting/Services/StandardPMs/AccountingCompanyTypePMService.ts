@@ -153,6 +153,7 @@ export class AccountingCompanyTypePMService {
         if (!entityPM) {
             
             entityPM = new AccountingCompanyTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class AccountingCompanyTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

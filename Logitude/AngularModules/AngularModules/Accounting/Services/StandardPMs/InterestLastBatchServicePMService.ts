@@ -153,6 +153,7 @@ export class InterestLastBatchServicePMService {
         if (!entityPM) {
             
             entityPM = new InterestLastBatchServicePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class InterestLastBatchServicePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

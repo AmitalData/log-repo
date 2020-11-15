@@ -48,7 +48,10 @@ export class InterestReportsConnectInvoicePM {
     public OldEntityPM: InterestReportsConnectInvoicePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class InterestReportsConnectInvoicePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestReportsConnectInvoice");
            
         }
+       }
     }
 
     private MyClone: InterestReportsConnectInvoicePM;

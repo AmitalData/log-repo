@@ -38,7 +38,10 @@ export class GLAccountTotalDateTypePM {
     public OldEntityPM: GLAccountTotalDateTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -46,6 +49,7 @@ export class GLAccountTotalDateTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccountTotalDateType");
            
         }
+       }
     }
 
     private MyClone: GLAccountTotalDateTypePM;
