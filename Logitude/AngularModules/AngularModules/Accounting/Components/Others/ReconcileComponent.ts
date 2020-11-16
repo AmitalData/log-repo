@@ -19,7 +19,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {AppTool} from '../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
@@ -211,6 +211,7 @@ export class LineModel extends BaseComponent {
     moduleId: './Accounting/Components/Others/',
     providers: [EntityListService],
     templateUrl: 'ReconcileComponent.html',
+    styleUrls: ['ReconcileComponent.css']
 })
 
 export class ReconcileComponent extends BaseComponent implements OnInit {
@@ -230,45 +231,63 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
     public ChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
-    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
     public filterAgrs: ApiQueryFilters;
-
-    //public SelectedLines: LineModel[] = [];
-    SelectedLines: ObservableCollection;//SelectedLines[];
     public isRTL: boolean = false;
-
-    public OperatorsList: any[] = [];
-
-    IsEntityValid: boolean = true;
-
-    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
-    _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
-    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-
-
-
+    public Operators: any[] = [];
+    public IsEntityValid: boolean = true;    
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
+    public SelectedLines: ObservableCollection= new ObservableCollection([]);
+    public _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+    public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
+    public entityListService: EntityListService= new EntityListService();
+
+
+    constructor(private CD: ChangeDetectorRef) {
         super();
-        if(ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this._entityListService = new EntityListService();
+
+        this.InitComponent();
+    }
+
+    private InitComponent()
+    {
+        this.SetComponentRTL();
+
+        this.GetTenant();
+
+        this.InitEntity();
+
+        this.InitFilters();
+    }
+
+    private GetTenant()
+    {
         this.TenantPM = SessionLocator.TenantPM;
+    }
+
+    private SetComponentRTL()
+    {
+        if (ObjectsLocator.GlobalSetting)
+            this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+    }
+
+    private InitEntity()
+    {
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
-        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
-        this.SelectedLines = new ObservableCollection([]);
-
-        var filters = new ApiQueryFilters();
         this.CurrencyId = this.EntityPM.CurrencyId;
+    }
 
-        //#region initialize operators
-        //this.OperatorsList =   ['Equals',
-        //                        'Not Equal',
-        //                        'Larger Than',
-        //                        'Less Than',
-        //                        'Less Than Or Equal',
-        //    'Greater Than Or Equal',];
-        this.OperatorsList =
+    private InitFilters()
+    {
+        this.BuildAmountFiltersOperatorsList();
+        this.InitDateFilter();
+    }
+
+    private BuildAmountFiltersOperatorsList()
+    {
+        this.Operators =
             [{ EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
             { EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
             { EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
@@ -276,8 +295,20 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             { EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
             { EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
             ];
-        //#endregion
+        this.openAmountSelectedOperator = this.Operators[0];
+        this.foreignAmountSelectedOperator = this.Operators[0];
+    }
 
+    private InitDateFilter()
+    {
+        this.DateFilterPresetsList =
+            [
+                { EnglishName: 'Last 7 days', LocalName: TextCodeTranslator.Translate("Accounting.O.Last7days") },
+                { EnglishName: 'Last month', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastmonth") },
+                { EnglishName: 'Last 3 months', LocalName: TextCodeTranslator.Translate("Accounting.O.Last3months") },
+                { EnglishName: 'Last year', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastyear") },
+                { EnglishName: 'Custom', LocalName: TextCodeTranslator.Translate("Accounting.O.Custom") },
+            ];
     }
 
     public ExportToExcelClick(){
@@ -412,15 +443,31 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    private selectedOperator: any;
-    get SelectedOperator() { return this.selectedOperator; }
-    set SelectedOperator(value: any) {
-        if (this.selectedOperator != value) {
-            this.selectedOperator = value;
-            this.OpenAmountTextChanged(this.openAmount,true);
+    foreignAmount: number;
+    get ForeignAmount() { return this.foreignAmount; }
+    set ForeignAmount(value: number) {
+        if (this.foreignAmount != value) {
+            this.foreignAmount = value;
         }
     }
 
+
+    private openAmountSelectedOperator: any;
+    get SelectedOperator() { return this.openAmountSelectedOperator; }
+    set SelectedOperator(value: any) {
+        if (this.openAmountSelectedOperator != value) {
+            this.openAmountSelectedOperator = value;
+            this.OpenAmountTextChanged(this.openAmount,true);
+        }
+    }
+    private foreignAmountSelectedOperator: any;
+    get SelectedOperator2() { return this.foreignAmountSelectedOperator; }
+    set SelectedOperator2(value: any) {
+        if (this.foreignAmountSelectedOperator != value) {
+            this.foreignAmountSelectedOperator = value;
+            this.ForeignAmountTextChanged(this.foreignAmount,true);
+        }
+    }
     private automaticReconcileId: string;
     get AutomaticReconcileId() { return this.automaticReconcileId; }
     set AutomaticReconcileId(value: string) {
@@ -495,16 +542,42 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.openAmountFilter = null;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
-        // let TempData = [];
 
-        // if (this.IsDraft == true) {
-        //     this.SelectedLines.Collection.forEach((value, key) => {
-        //         if (value.ledgerTransaction.Mark == true) {
-        //             TempData.push(value);
-        //         }
-        //     });
-        // }
-        // this.SelectedLines = new ObservableCollection(TempData);
+    }
+    ForeignAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
+        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.SelectedOperator2)) {
+
+            this.timerToken = setTimeout(() => {
+                var ForeignAmountFilterOperator = this.SelectedOperator2.EnglishName.replace(/ /g, ''); // remove white spaces
+                if (ForeignAmountFilterOperator == "Equals")
+                {
+                    this.foreignAmountFilter = new FilterItem("ForeignAmount", searchtext, -1 * searchtext, null, ForeignAmountFilterOperator, false, false, false, "number", false);
+                }
+                else if (ForeignAmountFilterOperator == "LessThan")
+                {
+                    searchtext = Math.abs(searchtext);
+                    this.foreignAmountFilter = new FilterItem("ForeignAmount", -1 * --searchtext, +searchtext , null, "Between", false, false, false, "number", false);
+                }
+                else if (ForeignAmountFilterOperator == "LessThanOrEqual")
+                {
+                    searchtext = Math.abs(searchtext);
+                    this.foreignAmountFilter = new FilterItem("ForeignAmount", -1 * searchtext, +searchtext, null, "Between", false, false, false, "number", false);
+                }
+                else
+                {
+                    this.foreignAmountFilter = new FilterItem("ForeignAmount", searchtext, null, null, ForeignAmountFilterOperator, false, false, false, "number", false);
+                }
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+            }, 700);
+
+        } else {
+            if (OperatorChanged == true && AppTool.IsNullOrEmpty(searchtext)) {
+                return;
+            }
+            this.openAmountFilter = null;
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+        }
+
     }
     //#endregion
 
@@ -615,7 +688,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.openAmountFilter) {
              filterAgrs.AdditionalFilters.push(this.openAmountFilter);
         }
-
+        if (this.foreignAmountFilter) {
+            filterAgrs.AdditionalFilters.push(this.foreignAmountFilter);
+       }
              filterAgrs.PageSize = 30;
              filterAgrs.PageIndex = 1; // decremented 1 in the service
              filterAgrs.GetAll = true;
@@ -754,13 +829,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region Grid Data Source
-    private _entityListService: EntityListService;
+    private _entityListService: EntityListService = new EntityListService();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
     dateFilter: FilterItem;
     currencyFilter: FilterItem;
     searchFieldFilter: FilterItem;
     openAmountFilter: FilterItem;
+    foreignAmountFilter: FilterItem;
 
     public columns: any[] = null;
     public QueryColumns: QueryColumnPM[] = [];
@@ -991,13 +1067,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        this.filterAgrs  = new ApiQueryFilters;
-        //if (this.dateFilter) {
-        //    filters.AdditionalFilters.push(this.dateFilter);
-        //} else {
-        //    return;
-        //}
+        this.filterAgrs = new ApiQueryFilters;
 
+        if (this.dateFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.dateFilter);
+        }
 
         if (this.currencyFilter) {
             this.filterAgrs.AdditionalFilters.push(this.currencyFilter);
@@ -1007,6 +1081,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
         if (this.openAmountFilter) {
             this.filterAgrs.AdditionalFilters.push(this.openAmountFilter);
+        }
+        if (this.foreignAmountFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.foreignAmountFilter);
         }
 
         this.filterAgrs.PageSize = take;
@@ -1155,7 +1232,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.openAmountFilter) {
             filters.AdditionalFilters.push(this.openAmountFilter);
         }
-
+        if (this.foreignAmountFilter) {
+            filters.AdditionalFilters.push(this.foreignAmountFilter);
+        }
         filters.PageSize = 100;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
@@ -1390,4 +1469,226 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     }
     //#endregion
+
+    
+    private _showMoreFilters : string;
+    public get showMoreFilters() : string {
+        return this._showMoreFilters;
+    }
+    public set showMoreFilters(v : string) {
+        this._showMoreFilters = v;
+    }
+
+    public DateFilterPresetsList: any[] = [];
+
+    private selectedDatePreset: any;
+    get SelectedDatePreset() { return this.selectedDatePreset; }
+    set SelectedDatePreset(value: any) {
+        if (this.selectedDatePreset != value) {
+            this.selectedDatePreset = value;
+
+            this.ChangeDate();
+            this.FiltersChanged();
+        }
+    }
+    ChangeDate() {
+        if (this.SelectedDatePreset) 
+        {
+            this.DisableDates();
+            this.SetDatesFieldsByPreset();
+        } 
+        else 
+        {
+            this.FromDate = null;
+            this.ToDate = null;
+        }
+        this.ReloadScreen();
+    }
+
+    
+    fromDate: Date;
+    private SetDatesFieldsByPreset()
+    {
+        var datesHelper = new DatesHelper();
+        switch (this.SelectedDatePreset.EnglishName) {
+            case "Today":
+                {
+                    this.FromDate = datesHelper.TodayDate;
+                    this.ToDate = datesHelper.TomorrowDate;
+                    break;
+                }
+            case "Yesterday":
+                {
+                    this.FromDate = datesHelper.YesterdayDate;
+                    this.ToDate = datesHelper.TodayDate;
+                    break;
+                }
+            case "Last 7 days":
+                {
+                    this.FromDate = datesHelper.LastSevenDaysDate;
+                    this.ToDate = datesHelper.TomorrowDate;
+                    break;
+                }
+            case "Last month":
+                {
+                    this.FromDate = datesHelper.LastThirtyDaysDate;
+                    this.ToDate = datesHelper.TomorrowDate;
+                    break;
+                }
+            case "Last 3 months":
+                {
+                    this.FromDate = datesHelper.LastThreeMonthDate;
+                    this.ToDate = datesHelper.TomorrowDate;
+                    break;
+                }
+            case "Current year":
+                {
+                    this.FromDate = datesHelper.CurrentYearFromDate;
+                    this.ToDate = datesHelper.CurrentYearToDate;
+                    break;
+                }
+            case "Last year":
+                {
+                    this.FromDate = datesHelper.LastYearFromDate;
+                    this.ToDate = datesHelper.LastYearToDate;
+                    break;
+                }
+            case "Custom":
+                {
+                    this.FromDate = null;
+                    this.ToDate = null;
+                    this.EnableDates();
+                    this.CD.detectChanges();
+                    break;
+                }
+        }
+    }
+
+    private EnableDates()
+    {
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+    }
+    private DisableDates()
+    {
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+    }
+
+    get FromDate() { return this.fromDate; }
+    set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+            if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
+                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+            else 
+                this.dateFilter = null;
+            this.ReloadScreen();
+        }
+    }
+
+    toDate: Date;
+    get ToDate() { return this.toDate; }
+    set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+            if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
+                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+            else 
+                this.dateFilter = null;
+            this.ReloadScreen();
+        }
+    }
+
+    FiltersChanged() {
+        var t = setTimeout(() => {
+            
+        }, 700);
+    }
+
+
+    public get areFiltersSelected(): boolean
+    {
+        var selected =
+            (!AppTool.IsNullOrEmpty(this.OpenAmount)
+                || !AppTool.IsNullOrEmpty(this.ForeignAmount)
+                || (!AppTool.IsNullOrEmpty(this.FromDate) && !AppTool.IsNullOrEmpty(this.ToDate)));
+        return selected;
+    }
+
+    ResetFilters(){
+        this.ForeignAmount = null;
+        this.OpenAmount = null;
+        this.FromDate = null;
+        this.ToDate = null;
+    }
+
+    
+}
+
+export class DatesHelper
+ {
+    constructor() {
+        
+        this.InitDates();
+    }
+
+    public TomorrowDate: Date; 
+    public TodayDate: Date; 
+    public YesterdayDate: Date; 
+    public LastSevenDaysDate: Date; 
+    public LastThirtyDaysDate: Date; 
+    public LastThreeMonthDate: Date; 
+    public CurrentYearFromDate: Date; 
+    public CurrentYearToDate: Date; 
+    public LastYearFromDate: Date; 
+    public LastYearToDate: Date; 
+    
+
+    private InitDates()
+    {
+        this.TomorrowDate = this.GetTomorrowDate();
+        this.TodayDate = this.GetTodayDate();
+        this.YesterdayDate = this.GetNewDateWithAddedDays(-1);
+        this.LastSevenDaysDate = this.GetNewDateWithAddedDays(-7);
+        this.LastThirtyDaysDate = this.GetNewDateWithAddedDays(-30);
+        this.LastThreeMonthDate = this.GetNewDateWithAddedDays(-90);
+        this.CurrentYearToDate = this.GetNewDateWithAddedDays( 1);
+        this.LastYearFromDate = this.GetNewDateWithAddedDays(-365);
+        this.LastYearToDate = this.GetNewDateWithAddedDays( 1);    
+        this.CurrentYearFromDate = this.GetCurrentYearDate();
+    }
+
+    private GetTomorrowDate()
+    {
+        var date = new Date();
+        date.setHours(23, 59, 59, 59);
+        return date;
+    }
+
+    private GetTodayDate()
+    {
+        var date = new Date();
+        this.ResetHours(date);
+        return date;
+    }
+
+    private GetCurrentYearDate()
+    {
+        var date = new Date(new Date().getFullYear(), 0, 1);
+        this.ResetHours(date);
+        return date;
+    }
+
+    private GetNewDateWithAddedDays(daysToAdd: number)
+    {
+        var date  = DateTool.AddDays((new Date()), daysToAdd);
+        this.ResetHours(date);
+        return date;
+    }
+
+    private ResetHours(date: Date)
+    {
+        date.setUTCHours(0, 0, 0, 0);
+    }
 }
