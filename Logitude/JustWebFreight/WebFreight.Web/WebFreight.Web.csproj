@@ -1033,6 +1033,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancellationRequestStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferantTeamViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
+    <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
