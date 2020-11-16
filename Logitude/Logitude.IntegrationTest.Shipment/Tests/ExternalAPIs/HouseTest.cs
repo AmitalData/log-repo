@@ -1,4 +1,4 @@
-﻿
+﻿    
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.IntegrationTest.Shipment.EntitiesInitializer;
 using Logitude.IntegrationTest.Shipment.Services;
@@ -27,9 +27,9 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
             await CreateShipment();
             await GetShipment();
-            await UpdateShipmentWithInvalidFutureATD();
-            await UpdateShipmentWithInvalidFutureATA();
-            await UpdateShipmentWithValidDates();
+            //await UpdateShipmentWithInvalidFutureATD();
+            //await UpdateShipmentWithInvalidFutureATA();
+            //await UpdateShipmentWithValidDates();
         }
         private async Task CreateShipment()
         {
@@ -45,25 +45,38 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                     Code = "E",
                 },
 
-                TransportMode = new BL.InfrastructureModel.APIDataContract.ApiV1.TransportMode()
+                TransportMode = new BL.InfrastructureModel.APIDataContract.ApiV1.TransportMode() // 
                 {
                     Code = "O",
                 },
 
-                ShipmentType = new ShipmentType()
+                ShipmentType = new ShipmentType() //
                 {
-                    Code = "FCLD",
+                    Code = "LCL",
                 },
 
-                Shipper = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
+                Shipper = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
                 {
-                    Code = "10009",
+                    Code = "",
+                    PartnerCode = "MSALOG",
+                    IsDisconnectedFromGLAccount = false
+                },
+                Consignee = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
+                {
+                    Code = "",
+                    PartnerCode = "MSALOG",
+                    IsDisconnectedFromGLAccount = false
                 },
 
-                ShipperReference1 = "SR1",
-                ShipperReference2 = "SR2",
-
-                GrossWeightUnit = new BL.CommonDataModel.APIDataContract.ApiV1.WeightUnit()
+                ConsigneeReference1 = "SR1",
+                ConsigneeReference2 = "SR2",
+                Customer = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
+                {
+                    Code = "",
+                    PartnerCode = "MSALOG",
+                    IsDisconnectedFromGLAccount = false
+                },
+                GrossWeightUnit = new BL.CommonDataModel.APIDataContract.ApiV1.WeightUnit()//
                 {
                     Code = "KG",
                 },
@@ -73,66 +86,49 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                     Code = "KG",
                 },
 
-                VolumeUnit = new BL.InfrastructureModel.APIDataContract.ApiV1.VolumeUnit()
+                VolumeUnit = new BL.InfrastructureModel.APIDataContract.ApiV1.VolumeUnit()//
                 {
-                    Code = "CBM",
+                    Code = "CBI",
                 },
+
+                HouseNo = "CTIBGUM203248LAX", //
+
+                HouseDate = DateTime.Parse("2020-11-11T10:10:48"), //
 
                 Commodity = "653",
 
-                Incoterm = new BL.CommonDataModel.APIDataContract.ApiV1.Incoterm()
+                Incoterm = new BL.CommonDataModel.APIDataContract.ApiV1.Incoterm()//
                 {
-                    Code = "CIF",
+                    Code = "CFR",
                 },
-
-                MainCarriageCarrier = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
-                {
-                    Code = "DD",
-                },
-
-                MainCarriageCarrierNumber = "CC",
-
-                MainCarriageATD = new DateTime(2018, 12, 31),
 
                 OceanOrInlandPackages = new List<OceanOrInlandPackage>(),
-                MainCarriageLegs = new List<MainCarriageLeg>(),
             };
 
             entityPM.OceanOrInlandPackages.Add(new OceanOrInlandPackage()
             {
                 PackageType = new BL.CommonDataModel.APIDataContract.ApiV1.PackageType()
                 {
-                    Code = "20BU",
+                    Code = "IP",
+                    PartnerCode=""
                 },
-
+                Length =22,
+                Width = 25,
+                Height=5,
                 Pieces = 1,
+                Volume = 1.59,
+                GrossWeight = 36,
+                Reference1 = "AUTO PARTS",
+                Reference2 = "15061200",
+                Reference3 = "10/28/2020",
+                Reference4 = "4236564",
+                IsDangerous =false,
+                Notes = "ROUGH COUNTRY",
+              
 
-                GrossWeight = 250,
             });
 
-            entityPM.MainCarriageLegs.Add(new MainCarriageLeg()
-            {
-                LegIndex = 1,
-
-                Carrier = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
-                {
-                    Code = "DD",
-                },
-
-                FromPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
-                {
-                    Code = "DE222",
-                },
-
-                ToPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
-                {
-                    Code = "DE223",
-                },
-
-                MasterNumber = "456",
-                CarrierNumber = "123",
-            });
-
+       
             shipmentId = await service.CreateHouse(entityPM);
         }
 
