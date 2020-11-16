@@ -17,14 +17,32 @@ export class ReceivablesTab {
         this.CreateInvoice("ARInvoice");
         this.FillInvoiceDetailes();
         this.GoToPaymentsTabInARInvoice(this.EntityNumber);
+        cy.server();
+        cy.route({
+            method: 'GET',
+            url: '**/shipment/GetSingle?id=**',
+            onResponse: (xhr) => {
+                expect(xhr.status).to.eq(200);
+            }
+        }).as('entityLoaded');
         this.BackToShipmentsTab(this.count);
+        cy.wait('@entityLoaded');
     }
     private AddCreditNoteInvoice() {
         this.AddReceivable("-" + this.EntityNumber);
         this.CreateInvoice("CreditNote");
         this.FillInvoiceDetailes();
         this.count++;
+        cy.server();
+        cy.route({
+            method: 'GET',
+            url: '**/shipment/GetSingle?id=**',
+            onResponse: (xhr) => {
+                expect(xhr.status).to.eq(200);
+            }
+        }).as('entityLoaded');
         this.BackToShipmentsTab(this.count);
+        cy.wait('@entityLoaded');;
     }
     private GoToReceivablesTab() {
         cy.get('#ShipmentTHReceivables').click();
@@ -66,15 +84,15 @@ export class ReceivablesTab {
         Resolvers.ButtonResolver.Selector('#ARPayment-SaveClose').Click();
         Resolvers.ButtonResolver.Selector('#Disconnect').Click();
         Resolvers.ButtonResolver.Selector('#Connect').Click();
-      
     }
 
     private BackToShipmentsTab(count: number) {
        // cy.get('#ARInvoiceBSaveAsDraft').click();
         Resolvers.ButtonResolver.Selector('#BackButton_' + count).Click();
-     //   cy.get('.ConfirmWindow').should('be.visible')
-        Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();  
+       //   cy.get('.ConfirmWindow').should('be.visible')
+       Resolvers.ButtonResolver.Selector('#ConfirmWindow_Yes_0').Click();  
         Resolvers.WindowResolver.ShouldBeClosed();
+      
     }
 
     
@@ -82,7 +100,7 @@ export class ReceivablesTab {
         cy.server();
         cy.route({
             method: 'GET',
-            url: '**/' + urls + '**',
+            url: '**/shipment',
             onResponse: (xhr) => {
                 expect(xhr.status).to.eq(200);
             }
