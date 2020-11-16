@@ -79,4 +79,14 @@ export class EditComponentResolver extends AbstractResolver implements IResolver
         this.Reset();
     }
 
+    public Close() {
+        
+        cy.get(this.GetContainer()).find('#EditComponentCellId_0_' + this.index).then((element) => {
+            cy.wrap(element).find('BackButton').click({ force: true });
+        });
+        //cy.get(this.GetContainer()).find('.LogitudeEditComponent').eq(this.index).then((element) => {
+        //    cy.wrap(element).find('BackButton').click();
+        //});
+        this.Reset();
+    }
 }
