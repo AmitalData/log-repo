@@ -157,7 +157,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
             var filters = new ApiQueryFilters();
             filters.PageIndex = 0;
-            filters.PageSize = 300;
+            filters.PageSize = 500;
 
             filters.Filter1Name = "BillToId";
             filters.Filter1Value = this.EntityPM.BillToId;
