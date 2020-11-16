@@ -379,7 +379,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this._isAllSelected = v;
 
         if (v) {
-            this.GetFirst100LedgerToReconcile();
+            this.GetFirst500LedgerForReconciliation();
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
@@ -1112,12 +1112,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     //#endregion
 
-    GetFirst100LedgerToReconcile()
+    GetFirst500LedgerForReconciliation()
     {
         this.ValidationErrorsList = [];
         var filters = this.GetAPIFilters();
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
-        this._LedgerTransactionExtendedListService.getFirst100LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.GetFirst500LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
             var mm: ServiceResponse = myResult;
             var first100Transactions = mm.Result;
             if (!mm.HasError) {
