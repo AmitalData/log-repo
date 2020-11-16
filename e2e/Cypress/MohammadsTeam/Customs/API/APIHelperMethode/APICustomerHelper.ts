@@ -22,8 +22,8 @@ public CreateAPICustomer(){
           'Token': Token,
          },
         body: {
-          EnglishName: "GE:Cusstomer",
-          LocalName: "GE:Cusstomer",
+          EnglishName:  "OCR Client",
+          LocalName:  "OCR Client",
           CityName : "Guaynabo",
           CountryName : "Guaynabo",
           Tenant : Tenant,
