@@ -385,6 +385,7 @@
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />
     <Compile Include="Services\ReportSchedulerTaskService.cs" />
     <Compile Include="Services\SFTPSchedulerTaskService.cs" />
+    <Compile Include="Tasks\DeleteOldCargoTrackingData.cs" />
     <Compile Include="Tasks\DeleteOldCommunicationLogsTask.cs" />
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
     <Compile Include="Tasks\GLAccountsCSVTask.cs" />
