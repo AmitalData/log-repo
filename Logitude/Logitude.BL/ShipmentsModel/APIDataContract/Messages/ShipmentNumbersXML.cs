@@ -21,8 +21,29 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
         public static Shipments GetShipmentNumbersXMLMessage(GetShipmentNumbers entity, int tenant)
         {
             IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-            IQueryable<Shipment> shipments = myContext.Shipments.Include("ShipmentMasterData").Include("ShipmentMasterData.MainCarriageCarrierCard").Where(d => d.Tenant == tenant
-            && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(entity.FromDate)
+
+            IQueryable<ShipmentPM> shipments =
+                (from s in myContext.Shipments.Include("MainCarriageCarrierCard")
+                 join sm in myContext.ShipmentMasterDatas
+                 on s.MasterShipmentDataId equals sm.Id
+                 into shipmentJoin
+                 from m in shipmentJoin.DefaultIfEmpty()
+                 where s.Tenant == tenant
+                 select new ShipmentPM()
+                 {
+                     ShipmentNumber = s.ShipmentNumber,
+                     CreateDateTime = s.CreateDateTime,
+                     DirectionId = s.DirectionId,
+                     TransportModeId=s.TransportModeId,
+                     ShipmentLevelCode = s.ShipmentLevelCode,
+                     MainCarriageCarrierCode = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.Code : null,
+                     House = s.House,
+                     MasterShipmentNumber  =m.MasterShipmentNumber,
+                     LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
+                 });
+
+            shipments = shipments.Where(d => 
+            System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(entity.FromDate)
             && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(entity.ToDate));
 
             if (!string.IsNullOrEmpty(entity.Direction))
@@ -36,7 +57,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 
             if (!string.IsNullOrEmpty(entity.Carrier))
             {
-                shipments = shipments.Where(o => o.ShipmentMasterData.MainCarriageCarrierCard.Code == entity.Carrier);
+                shipments = shipments.Where(o => o.MainCarriageCarrierCode == entity.Carrier);
             }
                 
             if (!string.IsNullOrEmpty(entity.House))
@@ -44,15 +65,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 
             if (!string.IsNullOrEmpty(entity.Master))
             {
-                if (entity.TransportMode == "A")
-                {
-                    shipments = shipments.Where(o => !string.IsNullOrEmpty(o.ShipmentMasterData.AirlinePrefix) && !string.IsNullOrEmpty(o.ShipmentMasterData.Master) &&
-                    o.ShipmentMasterData.AirlinePrefix + "-" + o.ShipmentMasterData.Master == entity.Master);
-                }
-                else
-                {
-                    shipments = shipments.Where(o => o.ShipmentMasterData.Master == entity.Master);
-                }
+                shipments = shipments.Where(o => o.LongMaster == entity.Master);
             }
 
             if (!string.IsNullOrEmpty(entity.ContainerNumber))
@@ -70,26 +83,13 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
                 ShipmentList = shipments.ToList().Select(x => new ShipmentResponseItem()
                 {
                     ShipmentNumber = SplitBySlash(x.ShipmentNumber),
-                    MasterShipmentNumber = x.ShipmentLevelCode == "H" ? GetHouseData(x.MasterShipmentDataId, myContext) : " ",
+                    MasterShipmentNumber = x.ShipmentLevelCode == "H" ? SplitBySlash(x.MasterShipmentNumber) : " ",
                     CreateDate = x.CreateDateTime
                 }).ToList(),
             };
             return response;
         }
 
-        private static string GetHouseData(string masterShipmentDataId, IShipmentsContext myContext)
-        {
-            var masterShipmentNumber = " ";
-            ShipmentMasterData masterData = (from a in myContext.ShipmentMasterDatas
-                                             where a.Id == masterShipmentDataId
-                                             select a).FirstOrDefault();
-
-            if (masterData != null)
-            {
-                masterShipmentNumber = SplitBySlash(masterData.MasterShipmentNumber);
-            }
-            return masterShipmentNumber;
-        }
 
         public static void ShipmentDataMappingValidating(GetShipmentNumbers entity, int tenant)
         {
