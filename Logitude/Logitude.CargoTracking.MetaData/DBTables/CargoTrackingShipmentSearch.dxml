@@ -47,6 +47,8 @@
   <Index
     Columns="Tenant,SearchFields,IsPublic" />
   <Index
+    Columns="Tenant,ShipmentId,IsPublic" />
+  <Index
     Columns="ShipmentId" />
   <Index
     Columns="ShipmentDate" />
