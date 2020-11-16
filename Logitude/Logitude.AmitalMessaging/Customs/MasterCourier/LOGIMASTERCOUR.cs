@@ -86,6 +86,8 @@ public partial class LogitudeMasterCourier
 
     private string packageQuantityInMAWBField;
 
+    private string unifreightLeadingFileField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -304,6 +306,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.packageQuantityInMAWBField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string UnifreightLeadingFile
+    {
+        get
+        {
+            return this.unifreightLeadingFileField;
+        }
+        set
+        {
+            this.unifreightLeadingFileField = value;
         }
     }
 }
