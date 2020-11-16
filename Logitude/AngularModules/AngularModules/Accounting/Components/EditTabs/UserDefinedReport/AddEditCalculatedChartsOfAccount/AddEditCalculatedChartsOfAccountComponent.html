@@ -584,7 +584,7 @@
                         <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="'center'" style="margin-top: 4px;"> 
                                 <!-- <img *ngIf="item.IsCancelled" src="./Images/CheckBoxIcon.png" />     -->
-                                <LogCheckBox [HideColumns]="true" [IsDisabled]="item.fatherComponent.IsCancelled" [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogCheckBox>
+                                <LogCheckBox [HideColumns]="true"   [ObjectFieldName]="'IsCancelled'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogCheckBox>
 
                             </div>
                         </log-cell-template>

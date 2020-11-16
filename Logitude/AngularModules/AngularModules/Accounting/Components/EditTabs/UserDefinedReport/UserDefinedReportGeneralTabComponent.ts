@@ -292,6 +292,8 @@ export class CalculatedChartsOfAccountItem extends BaseComponent {
         }
     }
 
+    
+
     get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
     set UpdatedByUserId(newValue: string) {
         if (this.EntityPM.UpdatedByUserId != newValue) {
@@ -388,7 +390,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
             //if(this.GLAccountId && this.ChartOfAccountIdForValidate){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
-                var MainlLines = this.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
+                var MainlLines = this.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection.filter(s=>s.IsCancelled!=true);
                 if(MainlLines!=null && this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
                     MainlLines = MainlLines.concat(this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
@@ -435,7 +437,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
           //  if(this.ChartOfAccountId){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
-                var MainlLines = Line.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
+                var MainlLines = Line.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection.filter(s=>s.IsCancelled!=true);;
                 if(MainlLines!=null && Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
                     MainlLines = MainlLines.concat(Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
