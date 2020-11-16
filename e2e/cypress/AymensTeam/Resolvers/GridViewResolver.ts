@@ -16,7 +16,6 @@ export class GridViewResolver extends AbstractResolver implements IResolver {
             .find(rowSelector)
             .eq(indexOfRow)
             .then((element) => {
-
                 const selector = 'iconbutton[ng-reflect--name=\"' + 'Delete' + '\"]';
                 cy.wrap(element).find(selector).click({ force: true });
 

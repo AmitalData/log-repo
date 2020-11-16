@@ -1,12 +1,12 @@
 import { Resolvers } from "../../Resolvers/Resolvers";
 
 export class RoutingTab {
-
-    public RunRoutingTabScenarios() {
+    public RunRoutingTabScenarios(direction: string, transportMode: string) {
         this.GoToRoutingTab();
         this.FillDates();
-        this.AddPickupDeilvery();
-
+        if (direction != 'D' && transportMode != 'I') {
+            this.AddPickupDeilvery();
+        }
     }
     private GoToRoutingTab() {
         cy.get('#QuoteTHRoutings').click();
@@ -32,5 +32,4 @@ export class RoutingTab {
                 cy.get(routeId).click({ force: true });
             });
     }
-
 }

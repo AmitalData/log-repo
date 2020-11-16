@@ -21,7 +21,7 @@ export class EditShipmentTabsScenarios {
         this.PackagesTab.RunPackagesTabsScenarios(shipmentType, transportMode);
         this.RoutingTab.RunRoutingTabScenarios(levelCode,transportMode);
         this.PayablesTab.RunPayablesTabScenarios();
-       // this.ReceivablesTab.RunReceivablesTabScenarios();
+        //this.ReceivablesTab.RunReceivablesTabScenarios();
     }
     private FillGeneralTab() {
         cy.get('#ShipmentTHGeneral').click();

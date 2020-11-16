@@ -11,6 +11,7 @@ describe('Quotes Modules', () => {
     let editScenarios: EditQuoteTabsScenarios = new EditQuoteTabsScenarios();
     let quoteActions: QuoteActions = new QuoteActions();
 
+    var quoteType;
     var direction;
     var transportMode;
     var shipmentType;
@@ -21,12 +22,14 @@ describe('Quotes Modules', () => {
     });
 
     it('Test New Quote ', () => {
+        quoteType = 'RR'; // RR: Routing Rate , SR : spot Rate 
         direction = 'E';
         transportMode = 'A';
-        shipmentType ='';
-        scenarios.RunScenario(direction, transportMode, shipmentType);
-        editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType);
-        quoteActions.RunQuoteActions();
+        shipmentType = '';
 
+        scenarios.RunScenario(direction, transportMode, shipmentType, quoteType);
+        editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType, quoteType);
+        quoteActions.RunQuoteActions(quoteType);     
     });
+   
 });

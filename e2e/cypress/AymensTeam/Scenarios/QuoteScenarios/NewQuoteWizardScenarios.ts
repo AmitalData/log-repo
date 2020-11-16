@@ -10,19 +10,20 @@ export class NewQuoteWizardScenarios {
     private isInlandDomestic: boolean = false;
     public EntityId: string;
     public EntityNumber: string;
-    public RunScenario(direction: string, transportMode: string, shipmentType: string = null) {
+    public quoteType: string;
+
+    public RunScenario(direction: string, transportMode: string, shipmentType: string = null, quoteType:string) {
 
         this.direction = direction.toUpperCase();
         this.transportMode = transportMode.toUpperCase();
         this.shipmentType = shipmentType.toUpperCase();
+        this.quoteType = quoteType.toUpperCase();
+        this.objectTable = "Quote";
 
         if (this.shipmentType == 'FCLD' || this.shipmentType == 'FCL')
             this.shipmentType = 'FCLD';
         if (this.shipmentType == 'LCLD' || this.shipmentType == 'LCL')
             this.shipmentType = 'LCLD';
-
-        this.objectTable = "Quote";
-
         if ((this.transportMode == "O" && this.shipmentType == "FCLD") || (this.transportMode == "I" && this.shipmentType == "FTL")) {
             this.isFCL = true;
         }
@@ -135,6 +136,11 @@ export class NewQuoteWizardScenarios {
         //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference2").Type(Random.GetRandomNumber());
     }
     private FillGeneral() {
+        if (this.quoteType == 'SR') {
+            Resolvers.ButtonResolver.Selector("#AdhocRadio0").Click();
+        } else if (this.quoteType == 'RR') {
+            Resolvers.ButtonResolver.Selector("#RoutingRadio0").Click();
+        }
         Resolvers.LOVResolver.Selector("#Quote_IncotermId").SelectFirst();
         Resolvers.LOVResolver.Selector("#Quote_MoveTypeId").SelectFirst();
 
