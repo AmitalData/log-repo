@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
                  where s.Tenant == tenant
                  select new ShipmentPM()
                  {
+                     Id = s.Id,
                      ShipmentNumber = s.ShipmentNumber,
                      CreateDateTime = s.CreateDateTime,
                      DirectionId = s.DirectionId,
