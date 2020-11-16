@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.Validators
         {
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            ValidateIsReportHasAtLeastOneCalculatedChartsOfAccountsAndValidateAllLinesRelated(entityPM, showLocals);
+            ValidateIsReportHasAtLeastOneCalculatedChartsOfAccounts(entityPM, showLocals);
             ValidateCalculatedChartsOfAccountsLines(entityPM, showLocals);
 
             return null;
@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
         }
-        private static void ValidateIsReportHasAtLeastOneCalculatedChartsOfAccountsAndValidateAllLinesRelated(UserDefinedReportPM entityPM, bool showLocals)
+        private static void ValidateIsReportHasAtLeastOneCalculatedChartsOfAccounts(UserDefinedReportPM entityPM, bool showLocals)
         {
             bool IsAtLeastOneNotDeletdeCalculatedChartsOfAccounts = false;
             foreach (CalculatedChartsOfAccountPM periodPM in entityPM.CalculatedChartsOfAccounts)
