@@ -28,6 +28,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Release
 {
@@ -47,6 +49,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
         private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
         private string mode;
+        private string exemptTypesForEntitlement;
+        private bool isExemptTypeInDefault;
 
         public ReleaseService()
             : base(
@@ -120,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeReleaseFile.Id + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
+            exemptTypesForEntitlement = GetDefault("ISRAEL", "CGG_ENTI_EXEMPT", "NON", "NON", ResolvedTenant());
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             if (mode == "SecondaryEntry")
@@ -510,6 +514,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
 
         private string TranslateClient(string importerId)
@@ -1435,7 +1457,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 SupplierInvoiceItemPM.Tenant = ResolvedTenant();
                 SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
-                if (this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode == "VN") // moran 11.4.16 - AMI-56512 - if vehicle
+                if(isExemptTypeInDefault)
+                {
+                    SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM()
+                    {
+                        DeclarationId = SupplierInvoiceItemPM.DeclarationId,
+                        InvoiceItemLineNumber = SupplierInvoiceItemPM.LineNumber,
+                        ProcessTypeCode = "4100105",
+                        InvoiceCounterKey = SupplierInvoiceItemPM.CounterKey,
+                        Tenant = SupplierInvoiceItemPM.Tenant,
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                    };
+                    SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+                    isExemptTypeInDefault = false;
+                }
+                else if (this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode == "VN") // moran 11.4.16 - AMI-56512 - if vehicle
                 {
                     SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM()
                     {
@@ -1704,7 +1740,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 }
             }
             SupplierInvoiceItemVehicleAddPM.Exempt_type = invoiceItemCar.EXEMPT_TYPE;
-
+            if(!isExemptTypeInDefault && !string.IsNullOrWhiteSpace(SupplierInvoiceItemVehicleAddPM.Exempt_type))
+            {
+                isExemptTypeInDefault = exemptTypesForEntitlement.Contains(SupplierInvoiceItemVehicleAddPM.Exempt_type);
+            }
             SupplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Insert;
             SupplierInvoiceItemVehicleAddPM.Tenant = _MyDeclarationPM.Tenant;
             SupplierInvoiceItemVehicleAddPMList.Add(SupplierInvoiceItemVehicleAddPM);
