@@ -1465,26 +1465,36 @@ export class APInvoiceLineItem extends BaseComponent {
         return result;
     }
 
+    private exists: boolean = false;
     get Exists() {
-        var myResult = false;
+        var exists = false;
+
         if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
-            myResult = true;
+            exists = true;
         }
-        return myResult;
+
+        return exists;
     }
 
-    set Exists(newValue: boolean) {
-        if (newValue == true) {
-            this.SetForiegnCurrencyAmountTheSameAsOpenAmount();
-            this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
+    set Exists(value: boolean) {
+        if (this.exists != value) {
+
+            this.exists = value;
+
+            if (value == true) {
+                this.ForiegnCurrencyAmount = this.OpenAmount;
+                this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
+            }
+
+            else {
+                this.InvoiceCurrencyAmount = null;
+                this.invoicePM.RemoveAPInvoiceLinePM(this.invoiceLinePM);
+            }
+
+            this.RefreshLine();
+            this.setColors();
+            this.fatherComponent.ComputeTotals();
         }
-        else {
-            this.InvoiceCurrencyAmount = null;
-            this.invoicePM.RemoveAPInvoiceLinePM(this.invoiceLinePM);
-        }
-        this.RefreshLine();
-        this.setColors();
-        this.fatherComponent.ComputeTotals();
     }
 
     private SetForiegnCurrencyAmountTheSameAsOpenAmount() {
