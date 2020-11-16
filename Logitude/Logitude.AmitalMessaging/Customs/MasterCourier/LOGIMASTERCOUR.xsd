@@ -27,6 +27,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="NoOfCourierHawb" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TruckerId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="PackageQuantityInMAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UnifreightLeadingFile" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,4 +48,5 @@
   <xs:element name="NoOfCourierHawb" type="xs:string" />
   <xs:element name="TruckerId" type="xs:string" />
   <xs:element name="PackageQuantityInMAWB" type="xs:string" />
+  <xs:element name="UnifreightLeadingFile" type="xs:string" />
 </xs:schema>

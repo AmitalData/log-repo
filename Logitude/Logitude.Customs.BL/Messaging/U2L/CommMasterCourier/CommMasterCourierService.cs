@@ -250,6 +250,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
                     }
                 }
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
