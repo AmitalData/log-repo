@@ -136,8 +136,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                 foreach (ShipmentJoinPackageList shipmentPackage in filteredShipmentPackageList)
                 {
                     ReportGroupData myDataRecord = new ReportGroupData();
-                    myDataRecord.House = shipmentPackage.House;
+                    myDataRecord.House = shipmentPackage.House; 
                     myDataRecord.CommodityNumber = shipmentPackage.CommodityNumber;
+                    myDataRecord.CommodityName = shipmentPackage.CommodityName;
                     myDataRecord.Master = shipmentPackage.MasterNumber;
                     myDataRecord.Shipper = shipmentPackage.ShipperName;
                     myDataRecord.Consignee = shipmentPackage.ConsigneeName;
@@ -147,11 +148,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.VolumetricWeight = shipmentPackage.PackageVolumeitricWeight;
                     myDataRecord.MoveType = shipmentPackage.MoveTypeName;
                     myDataRecord.CustomAgentImportId = shipmentPackage.CustomAgentImportId;
+                    myDataRecord.MasterLong = shipmentPackage.AirlinePrefix + "-" + shipmentPackage.MasterNumber;
+                    myDataRecord.ATD = shipmentPackage.MainCarriageATD;
+                    myDataRecord.ETD = shipmentPackage.MainCarriageETD;
                     myDataRecord.CustomAgentImportName = shipmentPackage.CustomAgentImportName;
                     myDataRecord.PackageReference1 = shipmentPackage.ShipmentPackageReference1;
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+
 
                     if(shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
@@ -180,7 +185,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                }).ToList();
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
-                                                                     group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName } 
+                                                                     group p by new { p.Master, p.CommodityNumber ,p.CustomAgentImportId, p.CustomAgentImportName ,p.CommodityName ,p.MasterLong , p.ATD , p.ETD } 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -189,6 +194,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          CustomAgentImportId = g.Key.CustomAgentImportId,
                                                                          CustomAgentImportName = g.Key.CustomAgentImportName,
                                                                          CommodityNumber = g.Key.CommodityNumber,
+                                                                         CommodityName = g.Key.CommodityName,
+                                                                         MasterLong = g.Key.MasterLong,
+                                                                         ATD = g.Key.ATD,
+                                                                         ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
                                                                      }).ToList();
 
@@ -322,10 +331,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
                      MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-
+                     AirlinePrefix = master.AirlinePrefix,
                      //Package
                      PackageId = package.Id,
                      CommodityNumber = package.CommodityNumber,
+                     CommodityName = package.CommodityName,
                      PackageQuantity = package.Quantity,
                      PackagesGrossWeight = package.Weight,
                      PackageVolume = package.Volume,
