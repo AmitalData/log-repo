@@ -474,12 +474,12 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         var queryFilterItem: QueryFilterItem;              
         queryFilterItems.push(new QueryFilterItem("AgingForDate", new Date(), "Date"));
         queryFilterItems.push(new QueryFilterItem("GLAccountType", "2"));
-        queryFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
+        queryFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.GetLookUpFieldValue(this.Customer) : null));
         queryFilterItems.push(new QueryFilterItem("NumberOfMonths", 5, "Number"));
-        queryFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-        queryFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-        queryFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-        queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet));       
+        queryFilterItems.push(new QueryFilterItem("CollectorId", this.GetLookUpFieldValue(this.Collector)));
+        queryFilterItems.push(new QueryFilterItem("SalesmanId",    this.GetLookUpFieldValue(this.Salesman)));
+        queryFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed? true : false));
+        queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet?  true:false ));       
         queryFilterItems.push(new QueryFilterItem("GroupByDate", ""));
         queryFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
         queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
