@@ -456,7 +456,9 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             var otherLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(d => d.VendorId != this.VendorId);
 
             defaultConnectedLines.forEach(line => {
-                this.ItemsSource.Insert(new APInvoiceLineItem(line, this, false));
+                var aPInvoiceLineItem = new APInvoiceLineItem(line, this, false);
+                aPInvoiceLineItem.Exists = true;
+                this.ItemsSource.Insert(aPInvoiceLineItem);
             });
 
             otherLines.forEach(line => {
@@ -1224,6 +1226,10 @@ export class APInvoiceLineItem extends BaseComponent {
         this.GetUserName();
         this.setColors();
         this.ReadVatTypeData();
+
+        if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
+            this.exists = true;
+        }
     }
 
     private GetUserName() {
@@ -1463,27 +1469,41 @@ export class APInvoiceLineItem extends BaseComponent {
         return result;
     }
 
+    private exists: boolean = false;
     get Exists() {
-        var myResult = false;
+        var exists = false;
+
         if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
-            myResult = true;
+            exists = true;
         }
-        return myResult;
+
+        return exists;
     }
 
-    set Exists(newValue: boolean) {
-        if (newValue == true) {
-            this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
-        }
+    set Exists(value: boolean) {
+        if (this.exists != value) {
 
-        else {
-            this.InvoiceCurrencyAmount = null;
-            this.invoicePM.RemoveAPInvoiceLinePM(this.invoiceLinePM);
-        }
+            this.exists = value;
 
-        this.RefreshLine();
-        this.setColors();
-        this.fatherComponent.ComputeTotals();
+            if (value == true) {
+                this.ForiegnCurrencyAmount = this.OpenAmount;
+                this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
+            }
+
+            else {
+                this.InvoiceCurrencyAmount = null;
+                this.invoicePM.RemoveAPInvoiceLinePM(this.invoiceLinePM);
+            }
+
+            this.RefreshLine();
+            this.setColors();
+            this.fatherComponent.ComputeTotals();
+        }
+    }
+
+    private SetForiegnCurrencyAmountTheSameAsOpenAmount() {
+        this.invoiceLinePM.ForiegnCurrencyAmount = this.OpenAmount;
+        this.ComputeOtherAmounts();
     }
 
     private setColors() {
