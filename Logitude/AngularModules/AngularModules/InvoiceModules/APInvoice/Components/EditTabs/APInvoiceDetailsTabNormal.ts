@@ -1226,6 +1226,10 @@ export class APInvoiceLineItem extends BaseComponent {
         this.GetUserName();
         this.setColors();
         this.ReadVatTypeData();
+
+        if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
+            this.exists = true;
+        }
     }
 
     private GetUserName() {
