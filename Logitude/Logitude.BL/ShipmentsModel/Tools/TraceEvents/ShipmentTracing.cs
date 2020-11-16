@@ -201,6 +201,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (!entityPoco.IsAccrualsApproved && entityPM.IsAccrualsApproved)
             {
+                entityPM.AccrualsApprovalDate = todayDateTime;
                 this.CreateTraceEvent("CCPP", entityPM.EventNote);
             }
         }
