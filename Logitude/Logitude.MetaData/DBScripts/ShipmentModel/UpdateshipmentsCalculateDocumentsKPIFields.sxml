@@ -1,67 +1,66 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="DocumentsFilings">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
-    
-declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
+--declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
 
 
-  declare @Id as varchar(15)
-       declare @FieldName as VARCHAR(200) 
-	   declare @FieldValue as datetime 
-	    declare @DocumentTypeId as VARCHAR(15) 
+--  declare @Id as varchar(15)
+--       declare @FieldName as VARCHAR(200) 
+--	   declare @FieldValue as datetime 
+--	    declare @DocumentTypeId as VARCHAR(15) 
 
-DECLARE DataCursor CURSOR READ_ONLY
-	FOR
-select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
-  CASE
-       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
-       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
-       ELSE DocumentTypes.OnSendPopulateDateFieldName
- END AS FieldName,
- Max(DocumentsFilings.UpdateDate)
+--DECLARE DataCursor CURSOR READ_ONLY
+--	FOR
+--select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
+--  CASE
+--       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
+--       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
+--       ELSE DocumentTypes.OnSendPopulateDateFieldName
+-- END AS FieldName,
+-- Max(DocumentsFilings.UpdateDate)
 
- from DocumentsFilings
- inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
-where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
- ELSE DocumentTypes.OnSendPopulateDateFieldName
-           END) is not null  and (
- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
- ELSE DocumentTypes.OnSendPopulateDateFieldName END) !=''
- and   DocumentsFilings.ObjectTableId =@ObjectTableId and DocumentTypes.ObjectTableId =@ObjectTableId 
- GROUP BY EntityId,DocumentTypeId , CASE
-       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
-       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
-       ELSE DocumentTypes.OnSendPopulateDateFieldName
- END
-    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
+-- from DocumentsFilings
+-- inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
+--where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
+-- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
+-- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
+-- ELSE DocumentTypes.OnSendPopulateDateFieldName
+--           END) is not null  and (
+-- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
+-- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
+-- ELSE DocumentTypes.OnSendPopulateDateFieldName END) !=''
+-- and   DocumentsFilings.ObjectTableId =@ObjectTableId and DocumentTypes.ObjectTableId =@ObjectTableId 
+-- GROUP BY EntityId,DocumentTypeId , CASE
+--       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
+--       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
+--       ELSE DocumentTypes.OnSendPopulateDateFieldName
+-- END
+--    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
+--	WHILE @@FETCH_STATUS = 0
+--	BEGIN
 
-		 declare @functionring as varchar(3000)
-		 	declare @TableName varchar(100) 
+--		 declare @functionring as varchar(3000)
+--		 	declare @TableName varchar(100) 
 
-			set @TableName ='Shipments'
+--			set @TableName ='Shipments'
 
 
-		set @FieldName =  REPLACE(@FieldName,'Shipment.', '');
+--		set @FieldName =  REPLACE(@FieldName,'Shipment.', '');
 
-	  IF COL_LENGTH('ShipmentComputedFields',@FieldName) IS  NULL
-	  begin 
-	   IF COL_LENGTH('ShipmentComputedFields',REPLACE(@FieldName, 'Date', '')) IS not NULL
-	   begin  set @FieldName = REPLACE(@FieldName, 'Date', ''); set @TableName = 'ShipmentComputedFields' end
-	  end
-	  else set @TableName = 'ShipmentComputedFields'
-	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
-	EXEC(@functionring)
+--	  IF COL_LENGTH('ShipmentComputedFields',@FieldName) IS  NULL
+--	  begin 
+--	   IF COL_LENGTH('ShipmentComputedFields',REPLACE(@FieldName, 'Date', '')) IS not NULL
+--	   begin  set @FieldName = REPLACE(@FieldName, 'Date', ''); set @TableName = 'ShipmentComputedFields' end
+--	  end
+--	  else set @TableName = 'ShipmentComputedFields'
+--	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
+--	EXEC(@functionring)
 
-	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
-	END
-	CLOSE DataCursor
-	DEALLOCATE DataCursor
+--	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
+--	END
+--	CLOSE DataCursor
+--	DEALLOCATE DataCurs
 
     ]]>
   </Sql>
