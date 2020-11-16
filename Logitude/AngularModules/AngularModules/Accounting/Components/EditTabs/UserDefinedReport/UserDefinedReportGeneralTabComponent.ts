@@ -511,13 +511,15 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
 
 
 public LineCancelledValidation(newValue:boolean){
+    this.ValidateAllLinesOnOpenSession();
+    
     var IsValid = this.ValidateIsCancelled();
     if(!IsValid && !newValue)
         this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
     else if (newValue)
         this.ErrorLog = null;
     //else if (IsValid)
-        this.ValidateAllLinesOnOpenSession();
+        
 }
 
     get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
