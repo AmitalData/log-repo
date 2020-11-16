@@ -459,6 +459,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
 
+            entityPoco.IsAccrualsApproved = entityPM.IsAccrualsApproved;
+            entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
