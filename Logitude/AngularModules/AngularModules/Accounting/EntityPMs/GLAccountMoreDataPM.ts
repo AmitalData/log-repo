@@ -63,7 +63,10 @@ export class GLAccountMoreDataPM {
     public OldEntityPM: GLAccountMoreDataPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class GLAccountMoreDataPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccountMoreData");
            
         }
+       }
     }
 
     private MyClone: GLAccountMoreDataPM;

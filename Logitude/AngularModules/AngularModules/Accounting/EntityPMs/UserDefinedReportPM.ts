@@ -143,7 +143,10 @@ export class UserDefinedReportPM {
     public OldEntityPM: UserDefinedReportPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -151,6 +154,7 @@ export class UserDefinedReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "UserDefinedReport");
            
         }
+       }
     }
 
     private MyClone: UserDefinedReportPM;

@@ -253,7 +253,10 @@ export class InterestReportPM {
     public OldEntityPM: InterestReportPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -261,6 +264,7 @@ export class InterestReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestReport");
            
         }
+       }
     }
 
     private MyClone: InterestReportPM;

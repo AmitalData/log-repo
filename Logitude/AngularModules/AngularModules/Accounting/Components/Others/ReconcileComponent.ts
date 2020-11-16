@@ -657,10 +657,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 transactionsIds.push(transaction.Id);
             });
 
+            var transactions: LineModel[] = this.SelectedLines.Collection;
+            var ledgerTransactionsPMs = transactions.map(d=>d.LedgerTransactionPM);
+
             // 2- call the service
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsIds).subscribe((serviceResponse: ServiceResponse) => {
-                console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
+            this._ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
+                console.log("_ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions", serviceResponse);
                 this.CurrentSession.StopBusyIndicator();
 
                 var result = serviceResponse.Result;
@@ -1142,6 +1145,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
+            newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
             newLine.GroupNumber = selectedTransaction.GroupHash;
 

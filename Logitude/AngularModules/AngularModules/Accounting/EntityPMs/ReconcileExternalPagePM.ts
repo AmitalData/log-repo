@@ -163,7 +163,10 @@ export class ReconcileExternalPagePM {
     public OldEntityPM: ReconcileExternalPagePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -171,6 +174,7 @@ export class ReconcileExternalPagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ReconcileExternalPage");
            
         }
+       }
     }
 
     private MyClone: ReconcileExternalPagePM;

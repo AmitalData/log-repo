@@ -920,6 +920,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
 
+
+           
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
             {
@@ -927,6 +929,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myCard != null)
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.LocalName);
                 }
             }
             #endregion

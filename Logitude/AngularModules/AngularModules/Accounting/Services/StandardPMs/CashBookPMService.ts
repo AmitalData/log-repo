@@ -154,6 +154,7 @@ export class CashBookPMService {
         if (!entityPM) {
             
             entityPM = new CashBookPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class CashBookPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -229,7 +232,8 @@ export class CashBookPMService {
             {
                 newCashBookLinePM = new CashBookLinePM(null);
             }
-                
+ 			newCashBookLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -261,7 +265,7 @@ export class CashBookPMService {
                 newCashBookLinePM.OldEntityPM = null;
                 newCashBookLinePM.EntityParentPM = null;
             }
-			
+			 newCashBookLinePM.DisableMarkAsDirty = false;
 			 newCashBookLinePM.IsDirty = false;
             entityPM.CashBookLines.push(newCashBookLinePM);
         }
@@ -275,6 +279,7 @@ export class CashBookPMService {
                         //entityPM.CashBookLines.push(oldCashBookLines[itemKey]);
 						var oldItemJson = oldCashBookLines[itemKey];
                         var deletedPM: CashBookLinePM = new CashBookLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -286,7 +291,7 @@ export class CashBookPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

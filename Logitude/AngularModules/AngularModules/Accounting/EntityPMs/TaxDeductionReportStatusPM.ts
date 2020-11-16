@@ -53,7 +53,10 @@ export class TaxDeductionReportStatusPM {
     public OldEntityPM: TaxDeductionReportStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class TaxDeductionReportStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TaxDeductionReportStatus");
            
         }
+       }
     }
 
     private MyClone: TaxDeductionReportStatusPM;

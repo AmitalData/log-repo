@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "c8910157d4413dc8a794ff9b0598ba41";
+		public const string HashString = "eeced9740cef6ce67b602b25d02896c3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1243,7 +1243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode UserDefinedReportTextCode_UserDefinedReportOParentCharofAccountAlreadyIncluded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ParentCharofAccount AlreadyIncluded", DefaultText = "This GLAccount or its parent Chart of Account is already included in this report under calculated chart of account line",LocalDefaultText = @"כרטיס זה הוא חלק מקבוצת מאזן שכבר הוגדרה בדוח זה תחת קבוצת מאזן מחושבת בשורה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode UserDefinedReportTextCode_UserDefinedReportOChartOfAccountTypeforthislinediffersfromtheChartofAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", DefaultText = "Chart Of Account Type for this line differs from the Chart of Account",LocalDefaultText = @"סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOChartOfAccountTypeforthislinediffersfromtheChartofAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", DefaultText = "Chart Of Account Type for this line differs from the Chart of Account Type for this calculated chart of account, please choose another GLAccount or Charts of Accounts.",LocalDefaultText = @"סוג קבוצת המאזן בשורה זאת שונה מהגדרת הסוג של קבוצת המאזן שנבחרה", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

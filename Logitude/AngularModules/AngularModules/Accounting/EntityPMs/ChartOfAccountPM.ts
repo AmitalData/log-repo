@@ -83,7 +83,10 @@ export class ChartOfAccountPM {
     public OldEntityPM: ChartOfAccountPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -91,6 +94,7 @@ export class ChartOfAccountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ChartOfAccount");
            
         }
+       }
     }
 
     private MyClone: ChartOfAccountPM;

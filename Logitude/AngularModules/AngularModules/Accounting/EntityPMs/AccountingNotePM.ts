@@ -78,7 +78,10 @@ export class AccountingNotePM {
     public OldEntityPM: AccountingNotePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -86,6 +89,7 @@ export class AccountingNotePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingNote");
            
         }
+       }
     }
 
     private MyClone: AccountingNotePM;

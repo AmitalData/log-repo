@@ -381,6 +381,7 @@
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171200_ModifyAnalyzeQueueIdOfInboundEmailTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202006151350_DeleteOldPaymentMethodsMetadata.sxml" />
+    <None Include="DBScripts\InvoiceModel\202012110120_ARPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202006291330_FillPaidDateOfInvoices.sxml" />
     <None Include="DBScripts\QuoteModel\202006132005_AddDepartureFrequencyToQuoteDetails.sxml" />
     <None Include="DBScripts\QuoteModel\202006011340_DropQuoteClosingReason.sxml" />
@@ -407,6 +408,7 @@
     <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202009230840_AddNewSpecialHandlingCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
+    <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />

@@ -48,7 +48,10 @@ export class OpenFormatReportStatusPM {
     public OldEntityPM: OpenFormatReportStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class OpenFormatReportStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "OpenFormatReportStatus");
            
         }
+       }
     }
 
     private MyClone: OpenFormatReportStatusPM;
