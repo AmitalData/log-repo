@@ -2269,6 +2269,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.declarationMessagesService.PostSendPaymentOnly(params)
                 .subscribe(res1 => {
                 });
+        else
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+
     }
 
     ActualSendToTransfer() {
