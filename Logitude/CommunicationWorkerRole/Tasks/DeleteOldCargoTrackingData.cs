@@ -41,18 +41,19 @@ namespace CommunicationWorkerRole.Tasks
             string cmd = "DELETE FROM [dbo].[CargoTrackingShipments] WHERE DATEADD(year, 1, CreateDate) < getdate()";
             ExecuteCommand(cmd);
         }
-        private void ExecuteCommand(string sql)
+        private void ExecuteCommand(string sqlString)
         {
+
             string strConnString = GetCargoTrackingConnectionString();
             using (SqlConnection cn = new SqlConnection(strConnString))
             {
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+                SqlCommand sqlCommand = new SqlCommand(sqlString, cn);
+                sqlCommand.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                 cn.Open();
-                var output = cmd.ExecuteNonQuery();
+                sqlCommand.ExecuteNonQuery();
                 cn.Close();
             }
+
         }
         private string GetCargoTrackingConnectionString()
         {
