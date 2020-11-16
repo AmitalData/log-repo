@@ -1,12 +1,12 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,37 +17,43 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 {
     public static class ShipmentNumbersXML
     {
+        private static string errorMsg = "";
         public static Shipments GetShipmentNumbersXMLMessage(GetShipmentNumbers entity, int tenant)
         {
             IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-            IQueryable<Shipment> shipments = myContext.Shipments.Include("ShipmentMasterData").Where(d => d.Tenant == tenant
+            IQueryable<Shipment> shipments = myContext.Shipments.Include("ShipmentMasterData").Include("ShipmentMasterData.MainCarriageCarrierCard").Where(d => d.Tenant == tenant
             && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(entity.FromDate)
             && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(entity.ToDate));
 
-            var tt = shipments.ToList();
             if (!string.IsNullOrEmpty(entity.Direction))
                 shipments = shipments.Where(o => o.DirectionId == entity.Direction);
-
-            var tt1 = shipments.ToList();
 
             if (!string.IsNullOrEmpty(entity.TransportMode))
                 shipments = shipments.Where(o => o.TransportModeId == entity.TransportMode);
 
-            var tt2 = shipments.ToList();
-
             if (!string.IsNullOrEmpty(entity.ShipmentLevel))
                 shipments = shipments.Where(o => o.ShipmentLevelCode == entity.ShipmentLevel);
 
-            var tt3 = shipments.ToList();
-
             if (!string.IsNullOrEmpty(entity.Carrier))
+            {
                 shipments = shipments.Where(o => o.ShipmentMasterData.MainCarriageCarrierCard.Code == entity.Carrier);
-
+            }
+                
             if (!string.IsNullOrEmpty(entity.House))
                 shipments = shipments.Where(o => o.House == entity.House);
 
             if (!string.IsNullOrEmpty(entity.Master))
-                shipments = shipments.Where(o => o.ShipmentMasterData.Master == entity.Master);
+            {
+                if (entity.TransportMode == "A")
+                {
+                    shipments = shipments.Where(o => !string.IsNullOrEmpty(o.ShipmentMasterData.AirlinePrefix) && !string.IsNullOrEmpty(o.ShipmentMasterData.Master) &&
+                    o.ShipmentMasterData.AirlinePrefix + "-" + o.ShipmentMasterData.Master == entity.Master);
+                }
+                else
+                {
+                    shipments = shipments.Where(o => o.ShipmentMasterData.Master == entity.Master);
+                }
+            }
 
             if (!string.IsNullOrEmpty(entity.ContainerNumber))
             {
@@ -58,23 +64,60 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
                              select shipment).GroupBy(s => s.Id).Select(grp => grp.FirstOrDefault());
             }
 
+
             var response = new Shipments()
             {
                 ShipmentList = shipments.ToList().Select(x => new ShipmentResponseItem()
                 {
                     ShipmentNumber = SplitBySlash(x.ShipmentNumber),
-                    MasterShipmentNumber = x.ShipmentMasterData != null ? SplitBySlash(x.ShipmentMasterData.MasterShipmentNumber) : " ",
+                    MasterShipmentNumber = x.ShipmentLevelCode == "H" ? GetHouseData(x.MasterShipmentDataId, myContext) : " ",
                     CreateDate = x.CreateDateTime
                 }).ToList(),
             };
             return response;
         }
 
+        private static string GetHouseData(string masterShipmentDataId, IShipmentsContext myContext)
+        {
+            var masterShipmentNumber = " ";
+            ShipmentMasterData masterData = (from a in myContext.ShipmentMasterDatas
+                                             where a.Id == masterShipmentDataId
+                                             select a).FirstOrDefault();
+
+            if (masterData != null)
+            {
+                masterShipmentNumber = SplitBySlash(masterData.MasterShipmentNumber);
+            }
+            return masterShipmentNumber;
+        }
+
         public static void ShipmentDataMappingValidating(GetShipmentNumbers entity, int tenant)
         {
+            errorMsg = "";
             ValidateDirection(entity.Direction, tenant);
             ValidateTransportMode(entity.TransportMode, tenant);
             ValidateShipmentLevel (entity.ShipmentLevel, tenant);
+            ValidateCarrier(entity.Carrier, tenant);
+
+            if (!string.IsNullOrEmpty(errorMsg))
+            {
+                throw new ApplicationException(errorMsg);
+            }
+        }
+
+        private static void ValidateCarrier(string carrier, int tenant)
+        {
+            var temp = new CardPM();
+            CardQuery query = new CardQuery(tenant);
+            if (!string.IsNullOrEmpty(carrier))
+            {
+                temp = query.GetSinglePMByCode(carrier, tenant);
+            }
+
+            if (temp == null)
+            {
+                errorMsg = errorMsg + "Carrier with Code " + carrier + " doesn't exist. ";
+            }
         }
 
         private static void ValidateShipmentLevel(string shipmentLevel, int tenant)
@@ -88,7 +131,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 
             if (temp == null)
             {
-                throw new ApplicationException("Shipment Level with Code " + shipmentLevel + " doesn't exist");
+                errorMsg = errorMsg + "Shipment Level with Code " + shipmentLevel + " doesn't exist. ";
             }
         }
 
@@ -103,7 +146,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 
             if (temp == null)
             {
-                throw new ApplicationException("Transport Mode with Code " + transportMode + " doesn't exist");
+                errorMsg = errorMsg + "Transport Mode with Code " + transportMode + " doesn't exist. ";
             }
         }
 
@@ -118,7 +161,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.Messages
 
             if (temp == null)
             {
-                throw new ApplicationException("Direction with Code " + direction + " doesn't exist");
+                errorMsg = errorMsg + "Direction with Code " + direction + " doesn't exist. ";
             }
         }
 
