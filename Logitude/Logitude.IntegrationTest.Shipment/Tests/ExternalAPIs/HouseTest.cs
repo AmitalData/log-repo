@@ -23,24 +23,17 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
         public async Task TestDirectShipment()
         {
             service = new ExternalHouseAPITestService();
-            //factory = new EntityInitializerFactory();
 
             await CreateShipment();
             await GetShipment();
-            //await UpdateShipmentWithInvalidFutureATD();
-            //await UpdateShipmentWithInvalidFutureATA();
-            //await UpdateShipmentWithValidDates();
+          
         }
         private async Task CreateShipment()
         {
             var entityPM = new House()
             {
-                Agent = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
-                {
-                    Code = "10026"
-                },
-
-                Direction = new BL.InfrastructureModel.APIDataContract.ApiV1.Direction()
+              
+                Direction = new BL.InfrastructureModel.APIDataContract.ApiV1.Direction() //
                 {
                     Code = "E",
                 },
@@ -68,8 +61,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                     IsDisconnectedFromGLAccount = false
                 },
 
-                ConsigneeReference1 = "SR1",
-                ConsigneeReference2 = "SR2",
+
                 Customer = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
                 {
                     Code = "",
@@ -81,9 +73,9 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                     Code = "KG",
                 },
 
-                ChargeableWeightUnit = new BL.CommonDataModel.APIDataContract.ApiV1.WeightUnit()
+                DimensionsUnit = new BL.CommonDataModel.APIDataContract.ApiV1.DimensionsUnit() //
                 {
-                    Code = "KG",
+                    Code = "inc",
                 },
 
                 VolumeUnit = new BL.InfrastructureModel.APIDataContract.ApiV1.VolumeUnit()//
@@ -93,15 +85,19 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 HouseNo = "CTIBGUM203248LAX", //
 
-                HouseDate = DateTime.Parse("2020-11-11T10:10:48"), //
+                HouseDate =new DateTime(2020 , 11 , 11), //
 
-                Commodity = "653",
+          
 
                 Incoterm = new BL.CommonDataModel.APIDataContract.ApiV1.Incoterm()//
                 {
                     Code = "CFR",
                 },
-
+                IsCancelled = false, //
+                IsOperationalClosed = false, //
+                IsAccountingClosed = false, // 
+                OrderIsDangerouseGoods =false,//
+                ComputingPartnerCode = "API",//
                 OceanOrInlandPackages = new List<OceanOrInlandPackage>(),
             };
 
@@ -124,11 +120,31 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                 Reference4 = "4236564",
                 IsDangerous =false,
                 Notes = "ROUGH COUNTRY",
-              
+
+            });
+            entityPM.OceanOrInlandPackages.Add(new OceanOrInlandPackage()
+            {
+                PackageType = new BL.CommonDataModel.APIDataContract.ApiV1.PackageType()
+                {
+                    Code = "PL",
+                    PartnerCode = ""
+                },
+                Length = 79,
+                Width = 22,
+                Height = 1,
+                Pieces = 1,
+                Volume = 17.09,
+                GrossWeight = 117,
+                Reference1 = "HARDWARE",
+                Reference2 = "15061211",
+                Reference3 = "10/28/2020",
+                Reference4 = "WORGFAB",
+                IsDangerous = false,
+                Notes = "TRAIL GEAR",
 
             });
 
-       
+            
             shipmentId = await service.CreateHouse(entityPM);
         }
 
