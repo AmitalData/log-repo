@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 CurrentChartofAccountId = UserDefinedReportValidatorArguments.CurrentLinePM.ChartOfAccountId;
             }
-            foreach (CalculatedChartsOfAccountPM periodPM in entityPM.CalculatedChartsOfAccounts)
+            foreach (CalculatedChartsOfAccountPM periodPM in entityPM.CalculatedChartsOfAccounts.Where(s=>s.IsCancelled=false))
             {
                 foreach (CalculatedChartsOfAccountsLinePM LinePM in periodPM.CalculatedChartsOfAccountLines)
                 {
