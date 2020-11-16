@@ -504,9 +504,8 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
     get IsCancelled() { return this.EntityPM.IsCancelled; }
     set IsCancelled(newValue: boolean) {
         if (this.EntityPM.IsCancelled != newValue) {
-            this.LineCancelledValidation(newValue);
             this.EntityPM.IsCancelled = newValue;
-            
+            this.LineCancelledValidation(newValue);           
         }
     }
 
@@ -517,7 +516,7 @@ public LineCancelledValidation(newValue:boolean){
         this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
     else if (newValue)
         this.ErrorLog = null;
-    else if (IsValid)
+    //else if (IsValid)
         this.ValidateAllLinesOnOpenSession();
 }
 
