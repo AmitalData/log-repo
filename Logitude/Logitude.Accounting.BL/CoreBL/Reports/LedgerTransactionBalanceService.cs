@@ -163,8 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             this.Response.TookMS = sw.ElapsedMilliseconds;
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
-
-        
+ 
         private void LogIt(string mess)
         {
 

@@ -173,6 +173,7 @@ import { WarehouseWeightMeasurementListService } from './Services/StandardLists/
 import { WarehouseWeightRoundingListService } from './Services/StandardLists/WarehouseWeightRoundingListService';
 import { HorseListService } from './Services/StandardLists/HorseListService';
 import { HorsePMService } from './Services/StandardPMs/HorsePMService';
+import {LogitudeGridExportToExcelExtendedPMService} from './Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -414,6 +415,8 @@ export class ModuleProviders {
             case "WarehouseWeightRoundingListService": { myResult = new WarehouseWeightRoundingListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
             case "HorsePMService": { myResult = new HorsePMService(); break; }
+            case "LogitudeGridExportToExcelExtendedPMService": { myResult = new LogitudeGridExportToExcelExtendedPMService(); break; }
+
         }
 
         return myResult;

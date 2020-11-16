@@ -1,45 +1,40 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityKeys;
+﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.DomainServices.Server;
+using System.Web;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
-    public partial class AccountingDomainService
-    {
-        public List<ReconciliationLineList> GetReconciliationLineFilters(byte[] xmlFilters, int tenant)
+	public partial class AccountingDomainService
+	{
+        public List<InterestReportLinesByDateList> GetInterestReportLinesByDateFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             //    SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
 
             accountingContext = AccountingContext.GetContext(tenant);
-            ReconciliationLineListQueryService listService = new ReconciliationLineListQueryService(accountingContext);
+            InterestReportLinesByDateListQueryService listService = new InterestReportLinesByDateListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
 
         }
 
-        public int GetReconciliationLineFiltersCount(byte[] xmlFilters, int tenant)
+        public int GetInterestReportLinesByDateFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             //  SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
             accountingContext = AccountingContext.GetContext(tenant);
-            ReconciliationLineListQueryService queryService = new ReconciliationLineListQueryService(accountingContext);
+            InterestReportLinesByDateListQueryService queryService = new InterestReportLinesByDateListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return queryService.GetListCount(queryOperations, tenant);
 
         }
-
     }
 }

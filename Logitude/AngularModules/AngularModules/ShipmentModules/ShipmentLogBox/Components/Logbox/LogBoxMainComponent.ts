@@ -850,7 +850,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     btnExcelCLicked() {
         var windowArgs: any = {};
         windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
-
         windowArgs.tenant = SessionLocator.Tenant;
         windowArgs.ObjectTableName = "Shipment";
         windowArgs.QueryName = this.SelectedFilter;

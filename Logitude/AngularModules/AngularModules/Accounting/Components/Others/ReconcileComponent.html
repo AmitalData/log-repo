@@ -558,7 +558,11 @@
                                         <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                     </div>
                                 </td>
-                                <td><div></div></td>
+                                <td><div [style.float]="isRTL ? 'left' : 'right'"  style="margin: 0 15px;">
+
+                                    <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [IsSmall]="true"     (click)="ExportToExcelClick()"></IconButton>
+
+                                </div></td>
 
 
                                 <!--<td>
