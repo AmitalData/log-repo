@@ -114,8 +114,39 @@
 	where sh.tenant <> c.tenant
 	)
 	
+	 select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as brancId,c.SearchFields,c.tenant as cardTenant 
+	from ShipmentComputedFields sh
+	inner join Users c on c.id = sh.OperationallyClosedByUserId
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
 
 
+	update ShipmentComputedFields set OperationallyClosedByUserId = (select top 1 id from Users where ShipmentComputedFields.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from ShipmentComputedFields sh
+	inner join Users c on c.id = sh.OperationallyClosedByUserId
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+	)
+	
+
+
+	 select sh.id as sipmentId,sh.tenant as shipmentTenant,t.company,c.id as brancId,c.SearchFields,c.tenant as cardTenant 
+	from shipments sh
+	inner join Users c on c.id = sh.SalesmanUserId
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+
+
+	update shipments set SalesmanUserId = (select top 1 id from Users where shipments.Tenant = Tenant) 
+	where id in (
+	select sh.id
+	from shipments sh
+	inner join Users c on c.id = sh.SalesmanUserId
+	inner join tenants t on t.id = sh.tenant
+	where sh.tenant <> c.tenant
+	)
 
 
 
