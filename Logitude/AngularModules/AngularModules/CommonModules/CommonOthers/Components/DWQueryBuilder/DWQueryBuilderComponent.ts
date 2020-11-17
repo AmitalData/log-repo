@@ -260,6 +260,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
                     //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
                     this.FillAllFieldsWithChildrenDataSource(this.DWObjectFields);
+
+                    if (this.QID) {
+                        this.EditBIReport();
+                    }
                 }
             });
         });
@@ -317,10 +321,6 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.BackCompleted = args.BackCompleted;
         this.CopyBIReportsFromTenant = args.BIReportsTenant;
         this.FactTableName = args.FactTableName;
-
-        if (this.QID) {
-            this.EditBIReport();
-        }
     }
 
     EditBIReport() {
