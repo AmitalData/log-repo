@@ -174,6 +174,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //this.ClearData();
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this.ObsList = [];
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         this._DWObjectTableListService.getAll().subscribe((myResult: any) => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult: any) => {
@@ -186,6 +187,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     this.FillGroupChargesValues(myResult);
                     this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(this.FactTableCode).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             var MyGroups = [];
                             var MyAllGroups = [];
                             Result.Result.forEach((Group) => {
@@ -714,7 +716,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return;
         }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
-        if (item.HasTree) {
+        if (item.HasTree && item.DataTypeCode != "DateTime") {
             var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
             if (defaultItem) {
                 view.Code = defaultItem.Code;
@@ -1370,7 +1372,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
             view.DisplayName = field.DisplayName;
-            if (view.HasTree) {
+            if (view.HasTree && view.DataTypeCode != "DateTime") {
                 var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
                     view.Code = defaultItem.Code;
