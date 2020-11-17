@@ -300,8 +300,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FOBValueNIS).HasColumnName("FOBValueNIS").HasPrecision(16, 2);
 
             this.Property(t => t.FOBValueDollar).HasColumnName("FOBValueDollar").HasPrecision(16, 2);
-
-            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

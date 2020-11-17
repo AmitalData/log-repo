@@ -414,11 +414,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? FOBValueNIS { get; set; }
         [Column("FOBValueDollar")]
 	    public decimal? FOBValueDollar { get; set; }
-        [ForeignKey("Trucker")]
-        [Column("TruckerId")]
-	    public string TruckerId { get; set; }
-	      
-        public virtual Trucker Trucker { get; set; }
     }
 }
 	 
