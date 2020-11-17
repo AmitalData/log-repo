@@ -4756,7 +4756,7 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.Distributor.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.ComputingPartner.cs" />
     <Content Include="InstallFonts.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="CustomWebServices\Testers\Signalr.cshtml" />
     <Content Include="ClassDiagram3.cd" />
@@ -6872,7 +6872,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EnableDynamicCompression.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APInvoiceStatus.cs" />
     <Content Include="XapFileDownloadHandler.ashx" />

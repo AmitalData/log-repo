@@ -390,7 +390,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="FTP\private.pem">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
