@@ -421,11 +421,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FinalLoadingSite { get; set; }
 	      
         public virtual LoadingSiteType LoadingSiteType { get; set; }
-        [ForeignKey("Trucker")]
-        [Column("TruckerId")]
-	    public string TruckerId { get; set; }
-	      
-        public virtual Trucker Trucker { get; set; }
     }
 }
 	 

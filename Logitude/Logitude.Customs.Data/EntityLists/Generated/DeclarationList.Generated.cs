@@ -382,8 +382,6 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? TransshipmentApprovalDateTime  { get; set; }
        [DataMember]
        public string FinalLoadingSite  { get; set; }
-       [DataMember]
-       public string TruckerId  { get; set; }
    }
 
 }

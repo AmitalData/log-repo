@@ -179,6 +179,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterStorageSiteCode = cm.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
                                                                   CustomFileNo = d.CustomFileNo,
+                                                                  TruckerId=a.Trucker.Card.Code
                                                               });
 
 
