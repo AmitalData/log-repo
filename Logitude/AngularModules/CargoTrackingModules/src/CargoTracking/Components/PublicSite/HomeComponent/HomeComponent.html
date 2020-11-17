@@ -46,7 +46,9 @@
   
     <!-- <div style="width: 100%;height: 55px;"></div> -->
   
-    <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
+    <div style="min-height: calc(100vh - 110px);">
+        <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
+    </div>
   
     <footer>
         <!-- {{ currentDate | date:'y'}} {{companyLabel}} &copy; &nbsp; -->
