@@ -228,8 +228,16 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             if (_DeclarationPM.IsConnectedToUnifreight)
-            {
-                OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
+            {if(_DeclarationPM.IsCourierDeclaration)
+                {
+                    OpenUnifreighTask(_DeclarationPM, "L2U", null, false, "");
+
+                }
+            else
+                {
+                    OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
+
+                }
                 return;
             }
             ///moran please updat event "INR"
@@ -237,7 +245,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             string loggingUserId = null;
             if (RequestSheetContext.Current != null) loggingUserId = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
             if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
-            Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.RaiseINREvent(_DeclarationPM, loggingUserId);
+            if (!_DeclarationPM.IsCourierDeclaration)
+                Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.RaiseINREvent(_DeclarationPM, loggingUserId);
 
         }
 
