@@ -42,8 +42,8 @@ export class LineModel extends BaseComponent {
     public isRTL: boolean = false;
 
     constructor(
-        private ledgerTransaction: LedgerTransactionPM,
-        private parent: ReconcileComponent,
+        public ledgerTransaction: LedgerTransactionPM,
+        public parent: ReconcileComponent,
         public myRowIndex:number
     ) {
         super();
@@ -235,7 +235,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public isRTL: boolean = false;
     public Operators: any[] = [];
     public IsEntityValid: boolean = true;    
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
     public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
     public SelectedLines: ObservableCollection= new ObservableCollection([]);
     public _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -244,13 +244,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public entityListService: EntityListService= new EntityListService();
 
 
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(public CD: ChangeDetectorRef) {
         super();
 
         this.InitComponent();
     }
 
-    private InitComponent()
+    public InitComponent()
     {
         this.SetComponentRTL();
 
@@ -261,31 +261,31 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.InitFilters();
     }
 
-    private GetTenant()
+    public GetTenant()
     {
         this.TenantPM = SessionLocator.TenantPM;
     }
 
-    private SetComponentRTL()
+    public SetComponentRTL()
     {
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
-    private InitEntity()
+    public InitEntity()
     {
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.CurrencyId = this.EntityPM.CurrencyId;
     }
 
-    private InitFilters()
+    public InitFilters()
     {
         this.BuildAmountFiltersOperatorsList();
         this.InitDateFilter();
     }
 
-    private BuildAmountFiltersOperatorsList()
+    public BuildAmountFiltersOperatorsList()
     {
         this.Operators =
             [{ EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
@@ -299,7 +299,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.foreignAmountSelectedOperator = this.Operators[0];
     }
 
-    private InitDateFilter()
+    public InitDateFilter()
     {
         this.DateFilterPresetsList =
             [
@@ -317,12 +317,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("LedgerTransaction",this.filterAgrs,this.QueryColumns);
     }
 
-    private AddAccountIdFilterForFilterAgrs(){
+    public AddAccountIdFilterForFilterAgrs(){
         var AccountFilter = new FilterItem("AccountId", this.GLAccountPM.Id, null, null, "Equals", false, false, false, "string", false);
         this.filterAgrs.AdditionalFilters.push(AccountFilter);
     }
 
-    private AddIsReconciledFiltersForFilterAgrs(){
+    public AddIsReconciledFiltersForFilterAgrs(){
         var IsReconciledFilter = new FilterItem("IsReconciled", false, null, null, "Equals", false, false, false, "boolean", false);
         var IsExternalReconcileFilter = new FilterItem("IsExternalReconcile", false, null, null, "Equals", false, false, false, "boolean", false);
         var InReconcileProgressFilter = new FilterItem("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean", false);
@@ -402,7 +402,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#region Properties
 
 
-    private _isAllSelected : boolean;
+    public _isAllSelected : boolean;
     public get isAllSelected() : boolean {
         return this._isAllSelected;
     }
@@ -420,7 +420,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
 
 
-    private currencyId: string;
+    public currencyId: string;
     get CurrencyId() { return this.currencyId; }
     set CurrencyId(value: string) {
         if (this.currencyId != value) {
@@ -452,7 +452,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
 
-    private openAmountSelectedOperator: any;
+    public openAmountSelectedOperator: any;
     get SelectedOperator() { return this.openAmountSelectedOperator; }
     set SelectedOperator(value: any) {
         if (this.openAmountSelectedOperator != value) {
@@ -460,7 +460,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.OpenAmountTextChanged(this.openAmount,true);
         }
     }
-    private foreignAmountSelectedOperator: any;
+    public foreignAmountSelectedOperator: any;
     get SelectedOperator2() { return this.foreignAmountSelectedOperator; }
     set SelectedOperator2(value: any) {
         if (this.foreignAmountSelectedOperator != value) {
@@ -468,7 +468,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.ForeignAmountTextChanged(this.foreignAmount,true);
         }
     }
-    private automaticReconcileId: string;
+    public automaticReconcileId: string;
     get AutomaticReconcileId() { return this.automaticReconcileId; }
     set AutomaticReconcileId(value: string) {
         if (this.automaticReconcileId != value) {
@@ -477,7 +477,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    private automaticReconcile: AutomaticReconcileMethodList;
+    public automaticReconcile: AutomaticReconcileMethodList;
     get AutomaticReconcileMethodList() { return this.automaticReconcile; }
     set AutomaticReconcileMethodList(value: AutomaticReconcileMethodList) {
         if (this.automaticReconcile != value) {
@@ -495,7 +495,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region Search Fields
-    private timerToken: any;
+    public timerToken: any;
     TextChanged(searchtext) {
         if (searchtext != null || searchtext != undefined) {
 
@@ -829,7 +829,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region Grid Data Source
-    private _entityListService: EntityListService = new EntityListService();
+    public _entityListService: EntityListService = new EntityListService();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
     dateFilter: FilterItem;
@@ -1211,7 +1211,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         });
     }
 
-    private SelectLines(result: any)
+    public SelectLines(result: any)
     {
         this.SelectedLines.Clear();
         let emittedArray = result.map((res: LedgerTransactionPM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
@@ -1220,7 +1220,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.ChangeCheckBoxesState.emit(emittedArray);
     }
 
-    private GetAPIFilters()
+    public GetAPIFilters()
     {
         var filters = new ApiQueryFilters;
         if (this.currencyFilter) {
@@ -1471,7 +1471,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#endregion
 
     
-    private _showMoreFilters : string;
+    public _showMoreFilters : string;
     public get showMoreFilters() : string {
         return this._showMoreFilters;
     }
@@ -1481,7 +1481,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     public DateFilterPresetsList: any[] = [];
 
-    private selectedDatePreset: any;
+    public selectedDatePreset: any;
     get SelectedDatePreset() { return this.selectedDatePreset; }
     set SelectedDatePreset(value: any) {
         if (this.selectedDatePreset != value) {
@@ -1507,7 +1507,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     
     fromDate: Date;
-    private SetDatesFieldsByPreset()
+    public SetDatesFieldsByPreset()
     {
         var datesHelper = new DatesHelper();
         switch (this.SelectedDatePreset.EnglishName) {
@@ -1564,12 +1564,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    private EnableDates()
+    public EnableDates()
     {
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
     }
-    private DisableDates()
+    public DisableDates()
     {
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
@@ -1645,7 +1645,7 @@ export class DatesHelper
     public LastYearToDate: Date; 
     
 
-    private InitDates()
+    public InitDates()
     {
         this.TomorrowDate = this.GetTomorrowDate();
         this.TodayDate = this.GetTodayDate();
@@ -1659,35 +1659,35 @@ export class DatesHelper
         this.CurrentYearFromDate = this.GetCurrentYearDate();
     }
 
-    private GetTomorrowDate()
+    public GetTomorrowDate()
     {
         var date = new Date();
         date.setHours(23, 59, 59, 59);
         return date;
     }
 
-    private GetTodayDate()
+    public GetTodayDate()
     {
         var date = new Date();
         this.ResetHours(date);
         return date;
     }
 
-    private GetCurrentYearDate()
+    public GetCurrentYearDate()
     {
         var date = new Date(new Date().getFullYear(), 0, 1);
         this.ResetHours(date);
         return date;
     }
 
-    private GetNewDateWithAddedDays(daysToAdd: number)
+    public GetNewDateWithAddedDays(daysToAdd: number)
     {
         var date  = DateTool.AddDays((new Date()), daysToAdd);
         this.ResetHours(date);
         return date;
     }
 
-    private ResetHours(date: Date)
+    public ResetHours(date: Date)
     {
         date.setUTCHours(0, 0, 0, 0);
     }
