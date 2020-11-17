@@ -32,7 +32,7 @@ export class ReceivablesTab {
         this.AddReceivable("-" + this.EntityNumber);
         this.CreateInvoice("CreditNote");
         this.FillInvoiceDetailes();
-        this.count++;
+        this.count += 2;
         cy.server();
         cy.route({
             method: 'GET',
