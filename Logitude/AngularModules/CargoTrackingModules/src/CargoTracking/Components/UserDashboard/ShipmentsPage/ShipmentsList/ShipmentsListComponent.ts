@@ -48,7 +48,7 @@ export class ShipmentsListComponent
         this.GetVariablesFromURI();
         // this.listenToRouterEvents();
         this.InitForm();
-        this.SearchText = 'abed';
+        this.SearchText = '';
         this.Search();
 
     }

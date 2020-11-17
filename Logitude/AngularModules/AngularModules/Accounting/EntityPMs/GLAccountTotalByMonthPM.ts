@@ -108,7 +108,10 @@ export class GLAccountTotalByMonthPM {
     public OldEntityPM: GLAccountTotalByMonthPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -116,6 +119,7 @@ export class GLAccountTotalByMonthPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccountTotalByMonth");
            
         }
+       }
     }
 
     private MyClone: GLAccountTotalByMonthPM;

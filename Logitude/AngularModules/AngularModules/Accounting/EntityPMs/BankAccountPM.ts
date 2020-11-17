@@ -223,7 +223,10 @@ export class BankAccountPM {
     public OldEntityPM: BankAccountPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -231,6 +234,7 @@ export class BankAccountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BankAccount");
            
         }
+       }
     }
 
     private MyClone: BankAccountPM;

@@ -153,6 +153,7 @@ export class TaxReportLinePMService {
         if (!entityPM) {
             
             entityPM = new TaxReportLinePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TaxReportLinePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

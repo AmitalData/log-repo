@@ -206,7 +206,17 @@ namespace WebFreight.Web.Helpers
 
                     DocumentOutCopy documentOutCopy = documentOutCopyRep.GetDocumentOutCopyByDocumentOutAndType(documentOutId, documentTypeCopyId, tenant);
 
-                    string calculatedFileName = GetCalculatedDocumentFileName(entityId, entityObjectTableId, childEntityId, tenant, userId, documentTypeCopy, documentType);
+                    DocumentFileNameParameter documentFileNameParameter = new DocumentFileNameParameter
+                    {
+                        EntityId = entityId,
+                        EntityObjectTableId = entityObjectTableId,
+                        ChildEntityId = childEntityId,
+                        Tenant = tenant,
+                        UserId = userId,
+                        DocumentTypeCopy = documentTypeCopy,
+                        DocumentType = documentType,
+                    };
+                    string calculatedFileName = GetCalculatedDocumentFileName(documentFileNameParameter);
 
                     Document document = CreateOrUpdateDocument(documentOutId, tenant, documentTypeCopyId, docRepository, documentOutCopyRep, documentOut, documentTypeCopy, documentType, ref documentOutCopy, calculatedFileName);
 
@@ -326,40 +336,123 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private string GetCalculatedDocumentFileName(string entityId, string entityObjectTableId, string childEntityId, int tenant, string userId, DocumentTypeCopy documentTypeCopy, DocumentType documentType)
+        private string GetCalculatedDocumentFileName(DocumentFileNameParameter documentFileNameParameter)
         {
             string calculatedFileName = string.Empty;
-            if (!string.IsNullOrEmpty(documentType.FileName))
+            if (!string.IsNullOrEmpty(documentFileNameParameter.DocumentType.FileName))
             {
-
-                if (documentType.FileName.Contains("["))
-                {
-                    string id = entityId;
-                    string tableId = entityObjectTableId;
-                    if (!string.IsNullOrEmpty(childEntityId)) id = childEntityId;
-                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                    string htmlResolve = htmlEditorHelper.ResolveHtmlString(id, documentType.ObjectTableId, documentType.FileName, userId, tenant);
-                    if (!string.IsNullOrEmpty(htmlResolve))
-                    {
-                        if (htmlResolve.Length > 120)
-                        {
-                            calculatedFileName = htmlResolve.Substring(0, 119);
-                        }
-                        else calculatedFileName = htmlResolve;
-                    }
-
-                }
-                else calculatedFileName = documentType.FileName;
+                if (documentFileNameParameter.DocumentType.FileName.Contains("["))
+                    calculatedFileName = GetDocumentFileNameFromDataFields(documentFileNameParameter);
+                else 
+                    calculatedFileName = documentFileNameParameter.DocumentType.FileName;
             }
 
-            if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentType.Name;
+            if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentFileNameParameter.DocumentType.Name;
 
-            if (documentTypeCopy != null && documentType.Name != documentTypeCopy.Name)
+            if (documentFileNameParameter.DocumentTypeCopy != null && documentFileNameParameter.DocumentType.Name != documentFileNameParameter.DocumentTypeCopy.Name)
             {
-                calculatedFileName += "_" + documentTypeCopy.Name;
+                calculatedFileName += "_" + documentFileNameParameter.DocumentTypeCopy.Name;
             }
 
             return calculatedFileName;
+        }
+
+        private static string GetDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
+        {
+            string calculatedFileName = string.Empty;
+            string htmlResolve = ResolveDocumentFileNameFromDataFields(documentFileNameParameter);
+            if (!string.IsNullOrEmpty(htmlResolve))
+            {
+                if (htmlResolve.Length > 120)
+                {
+                    calculatedFileName = htmlResolve.Substring(0, 119);
+                }
+                else calculatedFileName = htmlResolve;
+            }
+
+            return calculatedFileName;
+        }
+
+        private static string ResolveDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
+        {
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+
+            string htmlResolve  = ResolveDocumentFileNameFromMainObjectTable(documentFileNameParameter, htmlEditorHelper);
+
+            if (htmlResolve.Contains("[DocumentType"))
+            {
+                DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
+                {
+                    DocumentFileNameParameter = documentFileNameParameter,
+                    HtmlEditorHelper = htmlEditorHelper,
+                    DocumentFileName = htmlResolve, 
+                    EntityId = documentFileNameParameter.DocumentType.Id, 
+                    ObjectTableName = "DocumentType",
+                };
+                htmlResolve = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
+            }
+            if (htmlResolve.Contains("[DocumentsFiling"))
+            {
+                htmlResolve = ResolveDocumentFileNameFromDocumentsFilingObjectTable(documentFileNameParameter, htmlEditorHelper, htmlResolve);
+            }
+            return htmlResolve;
+        }
+
+        private static string ResolveDocumentFileNameFromDocumentsFilingObjectTable(DocumentFileNameParameter documentFileNameParameter, HtmlEditorHelper htmlEditorHelper, string htmlResolve)
+        {
+            string id = documentFileNameParameter.EntityId;
+            if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
+                id = documentFileNameParameter.ChildEntityId;
+
+            Logitude.BL.CommonDataModel.EntityQueries.DocumentsFilingQuery documentsFilingQuery = new Logitude.BL.CommonDataModel.EntityQueries.DocumentsFilingQuery(documentFileNameParameter.Tenant);
+            DocumentsFilingPM documentsFilingPM = documentsFilingQuery.GetDocumentsFilingByDocumentType(documentFileNameParameter.DocumentType.Id, documentFileNameParameter.DocumentType.ObjectTableId, id, documentFileNameParameter.Tenant);
+            if (documentsFilingPM != null)
+            {
+                DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
+                {
+                    DocumentFileNameParameter = documentFileNameParameter,
+                    HtmlEditorHelper = htmlEditorHelper,
+                    DocumentFileName = htmlResolve,
+                    EntityId = documentsFilingPM.Id,
+                    ObjectTableName = "DocumentsFiling",
+                };
+                htmlResolve = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
+            }
+
+            return htmlResolve;
+        }
+
+        private static string ResolveDocumentFileNameFromMainObjectTable(DocumentFileNameParameter documentFileNameParameter, HtmlEditorHelper htmlEditorHelper)
+        {
+            HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs();
+
+            string id = documentFileNameParameter.EntityId;
+            if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
+                id = documentFileNameParameter.ChildEntityId;
+
+            htmlResolveArgs.EntityId = id;
+            htmlResolveArgs.ObjectTableId = documentFileNameParameter.DocumentType.ObjectTableId;
+            htmlResolveArgs.HtmlString = documentFileNameParameter.DocumentType.FileName;
+            htmlResolveArgs.UserId = documentFileNameParameter.UserId;
+            htmlResolveArgs.Tenant = documentFileNameParameter.Tenant;
+
+            string htmlResolve = htmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
+            return htmlResolve;
+        }
+
+        private static string GetDocumentFileNameFromDataFieldsByObjectTableName(DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter)
+        {
+            HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs();
+
+            htmlResolveArgs.EntityId = documentFileNameFromObjectTableParameter.EntityId;
+            htmlResolveArgs.ObjectTableId = "";
+            htmlResolveArgs.ObjectTableName = documentFileNameFromObjectTableParameter.ObjectTableName;
+            htmlResolveArgs.HtmlString = documentFileNameFromObjectTableParameter.DocumentFileName.Replace("[" + documentFileNameFromObjectTableParameter.ObjectTableName, "[");
+            htmlResolveArgs.UserId = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.UserId;
+            htmlResolveArgs.Tenant = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.Tenant;
+
+            string resolveDocumentFileName = documentFileNameFromObjectTableParameter.HtmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
+            return resolveDocumentFileName;
         }
 
         private long t1;
@@ -1884,7 +1977,15 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         string id = entityId;
                         if (!string.IsNullOrEmpty(childEntityId)) id = childEntityId;
-                        string htmlResolve = htmlEditorHelper.ResolveHtmlString(id, documentType.ObjectTableId, documentType.FileName, "", tenant);
+                        HtmlResolveArgs htmlResolveArgs = new HtmlResolveArgs
+                        {
+                            EntityId = id,
+                            ObjectTableId = documentType.ObjectTableId,
+                            HtmlString = documentType.FileName,
+                            UserId = "",
+                            Tenant = tenant,
+                        };
+                        string htmlResolve = htmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
                         if (!string.IsNullOrEmpty(htmlResolve))
                         {
                             if (htmlResolve.Length > 120)
@@ -2283,5 +2384,24 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public string DocumentOutId { get; set; }
     }
 
+    public class DocumentFileNameParameter
+    {
+        public string EntityId { get; set; }
+        public string EntityObjectTableId { get; set; }
+        public string ChildEntityId { get; set; }
+        public int Tenant { get; set; }
+        public string UserId { get; set; }
+        public DocumentTypeCopy DocumentTypeCopy { get; set; }
+        public DocumentType DocumentType { get; set; }
+    }
 
+    public class DocumentFileNameFromObjectTableParameter
+    {
+        public string EntityId { get; set; }
+        public DocumentFileNameParameter DocumentFileNameParameter { get; set; }
+        public HtmlEditorHelper HtmlEditorHelper { get; set; }
+        public string DocumentFileName { get; set; }
+        public int Tenant { get; set; }
+        public string ObjectTableName { get; set; }
+    }
 }

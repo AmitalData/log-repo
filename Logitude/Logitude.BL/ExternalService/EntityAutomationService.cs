@@ -27,6 +27,7 @@ namespace Logitude.BL.ExternalService
         private string automationType = string.Empty;
         private object oldEntityPM = null;
         private string entityId = string.Empty;
+        private EntityAutomationArgs entityAutomationArgs = null;
         public EntityAutomationService(EntityAutomationArgs args)
         {
             this.entityPM = args.EntityPM;
@@ -35,6 +36,7 @@ namespace Logitude.BL.ExternalService
             this.objectTableName = args.ObjectTableName;
             this.automationType = args.AutomationType;
             this.entityId = args.EntityId;
+            this.entityAutomationArgs = args;
             if (automationType != "OnCreate")
             {
                 this.automationObjectFields = GetObjectFieldsUsedInAutomation();
@@ -52,7 +54,7 @@ namespace Logitude.BL.ExternalService
         {
             string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
 
-            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now });
+            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity });
             mainEntityChangeService.AddEntityChange();
 
         }
@@ -61,7 +63,7 @@ namespace Logitude.BL.ExternalService
         {
             List<ObjectFieldPM> objectFieldLists = new List<ObjectFieldPM>();
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(tenant);
-            ObjectTable objecttable = objecttableRepository.GetObjectTableByName(objectTableName, 0, true);
+            ObjectTable objecttable = objecttableRepository.GetObjectTableByName(objectTableName == "Master" ? "Shipment" : objectTableName, 0, true);
             if (objecttable != null)
             {
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
@@ -76,6 +78,14 @@ namespace Logitude.BL.ExternalService
             return EntityPMChangeTrackingHelper.GetChangesDetectedXml(notifyPropertyChangeValuesLists);
         }
 
+
+        public List<NotifyPropertyChangeValues> GetNotifyPropertyChangeValuesLists()
+        {
+            var notifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, oldEntityPM);
+            return notifyPropertyChangeValuesLists;
+        }
+
+
         private void MapAutomationFieldsFormPocoToEntityPM( object poco , object entityPM)
         {
             if (automationObjectFields != null)
@@ -85,7 +95,7 @@ namespace Logitude.BL.ExternalService
                     object value = GetPropertyValue(poco, objectFieldPM.FieldName);
                     if (objectFieldPM.IsCustom)
                     {
-                        value = new CustomFieldClass(objectFieldPM.FieldName, objectTableName, value!=null ? value.ToString():"");
+                        value = new CustomFieldClass(objectFieldPM.FieldName, objectTableName == "Master" ? "Shipment": objectTableName, value!=null ? value.ToString():"");
                     }
                     PropertyInfo propInfo = entityPM.GetType().GetProperty(objectFieldPM.FieldName);
                     propInfo.SetValue(entityPM, value, null);
@@ -164,8 +174,11 @@ namespace Logitude.BL.ExternalService
     {
         public object EntityPM { get; set; }
         public object OldEntityPM { get; set; }
+        public Object ExternalEntity { get; set; }
 
         public object Poco { get; set; }
+        
+        public string OtherObjectTableName { get; set; }
 
         public string AutomationType { get; set; }
         public string ObjectTableName { get; set; }

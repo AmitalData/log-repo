@@ -721,7 +721,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
             }
         }
-        if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
+        if (view.DWObjectTableCode.indexOf("DIM_") != -1 && (view.DataTypeCode != "DateTime" || view.DWObjectTableCode.indexOf("DIM_Date") != -1)) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]' || view.Code == '[Full Date US]') {
 
@@ -1377,7 +1377,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 }
             }
             if (field.FilterItems.length == 0) {
-                if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
+                if (field.DWObjectTableCode && (field.DWObjectTableCode.indexOf("DIM_") != -1 && (field.DataTypeCode != "DateTime" || field.DWObjectTableCode.indexOf("DIM_Date") != -1))) {
                     if (view.Code == '[Full Date]' || view.Code == '[Full Date US]') {
                         view.ParentDataTypeCode = "Date";
                         view.DataTypeCode = "Date";
@@ -1753,7 +1753,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             }
         }
         else {
-            if (newValue == "DateTime" && this.DWObjectTableCode.indexOf("DIM_") == -1) {
+            if (newValue == "DateTime" && this.DWObjectTableCode.indexOf("DIM_Date") == -1) {
                 this.HasTree = true;
 
             }
@@ -2066,6 +2066,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     LoadItems(DWObjectField: any) {
         if (this.IsViewTree) {
             this.IsViewTree = false;
+            this.Items = [];
         }
         else {
             if (this.Items.length == 0 || AppTool.IsNullOrEmpty(DWObjectField.MyParentClass.searchText)) {
@@ -2137,10 +2138,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
             dWObjectFieldPM.DataTypeCode = item;
             dWObjectFieldPM.CannotFilter = true;
             dWObjectFieldPM.Name = item;
+            dWObjectFieldPM.DimensionTableDisplayName = DWObjectField.DimensionTableDisplayName;
             dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
             view.displayname = DWObjectField.Name + " " + item;
             view.ParentDataTypeCode = "DateParts";
+            view.parentDimTabelName = DWObjectField.ParentDimTabelName;
 
             ObsList.push(view);
             this.Items = ObsList;

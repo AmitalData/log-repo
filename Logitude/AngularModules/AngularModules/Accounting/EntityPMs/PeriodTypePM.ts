@@ -53,7 +53,10 @@ export class PeriodTypePM {
     public OldEntityPM: PeriodTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class PeriodTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PeriodType");
            
         }
+       }
     }
 
     private MyClone: PeriodTypePM;

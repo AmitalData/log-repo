@@ -527,8 +527,9 @@
     </script>
         
     <script type="text/javascript">
-        function OnDownloadDocument(documentId) {
+        function OnDownloadDocument(url) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open(url);
         }
 
         function OnDownloadAllDocument() {

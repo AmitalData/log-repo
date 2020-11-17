@@ -111,6 +111,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FollowUpAutomationSsucceedXml = a.FollowUpAutomationSsucceedXml,
                              SetSLAAutomationFailedXml = a.SetSLAAutomationFailedXml,
                              SetSLAAutomationSsucceedXml = a.SetSLAAutomationSsucceedXml,
+                             QueuedTaskAutomationFailedXml = a.QueuedTaskAutomationFailedXml, 
+                             QueuedTaskAutomationSsucceedXml = a.QueuedTaskAutomationSsucceedXml,
+                             SendInterfaceAutomationFailedXml = a.SendInterfaceAutomationFailedXml,
+                             SendInterfaceAutomationSsucceedXml = a.SendInterfaceAutomationSsucceedXml,
                       
                          }).FirstOrDefault();
             return query;

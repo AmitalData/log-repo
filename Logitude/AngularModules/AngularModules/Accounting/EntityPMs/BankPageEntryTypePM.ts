@@ -53,7 +53,10 @@ export class BankPageEntryTypePM {
     public OldEntityPM: BankPageEntryTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -61,6 +64,7 @@ export class BankPageEntryTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BankPageEntryType");
            
         }
+       }
     }
 
     private MyClone: BankPageEntryTypePM;

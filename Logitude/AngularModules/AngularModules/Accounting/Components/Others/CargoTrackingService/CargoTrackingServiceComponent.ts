@@ -47,8 +47,8 @@ ItemClicked(item:CargoTrackingMenuItem){
     case "CargoShipment":{
       var windowTitle = "Build Cargo Tracking Shipments";
       var logWindow = new LogitudeWindow();
-      logWindow.Width = 950;
-      logWindow.Height = 500;
+      logWindow.Width = 450;
+      logWindow.Height = 200;
       logWindow.Title = windowTitle;
       logWindow.IsShowCloseButton = true;
       logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent');

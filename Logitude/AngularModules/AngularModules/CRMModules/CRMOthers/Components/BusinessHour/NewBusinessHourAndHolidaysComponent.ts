@@ -617,8 +617,8 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         holidayPM.UpdateDate = todayDateTime;
         holidayPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         var viewModel = new BusinessHourHolidayArgs(this.entityPM, holidayPM, this, true, false);
-        logWindow.Title = "New Holiday";
         var logWindow = new LogitudeWindow();
+        logWindow.Title = "New Holiday";
         logWindow.Width = 800;
         logWindow.Height = 450;
         logWindow.DataContext = viewModel;

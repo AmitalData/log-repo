@@ -123,7 +123,10 @@ export class InterestBasesTypePM {
     public OldEntityPM: InterestBasesTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -131,6 +134,7 @@ export class InterestBasesTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestBasesType");
            
         }
+       }
     }
 
     private MyClone: InterestBasesTypePM;

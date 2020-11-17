@@ -793,22 +793,22 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRule blockedFieldsUpdateRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
-            {
-                RuleCode = "ShipmentBlockFieldsUpdate",
-                Name = "Block Fields Update",
-                ObjectTableId = ShipmentTable.Id,
-                Tenant = 0,
-                RuleTypeCode = "BLCK",
-                SystemLevel = true,
-                ActiveForNew = false,
-                ActiveForUpdate = true,
-                TriggerTypeCode = "ALLW",
-                RuleNotificationTypeCode = "ERR",
-            }, ObjectTableRuleRepository, TenantObjectTableRule);
+            //ObjectTableRule blockedFieldsUpdateRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            //{
+            //    RuleCode = "ShipmentBlockFieldsUpdate",
+            //    Name = "Block Fields Update",
+            //    ObjectTableId = ShipmentTable.Id,
+            //    Tenant = 0,
+            //    RuleTypeCode = "BLCK",
+            //    SystemLevel = true,
+            //    ActiveForNew = false,
+            //    ActiveForUpdate = true,
+            //    TriggerTypeCode = "ALLW",
+            //    RuleNotificationTypeCode = "ERR",
+            //}, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField ShipmentTypeIdBlckField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectFieldCode = ShipmentTypeId.FieldCode, ObjectTableRuleId = blockShipmentTypeRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            //ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            //ObjectTableRuleField ShipmentTypeIdBlckField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectFieldCode = ShipmentTypeId.FieldCode, ObjectTableRuleId = blockShipmentTypeRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region Operational Closed
@@ -1728,21 +1728,21 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectField OpenedByUserId = ObjectContext.ObjectFields.Where(d => d.FieldName == "CreatedByUserId" && d.ObjectTableId == QuoteTable.Id).FirstOrDefault();
             ObjectField IsCancelled = ObjectContext.ObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == QuoteTable.Id).FirstOrDefault();
 
-            ObjectTableRule blockedFieldsUpdateRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
-            {
-                RuleCode = "QuoteBlockFieldsUpdate",
-                Name = "Block Fields Update",
-                ObjectTableId = QuoteTable.Id,
-                Tenant = 0,
-                RuleTypeCode = "BLCK",
-                SystemLevel = true,
-                ActiveForNew = false,
-                ActiveForUpdate = true,
-                TriggerTypeCode = "ALLW",
-                RuleNotificationTypeCode = "ERR",
-            }, ObjectTableRuleRepository, TenantObjectTableRule);
+            //ObjectTableRule blockedFieldsUpdateRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            //{
+            //    RuleCode = "QuoteBlockFieldsUpdate",
+            //    Name = "Block Fields Update",
+            //    ObjectTableId = QuoteTable.Id,
+            //    Tenant = 0,
+            //    RuleTypeCode = "BLCK",
+            //    SystemLevel = true,
+            //    ActiveForNew = false,
+            //    ActiveForUpdate = true,
+            //    TriggerTypeCode = "ALLW",
+            //    RuleNotificationTypeCode = "ERR",
+            //}, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            //ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             #region Block after cancel
             //ObjectTableRule blockFieldsRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()

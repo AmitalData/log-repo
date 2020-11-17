@@ -19,22 +19,23 @@ export class PublicShipmentDetailsComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-    tenant:number;
+    tenant: number;
     previousUrl: string;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
-         private location: Location,
-         private searchService: CargoTrackingSearchService) {
+        private location: Location,
+        private searchService: CargoTrackingSearchService)
+    {
         this.GetIdFromURI();
         this.mainColor = CargoTrackingBrandingData.MainColor;
         this.LoadShipment();
-        console.log("[referrer]",document.referrer);
-        
+        console.log("[referrer]", document.referrer);
+
         this.listenToRouterEvents();
-        
-        
-        
+
+
+
 
     }
     private listenToRouterEvents()
@@ -44,7 +45,7 @@ export class PublicShipmentDetailsComponent implements OnInit
             if (event instanceof RoutesRecognized) {
                 // Show loading indicator
                 // var url = window.location.pathname;
-                
+
 
             }
 
@@ -58,8 +59,9 @@ export class PublicShipmentDetailsComponent implements OnInit
         });
     }
     @HostListener('window:resize', ['$event'])
-    onResize() {
-      this.setViews();
+    onResize()
+    {
+        this.setViews();
     }
     ngOnInit(): void
     {
@@ -79,10 +81,10 @@ export class PublicShipmentDetailsComponent implements OnInit
     // }
 
     private GetIdFromURI()
-    {      
-        
+    {
+
         // var tenant = this.route.snapshot.paramMap.get('SecurityKey');
-        if(this.tenant==null){
+        if (this.tenant == null) {
             this.tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
         }
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
@@ -94,9 +96,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 
 
 
-    goBack(): void {
-        AppHelper.AppBack(this.router,this.location,this.tenant);
-        
+    goBack(): void
+    {
+        AppHelper.AppBack(this.router, this.location, this.tenant);
+
     }
     GetModeIcon()
     {
@@ -108,10 +111,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 
             case 'O':
                 iconPath = "./assets/images/misc/ship.svg";
-            break;
+                break;
 
             default:
-                case 'L':
+            case 'L':
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
 
@@ -121,8 +124,9 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
     public mainColor: string;
     public transform: string;
-    GetModesvgPath() {
-   
+    GetModesvgPath()
+    {
+
         var iconPath = "";
         switch (this.Shipment.TransportModeId) {
             case 'A':
@@ -152,12 +156,12 @@ export class PublicShipmentDetailsComponent implements OnInit
     //    if (this.Shipment.CurrentMilestoneCode == "11") {
 
     //        this.DileveredIconColor = this.mainColor;
-          
+
     //    }
     //    else {
     //        this.DileveredIconColor ="#B5B5B5";
     //    }
-          
+
     //    return iconPath;
     //}
 
@@ -167,49 +171,59 @@ export class PublicShipmentDetailsComponent implements OnInit
         this.SelectedTab = tabName;
     }
 
-    LoadShipment(){
+    LoadShipment()
+    {
+        this.GetShipment();
+        this.GetPublicShipmentReferences();
+    }
+
+    public MilstonesExist: boolean = false;
+    public Date: Date;
+    private GetShipment()
+    {
         this.isLoading = true;
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
             console.log("[getShipment]", result);
             this.ShipmentWithMilestones = result;
-            if(this.ShipmentWithMilestones){
+            if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
-                    this.DileveredIconColor = this.mainColor;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }
                 else {
                     this.Delivered = false;
                     this.DileveredIconColor = "#B5B5B5";
                 }
                 this.SetMilestonesFields(result);
-              
+
             }
-            
+
 
         });
     }
-    public MilstonesExist: boolean = false;
-    public Date: Date;
-    SetMilestonesFields(result: CargoTrackingShipmentWithMilestones) {
-     
-        this.AllMilestoneFields = result.Milestones;      
-        if(this.AllMilestoneFields){
-            this.AllMilestoneFields.forEach(S=>{
-                
+
+    SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
+    {
+
+        this.AllMilestoneFields = result.Milestones;
+        if (this.AllMilestoneFields) {
+            this.AllMilestoneFields.forEach(S =>
+            {
+
                 if (S.IsEstimation) {
-                  
-                         this.FuturesMilestoneFields.push(S);
-                    }
-                    else if(!S.IsCurrent){
-                        this.CompletedMilestoneFields.push(S);
-                       
-                    }
-                    else{
-                        this.CurrentMilestoneField = S;
-                    }
+
+                    this.FuturesMilestoneFields.push(S);
+                }
+                else if (!S.IsCurrent) {
+                    this.CompletedMilestoneFields.push(S);
+
+                }
+                else {
+                    this.CurrentMilestoneField = S;
+                }
             });
         }
 
@@ -225,31 +239,52 @@ export class PublicShipmentDetailsComponent implements OnInit
         }
     }
 
-    public ShipmentWithMilestones:CargoTrackingShipmentWithMilestones;
-    public AllMilestoneFields:Milestone[];
-    public CompletedMilestoneFields:Milestone[]=[];
-    public FuturesMilestoneFields:Milestone[]=[];
-    public CurrentMilestoneField:Milestone = new Milestone();
+    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    public AllMilestoneFields: Milestone[];
+    public CompletedMilestoneFields: Milestone[] = [];
+    public FuturesMilestoneFields: Milestone[] = [];
+    public CurrentMilestoneField: Milestone = new Milestone();
+
+
+    ShipmentReferences: string[] = [];
+    IsLoadingReferences = false;
+    showMoreReferences: boolean  = false;
+
+    GetPublicShipmentReferences()
+    {
+        this.IsLoadingReferences = true;
+        this.searchService.GetPublicShipmentReferences(this.SecurityKey, this.tenant)
+            .subscribe((references: any) =>
+            {
+                this.IsLoadingReferences = false;
+                console.log("[GetPublicShipmentReferences]", references);
+                this.ShipmentReferences = references;
+            });
+
+    }
+
+
 }
 
 
 
-export class Milestone {
-   
-    public	Code: string;
-    public	Name: string;
-	public  Notes: string;
-	public  Date: Date;
-	public  EstimationDate: Date;
-    public  Done: boolean;
-    public  IsEstimation: boolean;
-    public  IsCurrent: boolean;
+export class Milestone
+{
+
+    public Code: string;
+    public Name: string;
+    public Notes: string;
+    public Date: Date;
+    public EstimationDate: Date;
+    public Done: boolean;
+    public IsEstimation: boolean;
+    public IsCurrent: boolean;
 }
 
 
 export class CargoTrackingShipmentWithMilestones
 {
-    public Milestones: Milestone[]  ;
-    public ShipmentList:CargoTrackingShipmentList   ;
+    public Milestones: Milestone[];
+    public ShipmentList: CargoTrackingShipmentList;
 
 }

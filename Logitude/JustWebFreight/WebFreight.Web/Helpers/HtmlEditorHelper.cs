@@ -132,6 +132,7 @@ namespace WebFreight.Web.Helpers
         List<XmlNode> shipmentNumbersNodes = new List<XmlNode>();
 
         List<HtmlNode> shipmentNumbersNodesHtml = new List<HtmlNode>();
+        List<HtmlNode> SharedDocumentsNodesHTML = new List<HtmlNode>();
 
         ObjectTableRepository tablesRepository;
         Tenant CurrentTenant = null;
@@ -952,6 +953,8 @@ namespace WebFreight.Web.Helpers
             securityKey = "";
             //securityKeyNode = null;
             shipmentNumbersNodesHtml = new List<HtmlNode>();
+            SharedDocumentsNodesHTML = new List<HtmlNode>();
+
             string childEntityName = "";
             if (childEntityId != null && childEntityObjectTableId != null)
             {
@@ -1373,6 +1376,34 @@ namespace WebFreight.Web.Helpers
 
             }
 
+            foreach (HtmlNode securityKeyNode in SharedDocumentsNodesHTML)
+            {
+                if (securityKeyNode != null && !string.IsNullOrEmpty(securityKey))
+                {
+                    if (securityKeyNode.ParentNode != null)
+                    {
+                        HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, entityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
+                        
+                        foreach (HtmlNode childNode in newLogoSection.ChildNodes)
+                        {
+                            if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
+                            {
+                                securityKeyNode.ParentNode.ParentNode.InsertBefore(childNode, securityKeyNode.ParentNode);
+                            }
+
+                        }
+
+                        if (securityKeyNode.ParentNode != null)
+                        {
+                            if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
+                            {
+                                securityKeyNode.ParentNode.ParentNode.RemoveChild(securityKeyNode.ParentNode);
+                            }
+                        }
+                    }
+                }
+            }
+
 
             var result = htmlString;
             if (document != null)
@@ -1419,39 +1450,30 @@ namespace WebFreight.Web.Helpers
         }
 
         bool ReplaceHtmlStringWithTageHtml = false;
-        public string ResolveHtmlString(string entityId, string objectTableId, string htmlString, string userId, int tenant)
+        public string ResolveHtmlString(HtmlResolveArgs htmlResolveArgs)
         {
-            tablesRepository = new ObjectTableRepository(tenant);
-            ObjectTable entityTable = tablesRepository.GetObjectTableById(objectTableId, tenant);
+            string entityName = GetObjectTableNameFromHTMLResolveArgs(htmlResolveArgs);
 
-            if (entityTable != null) ObjectTableName = entityTable.Name;
-            string entityName = "";
-            if (entityTable != null)
+            if (!string.IsNullOrEmpty(htmlResolveArgs.EntityId))
             {
-                entityName = entityTable.Name;
-            }
-
-
-            if (!string.IsNullOrEmpty(entityId))
-            {
-                entity = GetEntity(entityName, entityId, tenant);
+                entity = GetEntity(entityName, htmlResolveArgs.EntityId, htmlResolveArgs.Tenant);
             }
 
             generalService = new GeneralDomainService();
-            entityObjectFields = GetEntityObjectFields(entityName, tenant);
+            entityObjectFields = GetEntityObjectFields(entityName, htmlResolveArgs.Tenant);
 
             List<HtmlNode> signatureNodeList = new List<HtmlNode>();
             Dictionary<HtmlNode, HtmlNode> tablesDic = new Dictionary<HtmlNode, HtmlNode>();
 
-            if (!string.IsNullOrEmpty(htmlString))
+            if (!string.IsNullOrEmpty(htmlResolveArgs.HtmlString))
             {
-                if (htmlString.Contains("[") && htmlString.Contains("]"))
+                if (htmlResolveArgs.HtmlString.Contains("[") && htmlResolveArgs.HtmlString.Contains("]"))
                 {
                     HtmlDocument doc = new HtmlDocument();
-                    HtmlNode subjectNode = doc.CreateElement(htmlString);
-                    subjectNode.InnerHtml = htmlString;
-                    GetHtmlNodeValue(subjectNode, htmlString, entity, entityObjectFields, tablesDic, null, null, signatureNodeList, tenant, generalService, null, null);
-                    htmlString = subjectNode.InnerHtml;
+                    HtmlNode subjectNode = doc.CreateElement(htmlResolveArgs.HtmlString);
+                    subjectNode.InnerHtml = htmlResolveArgs.HtmlString;
+                    GetHtmlNodeValue(subjectNode, htmlResolveArgs.HtmlString, entity, entityObjectFields, tablesDic, null, null, signatureNodeList, htmlResolveArgs.Tenant, generalService, null, null);
+                    htmlResolveArgs.HtmlString = subjectNode.InnerHtml;
                 }
             }
 
@@ -1502,10 +1524,31 @@ namespace WebFreight.Web.Helpers
 
 
 
-            return htmlString;
+            return htmlResolveArgs.HtmlString;
         }
 
+        private string GetObjectTableNameFromHTMLResolveArgs(HtmlResolveArgs htmlResolveArgs)
+        {
+            string entityName = "";
+            if (!string.IsNullOrEmpty(htmlResolveArgs.ObjectTableId))
+            {
+                tablesRepository = new ObjectTableRepository(htmlResolveArgs.Tenant);
+                ObjectTable entityTable = tablesRepository.GetObjectTableById(htmlResolveArgs.ObjectTableId, htmlResolveArgs.Tenant);
 
+                if (entityTable != null) ObjectTableName = entityTable.Name;
+                if (entityTable != null)
+                {
+                    entityName = entityTable.Name;
+                }
+            }
+            else
+            {
+                ObjectTableName = htmlResolveArgs.ObjectTableName;
+                entityName = htmlResolveArgs.ObjectTableName;
+            }
+
+            return entityName;
+        }
 
         public string ResolveSystemDataHtml(string htmlString, string userId, ref string subject, ref string from, ref string replyTo, ref string cc, int tenant)
         {
@@ -5300,8 +5343,17 @@ namespace WebFreight.Web.Helpers
                                         //this.securityKeyNode = node;
                                         shipmentNumbersNodesHtml.Add(node);
                                     }
-
                                 }
+
+                                else if (propertyName == "ViewSharedDocuments" && ObjectTableName == "Shipment" && CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink)
+                                {
+                                    this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+
+                                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+
+                                    SharedDocumentsNodesHTML.Add(node);
+                                }
+
                                 else if (propertyName == "TicketHeader" || propertyName == "TicketFooter")
                                 {
                                     if (propertyName == "TicketHeader")
@@ -5807,6 +5859,34 @@ namespace WebFreight.Web.Helpers
 
             return reslut;
         }
+        public string GetSharedDocumentLinkHtml(string key, string entityId, string originalNodeInnerText, int tenant, bool hideSharedlogistics, string systemUrl)
+        {
+            //   "<t:Span FontFamily=\"Verdana\" FontSize=\"13.3299999237061\" Text=\"Our File  : SHIP_7180 \" UnderlineColor=\"#FF000000\" UnderlineDecoration=\"None\" xmlns:t=\"clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents\" />"
+            originalNodeInnerText = originalNodeInnerText.Replace("\"", "'");
+
+            //   string serverPath = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationManager.AppSettings.Get("LogitudeURL");//HttpContext.Current.Request.UrlReferrer.AbsoluteUri.Replace(HttpContext.Current.Request.UrlReferrer.PathAndQuery, "");
+            string url = systemUrl;
+            if (systemUrl.Contains("login.aspx"))
+            {
+                string[] test = systemUrl.Split('/');
+                if (test != null && test.Length > 0)
+                {
+                    url = systemUrl.Replace("/" + test[test.Length - 1], "");
+                }
+            }
+
+
+
+            string pageLink = (url + @"/SharedDocuments.aspx").ToLower() + "?securitykey=" + key + ":" + entityId + ":" + tenant + ":" + hideSharedlogistics;
+            string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
+
+            string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View Documents</a>";
+
+            string reslut = "<p>" + originalNodeInnerText + Textlink + "</p>";
+
+            return reslut;
+        }
+
         #endregion
 
         #endregion
@@ -7050,6 +7130,17 @@ namespace WebFreight.Web.Helpers
         public List<HtmlNode> TicketHeaderNode { get; set; }
         public List<HtmlNode> TicketFooterNode { get; set; }
         public Dictionary<HtmlNode, HtmlNode> TablesDic { get; set; }
+
+    }
+
+    public class HtmlResolveArgs
+    {
+        public int Tenant { get; set; }
+        public string EntityId { get; set; }
+        public string ObjectTableId { get; set; }
+        public string ObjectTableName { get; set; }
+        public string HtmlString { get; set; }
+        public string UserId { get; set; }
 
     }
 }

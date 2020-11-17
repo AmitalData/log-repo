@@ -34,6 +34,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string FollowUpAutomationSsucceedXml { get; set; }
         public string SetSLAAutomationSsucceedXml { get; set; }
 
+        public string QueuedTaskAutomationFailedXml { get; set; }
+        public string QueuedTaskAutomationSsucceedXml { get; set; }
+
+
+        public string SendInterfaceAutomationFailedXml { get; set; }
+        public string SendInterfaceAutomationSsucceedXml { get; set; }
 
         public DateTime? CheckStartDate { get; set; }
         public DateTime? DoneDate { get; set; }

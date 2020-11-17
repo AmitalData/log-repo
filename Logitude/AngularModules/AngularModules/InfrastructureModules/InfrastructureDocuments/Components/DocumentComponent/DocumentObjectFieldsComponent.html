@@ -102,7 +102,10 @@
                                                                             </td>
 
 
-                                                                            <td (click)="ObjectDataSourceChangeSelected(item)" class="iwanttohover" colspan="2" [style.background]="item.DivSelectBackgroud" *ngIf="item" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+                                                                            <td (click)="ObjectDataSourceChangeSelected(item)" class="iwanttohover" colspan="2" [style.background]="item.DivSelectBackgroud" *ngIf="item" style="width:100px;height:24px">
+                                                                                <p *ngIf ="item.ObjectTableId != ObjectTableId" style="display:inline-block;">{{item.ObjectTableName}}&nbsp;</p>
+                                                                                <p style="display:inline-block;">{{item.TranslatedText}}</p>
+                                                                            </td>
 
 
                                                                         </tr>

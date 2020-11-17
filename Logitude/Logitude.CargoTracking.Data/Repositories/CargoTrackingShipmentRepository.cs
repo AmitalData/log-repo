@@ -43,8 +43,6 @@ namespace Logitude.CargoTracking.Data.Repositories
                                                                      )
                                                            select shipment);
 
-
-
             return shipments;
         }
 
@@ -55,6 +53,18 @@ namespace Logitude.CargoTracking.Data.Repositories
                                                                  _shipment.Tenant == tenant
                                                               && _shipment.SecurityKey == SecurityKey
                                                            select _shipment).FirstOrDefault();
+
+            return shipment;
+        }
+
+        public List<string> GetPublicReferencesForShipment(string shipmentId, int tenant)
+        {
+            List<string> shipment = (from _shipment in currentContext.CargoTrackingShipmentSearches
+                                              where
+                                                    _shipment.Tenant == tenant
+                                                 && _shipment.ShipmentId == shipmentId
+                                                 && _shipment.IsPublic == true
+                                              select _shipment.SearchFields).ToList();
 
             return shipment;
         }

@@ -22,11 +22,15 @@ export class ReceivablesTab {
     }
 
     private AddReceivable(EntityNumber: string) {
-        Resolvers.ButtonResolver.Selector('#Add').Click();
-        this.WaitLoaded('EntityResource?');
+        Resolvers.ButtonResolver.Selector('#Add_4').Click();
+     //   this.WaitLoaded('userviews/getsingle/?');
         Resolvers.LOVResolver.Selector('#ShipmentReceivable_ChargesTypeId').SelectFirst();
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_TotalAmount').Type(EntityNumber);
+     //   Resolvers.LOVResolver.Selector('#ShipmentReceivable_CurrencyId').SelectFirst();
+     //   Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_Quantity').Type('1');
         Resolvers.ButtonResolver.Selector('#Ok-AddReceivableBtn').Click();
+
+      
     }
    
     private CreateARInvoice(EntityNumber: string) {

@@ -98,9 +98,9 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(TenantPM tenantPM, ShipmentPM entityPM)
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int importerTenant, ShipmentPM entityPM)
         {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && tenantPM.CustomerTenantShareExportFile == false)
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", importerTenant))
             {
                 return false;
             }
@@ -364,7 +364,7 @@ namespace CommunicationWorkerRole
                                                 LogPM.EntityId = Shipment.Id;
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
-                                                if (IsImporterTenantHasExportFeatureForExportShipments(tenantPM, Shipment))
+                                                if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
                                                 { 
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                                                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);

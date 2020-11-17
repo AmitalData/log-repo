@@ -188,25 +188,15 @@ tenant);
 
 
 
-        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<string> transactionsIds)
+        public HttpResponseMessage PutDraftReconciliationTransactions(List<LedgerTransactionPM> transactions)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
 
+                BlockEmptyTransactions(transactions);
 
-                var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(accountingContext);
-                List<LedgerTransactionList> transactions = transactionsQuery.GetTransactionsByIds(transactionsIds);
-
-
-                if (transactions == null || transactions.Count == 0)
-                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
-
-                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
-                us.DelSertOpenRecilationDrafts(transactions);
+                UpdateDraftReconciliationTransactions(transactions, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
             }
@@ -217,6 +207,19 @@ tenant);
             }
         }
 
+        private static void UpdateDraftReconciliationTransactions(List<LedgerTransactionPM> transactions, int tenant)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionUpdateService query = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            query.DelSertOpenRecilationDrafts(transactions);
+        }
+
+
+        private static void BlockEmptyTransactions(List<LedgerTransactionPM> transactions)
+        {
+            if (transactions == null || transactions.Count == 0)
+                throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
+        }
 
         public HttpResponseMessage PutAutomaticReconcileByFilter(string gLAccountId, int tenant, FilteredReconciliation myFilteredReconciliation)
         {
@@ -435,7 +438,7 @@ tenant);
         {
             try
             {
-                int tenant = GetAndAuthinticateTenant();
+                int tenant = GetAuthinticatedTenant();
 
                 QueryOperations queryOperations = GetQueryOperationsFromFilter(filters, tenant);
 
@@ -487,11 +490,11 @@ tenant);
         }
 
         [HttpGet]
-        public HttpResponseMessage GetFirst100LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetFirst500LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
-                int tenant = GetAndAuthinticateTenant();
+                int tenant = GetAuthinticatedTenant();
                 QueryOperations queryOperations = GetQueryOperationsFromFilter(filters, tenant);
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
@@ -508,7 +511,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openTransactions.Take(100);
+                response.Result = openTransactions.Take(500);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -520,7 +523,7 @@ tenant);
 
         }
 
-        private static int GetAndAuthinticateTenant()
+        private static int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

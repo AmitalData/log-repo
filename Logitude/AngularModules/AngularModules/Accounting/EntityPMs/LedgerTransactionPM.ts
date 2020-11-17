@@ -284,21 +284,27 @@ export class LedgerTransactionPM {
     public set InProgressExternalReconcile(newValue: boolean) { if (this.inProgressExternalReconcile != newValue) { this.inProgressExternalReconcile = newValue; this.MarkAsDirty("InProgressExternalReconcile"); } }
        
 	 
+    private originalAmount: number;
+    public get OriginalAmount() { return this.originalAmount; }
+    public set OriginalAmount(newValue: number) { if (this.originalAmount != newValue) { this.originalAmount = newValue; this.MarkAsDirty("OriginalAmount"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName: string = null) {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
-
-            }
+    MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
+        this.IsDirty = true;
+		  	
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LedgerTransaction");
+           
         }
+       }
     }
 
     private MyClone: LedgerTransactionPM;

@@ -10,73 +10,26 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
-   public class GeneralAutomationResultService
+    public class GeneralAutomationResultService
     {
         public ValidateAutomationResultClass ValidateAutomation(Automation automation, EntityChange entityChange, List<Field> automationConditionFields, string lastupdateautomation, string typeConditionValidate)
         {
             bool validconditionAnd = true;
             bool validconditionOr = false;
-            AutomatedBackup automatedBackup = null;
             bool IsConditionValid = false;
 
             ValidateAutomationResultClass validateResult = new ValidateAutomationResultClass();
             List<AutomationCondition> automationConditionList = null;
+            AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
 
-            if (entityChange.CreateDate >= automation.UpdateDate)
-            {
-                #region Load AutomatedBackup From Cache
-                string automatedBackupName = "AutomatedBackupName" + lastupdateautomation + automation.Id + automation.Tenant;
-
-                if (CacheManager.CacheWrapper != null)
-                {
-                    if (CacheManager.CacheWrapper.Get(automatedBackupName) == null)
-                    {
-                        if (!string.IsNullOrEmpty(automation.AutomationXML))
-                        {
-                            automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-
-                            if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
-                            else automationConditionList = automatedBackup.AautomationConditionLists;
-
-                            CacheManager.CacheWrapper.Insert(automatedBackupName, automatedBackup, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
-                        }
-                    }
-                    else
-                    {
-                        automatedBackup = (AutomatedBackup)CacheManager.CacheWrapper.Get(automatedBackupName);
-                        if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
-                        else automationConditionList = automatedBackup.AautomationConditionLists;
-                    }
-                }
-
-                else
-                {
-                    if (!string.IsNullOrEmpty(automation.AutomationXML))
-                    {
-                        automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-                        if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
-                        else automationConditionList = automatedBackup.AautomationConditionLists;
-                    }
-                }
-
-                #endregion
-            }
-            else
-            {
-                AutomationHistoryRepository automationHistoryRepository = new AutomationHistoryRepository(entityChange.Tenant);
-                string automationXML = automationHistoryRepository.GetAutomationXMLFromAutomationHistoryByDate(entityChange.CreateDate, automation.Id, entityChange.Tenant);
-                if (!string.IsNullOrEmpty(automationXML))
-                {
-                    automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automationXML);
-                    if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
-                    else automationConditionList = automatedBackup.AautomationConditionLists;
-                }
-            }
+            if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
+            else automationConditionList = automatedBackup.AautomationConditionLists;
 
             if (automationConditionList != null && automationConditionList.Count() > 0)
             {
@@ -326,43 +279,48 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         }
 
 
-        public string GetLastUpdateDate(string lastupdateautomation, string otherLastupdateautomation, Automation automation)
+        public string GetLastAuomationUpdateDate(AutomationObjectTableClass automationObjectTableClass, AutomationObjectTableClass otherAutomationObjectTableClass, Automation automation)
         {
-            string lastUpdate = lastupdateautomation;
-            if (!string.IsNullOrEmpty(otherLastupdateautomation))
+            string lastAuomationUpdateDate = automationObjectTableClass.AutomationLastUpdate;
+            if (otherAutomationObjectTableClass != null && !string.IsNullOrEmpty(otherAutomationObjectTableClass.AutomationLastUpdate))
             {
-                string otherObjectTableId = otherLastupdateautomation.Split('@')[0];
-
-                if (automation.ObjectTableId == otherObjectTableId)
+                if (automation.ObjectTableId == otherAutomationObjectTableClass.Id)
                 {
-                    lastUpdate = otherLastupdateautomation.Split('@')[1];
+                    lastAuomationUpdateDate = otherAutomationObjectTableClass.AutomationLastUpdate;
                 }
             }
 
-            return lastUpdate;
+            return lastAuomationUpdateDate;
         }
 
 
-        public void AddDelayedAutomationQueue(string entityChangeId, string type, int tenant, string automationId, ValidateAutomationResultClass validateResult, List<Field> automationFieldLists, string entityId)
+        public void AddAutomationQueue(AutomationQueueArgs automationQueueArgs)
         {
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("DelayAutomationQueue", tenant);
-            int delay = validateResult.Delaytime;
+            queueservice.InitializeQueue("AutomationQueue", automationQueueArgs.Tenant);
+            queueservice.Send(new Dictionary<string, string>() {{ "EntityChangeId", automationQueueArgs.EntityChangeId }, { "Tenant", automationQueueArgs.Tenant.ToString() }, { "Type", automationQueueArgs.AutomationType }, { "EntityId", automationQueueArgs.EntityId }, { "AutomationId", automationQueueArgs.AutomationId } , { "ExternalId", automationQueueArgs.ExternalId } , { "ExecutedImmediately", automationQueueArgs.ExecutedImmediately.ToString() } }, automationQueueArgs.Tenant, automationQueueArgs.AutomationDelayTime, null, null, null);
+
+        }
+
+        public TimeSpan? GetAutomationDelayTime(DelaytimeDetails delaytimeDetails, List<Field> automationFieldLists)
+        {
+            TimeSpan? delayTime = null;
+            int delay = delaytimeDetails.Delaytime;
             bool newDelayedQueue = false;
             DateTime nextRunDate = DateTime.UtcNow;
-            if (validateResult.DelaytimeIndicator == "OO" && validateResult.Delaytime != 0) delay = validateResult.Delaytime * 60;
-            if (validateResult.DelaytimeIndicator == "DD" && validateResult.Delaytime != 0) delay = validateResult.Delaytime * 60 * 24;
+            if (delaytimeDetails.DelaytimeIndicator == "OO" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60;
+            if (delaytimeDetails.DelaytimeIndicator == "DD" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60 * 24;
 
-            if (!string.IsNullOrEmpty(validateResult.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(validateResult.DelaytimeOp))
+            if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp))
             {
                 DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
-                Field field = automationFieldLists.Where(d => d.FieldCode == validateResult.SelectedDelaytimeFieldCode).FirstOrDefault();
+                Field field = automationFieldLists.Where(d => d.FieldCode == delaytimeDetails.SelectedDelaytimeFieldCode).FirstOrDefault();
                 if (field != null && !string.IsNullOrEmpty(field.Value))
                 {
                     nextRunDateBeforeAddDelayed = ConvertToDate(field.Value) ?? nextRunDateBeforeAddDelayed;
                     newDelayedQueue = true;
                 }
-                if (validateResult.DelaytimeOp == "BF") delay = delay * -1;
+                if (delaytimeDetails.DelaytimeOp == "BF") delay = delay * -1;
                 nextRunDate = nextRunDateBeforeAddDelayed.AddMinutes((double)delay);
             }
             else
@@ -370,13 +328,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 nextRunDate = nextRunDate.AddMinutes((double)delay);
                 newDelayedQueue = true;
             }
+
             if (newDelayedQueue)
             {
-                TimeSpan delayTime = nextRunDate - DateTime.UtcNow;
-                queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "EntityId", entityId }, { "AutomationId", automationId } }, tenant, delayTime, null, null, null);
+                delayTime = nextRunDate - DateTime.UtcNow;
             }
-        }
+            return delayTime;
 
+
+        }
 
         public DateTime? ConvertToDate(string value)
         {
@@ -403,5 +363,80 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             return date;
         }
 
+
+
+        public AutomatedBackup GetAutomatedBackupClass(Automation automation, EntityChange entityChange, string lastUpdateDate)
+        {
+            AutomatedBackup automatedBackup = null;
+            if (entityChange.CreateDate >= automation.UpdateDate)
+            {
+                string automatedBackupName = "AutomatedBackupName" + lastUpdateDate + automation.Id + automation.Tenant;
+
+                if (CacheManager.CacheWrapper != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(automatedBackupName) == null)
+                    {
+                        if (!string.IsNullOrEmpty(automation.AutomationXML))
+                        {
+                            automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
+                            CacheManager.CacheWrapper.Insert(automatedBackupName, automatedBackup, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                        automatedBackup = (AutomatedBackup)CacheManager.CacheWrapper.Get(automatedBackupName);
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(automation.AutomationXML))
+                    {
+                        automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
+                    }
+                }
+            }
+            else
+            {
+                AutomationHistoryRepository automationHistoryRepository = new AutomationHistoryRepository(entityChange.Tenant);
+                string automationXML = automationHistoryRepository.GetAutomationXMLFromAutomationHistoryByDate(entityChange.CreateDate, automation.Id, entityChange.Tenant);
+                if (!string.IsNullOrEmpty(automationXML))
+                {
+                    automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automationXML);
+                }
+            }
+
+            return automatedBackup;
+        }
+
+
+
+
     }
+
+    public class DelaytimeDetails
+    {
+        public string Type { get; set; }
+        public string DelaytimeIndicator { get; set; }
+        public int Delaytime { get; set; }
+        public string DelaytimeOp { get; set; }
+        public string SelectedDelaytimeFieldCode { get; set; }
+    }
+
+    public class AutomationQueueArgs
+    {
+        public string EntityChangeId { get; set; }
+        public string AutomationType { get; set; }
+        public int Tenant { get; set; }
+        public string EntityId { get; set; }
+        public string AutomationId { get; set; }
+        public string ExternalId { get; set; }
+        public TimeSpan? AutomationDelayTime { get; set; }
+        public bool ExecutedImmediately { get; set; }
+
+
+
+    }
+
+
 }
+

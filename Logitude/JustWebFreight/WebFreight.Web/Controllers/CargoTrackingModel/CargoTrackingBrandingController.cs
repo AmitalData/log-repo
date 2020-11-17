@@ -24,14 +24,14 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
                 Uploader uploaderService = new Uploader();
-                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);
+                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);            
                 CargoTrackingBrandingData data = new CargoTrackingBrandingData()
                 {
                     Tenant = tenant,
                     MainColor = tenantManagementPM.MainColor,
                     SecondaryColor = tenantManagementPM.SecondaryColor,
                     BackgroundId = tenantManagementPM.BackgroundId,
-                    
+                    Logo = CargoTrackingHelper.SetBrandingLogo(tenantManagementPM)
                 };
                 if (filedata != null)
                 {
@@ -41,8 +41,6 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
-            
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

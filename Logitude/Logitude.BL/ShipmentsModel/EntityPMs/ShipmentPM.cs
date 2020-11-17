@@ -2531,6 +2531,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<TransshipmentLeg> MainCarriageLegs { get; set; }
         public bool IsCFSWarehouse { get; set; }
         public bool IsCFSWarehouseChanged { get; set; }
+        public string ViewSharedDocuments { get; set; }
+        public bool IsAccrualsApproved { get; set; }
+        public DateTime? AccrualsApprovalDate { get; set; }
     }
 
     public class TransshipmentLeg

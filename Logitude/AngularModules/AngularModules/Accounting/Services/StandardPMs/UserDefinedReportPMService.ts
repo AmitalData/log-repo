@@ -156,6 +156,7 @@ export class UserDefinedReportPMService {
         if (!entityPM) {
             
             entityPM = new UserDefinedReportPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -213,6 +214,8 @@ export class UserDefinedReportPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -238,7 +241,8 @@ export class UserDefinedReportPMService {
             {
                 newCalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(null);
             }
-                
+ 			newCalculatedChartsOfAccountPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -281,7 +285,7 @@ export class UserDefinedReportPMService {
                 newCalculatedChartsOfAccountPM.OldEntityPM = null;
                 newCalculatedChartsOfAccountPM.EntityParentPM = null;
             }
-			
+			 newCalculatedChartsOfAccountPM.DisableMarkAsDirty = false;
 			 newCalculatedChartsOfAccountPM.IsDirty = false;
             entityPM.CalculatedChartsOfAccounts.push(newCalculatedChartsOfAccountPM);
         }
@@ -295,6 +299,7 @@ export class UserDefinedReportPMService {
                         //entityPM.CalculatedChartsOfAccounts.push(oldCalculatedChartsOfAccounts[itemKey]);
 						var oldItemJson = oldCalculatedChartsOfAccounts[itemKey];
                         var deletedPM: CalculatedChartsOfAccountPM = new CalculatedChartsOfAccountPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -306,7 +311,7 @@ export class UserDefinedReportPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -342,7 +347,8 @@ export class UserDefinedReportPMService {
             {
                 newCalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(null);
             }
-                
+ 			newCalculatedChartsOfAccountsLinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -379,7 +385,7 @@ export class UserDefinedReportPMService {
                 newCalculatedChartsOfAccountsLinePM.OldEntityPM = null;
                 newCalculatedChartsOfAccountsLinePM.EntityParentPM = null;
             }
-			
+			 newCalculatedChartsOfAccountsLinePM.DisableMarkAsDirty = false;
 			 newCalculatedChartsOfAccountsLinePM.IsDirty = false;
             entityPM.CalculatedChartsOfAccountLines.push(newCalculatedChartsOfAccountsLinePM);
         }
@@ -393,6 +399,7 @@ export class UserDefinedReportPMService {
                         //entityPM.CalculatedChartsOfAccountLines.push(oldCalculatedChartsOfAccountLines[itemKey]);
 						var oldItemJson = oldCalculatedChartsOfAccountLines[itemKey];
                         var deletedPM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -404,7 +411,7 @@ export class UserDefinedReportPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

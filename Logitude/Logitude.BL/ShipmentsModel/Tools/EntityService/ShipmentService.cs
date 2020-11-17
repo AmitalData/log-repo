@@ -5697,7 +5697,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentTracing.TracePickUp(itemPM, itemPoco);
             }
 
-            ShipmentMapping.MapPickUp(itemPM, itemPoco, true);
+            ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
 
             if (itemPM.ShipmentPickUpDeliveryPackages != null)
@@ -5719,7 +5719,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentTracing.TracePickUp(itemPM, itemPoco);
             }
 
-            ShipmentMapping.MapPickUp(itemPM, itemPoco, true);
+            ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Update(itemPoco);
 
             if (itemPM.ShipmentPickUpPackagesChangeSet != null)
@@ -5804,7 +5804,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentTracing.TraceDelivery(itemPM, itemPoco);
             }
 
-            ShipmentMapping.MapDelivery(itemPM, itemPoco, true);
+            ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
 
             if (itemPM.ShipmentPickUpDeliveryPackages != null)
@@ -5828,7 +5828,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.UpdateShipmentPackageFromDelivery(itemPM);
 
-            ShipmentMapping.MapDelivery(itemPM, itemPoco, false);
+            ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, false);
             shipmentPickUpDeliveryRepository.Update(itemPoco);
 
             if (itemPM.ShipmentDeliveryPackagesChangeSet != null)
@@ -6101,7 +6101,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
 
                             ShipmentPickUpDelivery entityPOCO = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, myDelivery.Id);
-                            ShipmentMapping.MapDelivery(myDelivery, entityPOCO, false);
+                            ShipmentMapping.MapDelivery(myDelivery, entityPOCO, myCommonContext, false);
                             shipmentPickUpDeliveryRepository.Update(entityPOCO);
                         }
                     }
@@ -6146,7 +6146,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 myDelivery.TransportModeCode = itemPM.ECRTransportModeCode;
 
                                 ShipmentPickUpDelivery entityPOCO = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, myDelivery.Id);
-                                ShipmentMapping.MapDelivery(myDelivery, entityPOCO, false);
+                                ShipmentMapping.MapDelivery(myDelivery, entityPOCO, myCommonContext, false);
                                 shipmentPickUpDeliveryRepository.Update(entityPOCO);
                             }
                         }

@@ -29,12 +29,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
                 {
-                    cmd += " where C.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    cmd += " where C.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
 
                 }
                 else
                 {
-                    cmd += " where C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    cmd += " where C.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and C.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
                 }
             }
 
@@ -64,12 +64,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
                 {
-                    cmd += " and P.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    cmd += " and P.Tenant=" + cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
 
                 }
                 else
                 {
-                    cmd += " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate + "'";
+                    cmd += " and P.CreateDateTime >= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + "' and P.CreateDateTime <= '" + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
                 }
             }
 

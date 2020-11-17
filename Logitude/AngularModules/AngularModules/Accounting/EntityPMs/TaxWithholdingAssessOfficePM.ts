@@ -63,7 +63,10 @@ export class TaxWithholdingAssessOfficePM {
     public OldEntityPM: TaxWithholdingAssessOfficePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class TaxWithholdingAssessOfficePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TaxWithholdingAssessOffice");
            
         }
+       }
     }
 
     private MyClone: TaxWithholdingAssessOfficePM;

@@ -36,9 +36,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 int tenant = AuthinticateTenant();
-
-                LedgerTransactionBalanceFilter LTBFilter = CreateLTBFilter(filters, tenant);
-
+                LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
+                LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(filters, tenant);
                 var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run();
@@ -98,69 +97,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             int tenant = authToken.Tenant;
             return tenant;
         }
-
-        private static LedgerTransactionBalanceFilter CreateLTBFilter(ApiQueryFilters filters, int tenant)
-        {
-            LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-            List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
-            LTBFilter.PageSize = filters.PageSize;
-            LTBFilter.PageStartAtRecordIndex = filters.PageIndex;
-            LTBFilter.Tenant = tenant;
-
-            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-            {
-                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-                var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
-                //var from = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue;
-                //var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
-                var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
-                var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
-                string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
-
-                // dates
-                var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
-                if (createDateFilter != null)
-                {
-
-                    var from = createDateFilter.FieldValue.ToString();
-                    string[] fromDate = from.ToString().Split(';');
-                    LTBFilter.From = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1]) + 1, int.Parse(fromDate[2]), 0, 0, 0);
-
-                    var to = createDateFilter.FieldValue2.ToString();
-                    string[] toDate = to.ToString().Split(';');
-                    LTBFilter.To = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1]) + 1, int.Parse(toDate[2]), 23, 59, 59);
-
-
-                }
-
-                //currency
-                var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
-                if (currencyIdFilter != null)
-                {
-                    var currencyId = currencyIdFilter.FieldValue.ToString();
-                    LTBFilter.CurrencyId = currencyId;
-                }
-
-                //search
-                var searchFieldsf = filters_list.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
-                if (searchFieldsf != null)
-                {
-                    var searchFields = searchFieldsf.FieldValue.ToString();
-                    LTBFilter.SearchFields = searchFields;
-                }
-
-                LTBFilter.GLAccountId = glAccountId;
-                LTBFilter.DateTypeCode = _dateTypeCode;
-                //LTBFilter.From = Convert.ToDateTime(from);
-                //LTBFilter.To = Convert.ToDateTime(to);
-                LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
-                LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
-            }
-
-            return LTBFilter;
-        }
+ 
 
         public HttpResponseMessage GetTransactionsBalanceByFilters([FromUri] ApiQueryFilters filters)
         {

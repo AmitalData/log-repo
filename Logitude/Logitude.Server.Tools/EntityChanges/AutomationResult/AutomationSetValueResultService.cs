@@ -42,7 +42,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
                 if (automation.ResultCode == "FIELDSET") entityChangesAutomation.ResultCode = "Set Fields Value";
 
-                string lastUpdate = GetLastUpdateDate(lastupdateautomation, otherLastupdateautomation, automation);
+                string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                 ValidateAutomationResultClass validateResult = ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
                 var isShipmentSetFieldDelayed = (validateResult.IsAutomationValid && automation.ResultCode == "FIELDSET" && validateResult.Type == "Delayed") ? objecttableRepository.IsObjectTableShipment(automation.ObjectTableId) : false;
@@ -57,7 +57,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 {
                     if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                     {
-                        AddDelayedAutomationQueue(entityChange.Id, processtype, automation.Tenant, automation.Id, validateResult, automationFieldLists, entityId);
+                        DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
+                        AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists) });
                     }
                     else SetValue(entityPM, entityChange, automationFieldLists, lastUpdate, this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, this.automationResultArgs.MainEntityChangeService.Changefields, automation, entityChangesAutomation, dateBefore);
                 }

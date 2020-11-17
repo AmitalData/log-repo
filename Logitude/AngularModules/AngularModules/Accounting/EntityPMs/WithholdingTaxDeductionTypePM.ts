@@ -63,7 +63,10 @@ export class WithholdingTaxDeductionTypePM {
     public OldEntityPM: WithholdingTaxDeductionTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class WithholdingTaxDeductionTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WithholdingTaxDeductionType");
            
         }
+       }
     }
 
     private MyClone: WithholdingTaxDeductionTypePM;

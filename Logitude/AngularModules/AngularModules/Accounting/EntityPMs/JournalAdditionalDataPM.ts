@@ -48,7 +48,10 @@ export class JournalAdditionalDataPM {
     public OldEntityPM: JournalAdditionalDataPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class JournalAdditionalDataPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "JournalAdditionalData");
            
         }
+       }
     }
 
     private MyClone: JournalAdditionalDataPM;

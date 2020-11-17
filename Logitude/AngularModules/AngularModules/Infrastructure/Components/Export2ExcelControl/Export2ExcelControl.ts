@@ -13,6 +13,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
 import {LogboxShipmentExportExcelService} from '../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
+import { LogitudeGridExportToExcelExtendedPMService } from 'Common/Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
 
 @Component({
     
@@ -48,7 +49,24 @@ export class Export2ExcelControl {
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;
 
-        if (this.QueryType != "LogBox") {
+       if (this.QueryType == "LogBox") {
+            var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
+            logboxShipmentExportExcelService.GetQueryToExcelData(this.ExportExcelArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
+
+        }
+        else if (this.QueryType == "LogitudeGrid") {
+            var logitudeGridExportToExcelExtendedPMService: LogitudeGridExportToExcelExtendedPMService = new LogitudeGridExportToExcelExtendedPMService();
+            logitudeGridExportToExcelExtendedPMService.GetQueryToExcelData(this.ExportExcelArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
+
+        }
+
+        else {
             var myService: WebFreightDomainService = new WebFreightDomainService();
             this.ObjectTableName = args.currentObjectTable;
             this.tenant = args.tenant;
@@ -62,14 +80,7 @@ export class Export2ExcelControl {
                 this.CompleteExcelData(myResult.body);
             });
         }
-        else if (this.QueryType == "LogBox") {
-            var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
-            logboxShipmentExportExcelService.GetQueryToExcelData(this.ExportExcelArgs).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
-                else this.CompleteExcelData("Faild");
-            });
-
-        }
+         
     }
 
     CompleteExcelData(myResult:any) {

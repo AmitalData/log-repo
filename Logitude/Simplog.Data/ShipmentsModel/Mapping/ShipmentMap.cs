@@ -756,8 +756,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WeightRoundingCode).HasColumnName("WeightRoundingCode");
             this.Property(t => t.IsCFSWarehouse).HasColumnName("IsCFSWarehouse");
             this.Property(t => t.IsCFSWarehouseChanged).HasColumnName("IsCFSWarehouseChanged");
+            this.Property(t => t.IsAccrualsApproved).HasColumnName("IsAccrualsApproved");
+            this.Property(t => t.AccrualsApprovalDate).HasColumnName("AccrualsApprovalDate");
 
-            
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();

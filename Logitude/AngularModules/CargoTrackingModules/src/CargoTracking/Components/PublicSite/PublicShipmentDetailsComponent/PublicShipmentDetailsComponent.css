@@ -14,9 +14,10 @@ a {
     background: #EDEEFA;
     border-radius: 3px;
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     margin-top: 10px;
     position: relative;
+    overflow: auto;
 }
 
 .box-header .icon {
@@ -42,9 +43,20 @@ a {
     width: 168px;
 }
 
+.box-header ul{
+    padding: 0;
+    margin: 0;
+  }
+  .box-header ul li{
+    list-style: none;
+    font-size: 15px;
+  }
+
 .circle-image {
-    background: var(--CircleImageColor); /*#E0E3F2;*/
+   background: #ffffff; /*#E0E3F2;*/
     border-radius: 50%;
+    border-color: var(--secondaryColor);
+    border-style:solid;
     width: 60px !important;
     height: 60px;
     padding: 0 !important;
@@ -54,7 +66,7 @@ a {
     text-align: center;
 }
 
-.circle-image img {
+.circle-image svg {
     width: 30px;
     height: 24px;
     position: relative;
@@ -106,12 +118,12 @@ a {
 }
 
 .shipment-details .field .label {
-    color:var(--TitleColor); /*#000;*/
+    color:var(--MainColor); /*#000;*/
     font-weight: bold;
     font-size: 12px;
     text-transform: uppercase;
 }
-
+   
 
 /* ul.line-list {
     padding: 0;
@@ -155,7 +167,7 @@ ul.line-list li.tick {
 
 .steps-list li:hover:not(.dimmed),
 .steps-list li.highlighted {
-    background:var(--MainColor); /*#002664;*/
+    background:var(--secondaryColor); /*#002664;*/
     color: white;
     font-weight: 600;
 }
@@ -205,7 +217,7 @@ ul.line-list li.tick {
 }
 
     .line-progressbar .blue-line {
-        background: var(--MainColor);
+        background: var(--secondaryColor);
         left: 0;
         z-index: 10;
     }
@@ -217,7 +229,7 @@ ul.line-list li.tick {
 }
 
     .line-progressbar .dilevered-line {
-        background: var(--MainColor);
+        background: var(--secondaryColor);
         right: 0;
         z-index: 1;
     }
@@ -228,7 +240,7 @@ ul.line-list li.tick {
         border-radius: 50%;
         position: absolute;
         top: -9px;
-        background: var(--MainColor);
+        background: var(--secondaryColor);
     }
 
 .line-progressbar .dot.start {
@@ -237,7 +249,7 @@ ul.line-list li.tick {
 
     .line-progressbar .outline {
         left: calc(50% - 12px);
-        background: var(--MainColor);
+        background: var(--secondaryColor);
     }
 
 .line-progressbar .outline::after {
@@ -261,7 +273,7 @@ ul.line-list li.tick {
 }
 
     .line-progressbar .dot.blue {
-        background: var(--MainColor);
+        background: var(--secondaryColor);
     }
 
 .line-progressbar .pos-75 {

@@ -3041,6 +3041,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsAccrualsApproved"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AccrualsApprovalDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

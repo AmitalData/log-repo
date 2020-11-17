@@ -211,7 +211,7 @@ li a {
 }
 
 .search-button {
-    background: var(--MainColor);
+    background: var(--secondaryColor);
     /* #002664;-->*/
     display: inline-block;
     color: white;
@@ -227,7 +227,7 @@ li a {
 }
 
     .search-button:hover {
-        background: var(--MainColor); /*#042e70;*/
+        background: var(--secondaryColor); /*#042e70;*/
     }
 
 .scrollable-table {
@@ -255,18 +255,18 @@ li a {
     right: -69px;
 }
 
-.path-image img.path {
+.path-image svg.path {
     width: 310px;
 }
 
-.path-image img.end {
+.path-image svg.end {
     position: absolute;
     top: -50px;
     right: -30px;
     width: 32px;
 }
 
-.path-image img.start {
+.path-image svg.start {
     position: absolute;
     bottom: -13px;
     left: -8px;
@@ -279,8 +279,10 @@ li a {
 }
 
 .circle-image {
-    background: var(--CircleImageColor); /*#F2F4F7;*/
+    background: #ffffff; /*#F2F4F7;*/
     border-radius: 50%;
+    border-color: var(--secondaryColor);
+   border-style:solid;
     width: 60px !important;
     height: 60px;
     padding: 0 !important;
@@ -291,7 +293,7 @@ li a {
     text-align: center;
 }
 
-.circle-image img {
+.circle-image svg {
     width: 30px;
     height: 24px;
     position: relative;

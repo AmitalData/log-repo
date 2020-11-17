@@ -41,11 +41,17 @@ a:focus {
   height: 100%;
   overflow: hidden;
   padding-left: 40px;
+  border:none;
+  outline:none;
 }
 
-.web-header .logo img {
-  padding: 15px 10px;
-}
+    .web-header .logo img {
+        padding: 15px 10px;
+        width: 80px;
+        height: 30px;
+        border: 0;
+        outline:none;
+    }
 
 .web-header .nav {
   display: inline-block;

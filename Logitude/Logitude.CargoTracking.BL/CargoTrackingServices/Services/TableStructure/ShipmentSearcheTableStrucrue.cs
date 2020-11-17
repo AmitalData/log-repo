@@ -27,9 +27,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         }
         public static string CreateIndex_Pre_ShipmentSearchs(string TableName)
         {
-            string cmd = "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "]([Tenant],[SearchFields],[IsPublic])\n";
+            string cmd = "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_ShipmentId_IsPublic] ON [dbo].[" + TableName + "]([Tenant],[ShipmentId],[IsPublic])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "]([Tenant],[SearchFields],[IsPublic])\n";
             cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "]([ShipmentId])\n";
             cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "]([ShipmentDate]) \n";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_ShipmentId_IsPublic] ON [dbo].[" + TableName + "] DISABLE \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "] DISABLE \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "] DISABLE \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "] DISABLE End \n";
@@ -41,6 +43,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public static string ReBuildIndexes_Pre_ShipmentSearchs(string TableName)
         {
             string cmd = "";
+            cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_ShipmentId_IsPublic] ON [dbo].[" + TableName + "] REBUILD \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_Tenant_SearchFields_IsPublic] ON [dbo].[" + TableName + "] REBUILD \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentId] ON [dbo].[" + TableName + "] REBUILD \n";
             cmd += "ALTER INDEX [IX_" + TableName + "_ShipmentDate] ON [dbo].[" + TableName + "] REBUILD  \n";
