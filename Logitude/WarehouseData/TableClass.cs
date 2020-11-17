@@ -37,9 +37,12 @@ namespace WarehouseData
 
         public string AdditionalIndexes { get; set; }
 
-        public List<DWObjectFieldDB> CopyToDwObjectFieldLists { get; set; }
+        public List<DWObjectFieldDB> ObjectFieldDBLists { get; set; }
 
         public List<IndexItem> Indexes { get; set; }
+
+        public List<string> FieldsDBNameLists { get; set; }
+
 
     }
 
