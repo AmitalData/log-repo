@@ -1235,7 +1235,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.foreignAmountFilter) {
             filters.AdditionalFilters.push(this.foreignAmountFilter);
         }
-        filters.PageSize = 100;
+        filters.PageSize = 500;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;

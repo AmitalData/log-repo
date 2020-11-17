@@ -291,7 +291,7 @@ export class LedgerTransactionExtendedListService {
 
         var url = this._reconciliationUrl + "/GetFirst500LedgerForReconciliation";
 
-        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url); 
 
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
