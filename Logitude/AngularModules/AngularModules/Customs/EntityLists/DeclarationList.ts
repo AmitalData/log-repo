@@ -187,7 +187,6 @@ export class DeclarationList {
 	ReplacingRepairRequest: string;
 	FOBValueNIS: number;
 	FOBValueDollar: number;
-	TruckerId: string;
 	
 }
  

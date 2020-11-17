@@ -460,7 +460,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ShipCode = a.ShipCode,
                                                      ShipName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
                                                      IsExporterConfirmation = a.IsExporterConfirmation,
-                                                     TruckerId=a.Trucker.Card.Code,
                                                  });
 
 
