@@ -5683,6 +5683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature APInvoiceFeature_INSC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INSC", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.INSC", NameTextCodeDefaultText = @"Don't Allow Special Characters" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APInvoiceObjectTable);
 
 
+
    
 	    
 		}
