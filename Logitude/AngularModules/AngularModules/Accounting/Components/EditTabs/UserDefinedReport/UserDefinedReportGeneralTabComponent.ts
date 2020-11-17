@@ -292,6 +292,8 @@ export class CalculatedChartsOfAccountItem extends BaseComponent {
         }
     }
 
+    
+
     get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
     set UpdatedByUserId(newValue: string) {
         if (this.EntityPM.UpdatedByUserId != newValue) {
@@ -388,7 +390,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
             //if(this.GLAccountId && this.ChartOfAccountIdForValidate){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
-                var MainlLines = this.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
+                var MainlLines = this.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection.filter(s=>s.IsCancelled!=true);
                 if(MainlLines!=null && this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
                     MainlLines = MainlLines.concat(this.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
@@ -435,7 +437,7 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
           //  if(this.ChartOfAccountId){
                 var LinesHasSameGLAccountorChartsofAccounts:number[]=[];
                 var MainLinesHasSameGLAccountorChartsofAccounts:number[]=[];
-                var MainlLines = Line.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection;
+                var MainlLines = Line.fatherComponent.fatherComponent.CalculatedChartsOfAccountItemList.Collection.filter(s=>s.IsCancelled!=true);;
                 if(MainlLines!=null && Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem){
                     MainlLines = MainlLines.concat(Line.fatherComponent.fatherComponent.NewCalculatedChartsOfAccountItem);
                 }
@@ -504,21 +506,22 @@ export class CalculatedChartsOfAccountsLineItem extends BaseComponent {
     get IsCancelled() { return this.EntityPM.IsCancelled; }
     set IsCancelled(newValue: boolean) {
         if (this.EntityPM.IsCancelled != newValue) {
-            this.LineCancelledValidation(newValue);
             this.EntityPM.IsCancelled = newValue;
-            
+            this.LineCancelledValidation(newValue);           
         }
     }
 
 
 public LineCancelledValidation(newValue:boolean){
+    this.ValidateAllLinesOnOpenSession();
+    
     var IsValid = this.ValidateIsCancelled();
     if(!IsValid && !newValue)
         this.ErrorLog = TextCodeTranslator.Translate("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount");
     else if (newValue)
         this.ErrorLog = null;
-    else if (IsValid)
-        this.ValidateAllLinesOnOpenSession();
+    //else if (IsValid)
+        
 }
 
     get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }

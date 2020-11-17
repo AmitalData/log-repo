@@ -4636,6 +4636,15 @@ export class ShipmentPM {
     public get ViewSharedDocuments() { return this.viewSharedDocuments; }
     public set ViewSharedDocuments(newValue: string) { if (this.viewSharedDocuments != newValue) { this.viewSharedDocuments = newValue; this.MarkAsDirty("ViewSharedDocuments"); } }
 
+    private isAccrualsApproved: boolean;
+    public get IsAccrualsApproved() { return this.isAccrualsApproved; }
+    public set IsAccrualsApproved(newValue: boolean) { if (this.isAccrualsApproved != newValue) { this.isAccrualsApproved = newValue; this.MarkAsDirty("IsAccrualsApproved"); } }
+
+    private accrualsApprovalDate: Date;
+    public get AccrualsApprovalDate() { return this.accrualsApprovalDate; }
+    public set AccrualsApprovalDate(newValue: Date) { if (this.accrualsApprovalDate != newValue) { this.accrualsApprovalDate = newValue; this.MarkAsDirty("AccrualsApprovalDate"); } }
+
+
 
     public OldEntityPM: ShipmentPM;
 

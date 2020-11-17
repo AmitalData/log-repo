@@ -33,7 +33,6 @@ namespace WebFreight.Web.ExternalAPIs
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(tenant);
-
                     entity = RemoveSpaces(entity);
                     ShipmentNumbersXML.ShipmentDataMappingValidating(entity, tenant);
                     var response = ShipmentNumbersXML.GetShipmentNumbersXMLMessage(entity, tenant);
@@ -55,6 +54,7 @@ namespace WebFreight.Web.ExternalAPIs
 
         private GetShipmentNumbers RemoveSpaces(GetShipmentNumbers entity)
         {
+            // we can use the reflection here to support the generalization (but there is a cost for for loop) - it needs discussion 
             GetShipmentNumbers newEntity = entity;
             newEntity.Direction = Regex.Replace(newEntity.Direction, @"\s+", "");
             newEntity.TransportMode = Regex.Replace(newEntity.TransportMode, @"\s+", "");

@@ -1367,6 +1367,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AgentSharedManifestRef = shipment.AgentSharedManifestRef;
             shipmentPM.ManifestLastSharingDate = shipment.ManifestLastSharingDate;
 
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
+            shipmentPM.AccrualsApprovalDate = shipment.AccrualsApprovalDate;
+
             if (!string.IsNullOrEmpty(shipmentPM.SalesmanUserId))
             {
                 Contact myContact = ContactRepository.GetSingleContact(shipmentPM.SalesmanUserId, tenant, true);
