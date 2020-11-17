@@ -223,6 +223,9 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                     }
                                 }
                             }
+                            else {
+                                this.FieldValue = null;
+                            }
                         }
 
                         else {
