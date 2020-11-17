@@ -1376,6 +1376,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
                     view.Code = defaultItem.Code;
+                    view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
                 }
             }
             if (field.FilterItems.length == 0) {
