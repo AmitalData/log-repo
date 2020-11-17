@@ -1471,11 +1471,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     //#endregion
 
     
-    public _showMoreFilters : string;
-    public get showMoreFilters() : string {
+    public _showMoreFilters : boolean;
+    public get showMoreFilters() : boolean {
         return this._showMoreFilters;
     }
-    public set showMoreFilters(v : string) {
+    public set showMoreFilters(v : boolean) {
         this._showMoreFilters = v;
     }
 
