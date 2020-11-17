@@ -18,7 +18,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
         ExternalMasterAPITestService service;
 
         [TestMethod]
-        public async Task TestDirectShipment()
+        public async Task TestMasterShipment()
         {
             service = new ExternalMasterAPITestService();
 
