@@ -359,7 +359,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.ReferentUserId = TranslateUser(_AmitalCustomsFile.ReferentUserId);
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
-
+                
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
