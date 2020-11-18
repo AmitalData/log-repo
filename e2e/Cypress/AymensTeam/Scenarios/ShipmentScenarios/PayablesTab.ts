@@ -9,7 +9,7 @@ export class PayablesTab {
         this.GoToPayablesTab();
         this.ReceiveInvoice(this.EntityNumber);
         this.FillInvoiceDetailes(this.EntityNumber);
-        this.GoToGeneralTabInAPInvoice();
+       // this.GoToGeneralTabInAPInvoice();
         this.SaveAP();
         this.BackToShipmentsTab();
     }
@@ -19,7 +19,7 @@ export class PayablesTab {
    
     private ReceiveInvoice(EntityNumber: string) {
         cy.get('#ReceiveInvoice').click();
-        Resolvers.LOVResolver.Selector('#APInvoice_VendorId').Type('Automation Test');
+        Resolvers.LOVResolver.Selector('#APInvoice_VendorId').Type('AR');
         Resolvers.TextBoxResolver.Selector('#APInvoice_InvoiceNumber').Type('Invoice # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#APInvoice_AmountInInvoiceCurrency').Type('100');
         Resolvers.LOVResolver.Selector('#APInvoice_InvoiceCurrencyId').Type('EUR');
