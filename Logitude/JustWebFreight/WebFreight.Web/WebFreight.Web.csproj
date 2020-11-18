@@ -956,6 +956,7 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.LedgerTransaction_Reconcile.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccount_LedgerTransaction.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />

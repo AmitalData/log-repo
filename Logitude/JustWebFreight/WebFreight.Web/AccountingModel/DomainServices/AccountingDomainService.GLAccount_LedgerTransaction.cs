@@ -26,7 +26,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, queryOperations);
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-                ledgerTransactionBalanceService.Run();
+                ledgerTransactionBalanceService.Run(true);
 
             }
            
@@ -44,7 +44,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, queryOperations);
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-                ledgerTransactionBalanceService.Run();
+                ledgerTransactionBalanceService.Run(true);
 
             }
             return (int)ledgerTransactionBalanceService.Response.TotalRowCount;

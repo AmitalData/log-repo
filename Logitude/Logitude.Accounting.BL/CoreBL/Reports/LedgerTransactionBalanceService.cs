@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
 
-        public void Run()
+        public void Run(bool IsFromExcelGenerater=false)
         {
             var sw = Stopwatch.StartNew();
             _sw = Stopwatch.StartNew();
@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
 
                 //int pageSize = 100; int curPageZeroBase = 0;
-                var list = Translate2ListMode(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                var list = Translate2ListMode(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, IsFromExcelGenerater);
                 LogIt("Translate2ListMode");
                 if (!this.Response.OmitAllBalance)
                 {
@@ -505,12 +505,11 @@ AccountBalanceM endAccountBalanceService)
 
         }
 
-        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,bool IsFromExcelGenerater)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
             var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param.DateTypeCode,
-                _Param.PageSize, _Param.PageStartAtRecordIndex);
+                _Param, IsFromExcelGenerater);
             return list;
         }
 

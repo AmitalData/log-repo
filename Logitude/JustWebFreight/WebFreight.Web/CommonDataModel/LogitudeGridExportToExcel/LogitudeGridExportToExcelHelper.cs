@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
                 SortByColumnName = logitudeGridExportToExcelArguments.SortBy,
                 SortDirectin = logitudeGridExportToExcelArguments.SortDirection,
                 QuerySection = logitudeGridExportToExcelArguments.QuerySection,
+                GetAll = true,
 
             };
 

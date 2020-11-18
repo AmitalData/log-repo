@@ -85,11 +85,16 @@
                     </div></li>
 
                     <li float-end>
+                        
                         <div style="width: 250px; padding: 3px 4px;"  float-end>
                             <SearchTextBox [ObjectTableName]="ObjectTableName"
                                 (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                         </div>
                         <div float-end style="padding-top: 5px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}</div>
+
+                        <div [style.float]="isRTL ? 'left' : 'right'"  style="margin: 0 15px;padding: 3px 4px;">
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [IsSmall]="true"     (click)="ExportToExcelClick()"></IconButton>
+                        </div>
                     </li>
                 </ul>
             </div>
