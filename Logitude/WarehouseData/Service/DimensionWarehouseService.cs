@@ -26,60 +26,23 @@ namespace WarehouseData.Helper
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(generalDataWarehouseService.CreateSqlDataWarehouseTable(table));
-            stringBuilder.Append(GetSqlInsertNotSpecifiedRecorderToDataWarehouse(table));
+         
+            var sqlInsertNotSpecifiedRecordArgs = new SqlInsertNotSpecifiedRecordArgs()
+            {
+                ObjectFieldDBLists = table.DWObjectFieldDBLists,
+                Table = table,
+                Tenant = 0,
+                TableName = ("#" + table.DWObjectTableCode + "Temp ")
+            };
+
+            stringBuilder.Append(generalDataWarehouseService.GetSqlInsertNotSpecifiedRecorderToDB(sqlInsertNotSpecifiedRecordArgs));
+
             stringBuilder.Append(generalDataWarehouseService.GetDataWarehouseScriptByForderAndScriptName("BuildWarehouse", table.BuildScriptName));
             stringBuilder.Append(generalDataWarehouseService.GetSqlCopyDataFromTempTableToActualTable(table));
             stringBuilder.Append(GetSqlAddConstraintAndIndexToDimensionTable(table));
             generalDataWarehouseService.ExecuteSql(stringBuilder.ToString(), connectionString);
         }
 
-        private string GetSqlInsertNotSpecifiedRecorderToDataWarehouse(TableClass table)
-        {
-            string result = "insert into #" + table.DWObjectTableCode + "Temp ";
-            StringBuilder fieldNamesBuilder = new StringBuilder(" ( ");
-            StringBuilder fieldValuesBuilder = new StringBuilder(" values ( ");
-            foreach (DWObjectFieldDB field in table.DWObjectFieldDBLists)
-            {
-                string fieldValue = string.Empty; ;
-                if (field.FieldName != "[Id_Number]")
-                {
-                    fieldNamesBuilder.Append(field.FieldName + ((table.DWObjectFieldDBLists.Last() != field) ? "," : ")"));
-                    fieldValuesBuilder.Append(GetNotSpecifiedFieldValue(table, field) + ((table.DWObjectFieldDBLists.Last() != field) ? "," : ")"));
-                }
-            }
-            result = result + fieldNamesBuilder.ToString() + " " + fieldValuesBuilder.ToString();
-
-            //if (table.DBTableName == "ShipmentTypes")
-            //{
-            //    string secondtNotSpecifiedValue = result.Replace("-1", "Air").Replace("Not Specified", "Air");
-            //    result += " " + secondtNotSpecifiedValue;
-            //}
-
-
-            return result;
-        }
-
-        private static string GetNotSpecifiedFieldValue(TableClass table, DWObjectFieldDB field)
-        {
-            string fieldValue = string.Empty;
-            if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
-            {
-                if (field.FieldName == "[Id]" || (field.FieldName == "[Code]" && table.TableName != "Card")) fieldValue = field.MaxLength > 1 ? "'-1'" : "'1'";
-                else fieldValue = "'Not Specified'";
-
-                if (field.MaxLength + 2 < fieldValue.Length) fieldValue = "null";
-            }
-            else if (field.DataTypeCode == "Boolean" || field.DataTypeCode == "Decimal" || field.DataTypeCode == "Integer")
-            {
-                fieldValue = field.FieldName == "[Tenant Number]" ? "-1" : "0";
-            }
-            else if(field.DataTypeCode == "DateTime")
-            {
-                fieldValue = "null";
-            }
-
-            return fieldValue;
-        }
 
         private string GetSqlAddConstraintAndIndexToDimensionTable(TableClass table)
         {

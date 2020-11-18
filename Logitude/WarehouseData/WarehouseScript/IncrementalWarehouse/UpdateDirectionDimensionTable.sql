@@ -20,7 +20,7 @@
 	SELECT Id, Name, AutomaticLastUpdateDate
 	From dw_Directions
 	where AutomaticLastUpdateDate > @LastUpdateDate
-	OPEN DirectionsCursor FETCH NEXT FROM DirectionsCursor INTO @Code , @Name
+	OPEN DirectionsCursor FETCH NEXT FROM DirectionsCursor INTO @Code , @Name , @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
