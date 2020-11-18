@@ -218,6 +218,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CourierMasterRemarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

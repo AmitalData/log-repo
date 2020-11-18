@@ -126,6 +126,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? LandingDateDateOnly  { get; set; }
        [DataMember]
        public DateTime? LandingDateTimeOnly  { get; set; }
+       [DataMember]
+       public string CourierMasterRemarks  { get; set; }
    }
 
 }

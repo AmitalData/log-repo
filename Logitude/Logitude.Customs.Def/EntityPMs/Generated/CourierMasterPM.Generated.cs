@@ -1331,6 +1331,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierMasterRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierMasterRemarks  
+	   {
+	    
+	     get
+		{
+		   return courierMasterRemarks;
+		 }
+		 set
+		 {
+		   if(courierMasterRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierMasterRemarks",OldValue=courierMasterRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierMasterRemarks=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

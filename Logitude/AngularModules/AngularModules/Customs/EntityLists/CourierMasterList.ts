@@ -64,6 +64,7 @@ export class CourierMasterList {
 	UnifreightLeadingFile: string;
 	LandingDateDateOnly: Date;
 	LandingDateTimeOnly: Date;
+	CourierMasterRemarks: string;
 	
 }
  
