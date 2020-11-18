@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemUpdateClass
    {  		
-		public const string HashString = "8844b68d2599b92427bee83ec14397bd";
+		public const string HashString = "afb0b351a65597ae776ec78fcfc34d2a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת פרט מכס",
 			      				    DefaultText =  "Supplier Invoice Item",
-			      				    Code =  "a4f8",
+			      				    Code =  "8efe",
 			      				    Name =  "Customs.SupplierInvoiceItem Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2907,7 +2907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.SupplierInvoiceItem",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  256,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2915,7 +2915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  30,
+					  						SystemMaxLength =  256,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,

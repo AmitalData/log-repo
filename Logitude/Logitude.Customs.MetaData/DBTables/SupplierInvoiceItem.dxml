@@ -223,7 +223,7 @@
   <Column
     Name="ItemDescription"
     Type="nvarchar"
-    Size="30">
+    Size="256">
     <Constraints
       Nullable="true" />
   </Column>
