@@ -32,12 +32,13 @@
               "styles": [
                 "styles.css"
               ],
-              "scripts": [
+            "scripts": [
                 "_Resources/js/FaviconManager.js",
                 "_Resources/js/JQuery/jquery-2.0.0.min.js",
                 "_Resources/js/JQuery/jquery.signalR.js",
                 "_Resources/js/js.js",
                 "_Resources/js/ChangePasswordFunctions.js",
+                "_Resources/js/UnifreightJSBridge.js",
                 "log.config.js",
                 "Js/Reflect.js",
                 "Js/jszip.js",
@@ -80,7 +81,7 @@
                 "_Resources/Froala/js/plugins/url.min.js",
                 "_Resources/Froala/js/plugins/video.min.js",
                 "_Resources/Froala/js/plugins/line_height.min.js"
-              ]
+            ]
             },
             "configurations": {
               "production": {
