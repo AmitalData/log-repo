@@ -41,14 +41,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
 		private IQueryable<CargoTrackingMilestone> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingMilestone> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-				private IQueryable<CargoTrackingMilestone> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingMilestone> iQueryable)
+		private IQueryable<CargoTrackingMilestone> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingMilestone> iQueryable)
         {
 			return iQueryable;
 		}
 		
-			}
+	}
 
 
 }

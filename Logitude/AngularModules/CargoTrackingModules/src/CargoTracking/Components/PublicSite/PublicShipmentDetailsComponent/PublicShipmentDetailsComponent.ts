@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, NavigationEnd, NavigationStart, RoutesRecognize
 import { Location } from '@angular/common';
 import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
 import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 
 @Component({
     selector: 'PublicShipmentDetailsComponent',
@@ -25,7 +27,8 @@ export class PublicShipmentDetailsComponent implements OnInit
     constructor(private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService)
     {
         this.GetIdFromURI();
         this.mainColor = CargoTrackingBrandingData.MainColor;
@@ -34,9 +37,25 @@ export class PublicShipmentDetailsComponent implements OnInit
 
         this.listenToRouterEvents();
 
+        this.GetMilstones();
 
 
 
+    }
+
+    milestones:CargoTrackingMilestoneList[];
+    
+    public get currentMilestoneName() : string {
+        return this.milestones.find(d=>d.Code == this.Shipment.CurrentMilestoneCode)?.EnglishName;
+    }
+   
+    
+    GetMilstones(){
+        this.milestonesService.getAll(this.tenant)
+            .subscribe((milestones:any) => {
+                console.log("[Milstones Loaded]" , this.milestones);
+                this.milestones  = milestones;
+            });
     }
     private listenToRouterEvents()
     {
@@ -149,21 +168,9 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
 
     Delivered: boolean = false;
+    InProgressShipment: boolean = false;
     DileveredIconColor: string;
-    //GetDeliveredIconColor() {
-    //    var iconPath = "";
 
-    //    if (this.Shipment.CurrentMilestoneCode == "11") {
-
-    //        this.DileveredIconColor = this.mainColor;
-
-    //    }
-    //    else {
-    //        this.DileveredIconColor ="#B5B5B5";
-    //    }
-
-    //    return iconPath;
-    //}
 
     SelectedTab: string = 'steps';
     TabToggleClicked(tabName: string)
@@ -192,6 +199,10 @@ export class PublicShipmentDetailsComponent implements OnInit
                 if (this.Shipment.CurrentMilestoneCode == "11") {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
+                }else if(this.Shipment.CurrentMilestoneCode){
+                    this.Delivered = false;
+                    this.InProgressShipment = true;
+                    this.DileveredIconColor = "#B5B5B5";
                 }
                 else {
                     this.Delivered = false;
