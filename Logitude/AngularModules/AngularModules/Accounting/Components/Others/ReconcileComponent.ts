@@ -698,7 +698,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
-                        logitudeWindow.WindowArgs = { "SelectedLines": this.SelectedLines, "GLAccountPMId": this.GLAccountPM.Id };
+                        logitudeWindow.WindowArgs = { 
+                            "SelectedLines": this.SelectedLines,
+                             "GLAccountPMId": this.GLAccountPM.Id,
+                             TotalDifference: this.TotalsDeference };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
                             // Close Reconcile window

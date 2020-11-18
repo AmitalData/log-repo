@@ -379,7 +379,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
 
                         //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": myExtPageLineModel.PageLinePM, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
-                        logitudeWindow.WindowArgs = { "ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
+                        logitudeWindow.WindowArgs = { 
+                            "ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList, 
+                            "LedgerTransactionIdList": LedgerTransactionIdList, 
+                            "BankAccountPMId": this.BankAccountPM.Id,
+                            TotalDifference: this.totalDifference,
+                            TotalDifferenceCurrency: this.openAmountCurrency,
+                         };
 
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
