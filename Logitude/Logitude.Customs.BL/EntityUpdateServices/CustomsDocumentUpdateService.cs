@@ -602,12 +602,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //}
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
+                     MainInterfaceCode="2715",
                     ///AppicationId = entityPM.DocumentsFilingId,
                     DocumentsFilingId = entityPM.DocumentsFilingId,
                     DeclaretionId = declarationId,
                     DocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId,
                     Tenant = entityPM.Tenant,
-                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),//task10676 
+                    LoggingObjectTableId = string.IsNullOrWhiteSpace(declarationId) ?null: ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),//task10676 
                     LoggingEntityId = declarationId,
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
