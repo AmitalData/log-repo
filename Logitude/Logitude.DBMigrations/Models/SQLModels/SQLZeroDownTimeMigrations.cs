@@ -267,7 +267,7 @@ namespace Logitude.DBMigrations.Models
             //string csvFileName = dbMigrationsDataScript.SxmlFileName.Replace(".sxml", String.Empty) + "_" + DateTime.Now.Ticks.ToString();
 
             queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", targetTableName + ".[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
-            queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
+            queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(MAX));\n" +
                           "INSERT INTO @IdsTable SELECT TOP(" + batchSize.ToString() + ") [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
                           (scriptExecutionNumber - 1 == 0 ? " OR [DBMigrationsLastScript] IS NULL" : null) + ";\n" +
                           queryString + "\n" +
