@@ -110,6 +110,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? LandingDate { get; set; }
         [Column("UnifreightLeadingFile")]
 	    public string UnifreightLeadingFile { get; set; }
+        [Column("CourierMasterRemarks")]
+	    public string CourierMasterRemarks { get; set; }
     }
 }
 	 

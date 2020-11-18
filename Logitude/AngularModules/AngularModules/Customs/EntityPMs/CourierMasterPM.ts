@@ -309,6 +309,11 @@ export class CourierMasterPM {
     public set LandingDateTimeOnly(newValue: Date) { if (this.landingDateTimeOnly != newValue) { this.landingDateTimeOnly = newValue; this.MarkAsDirty("LandingDateTimeOnly"); } }
        
 	 
+    private courierMasterRemarks: string;
+    public get CourierMasterRemarks() { return this.courierMasterRemarks; }
+    public set CourierMasterRemarks(newValue: string) { if (this.courierMasterRemarks != newValue) { this.courierMasterRemarks = newValue; this.MarkAsDirty("CourierMasterRemarks"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
