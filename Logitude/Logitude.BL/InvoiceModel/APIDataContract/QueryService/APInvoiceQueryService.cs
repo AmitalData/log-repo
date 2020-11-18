@@ -897,6 +897,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             }
+            this.InitAndValidateTotalVATsOnly();
         }
 
         public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
@@ -1032,7 +1033,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("InvoiceCurrencyAmount is not provided");
                 }
 
-                if (line.VatType == null)
+                if (line.VatType == null && !apinvoice.TotalVATOnly)
                 {
                     throw new ApplicationException("VatType is not provided");
                 }
