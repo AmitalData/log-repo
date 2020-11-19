@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.FTP;
 using Logitude.Server.Tools.Helpers;
@@ -28,8 +29,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private string entityId = string.Empty;
         private string objectTableId = string.Empty;
         private Contact loggedContact = null;
-
-
+        private string companyName = string.Empty;
+        private string computingPartnerName = string.Empty;
         public FTPAutomationService(FTPAutomationServiceArgs ftpAutomationServiceArgs)
         {
             tenant = ftpAutomationServiceArgs.Tenant;
@@ -37,7 +38,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
             fTPDetails = ftpAutomationServiceArgs.FTPDetails;
             entityId = ftpAutomationServiceArgs.EntityId;
             objectTableId = ftpAutomationServiceArgs.ObjectTableId;
-            loggedContact = this.GetLoggedContact();
+            loggedContact = GetLoggedContact();
+            companyName = GetCompanyName();
+            computingPartnerName = GetComputingPartnerName(ftpAutomationServiceArgs.ComputingPartnerId);
         }
 
 
@@ -47,14 +50,6 @@ namespace WebFreight.Web.Helpers.AutomationModel
             AddFTPCommunicationLogQueue(communicationLog);
         }
 
-
-        private Contact GetLoggedContact()
-        {
-            string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(loggedUserEmail, tenant);
-            return loggedContact;
-        }
 
         private CommunicationLog CreateCommunicationLog()
         {
@@ -70,13 +65,14 @@ namespace WebFreight.Web.Helpers.AutomationModel
             return new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
+                To = fTPDetails.Host,
+                From = companyName,
+                Subject =string.IsNullOrEmpty(computingPartnerName)? "Shipment Interface": ("Shipment Interface for "+ computingPartnerName),
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 InOut = "O",
-                From = loggedContact.Email,
                 EntityId = entityId,
                 ObjectTableId = objectTableId,
-                Subject = "Shipment XML via Automation",
                 Tenant = tenant,
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -115,6 +111,31 @@ namespace WebFreight.Web.Helpers.AutomationModel
             queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
         }
 
+        private Contact GetLoggedContact()
+        {
+            string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(loggedUserEmail, tenant);
+            return loggedContact;
+        }
+
+        private string GetComputingPartnerName(string computingPartnerId)
+        {
+            string result = string.Empty;
+            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+            result = computingPartnerQuery.GetComputingPartnerNameById(computingPartnerId);
+            return result;
+        }
+
+        private string GetCompanyName()
+        {
+            string result = string.Empty;
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            result = tenantQuery.GetCompanyNameById(tenant);
+            return result;
+        }
+
+
     }
 
     public class FTPAutomationServiceArgs
@@ -124,6 +145,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public int Tenant { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string ComputingPartnerId { get; set; }
+
+        
 
     }
 

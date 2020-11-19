@@ -491,6 +491,7 @@ namespace CommunicationWorkerRole
                 Tenant = Tenant,
                 EntityId = entityId,
                 ObjectTableId = entityChange.ObjectTableId,
+                ComputingPartnerId = automationSendInterface.ComputingPartnerId,
             };
             var ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
             ftpAutomationService.Run();
