@@ -9,6 +9,8 @@ import { FavoritesPageComponent } from 'src/CargoTracking/Components/UserDashboa
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
 import { ShipmentsListComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboard/UserDashboardComponent';
+import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
+import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
 
 const routes: Routes = [
     
@@ -40,6 +42,8 @@ const routes: Routes = [
     
  
     { path: ':Tenant/login', component: LoginComponent },
+    { path: ':Tenant/resetpassword', component: ResetPasswordComponent },
+    { path: ':Tenant/changepassword', component: ChangePasswordComponent },
     // {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},

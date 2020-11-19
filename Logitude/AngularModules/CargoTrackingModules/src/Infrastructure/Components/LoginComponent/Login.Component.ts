@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     public CaptchaTextValue: string = "";
     public errorMessage: string = "";
     public Tenant: number;
+    public ShowbusyIndicator: boolean = false;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
@@ -62,6 +63,9 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
+        this.ShowbusyIndicator = true;
+        this.errorMessage = "";
+
         let LoginParams = {
             Email: this.Email,
             Password: this.Password,
@@ -79,7 +83,10 @@ export class LoginComponent implements OnInit {
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
-            if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) this.LoginFailed(userData);
+            if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
+                this.LoginFailed(userData);
+                this.ShowbusyIndicator = false;
+            }
             else this.LoginSucceeded(LoginParams, userData);
         });
     }
@@ -129,6 +136,7 @@ export class LoginComponent implements OnInit {
         if(!LogInToTenant) LogInToTenant= tenantList[0];
 
         this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+            this.ShowbusyIndicator = false;
             if (userData) {
                 this.FillSessionInfoData(userData);
                 this.router.navigate([userData.CurrentTenant, "dashboard"])
@@ -148,5 +156,11 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
+    }
+
+    public ForgotPasswordClicked() {
+        this.Tenant =  this.route.snapshot.params.Tenant;
+        if(!this.Tenant) this.Tenant = 0;
+        this.router.navigate([this.Tenant, "resetpassword"]);
     }
 }
