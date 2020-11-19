@@ -576,6 +576,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
+        debugger;
            var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
@@ -596,7 +597,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.connectTo = this.SelectedIndex;
 
         var err = this.iCustomsDocumentsController.ValidationBeforeSave(this.CustomsDocumentsTicket, this.connectTo.toString());
-        if (err!="") {
+        if (!AppTool.IsNullOrEmpty( err)) {
                  this.ValidationErrorsList = [];
 
             this.ValidationErrorsList.push(err);
