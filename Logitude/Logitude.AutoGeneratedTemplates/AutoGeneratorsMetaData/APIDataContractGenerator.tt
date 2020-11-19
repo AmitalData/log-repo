@@ -207,7 +207,7 @@ using <#=myspacestring#>
 			
 			 if(IsKey == "true" && IsComposition == "false"){ #>
 
-		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant)
+		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -221,7 +221,7 @@ using <#=myspacestring#>
 				 if (temp == null)
                     throw new ApplicationException("<#=ObjectTableName#> with <#=FieldName#> " + <#=FieldName#> + " doesn't exist");
 
-				return <#=DCName #>DataMapping(temp,Tenant);
+				return <#=DCName #>DataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -268,7 +268,7 @@ using <#=myspacestring#>
 				if(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>.Count > 0<#+}#>)
 				{
 					 <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#> = new <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService(Tenant);
-					 temp.<#=DCFieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMapping(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant);
+					 temp.<#=DCFieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMapping(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant,ComputingPartnerName);
 				}
 
 							 <#+} else {#> 
@@ -278,10 +278,10 @@ using <#=myspacestring#>
 				   {
 					   <#=type#>QueryService <#=type#>Service<#=i#> = new <#=type#>QueryService(Tenant);
 					   <#+if(IsManualMapping == "true"){#>
-					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.<#=type.Replace("List<","").Replace(">","")#>CustomDataMapping(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant); 
+					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.<#=type.Replace("List<","").Replace(">","")#>CustomDataMapping(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant,ComputingPartnerName); 
 			       
 					   <#+}else{#>
-					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.Get<#=type#>By<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant); 
+					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.Get<#=type#>By<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant,ComputingPartnerName); 
 			       
 					   <#+}#>
 				   }

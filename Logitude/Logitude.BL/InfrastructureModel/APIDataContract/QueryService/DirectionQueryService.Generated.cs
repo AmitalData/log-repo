@@ -36,7 +36,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public Direction GetDirectionById(string Id,int Tenant)
+		public Direction GetDirectionById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("Direction with Id " + Id + " doesn't exist");
 
-				return DirectionDataMapping(temp,Tenant);
+				return DirectionDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

@@ -62,13 +62,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
 
-        public Address AddressCustomDataMapping(string Id, int Tenant)
+        public Address AddressCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
                 AddressQueryService AddressService0 = new AddressQueryService(Tenant);
-                var ChargeType = AddressService0.GetAddressById(Id, Tenant);
+                var ChargeType = AddressService0.GetAddressById(Id, Tenant,ComputingPartnerName);
                 return ChargeType;
             }
             catch (Exception ex)

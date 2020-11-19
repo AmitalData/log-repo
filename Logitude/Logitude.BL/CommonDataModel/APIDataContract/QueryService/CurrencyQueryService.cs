@@ -52,13 +52,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         }
 
 
-        public Currency CurrencyCustomDataMapping(string Id, int Tenant)
+        public Currency CurrencyCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
                 CurrencyQueryService CurrencyService0 = new CurrencyQueryService(Tenant);
-                var Currency = CurrencyService0.GetCurrencyById(Id, Tenant);
+                var Currency = CurrencyService0.GetCurrencyById(Id, Tenant,ComputingPartnerName);
                 return Currency;
             }
             catch (Exception ex)

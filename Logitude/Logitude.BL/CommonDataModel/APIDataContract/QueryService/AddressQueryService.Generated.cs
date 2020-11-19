@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Address GetAddressById(string Id,int Tenant)
+		public Address GetAddressById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Address with Id " + Id + " doesn't exist");
 
-				return AddressDataMapping(temp,Tenant);
+				return AddressDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.CountryId != null)
 				   {
 					   CountryQueryService CountryService0 = new CountryQueryService(Tenant);
-					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant); 
+					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -87,7 +87,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.StateId != null)
 				   {
 					   StateQueryService StateService1 = new StateQueryService(Tenant);
-					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant); 
+					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

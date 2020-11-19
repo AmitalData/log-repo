@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Incoterm GetIncotermById(string Id,int Tenant)
+		public Incoterm GetIncotermById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Incoterm with Id " + Id + " doesn't exist");
 
-				return IncotermDataMapping(temp,Tenant);
+				return IncotermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Incoterm GetIncotermByCode(string Code,int Tenant)
+		public Incoterm GetIncotermByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Incoterm with Code " + Code + " doesn't exist");
 
-				return IncotermDataMapping(temp,Tenant);
+				return IncotermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

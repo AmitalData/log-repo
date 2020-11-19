@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Currency GetCurrencyById(string Id,int Tenant)
+		public Currency GetCurrencyById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Currency with Id " + Id + " doesn't exist");
 
-				return CurrencyDataMapping(temp,Tenant);
+				return CurrencyDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Currency GetCurrencyByCode(string Code,int Tenant)
+		public Currency GetCurrencyByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Currency with Code " + Code + " doesn't exist");
 
-				return CurrencyDataMapping(temp,Tenant);
+				return CurrencyDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

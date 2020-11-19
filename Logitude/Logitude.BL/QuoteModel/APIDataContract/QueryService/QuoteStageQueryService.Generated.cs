@@ -40,7 +40,7 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public QuoteStage GetQuoteStageById(string Id,int Tenant)
+		public QuoteStage GetQuoteStageById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.QuoteModel;
 				 if (temp == null)
                     throw new ApplicationException("QuoteStage with Id " + Id + " doesn't exist");
 
-				return QuoteStageDataMapping(temp,Tenant);
+				return QuoteStageDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

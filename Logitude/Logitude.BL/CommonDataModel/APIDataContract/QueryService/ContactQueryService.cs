@@ -9,9 +9,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class ContactQueryService
     {
-        public List<Contact> ContactCustomDataMapping(CardPM EntityPm, List<ContactPM> MyEntityPMs, int Tenant)
+        public List<Contact> ContactCustomDataMapping(CardPM EntityPm, List<ContactPM> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
         {
-            return this.ContactMapping(MyEntityPMs, Tenant);           
+            return this.ContactMapping(MyEntityPMs, Tenant,ComputingPartnerName);           
         }
 
         public List<ContactPM> ContactCustomDataMappingAndValidatin(Customer MainEntity, List<Contact> MyEntities, int Tenant, string ComputingPartnerName = "")

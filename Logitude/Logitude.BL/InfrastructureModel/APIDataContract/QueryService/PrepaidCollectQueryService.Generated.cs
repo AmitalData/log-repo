@@ -36,7 +36,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public PrepaidCollect GetPrepaidCollectById(string Id,int Tenant)
+		public PrepaidCollect GetPrepaidCollectById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("PrepaidCollect with Id " + Id + " doesn't exist");
 
-				return PrepaidCollectDataMapping(temp,Tenant);
+				return PrepaidCollectDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

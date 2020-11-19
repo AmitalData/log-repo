@@ -143,7 +143,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public List<ARInvoiceLine> ARInvoiceLineCustomDataMapping(ARInvoicePM MyEntity,List<ARInvoiceLinePM> lines, int Tenant)
+        public List<ARInvoiceLine> ARInvoiceLineCustomDataMapping(ARInvoicePM MyEntity,List<ARInvoiceLinePM> lines, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
@@ -159,7 +159,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     if (item.ChargesTypeId != null)
                     {
                         ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-                        temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId, Tenant);
+                        temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId, Tenant,ComputingPartnerName);
 
                     }
 

@@ -36,7 +36,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public TransportMode GetTransportModeById(string Id,int Tenant)
+		public TransportMode GetTransportModeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("TransportMode with Id " + Id + " doesn't exist");
 
-				return TransportModeDataMapping(temp,Tenant);
+				return TransportModeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

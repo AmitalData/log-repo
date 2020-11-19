@@ -40,7 +40,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public MoveType GetMoveTypeById(string Id,int Tenant)
+		public MoveType GetMoveTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("MoveType with Id " + Id + " doesn't exist");
 
-				return MoveTypeDataMapping(temp,Tenant);
+				return MoveTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

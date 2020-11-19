@@ -52,7 +52,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant); 
+					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -61,7 +61,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.MeasurementId != null)
 				   {
 					   MeasurementQueryService MeasurementService1 = new MeasurementQueryService(Tenant);
-					   					   temp.Measurement = MeasurementService1.GetMeasurementById(item.MeasurementId,Tenant); 
+					   					   temp.Measurement = MeasurementService1.GetMeasurementById(item.MeasurementId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -72,7 +72,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
-					   					   temp.Currency = CurrencyService2.GetCurrencyById(item.CurrencyId,Tenant); 
+					   					   temp.Currency = CurrencyService2.GetCurrencyById(item.CurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -82,7 +82,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.PrepaidCollectId != null)
 				   {
 					   PrepaidCollectQueryService PrepaidCollectService3 = new PrepaidCollectQueryService(Tenant);
-					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant); 
+					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -92,7 +92,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.VendorId != null)
 				   {
 					   VendorQueryService VendorService4 = new VendorQueryService(Tenant);
-					   					   temp.Vendor = VendorService4.GetVendorById(item.VendorId,Tenant); 
+					   					   temp.Vendor = VendorService4.GetVendorById(item.VendorId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					

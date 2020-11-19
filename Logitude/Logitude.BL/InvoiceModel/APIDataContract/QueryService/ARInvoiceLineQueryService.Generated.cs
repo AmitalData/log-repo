@@ -53,7 +53,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId,Tenant); 
+					   					   temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -62,7 +62,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.ForiegnCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
-					   					   temp.ForeignCurrency = CurrencyService1.CurrencyCustomDataMapping(item.ForiegnCurrencyId,Tenant); 
+					   					   temp.ForeignCurrency = CurrencyService1.CurrencyCustomDataMapping(item.ForiegnCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -78,7 +78,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService2 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService2.VatTypeCustomDataMapping(item.VatTypeId,Tenant); 
+					   					   temp.VatType = VatTypeService2.VatTypeCustomDataMapping(item.VatTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -96,7 +96,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.LineActionCode != null)
 				   {
 					   ARInvoiceLineActionQueryService ARInvoiceLineActionService3 = new ARInvoiceLineActionQueryService(Tenant);
-					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant); 
+					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

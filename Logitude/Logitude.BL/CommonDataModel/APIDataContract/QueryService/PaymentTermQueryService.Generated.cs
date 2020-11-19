@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public PaymentTerm GetPaymentTermById(string Id,int Tenant)
+		public PaymentTerm GetPaymentTermById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with Id " + Id + " doesn't exist");
 
-				return PaymentTermDataMapping(temp,Tenant);
+				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant)
+		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with ExternalId " + ExternalId + " doesn't exist");
 
-				return PaymentTermDataMapping(temp,Tenant);
+				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant)
+		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -88,7 +88,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with Code " + Code + " doesn't exist");
 
-				return PaymentTermDataMapping(temp,Tenant);
+				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

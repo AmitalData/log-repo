@@ -11,7 +11,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
    public partial class AccountingPaymentMethodQueryService
     {
 
-        public AccountingPaymentMethod AccountingPaymentMethodCustomDataMapping(string id, int tenant)
+        public AccountingPaymentMethod AccountingPaymentMethodCustomDataMapping(string id, int tenant, string ComputingPartnerName = "")
         {
             try
             {
