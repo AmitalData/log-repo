@@ -31,6 +31,7 @@ import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/
 import { ShipmentSubTypeListService } from '../../../Shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../../Shipment/EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     templateUrl: './NewQuoteComponent.html',
@@ -85,6 +86,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.GetQuoteSetting();
             });
         });
+        this.InitalizeFeatureOfClosedAutomatically();
     }
 
     private GeneratedComponent: any;
@@ -101,6 +103,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 cmpRef.instance.LabelWidth = 110;
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
             });
+
     }
 
     SetUIProperties_GeneratedComponent() {
@@ -261,7 +264,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isScreenEnabled);
 
-        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, isScreenEnabled && this.IsQuoteClosedAutomaticallyEnabled);
 
         // Pickup
         this.UIProperties.SetEnabled("IncludePickUp", this.ObjectTableName, isScreenEnabled);
@@ -443,9 +446,19 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
     }
     private SetUIProperties_AutomaticallyClosed() {
-        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsAutomaticallyClosed);
-        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteClosedAutomaticallyEnabled);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteClosedAutomaticallyEnabled);
     }
+
+    public IsQuoteClosedAutomaticallyEnabled: boolean;
+    private InitalizeFeatureOfClosedAutomatically() {
+        this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("Quote", "QuoteClosedAutomatically");
+        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
+        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
+        this.SetUIProperties_AutomaticallyClosed();
+    }
+
     private SetUIProperties_Dimentions() {
         var fillDimEnabled: boolean = false;
 
