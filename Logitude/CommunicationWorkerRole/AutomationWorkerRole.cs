@@ -245,7 +245,7 @@ namespace CommunicationWorkerRole
                                         }
                                         else if (automationSendInterface.SendVia == "FTP")
                                         {
-                                            new FTPAutomationService().Run(automationSendInterface.FTPDetails, documentId, Tenant);
+                                            ApplyAuomationSendInterfaceFTP(entityChange, automationSendInterface, documentId);
                                         }
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
@@ -482,6 +482,22 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void ApplyAuomationSendInterfaceFTP(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)
+        {
+            FTPAutomationServiceArgs fTPAutomationServiceArgs = new FTPAutomationServiceArgs()
+            {
+                FTPDetails = automationSendInterface.FTPDetails,
+                DocumentId = documentId,
+                Tenant = Tenant,
+                EntityId = entityId,
+                ObjectTableId = entityChange.ObjectTableId,
+                ComputingPartnerId = automationSendInterface.ComputingPartnerId,
+            };
+            var ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
+            ftpAutomationService.Run();
+        }
+
+      
         private string GetentityChangesResultCode(string resultCode)
         {
             string result = string.Empty;
