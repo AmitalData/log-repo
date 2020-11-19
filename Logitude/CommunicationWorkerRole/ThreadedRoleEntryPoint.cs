@@ -46,6 +46,7 @@ using System.Xml.Linq;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.Messaging.Amital;
+using Simplog.Server.Infrastructure.Interfaces;
 
 namespace CommunicationWorkerRole
 {
@@ -232,6 +233,7 @@ namespace CommunicationWorkerRole
 
 
             AccountingRegistrations.Register();
+            InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
 
             Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
 
