@@ -670,7 +670,30 @@
                                                         </ng-template>
 
                                                     </log-column>
+                                                    <log-column [header]="'Customs.Declaration.O.AmendmentRequestInitiatorType' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'AmendmentRequestInitiatorType'">
 
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentRequestInitiatorType}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                    <log-column [header]="'Customs.Declaration.O.FieldAmendmentRejectReasonRemarks' | TextCodeTranslationPipe"
+                                                                [width]="'200'" [Alignment]="'right'" [binding]="'FieldAmendmentRejectReasonRemarks'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.FieldAmendmentRejectReasonRemarks}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
                                                 </logitude-edit-grid>
                                             </td>
                                         </tr>
