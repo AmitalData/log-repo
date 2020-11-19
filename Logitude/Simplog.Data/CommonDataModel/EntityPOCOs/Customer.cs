@@ -31,7 +31,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CollectorId { get; set; } 
         public string CustomerSizeId { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
-
+        public string EORInumber { get; set; }
         public virtual Card Card { get; set; }
 
         [ForeignKey("BillToId")]

@@ -110,6 +110,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string EORInumber { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayablesAccountingCard { get; set; }//card
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
