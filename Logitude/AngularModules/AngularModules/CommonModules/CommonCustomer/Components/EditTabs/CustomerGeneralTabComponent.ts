@@ -549,6 +549,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
         this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
         this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
+        this.UIProperties.SetEnabled("EORInumber", "Customer", enabled);
         this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
         this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
         this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
@@ -1012,6 +1013,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
+    get EORInumber() { return this.EntityPM.EORInumber; }
+    set EORInumber(newValue: string) {
+        if (this.EntityPM.EORInumber != newValue) {
+            this.EntityPM.EORInumber = newValue;
+        }
+    }
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
         if (this.EntityPM.PaymentTermId != newValue) {

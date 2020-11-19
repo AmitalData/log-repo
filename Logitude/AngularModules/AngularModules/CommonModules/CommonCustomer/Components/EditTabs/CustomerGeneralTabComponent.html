@@ -143,6 +143,18 @@
 
                                             </tr>
 
+                                            <!-- EORI number -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EORInumber'" [Text]="EORInumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
                                             <!-- PaymentTermId -->
                                             <tr class="FormFieldRow">
                                                 <td>
