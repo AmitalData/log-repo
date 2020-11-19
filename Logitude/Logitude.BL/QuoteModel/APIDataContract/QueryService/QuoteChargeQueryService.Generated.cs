@@ -52,7 +52,7 @@ using Simplog.Data.QuoteModel;
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant); 
+					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -61,7 +61,7 @@ using Simplog.Data.QuoteModel;
 				   if(item.CostCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
-					   					   temp.CostCurrency = CurrencyService1.GetCurrencyById(item.CostCurrencyId,Tenant); 
+					   					   temp.CostCurrency = CurrencyService1.GetCurrencyById(item.CostCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -72,7 +72,7 @@ using Simplog.Data.QuoteModel;
 				   if(item.CostMeasurementId != null)
 				   {
 					   MeasurementQueryService MeasurementService2 = new MeasurementQueryService(Tenant);
-					   					   temp.CostMeasurement = MeasurementService2.GetMeasurementById(item.CostMeasurementId,Tenant); 
+					   					   temp.CostMeasurement = MeasurementService2.GetMeasurementById(item.CostMeasurementId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -87,7 +87,7 @@ using Simplog.Data.QuoteModel;
 				   if(item.SaleMeasurementId != null)
 				   {
 					   MeasurementQueryService MeasurementService3 = new MeasurementQueryService(Tenant);
-					   					   temp.SaleMeasurement = MeasurementService3.GetMeasurementById(item.SaleMeasurementId,Tenant); 
+					   					   temp.SaleMeasurement = MeasurementService3.GetMeasurementById(item.SaleMeasurementId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -109,7 +109,7 @@ using Simplog.Data.QuoteModel;
 				if(item.QuoteChargePriceSteps != null && item.QuoteChargePriceSteps.Count > 0)
 				{
 					 QuotePriceStepsQueryService QuotePriceStepsService4 = new QuotePriceStepsQueryService(Tenant);
-					 temp.PriceBreaks = QuotePriceStepsService4.QuotePriceStepsDataMapping(item.QuoteChargePriceSteps,Tenant);
+					 temp.PriceBreaks = QuotePriceStepsService4.QuotePriceStepsDataMapping(item.QuoteChargePriceSteps,Tenant,ComputingPartnerName);
 				}
 
 							 

@@ -243,5 +243,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
             return myResult;
         }
+
+
+        public string GetComputingPartnerNameById(string id)
+        {
+            return (from a in repository.Context.ComputingPartners.Where(d => d.Id == id) select a.Name).FirstOrDefault();
+        }
+
+
     }
 }

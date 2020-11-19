@@ -40,7 +40,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPayment GetARPaymentById(string Id,int Tenant)
+		public ARPayment GetARPaymentById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("ARPayment with Id " + Id + " doesn't exist");
 
-				return ARPaymentDataMapping(temp,Tenant);
+				return ARPaymentDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -73,7 +73,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.AccountingPaymentMethodId != null)
 				   {
 					   AccountingPaymentMethodQueryService AccountingPaymentMethodService0 = new AccountingPaymentMethodQueryService(Tenant);
-					   					   temp.AccountingPaymentMethod = AccountingPaymentMethodService0.AccountingPaymentMethodCustomDataMapping(MyEntityPM.AccountingPaymentMethodId,Tenant); 
+					   					   temp.AccountingPaymentMethod = AccountingPaymentMethodService0.AccountingPaymentMethodCustomDataMapping(MyEntityPM.AccountingPaymentMethodId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -87,7 +87,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService1 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService1.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   					   temp.CreatedByUser = UserService1.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -97,7 +97,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService2 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService2.GetBranchById(MyEntityPM.BranchId,Tenant); 
+					   					   temp.Branch = BranchService2.GetBranchById(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -106,7 +106,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.PaymentCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService3 = new CurrencyQueryService(Tenant);
-					   					   temp.PaymentCurrency = CurrencyService3.GetCurrencyById(MyEntityPM.PaymentCurrencyId,Tenant); 
+					   					   temp.PaymentCurrency = CurrencyService3.GetCurrencyById(MyEntityPM.PaymentCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -115,7 +115,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BillToId != null)
 				   {
 					   CardQueryService CardService4 = new CardQueryService(Tenant);
-					   					   temp.BillTo = CardService4.GetCardById(MyEntityPM.BillToId,Tenant); 
+					   					   temp.BillTo = CardService4.GetCardById(MyEntityPM.BillToId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -130,7 +130,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.CreditCardTypeId != null)
 				   {
 					   CreditCardTypeQueryService CreditCardTypeService5 = new CreditCardTypeQueryService(Tenant);
-					   					   temp.CreditCardType = CreditCardTypeService5.GetCreditCardTypeById(MyEntityPM.CreditCardTypeId,Tenant); 
+					   					   temp.CreditCardType = CreditCardTypeService5.GetCreditCardTypeById(MyEntityPM.CreditCardTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -139,14 +139,14 @@ using Simplog.Data.InvoiceModel;
 				if(MyEntityPM.PaymentInvoices != null && MyEntityPM.PaymentInvoices.Count > 0)
 				{
 					 ARPaymentInvoiceQueryService ARPaymentInvoiceService6 = new ARPaymentInvoiceQueryService(Tenant);
-					 temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMapping(MyEntityPM.PaymentInvoices,Tenant);
+					 temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMapping(MyEntityPM.PaymentInvoices,Tenant,ComputingPartnerName);
 				}
 
 							 
 				if(MyEntityPM.ARPaymentChequeReplicas != null && MyEntityPM.ARPaymentChequeReplicas.Count > 0)
 				{
 					 ARPaymentChequeQueryService ARPaymentChequeService6 = new ARPaymentChequeQueryService(Tenant);
-					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
+					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant,ComputingPartnerName);
 				}
 
 							 
@@ -158,7 +158,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   ARPaymentStatusQueryService ARPaymentStatusService6 = new ARPaymentStatusQueryService(Tenant);
-					   					   temp.Status = ARPaymentStatusService6.GetARPaymentStatusByCode(MyEntityPM.StatusCode,Tenant); 
+					   					   temp.Status = ARPaymentStatusService6.GetARPaymentStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					

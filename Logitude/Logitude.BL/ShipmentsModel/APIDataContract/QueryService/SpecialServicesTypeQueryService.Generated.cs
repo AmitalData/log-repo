@@ -40,7 +40,7 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public SpecialServicesType GetSpecialServicesTypeById(string Id,int Tenant)
+		public SpecialServicesType GetSpecialServicesTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("SpecialServicesType with Id " + Id + " doesn't exist");
 
-				return SpecialServicesTypeDataMapping(temp,Tenant);
+				return SpecialServicesTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
-		public SpecialServicesType GetSpecialServicesTypeByCode(string Code,int Tenant)
+		public SpecialServicesType GetSpecialServicesTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("SpecialServicesType with Code " + Code + " doesn't exist");
 
-				return SpecialServicesTypeDataMapping(temp,Tenant);
+				return SpecialServicesTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

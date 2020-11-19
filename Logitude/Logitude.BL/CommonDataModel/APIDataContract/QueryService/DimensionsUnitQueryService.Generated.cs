@@ -36,7 +36,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public DimensionsUnit GetDimensionsUnitByCode(string Code,int Tenant)
+		public DimensionsUnit GetDimensionsUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("DimensionsUnit with Code " + Code + " doesn't exist");
 
-				return DimensionsUnitDataMapping(temp,Tenant);
+				return DimensionsUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -62,8 +62,7 @@ using Simplog.Data.CommonDataModel;
 				   
 				   var temp = new DimensionsUnit(); 
 				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;
-                   temp.PrintAs = MyEntityPM.PrintAs;
+				   temp.Name = MyEntityPM.Name;					
 				   return temp;
 			}
             catch (Exception ex)

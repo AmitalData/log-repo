@@ -52,7 +52,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService0 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService0.VatTypeCustomDataMapping(item.VatTypeId,Tenant); 
+					   					   temp.VatType = VatTypeService0.VatTypeCustomDataMapping(item.VatTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

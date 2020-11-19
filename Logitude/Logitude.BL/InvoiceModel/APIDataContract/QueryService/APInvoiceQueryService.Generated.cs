@@ -40,7 +40,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public APInvoice GetAPInvoiceById(string Id,int Tenant)
+		public APInvoice GetAPInvoiceById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("APInvoice with Id " + Id + " doesn't exist");
 
-				return APInvoiceDataMapping(temp,Tenant);
+				return APInvoiceDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.VendorId != null)
 				   {
 					   VendorQueryService VendorService0 = new VendorQueryService(Tenant);
-					   					   temp.Vendor = VendorService0.GetVendorById(MyEntityPM.VendorId,Tenant); 
+					   					   temp.Vendor = VendorService0.GetVendorById(MyEntityPM.VendorId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -83,7 +83,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
-					   					   temp.InvoiceCurrency = CurrencyService1.GetCurrencyById(MyEntityPM.InvoiceCurrencyId,Tenant); 
+					   					   temp.InvoiceCurrency = CurrencyService1.GetCurrencyById(MyEntityPM.InvoiceCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -95,7 +95,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
 					   PaymentTermQueryService PaymentTermService2 = new PaymentTermQueryService(Tenant);
-					   					   temp.PaymentTerm = PaymentTermService2.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant); 
+					   					   temp.PaymentTerm = PaymentTermService2.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -106,7 +106,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.LocalCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService3 = new CurrencyQueryService(Tenant);
-					   					   temp.LocalCurrency = CurrencyService3.GetCurrencyById(MyEntityPM.LocalCurrencyId,Tenant); 
+					   					   temp.LocalCurrency = CurrencyService3.GetCurrencyById(MyEntityPM.LocalCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -119,7 +119,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   APInvoiceStatusQueryService APInvoiceStatusService4 = new APInvoiceStatusQueryService(Tenant);
-					   					   temp.Status = APInvoiceStatusService4.GetAPInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant); 
+					   					   temp.Status = APInvoiceStatusService4.GetAPInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -128,7 +128,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.ProfitCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService5 = new CurrencyQueryService(Tenant);
-					   					   temp.ProfitCurrency = CurrencyService5.GetCurrencyById(MyEntityPM.ProfitCurrencyId,Tenant); 
+					   					   temp.ProfitCurrency = CurrencyService5.GetCurrencyById(MyEntityPM.ProfitCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -139,7 +139,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.UpdatedByUserId != null)
 				   {
 					   UserQueryService UserService6 = new UserQueryService(Tenant);
-					   					   temp.UpdatedByUser = UserService6.GetUserById(MyEntityPM.UpdatedByUserId,Tenant); 
+					   					   temp.UpdatedByUser = UserService6.GetUserById(MyEntityPM.UpdatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -153,7 +153,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService7 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService7.GetBranchById(MyEntityPM.BranchId,Tenant); 
+					   					   temp.Branch = BranchService7.GetBranchById(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -168,7 +168,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.TransferStatusCode != null)
 				   {
 					   APInvoiceTransferStatusQueryService APInvoiceTransferStatusService8 = new APInvoiceTransferStatusQueryService(Tenant);
-					   					   temp.TransferStatus = APInvoiceTransferStatusService8.GetAPInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant); 
+					   					   temp.TransferStatus = APInvoiceTransferStatusService8.GetAPInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -178,7 +178,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.ApprovedByUserId != null)
 				   {
 					   UserQueryService UserService9 = new UserQueryService(Tenant);
-					   					   temp.ApprovedByUser = UserService9.GetUserById(MyEntityPM.ApprovedByUserId,Tenant); 
+					   					   temp.ApprovedByUser = UserService9.GetUserById(MyEntityPM.ApprovedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -189,7 +189,7 @@ using Simplog.Data.InvoiceModel;
 				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
 				{
 					 APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
-					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant);
+					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant,ComputingPartnerName);
 				}
 
 							 
@@ -200,7 +200,7 @@ using Simplog.Data.InvoiceModel;
 				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
 				{
 					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
-					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant);
+					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant,ComputingPartnerName);
 				}
 
 							 

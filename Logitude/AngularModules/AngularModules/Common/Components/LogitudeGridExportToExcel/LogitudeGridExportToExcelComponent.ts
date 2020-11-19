@@ -13,6 +13,8 @@ export class LogitudeGridExportToExcelComponent {
     ExportToExcelExcute(ObjectTableName:string,filterAgrs: ApiQueryFilters,QueryColumns:QueryColumnPM[]) {
         this.ObjectTableName = ObjectTableName;
         this.filterAgrs = filterAgrs;
+        if(this.filterAgrs)
+           this.filterAgrs.GetAll = true;
         this.QueryColumns = QueryColumns;
 
         var windowArgs: any = {};

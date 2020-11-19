@@ -36,7 +36,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public VolumeUnit GetVolumeUnitByCode(string Code,int Tenant)
+		public VolumeUnit GetVolumeUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("VolumeUnit with Code " + Code + " doesn't exist");
 
-				return VolumeUnitDataMapping(temp,Tenant);
+				return VolumeUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -62,10 +62,8 @@ using Simplog.Data.InfrastructureModel;
 				   
 				   var temp = new VolumeUnit(); 
 				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;
-                   temp.PrintAs = MyEntityPM.PrintAs;
-
-                   return temp;
+				   temp.Name = MyEntityPM.Name;					
+				   return temp;
 			}
             catch (Exception ex)
             {
@@ -78,7 +76,7 @@ using Simplog.Data.InfrastructureModel;
         {
 		    try
             {
-				    var temp = new VolumeUnitPM();
+				   					var temp = new VolumeUnitPM();
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);

@@ -52,7 +52,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant); 
+					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -83,7 +83,7 @@ using Simplog.Data.ShipmentsModel;
 				if(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
 				{
 					 InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
-					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant);
+					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
 							 					

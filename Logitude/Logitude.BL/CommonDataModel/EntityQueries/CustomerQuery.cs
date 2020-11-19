@@ -180,6 +180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                  EORInumber = a.EORInumber,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -339,6 +340,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                              EORInumber = a.EORInumber,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -2099,6 +2101,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    MetodoPagoCode = a.Card.MetodoPagoCode,
                                                    UsoCFDICode = a.Card.UsoCFDICode,
                                                    CreatedByPartner = a.Card.CreatedByPartner,
+                                                   EORInumber = a.EORInumber,
                                                    Card = new CardPM()
                                                    {
                                                        Id = a.Id,
@@ -2226,6 +2229,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             MetodoPagoCode = a.Card.MetodoPagoCode,
                             UsoCFDICode = a.Card.UsoCFDICode,
                             CreatedByPartner = a.Card.CreatedByPartner,
+                            EORInumber = a.EORInumber,
                             Card = new CardPM()
                             {
                                 Id = a.Id,

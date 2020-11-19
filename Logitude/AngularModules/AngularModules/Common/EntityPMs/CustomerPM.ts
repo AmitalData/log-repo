@@ -179,6 +179,11 @@ export class CustomerPM {
     public set ReceivablesAccountingCard(newValue: string) { if (this.receivablesAccountingCard != newValue) { this.receivablesAccountingCard = newValue; this.MarkAsDirty("ReceivablesAccountingCard"); } }
        
 	 
+    private eORInumber: string;
+    public get EORInumber() { return this.eORInumber; }
+    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
+       
+	 
     private payablesAccountingCard: string;
     public get PayablesAccountingCard() { return this.payablesAccountingCard; }
     public set PayablesAccountingCard(newValue: string) { if (this.payablesAccountingCard != newValue) { this.payablesAccountingCard = newValue; this.MarkAsDirty("PayablesAccountingCard"); } }

@@ -61,7 +61,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.StatusCode != null)
 				   {
 					   ARPaymentChequeStatusReplicaQueryService ARPaymentChequeStatusReplicaService0 = new ARPaymentChequeStatusReplicaQueryService(Tenant);
-					   					   temp.ChequeStatus = ARPaymentChequeStatusReplicaService0.GetARPaymentChequeStatusReplicaByCode(item.StatusCode,Tenant); 
+					   					   temp.ChequeStatus = ARPaymentChequeStatusReplicaService0.GetARPaymentChequeStatusReplicaByCode(item.StatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					

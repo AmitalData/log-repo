@@ -54,7 +54,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant); 
+					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -66,7 +66,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService1 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService1.VatTypeCustomDataMapping(item.VatTypeId,Tenant); 
+					   					   temp.VatType = VatTypeService1.VatTypeCustomDataMapping(item.VatTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -77,7 +77,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.ForiegnCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
-					   					   temp.ForiegnCurrency = CurrencyService2.GetCurrencyById(item.ForiegnCurrencyId,Tenant); 
+					   					   temp.ForiegnCurrency = CurrencyService2.GetCurrencyById(item.ForiegnCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -92,7 +92,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.PrepaidCollectId != null)
 				   {
 					   PrepaidCollectQueryService PrepaidCollectService3 = new PrepaidCollectQueryService(Tenant);
-					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant); 
+					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -102,7 +102,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.ContainerTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService4 = new PackageTypeQueryService(Tenant);
-					   					   temp.ContainerType = PackageTypeService4.GetPackageTypeById(item.ContainerTypeId,Tenant); 
+					   					   temp.ContainerType = PackageTypeService4.GetPackageTypeById(item.ContainerTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

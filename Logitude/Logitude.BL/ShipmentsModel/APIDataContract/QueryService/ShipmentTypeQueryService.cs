@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ShipmentTypeQueryService
     {
 
-        public ShipmentType ShipmentTypeCustomDataMapping(string EntityId, int Tenant)
+        public ShipmentType ShipmentTypeCustomDataMapping(string EntityId, int Tenant, string ComputingPartnerName = "")
         {
             ShipmentTypePM MyEntityPM = query.GetSinglePM(EntityId, Tenant);
             var temp = new ShipmentType();
