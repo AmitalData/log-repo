@@ -367,8 +367,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment Term is required");
             }
         }
-        private void InitAndValidateTotalVATsOnly()
+        public void InitAndValidateTotalVATsOnly()
         {
+
             if (this.aPInvoicePM.TotalVATOnly)
             {
                 foreach (APInvoiceLinePM line in this.aPInvoicePM.InvoiceLines)
@@ -862,6 +863,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
         {
+        
             apinvoice.Tenant = tenant;
             apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
@@ -897,7 +899,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             }
-            this.InitAndValidateTotalVATsOnly();
+       
         }
 
         public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
