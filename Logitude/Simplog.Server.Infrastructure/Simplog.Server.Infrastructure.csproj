@@ -203,6 +203,7 @@
     <Compile Include="Helpers\GenericFilter.cs" />
     <Compile Include="Helpers\GenericSort.cs" />
     <Compile Include="Helpers\ICacheWrapper.cs" />
+    <Compile Include="Helpers\InjectionContainer.cs" />
     <Compile Include="Helpers\InjectionUtil.cs" />
     <Compile Include="Helpers\LogitudeExceptionExt.cs" />
     <Compile Include="Helpers\LogtitudeDomainScope.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Helpers\XLSUtil.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
+    <Compile Include="Interfaces\IObjectTablePropertyGetter.cs" />
     <Compile Include="Interfaces\IServiceBehaviour.cs" />
     <Compile Include="Interfaces\IServiceInitializer.cs" />
     <Compile Include="IRepository.cs" />
