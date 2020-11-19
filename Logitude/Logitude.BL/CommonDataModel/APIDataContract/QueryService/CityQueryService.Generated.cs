@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public City GetCityById(string Id,int Tenant)
+		public City GetCityById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("CountryCity with Id " + Id + " doesn't exist");
 
-				return CityDataMapping(temp,Tenant);
+				return CityDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public City GetCityByCode(string Code,int Tenant)
+		public City GetCityByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("CountryCity with Code " + Code + " doesn't exist");
 
-				return CityDataMapping(temp,Tenant);
+				return CityDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

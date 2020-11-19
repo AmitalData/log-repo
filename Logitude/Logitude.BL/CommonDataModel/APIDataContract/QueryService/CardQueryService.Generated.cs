@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Card GetCardById(string Id,int Tenant)
+		public Card GetCardById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
-				return CardDataMapping(temp,Tenant);
+				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Card GetCardByCode(string Code,int Tenant)
+		public Card GetCardByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
-				return CardDataMapping(temp,Tenant);
+				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService0 = new AddressQueryService(Tenant);
-					   					   temp.MainAddress = AddressService0.GetAddressById(MyEntityPM.MainAddressId,Tenant); 
+					   					   temp.MainAddress = AddressService0.GetAddressById(MyEntityPM.MainAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

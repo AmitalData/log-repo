@@ -36,7 +36,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public WeightUnit GetWeightUnitByCode(string Code,int Tenant)
+		public WeightUnit GetWeightUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("WeightUnit with Code " + Code + " doesn't exist");
 
-				return WeightUnitDataMapping(temp,Tenant);
+				return WeightUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Contact GetContactById(string Id,int Tenant)
+		public Contact GetContactById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Contact with Id " + Id + " doesn't exist");
 
-				return ContactDataMapping(temp,Tenant);
+				return ContactDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

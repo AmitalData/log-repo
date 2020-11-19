@@ -40,7 +40,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public ChargesGroup GetChargesGroupById(string Id,int Tenant)
+		public ChargesGroup GetChargesGroupById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("ChargesGroup with Id " + Id + " doesn't exist");
 
-				return ChargesGroupDataMapping(temp,Tenant);
+				return ChargesGroupDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

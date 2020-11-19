@@ -56,7 +56,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.FromPortId != null)
 				   {
 					   PortQueryService PortService0 = new PortQueryService(Tenant);
-					   					   temp.FromPort = PortService0.GetPortById(item.FromPortId,Tenant); 
+					   					   temp.FromPort = PortService0.GetPortById(item.FromPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -65,7 +65,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.ToPortId != null)
 				   {
 					   PortQueryService PortService1 = new PortQueryService(Tenant);
-					   					   temp.ToPort = PortService1.GetPortById(item.ToPortId,Tenant); 
+					   					   temp.ToPort = PortService1.GetPortById(item.ToPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -74,7 +74,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.FromPartnerCardId != null)
 				   {
 					   CardQueryService CardService2 = new CardQueryService(Tenant);
-					   					   temp.FromPartnerCard = CardService2.GetCardById(item.FromPartnerCardId,Tenant); 
+					   					   temp.FromPartnerCard = CardService2.GetCardById(item.FromPartnerCardId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -83,7 +83,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(item.ToPartnerCardId != null)
 				   {
 					   CardQueryService CardService3 = new CardQueryService(Tenant);
-					   					   temp.ToPartnerCard = CardService3.GetCardById(item.ToPartnerCardId,Tenant); 
+					   					   temp.ToPartnerCard = CardService3.GetCardById(item.ToPartnerCardId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					

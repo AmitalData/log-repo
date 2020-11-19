@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant)
+		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("CustomerOpenFilesAmount with CustomerId " + CustomerId + " doesn't exist");
 
-				return CustomerOpenFilesAmountDataMapping(temp,Tenant);
+				return CustomerOpenFilesAmountDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
