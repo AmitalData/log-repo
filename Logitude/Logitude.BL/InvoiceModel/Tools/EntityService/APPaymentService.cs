@@ -1097,6 +1097,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myCard != null)
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.LocalName);
                 }
             }
             #endregion
