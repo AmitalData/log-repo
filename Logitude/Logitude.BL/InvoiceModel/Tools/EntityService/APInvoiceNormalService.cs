@@ -2511,21 +2511,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                    
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
-                    //double? total = 0;// entityPM.InvoiceLines.Sum(a => a.LocalCurrencyAmount);// + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));//.Sum(s => s.LocalCurrencyAmount);
-                    //double? amount = 0.0;
-                    //foreach(APInvoiceLinePM a in entityPM.InvoiceLines)
-                    //{
-                    //    if(a.VatRecognizedPercentage != null)
-                    //    {
-                    //    }
-                    //    amount = (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage == 0) ? a.LocalCurrencyAmount :
-                    //   (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));
-
-                    //    total = (double?) amount + total;
-
-                    //}
-
-
+                   
                     // [Debit]
                     journalLine = new JournalLinePM();
                     int counter = 1;
@@ -2547,7 +2533,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                                             LocalAmount =(decimal)g.Sum(a => 
                                                             (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
-                                                               Math.Round( (double) (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2))),2)),
+                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
