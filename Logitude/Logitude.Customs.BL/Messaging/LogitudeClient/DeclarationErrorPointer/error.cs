@@ -14,6 +14,8 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer
         public string OldValue { get; set; }
         public string NewValue { get; set; }
         public string AmendmentFieldStatus { get; set; }
+        public string AmendmentRequestInitiatorType { get; set; }
+        public string FieldAmendmentRejectReasonRemarks { get; set; }
 
     }
 }
