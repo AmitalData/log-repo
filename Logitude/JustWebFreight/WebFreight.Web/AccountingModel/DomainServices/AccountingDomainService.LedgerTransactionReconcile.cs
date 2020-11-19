@@ -16,7 +16,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 	public partial class AccountingDomainService
 	{
         private List<LedgerTransactionList> openTransactions;
-        public List<LedgerTransactionList> GetLedgerTransaction_ReconcileFilters(byte[] xmlFilters, int tenant)
+        public List<LedgerTransactionList> GetLedgerTransactionReconcileFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             if (openTransactions == null)
@@ -35,7 +35,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         }
 
-        public int GetLedgerTransaction_ReconcileFiltersCount(byte[] xmlFilters, int tenant)
+        public int GetLedgerTransactionReconcileFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             if (openTransactions == null)

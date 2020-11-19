@@ -314,7 +314,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public ExportToExcelClick(){
          this.AddAccountIdFilterForFilterAgrs();
         this.AddIsReconciledFiltersForFilterAgrs();
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("LedgerTransaction_Reconcile",this.filterAgrs,this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("LedgerTransactionReconcile",this.filterAgrs,this.QueryColumns);
     }
 
     public AddAccountIdFilterForFilterAgrs(){

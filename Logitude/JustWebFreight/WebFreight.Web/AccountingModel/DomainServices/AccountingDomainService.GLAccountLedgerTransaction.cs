@@ -16,7 +16,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 	public partial class AccountingDomainService
 	{
         private LedgerTransactionBalanceService ledgerTransactionBalanceService;
-        public List<LedgerTransactionList> GetGLAccount_LedgerTransactionFilters(byte[] xmlFilters, int tenant)
+        public List<LedgerTransactionList> GetGLAccountLedgerTransactionFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             if (ledgerTransactionBalanceService==null)
@@ -34,7 +34,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         }
 
-        public int GetGLAccount_LedgerTransactionFiltersCount(byte[] xmlFilters, int tenant)
+        public int GetGLAccountLedgerTransactionFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             if (ledgerTransactionBalanceService == null)
