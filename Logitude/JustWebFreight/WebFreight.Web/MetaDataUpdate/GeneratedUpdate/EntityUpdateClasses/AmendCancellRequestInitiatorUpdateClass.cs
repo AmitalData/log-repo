@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendCancellRequestInitiatorUpdateClass
    {  		
-		public const string HashString = "faa3d554b6c2243cacdbdd7d49b96989";
+		public const string HashString = "75ad0134a62a0a8b040167f56f2f6806";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "סוג יוזם התיקון לשדה",
-			      				    Code =  "bb86",
+			      				    Code =  "d688",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -160,13 +160,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -187,6 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
+					  						ListLocalDefaultText =  "קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -226,6 +228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -286,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -345,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -406,6 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -445,11 +451,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup AmendCancellRequestInitiatorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d688", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AmendCancellRequestInitiatorQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f693", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AmendCancellRequestInitiatorObjectTable = objectTables.ContainsKey("Customs.AmendCancellRequestInitiator") ? objectTables["Customs.AmendCancellRequestInitiator"] : null;
+            if (AmendCancellRequestInitiatorObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                AmendCancellRequestInitiatorObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendCancellRequestInitiator" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode AmendCancellRequestInitiatorTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AmendCancellRequestInitiator.Q.AmendmentRequestInitiatorTypes", DefaultText = @"Amendment Request Initiator Types",LocalDefaultText = "סוג יוזם התיקון לשדה", ObjectTableId = AmendCancellRequestInitiatorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AmendCancellRequestInitiatorFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendCancellRequestInitiator.Q.AmendmentRequestInitiatorTypes", ObjectTableId = AmendCancellRequestInitiatorObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendCancellRequestInitiatorFeatures.AmendmentRequestInitiatorTypes", NameTextCodeDefaultText = "AmendmentRequestInitiatorTypes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AmendCancellRequestInitiatorObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AmendmentRequestInitiatorTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmendCancellRequestInitiatorTextCode_0.Id, NameTextCodeCode = AmendCancellRequestInitiatorTextCode_0.Code, ObjectTableName = "Customs.AmendCancellRequestInitiator", Code = "AmendmentRequestInitiatorTypes",  QueryGroupCode = "d688", IndexOrder = 0, Tenant = 0, ObjectTableId = AmendCancellRequestInitiatorObjectTable.Id, QuerySection = "Customs.AmendCancellRequestInitiator", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmendCancellRequestInitiatorFeature_0.Id,FeatureUniqeCode= AmendCancellRequestInitiatorFeature_0.FeatureUniqeCode, DefaultSortName = "LocalName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AmendmentRequestInitiatorTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestInitiatorTypesQuery.Id,QueryCode = AmendmentRequestInitiatorTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AmendCancellRequestInitiator.Code" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn AmendmentRequestInitiatorTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestInitiatorTypesQuery.Id,QueryCode = AmendmentRequestInitiatorTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AmendCancellRequestInitiator.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmendmentRequestInitiatorTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestInitiatorTypesQuery.Id,QueryCode = AmendmentRequestInitiatorTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AmendCancellRequestInitiator.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmendmentRequestInitiatorTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestInitiatorTypesQuery.Id,QueryCode = AmendmentRequestInitiatorTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AmendCancellRequestInitiator.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AmendCancellRequestInitiatorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AmendCancellRequestInitiator" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AmendCancellRequestInitiatorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendCancellRequestInitiator").ToList();
+		       
+	      
+
+	         Screen AmendCancellRequestInitiatorCustomsAmendCancellRequestInitiatorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AmendCancellRequestInitiator.HeaderScreen", Name = "Customs.AmendCancellRequestInitiatorHeaderScreen", ObjectTableId = AmendCancellRequestInitiatorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AmendCancellRequestInitiatorObjectTable.HeaderScreenId = AmendCancellRequestInitiatorCustomsAmendCancellRequestInitiatorHeaderScreenScreen0.Id;
+		    AmendCancellRequestInitiatorObjectTable.HeaderScreenCode = AmendCancellRequestInitiatorCustomsAmendCancellRequestInitiatorHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

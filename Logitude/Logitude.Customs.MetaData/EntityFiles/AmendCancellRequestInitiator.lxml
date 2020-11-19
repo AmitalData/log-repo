@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;סוג יוזם התיקון לשדה&quot;"
-  Code="&quot;bb86&quot;"
+  Code="&quot;d688&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -85,13 +85,14 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="3"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Code&quot;"
     ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -112,6 +113,7 @@
     DefaultText="&quot;Code&quot;"
     ListFieldLable="&quot;CodeListLable&quot;"
     ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -164,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -237,6 +240,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -309,6 +313,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LocalName&quot;"
     ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -383,6 +388,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Inactive&quot;"
     ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -429,6 +435,53 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;AmendmentRequestInitiatorTypes&quot;"
+    TextCode="&quot;Amendment Request Initiator Types&quot;"
+    LocalTextCode="&quot;סוג יוזם התיקון לשדה&quot;"
+    QueryGroupCode="&quot;d688&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.AmendCancellRequestInitiator&quot;"
+    QuerySection="&quot;Customs.AmendCancellRequestInitiator&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;LocalName&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AmendmentRequestInitiatorTypes&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentRequestInitiatorTypes&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentRequestInitiatorTypes&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AmendmentRequestInitiatorTypes&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="50" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;Customs.AmendCancellRequestInitiatorHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.AmendCancellRequestInitiator&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -457,6 +510,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
