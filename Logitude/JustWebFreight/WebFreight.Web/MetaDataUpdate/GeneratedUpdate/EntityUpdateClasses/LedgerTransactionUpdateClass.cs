@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "720976d68fb06d943a9052946b91115f";
+		public const string HashString = "cd77c4429862d71e0aaad3a73c212a15";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ledger Transaction",
-			      				    Code =  "4bb0",
+			      				    Code =  "2cab",
 			      				    Name =  "LedgerTransaction Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -3416,9 +3416,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"יש להגדיר מספר חודשי גיול בהגדרות מערכת", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "REF From",LocalDefaultText = @"מתאריך", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"מתאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "REF To",LocalDefaultText = @"עד", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"עד תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"בנק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

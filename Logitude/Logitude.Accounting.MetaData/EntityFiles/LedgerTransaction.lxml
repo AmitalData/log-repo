@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ledger Transaction&quot;"
-  Code="&quot;4bb0&quot;"
+  Code="&quot;2cab&quot;"
   Name="&quot;LedgerTransaction Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -4137,14 +4137,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;LedgerTransaction.O.REFFrom&quot;"
-      DefaultText="&quot;REF From&quot;"
-      LocalDefaultText="&quot;מתאריך&quot;"
+      DefaultText="&quot;From Ref. Date&quot;"
+      LocalDefaultText="&quot;מתאריך אסמכתא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;LedgerTransaction.O.REFTo&quot;"
-      DefaultText="&quot;REF To&quot;"
-      LocalDefaultText="&quot;עד&quot;"
+      DefaultText="&quot;To Ref. date&quot;"
+      LocalDefaultText="&quot;עד תאריך אסמכתא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
