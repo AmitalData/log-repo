@@ -11,6 +11,7 @@ import { ShipmentsListComponent } from 'src/CargoTracking/Components/UserDashboa
 import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboard/UserDashboardComponent';
 import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
 import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
+import { AuthGuardService as AuthGuard  } from 'src/Infrastructure/Services/auth-guard.service';
 
 const routes: Routes = [
     
@@ -19,11 +20,12 @@ const routes: Routes = [
     { 
         path: ':Tenant/dashboard', 
         component: UserDashboardComponent,
+        canActivate: [AuthGuard],
         children: [
             { path: "", redirectTo: "shipments", pathMatch: "full" }, 
             { path: "shipments", component: ShipmentsListComponent }, 
             { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
-            { path: "favorites", component: FavoritesPageComponent }, 
+            { path: "favorites", component: FavoritesPageComponent  }, 
            
         ]
     },
@@ -41,9 +43,9 @@ const routes: Routes = [
     },
     
  
-    { path: ':Tenant/login', component: LoginComponent },
-    { path: ':Tenant/resetpassword', component: ResetPasswordComponent },
-    { path: ':Tenant/changepassword', component: ChangePasswordComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'resetpassword', component: ResetPasswordComponent },
+    { path: 'changepassword', component: ChangePasswordComponent },
     // {path: '', component: PublicGateComponent, pathMatch: 'full' },
     {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},

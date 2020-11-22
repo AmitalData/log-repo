@@ -114,6 +114,8 @@ export class ResetPasswordParameters {
 	IsChampLogin: boolean;
 	CaptchaKey: string;
 	CaptchaCode: string;
+	PageName: string;
+	BrandingTenant: string;
 }
 
 export class ChangePasswordParameter {

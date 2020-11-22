@@ -12,24 +12,16 @@ import { ChangePasswordParameter, LoginExtendedService } from 'src/Infrastructur
 export class ChangePasswordComponent implements OnInit {
     public Email: string = "";
     public LogoImgSrc: string = "";
-    public IsShowAreaCaptcha: boolean = false;
-    public CaptchaKey: string = "";
-    public CaptchaImageUrl: string = "";
     public ErrorMessage: string = "";
     public Tenant: number;
-
     public CurrentPassword: string;
     public NewPassword: string;
     public RetypePassword: string;
-
-    ResetPWD: string;
     public requestNumber: string;
-    IsResetPasswordViaEmail: boolean = false;
-
+    public IsResetPasswordViaEmail: boolean = false;
     public PasswordLenghtImg: string;
     public PasswordContainsCharactersImg: string;
     public PasswordContainsNumberImg: string;
-
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -38,43 +30,51 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.initForm();
+        this.initComponent();
     }
 
-    private initForm() {
+    private initComponent() {
         document.body.style.background = "#fff";
-
-        this.PasswordLenghtImg = "./assets/images/changePassword/verified.png";
-        this.PasswordContainsCharactersImg = "./assets/images/changePassword/verified.png";
-        this.PasswordContainsNumberImg = "./assets/images/changePassword/verified.png";
-        
         this.Email =  this.route.snapshot.queryParams.email;
         this.requestNumber = this.route.snapshot.queryParams.reset_request_number;
         if(this.requestNumber) this.IsResetPasswordViaEmail = true;
 
+        this.SetPasswordImagesAndColors();
         this.GetLogoImgage();
+    }
+
+    private SetPasswordImagesAndColors(){
+        this.PasswordLenghtImg = "./assets/images/changePassword/verified.png";
+        this.PasswordContainsCharactersImg = "./assets/images/changePassword/verified.png";
+        this.PasswordContainsNumberImg = "./assets/images/changePassword/verified.png";
+        
+        document.documentElement.style.setProperty('--PasswordLenghtColor', "gray");
+        document.documentElement.style.setProperty('--PasswordContainsCharacters', "gray");
+        document.documentElement.style.setProperty('--PasswordContainsNumber', "gray");
     }
 
     private GetLogoImgage() {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.Tenant = this.route.snapshot.params.Tenant;
-        this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
-            if (logoImage && !logoImage.HasError)
-                this.LogoImgSrc = logoImage;
-            else
-                this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
-        });
+        this.Tenant = this.route.snapshot.queryParams?.tenant;
+        if(this.Tenant){
+            this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
+                if (logoImage && !logoImage.HasError)
+                    this.LogoImgSrc = logoImage;
+                else  
+                    this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
+            });
+        }
+        else
+            this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
     }
 
     public SubmitClicked() {
-      
         if (!this.Email) {
             this.ErrorMessage = "Your email is empty.";
             return;
         }
 
         if (this.NewPassword == this.RetypePassword) {
-
             if (!this.NewPassword) {
                 this.ErrorMessage = "Confirm your password";
                 return;
@@ -103,7 +103,6 @@ export class ChangePasswordComponent implements OnInit {
             this.ErrorMessage = "The passwords you entered do not match.";
             return;
         }
-
 
         if (!this.IsResetPasswordViaEmail) {
             if (!this.CurrentPassword) {
@@ -200,7 +199,6 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     private IsSeries(passwordNumnberList: any, operatorCode: string) {
-
         var result = false;
         var seriesNumnberCount: number = 0;
         var seriesNumnberList: any = [];
@@ -254,9 +252,11 @@ export class ChangePasswordComponent implements OnInit {
 
         this.loginExtendedService.PostChangePassword(this.Email, params).subscribe((res:any) => {
             if (res) {
-                this.Tenant = this.route.snapshot.params.Tenant;
-                if (!this.Tenant) this.Tenant = 0;
-                this.router.navigate([this.Tenant, "login"])
+                this.Tenant = this.route.snapshot.queryParams?.tenant;
+                if(this.Tenant)
+                    this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+                else
+                    this.router.navigate(["login"]);
             }
             else {
                 this.ErrorMessage = "Changing password failed!"
@@ -273,39 +273,23 @@ export class ChangePasswordComponent implements OnInit {
         return regex.test(str);
     }
 
-    public OnPasswordChanged() {
-
-    }
-
-    public Passwordkeyup(passtring) {
-        //document.getElementById("PasswordLenghtDiv").style.color = "gray";
-        document.documentElement.style.setProperty('--PasswordLenghtColor', "gray");
-        document.documentElement.style.setProperty('--PasswordContainsCharacters', "gray");
-        document.documentElement.style.setProperty('--PasswordContainsNumber', "gray");
-        //document.getElementById("PasswordContainsCharactersDiv").style.color = "gray";
-        //document.getElementById("PasswordContainsNumberDiv").style.color = "gray";
-
-        this.PasswordLenghtImg = "./assets/images/changePassword/verified.png"
-        this.PasswordContainsCharactersImg = "./assets/images/changePassword/verified.png"
-        this.PasswordContainsNumberImg = "./assets/images/changePassword/verified.png"
+    public Passwordkeyup(passtring: any) {
+        this.SetPasswordImagesAndColors();
 
         if (passtring) {
             if (passtring.length >= 8) {
-                //document.getElementById("PasswordLenghtDiv").style.color = "green";
                 document.documentElement.style.setProperty('--PasswordLenghtColor', "green");
-                this.PasswordLenghtImg = "./assets/images/changePassword/verifiedGreen.png"
+                this.PasswordLenghtImg = "./assets/images/changePassword/verifiedGreen.png";
             }
 
             if (this.IsContainsLowerUpperCase(passtring)) {
-                //document.getElementById("PasswordContainsCharactersDiv").style.color = "green";
                 document.documentElement.style.setProperty('--PasswordContainsCharacters', "green");
-                this.PasswordContainsCharactersImg = "./assets/images/changePassword/verifiedGreen.png"
+                this.PasswordContainsCharactersImg = "./assets/images/changePassword/verifiedGreen.png";
             }
 
             if (this.IsContainsNumber(passtring)) {
-                //document.getElementById("PasswordContainsNumberDiv").style.color = "green";
                 document.documentElement.style.setProperty('--PasswordContainsNumber', "green");
-                this.PasswordContainsNumberImg = "./assets/images/changePassword/verifiedGreen.png"
+                this.PasswordContainsNumberImg = "./assets/images/changePassword/verifiedGreen.png";
             }
 
             this.ErrorMessage = this.PasswordValidation();

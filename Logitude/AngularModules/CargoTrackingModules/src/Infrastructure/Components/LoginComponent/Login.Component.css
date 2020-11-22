@@ -46,8 +46,6 @@ body, html {
     position: relative;
 }
 
-
-
 .wrap-login-additional {
     width: 100%;
     max-width: 270px;
@@ -81,12 +79,12 @@ body, html {
     padding: 0 5px;
     box-shadow: none;
 }
-
-.input:hover:not(:disabled):not(:read-only) {
-    border: none;
-}.input:focus:not(:disabled):not(:read-only) {
-    border: none;
-}
+    .input:hover:not(:disabled):not(:read-only) {
+        border: none;
+    }
+    .input:focus:not(:disabled):not(:read-only) {
+        border: none;
+    }
 
 .logo-img {
     width: 270px;
@@ -167,16 +165,13 @@ a {
     color: #6a7dfe;
     margin: 0px;
 }
-
     a:focus {
         outline: none !important;
     }
-
     a:hover {
         text-decoration: none;
         color: #6a7dfe;
     }
-
 
 p {
     font-size: 14px;
@@ -190,7 +185,6 @@ button {
     border: none;
     background: transparent;
 }
-
     button:hover {
         cursor: pointer;
     }

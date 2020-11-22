@@ -24,6 +24,8 @@ import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/Login
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
 import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
+import { AuthService } from './auth.service';
+import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -58,13 +60,15 @@ export function getBaseUrl() {
         AppRoutingModule,
         ReactiveFormsModule,
         ScrollingModule,
-        FormsModule, HttpClientModule, NoopAnimationsModule
+        FormsModule, HttpClientModule, NoopAnimationsModule,
     ],
     providers: [
         CargoTrackingSearchService,
         CargoTrackingBrandingDataExtendedService,
         LoginExtendedService,
         CommonDataExtendedService,
+        AuthGuardService,
+        AuthService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]

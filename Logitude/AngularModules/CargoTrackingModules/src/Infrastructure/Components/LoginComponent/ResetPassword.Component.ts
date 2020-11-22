@@ -26,23 +26,27 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.initForm();
+        this.initComponent();
     }
 
-    private initForm() {
+    private initComponent() {
         document.body.style.background = "#fff";
         this.GetLogoImgage();
     }
 
     private GetLogoImgage() {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.Tenant = this.route.snapshot.params.Tenant;
-        this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
-            if (logoImage && !logoImage.HasError)
-                this.LogoImgSrc = logoImage;
-            else
-                this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
-        });
+        this.Tenant = this.route.snapshot.queryParams?.tenant
+        if(this.Tenant){
+            this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
+                if (logoImage && !logoImage.HasError)
+                    this.LogoImgSrc = logoImage;
+                else  
+                    this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
+            });
+        }
+        else
+            this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
     }
 
     private captchaCode: string = "";
@@ -83,6 +87,8 @@ export class ResetPasswordComponent implements OnInit {
                 IsChampLogin: false,
                 CaptchaCode: this.CaptchaCode,
                 CaptchaKey: this.CaptchaKey,
+                PageName: "changepassword",
+                BrandingTenant: this.Tenant ? this.Tenant.toString() : "",
             }
 
             this.loginExtendedService.PostRequestResetUserPassword(params).subscribe((userData: any) => {
@@ -122,8 +128,10 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     public BackToLoginClicked() {
-        this.Tenant = this.route.snapshot.params.Tenant;
-        if (!this.Tenant) this.Tenant = 0;
-        this.router.navigate([this.Tenant, "login"])
+        this.Tenant = this.route.snapshot.queryParams?.tenant;
+        if(this.Tenant)
+            this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+        else
+            this.router.navigate(["login"]);
     }
 }
