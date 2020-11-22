@@ -1,6 +1,10 @@
+Warning: Missing Index In DXML File CargoTrackingShipment.dxml, The Found Index On DB Is IX_Pre_CargoTrackingShipments_Tenant_IsMainRecord_EntityId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CourierMaster.dxml, The Found Index On DB Is IX_AirlineId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CourierMaster.dxml, The Found Index On DB Is IX_WeightValueCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CustomsDocumentsDefinition.dxml, The Found Index On DB Is IX_CargoTypeCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_CourierSuspentionCode, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Keyword_Tenant_PartnerTypeId_InActive, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_RecordDate, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_Tenant_InActive_Keyword_PartnerTypeId_Weight, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ListFieldLableObjectFieldTextCode, The Index Should Added To The DXML File
 Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ObjectFieldTextCode, The Index Should Added To The DXML File
