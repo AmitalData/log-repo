@@ -10140,7 +10140,9 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.Transshipment1ETD = a.Transshipment1ETD;
                     myRecord.Transshipment2ETD = a.Transshipment2ETD;
                     myRecord.Transshipment3ETD = a.Transshipment3ETD;
-
+                    myRecord.ShippingLine = a.MainCarriageCarrierName;
+                    myRecord.Vessel = a.MainCarriageVesselName;
+                    myRecord.Voyage = a.MainCarriageCarrierNumber;
                     myRecord.FullStatus = a.StatusName;
                     if (!string.IsNullOrEmpty(a.StatusLocation))
                     {
