@@ -111,9 +111,17 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
             interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
+            SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
+        }
+
+        private void SetGLAccountCreditAllotmentPercentageByGLAccountId(InterestReportPM interestReportPM)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);
+            GLAccountPM account=    gLAccountQueryService.GetSinglePM(interestReportPM.GLAccountId, interestReportPM.Tenant);
+            interestReportPM.CreditAllotmentPercentage = account != null ? account.CreditAllotmentPercentage : null;
         }
 
         private void CreateOpenBalanceInterestTransaction()

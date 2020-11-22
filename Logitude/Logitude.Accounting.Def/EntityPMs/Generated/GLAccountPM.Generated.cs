@@ -2770,6 +2770,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? creditAllotmentPercentage ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CreditAllotmentPercentage  
+	   {
+	    
+	     get
+		{
+		   return creditAllotmentPercentage;
+		 }
+		 set
+		 {
+		   if(creditAllotmentPercentage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAllotmentPercentage",OldValue=creditAllotmentPercentage,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   creditAllotmentPercentage=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

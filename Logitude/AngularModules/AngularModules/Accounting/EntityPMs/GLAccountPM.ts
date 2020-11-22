@@ -704,6 +704,11 @@ export class GLAccountPM {
     public set ReportingAsAnotherDocument(newValue: boolean) { if (this.reportingAsAnotherDocument != newValue) { this.reportingAsAnotherDocument = newValue; this.MarkAsDirty("ReportingAsAnotherDocument"); } }
        
 	 
+    private creditAllotmentPercentage: number;
+    public get CreditAllotmentPercentage() { return this.creditAllotmentPercentage; }
+    public set CreditAllotmentPercentage(newValue: number) { if (this.creditAllotmentPercentage != newValue) { this.creditAllotmentPercentage = newValue; this.MarkAsDirty("CreditAllotmentPercentage"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
