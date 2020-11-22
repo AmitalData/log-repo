@@ -261,6 +261,13 @@ export class GLAccountInterestComponent extends BaseComponent {
         this.EntityPM.InterestCreditLimit = newValue;
     }
 
+    get CreditAllotmentPercentage() { return this.EntityPM.CreditAllotmentPercentage; }
+    set CreditAllotmentPercentage(newValue: number) {
+        if (this.EntityPM.CreditAllotmentPercentage != newValue) {
+            this.EntityPM.CreditAllotmentPercentage = newValue;
+        }
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);

@@ -84,6 +84,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         this.UIProperties.SetEnabled("OpenBalance", "InterestReport", false);
         this.UIProperties.SetEnabled("InterestCalculationDate", "InterestReport", false);
         this.UIProperties.SetEnabled("GLAccountInterestCreditLimit", "InterestReport", false);
+        this.UIProperties.SetEnabled("CreditAllotmentPercentage", "InterestReport", false);
     }
      public DataSource = {
         pageSize: 50,
@@ -206,8 +207,14 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         else
             return false;
     }
+    get CreditAllotmentPercentage() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.CreditAllotmentPercentage;
+        }
+        else
+            return null;
+    }
     
-
     public columns: any[] = null;
     public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {

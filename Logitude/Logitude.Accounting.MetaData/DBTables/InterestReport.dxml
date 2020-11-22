@@ -147,6 +147,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CalCreditAllotmentCommission"
+    Type="decimal"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

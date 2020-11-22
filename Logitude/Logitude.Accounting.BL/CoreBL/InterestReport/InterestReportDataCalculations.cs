@@ -112,6 +112,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
             SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
+            interestReportPM.CalCreditAllotmentCommission = interestReportPM.GLAccountInterestCreditLimit * interestReportPM.CreditAllotmentPercentage * (decimal?) 0.01;
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();

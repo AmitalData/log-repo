@@ -77,6 +77,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string InvoiceFailureReason { get; set; }
         [Column("CreditAllotmentPercentage")]
 	    public decimal? CreditAllotmentPercentage { get; set; }
+        [Column("CalCreditAllotmentCommission")]
+	    public decimal? CalCreditAllotmentCommission { get; set; }
     }
 }
 	 
