@@ -78,6 +78,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new AmendmentFieldStatusTypeMap());
+	
+            modelBuilder.Configurations.Add(new AmendRequestRejectReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
@@ -470,6 +474,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
 	
+            modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
+	
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
@@ -861,6 +867,10 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoice>().Property(x => x.InvoiceAmountInUSD).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<SupplierInvoice>().Property(x => x.ItemFOBAmountForeign).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoice>().Property(x => x.ItemFOBAmountNIS).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceFreightAmount>().Property(x => x.Amount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.ItemPrice).HasPrecision(16, 2);
@@ -1250,6 +1260,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmendmentFieldStatusType> AmendmentFieldStatusTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmendRequestRejectReasonType> AmendRequestRejectReasonTypes 
 	 {
 	      get; set;
 	 
@@ -2426,6 +2448,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LeadDocumentType> LeadDocumentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LoadingSiteType> LoadingSiteTypes 
 	 {
 	      get; set;
 	 

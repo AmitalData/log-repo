@@ -440,6 +440,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
+            UpdateTrucker();
+
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
             if(this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
@@ -493,6 +495,60 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+        }
+
+        private void UpdateTrucker()
+        {
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
+            {
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string truckerId = null;
+                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
+                    if (card != null)
+                    {
+                        truckerId = _AmitalCustomsFile.TruckerId;
+                    }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
+                        if (card != null)
+                        {
+                            truckerId = card.Id;
+                        }
+                    }
+
+                    if (!String.IsNullOrWhiteSpace(truckerId) && truckerId != currentDeclarationCourierStatusPM.TruckerId)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                        AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                        try
+                        {
+                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                            AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                            return;
+                        }
+                        catch (Exception e)
+                        {
+                            AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         private void UpdateDeclarationPending(string declarationPendingCode)
@@ -1085,6 +1141,123 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         public override string GetExampleDataIn1()
         {
+            return
+@"<?xml version=""1.0"" encoding=""windows-1255""?>
+<LOGICOMMDEC>
+ <LogitudeCommDecFile>
+  <LoadingPortCode>USBOS</LoadingPortCode>
+  <MAWB>20261079</MAWB>
+  <HAWB>09878498</HAWB>
+  <CarrierPrefix>114</CarrierPrefix>
+  <IsAutonomy>No</IsAutonomy>
+  <INVOICE>
+   <CURRENCYCODE>USD</CURRENCYCODE>
+   <INVOICEAMOUNT>12.00</INVOICEAMOUNT>
+   <ISSUECOUNTRYCODE>CN</ISSUECOUNTRYCODE>
+   <ORIGIN_COUNTRY>CN</ORIGIN_COUNTRY>
+   <Amount>0</Amount>
+   <CurrencyTypeCode>USD</CurrencyTypeCode>
+   <INVOICEITEMS>
+    <ITEMPRICE>12.0000</ITEMPRICE>
+    <QUANTITY_STS>1</QUANTITY_STS>
+    <ITEMORIGINCOUNTRY>CN</ITEMORIGINCOUNTRY>
+   </INVOICEITEMS>
+   <INCOTERM_ID>CIF</INCOTERM_ID>
+   <ACCOUNTTYPE>380</ACCOUNTTYPE>
+   <TRANSP_VALUE_LIST>
+    <TRANSP_VALUE_L>0</TRANSP_VALUE_L>
+    <TRANSP_VALUE_CURR_L>USD</TRANSP_VALUE_CURR_L>
+   </TRANSP_VALUE_LIST>
+  </INVOICE>
+  <OriginCountryCode>US</OriginCountryCode>
+  <CustomFileNo>60390074</CustomFileNo>
+  <Id/>
+  <DeclarationOfficeCode>4</DeclarationOfficeCode>
+  <FileState>P</FileState>
+  <AgentId>514193408</AgentId>
+  <CustomerId>10015236</CustomerId>
+  <TransportModeId>A</TransportModeId>
+  <CreatedByUserId>AMITAL.COURIER</CreatedByUserId>
+  <ReferentUserId/>
+  <DepartmentId>MSC</DepartmentId>
+  <MAWB>20261079</MAWB>
+  <DealId/>
+  <HAWB>09878498</HAWB>
+  <ManifestNumber>99999560337</ManifestNumber>
+  <LoadingPortCode/>
+  <OriginCountryCode>US</OriginCountryCode>
+  <CargoDescription>IBOX 233</CargoDescription>
+  <PackageTypeCode>PP</PackageTypeCode>
+  <PackageMeasureQualifierCode>2</PackageMeasureQualifierCode>
+  <PackageQuantity>1</PackageQuantity>
+  <GrossMassMeasure>0.30</GrossMassMeasure>
+  <VendorId/>
+  <ImporterId/>
+  <Tenant>1</Tenant>
+  <GrantDate/>
+  <ManifestDate/>
+  <ArrivalDateTime/>
+  <Mode>NEW</Mode>
+  <EnglishName>Kobi Cohen</EnglishName>
+  <HebrewName/>
+  <WarehouseId>ILMMN</WarehouseId>
+  <UnloadportId/>
+  <ProcedureCurrentCode>4000507</ProcedureCurrentCode>
+  <ImporterAddress>Dekel 27 2nd avenu 13 ddk Tel Aviv</ImporterAddress>
+  <CargoTypeCode>17</CargoTypeCode>
+  <SecondCargoID>514193408</SecondCargoID>
+  <ThirdCargoID>25.10.21</ThirdCargoID>
+  <UnloadDate/>
+  <IsCourierDeclaration>true</IsCourierDeclaration>
+  <CasualSupplierName>Yaron Toys</CasualSupplierName>
+  <CasualSupplierAddress>Yaron Toys-6546465 China</CasualSupplierAddress>
+  <CourierHawb>99999560337</CourierHawb>
+  <HAWBDATE/>
+  <COUWTVAL/>
+  <CasualImporterAddress1>Dekel 27 2nd avenu 13 ddk</CasualImporterAddress1>
+  <CasualImporterAddress2/>
+  <CasualImporterCity>Tel Aviv</CasualImporterCity>
+  <CasualImporterZipCode>6546465</CasualImporterZipCode>
+  <CasualImporterFax/>
+  <CasualImporterEmail>ven@vendor.com</CasualImporterEmail>
+  <CasualImportelTel>972089230879</CasualImportelTel>
+  <CasualImporterContact/>
+  <CasualImporterCountry/>
+  <IsDiamondsDeclaration/>
+  <EstimatedTimeOfArrival/>
+  <OrderNumber>65161</OrderNumber>
+  <WithPaper/>
+  <NewFile>true</NewFile>
+  <ImporterFile>BC32878</ImporterFile>
+  <Team/>
+  <FileOpenDate>20201026</FileOpenDate>
+  <SiteCode>139514</SiteCode>
+ </LogitudeCommDecFile>
+</LOGICOMMDEC>"
+                ;
+
+            /*
+"<?xml version="1.0" encoding="utf-8" ?>
+<ArrayOfEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <Entry>
+  <Key>MODE</Key>
+  <Value></Value>
+ </Entry>
+ <Entry>
+  <Key>TENANT</Key>
+  <Value>1</Value>
+ </Entry>
+ <Entry>
+  <Key>UNIFREIGHT_USER_ID</Key>
+  <Value>ITZIK</Value>
+ </Entry>
+</ArrayOfEntry>
+"
+             */
+        }
+        public  string GetExampleDataIn1_()
+        {
+
             var xml = "";
             var amitalObjExample = new LOGICOMMDEC();
             var myAmitalCommDec = new LogitudeCommDecFile();

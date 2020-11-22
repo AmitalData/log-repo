@@ -378,6 +378,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string TransportModeForExport  { get; set; }
        [DataMember]
        public string CustomFileForExport  { get; set; }
+       [DataMember]
+       public DateTime? TransshipmentApprovalDateTime  { get; set; }
+       [DataMember]
+       public string FinalLoadingSite  { get; set; }
    }
 
 }

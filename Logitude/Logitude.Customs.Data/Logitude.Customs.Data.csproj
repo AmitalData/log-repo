@@ -93,6 +93,7 @@
     <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomContextExt.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
+    <Compile Include="CustomFilters\DeclarationReferantDataCustomFilters.cs" />
     <Compile Include="CustomFilters\FreightPaymentMethodCustomFilters.cs" />
     <Compile Include="DataContracts\CertificateConnectedItems.cs" />
     <Compile Include="CustomContext.cs">
@@ -102,6 +103,8 @@
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
+    <Compile Include="EntityKeys\AmendmentFieldStatusTypeKeys.cs" />
+    <Compile Include="EntityKeys\AmendmentRequestRejectReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\AmendmentStatusKeys.cs" />
     <Compile Include="EntityKeys\AmendmentTypeKeys.cs" />
     <Compile Include="EntityKeys\AmountTypeKeys.cs" />
@@ -159,6 +162,7 @@
     <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
+    <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
@@ -193,6 +197,8 @@
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AmendmentFieldStatusTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AmendmentRequestRejectReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmountTypeListQueryService.cs" />
@@ -252,6 +258,8 @@
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AmendmentFieldStatusTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AmendmentRequestRejectReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmountTypeListQueryService.Generated.cs" />
@@ -309,6 +317,7 @@
     <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LoadingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
@@ -341,6 +350,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
@@ -375,6 +385,8 @@
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AmendmentFieldStatusTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AmendmentRequestRejectReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmountTypeList.Generated.cs" />
@@ -432,6 +444,7 @@
     <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LoadingSiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
@@ -467,6 +480,8 @@
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
+    <Compile Include="EntityMapping\AmendmentFieldStatusTypeMap.cs" />
+    <Compile Include="EntityMapping\AmendmentRequestRejectReasonTypeMap.cs" />
     <Compile Include="EntityMapping\AmendmentStatusMap.cs" />
     <Compile Include="EntityMapping\AmendmentTypeMap.cs" />
     <Compile Include="EntityMapping\AmountTypeMap.cs" />
@@ -524,6 +539,7 @@
     <Compile Include="EntityMapping\GatepassRequestMap.cs" />
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
+    <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
@@ -558,6 +574,8 @@
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
+    <Compile Include="EntityPOCOs\AmendmentFieldStatusType.cs" />
+    <Compile Include="EntityPOCOs\AmendmentRequestRejectReasonType.cs" />
     <Compile Include="EntityPOCOs\AmendmentStatus.cs" />
     <Compile Include="EntityPOCOs\AmendmentType.cs" />
     <Compile Include="EntityPOCOs\AmountType.cs" />
@@ -615,6 +633,7 @@
     <Compile Include="EntityPOCOs\GatepassRequest.cs" />
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
+    <Compile Include="EntityPOCOs\LoadingSiteType.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
@@ -650,6 +669,8 @@
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
+    <Compile Include="Repsitories\AmendmentFieldStatusTypeRepository.cs" />
+    <Compile Include="Repsitories\AmendmentRequestRejectReasonTypeRepository.cs" />
     <Compile Include="Repsitories\AmendmentStatusRepository.cs" />
     <Compile Include="Repsitories\AmendmentTypeRepository.cs" />
     <Compile Include="Repsitories\AmountTypeRepository.cs" />
@@ -709,6 +730,8 @@
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AmendmentFieldStatusTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AmendmentRequestRejectReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmountTypeRepository.Generated.cs" />
@@ -766,6 +789,7 @@
     <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LoadingSiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
@@ -798,6 +822,7 @@
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
+    <Compile Include="Repsitories\LoadingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />

@@ -8,7 +8,7 @@ describe('New Declarations ', () => {
 
 let R: CreateRandom= new CreateRandom();
 
-  it('New Declarations Created Successfully', function () {
+  it('New Export Declarations Created Successfully', function () {
 
       var str = R.createrandomnum();
       cy.get('li[id=GeneralMHDeclarations]').click();

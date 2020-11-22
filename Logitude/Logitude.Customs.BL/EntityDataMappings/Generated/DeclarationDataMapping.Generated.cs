@@ -160,7 +160,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar,
+	         FOBValueDollar, 
+	         TransshipmentApprovalDateTime, 
+	         FinalLoadingSite,
 	      }
 
 
@@ -380,7 +382,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar,
+	         FOBValueDollar, 
+	         AmendmentRejectionReasonName, 
+	         TransshipmentApprovalDateTime, 
+	         FinalLoadingSite,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1077,6 +1082,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FOBValueDollar))
             {
 				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
+            {
+				entityPOCO.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalLoadingSite))
+            {
+				entityPOCO.FinalLoadingSite = entityPM.FinalLoadingSite;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1780,6 +1795,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FOBValueDollar = entityPOCO.FOBValueDollar;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransshipmentApprovalDateTime))
+            {
+					entityPM.TransshipmentApprovalDateTime = entityPOCO.TransshipmentApprovalDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalLoadingSite))
+            {
+					entityPM.FinalLoadingSite = entityPOCO.FinalLoadingSite;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2476,6 +2501,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
+            {
+                oldEntityPM.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalLoadingSite))
+            {
+                oldEntityPM.FinalLoadingSite = entityPM.FinalLoadingSite;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2564,10 +2599,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendDeficitInitiatedReasTo)) //T4 find type == nText 
             {
                 entityPM.AmendDeficitInitiatedReasTo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendDeficitInitiatedReasTo));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
-            {
-                entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestReasonExplanation)) //T4 find type == nText 
             {

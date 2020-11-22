@@ -1314,6 +1314,21 @@ export class DeclarationPM {
     public set FOBValueDollar(newValue: number) { if (this.fOBValueDollar != newValue) { this.fOBValueDollar = newValue; this.MarkAsDirty("FOBValueDollar"); } }
        
 	 
+    private amendmentRejectionReasonName: string;
+    public get AmendmentRejectionReasonName() { return this.amendmentRejectionReasonName; }
+    public set AmendmentRejectionReasonName(newValue: string) { if (this.amendmentRejectionReasonName != newValue) { this.amendmentRejectionReasonName = newValue; this.MarkAsDirty("AmendmentRejectionReasonName"); } }
+       
+	 
+    private transshipmentApprovalDateTime: Date;
+    public get TransshipmentApprovalDateTime() { return this.transshipmentApprovalDateTime; }
+    public set TransshipmentApprovalDateTime(newValue: Date) { if (this.transshipmentApprovalDateTime != newValue) { this.transshipmentApprovalDateTime = newValue; this.MarkAsDirty("TransshipmentApprovalDateTime"); } }
+       
+	 
+    private finalLoadingSite: string;
+    public get FinalLoadingSite() { return this.finalLoadingSite; }
+    public set FinalLoadingSite(newValue: string) { if (this.finalLoadingSite != newValue) { this.finalLoadingSite = newValue; this.MarkAsDirty("FinalLoadingSite"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

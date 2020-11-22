@@ -4,10 +4,10 @@ export class APIHelper {
     constructor() { }
     
 
-    CreateParametersUrl(filters: ApiQueryFilters) {
+    CreateParametersUrl(filters: ApiQueryFilters,BaseUrl:string=null) {
 
 		var callTime = new Date();		                        
-		var urlparameters = '/getbyfilters?';
+		var urlparameters = BaseUrl?BaseUrl:'/getbyfilters?';
 		var mykeys = Object.keys(filters);
 		var addtionalFiltersValues = null;
 

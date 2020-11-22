@@ -47,6 +47,8 @@ using System.Web.Hosting;
 using WebFreight.Web.Helpers.APIHelpers;
 using Logitude.Customs.BL.PatchDistribution;
 using Logitude.Customs.BL.PatchDistribution.Patches;
+using Simplog.Server.Infrastructure.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace WebFreight.Web
 {
@@ -157,6 +159,9 @@ namespace WebFreight.Web
             {
                 LogitudeCacheManager.ServerCache = new LocalHttpCache();
             }
+            
+            InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
+
 
             //AreaRegistration.RegisterAllAreas();
 

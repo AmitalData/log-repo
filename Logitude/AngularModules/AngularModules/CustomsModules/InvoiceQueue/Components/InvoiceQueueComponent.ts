@@ -17,6 +17,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -34,8 +35,12 @@ export class InvoiceQueueComponent
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
     public declaration: DeclarationPM;
-    ErrorMessages: boolean ;
+    CreateQInvoiceButtonDim: boolean;
+    ErrorMessages: boolean;
     WarningMessages: boolean;
+    IsPaymentDateGreaterThanInvoiceDate: boolean;
+    SumAmountNIS: number;
+    LabelSumAmountNIS: string;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
     UnifreightMessage: any;
@@ -49,58 +54,86 @@ export class InvoiceQueueComponent
     }
     private GetData() {
         this.ResetVariables();
-        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
         //this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
-            if (this.declaration==null) {
+            if (this.declaration == null) {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show("declaration NOT FOUND");
             }
             this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
+                        if (x.AmountNIS != "") {
+                            this.SumAmountNIS += Number(x.AmountNIS);
+                        }
                         x = this.setClientForwarder(x);
                         x.AmountForeign = this.SetFixedValue(x.AmountForeign);
                         x.AmountNIS = this.SetFixedValue(x.AmountNIS);
                         this.InvoiceLineList.Insert(x);
                     });
                 }
+                this.LabelSumAmountNIS = this.SetFixedValue(String(this.SumAmountNIS));
                 (data.Result.Invoice as AllInvoices).Statuses.forEach(x => {
                     this.StatusList.Insert(x);
-                });
+                }); 
                 (data.Result.Invoice as AllInvoices).IntegratedInvoices.forEach(x => {
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
+                        if (x.InvoiceDate != null && x.InvoiceDate != "") {
+                            var InvoiceDate = this.BuildDateFromString(x.InvoiceDate);
+                            if (this.declaration.PaymentDate != null && InvoiceDate != null) {
+                                var InvoiceDateMonth = InvoiceDate.getMonth();
+                                var InvoiceDateYear = InvoiceDate.getFullYear();
+                                var PaymentDateMonth = new Date(this.declaration.PaymentDate).getMonth();
+                                var PaymentDateYear = new Date(this.declaration.PaymentDate).getFullYear();
+                                if ((InvoiceDateMonth < PaymentDateMonth && InvoiceDateYear == PaymentDateYear) || InvoiceDateYear < PaymentDateYear) {
+                                    this.IsPaymentDateGreaterThanInvoiceDate = true;
+                                }
+                            }
+                        }
+                        if (x.InvoiceTypeCode != null && x.InvoiceTypeCode == "R") { // חשבונית קבלה- סוג R
+                            this.CreateQInvoiceButtonDim = true; // מקש הפקת חשבונית ב DIM
+                        }
                         x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                         this.InvoiceListList.Insert(x);
                     });
                 }
-              
+
                 if ((data.Result.Invoice as AllInvoices).Messages != null) {
                     (data.Result.Invoice as AllInvoices).Messages.forEach(x => {
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM אם יש שגאיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
                             this.ErrorMessages = true;
                         }
-                   });
+                    });
                 }
                 this.WMessagesList.Collection.forEach(x => {
                     this.EMessagesList.Insert(x);
                 });
+
             });
         });
     }
 
+    BuildDateFromString(date: string) {
+        return new Date(date.replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
+    }
 
     ResetVariables() {
+        this.IsPaymentDateGreaterThanInvoiceDate = false;
+        this.SumAmountNIS = 0;
+        this.LabelSumAmountNIS = "";
+        this.CreateQInvoiceButtonDim = false;
         this.InvoiceLineList = new ObservableCollection([]);
         this.IntegratedInvoiceList = new ObservableCollection([]);
         this.StatusList = new ObservableCollection([]);
@@ -110,6 +143,7 @@ export class InvoiceQueueComponent
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }
+
     SetWindowArgs(args: any) {
         //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 
@@ -168,17 +202,17 @@ export class InvoiceQueueComponent
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
-                    SessionLocator.SelectedSession.CurrentWindow.Close("0");
+                    SessionLocator.SelectedSession.CurrentWindow.Close("");
                 } else {
                     confirm.Close();
                 }
             });
         } else {
-            SessionLocator.SelectedSession.CurrentWindow.Close("0");
+            SessionLocator.SelectedSession.CurrentWindow.Close("");
         }
     }
     ShowDisbursement() {
-     
+
         let myDeclaration: DeclarationPM = this.declaration;
         let myViewModelName = "InvoiceQueueComponent.ts-ShowDisbursement";
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -261,7 +295,7 @@ export class InvoiceQueueComponent
             alert("ShowPayments");
         }
     }
-   
+
     ShowCustomFileOPCFromDeclaration() {
 
         let myDeclaration: DeclarationPM = this.declaration;

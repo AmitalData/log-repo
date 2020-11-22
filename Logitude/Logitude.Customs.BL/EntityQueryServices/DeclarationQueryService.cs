@@ -1173,7 +1173,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DeclarationCorrection declarationCorrection = (DeclarationCorrection)serializer.Deserialize(memorystream);
                 correctionView = new DeclarationCorrectionView() { Id = Guid.NewGuid().ToString(), DeclarationId = declaration.Id };
                 correctionView.GeneralDataViews = new List<GeneralDataView>();
-
+             
 
 
                 foreach (General item in declarationCorrection.GeneralData)
@@ -1272,7 +1272,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
+                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
+                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(field.AmendmentFieldStatus,false,true);
+                            if (amendmentFieldStatusTypePM != null)
+                            {
+                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
+                            }
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1348,7 +1354,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
+                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
+                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(error.AmendmentFieldStatus, false, true);
+                            if (amendmentFieldStatusTypePM != null)
+                            {
+                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
+                            }
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1909,16 +1921,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return isFreight;
         }
-        public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
-        {
 
-            string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
-            var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(entityKeyString, () =>
-            {
-                return this.GetDeclarationAmendmentsById(Tenant, id, orderById);
-            });
-            return res;
-        }
+          //public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
+        //{
+
+        //    string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
+        //    var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(entityKeyString, () =>
+        //    {
+        //        return this.GetDeclarationAmendmentsById(Tenant, id, orderById);
+        //    });
+        //    return res;
+        //}
         public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
         {
             DeclarationDataMapping mapping = new DeclarationDataMapping();
@@ -1944,7 +1957,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
-            UserRepository userRepository = new UserRepository();
+            UserRepository userRepository = new UserRepository(tenant);
             var amendmentStatuses = amendmentStatusRepository.GetAll();
             var users = userRepository.GetAll();
             var i = 1;

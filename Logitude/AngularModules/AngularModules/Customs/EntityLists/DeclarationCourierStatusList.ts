@@ -78,6 +78,7 @@ export class DeclarationCourierStatusList {
 	SortedCourierManifestStatus: string;
 	SortedCourierDeclarationStatus: string;
 	Delivered: boolean;
+	TruckerId: string;
 	
 }
  

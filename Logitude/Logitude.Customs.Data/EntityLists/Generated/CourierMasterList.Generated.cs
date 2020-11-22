@@ -118,6 +118,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string EstimatedArrivalColor  { get; set; }
        [DataMember]
        public int? PackageQuantityInMAWB  { get; set; }
+       [DataMember]
+       public DateTime? LandingDate  { get; set; }
+       [DataMember]
+       public string UnifreightLeadingFile  { get; set; }
+       [DataMember]
+       public DateTime? LandingDateDateOnly  { get; set; }
+       [DataMember]
+       public DateTime? LandingDateTimeOnly  { get; set; }
+       [DataMember]
+       public string CourierMasterRemarks  { get; set; }
    }
 
 }

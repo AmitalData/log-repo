@@ -51,7 +51,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsReadyForInvoice, 
 	         NoOfCourierHawb, 
 	         IsAutomaticManifestSent, 
-	         PackageQuantityInMAWB,
+	         PackageQuantityInMAWB, 
+	         LandingDate, 
+	         UnifreightLeadingFile, 
+	         CourierMasterRemarks,
 	      }
 
 
@@ -110,7 +113,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CalcSuspendedDeclarations, 
 	         NoOfCourierHawb, 
 	         IsAutomaticManifestSent, 
-	         PackageQuantityInMAWB,
+	         PackageQuantityInMAWB, 
+	         LandingDate, 
+	         UnifreightLeadingFile, 
+	         LandingDateDateOnly, 
+	         LandingDateTimeOnly, 
+	         CourierMasterRemarks,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -262,6 +270,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantityInMAWB))
             {
 				entityPOCO.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LandingDate))
+            {
+				entityPOCO.LandingDate = entityPM.LandingDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightLeadingFile))
+            {
+				entityPOCO.UnifreightLeadingFile = entityPM.UnifreightLeadingFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterRemarks))
+            {
+				entityPOCO.CourierMasterRemarks = entityPM.CourierMasterRemarks;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -420,6 +443,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PackageQuantityInMAWB = entityPOCO.PackageQuantityInMAWB;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LandingDate))
+            {
+					entityPM.LandingDate = entityPOCO.LandingDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnifreightLeadingFile))
+            {
+					entityPM.UnifreightLeadingFile = entityPOCO.UnifreightLeadingFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierMasterRemarks))
+            {
+					entityPM.CourierMasterRemarks = entityPOCO.CourierMasterRemarks;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -571,6 +609,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.PackageQuantityInMAWB = entityPM.PackageQuantityInMAWB;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LandingDate))
+            {
+                oldEntityPM.LandingDate = entityPM.LandingDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightLeadingFile))
+            {
+                oldEntityPM.UnifreightLeadingFile = entityPM.UnifreightLeadingFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterRemarks))
+            {
+                oldEntityPM.CourierMasterRemarks = entityPM.CourierMasterRemarks;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CourierMasterPM entityPM)
@@ -599,6 +652,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.FlightNumber)) //T4 find type == nText 
             {
                 entityPM.FlightNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FlightNumber));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile)) //T4 find type == nText 
+            {
+                entityPM.UnifreightLeadingFile = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UnifreightLeadingFile));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CourierMasterRemarks)) //T4 find type == nText 
+            {
+                entityPM.CourierMasterRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierMasterRemarks));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -837,6 +837,11 @@ export class SupplierInvoiceItemPM {
     public set ClassificationCodeSource(newValue: string) { if (this.classificationCodeSource != newValue) { this.classificationCodeSource = newValue; this.MarkAsDirty("ClassificationCodeSource"); } }
        
 	 
+    private documentFilingId: string;
+    public get DocumentFilingId() { return this.documentFilingId; }
+    public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	

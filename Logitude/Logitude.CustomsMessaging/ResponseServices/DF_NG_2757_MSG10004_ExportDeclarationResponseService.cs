@@ -589,24 +589,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             //Update Declaration 
             _MyDeclarationPM.VersionId = customResponse.Response.Declaration.DMExtensions.VersionID.Value;
+ 
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
-           // _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactor.Value;
-            //_MyDeclarationPM.DealValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value;
-            _MyDeclarationPM.DealValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalDealValueAmountNIS.Value, 2);
-            //_MyDeclarationPM.CIFValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value;
-            _MyDeclarationPM.CIFValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value, 2);
-            //_MyDeclarationPM.TotalTax = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value;
+            if(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount!=null)
+             _MyDeclarationPM.FOBValueNIS = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount.Value, 2);
+            if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount != null)
+
+                _MyDeclarationPM.FOBValueDollar = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount.Value, 2);
+
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
-            //_MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
-           // _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.TaxationDateTime);
-            //if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
             if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715
             {
                 if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
             }
 
-            //_MyDeclarationPM.DealValueWithoutFactor = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value;
-            //_MyDeclarationPM.DealValueWithoutFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
             decimal DealValueWithoutFactor = 0;
             if (customResponse.Response.Declaration.GoodsShipment != null)
             {
@@ -1566,6 +1562,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     throw new System.Exception(
                        "unable to find the supplierInvoiceItemPM from governmentAgencyGoodsItem.SequenceNumeric " + governmentAgencyGoodsItem.SequenceNumeric);
                 }
+
+           
                 //Added by Yuval Chalup 26.05.2015 TASK-13473 --->
 
                 var supplierInvoiceItemsTaxPMList = new List<SupplierInvoiceItemsTaxPM>();
@@ -1583,10 +1581,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 //TODO:DDDD
 
+              if(governmentAgencyGoodsItem.Commodity.DMExtensions!= null)
+                {if (governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign != null)
+                    supplierInvoiceItemPM.ItemFOBAmountForeign = Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign.Value, 2);
+                if(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS!= null)
+                    supplierInvoiceItemPM.ItemFOBAmountNIS= Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS.Value, 2);
+
+                }
                 if (governmentAgencyGoodsItem.Commodity.DutyTaxFee != null)
                 {
+
+
+
                     foreach (var dutyTaxFee in governmentAgencyGoodsItem.Commodity.DutyTaxFee)
                     {
+                       
+
                         var supplierInvoiceItemsTaxPM = new SupplierInvoiceItemsTaxPM();
                         supplierInvoiceItemsTaxPM.ChangeSetOp = ChangeSetOperation.Insert;
                         //supplierInvoiceItemsTaxPM.DeclarationId = this._MyDeclarationPM.Id; //Removed by Yuval Chalup 26.05.2015 TASK-13473 (Move to SupplierInvoiceItemsTaxUpdateService.OnUpdating)
@@ -1594,47 +1604,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //supplierInvoiceItemsTaxPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey; //Removed by Yuval Chalup 26.05.2015 TASK-13473 (Move to SupplierInvoiceItemsTaxUpdateService.OnUpdating)
                         //supplierInvoiceItemsTaxPM.LineNumber = supplierInvoiceItemPM.LineNumber; //Removed by Yuval Chalup 26.05.2015 TASK-13473 (Move to SupplierInvoiceItemsTaxUpdateService.OnUpdating)
                         supplierInvoiceItemsTaxPM.TaxTypeCode = dutyTaxFee.TypeCode.Value;
-                        if (dutyTaxFee.DutyRegimeCode != null)
-                        {
-                            supplierInvoiceItemsTaxPM.TradeAgreementTypeCode = dutyTaxFee.DutyRegimeCode.Value;
-                        }
+                        //if (dutyTaxFee.DutyRegimeCode != null)
+                        //{
+                        //    supplierInvoiceItemsTaxPM.TradeAgreementTypeCode = dutyTaxFee.DutyRegimeCode.Value;
+                        //}
                         supplierInvoiceItemsTaxPM.TaxRate = dutyTaxFee.TaxRate;
                         supplierInvoiceItemsTaxPM.TaxBaseAmount = dutyTaxFee.AdValoremTaxBaseAmount.Value;
-                        //supplierInvoiceItemsTaxPM.TaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.Amount.Value;
-                        //supplierInvoiceItemsTaxPM.DeferedTaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.DeferedTaxAmount.Value;
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.DefinedPerUnitMethod != null)
+                        supplierInvoiceItemsTaxPM.TaxAmount = dutyTaxFee.CalculatedTax.Amount.Value;
+                        supplierInvoiceItemsTaxPM.DeferedTaxAmount = dutyTaxFee.CalculatedTax.DeferedTaxAmount.Value;
+                        if (dutyTaxFee.CalculatedTax.DefinedPerUnitMethod != null)
+                        {
+                            supplierInvoiceItemsTaxPM.DefinedPerUnitMeasure = dutyTaxFee.CalculatedTax.DefinedPerUnitMethod.Value;
+                        }
+                        supplierInvoiceItemsTaxPM.AlternateRate = dutyTaxFee.CalculatedTax.AlternateRate.Value;
+                        if (dutyTaxFee.CalculatedTax.AlternateDefinedPerUnitMeasure != null)
+                        {
+                            supplierInvoiceItemsTaxPM.AlternateDefinedPerUnitMeasure = dutyTaxFee.CalculatedTax.AlternateDefinedPerUnitMeasure.Value;
+                        }
+                        if (dutyTaxFee.CalculatedTax.DefinedPerUnitQuantity != null)
+                        {
+                            supplierInvoiceItemsTaxPM.DefinedPerUnitQuantity = dutyTaxFee.CalculatedTax.DefinedPerUnitQuantity.Value;
+                        }
+                        if (dutyTaxFee.CalculatedTax.AlternateDefinedPerUnitQuantity != null)
+                        {
+                            supplierInvoiceItemsTaxPM.AlternateDefinedPerUnitQuant = dutyTaxFee.CalculatedTax.AlternateDefinedPerUnitQuantity.Value;
+                        }
+                        if (dutyTaxFee.CalculatedTax.MeasurementUnitCode != null)
+                        {
+                            supplierInvoiceItemsTaxPM.MeasurementUnitCode = dutyTaxFee.CalculatedTax.MeasurementUnitCode.Value;
+                        }
+                        if (dutyTaxFee.CalculatedTax.AlternateMeasurementUnit != null)
+                        {
+                            supplierInvoiceItemsTaxPM.AlternateMeasurementUnitCode = dutyTaxFee.CalculatedTax.AlternateMeasurementUnit.Value;
+                        }
+                        if (dutyTaxFee.CalculatedTax.TradeLevyNumber != null)
+                        {
+                            supplierInvoiceItemsTaxPM.TradeLevyNumber = dutyTaxFee.CalculatedTax.TradeLevyNumber.Value;
+                        }
+                        //if (dutyTaxFee.CalculatedTax.TotalBtlCoverageNIS != null)
                         //{
-                        //    supplierInvoiceItemsTaxPM.DefinedPerUnitMeasure = dutyTaxFee.DMExtensions.CalculatedTax.DefinedPerUnitMethod.Value;
-                        //}
-                        //supplierInvoiceItemsTaxPM.AlternateRate = dutyTaxFee.DMExtensions.CalculatedTax.AlternateRate.Value;
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.AlternateDefinedPerUnitMeasure != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.AlternateDefinedPerUnitMeasure = dutyTaxFee.DMExtensions.CalculatedTax.AlternateDefinedPerUnitMeasure.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.DefinedPerUnitQuantity != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.DefinedPerUnitQuantity = dutyTaxFee.DMExtensions.CalculatedTax.DefinedPerUnitQuantity.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.AlternateDefinedPerUnitQuantity != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.AlternateDefinedPerUnitQuant = dutyTaxFee.DMExtensions.CalculatedTax.AlternateDefinedPerUnitQuantity.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.MeasurementUnitCode != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.MeasurementUnitCode = dutyTaxFee.DMExtensions.CalculatedTax.MeasurementUnitCode.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.AlternateMeasurementUnit != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.AlternateMeasurementUnitCode = dutyTaxFee.DMExtensions.CalculatedTax.AlternateMeasurementUnit.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.TradeLevyNumber != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.TradeLevyNumber = dutyTaxFee.DMExtensions.CalculatedTax.TradeLevyNumber.Value;
-                        //}
-                        //if (dutyTaxFee.DMExtensions.CalculatedTax.TotalBtlCoverageNIS != null)
-                        //{
-                        //    supplierInvoiceItemsTaxPM.TotalBtlCoverageNIS = dutyTaxFee.DMExtensions.CalculatedTax.TotalBtlCoverageNIS.Value;
-                        //    _TotalBtlCoverageNISSum = _TotalBtlCoverageNISSum + dutyTaxFee.DMExtensions.CalculatedTax.TotalBtlCoverageNIS.Value;
+                        //    supplierInvoiceItemsTaxPM.TotalBtlCoverageNIS = dutyTaxFee.CalculatedTax.TotalBtlCoverageNIS.Value;
+                        //    _TotalBtlCoverageNISSum = _TotalBtlCoverageNISSum + dutyTaxFee.CalculatedTax.TotalBtlCoverageNIS.Value;
                         //}
                         //// moran 21.11.13 - Bug 2083 - change handle -->
                         //AddSupplierInvoiceItemsTaxesModificationPM(supplierInvoiceItemsTaxPM, governmentAgencyGoodsItem.Commodity);

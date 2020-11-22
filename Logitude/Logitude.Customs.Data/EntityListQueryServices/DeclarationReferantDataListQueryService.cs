@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.CustomFilters;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -109,6 +110,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
+            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
+            if (filter == null)
+            {
+                DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
+
+                iQueryable = filters.GetFilteredQuery(iQueryable);
+            }
             return iQueryable;
 
         }
