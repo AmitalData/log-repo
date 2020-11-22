@@ -5,7 +5,9 @@
             <table>
                 <tr>
                     <td>
-                        <div></div>
+                        <div>
+                            <CheckBox [IsChecked]="ExpenseChargesIncluded" (Checked)="ExpenseChargesIncluded = $event" [Text]="'Expense Charges Included'"></CheckBox>
+                        </div>
                     </td>
 
                     <td style="width: 320px;">

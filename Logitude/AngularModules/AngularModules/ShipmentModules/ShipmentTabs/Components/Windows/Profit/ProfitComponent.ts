@@ -1,17 +1,19 @@
-import {Component} from '@angular/core';
-import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
-import {NumbersPipe} from '../../../../../Infrastructure/Pipes/NumbersPipe';
+import { Component } from '@angular/core';
+import { AppTool, FontTool } from '../../../../../Infrastructure/Tools';
+import { NumbersPipe } from '../../../../../Infrastructure/Pipes/NumbersPipe';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
-import {ShipmentPayablePM} from '../../../../../Shipment/EntityPMs/ShipmentPayablePM';
-import {ShipmentReceivablePM} from '../../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import {ShipmentDomainService} from '../../../../../Shipment/Services/ShipmentDomainService';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ShipmentPM } from '../../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPayablePM } from '../../../../../Shipment/EntityPMs/ShipmentPayablePM';
+import { ShipmentReceivablePM } from '../../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { ShipmentDomainService } from '../../../../../Shipment/Services/ShipmentDomainService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ChargesTypeListService } from '../../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypeList } from '../../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
-    
+
     templateUrl: './ProfitComponent.html',
 })
 
@@ -25,9 +27,11 @@ export class ProfitComponent {
     public SelectedCurrencyCode: string = null;
     public ProfitsCollection: ProfitClass[] = [];
     private myDomainService: ShipmentDomainService;
+    private chargesTypeListService: ChargesTypeListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myDomainService = new ShipmentDomainService();
+        this.chargesTypeListService = new ChargesTypeListService();
     }
 
     SetWindowArgs(args: any) {
@@ -91,7 +95,7 @@ export class ProfitComponent {
             else {
                 if (this.EntityPM.ShipmentReceivables.length > 0 || this.EntityPM.ConnectedShipmentsReceivablesCount > 0) {
                     this.isReceivablesExists = true;
-                }                
+                }
             }
 
             var housesIds: string[] = [];
@@ -159,6 +163,7 @@ export class ProfitComponent {
             this.BuildDataInProfitCurrency();
         }
 
+        this.FilterExpense();
         this.ComputeTotals();
     }
     BuildDataInLocalCurrency() {
@@ -379,6 +384,26 @@ export class ProfitComponent {
     public TotalReceivablesText: string = "N/A";
     public EstimateProfit: number = null;
     public Difference: number = null;
+    FilterExpense() {
+
+        if (!this.ExpenseChargesIncluded) {
+
+            this.chargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var allChargesTypes: ChargesTypeList[] = myResponse.Result;
+
+                    this.ProfitsCollection.forEach(item => {
+                        var list: ChargesTypeList = allChargesTypes.filter(f => f.Id == item.ChargeTypeId)[0];
+                        if (list) {
+                            item.ChargeTypeIsExpense = list.IsExpense;
+                        }
+                    });
+
+                    this.ProfitsCollection = this.ProfitsCollection.filter(f => f.ChargeTypeIsExpense == false);
+                }
+            });
+        }
+    }
     ComputeTotals() {
         var myTotalProfitText = "N/A";
         var myTotalPayablesText = "N/A";
@@ -452,7 +477,7 @@ export class ProfitComponent {
         if (!AppTool.IsNullOrEmpty(myProfit) && !AppTool.IsNullOrEmpty(myEstimateProfit)) {
             myDifference = myProfit - myEstimateProfit;
         }
-        
+
         this.EstimateProfit = myEstimateProfit;
         this.Difference = myDifference;
     }
@@ -508,11 +533,21 @@ export class ProfitComponent {
             }
         }
     }
+
+    private expenseChargesIncluded: boolean = true;
+    get ExpenseChargesIncluded() { return this.expenseChargesIncluded; }
+    set ExpenseChargesIncluded(value: boolean) {
+        if (this.expenseChargesIncluded != value) {
+            this.expenseChargesIncluded = value;
+            this.BuildProfitData();
+        }
+    }
 }
 
 class ProfitClass {
     public ChargeTypeId: string = null;
     public ChargeTypeName: string = null;
+    public ChargeTypeIsExpense: boolean = false;
     public ReceivableOpenedAmount: number = null;
     public ReceivableAcountedAmount: number = null;
     public PayableOpenedAmount: number = null;
