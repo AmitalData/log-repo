@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent 
+export class ShipmentsListComponent implements AfterViewInit
 {
 
 
@@ -36,7 +37,7 @@ export class ShipmentsListComponent
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
-
+    InvitedCustomersIds: string[];
     ShipmentsDS;
 
     constructor(private router: Router,
@@ -45,13 +46,49 @@ export class ShipmentsListComponent
         private changeDetector: ChangeDetectorRef,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-        this.InitForm();
-        this.SearchText = '';
-        this.Search();
+
+        this.InitComponent();
 
     }
+    ngAfterViewInit(): void
+    {
+        this.GetCompanyLoginsFromCache();
+    }
+
+    private InitComponent()
+    {
+        this.InitForm();
+        this.GetTenantFromURL();
+
+
+    }
+
+    private GetCompanyLoginsFromCache()
+    {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
+        this.GetInvitedCustomers();
+    }
+
+    private GetInvitedCustomers()
+    {
+        this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
+            .map(d => d.CardId);
+            console.log("[Invited Customers]",this.InvitedCustomersIds);     
+            
+        this.Search();
+    }
+
+    private GetTenantFromURL()
+    {
+        var tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
+        if (tenant) 
+            this.tenant = tenant;
+        else
+            console.error("Tenant not provided in URL");            
+    }
+
     private InitForm()
     {
         this.searchForm = this.formBuilder.group({
@@ -59,27 +96,9 @@ export class ShipmentsListComponent
         });
     }
 
-    private GetVariablesFromURI()
-    {
-        // let searchKey = this.route.snapshot.paramMap.get('searchKey');
+    
 
-
-        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
-        if (tenant != null && tenant != "") {
-            this.tenant = Number(tenant);
-        }
-        else {
-            //  if(searchKey!=null && searchKey!=""){
-            //     this.router.navigate([1,'search',searchKey]);
-            //  }
-            //  else{
-            //     this.router.navigate([1,'search']);
-            //  }
-
-        }
-    }
-
-    private _SearchText: string = '';
+    private _SearchText: string;
     public get SearchText(): string
     {
         return this._SearchText;
@@ -98,9 +117,10 @@ export class ShipmentsListComponent
     }
     Search()
     {
-        if (this.tenant && this.SearchText) {
+        if (this.tenant) {
             this.Shipments = [];
-            // this.router.navigate([this.tenant,'search', this.SearchText]);
+            this.ShipmentsDS = null;
+            this.changeDetector.detectChanges();
             this.LoadShipments();
         }
 
@@ -118,29 +138,15 @@ export class ShipmentsListComponent
     {
 
         this.noResult = false;
-        var searchText = this._SearchText.trim().toLowerCase();
-        if (searchText) {
-            var shipmentFilters = new ShipmentsFilters();
+        var searchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
+            var shipmentFilters = new CargoTrackingShipmentFilters();
             shipmentFilters.Tenant = this.tenant;
             shipmentFilters.SearchText = searchText;
-
+            shipmentFilters.CustomersIds = this.InvitedCustomersIds;
+            shipmentFilters.CustomersIdsString = this.InvitedCustomersIds?.join(',');
             
             this.ShipmentsDS = new ShipmentDataSource(this.changeDetector, this.searchService,shipmentFilters, this);
-
-            // this.isLoading = true;
-            // this.searchService.GetUserShipments(0,100,this.tenant).subscribe((result: any) =>
-            // {
-            //     this.isLoading = false;
-            //     console.log("[getShipments]", result);
-            //     this.Shipments = result;
-            //     this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-            //     this.cd.detectChanges();
-
-            // });
-        } else {
-            this.Shipments = [];
-        }
-
+            this.changeDetector.detectChanges();
     }
     references: string[];
     SplitReference(reference: string)
@@ -224,6 +230,8 @@ export class ShipmentsListComponent
 
     }
 
+    ShipmentsCount: number = 0;
+
     error: string;
 }
 
@@ -259,9 +267,11 @@ export class SearchFilter
 
 
 }
-export class ShipmentsFilters{
+export class CargoTrackingShipmentFilters{
     public Tenant: number;
     public SearchText: string;
+    public CustomersIds: string[] = [];
+    public CustomersIdsString: string;
 
 }
 export class ShipmentDataSource extends DataSource<any | undefined> {
@@ -274,9 +284,9 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     constructor(
         private ChangeDetector: ChangeDetectorRef,
         private ShipmentSearchService: CargoTrackingSearchService,
-        private ShipmentsFilters: ShipmentsFilters,
+        private ShipmentsFilters: CargoTrackingShipmentFilters,
         private parent: ShipmentsListComponent,
-        private ShipmentsCount = 1000
+        private ShipmentsCount = 1
     )
     {
         super();
@@ -323,10 +333,19 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
     private GetShipmentsPage(page: number)
     {
-        this.ShipmentSearchService.GetUserShipments(page, this.PAGE_SIZE, this.ShipmentsFilters.Tenant)
-        .subscribe((fetchedShipments: any) =>
+        this.ShipmentSearchService.GetUserShipments(page, this.PAGE_SIZE, this.ShipmentsFilters)
+        .subscribe((result: any) =>
         {
             this.parent.error = "";
+
+            var fetchedShipments = result.Shipments;
+
+            if(result.Count != this.ShipmentsCount){
+                this.ShipmentsCount = result.Count;
+                this.parent.ShipmentsCount = result.Count;
+                this.FetchedPages = new Set<number>();
+                this.CachedShipments = Array.from<any>({ length: result.Count });
+            }
 
             this.CacheShipments(page, fetchedShipments);
 

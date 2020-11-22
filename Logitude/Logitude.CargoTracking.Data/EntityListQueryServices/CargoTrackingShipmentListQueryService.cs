@@ -14,6 +14,8 @@ using System.Xml.Serialization;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.Def.DataContracts;
+using System.Web.Http;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -264,7 +266,64 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             }
             return shipmetsLists;
         }
-       
+        public List<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            IQueryable<CargoTrackingShipment> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
+
+            shipments = FilterShipments(shipmentFilters, shipments);
+
+            List<CargoTrackingShipmentList> shipmetsLists = GetShipmentsLists(ShipmentIds, shipments);
+
+            return shipmetsLists;
+        }
+
+        public int GetShipmentsCount(List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            IQueryable<CargoTrackingShipment> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
+
+            shipments = FilterShipments(shipmentFilters, shipments);
+
+            return shipments.Count();
+        }
+
+        private List<CargoTrackingShipmentList> GetShipmentsLists(List<string> ShipmentIds, IQueryable<CargoTrackingShipment> shipments)
+        {
+            List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
+
+            foreach (var Id in ShipmentIds)
+            {
+                string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
+                shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
+                foreach (CargoTrackingShipmentList shipment in shipmetsLists)
+                {
+                    if (shipment.EntityId == Id)
+                    {
+                        shipment.SearchReferences = String.Join(",", references);
+                        if (shipment.CurrentMilestoneCode == null)
+                        {
+                            GetMilestonesFieldsFromCargoTrackingShipment(shipment);
+
+                        }
+                    }
+                }
+            }
+
+            return shipmetsLists;
+        }
+
+        private static IQueryable<CargoTrackingShipment> FilterShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipment> shipments)
+        {
+            shipments = shipments.Where(d => shipmentFilters.CustomersIds.Contains(d.CustomerId));
+            return shipments;
+        }
+
+        private IQueryable<CargoTrackingShipment> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
+        {
+            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
+            IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
+            return shipments;
+        }
+
         public List<Milestone> GetMilestonesFieldsFromCargoTrackingShipment( CargoTrackingShipmentList  Shipment)
         {
             List<Milestone> milestones = new List<Milestone>();

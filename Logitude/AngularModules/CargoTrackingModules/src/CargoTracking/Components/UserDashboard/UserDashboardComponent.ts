@@ -3,6 +3,7 @@ import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingS
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 
 @Component({
@@ -21,18 +22,65 @@ export class UserDashboardComponent implements AfterViewInit
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
     _Tenant:number;
+    UserName:string;
+
+    ConnectedCustomers: string[] = [];
 
     constructor(private router: Router,
+        private route: ActivatedRoute,
         private searchService: CargoTrackingSearchService)
     {
-        // this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-       
-         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+        document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+        
+        this.InitComponent();
 
     }
 
+    private InitComponent()
+    {
+        this.GetTenantFromURL();
+        this.Authenticate();
+        this.GetLoggedUserNameFromLoggedEmail();
+    }
+
+    private GetLoggedUserNameFromLoggedEmail()
+    {
+        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
+        this.UserName = loggedEmail?.split('@')[0] || 'Saitama Con';
+    }
+    private GetCompanyLoginsFromCache()
+    {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
+        this.GetInvitedCustomers();
+    }
+
+    private GetInvitedCustomers()
+    {
+        this.ConnectedCustomers = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this._Tenant)
+            .map(d => d.CardId);
+            console.log("[Invited Customers]",this.ConnectedCustomers);            
+    }
+
+    private GetTenantFromURL()
+    {
+        var tenant = Number(this.route.snapshot.paramMap.get('Tenant'));
+        if (tenant) 
+            this._Tenant = tenant;
+        else
+            console.error("Tenant not provided in URL");            
+    }
+
+    private Authenticate()
+    {
+        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
+        if (!loggedEmail) 
+            this.router.navigate([this._Tenant, "login"]);        
+    }
+
     isNavOpened = false;
+
     openNav(){
         this.isNavOpened = !this.isNavOpened;
     }

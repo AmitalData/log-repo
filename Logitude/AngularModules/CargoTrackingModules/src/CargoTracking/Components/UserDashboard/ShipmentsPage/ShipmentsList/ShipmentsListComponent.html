@@ -81,15 +81,15 @@
         Something wrong! Please try again later.
     </div>
     <!-- Row Count -->
-    <div class="row-count" *ngIf="Shipments.length>0"> 
-        {{Shipments.length}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
+    <div class="row-count"> 
+        {{ShipmentsCount}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
     <div class="scrollable-table">
         <div class="table">
             
-            <cdk-virtual-scroll-viewport class="shipment-cards-holder" [itemSize]="170">
+            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDS" class="shipment-cards-holder" [itemSize]="170">
             
             
                 <div *cdkVirtualFor="let shipment of ShipmentsDS" class="row record-row" (click)="ItemClicked(shipment)"

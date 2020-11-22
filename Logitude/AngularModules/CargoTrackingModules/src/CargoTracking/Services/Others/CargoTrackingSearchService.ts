@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
 import {CargoTrackingShipmentSearchList} from '../../EntityLists/CargoTrackingShipmentSearchList';
+import { CargoTrackingShipmentFilters as CargoTrackingShipmentFilters } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 
 @Injectable()
 export class CargoTrackingSearchService {
@@ -33,12 +34,25 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
-    GetUserShipments(pageIndex: number, pageSize: number, tenant: number) {
+    GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
         var authHeaders = ServiceHelper.GetHeaders();
+
+        var urlparameters = '';
+		var mykeys = Object.keys(shipmentFilters);
+		var addtionalFiltersValues = null;
+
+		for (var i in mykeys) {
+			var propName = mykeys[i];
+			var propValue = shipmentFilters[propName];
+
+            propValue = encodeURIComponent(propValue);
+            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue)).concat('&');
+
+        }
 
 
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipments/?tenant=' + tenant 
+            return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters 
             + '&pageIndex=' + pageIndex
             + '&pageSize=' + pageSize,
              {headers: authHeaders})

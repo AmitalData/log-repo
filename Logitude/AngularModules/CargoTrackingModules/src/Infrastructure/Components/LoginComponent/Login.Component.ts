@@ -128,6 +128,9 @@ export class LoginComponent implements OnInit {
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         if(!LogInToTenant) LogInToTenant= tenantList[0];
 
+        SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
+        sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
+
         this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
             if (userData) {
                 this.FillSessionInfoData(userData);
@@ -148,5 +151,6 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
+        SessionInfo.LoggedUser = userData;
     }
 }

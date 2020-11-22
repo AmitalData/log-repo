@@ -36,11 +36,12 @@ using Logitude.CargoTracking.BL.EntityUpdateServices;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
+using Logitude.CargoTracking.Def.DataContracts;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
-{ 
+{
 
-    
+
     public class CargoTrackingSearchController : ApiController
     {
 
@@ -50,12 +51,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                
+
 
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
 
-                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s=>s.CreateDate).ToList();
+                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
                 //throw new ApplicationException("Hi, I am an error!! okay!");
 
@@ -100,24 +101,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [HttpGet]
-        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, int tenant)
+        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
-                // for now, it gets top 500 shipments by tenant
+                shipmentFilters.CustomersIds = shipmentFilters.CustomersIdsString.Split(',').ToList();
 
-                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+                CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
 
-                List<CargoTrackingShipmentList> shipments 
-                    = cargoTrackingShipmentSearchQuery
-                    .GetTop500Shipments(pageIndex, pageSize, tenant)
-                    .OrderByDescending(s => s.CreateDate)
-                    .ToList();
+                var count = GetAllShipmentsCount(pageIndex, shipmentFilters);
 
-                //Thread.Sleep(700);
+                List<CargoTrackingShipmentList> shipments
+                    = shipmentSearchQuery
+                        .GetShipments(pageIndex, pageSize, shipmentFilters)
+                        .OrderByDescending(s => s.CreateDate)
+                        .ToList();
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, new { Shipments = shipments, Count = count });
 
                 return reponseMessage;
             }
@@ -127,6 +128,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+
+        private static int GetAllShipmentsCount(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
+            var count = 0;
+            if (pageIndex == 0)
+                count = shipmentSearchQuery.GetShipmentsCount(shipmentFilters);
+
+            return count;
+        }
+
+        private static CargoTrackingShipmentSearchListQueryService GetCargoTrackingShipmentSearchQuery(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(shipmentFilters.Tenant);
+            CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+            return cargoTrackingShipmentSearchQuery;
+        }
+
         [HttpGet]
         public HttpResponseMessage GetUserShipmentsCount(int pageIndex, int pageSize, int tenant)
         {
@@ -191,6 +210,4 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public int Tenant { get; set; }
     }
 
-
 }
-	 
