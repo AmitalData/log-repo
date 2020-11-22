@@ -226,6 +226,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     q = q.Where(rec => rec.EntityId2 == EntityId2 && rec.ObjectTableId2 == ObjectTableId2);
                 }
             }
+            //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('CR1', 'GetRequestInProgress 2715', 'CR1,GetRequestInProgress 2715')
+            //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('-1', '1', TO_TIMESTAMP('2020-11-22 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2020-11-22 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'CR1', '1', '0', 'CR1')
+
+            ///Bug 75132: העלאת מסמך ללא קישור - מסמך נשלח למכס מס' פעמים
+            if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CR1", Tenant))
+            {
+                if (InterfaceTypeCode == "2715")
+                {
+                    if (!string.IsNullOrWhiteSpace(EntityId2) && !string.IsNullOrWhiteSpace(ObjectTableId2))
+                    {
+                        q = q.Where(rec => rec.EntityId2 == EntityId2 && rec.ObjectTableId2 == ObjectTableId2);
+                    }
+                }
+            }
             if (!haveFilter)
             {
                 return new List<CustomsRequestsSheetPM>();
