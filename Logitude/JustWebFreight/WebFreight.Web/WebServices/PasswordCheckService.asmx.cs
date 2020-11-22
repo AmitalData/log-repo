@@ -343,224 +343,24 @@ namespace WebFreight.Web.WebServices
         }
 
         [WebMethod]
-        public bool RequestResetUserPassword(string email, bool ischamplogin, bool ismobile, string appMobileEnvironment, string tenant = null)
+        public bool RequestResetUserPassword(ResetPasswordParameters resetPasswordParameters, string appMobileEnvironment, string tenant = null)
         {
-            // bool succeeded = false;
-
             bool exists = false;
-            string brandingTenant = tenant;
 
             IGlobalContext globalContext = GlobalContext.GetContext();
-            ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault();
+            ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == resetPasswordParameters.Email).FirstOrDefault();
 
             if (contactPassword != null)
             {
                 exists = true;
 
-                string newPassword = PasswordGenerator.GetBCryptHashedPassword(email, PasswordGenerator.Generate(8));
-                Random random = new Random();
-                string randomNumber = random.Next().ToString().Substring(0, 7);
-                string reqNumber = Guid.NewGuid().ToString("N") + randomNumber;
-
-                PasswordResetRequest resetRequest = new PasswordResetRequest();
-                resetRequest.RequestNumber = reqNumber;
-                resetRequest.Email = email;
-
-                if (ismobile)
-                {
-
-                    Random generator = new Random();
-                    string verificationCode = generator.Next(0, 10000000).ToString().Substring(0, 5);
-
-                    resetRequest.RequestNumber = reqNumber;
-                    resetRequest.Email = email;
-                    resetRequest.CreateDate = DateTime.UtcNow;
-                    resetRequest.ExpirationDate = DateTime.UtcNow.AddMinutes(15);
-                    resetRequest.Type = "";
-                    resetRequest.VerificationCode = verificationCode;
-                    resetRequest.IsMobileOnly = true;
-                }
-
-
-                globalContext.PasswordResetRequests.Add(resetRequest);
-                globalContext.SaveChanges();
-
-                // string path = HttpContext.Current.Request.UrlReferrer.AbsoluteUri.Replace(HttpContext.Current.Request.UrlReferrer.PathAndQuery, @"/PasswordChangePage.aspx?email=" + email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + ischamplogin);
-                string path = LogitudeSettings.LogitudeURL + @"/PasswordChangePage.aspx?email=" + email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + ischamplogin;
-
-                MessageArgs result = new MessageArgs();
-                StringBuilder HtmlTemplate = new StringBuilder();
-                string teamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team";
-                string siteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName);
-
-                bool isLogBox = false;
-                string env = LogitudeSettings.WorkEnvironment == "cloud" ? "Amital Cloud" : "Logitude";
-
-                string senderEmail = "no-reply@" + LogitudeSettings.DomainName;
-                TenantManagmentPrivateLabelsPM privatelabel = null;
-                if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
-                {
-                    
-                    var url = SecurityUtility.getLoggedDomain();
-                    if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-                    {
-                        TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                        privatelabel = query.GetSingleActivePMByUrl(url);
-                    }
-                    if (privatelabel != null)
-                    {
-                        teamName = privatelabel.PrivateLabelShortName + " Team";
-                        siteUri = privatelabel.PrivateLabelUrl;
-                        senderEmail = "no-reply@" + privatelabel.PrivateLabelUrl.Replace("www.","");
-                        env = privatelabel.PrivateLabelShortName;
-                        isLogBox = true;
-                        path = siteUri + @"/PasswordChangePage.aspx?email=" + email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + ischamplogin;
-                    }
-                    else
-                    {
-                        teamName = "LogBox Team";
-                        siteUri = "system.logbox.co.il";
-                        senderEmail = "no-reply@logbox.co.il";
-                        env = "Logbox";
-                        isLogBox = true;
-                    }   
-                        
-                }
-                if (!ismobile)
-                {
-                    bool IsLoadingTemplate = false;
-                    if (!string.IsNullOrEmpty(brandingTenant))
-                    {
-                        var documenttype = GetDocumentTypeForResetPassword(Int32.Parse(brandingTenant));
-                        if (documenttype != null)
-                        {
-                            result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                            if (!string.IsNullOrEmpty(result.HtmlTemplate))
-                            {
-                                IsLoadingTemplate = true;
-                                string url = @"/PasswordChangePage.aspx?email=" + email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + ischamplogin + "&tenant=" + Int32.Parse(brandingTenant);
-
-                                result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
-                                HtmlTemplate.Append(result.HtmlTemplate);
-
-                            }
-
-                        }
-                    }
-
-                    if (!IsLoadingTemplate)
-                    {
-
-
-                        HtmlTemplate.Append("<p style='text-align:left'>");
-                        HtmlTemplate.Append("Hi,");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Click on the link below to reset your password.");
-                        HtmlTemplate.Append("</P>");
-                        HtmlTemplate.Append("<p style='text-align:left'>");
-                        HtmlTemplate.Append("<a href=" + path + ">Reset my Password</a>");
-                        HtmlTemplate.Append("</P>");
-                        HtmlTemplate.Append("<p style='text-align:left'>");
-                        HtmlTemplate.Append("You can use the username <b>" + email + "</b>  as the " + env + " ID to sign in to " + env + " Sofware.");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Thanks,");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append(teamName);
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<a href='http://" + siteUri + "'>" + siteUri + "<a>");
-                        HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
-                        HtmlTemplate.Append("</P>");
-                        if (!isLogBox && LogitudeSettings.WorkEnvironment != "cloud")
-                        {
-                            HtmlTemplate.Append("<p style='font-size:14px;text-align:left'>" + env + " is the first true online Freight Forwarding software solution developed specifically for the cloud<br/> <img width='258' height='101' src='cid:logo0' /></p>");
-
-                        }
-                      
-                        HtmlTemplate.Append("");
-
-                    }
-
-                }
-                else
-                {
-
-                    HtmlTemplate.Append("<!DOCTYPE html>");
-                    HtmlTemplate.Append(" <p >Hi,</p>");
-                    HtmlTemplate.Append("<p style='margin-top:15px;'>Please enter the following code in the app to set a new password :</p>");
-
-                    HtmlTemplate.Append(" <table style='width:60px;height:37px;background-color:#F2F2F2;border:1px solid #808080;text-align:center;margin-left:120px'>   <tr ><td style='text-align:center'>" + resetRequest.VerificationCode + "</td></tr>   </table>");
-
-                    HtmlTemplate.Append("<p style='margin-top:15px;'>This code valid for 15 minute from now</p>");
-
-                    HtmlTemplate.Append("<p style='margin-top:20px;'>Please do not reply directly to this message</p>");
-                    //HtmlTemplate.Append("<div style='background-color:#F2F2F2;width:60px;text-align:center;height:37px;vertical-align:middle;line-height:30px;border: 1px solid #808080;'>" + resetRequest.VerificationCode + "</div>");
-
-                }
-
-
-                //Your Cloud/Mobile Password!
-
-                GlobalContact callContact = globalContext.GlobalContacts.Where(m => m.Email == email && m.InActive == false && (m.IsUser == true || m.InternetAccess == true)).FirstOrDefault();
-                string fromemail = LogitudeSettings.WorkEnvironment == "cloud" ? "no-replay@amital.co.il" : "no-reply@LogitudeWorld.com";
-
-                string subject = LogitudeSettings.WorkEnvironment == "cloud" ? "Your Cloud Password!" : "Your Logitude Password! ";
-
-
-
-                if (ismobile)
-                {
-                    subject = appMobileEnvironment + " Mobile Password";
-                    fromemail = appMobileEnvironment == "Unifreight" ? "no-replay@amital.co.il" : "no-reply@LogitudeWorld.com";
-                }
-
-
-                if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
-                {
-                    string envir = "Logbox";
-                    string Email = "no-replay@logbox.co.il";
-                    if (privatelabel != null)
-                    {
-                        Email = "no-reply@" + privatelabel.PrivateLabelUrl.Replace("www.", "");
-                        envir = privatelabel.PrivateLabelShortName;
-                    }
-                    subject = "Your " + envir + " Password";
-                    fromemail = Email;
-                }
-
-                if (!string.IsNullOrEmpty(result.HtmlTemplate))
-                {
-                    subject = !string.IsNullOrEmpty(result.Subject) ? result.Subject : subject;
-                    fromemail = !string.IsNullOrEmpty(result.From) ? result.From : fromemail;
-                }
-
-
-                EmailCommunicationParams emailParams = new EmailCommunicationParams()
-                {
-                    Subject = subject,
-                    From = fromemail,
-                    To = email,
-                    CC = null,
-                    BCC = null,
-                    EmailBody = HtmlTemplate.ToString(),
-                    Tenant = callContact.GlobalTenantId,
-                    LoggingUserId = callContact.Id,
-                    IsBodySecured = true,
-                };
-
-                Communications.AddEmailCommunicationLogQueue(emailParams, callContact.GlobalTenantId);
-                //    scope.Complete();
-                //}
+                ResetUserPasswordService resetUserPasswordService = new ResetUserPasswordService();
+                resetUserPasswordService.ResetUserPassword(resetPasswordParameters, appMobileEnvironment, tenant);
             }
-
-
-
-
 
             return exists;
         }
-
-
+        
         [WebMethod]
         public bool CheckIfUserIsExists(string email, int tenant, ref bool hasPassword, ref bool hasContact)
         {
@@ -725,24 +525,5 @@ namespace WebFreight.Web.WebServices
             }
             return isValid;
         }
-
-
-        private DocumentType GetDocumentTypeForResetPassword(int tenant)
-        {
-            DocumentType documentType = null;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCRP", tenant);
-                scope.Complete();
-
-            }
-            if (documentType != null && !string.IsNullOrEmpty(documentType.DocumentTypeDefaultHTMLTemplateId)) return documentType;
-            else return null;
-
-        }
-
-
-
     }
 }
