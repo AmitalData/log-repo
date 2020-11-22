@@ -993,9 +993,6 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
     }
 
-    private customerSalesmanId: string;
-    private customerSalesmanBusinessUnitId: string;
-
     get CustomerId() { return this.EntityPM.CustomerId; }
     set CustomerId(newValue: string) {
         if (this.EntityPM.CustomerId != newValue) {
@@ -1008,8 +1005,6 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.EntityPM.CustomerName = null;
                 this.EntityPM.CustomerNote = null;
                 this.CustomerAddressId = null;
-                this.customerSalesmanId = null;
-                this.customerSalesmanBusinessUnitId = null;
             }
 
             else {
@@ -1021,8 +1016,6 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                             this.EntityPM.CustomerName = myCardList.EnglishName;
                             this.EntityPM.CustomerNote = myCardList.Notes;
                             this.CustomerAddressId = myCardList.MainAddressId;
-                            this.customerSalesmanId = myCardList.SalesmanUserId;
-                            this.customerSalesmanBusinessUnitId = myCardList.SalesmanBusinessUnitId;
                             this.SetCustomePartner();
                         }
                     }
@@ -2355,17 +2348,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 if (s) {
                     if (customerType == "Shipper") {
                         this.ShipperId = comp.EntityPM.Id;
-                        this.customerSalesmanId = comp.EntityPM.SalesmanUserId;
                     }
 
                     else if (customerType == "Consignee") {
                         this.ConsigneeId = comp.EntityPM.Id;
-                        this.customerSalesmanId = comp.EntityPM.SalesmanUserId;
                     }
 
                     else if (customerType == "Customer") {
                         this.CustomerId = comp.EntityPM.Id;
-                        this.customerSalesmanId = comp.EntityPM.SalesmanUserId;
                     }
                 }
             });
@@ -2432,7 +2422,6 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 logWindow.ComponentLoaded.subscribe(comp => {
                     logWindow.WindowClosed.subscribe(s => {
                         if (s) {
-                            this.customerSalesmanId = comp.EntityPM.SalesmanUserId;
 
                             if (customerType == "Shipper") {
                                 this.ShipperId = comp.EntityPM.Id;
@@ -2560,13 +2549,13 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     private SetCustomerDataOnFinish() {
         this.SetCustomePartner();
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.SalesmanUserId)) {
-            this.EntityPM.SalesmanUserId = AppTool.IsNullOrEmpty(this.customerSalesmanId) ? this.EntityPM.CreatedByUserId : this.customerSalesmanId;
-        }
+        //if (AppTool.IsNullOrEmpty(this.EntityPM.SalesmanUserId)) {
+        //    this.EntityPM.SalesmanUserId = AppTool.IsNullOrEmpty(this.customerSalesmanId) ? this.EntityPM.CreatedByUserId : this.customerSalesmanId;
+        //}
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.BusinessUnitId)) {
-            this.EntityPM.BusinessUnitId = AppTool.IsNullOrEmpty(this.customerSalesmanBusinessUnitId) ? SessionLocator.LoggedUserPM.BusinessUnitId : this.customerSalesmanBusinessUnitId;
-        }
+        //if (AppTool.IsNullOrEmpty(this.EntityPM.BusinessUnitId)) {
+        //    this.EntityPM.BusinessUnitId = AppTool.IsNullOrEmpty(this.customerSalesmanBusinessUnitId) ? SessionLocator.LoggedUserPM.BusinessUnitId : this.customerSalesmanBusinessUnitId;
+        //}
 
         //this.EntityPM.CustomerId = null;
         //this.EntityPM.CustomerName = null;
