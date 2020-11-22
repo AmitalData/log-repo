@@ -100,6 +100,11 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationSetSLAValue AutomationSetSLAValue { get; set; }
+
+
+        [DataMember]
+        public AutomationSendInterface AutomationSendInterface { get; set; }
+
     }
 
 
@@ -112,10 +117,13 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string ObjectFieldId { get; set; }
 
-
         [DataMember]
         public string ObjectFieldCode { get; set; }
 
-        
     }
+
+
+   
+
+
 }

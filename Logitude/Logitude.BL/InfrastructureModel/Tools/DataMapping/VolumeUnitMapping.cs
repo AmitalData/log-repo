@@ -9,6 +9,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
         {
             poco.Code = entityPM.Code;
             poco.Name = entityPM.Name;
+            poco.PrintAs = entityPM.PrintAs;
             poco.SearchFields = entityPM.SearchFields; 
 
         }

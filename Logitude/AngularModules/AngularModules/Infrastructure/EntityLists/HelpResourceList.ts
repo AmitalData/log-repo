@@ -23,5 +23,6 @@ export class HelpResourceList {
 		Tenant: number;
 		TypeName: string;
 		CategoryName: string;
+		Inactive: boolean;
 	
 }

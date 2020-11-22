@@ -96,11 +96,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         public List<LedgerTransactionList> GetLedgerTransactionListForceOrderByDateTypeCodeAndId(
-            IQueryable<LedgerTransaction> LedgerTransactionQuery, string DateTypeCode, int pageSize, int pageStartAtRecordIndex)
+            IQueryable<LedgerTransaction> LedgerTransactionQuery, LedgerTransactionBalanceFilter _Param , bool IsFromExcelGenerator=false)
         {
             //var skip = pageSize * curPageZeroBase;
-            var skip = pageStartAtRecordIndex;
-            var q = LedgerTransactionQuery.Skip(skip).Take(pageSize);
+            var skip = _Param.PageStartAtRecordIndex;
+            var q = IsFromExcelGenerator? LedgerTransactionQuery :LedgerTransactionQuery.Skip(skip).Take(_Param.PageSize);
             IQueryable<LedgerTransactionList> ledgerTransactionListQuery = null;
             if (this.context.ToString().StartsWith("Fake"))
             {
@@ -111,7 +111,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 ledgerTransactionListQuery = GetIqueryableList(q);
             }
 
-            switch (DateTypeCode)
+            switch (_Param.DateTypeCode)
             {
                 case "2":// GLAccountTotalDateTypeValues.DueDate:
                     {
@@ -503,7 +503,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Where(rec => rec.CreateDate <= maxCreateDate)
                 .Take(callback.TotalRecord);
             var skipped = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
-            query2 = query2
+            query2 = callback.IsFromExcelGenerator? query2: query2
                 .Skip(skipped)
                 .Take(queryOperations.PageSize);
             var mylist = query2.ToList();
@@ -1359,6 +1359,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         // =HaveValue(FromDate || ToDate || SearchText ) Or DBCount HaveMore CallBackTotalRecord
         public bool IsPartial { get; set; }
+
+        public bool IsFromExcelGenerator { get; set; }
     }
 
     public class LedgerTransactionCardIndexFilter

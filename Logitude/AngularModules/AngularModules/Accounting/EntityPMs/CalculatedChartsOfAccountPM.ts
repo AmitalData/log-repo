@@ -166,7 +166,10 @@ export class CalculatedChartsOfAccountPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -176,6 +179,7 @@ export class CalculatedChartsOfAccountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CalculatedChartsOfAccount");
            
         }
+       }
     }
 
     private MyClone: CalculatedChartsOfAccountPM;

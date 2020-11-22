@@ -112,17 +112,19 @@ export class QuoteTotalVATPM {
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
     public UniqueKey: string;
-	 	
+    public DisableMarkAsDirty: boolean = false;	 	
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
-        this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTotalVAT");
-           
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTotalVAT");
+
+            }
         }
     }
     private MyClone: QuoteTotalVATPM;

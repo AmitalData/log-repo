@@ -4,8 +4,9 @@ import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
 import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
+import { AutomationSendInterface } from './AutomationSendInterface';
 
-@Injectable()
+@Injectable() 
 
 export class AutomatedBackup {
 
@@ -28,9 +29,15 @@ export class AutomatedBackup {
     AutomationFollowUp: AutomationFollowUp;
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
+    AutomationSendInterface: AutomationSendInterface;
+
+
 }
 
 export class AutomationSetSLAValue {
     SLAId: string;
     ObjectFieldCode: string;
 }
+
+
+

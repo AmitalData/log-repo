@@ -15,6 +15,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         int tenant;
         ReconciliationPM reconciliationPM;
         List<LedgerTransactionPM> recoTransactions;
+        List<ReconciliationLinePM> paymentsRecoLines;
+        List<ReconciliationLinePM> remainingPaymentRecoLines;
+        List<ReconciliationPM> paymentReconciliations = new List<ReconciliationPM>();
+
         public MultipleARPaymentReconciliationSplitter(ReconciliationPM reconcileToSplit)
         {
             tenant = reconcileToSplit.Tenant;
@@ -27,48 +31,108 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         {
             List<ReconciliationLinePM> paymentsRecoLines = GetPaymentReconciliationLines();
             List<ReconciliationLinePM> nonPaymentsRecoLines = GetNonPaymentReconciliationLines();
-            List<ReconciliationPM> paymentReconciliations = new List<ReconciliationPM>();
 
             foreach (ReconciliationLinePM paymentReconcileLine in paymentsRecoLines)
             {
-                ReconciliationPM newReconciliation = CreateReconciliationForPayment(nonPaymentsRecoLines, paymentReconcileLine);
-                paymentReconciliations.Add(newReconciliation);
+                ReconciliationPM newReconciliation;
+                if (nonPaymentsRecoLines.Count > 0)
+                {
+                    newReconciliation = ReconcilePaymentWithOtherLines(nonPaymentsRecoLines, paymentReconcileLine);
+                    paymentReconciliations.Add(newReconciliation);
+                }
+                else if (paymentsRecoLines.Count == 2)
+                {
+                    paymentReconciliations.Add(ReconcilePaymentsOnly(paymentsRecoLines));
+                    break;
+                }
             }
             return paymentReconciliations;
         }
 
-        ReconciliationPM CreateReconciliationForPayment(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationLinePM paymentReconcileLine)
+        private ReconciliationPM ReconcilePaymentsOnly(List<ReconciliationLinePM> paymentsRecoLines)
         {
             ReconciliationPM newReconciliation = InitNewReconciliation();
-            newReconciliation.ReconciliationLines.Add(paymentReconcileLine);
-            decimal paymentAmount2Reconcile = Math.Abs(paymentReconcileLine.ReconciliationAmount);
-
-            while (nonPaymentsRecoLines.Count > 0 && paymentAmount2Reconcile > 0)
-            {
-                ReconciliationLinePM otherRecoLine = nonPaymentsRecoLines.First();
-                if (otherRecoLine.ReconciliationAmount > paymentAmount2Reconcile)
-                {
-                    SliceAndAddRecoLine(newReconciliation, paymentAmount2Reconcile, otherRecoLine);
-                    paymentAmount2Reconcile = 0;
-                }
-                else
-                {
-                    newReconciliation.ReconciliationLines.Add(otherRecoLine);
-                    nonPaymentsRecoLines.Remove(otherRecoLine);
-                    paymentAmount2Reconcile -= Math.Abs(otherRecoLine.ReconciliationAmount);
-                }
-            }
+            newReconciliation.ReconciliationLines.AddRange(paymentsRecoLines);
             return newReconciliation;
         }
 
-        void SliceAndAddRecoLine(ReconciliationPM newReconciliation, decimal paymentAmount2Reconcile, ReconciliationLinePM otherRecoLine)
+        //List<ReconciliationLinePM> oppositePaymentsRecoLines = GetNonUsedPaymentRecoLines(paymentReconcileLine);
+        //ReconciliationLinePM oppositeRecoLine = nonPaymentsRecoLines.Count > 0 ? nonPaymentsRecoLines.First() : oppositePaymentsRecoLines.First();
+
+        ReconciliationPM ReconcilePaymentWithOtherLines(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationLinePM paymentReconcileLine)
+        {
+            ReconciliationPM newReconciliation = InitNewReconciliation();
+
+            AddPaymentReconcileLine(paymentReconcileLine, newReconciliation);
+
+            AddNonPaymentReconcileLine(nonPaymentsRecoLines, paymentReconcileLine, newReconciliation);
+
+            return newReconciliation;
+        }
+
+        private static void AddPaymentReconcileLine(ReconciliationLinePM paymentReconcileLine, ReconciliationPM newReconciliation)
+        {
+            newReconciliation.ReconciliationLines.Add(paymentReconcileLine);
+        }
+
+        private void AddNonPaymentReconcileLine(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationLinePM paymentReconcileLine, ReconciliationPM newReconciliation)
+        {
+            while (paymentReconcileLine.ReconciliationAmount != 0)
+            {
+                ReconciliationLinePM lineToAdd = GetOppositeRecoLine(nonPaymentsRecoLines);
+
+                if (IsLineHasAmountGreaterThanPaymentLine(paymentReconcileLine, lineToAdd))
+                    lineToAdd = SliceLine(paymentReconcileLine.ReconciliationAmount, lineToAdd);
+
+                AddLine(nonPaymentsRecoLines, newReconciliation, lineToAdd);
+                SubtractLineAmountFromPaymentLine(paymentReconcileLine, lineToAdd);
+            }
+        }
+
+        private static bool IsLineHasAmountGreaterThanPaymentLine(ReconciliationLinePM paymentReconcileLine, ReconciliationLinePM oppositeRecoLine)
+        {
+            return Math.Abs(oppositeRecoLine.ReconciliationAmount) > Math.Abs(paymentReconcileLine.ReconciliationAmount);
+        }
+
+        private static ReconciliationLinePM GetOppositeRecoLine(List<ReconciliationLinePM> nonPaymentsRecoLines)
+        {
+            return nonPaymentsRecoLines.First();
+        }
+
+        private static void AddLine(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationPM newReconciliation, ReconciliationLinePM oppositeRecoLine)
+        {
+            newReconciliation.ReconciliationLines.Add(oppositeRecoLine);
+
+            if(nonPaymentsRecoLines.Exists(d=>d == oppositeRecoLine))
+                nonPaymentsRecoLines.Remove(oppositeRecoLine);
+        }
+
+        private static void SubtractLineAmountFromPaymentLine(ReconciliationLinePM paymentReconcileLine, ReconciliationLinePM oppositeRecoLine)
+        {
+            if (oppositeRecoLine.ReconciliationAmount > paymentReconcileLine.ReconciliationAmount)
+                paymentReconcileLine.ReconciliationAmount = 0;
+            else if (paymentReconcileLine.ReconciliationAmount > 0)
+                paymentReconcileLine.ReconciliationAmount -= Math.Abs(oppositeRecoLine.ReconciliationAmount);
+            else
+                paymentReconcileLine.ReconciliationAmount += Math.Abs(oppositeRecoLine.ReconciliationAmount);
+        }
+
+        private List<ReconciliationLinePM> GetNonUsedPaymentRecoLines(ReconciliationLinePM paymentReconcileLine)
+        {
+            if (paymentReconcileLine.ReconciliationAmount > 0)
+                return remainingPaymentRecoLines.Where(d => d.ReconciliationAmount < 0).ToList();
+            else
+                return remainingPaymentRecoLines.Where(d => d.ReconciliationAmount > 0).ToList();
+        }
+
+        ReconciliationLinePM SliceLine(decimal paymentAmount2Reconcile, ReconciliationLinePM otherRecoLine)
         {
             ReconciliationLinePM sliceLine = CloneReconcileLine(otherRecoLine);
-            sliceLine.ReconciliationAmount = paymentAmount2Reconcile;
-            newReconciliation.ReconciliationLines.Add(sliceLine);
+            sliceLine.ReconciliationAmount = paymentAmount2Reconcile > 0 ? Math.Abs(paymentAmount2Reconcile)*-1 : Math.Abs(paymentAmount2Reconcile);
 
             otherRecoLine.ReconciliationAmount -= sliceLine.ReconciliationAmount; // slice B - remaining
 
+            return sliceLine;
         }
 
         List<LedgerTransactionPM> GetReconcileTransactions()

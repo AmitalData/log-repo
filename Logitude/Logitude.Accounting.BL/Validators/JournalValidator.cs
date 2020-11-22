@@ -15,6 +15,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -148,7 +149,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 currDateTimeUtcNow = (DateTime)accountingValidationContextServiceProvider.Items[JournalValidator.K_DateTimeUtcNow];
             }
-            currDateTimeUtcNow = currDateTimeUtcNow ?? DateTime.UtcNow;
+            currDateTimeUtcNow = currDateTimeUtcNow ?? TenantServerConfigration.GetCurrentDateTime(myJournalPM.Tenant); //DateTime.UtcNow;
 
             if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_AccountingPeriodsByTypeRegular))
             {

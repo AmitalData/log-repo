@@ -147,6 +147,16 @@ export class CalculatedChartsOfAccountsLinePM {
     public set ErrorLog(newValue: string) { if (this.errorLog != newValue) { this.errorLog = newValue; this.MarkAsDirty("ErrorLog"); } }
        
 	 
+    private chartOfAccountIdForValidate: string;
+    public get ChartOfAccountIdForValidate() { return this.chartOfAccountIdForValidate; }
+    public set ChartOfAccountIdForValidate(newValue: string) { if (this.chartOfAccountIdForValidate != newValue) { this.chartOfAccountIdForValidate = newValue; this.MarkAsDirty("ChartOfAccountIdForValidate"); } }
+       
+	 
+    private chartOfAccountTypeCode: string;
+    public get ChartOfAccountTypeCode() { return this.chartOfAccountTypeCode; }
+    public set ChartOfAccountTypeCode(newValue: string) { if (this.chartOfAccountTypeCode != newValue) { this.chartOfAccountTypeCode = newValue; this.MarkAsDirty("ChartOfAccountTypeCode"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
 	
@@ -161,7 +171,10 @@ export class CalculatedChartsOfAccountsLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -171,6 +184,7 @@ export class CalculatedChartsOfAccountsLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CalculatedChartsOfAccountsLine");
            
         }
+       }
     }
 
     private MyClone: CalculatedChartsOfAccountsLinePM;

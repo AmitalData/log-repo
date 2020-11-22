@@ -249,11 +249,19 @@ export class InterestReportPM {
     public set IsNewReport(newValue: boolean) { if (this.isNewReport != newValue) { this.isNewReport = newValue; this.MarkAsDirty("IsNewReport"); } }
        
 	 
+    private creditAllotmentPercentage: number;
+    public get CreditAllotmentPercentage() { return this.creditAllotmentPercentage; }
+    public set CreditAllotmentPercentage(newValue: number) { if (this.creditAllotmentPercentage != newValue) { this.creditAllotmentPercentage = newValue; this.MarkAsDirty("CreditAllotmentPercentage"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -261,6 +269,7 @@ export class InterestReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InterestReport");
            
         }
+       }
     }
 
     private MyClone: InterestReportPM;

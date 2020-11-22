@@ -36,7 +36,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPaymentStatus GetARPaymentStatusByCode(string Code,int Tenant)
+		public ARPaymentStatus GetARPaymentStatusByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("ARPaymentStatus with Code " + Code + " doesn't exist");
 
-				return ARPaymentStatusDataMapping(temp,Tenant);
+				return ARPaymentStatusDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

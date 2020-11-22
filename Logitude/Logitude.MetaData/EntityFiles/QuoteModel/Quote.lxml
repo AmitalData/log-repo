@@ -52,7 +52,6 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="true"
   AllowedForComputingPartners="false"
-  IsBusinessUnitEnabled="true"
   Code1="&quot;QFLU&quot;"
   Name1="&quot;Follow Ups&quot;"
   CustomFieldsCount="0"
@@ -6307,7 +6306,7 @@
     PMPropertyPath="&quot;CreatedByUserId&quot;"
     ListPropertyPath="&quot;CreatedByUserId&quot;"
     DisplayInLookUpIndex="0"
-    AutomaticField="false"
+    AutomaticField="true"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="false"
@@ -25612,6 +25611,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DescriptionRightToLeft&quot;"
     ListPropertyPath="&quot;DescriptionRightToLeft&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -27595,8 +27595,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AcceptedDate&quot;"
         FieldName="&quot;AcceptedDate&quot;"
@@ -27610,8 +27609,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AgentReference1&quot;"
         FieldName="&quot;AgentReference1&quot;"
@@ -27625,8 +27623,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AgentReference2&quot;"
         FieldName="&quot;AgentReference2&quot;"
@@ -27640,8 +27637,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ChargeableWeight&quot;"
         FieldName="&quot;ChargeableWeight&quot;"
@@ -27655,8 +27651,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ConsigneeReference1&quot;"
         FieldName="&quot;ConsigneeReference1&quot;"
@@ -27670,8 +27665,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ConsigneeReference2&quot;"
         FieldName="&quot;ConsigneeReference2&quot;"
@@ -27685,8 +27679,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CostTotalAmountInLocalCurrency&quot;"
         FieldName="&quot;CostTotalAmountInLocalCurrency&quot;"
@@ -27700,8 +27693,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CostTotalAmountInSaleCurrency&quot;"
         FieldName="&quot;CostTotalAmountInSaleCurrency&quot;"
@@ -27715,8 +27707,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CustomerReference1&quot;"
         FieldName="&quot;CustomerReference1&quot;"
@@ -27730,8 +27721,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CustomerReference2&quot;"
         FieldName="&quot;CustomerReference2&quot;"
@@ -27745,8 +27735,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeclinedDate&quot;"
         FieldName="&quot;DeclinedDate&quot;"
@@ -27760,8 +27749,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeliveryLocation&quot;"
         FieldName="&quot;DeliveryLocation&quot;"
@@ -27775,8 +27763,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DepartureFrequency&quot;"
         FieldName="&quot;DepartureFrequency&quot;"
@@ -27790,8 +27777,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DescriptionOfGoods&quot;"
         FieldName="&quot;DescriptionOfGoods&quot;"
@@ -27805,8 +27791,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DimFactor&quot;"
         FieldName="&quot;DimFactor&quot;"
@@ -27820,8 +27805,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;EstimateProfit&quot;"
         FieldName="&quot;EstimateProfit&quot;"
@@ -27835,8 +27819,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;EstimateProfitInSaleCurrency&quot;"
         FieldName="&quot;EstimateProfitInSaleCurrency&quot;"
@@ -27850,8 +27833,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ExpirationDate&quot;"
         FieldName="&quot;ExpirationDate&quot;"
@@ -27865,8 +27847,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         FieldName="&quot;GrossWeight&quot;"
@@ -27880,8 +27861,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IncludeDelivery&quot;"
         FieldName="&quot;IncludeDelivery&quot;"
@@ -27895,8 +27875,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;IncludePickUp&quot;"
         FieldName="&quot;IncludePickUp&quot;"
@@ -27910,8 +27889,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;LastVersionNumber&quot;"
         FieldName="&quot;LastVersionNumber&quot;"
@@ -27925,8 +27903,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CreateDate&quot;"
         FieldName="&quot;OpenDate&quot;"
@@ -27940,8 +27917,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ProductCode&quot;"
         FieldName="&quot;ProductCode&quot;"
@@ -27955,8 +27931,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SaleTotalAmountInSaleCurrency&quot;"
         DCVersion="&quot;&quot;"
@@ -27971,8 +27946,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Notes&quot;"
         DCVersion="&quot;&quot;"
@@ -27987,8 +27961,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;UpdateDate&quot;"
         DCVersion="&quot;&quot;"
@@ -28003,8 +27976,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;QuoteNumber&quot;"
         DCVersion="&quot;&quot;"
@@ -28019,8 +27991,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SentDate&quot;"
         DCVersion="&quot;&quot;"
@@ -28035,8 +28006,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ShipperPickAddressId&quot;"
         DCVersion="&quot;&quot;"
@@ -28051,8 +28021,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ShipperReference1&quot;"
         DCVersion="&quot;&quot;"
@@ -28067,8 +28036,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ShipperReference2&quot;"
         DCVersion="&quot;&quot;"
@@ -28083,8 +28051,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;StageDueDate&quot;"
         DCVersion="&quot;&quot;"
@@ -28099,8 +28066,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Subject&quot;"
         DCVersion="&quot;&quot;"
@@ -28115,8 +28081,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;TEU&quot;"
         DCVersion="&quot;&quot;"
@@ -28131,8 +28096,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;TotalContainers&quot;"
         DCVersion="&quot;&quot;"
@@ -28147,8 +28111,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;TransitTime&quot;"
         DCVersion="&quot;&quot;"
@@ -28163,8 +28126,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ValueOfGoods&quot;"
         DCVersion="&quot;&quot;"
@@ -28179,8 +28141,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;StartDate&quot;"
         FieldName="&quot;StartDate&quot;"
@@ -28194,8 +28155,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Volume&quot;"
         DCVersion="&quot;&quot;"
@@ -28210,8 +28170,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;AgentContact&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28226,8 +28185,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Agent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28242,8 +28200,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Branch&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28258,8 +28215,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Department&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28274,8 +28230,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ChargeableWeightUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28290,8 +28245,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ShipperContact&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28306,8 +28260,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Shipper&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28322,8 +28275,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ConsigneeContact&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28338,8 +28290,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Consignee&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28354,8 +28305,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CreatedByUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28370,8 +28320,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;UpdatedByUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28386,8 +28335,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;CustomerContact&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28402,8 +28350,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Customer&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28418,8 +28365,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeliveryAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28434,8 +28380,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DimensionsUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28450,8 +28395,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Direction&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28466,8 +28410,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;TransportMode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28482,8 +28425,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;FromPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28498,8 +28440,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ToPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28514,8 +28455,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;GrossWeightUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28530,8 +28470,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Incoterm&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28546,8 +28485,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MainCarriageCarrier&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28562,8 +28500,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;MoveType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28578,8 +28515,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PickUpAddress&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28594,8 +28530,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;QuoteType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28610,8 +28545,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SaleCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28626,8 +28560,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SalesmanUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28642,8 +28575,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ShipmentType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28658,8 +28590,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Stage&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28674,8 +28605,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;ValueOfGoodsCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28690,8 +28620,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VolumeUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28706,8 +28635,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;QuoteCharges&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28723,8 +28651,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType1&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28739,8 +28666,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType2&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28755,8 +28681,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType3&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28771,8 +28696,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType4&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28787,8 +28711,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType5&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28803,8 +28726,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType1Quantity&quot;"
         FieldName="&quot;PackageType1Quantity&quot;"
@@ -28818,8 +28740,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType2Quantity&quot;"
         FieldName="&quot;PackageType2Quantity&quot;"
@@ -28833,8 +28754,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType3Quantity&quot;"
         FieldName="&quot;PackageType3Quantity&quot;"
@@ -28848,8 +28768,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType4Quantity&quot;"
         FieldName="&quot;PackageType4Quantity&quot;"
@@ -28863,8 +28782,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackageType5Quantity&quot;"
         FieldName="&quot;PackageType5Quantity&quot;"
@@ -28878,8 +28796,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PackagesQuantity&quot;"
         FieldName="&quot;NumberOfPackages&quot;"
@@ -28893,8 +28810,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;VolumetricWeight&quot;"
         FieldName="&quot;VolumetricWeight&quot;"
@@ -28908,8 +28824,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;QuotePackages&quot;"
         FieldName="&quot;QuotePackages&quot;"
@@ -28924,8 +28839,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;StageDate&quot;"
         FieldName="&quot;LastStageDate&quot;"
@@ -28939,8 +28853,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;SameOrFixed&quot;"
         FieldName="&quot;SameOrFixed&quot;"
@@ -28954,8 +28867,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PickupCity&quot;"
         FieldName="&quot;PickupCity&quot;"
@@ -28969,8 +28881,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PickupCountry&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -28985,8 +28896,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;PickupZipCode&quot;"
         FieldName="&quot;PickupZipCode&quot;"
@@ -29000,8 +28910,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeliveryCity&quot;"
         FieldName="&quot;DeliveryCity&quot;"
@@ -29015,8 +28924,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeliveryCountry&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -29031,8 +28939,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;DeliveryZipCode&quot;"
         FieldName="&quot;DeliveryZipCode&quot;"
@@ -29046,8 +28953,7 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -30321,6 +30227,15 @@
       FeatureTextCodeCode="&quot;Quote.Features.QuotePriceCheck&quot;"
       FeatureDefaultText="&quot;Price Check&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QuoteClosedAutomatically&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Quote.Features.QuoteClosedAutomatically&quot;"
+      FeatureDefaultText="&quot;Quote Closed Automatically&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

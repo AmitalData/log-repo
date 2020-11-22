@@ -61,7 +61,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
             
         }
 
-        public GLAccount GLAccountCustomDataMapping(string Id, int Tenant)
+        public GLAccount GLAccountCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             return new GLAccount();
         }

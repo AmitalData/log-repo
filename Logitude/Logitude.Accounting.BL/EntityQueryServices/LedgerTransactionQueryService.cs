@@ -53,7 +53,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             )
         {
             bool check20181209 = false;
-
+            if ((this.context as System.Data.Entity.DbContext).Database.CommandTimeout<1200)//wrokerrole mode !!!
+            {
+                (this.context as System.Data.Entity.DbContext).Database.CommandTimeout = 1200;
+            }
+            
             var qLedgerTransByAcountingDate =
                 this.repository.GetAll(tenant).Where(rec =>
                     EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDate.Date &&

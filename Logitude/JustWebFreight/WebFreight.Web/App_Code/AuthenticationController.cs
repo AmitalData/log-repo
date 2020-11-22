@@ -2525,7 +2525,14 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, bool ischamplogin)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), ischamplogin, false,false);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = ischamplogin,
+                IsMobile = false,
+                UseCaptcha = false,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }
@@ -2553,7 +2560,14 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(bool ismobile, string email)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, ismobile, false);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = false,
+                IsMobile = ismobile,
+                UseCaptcha = false,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }
@@ -2562,7 +2576,17 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, string appEnvironment)//New Method
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, true, false,null,null, appEnvironment);
+            ResetPasswordParameters resetPasswordParameters = new ResetPasswordParameters
+            {
+                Email = email.ToLower(),
+                IsChampLogin = false,
+                IsMobile= true,
+                UseCaptcha = false,
+                CaptchaCode = null,
+                CaptchaKey = null,
+                AppEnvironment = appEnvironment,
+            };
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
 
             return userData;
         }

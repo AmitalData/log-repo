@@ -60,6 +60,7 @@ export class LedgerTransactionList {
 	ReconciliationId: string;
 	PaymentReconciledAmount: number;
 	InProgressExternalReconcile: boolean;
+	OriginalAmount: number;
 	
 }
  

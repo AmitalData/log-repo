@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
     {
         private List<BankPageDTO> _BankPagesDTO;
         List<TenantPagesOfAccountDTO> _TenantBankPagesDTO = new List<TenantPagesOfAccountDTO>();
-
+        private static Object thisLock = new Object();
 
         static string ConvertFromDosHeberwToWinHeberw(string FileContent862)
         {
@@ -40,55 +40,57 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         }
         public void Analyze(int? ptenant, string FileContent)
         {
-
-            try
+            lock (thisLock)
             {
-                FileContent = ConvertFromDosHeberwToWinHeberw(FileContent);
-                int? tenantFromPage4Tester = null;
-                _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent, out tenantFromPage4Tester);
-
-                if (tenantFromPage4Tester.HasValue)
+                try
                 {
-                    ptenant = tenantFromPage4Tester.Value;
-                }
-                if (!ptenant.HasValue)
-                {
-                    throw new Exception("unable to find tenantFromPage4Tester ");
-                }
-                FixSignOfOpenCloseBalance();
-            }
-            catch (Exception e)
-            {
+                    FileContent = ConvertFromDosHeberwToWinHeberw(FileContent);
+                    int? tenantFromPage4Tester = null;
+                    _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
-                throw new Exception("LoadBankPageFromFile(FileContent) failed while CreateBankPagesDTOFromFile ", e);
-            }
-            int tenant = ptenant.Value;
-            TenantBankPagesFilter(tenant, _BankPagesDTO);
-
-            foreach (var validBankAccountDTO in _TenantBankPagesDTO)
-            {
-                foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
-                {
-                    _BankAccountQueryService = new BankAccountQueryService(tenant);
-                    var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
-                    try
+                    if (tenantFromPage4Tester.HasValue)
                     {
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        ptenant = tenantFromPage4Tester.Value;
+                    }
+                    if (!ptenant.HasValue)
+                    {
+                        throw new Exception("unable to find tenantFromPage4Tester ");
+                    }
+                    FixSignOfOpenCloseBalance();
+                }
+                catch (Exception e)
+                {
+
+                    throw new Exception("LoadBankPageFromFile(FileContent) failed while CreateBankPagesDTOFromFile ", e);
+                }
+                int tenant = ptenant.Value;
+                TenantBankPagesFilter(tenant, _BankPagesDTO);
+
+                foreach (var validBankAccountDTO in _TenantBankPagesDTO)
+                {
+                    foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
+                    {
+                        _BankAccountQueryService = new BankAccountQueryService(tenant);
+                        var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
+                        try
                         {
-                            var successCommit=AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
-                            if (successCommit)
+                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                             {
-                                scope.Complete();
+                                var successCommit = AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
+                                if (successCommit)
+                                {
+                                    scope.Complete();
+                                }
                             }
+
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
                         }
 
                     }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-
                 }
             }
         }

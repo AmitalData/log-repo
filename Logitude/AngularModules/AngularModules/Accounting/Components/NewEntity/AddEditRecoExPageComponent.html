@@ -95,7 +95,7 @@
                                     <td class="HeaderScreenValue">
                                         <div class="TextTrimming" style="width: 100%; position: relative;">
                                             <a style="font-size: 11px;" *ngIf="PreviousPagePM" href="#"
-                                                (click)="OpenPrevPage()">{{PreviousPagePM.PageNo}}</a>
+                                                (click)="OpenPrevPage()" id="PreviousPageNo">{{PreviousPagePM.PageNo}}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -264,6 +264,7 @@
                                                     <td>
                                                         <LogTextBox [ObjectFieldName]="'StartBalance'"
                                                             [ObjectTableName]="ExternalPageTable"
+                                                            [Text]="StartBalance"
                                                             [DataContext]="DataContext" [HideColumns]="true"
                                                             [InputType]="'decimal'"></LogTextBox>
                                                     </td>
@@ -553,7 +554,7 @@
 
                     <td style="width: 57px;">
                         <button class="Button"
-                            (click)="CancelButtonClicked()">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
+                            (click)="CancelButtonClicked()" id="Close">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 7px;">
@@ -570,7 +571,7 @@
                     </td>
 
                     <td style="width: 75px;">
-                        <button class="GreenButton" (click)="ApproveButtonClicked()"
+                        <button class="GreenButton" (click)="ApproveButtonClicked()" id="Approve"
                             [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Approve' | TextCodeTranslationPipe}}</button>
                     </td>
 

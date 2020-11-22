@@ -366,7 +366,10 @@ export class DocumentTypePM {
     public OldEntityPM: DocumentTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -374,6 +377,7 @@ export class DocumentTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentType");
            
         }
+	 }
     }
     private MyClone: DocumentTypePM;
 

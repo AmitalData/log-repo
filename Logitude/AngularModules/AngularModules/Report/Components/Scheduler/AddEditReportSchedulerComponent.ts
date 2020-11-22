@@ -151,7 +151,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
-        this.RunBuildStimulsoftTimer();
+      //  this.RunBuildStimulsoftTimer();
     }
 
     SetRecepientsDetails(isReloaded) {

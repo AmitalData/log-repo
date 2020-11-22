@@ -23,6 +23,15 @@
        
     }
 
+    .CenterMessage {
+        text-align: center;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 50%;
+        bottom: 0;
+    }
+
 </style>
 
 <table *ngIf="IsReady" style="background-color:transparent">
@@ -35,7 +44,7 @@
         <td style="height:45%" class="CellStretch">
 
             <div class="SystemDefaultsBox">
-                <logitude-edit-grid *ngIf="!IsNotDocumentOutFound"
+                <logitude-edit-grid  
                                     GridWidth="100%" GridHeight="100%"
                                     [HeaderHeight]="25" [ItemSource]="DocOutItemsSource">
 
@@ -70,8 +79,8 @@
                         <ng-template let-item>
 
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <div style="width: 100%; height: 100%; position: relative;">
-                                    <div class="CenterCenter">
+                                <div style="width: 100%; height: 100%; position: relative; text-align: center;">
+                                    <div class="CenterCenter" style="padding-left:35px">
                                         <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
                                     </div>
                                 </div>
@@ -85,7 +94,7 @@
 
                 </logitude-edit-grid>
 
-                <div class="SimpleGridViewBody" style="vertical-align:top;text-align:left;margin-top:5px;height:50px;" *ngIf="IsNotDocumentInFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs in Document Types Found</span></div>
+                <div class="SimpleGridViewBody CenterMessage"  *ngIf="IsNotDocumentOutFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs out Document Types Found</span></div>
 
             </div>
                 <!--<div class="SimpleGridView">
@@ -149,14 +158,14 @@
         <td style="height:50%" class="CellStretch">
             <div class="SystemDefaultsBox">
 
-                <logitude-edit-grid *ngIf="!IsNotDocumentOutFound"
+                <logitude-edit-grid  
                                     GridWidth="100%" GridHeight="100%"
                                     [HeaderHeight]="25" [ItemSource]="DocInItemsSource">
 
 
 
                     <!--File Name-->
-                    <log-column [width]="'600'" [header]="'Docs out Document Types'">
+                    <log-column [width]="'600'" [header]="'Docs in Document Types'">
 
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -185,7 +194,7 @@
 
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                 <div style="width: 100%; height: 100%; position: relative;">
-                                    <div class="CenterCenter">
+                                    <div class="CenterCenter" style="padding-left:35px">
                                         <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
                                     </div>
                                 </div>
@@ -199,7 +208,9 @@
 
                 </logitude-edit-grid>
 
-                <div class="SimpleGridViewBody" style="vertical-align:top;text-align:left;margin-top:5px;height:50px;" *ngIf="IsNotDocumentInFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs in Document Types Found</span></div>
+                <div class="SimpleGridViewBody CenterMessage"  *ngIf="IsNotDocumentInFound">
+                    <span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs in Document Types Found</span>
+                </div>
 
             </div>
                 <!--<div class="SimpleGridView">

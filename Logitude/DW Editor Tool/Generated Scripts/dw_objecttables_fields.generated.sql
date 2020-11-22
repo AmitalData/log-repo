@@ -433,6 +433,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PartnersInActiveNewId,0,'DIM_Partners','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PartnersCustomerFirstShipmentDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersCustomerFirstShipmentDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,RecordType) Values(@DIM_PartnersCustomerFirstShipmentDateNewId,0,'DIM_Partners','[Customer First Shipment Date]','Customer First Shipment Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false','Customer')  
+declare @DIM_PartnersCustomerLastShipmentDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersCustomerLastShipmentDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,RecordType) Values(@DIM_PartnersCustomerLastShipmentDateNewId,0,'DIM_Partners','[Customer Last Shipment Date]','Customer Last Shipment Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false','Customer')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 

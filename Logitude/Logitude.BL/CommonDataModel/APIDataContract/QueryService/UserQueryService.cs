@@ -58,13 +58,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
 
-        public User UserCustomDataMapping(string Id, int Tenant)
+        public User UserCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
 
                 UserQueryService UserService0 = new UserQueryService(Tenant);
-                var ChargeType = UserService0.GetUserById(Id, Tenant);
+                var ChargeType = UserService0.GetUserById(Id, Tenant,ComputingPartnerName);
                 return ChargeType;
             }
             catch (Exception ex)

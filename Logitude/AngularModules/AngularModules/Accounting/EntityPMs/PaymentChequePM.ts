@@ -303,7 +303,10 @@ export class PaymentChequePM {
     public OldEntityPM: PaymentChequePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -311,6 +314,7 @@ export class PaymentChequePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PaymentCheque");
            
         }
+       }
     }
 
     private MyClone: PaymentChequePM;

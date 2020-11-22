@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.Poco = new Port();
                 this.Poco.Id = this.entityPM.Id;
+                this.entityPM.AddedManually = true;
 
                 if (!string.IsNullOrEmpty(entityPM.StateId))
                 {

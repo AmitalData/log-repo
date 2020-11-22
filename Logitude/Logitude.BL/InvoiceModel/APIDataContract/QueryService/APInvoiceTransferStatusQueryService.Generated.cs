@@ -36,7 +36,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public APInvoiceTransferStatus GetAPInvoiceTransferStatusByCode(string Code,int Tenant)
+		public APInvoiceTransferStatus GetAPInvoiceTransferStatusByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("APInvoiceTransferStatus with Code " + Code + " doesn't exist");
 
-				return APInvoiceTransferStatusDataMapping(temp,Tenant);
+				return APInvoiceTransferStatusDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

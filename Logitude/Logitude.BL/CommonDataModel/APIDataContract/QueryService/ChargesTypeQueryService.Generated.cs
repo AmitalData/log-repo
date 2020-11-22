@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public ChargesType GetChargesTypeById(string Id,int Tenant)
+		public ChargesType GetChargesTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("ChargesType with Id " + Id + " doesn't exist");
 
-				return ChargesTypeDataMapping(temp,Tenant);
+				return ChargesTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public ChargesType GetChargesTypeByCode(string Code,int Tenant)
+		public ChargesType GetChargesTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("ChargesType with Code " + Code + " doesn't exist");
 
-				return ChargesTypeDataMapping(temp,Tenant);
+				return ChargesTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

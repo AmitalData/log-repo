@@ -127,7 +127,10 @@ export class CustomsTransferHeaderPM {
     public OldEntityPM: CustomsTransferHeaderPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -135,6 +138,7 @@ export class CustomsTransferHeaderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsTransferHeader");
            
         }
+	 }
     }
     private MyClone: CustomsTransferHeaderPM;
 

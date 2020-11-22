@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Department GetDepartmentById(string Id,int Tenant)
+		public Department GetDepartmentById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Department with Id " + Id + " doesn't exist");
 
-				return DepartmentDataMapping(temp,Tenant);
+				return DepartmentDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Department GetDepartmentByCode(string Code,int Tenant)
+		public Department GetDepartmentByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Department with Code " + Code + " doesn't exist");
 
-				return DepartmentDataMapping(temp,Tenant);
+				return DepartmentDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

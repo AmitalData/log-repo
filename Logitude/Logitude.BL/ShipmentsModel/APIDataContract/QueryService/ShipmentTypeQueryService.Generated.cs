@@ -36,7 +36,7 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentType GetShipmentTypeById(string Id,int Tenant)
+		public ShipmentType GetShipmentTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.ShipmentsModel;
 				 if (temp == null)
                     throw new ApplicationException("ShipmentType with Id " + Id + " doesn't exist");
 
-				return ShipmentTypeDataMapping(temp,Tenant);
+				return ShipmentTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

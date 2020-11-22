@@ -139,6 +139,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CreditAllotmentPercentage"
+    Type="decimal"
+    Precision="2"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

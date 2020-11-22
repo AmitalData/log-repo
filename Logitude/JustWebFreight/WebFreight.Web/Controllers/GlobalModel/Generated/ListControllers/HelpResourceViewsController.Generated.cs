@@ -178,7 +178,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -215,6 +215,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 IGlobalContext MyContext = GlobalContext.GetContext();
                 HelpResourceRepository  helpResourceRepository = new HelpResourceRepository(MyContext);
                 IQueryable<HelpResource> entityPocos = helpResourceRepository.GetHelpResources(tenant);
@@ -232,7 +233,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<HelpResourceList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(HelpResourceList).GetProperty(queryOperations.SortByColumnName);
@@ -296,18 +298,18 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Name);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-			  }
+    		  }
 			  	if(!queryOperations.GetAll)
 				 {
 

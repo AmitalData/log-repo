@@ -1,12 +1,16 @@
 ﻿
 using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.Data;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,6 +18,7 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -87,9 +92,66 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
                     var response = new ServiceResponse();
+
+
+                    bool batchIt = true;
+                    
+                    if (batchIt)
+                    {
+                        string batchTaskId;
+                        using (var scope = TransactionFactory.GetNewTransaction())
+                        {
+
+
+                            var _resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(authToken.Tenant);
+                            string communicationLogId;
+
+                            var myByteData = Encoding.UTF8.GetBytes(winHebrewString);
+                            communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+                            {
+                                Tenant = authToken.Tenant,
+                                CommunicationLogTypeCode = "Q",
+                                QueueName = "externaltasksqueue" + authToken.Tenant + 1,
+                                Priority = 1,
+                                InOut = "O",
+                                Status = "D",
+                                FileExtension = "xml",
+                                //LoggingUserId = loggedUserId,
+                                //LoggingObjectTableId = table.Id,
+                                //LoggingEntityId = extDocPM.Id,
+
+                                FolderName = "System1000FlatFileAnalyser",
+
+                                To = "System1000FlatFileAnalyser",
+
+
+                                Subject = "System1000FlatFileAnalyser holder ",
+                                ByteData = myByteData
+
+
+                            });
+
+
+
+                            var myBatchTask = new BatchSystem1000FlatFileAnalyser(null);
+                            string subj = $"System1000FlatFileAnalyser";
+                             batchTaskId = myBatchTask.CreateQBatchTaskExecution<System1000FlatFileAnalyserArgs>(
+                                new System1000FlatFileAnalyserArgs()
+                                {
+                                    Tenant = authToken.Tenant,
+                                    LoggingUserId = _resolveLoggingUserId,
+                                    CommunicationLogId = communicationLogId,
+                                }, authToken.Tenant, subj, false);
+
+                            scope.Complete();
+                           
+                        }
+                        var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                        return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                    }
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
                     var system1000FlatFileAnalyser = new System1000FlatFileAnalyser();
-                    system1000FlatFileAnalyser.Analyse(authToken.Tenant, winHebrewString);
+                    system1000FlatFileAnalyser.Analyse(authToken.Tenant, winHebrewString,null);
                     
                     return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Done" });
                 }

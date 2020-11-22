@@ -153,7 +153,7 @@ export class AddEditPackageHarmonizeComponent {
 
             if (index == -1) {
                 var item = this.InsidePackagePM.InsidePackageHarmonizes[i];
-                this.InsidePackagePM.RemoveInsidePackageHarmonizePM(item);
+                this.InsidePackagePM.RemoveShipmentPackageHarmonizePM(item);
             }
         }
 

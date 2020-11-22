@@ -40,7 +40,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARInvoice GetARInvoiceById(string Id,int Tenant)
+		public ARInvoice GetARInvoiceById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("ARInvoice with Id " + Id + " doesn't exist");
 
-				return ARInvoiceDataMapping(temp,Tenant);
+				return ARInvoiceDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.ARInvoiceTypeCode != null)
 				   {
 					   ARInvoiceTypeQueryService ARInvoiceTypeService0 = new ARInvoiceTypeQueryService(Tenant);
-					   					   temp.InvoiceType = ARInvoiceTypeService0.GetARInvoiceTypeByCode(MyEntityPM.ARInvoiceTypeCode,Tenant); 
+					   					   temp.InvoiceType = ARInvoiceTypeService0.GetARInvoiceTypeByCode(MyEntityPM.ARInvoiceTypeCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -80,7 +80,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BillToId != null)
 				   {
 					   CardQueryService CardService1 = new CardQueryService(Tenant);
-					   					   temp.BillTo = CardService1.CardCustomDataMapping(MyEntityPM.BillToId,Tenant); 
+					   					   temp.BillTo = CardService1.CardCustomDataMapping(MyEntityPM.BillToId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -96,7 +96,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
-					   					   temp.InvoiceCurrency = CurrencyService2.CurrencyCustomDataMapping(MyEntityPM.InvoiceCurrencyId,Tenant); 
+					   					   temp.InvoiceCurrency = CurrencyService2.CurrencyCustomDataMapping(MyEntityPM.InvoiceCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -107,7 +107,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService3 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService3.UserCustomDataMapping(MyEntityPM.CreatedByUserId,Tenant); 
+					   					   temp.CreatedByUser = UserService3.UserCustomDataMapping(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -117,7 +117,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BillToAddressId != null)
 				   {
 					   AddressQueryService AddressService4 = new AddressQueryService(Tenant);
-					   					   temp.BillToAddress = AddressService4.AddressCustomDataMapping(MyEntityPM.BillToAddressId,Tenant); 
+					   					   temp.BillToAddress = AddressService4.AddressCustomDataMapping(MyEntityPM.BillToAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -127,7 +127,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.IssuedByUserId != null)
 				   {
 					   UserQueryService UserService5 = new UserQueryService(Tenant);
-					   					   temp.IssuedByUser = UserService5.UserCustomDataMapping(MyEntityPM.IssuedByUserId,Tenant); 
+					   					   temp.IssuedByUser = UserService5.UserCustomDataMapping(MyEntityPM.IssuedByUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -135,7 +135,7 @@ using Simplog.Data.InvoiceModel;
 				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
 				{
 					 ARInvoiceLineQueryService ARInvoiceLineService6 = new ARInvoiceLineQueryService(Tenant);
-					 temp.ARInvoiceLines = ARInvoiceLineService6.ARInvoiceLineCustomDataMapping(MyEntityPM,MyEntityPM.InvoiceLines,Tenant);
+					 temp.ARInvoiceLines = ARInvoiceLineService6.ARInvoiceLineCustomDataMapping(MyEntityPM,MyEntityPM.InvoiceLines,Tenant,ComputingPartnerName);
 				}
 
 							 
@@ -151,7 +151,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.TransferStatusCode != null)
 				   {
 					   ARInvoiceTransferStatusQueryService ARInvoiceTransferStatusService6 = new ARInvoiceTransferStatusQueryService(Tenant);
-					   					   temp.TransferStatus = ARInvoiceTransferStatusService6.GetARInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant); 
+					   					   temp.TransferStatus = ARInvoiceTransferStatusService6.GetARInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -160,7 +160,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService7 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService7.BranchCustomDataMapping(MyEntityPM.BranchId,Tenant); 
+					   					   temp.Branch = BranchService7.BranchCustomDataMapping(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -169,7 +169,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.LocalCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService8 = new CurrencyQueryService(Tenant);
-					   					   temp.LocalCurrency = CurrencyService8.CurrencyCustomDataMapping(MyEntityPM.LocalCurrencyId,Tenant); 
+					   					   temp.LocalCurrency = CurrencyService8.CurrencyCustomDataMapping(MyEntityPM.LocalCurrencyId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -183,7 +183,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   ARInvoiceStatusQueryService ARInvoiceStatusService9 = new ARInvoiceStatusQueryService(Tenant);
-					   					   temp.Status = ARInvoiceStatusService9.GetARInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant); 
+					   					   temp.Status = ARInvoiceStatusService9.GetARInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					

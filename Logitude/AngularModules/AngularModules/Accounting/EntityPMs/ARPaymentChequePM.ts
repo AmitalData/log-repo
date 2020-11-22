@@ -133,7 +133,10 @@ export class ARPaymentChequePM {
     public OldEntityPM: ARPaymentChequePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -141,6 +144,7 @@ export class ARPaymentChequePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPaymentCheque");
            
         }
+       }
     }
 
     private MyClone: ARPaymentChequePM;

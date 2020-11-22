@@ -372,6 +372,8 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
                             this.VendorName = list.LocalName || list.EnglishName;
+                            this.EntityPM.VendorName = list.LocalName || list.EnglishName;
+                            this.EntityPM.VendorLocalName = list.LocalName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
 

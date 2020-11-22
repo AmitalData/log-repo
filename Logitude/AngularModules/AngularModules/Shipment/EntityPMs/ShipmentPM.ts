@@ -4632,6 +4632,20 @@ export class ShipmentPM {
     public get WeightRoundingCode() { return this.weightRoundingCode; }
     public set WeightRoundingCode(newValue: string) { if (this.weightRoundingCode != newValue) { this.weightRoundingCode = newValue; this.MarkAsDirty("WeightRoundingCode"); } }
 
+    private viewSharedDocuments: string;
+    public get ViewSharedDocuments() { return this.viewSharedDocuments; }
+    public set ViewSharedDocuments(newValue: string) { if (this.viewSharedDocuments != newValue) { this.viewSharedDocuments = newValue; this.MarkAsDirty("ViewSharedDocuments"); } }
+
+    private isAccrualsApproved: boolean;
+    public get IsAccrualsApproved() { return this.isAccrualsApproved; }
+    public set IsAccrualsApproved(newValue: boolean) { if (this.isAccrualsApproved != newValue) { this.isAccrualsApproved = newValue; this.MarkAsDirty("IsAccrualsApproved"); } }
+
+    private accrualsApprovalDate: Date;
+    public get AccrualsApprovalDate() { return this.accrualsApprovalDate; }
+    public set AccrualsApprovalDate(newValue: Date) { if (this.accrualsApprovalDate != newValue) { this.accrualsApprovalDate = newValue; this.MarkAsDirty("AccrualsApprovalDate"); } }
+
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
@@ -5069,12 +5083,15 @@ export class ShipmentPM {
     public ShipmentAPInvoices: Array<any>;
     public ShipmentCarrierStatuses: Array<any>;
 
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ShipmentPMCustomCode.ApplyEntityChanged(propertyName, this);
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Shipment");
+            }
         }
     }
 

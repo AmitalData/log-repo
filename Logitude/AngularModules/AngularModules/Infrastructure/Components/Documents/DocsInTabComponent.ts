@@ -73,6 +73,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     SelectedExternalViewModel: DocsInDataViewModel;
     DeleteAttachmentButtonEnable: boolean = false;
     IsStardLoadPage: boolean;
+    AllowChangeReceiveDateDocsIn : boolean =false;
     public documentsFilingPMService: DocumentsFilingPMService;
     public UndoReceivedButtonEnable: boolean;
     public TabHeaderTextCode: string;
@@ -121,10 +122,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         else this.ObjectTableName = "Shipment";
 
 
+      
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-
+            
 
         // Ayman:
         // we need this for Translation
@@ -167,7 +169,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     private RefreshDocInEvent: any = null;
-
+    private SaveCompletedEvent: any = null;
 
     private Listen() {
 
@@ -187,13 +189,41 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     this.LoadAllDocumentTypeList();
                 }
             });
+
+
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.IsAttachExternalRequested && this.SelectedDocsInDataViewModel) {
+                            this.SelectedDocsInDataViewModel.UploadDocument();
+                        }
+                        this.IsAttachExternalRequested = false;
+                        this.SelectedDocsInDataViewModel = null;
+                    } else {
+                        this.IsClickToUpload = false;
+                    }
+                });
+            }
+
+
+
+
+
         }
     }
 
 
+
+
+ 
+
+
+
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-        //AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
 
@@ -739,5 +769,16 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.CurrentSession.StopBusyIndicator();
         }
     }
+
+
+
+    IsAttachExternalRequested: boolean = false;
+    SelectedDocsInDataViewModel: DocsInDataViewModel;
+    public AttachExternalRequested(docsInDataViewModel: DocsInDataViewModel) {
+        this.SelectedDocsInDataViewModel = docsInDataViewModel;
+        this.IsAttachExternalRequested = true;
+    }
+
+
 
 }

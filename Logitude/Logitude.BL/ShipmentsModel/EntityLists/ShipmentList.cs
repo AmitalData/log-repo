@@ -540,6 +540,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public bool IsDangerous { get; set; }
         public string DangerousUnNumber { get; set; }
-
+        public bool IsAccrualsApproved { get; set; }
+        public DateTime? AccrualsApprovalDate { get; set; }
     }
 }

@@ -1,1 +1,0 @@
-Warning: Missing Index In DXML File CourierMaster.dxml, The Found Index On DB Is AIRLINEID_MAWB_UNIQUE, The Index Should Added To The DXML File

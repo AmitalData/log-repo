@@ -444,7 +444,13 @@ AccountBalanceM endAccountBalanceService)
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,"1", _Param.PageSize, _Param.PageStartAtRecordIndex);
+            LedgerTransactionBalanceFilter LedgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter()
+            {
+                DateTypeCode = "1",
+                PageSize = _Param.PageSize,
+                PageStartAtRecordIndex = _Param.PageStartAtRecordIndex,
+            };
+            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, LedgerTransactionBalanceFilter);
             return list;
         }
 

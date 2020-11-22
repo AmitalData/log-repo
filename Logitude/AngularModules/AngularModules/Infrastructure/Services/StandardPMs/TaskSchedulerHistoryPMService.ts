@@ -153,6 +153,7 @@ export class TaskSchedulerHistoryPMService {
         if (!entityPM) {
             
             entityPM = new TaskSchedulerHistoryPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class TaskSchedulerHistoryPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+
+    update customers set EORInumber = Field1 where Tenant = 2264
+     
+    ]]>
+  </Sql>
+</Script>

@@ -88,7 +88,10 @@ export class QuotePriceStepsPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -98,6 +101,7 @@ export class QuotePriceStepsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuotePriceSteps");
            
         }
+	 }
     }
     private MyClone: QuotePriceStepsPM;
 

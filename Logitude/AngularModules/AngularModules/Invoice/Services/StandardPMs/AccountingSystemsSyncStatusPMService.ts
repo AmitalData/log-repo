@@ -153,6 +153,7 @@ export class AccountingSystemsSyncStatusPMService {
         if (!entityPM) {
             
             entityPM = new AccountingSystemsSyncStatusPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class AccountingSystemsSyncStatusPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

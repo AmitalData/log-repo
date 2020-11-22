@@ -308,92 +308,105 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                  });
 
+            if (false)
+            {
 
-            var qJLDebitVat =
-                (from jl in
-                     qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
-                 from vl in
-                     (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
-                      where v.FromDate <= jl.DocumentDate
-                      select v).Take(1)
-                 select new { jl, vl.myVat }
-                )
-                .Select(rec => new JournalLineLedgerDTO()
-                {
-                    CHANGE_TYPE = "",
-                    JournalId = rec.jl.JournalId,
-                    JournalLineNumber = rec.jl.Line,
-                    AccountId = rec.jl.DebitAccountId,
-                    CurrencyId = rec.jl.CurrencyId,
-                    LocalAmountCredit = 0,
-                    LocalAmountDebit =
-                    Math.Round((double)((double)rec.jl.LocalAmount / (double)rec.myVat), 2),
+                /*
+                 (No column name)	ActionCode
+                4531262	1
+                3489610	2
+                1366	3 
+                 */
+
+                var qJLDebitVat =
+                    (from jl in
+                         qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                     from vl in
+                         (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
+                          where v.FromDate <= jl.DocumentDate
+                          select v).Take(1)
+                     select new { jl, vl.myVat }
+                    )
+                    .Select(rec => new JournalLineLedgerDTO()
+                    {
+                        CHANGE_TYPE = "",
+                        JournalId = rec.jl.JournalId,
+                        JournalLineNumber = rec.jl.Line,
+                        AccountId = rec.jl.DebitAccountId,
+                        CurrencyId = rec.jl.CurrencyId,
+                        LocalAmountCredit = 0,
+                        LocalAmountDebit =
+                        Math.Round((double)((double)rec.jl.LocalAmount / (double)rec.myVat), 2),
                     //Math.Round(((rec.jl.LocalAmount / ((rec.Percentage + 100) / 100))), 2),
                     //rec.Percentage ==null ?  
                     //Math.Round(((double)(rec.jl.LocalAmount / (double)(( 200) / 100))), 2) :
                     //Math.Round(((double)(rec.jl.LocalAmount / (double)((rec.Percentage.GetValueOrDefault() + 100) / 100))), 2) 
 
                     ForeignAmountCredit = 0,
-                    ForeignAmountDebit =
-                    Math.Round((double)((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
-                    //Math.Round(((decimal)(rec.jl.ForeignAmount / (decimal)((rec.Percentage  + 100) / 100))), 2),
-                    //(decimal)Expression.Divide((decimal)rec.ForeignAmount, (decimal)myVat)
-                                        
-                    ,AccountingDate = rec.jl.AccountingDate,
-                    DueDate = rec.jl.DueDate,
-                    DocumentDate = rec.jl.DocumentDate,
+                        ForeignAmountDebit =
+                        Math.Round((double)((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
+                        //Math.Round(((decimal)(rec.jl.ForeignAmount / (decimal)((rec.Percentage  + 100) / 100))), 2),
+                        //(decimal)Expression.Divide((decimal)rec.ForeignAmount, (decimal)myVat)
 
-                });
+                        ,
+                        AccountingDate = rec.jl.AccountingDate,
+                        DueDate = rec.jl.DueDate,
+                        DocumentDate = rec.jl.DocumentDate,
 
-            var qJLVat =
-                (
-                from jl in
-                    qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
-                from vl in
-                    (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
-                     where v.FromDate <= jl.DocumentDate
-                     select v).Take(1)
-                select new { jl, myVat = vl.myVat }
-                 )
-                 .Select(rec => new JournalLineLedgerDTO()
-                 {
-                     CHANGE_TYPE = "",
-                     JournalId = rec.jl.JournalId,
-                     JournalLineNumber = rec.jl.Line,
+                    });
 
-                     AccountId = myTaxCard,//rec.CreditAccountId,
+                var qJLVat =
+                    (
+                    from jl in
+                        qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                    from vl in
+                        (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
+                         where v.FromDate <= jl.DocumentDate
+                         select v).Take(1)
+                    select new { jl, myVat = vl.myVat }
+                     )
+                     .Select(rec => new JournalLineLedgerDTO()
+                     {
+                         CHANGE_TYPE = "",
+                         JournalId = rec.jl.JournalId,
+                         JournalLineNumber = rec.jl.Line,
+
+                         AccountId = myTaxCard,//rec.CreditAccountId,
                      CurrencyId = rec.jl.CurrencyId,
 
-                     LocalAmountCredit = 0,
-                     LocalAmountDebit = Math.Round((double)rec.jl.LocalAmount - (1 * (double)rec.jl.LocalAmount / (double)rec.myVat), 2),
+                         LocalAmountCredit = 0,
+                         LocalAmountDebit = Math.Round((double)rec.jl.LocalAmount - (1 * (double)rec.jl.LocalAmount / (double)rec.myVat), 2),
 
-                     ForeignAmountCredit = 0,
-                     ForeignAmountDebit = Math.Round((double)rec.jl.ForeignAmount - 1 * ((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
-                     //ForeignAmountDebit =
-                     //Math.Truncate(
-                     //Math.Truncate(
-                     // (double)(
-                     // (double)rec.jl.ForeignAmount - (1 * (double)rec.jl.ForeignAmount / (double)rec.myVat)
-                     // )
-                     // *1000
-                     // )
-                     // /100)
-                                         ,
-                     AccountingDate = rec.jl.AccountingDate,
-                     DueDate = rec.jl.DueDate,
-                     DocumentDate = rec.jl.DocumentDate,
+                         ForeignAmountCredit = 0,
+                         ForeignAmountDebit = Math.Round((double)rec.jl.ForeignAmount - 1 * ((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
+                                             //ForeignAmountDebit =
+                                             //Math.Truncate(
+                                             //Math.Truncate(
+                                             // (double)(
+                                             // (double)rec.jl.ForeignAmount - (1 * (double)rec.jl.ForeignAmount / (double)rec.myVat)
+                                             // )
+                                             // *1000
+                                             // )
+                                             // /100)
+                                             ,
+                         AccountingDate = rec.jl.AccountingDate,
+                         DueDate = rec.jl.DueDate,
+                         DocumentDate = rec.jl.DocumentDate,
 
-                 });
+                     });
+            }
             //var qJLVat_260_3 = qJLVat.First(r => r.JournalId == "1-260" && r.JournalLineNumber == 3);
 
-            var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
-            bool UnionreturnsDistinctvalues = true;
-            if (UnionreturnsDistinctvalues)
+            //var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
+            //qJLAll.ToList();
+            //bool UnionreturnsDistinctvalues = true;
+            //if (UnionreturnsDistinctvalues)
             {
-                qJLAll = qJLCredit.Concat(qJLDebit).Concat(qJLDebitVat).Concat(qJLVat);
-            }
-                //qJLAll.ToList();
+                var qJLAll = qJLCredit.Concat(qJLDebit)/*.Concat(qJLDebitVat).Concat(qJLVat)*/;
+
+
                 return qJLAll;
+            }
         }
 
         //public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransactionByAccId(string glAccountId, int tenant)

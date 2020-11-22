@@ -890,10 +890,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set InvoiceNumber(newValue: string) {
         if (this.EntityPM.InvoiceNumber != newValue) {
             this.EntityPM.InvoiceNumber = newValue;
-
+          
         }
     }
-
+    
     get PaymentTermId() {
         if (this.EntityPM == null) {
             return null;

@@ -347,15 +347,15 @@ namespace CommunicationWorkerRole
             try
             {
                 List<string> Last_journalBufferKeys = null;
-                var myWorker = new Logitude.Accounting.BL.CoreBL.JournalApproveService.JournalApproveWorker();
-                myWorker.WorkUntilQEmptyQueueDB();
+                //var myWorker = new Logitude.Accounting.BL.CoreBL.JournalApproveService.JournalApproveWorker();
+                //myWorker.WorkUntilQEmptyQueueDB();
 
-                Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
+                //Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
 
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();
                 //{"BatchTaskExecutionId":"1-7167","Tenant":"1071"}-QueueDefinitionCode ='batchtaskexecutionqueue'
-                dic.Add("BatchTaskExecutionId", "1-2849");
+                dic.Add("BatchTaskExecutionId", "1-3620");
                 dic.Add("Tenant", "18");
                 batchTaskExecutionWR.SupressStartThread = true;
                 batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });

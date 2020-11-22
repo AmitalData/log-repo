@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public PackageType GetPackageTypeById(string Id,int Tenant)
+		public PackageType GetPackageTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("PackageType with Id " + Id + " doesn't exist");
 
-				return PackageTypeDataMapping(temp,Tenant);
+				return PackageTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public PackageType GetPackageTypeByCode(string Code,int Tenant)
+		public PackageType GetPackageTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("PackageType with Code " + Code + " doesn't exist");
 
-				return PackageTypeDataMapping(temp,Tenant);
+				return PackageTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

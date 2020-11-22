@@ -228,6 +228,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ParentCurrencyId  { get; set; }
        [DataMember]
        public bool ReportingAsAnotherDocument  { get; set; }
+       [DataMember]
+       public decimal? CreditAllotmentPercentage  { get; set; }
    }
 
 }

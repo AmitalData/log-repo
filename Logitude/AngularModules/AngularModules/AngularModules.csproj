@@ -1724,6 +1724,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.ts" />
@@ -1741,6 +1743,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendInterface.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ChangePasswordParameter.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
@@ -1894,6 +1897,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultiSelectLOVComponent.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.html" />

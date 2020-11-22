@@ -94,7 +94,10 @@ export class FTPDetailPM {
     public OldEntityPM: FTPDetailPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -102,6 +105,7 @@ export class FTPDetailPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FTPDetail");
            
         }
+	 }
     }
     private MyClone: FTPDetailPM;
 

@@ -40,7 +40,24 @@ namespace WarehouseData.Service
                 reader.Close();
 
             }
-            generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.CopyToDwObjectFieldLists), destinationConnectionString);
+
+            table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
+            generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.ObjectFieldDBLists), destinationConnectionString);
+        }
+
+        private List<DWObjectFieldDB> GetCopyToDwObjectFieldLists(DataTable dataTable)
+        {
+            List<DWObjectFieldDB> results = new List<DWObjectFieldDB>();
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                var dWObjectFieldDB = new DWObjectFieldDB();
+                dWObjectFieldDB.FieldName = "[" + dataTable.Columns[i].ColumnName + "]";
+                dWObjectFieldDB.DataTypeCode = dataTable.Columns[i].DataType.ToString();
+                dWObjectFieldDB.MaxLength = dataTable.Columns[i].MaxLength;
+                dWObjectFieldDB.IsRequired = !dataTable.Columns[i].AllowDBNull;
+                results.Add(dWObjectFieldDB);
+            }
+            return results;
         }
 
         private string CreateTABLE(string tableName, DataTable table, List<DWObjectFieldDB> copyToDwObjectFieldLists)
@@ -180,7 +197,10 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterId DEFAULT '-1' FOR ConsigneeNotImporterId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IssuingCarrierAgentId DEFAULT '-1' FOR IssuingCarrierAgentId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageTransportModeId DEFAULT '1' FOR OnCarriageTransportModeId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ComputedStatusId DEFAULT '1' FOR ComputedStatusId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ComputedStatusId DEFAULT '-1' FOR ComputedStatusId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentPayableStatusCode DEFAULT '-1' FOR ShipmentPayableStatusCode;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentReceivableStatusCode DEFAULT '-1' FOR ShipmentReceivableStatusCode;"
+
 
 
                         ;
@@ -272,48 +292,18 @@ namespace WarehouseData.Service
 
         public void InSertNotSpecifiedValueToDW(TableClass table, string connectionString, int? privateTenant = null)
         {
-            int tenant = privateTenant != null ? (int)privateTenant : 0;
-
-            string cmd = "";
-
-            if (table.DBTableName == "States")
+            var sqlInsertNotSpecifiedRecordArgs = new SqlInsertNotSpecifiedRecordArgs()
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' , GETDATE());";
-            }
-            else if (table.DBTableName == "Countries")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' ,'', GETDATE());";
-            }
-            else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AddressTypeId,CardId,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' ,'M',-1, GETDATE());";
-
-            else if (table.DBTableName == "Contacts")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email, InActive, AutomaticLastUpdateDate)values('-1'," + tenant + ",'','','' , 0, GETDATE());";
-            }
-
-            else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','' ,GETDATE());";
-            else if (table.DBTableName == "ShipmentMasterDatas")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId, OBLTypeCode,AutomaticLastUpdateDate)values('-1'," + tenant + ",'',null,'-1' , '-1','-1','-1','-1', GETDATE())";
-            }
-            else if (table.DBTableName == "DWHSettings")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Tenant,ParentTenant, AutomaticLastUpdateDate)values(-1 ,-1, GETDATE());";
-            }
-            else if (table.DBTableName == "ShipmentReceivableStatus")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Code,Name, AutomaticLastUpdateDate)values(-1 ,'', GETDATE());";
-            }
-            else if (table.DBTableName == "ShipmentPayableStatus")
-            {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Code,Name, AutomaticLastUpdateDate)values(-1 ,'', GETDATE());";
-            }
-
-            generalDataWarehouseService.ExecuteSql(cmd, connectionString);
-
-
-
+                ObjectFieldDBLists = table.ObjectFieldDBLists,
+                Table = table,
+                Tenant = privateTenant != null ? (int)privateTenant : 0,
+                TableName = table.Dw_TableName
+            };
+            string sqlString = generalDataWarehouseService.GetSqlInsertNotSpecifiedRecorderToDB(sqlInsertNotSpecifiedRecordArgs);
+            generalDataWarehouseService.ExecuteSql(sqlString, connectionString);
         }
+
+
 
 
         #region CopyDataBase
@@ -438,19 +428,25 @@ namespace WarehouseData.Service
         #endregion
 
 
+
+
+       
+
+
+
         public void UpdateDWDataBase(BuildDWArgs buildDWArgs)
         {
             TableClass table = buildDWArgs.table;
-            string fieldName = !string.IsNullOrEmpty(buildDWArgs.table.FieldsDBName) ? buildDWArgs.table.FieldsDBName : "*";
-            string condition =!string.IsNullOrEmpty( buildDWArgs.Conition) ? buildDWArgs.Conition :  GetUpdateDWDataBaseCondition(buildDWArgs);
-            
+            string condition = !string.IsNullOrEmpty(buildDWArgs.Conition) ? buildDWArgs.Conition : GetUpdateDWDataBaseCondition(buildDWArgs);
+            var columnNames =generalDataWarehouseService.GetColumnNamesAsString(table.Dw_TableName , buildDWArgs.DestinationConnectionString);
+     
             using (SqlConnection sourceConnection =
                        new SqlConnection(buildDWArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
 
                 SqlCommand commandSourceData = new SqlCommand(
-               "SELECT  " + fieldName +
+               "SELECT  " + columnNames +
                " FROM dbo." + table.DBTableName + condition, sourceConnection);
 
                 SqlDataReader reader = commandSourceData.ExecuteReader();

@@ -44,7 +44,10 @@ export class WorkerRoleNamePM {
     public OldEntityPM: WorkerRoleNamePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -52,6 +55,7 @@ export class WorkerRoleNamePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WorkerRoleName");
            
         }
+	 }
     }
     private MyClone: WorkerRoleNamePM;
 

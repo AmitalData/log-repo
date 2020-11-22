@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityKeys;
@@ -24,10 +25,14 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             entityPM.PermittedBIFolders = queryService.GetMulti(biReportFolderKeys, true);
         }
 
-        public List<BIReportFolderList> GetPermittedFoldersList(int tenant)
+        public List<BIReportFolderList> GetPermittedFoldersList(int tenant, string loggedUserId)
         {
+            bool isCustomerCareUser = false;
             FoldersPermissionParams foldersPermissionParams = GetBIReportFolderPermissionParams(tenant,null);
-            List<BIReportFolderList> result = repository.GetFoldersByPermittedUser(foldersPermissionParams);
+            UserQuery userQuery = new UserQuery(tenant);
+            UserPM user = userQuery.GetSinglePM(loggedUserId, tenant);
+            if (user != null && user.IsCustomerCare) isCustomerCareUser = true;
+            List<BIReportFolderList> result = repository.GetFoldersByPermittedUser(foldersPermissionParams, isCustomerCareUser);
             return result;
         }
 

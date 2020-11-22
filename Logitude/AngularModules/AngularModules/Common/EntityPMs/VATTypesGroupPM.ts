@@ -68,7 +68,10 @@ export class VATTypesGroupPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -78,6 +81,7 @@ export class VATTypesGroupPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "VATTypesGroup");
            
         }
+	 }
     }
     private MyClone: VATTypesGroupPM;
 

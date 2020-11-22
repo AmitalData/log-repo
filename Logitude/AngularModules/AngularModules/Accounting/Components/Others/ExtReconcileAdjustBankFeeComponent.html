@@ -1,4 +1,8 @@
-
+<style>    
+    .red {
+        color: #d53737 !important;
+    }
+</style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -10,7 +14,18 @@
             <div class="TableHolder">
                 <table>
 
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{'ReconcileExternalPage.O.Difference' | TextCodeTranslationPipe}}
+                        </td>
 
+                        <td style="width: 180px;">
+                            <div style="font-size: 15px;color:#0f9776;" [class.red]="TotalDifference!=0">
+                                {{TotalDifference | NumbersPipe: 'N2'}} {{ TotalDifferenceCurrency }}
+                            </div>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
 
                     <tr class="FormFieldRow">
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">

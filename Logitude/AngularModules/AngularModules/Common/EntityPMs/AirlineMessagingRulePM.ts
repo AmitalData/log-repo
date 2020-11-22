@@ -94,7 +94,10 @@ export class AirlineMessagingRulePM {
     public OldEntityPM: AirlineMessagingRulePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -102,6 +105,7 @@ export class AirlineMessagingRulePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AirlineMessagingRule");
            
         }
+	 }
     }
     private MyClone: AirlineMessagingRulePM;
 

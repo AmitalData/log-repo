@@ -15,6 +15,7 @@ import {GroupByPipe} from '../../Infrastructure/Pipes/GroupByPipe';
 import {APInvoicePM} from '../EntityPMs/APInvoicePM';
 import {VATTypesGroupPM} from '../../Common/EntityPMs/VATTypesGroupPM';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 
 export class APInvoiceValidator {
     private Errors: string[] = [];
@@ -90,7 +91,17 @@ export class APInvoiceValidator {
                 }
             }            
         }
+        this.CheckSpecialCharacters();
 
         return this.Errors;
+    }
+    CheckSpecialCharacters() {
+        if (FeatureLocator.HasFeaturePermession("APInvoice", "INSC")) {
+            var invoiceNumber_Check = /^[A-Za-z0-9]+$/i;
+            if (!invoiceNumber_Check.test(this.EntityPM.InvoiceNumber)) {
+
+                this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ValidateInvoiceNumber"));
+            }
+        }
     }
 }

@@ -303,7 +303,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        string tenantFieldName = (Tabel != "DIM_Tenants" ? (isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
+                        string tenantFieldName = (Tabel != "DIM_Tenants" ? (!isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
                         sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " ";
                         if(!IsClosed)
                             sqlCommandDefinition.SQLString += ", " + tenantFieldName + " ";
@@ -463,11 +463,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
                         if (isParentTenant && Tabel == "DIM_Tenants")
                         {
-                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable, childTenants);
+                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity( dataTable , childTenants );
                         }
                         else
                         {
-                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(dataTable);
+                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity( dataTable );
                         }
                     }
 
@@ -594,9 +594,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(sqlCommandDefinition);
 
-                //int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
-                //BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
-                //bIReportsSecurityIntegrationService.CheckBIReportDataSecurity(MyData);
+                int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
+                BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
+                bIReportsSecurityIntegrationService.CheckBIReportDataSecurity (MyData );
 
 
                 DWQueryDataResult myResult = new DWQueryDataResult();

@@ -19,6 +19,8 @@ export class DocumentObjectFieldsRowViewModel   {
     TranslatedText: string;
     FullNameTextCodeCode: string;
     Order: number;
+    ObjectTableId: string;
+    ObjectTableName: string;
 
     DisplayListOnly: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -30,6 +32,8 @@ export class DocumentObjectFieldsRowViewModel   {
      
 
             this.FieldName = objectField.FieldName;
+            this.ObjectTableId = objectField.ObjectTableId;
+            this.ObjectTableName = objectField.ObjectTableName;
             this.ResultFieldName = resultFieldName;
             this.ObjectFieldType = objectFieldType;
 

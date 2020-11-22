@@ -153,6 +153,7 @@ export class FTPDetailPMService {
         if (!entityPM) {
             
             entityPM = new FTPDetailPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class FTPDetailPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

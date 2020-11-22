@@ -40,7 +40,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public CreditCardType GetCreditCardTypeById(string Id,int Tenant)
+		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("CreditCardType with Id " + Id + " doesn't exist");
 
-				return CreditCardTypeDataMapping(temp,Tenant);
+				return CreditCardTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

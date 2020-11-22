@@ -99,7 +99,10 @@ export class TariffCarrierTranslationPM {
     public OldEntityPM: TariffCarrierTranslationPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -107,6 +110,7 @@ export class TariffCarrierTranslationPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffCarrierTranslation");
            
         }
+	 }
     }
     private MyClone: TariffCarrierTranslationPM;
 

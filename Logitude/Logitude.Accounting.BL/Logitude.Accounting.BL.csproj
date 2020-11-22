@@ -215,6 +215,7 @@
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageCTask.cs" />
     <Compile Include="CoreBL\Batch\BatchRevaluationService.cs" />
+    <Compile Include="CoreBL\Batch\BatchSystem1000FlatFileAnalyser.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />

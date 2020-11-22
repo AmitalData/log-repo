@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "MailgunPageAnalyzer", ClassName = "MailgunPageAnalyzerWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "QuickbooksOnline", ClassName = "QuckbooksOnlineWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
 
-            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "DelayAutomationWR", ClassName = "DelayAutomationWorkerRole", InActive = false, NumberOfThreads = 1, Parameter1 = "0" }, batchServicesDefinitionRepository);
+            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AutomationWR", ClassName = "AutomationWorkerRole", InActive = false, NumberOfThreads = 1, Parameter1 = "0" }, batchServicesDefinitionRepository);
 
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AgentsSharedLogistics", ClassName = "AgentsSharedLogisticsWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "EntityExternalUpdateWR", ClassName = "EntityExternalUpdateWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "MailgunPageAnalyzer", ClassName = "MailgunPageAnalyzerWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "QuickbooksOnline", ClassName = "QuckbooksOnlineWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
 
-            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "DelayAutomationWR", ClassName = "DelayAutomationWorkerRole", InActive = false, NumberOfThreads = 1, Parameter1 = "0" }, batchServicesDefinitionRepository);
+            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AutomationWR", ClassName = "AutomationWorkerRole", InActive = false, NumberOfThreads = 1, Parameter1 = "0" }, batchServicesDefinitionRepository);
 
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "AgentsSharedLogistics", ClassName = "AgentsSharedLogisticsWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "EntityExternalUpdateWR", ClassName = "EntityExternalUpdateWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);

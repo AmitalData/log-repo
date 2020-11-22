@@ -1216,6 +1216,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal originalAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OriginalAmount  
+	   {
+	    
+	     get
+		{
+		   return originalAmount;
+		 }
+		 set
+		 {
+		   if(originalAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalAmount",OldValue=originalAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   originalAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

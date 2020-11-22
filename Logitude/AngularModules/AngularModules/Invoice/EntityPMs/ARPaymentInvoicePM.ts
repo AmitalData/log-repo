@@ -68,12 +68,15 @@ export class ARPaymentInvoicePM {
   public UniqueKey: string;
   public OldEntityPM: ARPaymentInvoicePM;
 
-  public IsDirty: boolean;
-  MarkAsDirty() {
-    this.IsDirty = true;
-    if (this.EntityParentPM) {
-      this.EntityParentPM.MarkAsDirty();
-    }
+    public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
+    MarkAsDirty() {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }
+        }
   }
 
   private MyClone: ARPaymentInvoicePM;

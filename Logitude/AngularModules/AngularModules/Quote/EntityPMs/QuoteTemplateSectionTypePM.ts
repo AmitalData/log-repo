@@ -39,7 +39,10 @@ export class QuoteTemplateSectionTypePM {
     public OldEntityPM: QuoteTemplateSectionTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -47,6 +50,7 @@ export class QuoteTemplateSectionTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateSectionType");
            
         }
+	 }
     }
     private MyClone: QuoteTemplateSectionTypePM;
 

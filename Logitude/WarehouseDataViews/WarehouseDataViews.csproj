@@ -67,6 +67,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CompareViewsService.cs" />
+    <Compile Include="Service\FeaturePrivateDataWarehouseService.cs" />
     <Compile Include="Service\GeneralDataWarehouseViewsService.cs" />
     <Compile Include="Service\PrivateDataWarehouseViewService.cs" />
     <Compile Include="Service\DataWarehouseViewsService.cs" />

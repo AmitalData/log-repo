@@ -54,7 +54,10 @@ export class TermsofUseSignaturePM {
     public OldEntityPM: TermsofUseSignaturePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -62,6 +65,7 @@ export class TermsofUseSignaturePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TermsofUseSignature");
            
         }
+	 }
     }
     private MyClone: TermsofUseSignaturePM;
 

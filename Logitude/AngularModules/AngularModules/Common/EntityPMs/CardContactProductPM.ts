@@ -68,7 +68,10 @@ export class CardContactProductPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -78,6 +81,7 @@ export class CardContactProductPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CardContactProduct");
            
         }
+	 }
     }
     private MyClone: CardContactProductPM;
 

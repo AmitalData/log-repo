@@ -183,7 +183,10 @@ export class CashBookPM {
     public OldEntityPM: CashBookPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -191,6 +194,7 @@ export class CashBookPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CashBook");
            
         }
+       }
     }
 
     private MyClone: CashBookPM;

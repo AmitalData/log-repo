@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Measurement GetMeasurementById(string Id,int Tenant)
+		public Measurement GetMeasurementById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Measurement with Id " + Id + " doesn't exist");
 
-				return MeasurementDataMapping(temp,Tenant);
+				return MeasurementDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Measurement GetMeasurementByCode(string Code,int Tenant)
+		public Measurement GetMeasurementByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Measurement with Code " + Code + " doesn't exist");
 
-				return MeasurementDataMapping(temp,Tenant);
+				return MeasurementDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

@@ -20,12 +20,12 @@ export class BIReportFolderExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bireportfolderextended';
     }
 
-    GetPermittedFolders() {
+    GetPermittedFolders(loggedUserId) {
 
         var callTime = new Date();
 
         return defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetPermittedFolders', ServiceHelper.GetHttpFullHeaders())
+            return this._httpClient.get(this._apiUrl + '/GetPermittedFolders?loggedUserId=' + loggedUserId, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
 

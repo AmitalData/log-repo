@@ -775,7 +775,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CheckDocumentFilingInbox(UserPM entityPM, User entityPOCO)
         {
-            if (this.isNewEntity)
+            if (this.isNewEntity || (entityPOCO.Contact != null && entityPM.Email != entityPOCO.Contact.Email))
             {
                 var filingInboxName = entityPM.Email.Split('@')[0] + '.' + entityPM.Email.Split('@')[1].Split('.')[0];
                 var emailIndex = 0;
@@ -851,30 +851,33 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
-            bool hasRoles = true;
 
-            if (this.isNewEntity)
+            if (!entityPm.SignupRole)
             {
-                if (entityPm.Roles.Count == 0)
+                bool hasRoles = true;
+
+                if (this.isNewEntity)
                 {
-                    hasRoles = false;
+                    if (entityPm.Roles.Count == 0)
+                    {
+                        hasRoles = false;
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(myResult))
+                    {
+                        hasRoles = false;
+                    }
+                }
+
+                if (!hasRoles)
+                {
+                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
+                    throw new ApplicationException(message);
                 }
             }
-
-            else
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    hasRoles = false;
-                }
-            }
-
-            if (!hasRoles)
-            {
-                string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
-                throw new ApplicationException(message);
-            }
-
             return myResult;
         }
 

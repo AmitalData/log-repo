@@ -474,7 +474,10 @@ export class WarehousePM {
     public OldEntityPM: WarehousePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -482,6 +485,7 @@ export class WarehousePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Warehouse");
            
         }
+	 }
     }
     private MyClone: WarehousePM;
 

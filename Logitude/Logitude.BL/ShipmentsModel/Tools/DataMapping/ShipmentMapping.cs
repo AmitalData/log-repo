@@ -459,6 +459,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
 
+            entityPoco.IsAccrualsApproved = entityPM.IsAccrualsApproved;
+            entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -1581,10 +1583,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     }
 
 
-                    entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
-                    entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
-                    entityMasterData.Transshipment2CarrierPrefix = entityPM.Transshipment2CarrierPrefix;
-                    entityMasterData.Transshipment3CarrierPrefix = entityPM.Transshipment3CarrierPrefix;
+                    if (entityPM.TransportModeId == "A")
+                    {
+                        entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
+                        entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
+                        entityMasterData.Transshipment2CarrierPrefix = entityPM.Transshipment2CarrierPrefix;
+                        entityMasterData.Transshipment3CarrierPrefix = entityPM.Transshipment3CarrierPrefix;
+                    }
+
                     entityMasterData.IsKnownCargo = entityPM.IsKnownCargo;
                     entityMasterData.RegulatedAgentRANumber = entityPM.RegulatedAgentRANumber;
                     entityMasterData.KnownConsignorNumber = entityPM.KnownConsignorNumber;

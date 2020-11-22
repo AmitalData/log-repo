@@ -13,12 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="DocumentId"
     Type="varchar"
     Size="15">
@@ -26,35 +20,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="30">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DocumentTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DirectionCode"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="EntityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ObjectTableId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -85,34 +51,6 @@
     Name="Notes"
     Type="nvarchar"
     Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="OwnerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Description"
-    Type="nvarchar"
-    Size="256">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -228,31 +166,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LastVersion"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LastShareDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsSharedIn"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsSharedOut"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="BranchId"
     Type="varchar"
     Size="15">
@@ -306,7 +219,94 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsRequested"
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DocumentTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DirectionCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OwnerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSharedIn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSharedOut"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastShareDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BackedupExternally"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -345,20 +345,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EntityNumber"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsDigitalSignRequired"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="BackedupExternally"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -368,6 +355,19 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="LastVersion"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsRequested"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
@@ -444,9 +444,9 @@
   <Index
     Columns="Tenant,SecurityId" />
   <Index
-   Columns="CreateDate" />
+    Columns="CreateDate" />
   <Index
-    Columns="EntityId,ChildEntityId"  />
- <Index
+    Columns="EntityId,ChildEntityId" />
+  <Index
     Columns="ChildEntityId" />
 </Table>

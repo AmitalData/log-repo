@@ -36,7 +36,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARInvoiceType GetARInvoiceTypeByCode(string Code,int Tenant)
+		public ARInvoiceType GetARInvoiceTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -46,7 +46,7 @@ using Simplog.Data.InvoiceModel;
 				 if (temp == null)
                     throw new ApplicationException("ARInvoiceType with Code " + Code + " doesn't exist");
 
-				return ARInvoiceTypeDataMapping(temp,Tenant);
+				return ARInvoiceTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {

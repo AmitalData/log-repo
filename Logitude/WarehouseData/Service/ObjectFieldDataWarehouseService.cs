@@ -29,20 +29,20 @@ namespace WarehouseData.Helper
             {
                 string tableName = row["Name"].ToString() == "Master" ? "ShipmentMasterData" : row["Name"].ToString();
                 string tableId = row["Id"].ToString();
+                TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
+                if (tableClass != null) tableClass.ObjectTableId = tableId;
 
-                var fields = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
+                tableClass.FieldsDBNameLists = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
                               where rowfield.Field<string>("ObjectTableId") == tableId
                               select rowfield.Field<string>("FieldName")).ToList();
 
-                TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
-                if (tableClass != null) tableClass.ObjectTableId = tableId;
-                tableClass.FieldsDBName = GetDWObjectFieldsDBName(fields, tableClass);
+                tableClass.FieldsDBName = GetDWObjectFieldsDBName(tableClass.FieldsDBNameLists, tableClass);
             }
 
             foreach (TableClass tableClass in tableNameLists)
             {
                 var rowLists = copyToDwObjectFieldLists.AsEnumerable().Where(row => row["ObjectTableId"].ToString() == tableClass.ObjectTableId).ToList();
-                tableClass.CopyToDwObjectFieldLists = GetDWObjectFieldDBLists(rowLists);
+                tableClass.ObjectFieldDBLists = GetDWObjectFieldDBLists(rowLists);
 
                 if (tableClass.TableName != "WaterMark") tableClass.FieldsDBName = tableClass.FieldsDBName + GetAdditionalDWObjectFieldsDBName(tableClass);
 
@@ -53,8 +53,10 @@ namespace WarehouseData.Helper
 
         private static string GetAdditionalDWObjectFieldsDBName(TableClass tableClass)
         {
-            string fieldsDBName = ("," + tableClass.KeyName) + (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? ",Tenant" : "");
-            fieldsDBName += ",AutomaticLastUpdateDate";
+            string fieldsDBName = string.Empty;
+             if (tableClass.FieldsDBNameLists!=null && !tableClass.FieldsDBNameLists.Contains(tableClass.KeyName)) fieldsDBName = "," + tableClass.KeyName;
+             fieldsDBName += (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? ",Tenant" : "");
+             fieldsDBName += ",AutomaticLastUpdateDate";
             return fieldsDBName;
         }
 

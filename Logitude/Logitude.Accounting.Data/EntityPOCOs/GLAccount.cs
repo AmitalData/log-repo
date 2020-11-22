@@ -188,6 +188,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? MinimumInterestInvoiceBilling { get; set; }
         [Column("ReportingAsAnotherDocument")]
 	    public bool ReportingAsAnotherDocument { get; set; }
+        [Column("CreditAllotmentPercentage")]
+	    public decimal? CreditAllotmentPercentage { get; set; }
     }
 }
 	 

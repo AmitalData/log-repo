@@ -1778,7 +1778,8 @@ namespace HypredTest
         private void btnTest_Click(object sender, EventArgs e)
         {
             Login();
-            TestShipmentService();
+            TestCustomerService(Token);
+            //TestShipmentService();
 
             //decimal mydec = 1298989741233.8784431545454999m;
             //mydec = Math.Truncate(mydec * 1000000m) / 1000000m;
@@ -2359,6 +2360,7 @@ namespace HypredTest
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
                     PaymentTermId = paymentTermId,
+                     
 
                 };
 
@@ -3142,6 +3144,9 @@ namespace HypredTest
                 case "Warehouse":
                     TestWarehouseService(Token);
                     break;
+                case "Customer":
+                    TestCustomerService(Token);
+                    break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
@@ -3174,6 +3179,11 @@ namespace HypredTest
                     MessageBox.Show("Failed: " + response.ErrorMessage);
                 }
             }
+
+        }
+
+        private void cmdServices_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 

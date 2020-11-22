@@ -1,0 +1,53 @@
+<div class="sidebar">
+
+    <div class="hide-mobile nav" [class.nav-opened]="isNavOpened">
+
+        <div class="action-buttons right-button mobile-only" (click)="openNav()">
+            <img src="./assets/images/icons/close.svg" alt="" />
+        </div>
+
+        <div class=" " style="height: 50px;"></div>
+ 
+        <div class="avatar ">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSnxXuSRioKtY5255bV-l1ZGs8OqP5vVSP-0Q&usqp=CAU" alt="">
+        </div>
+
+        <div class="user-name ">
+            Saitama 
+        </div> 
+
+        <div class="signout " style="cursor: pointer;" (click)="SignOutClicked()">Sign Out</div> 
+
+        <div  class=" " style="height: 20px;"></div>
+    
+        <div class="">
+            <a routerLinkActive="active" routerLink="shipments">Shipments</a>
+            <a routerLinkActive="active" routerLink="favorites">Favorite</a>
+            <a routerLinkActive="active" routerLink="Reports">Reports</a>
+            <a routerLinkActive="active" routerLink="Price">Price Offers</a>
+            <a routerLinkActive="active" routerLink="Accounting">Accounting</a>
+            <a routerLinkActive="active" routerLink="Archive">Archive</a>
+        </div> 
+    </div>
+    
+    <div class="logo">
+        <img class="hide-mobile" src="./assets/images/logo/dsv1x.png" alt="" />
+        <img class="mobile-only" src="./assets/images/logo/mobilewhitelogo@2x.png" alt="" />
+        <!-- <img src="./assets/images/logo/path3410@1x.png" routerLinkActive="active" routerLink="/search" alt="" /> -->
+    </div>
+
+    <div class="action-buttons left-button mobile-only">
+        <img src="./assets/images/icons/arrow.svg" alt="" />
+
+    </div>
+
+    <div class="action-buttons right-button mobile-only" (click)="openNav()">
+        <img src="./assets/images/icons/Menu.svg" alt="" />
+    </div>
+
+
+</div>
+
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

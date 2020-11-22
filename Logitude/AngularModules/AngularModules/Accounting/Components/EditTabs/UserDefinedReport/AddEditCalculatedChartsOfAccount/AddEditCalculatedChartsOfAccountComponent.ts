@@ -4,6 +4,7 @@ import { CalculatedChartsOfAccountsLinePM } from 'Accounting/EntityPMs/Calculate
 import { ChartOfAccountsTypePM } from 'Accounting/EntityPMs/ChartOfAccountsTypePM';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
@@ -29,14 +30,23 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
     public ObjectTableName: string = "CalculatedChartsOfAccount";
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public ChartOfAccountFilterItems :ApiQueryFilters;
+    public GLAccountFilterItems :ApiQueryFilters;
+    public IsNewEntity:boolean =false;
 
     constructor() {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl"); 
+         
     }
 
 
+    SetFilterItems(){
+        this.ChartOfAccountFilterItems = new ApiQueryFilters();
+        this.GLAccountFilterItems = new ApiQueryFilters();
+        this.ChartOfAccountFilterItems.addAdditionalFilter("TypeCode", this.ChartOfAccountTypeCode, null, null, "Equals", false, false, false, "string");
+        this.GLAccountFilterItems.addAdditionalFilter("ChartOfAccountsTypeCode", this.ChartOfAccountTypeCode, null, null, "Equals", false, false, false, "string");
+    }
     
     OnFocus() {
         if (this.DataContext.CalculatedChartsOfAccountsLineItemList.Length == 0) {
@@ -59,8 +69,13 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             this.DataContext.CalculatedChartsOfAccountsLineItemList.Update(oldItem, updatedItem);
         }
     }
+    
+
+
     CancelButtonClicked(){
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=>s.ErrorLog=null);
         this.CurrentSession.CloseCurrentWindow();
+        
     }
     OkButtonClicked(){
         this.ValidationErrorsList= [];
@@ -68,39 +83,46 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidateErrorLogsLines();
         this.ValidateLine(errors);
-         if (errors.length == 0) {
+        if (errors.length == 0) {
             this.CurrentSession.CloseCurrentWindowEmit("Ok");
-        } else {
+        }
+         else {
             this.ValidationErrorsList = errors;
         }
     }
-
-    ValidateLine(errors: string[]){
-        if(this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length == 0){
-            errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
-        }
-        else {
-            var haveValues = false;
-            this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> 
-                !s.IsCancelled ?haveValues = true:null
-            );
-            if(!haveValues)
-            errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
-
-        }
-        var LinesHaveErrors:number[]=[]
-        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> !s.IsCancelled && !AppTool.IsNullOrEmpty(s.ErrorLog)?LinesHaveErrors.push(s.Line):null);
-        if(LinesHaveErrors.length!=0){
-            var ErrorMessage = TextCodeTranslator.Translate("UserDefinedReport.O.CantSaveTheCalculatedChartofAccount");
-            if(LinesHaveErrors.length>1) 
-                ErrorMessage+="s";
-            ErrorMessage+=" "+LinesHaveErrors.toString();
-            errors.push(ErrorMessage);
-        }
+    SetUIProperty() {
+        var IsEnabled = this.ValidateChartofAccountType();
+        this.UIProperties.SetEnabled("ChartOfAccountTypeCode", this.ObjectTableName, IsEnabled);
+        this.UIProperties.SetEnabled("IsCancelled", this.ObjectTableName, !this.DataContext.IsNewEntity);
 
     }
-
+    ValidateLine(errors: string[]){
+        if(!this.DataContext.IsCancelled){
+            if(this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length == 0){
+                errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
+            }
+            else {
+                var haveValues = false;
+                this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> 
+                    !s.IsCancelled ?haveValues = true:null
+                );
+                if(!haveValues)
+                errors.push(TextCodeTranslator.Translate("UserDefinedReport.O.CalculatedChartofAccount")+" "+TextCodeTranslator.Translate("UserDefinedReport.O.DontHaveAnyLinesInThem."))
     
+            }
+            var LinesHaveErrors:number[]=[]
+            this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> !s.IsCancelled && !AppTool.IsNullOrEmpty(s.ErrorLog)?LinesHaveErrors.push(s.Line):null);
+            if(LinesHaveErrors.length!=0){
+                var ErrorMessage = TextCodeTranslator.Translate("UserDefinedReport.O.CantSaveTheCalculatedChartofAccount");
+                if(LinesHaveErrors.length>1) 
+                    ErrorMessage+="s";
+                ErrorMessage+=" "+LinesHaveErrors.toString();
+                errors.push(ErrorMessage);
+            }
+        }
+    }
+    
+  
     ValidateErrorLogsLines(){
         var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         var RequiredChartsofAccountFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccountsLine.F.ChartOfAccountId"));
@@ -111,8 +133,20 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
                                                                                         s.LineTypeCode=='2' && !s.ChartOfAccountId? s.ErrorLog = RequiredChartsofAccountFiled:null)
                                                                                    );
     }
+
+    ValidateCreateLine(){
+        this.ValidationErrorsList = [];
+        if(AppTool.IsNullOrEmpty(this.ChartOfAccountTypeCode)){
+            var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            var RequiredChartsOfAccountTypeFiled= FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("CalculatedChartsOfAccount.F.ChartOfAccountTypeEnglishName"));
+            this.ValidationErrorsList.push(RequiredChartsOfAccountTypeFiled);
+        }
+    }
+
     AddLine() {
         if(!this.EntityPM.IsCancelled){
+            this.ValidateCreateLine();
+            if( this.ValidationErrorsList.length == 0){
             var calculatedChartsOfAccountsLinePM: CalculatedChartsOfAccountsLinePM = new CalculatedChartsOfAccountsLinePM(this.EntityPM);
             calculatedChartsOfAccountsLinePM.Tenant = this.EntityPM.Tenant;
             this.EntityPM.AddCalculatedChartsOfAccountsLine(calculatedChartsOfAccountsLinePM);
@@ -123,26 +157,55 @@ export class AddEditCalculatedChartsOfAccountComponent extends BaseComponent {
             }
             var line = new CalculatedChartsOfAccountsLineItem(calculatedChartsOfAccountsLinePM,true, this.DataContext);
             this.DataContext.CalculatedChartsOfAccountsLineItemList.Insert(line);
-        }
+         }
+      }
     }
 
+    ValidateLinesAfterChangedChartsofAccountTypeCode(){
+        this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.forEach(s=> s.LineCancelledValidation());
+    }
  
     SetDataContext(dataContext: CalculatedChartsOfAccountItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        this.IsNewEntity = this.DataContext.IsNewEntity;
+        this.SetUIProperty();
+        this.SetFilterItems();  
      }
 
- 
+     ValidateChartofAccountType():boolean{
+        var IsValid:boolean=true;
+        for (var i = 0; i < this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length; i++) {
+            var line = this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection[i];
+            if(!line.IsCancelled && (line.GLAccountId ||line.ChartOfAccountId) 
+             && (line.ChartOfAccountTypeCode == this.ChartOfAccountTypeCode)
+                ){
+                IsValid = false;
+                break;
+            }
+        }
+        return IsValid;
+    }
     get ChartOfAccountTypeCode() { return this.DataContext.ChartOfAccountTypeCode; }
     set ChartOfAccountTypeCode(newValue: string) {
         if (this.DataContext.ChartOfAccountTypeCode != newValue) {
-            if(this.DataContext.ChartOfAccountTypeCode  && this.DataContext.CalculatedChartsOfAccountsLineItemList.Collection.length > 0){
-                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("UserDefinedReport.O.CantUpdateTheChartofAccountType"));
+            var IsValid= this.ValidateChartofAccountType();
+            if(IsValid){
+                this.DataContext.ChartOfAccountTypeCode = newValue;
+                this.ValidateLinesAfterChangedChartsofAccountTypeCode();
+                this.SetFilterItems();
             }
             else{
-                this.DataContext.ChartOfAccountTypeCode = newValue;
+                this.ValidationErrorsList = [];
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("UserDefinedReport.O.CantUpdateTheChartofAccountType"));
             }
         }
+    }
+
+    get IsChartOfAccountTypeCodeEnabled(){
+        this.SetUIProperty();
+        return this.ValidateChartofAccountType();
+          
     }
    
     get ChartOfAccountsType() { return this.DataContext.ChartOfAccountsType; }

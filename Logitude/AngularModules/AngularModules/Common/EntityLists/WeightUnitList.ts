@@ -9,6 +9,7 @@
 export class WeightUnitList {
    		Code: string;
 		Name: string;
+		PrintAs: string;
 		SearchFields: string;
 	
 }
