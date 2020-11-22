@@ -11,6 +11,7 @@ export class ReceivablesTab {
         this.GoToReceivablesTab();
         this.AddARInvoice();
         this.AddCreditNoteInvoice();
+        this.BackToSystem();
     }
     private AddARInvoice() {
         this.AddReceivable(this.EntityNumber);
@@ -95,6 +96,9 @@ export class ReceivablesTab {
       
     }
 
+    private BackToSystem() {
+
+    }
     
     private WaitLoaded(urls: string) {
         cy.server();
