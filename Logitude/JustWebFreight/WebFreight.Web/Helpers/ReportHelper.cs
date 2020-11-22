@@ -851,6 +851,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = ExternalReconciliationManager.GetData();
                         break;
                     }
+                case "URDR":
+                    {
+                        UserDefinedReportManager UserDefinedReportManager = new UserDefinedReportManager(filters, reportFliter.tenant);
+                        dataProvider = UserDefinedReportManager.GetData();
+                        break;
+                    }
                 case "UPTR":
                     {
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
@@ -1851,6 +1857,14 @@ namespace WebFreight.Web.Helpers
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
+                case "URDR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
+                        UserDefinedReportDataProvider reportDataProvider = (UserDefinedReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "URDR", Name = "UserDefinedReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
 
                 case "ATRE":
                     {
@@ -1929,13 +1943,13 @@ namespace WebFreight.Web.Helpers
 
             report.AutoLocalizeReportOnRun = true;
 
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
-                && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
-            {
-                report.ReportCacheMode = StiReportCacheMode.On;
-                report.RenderedPages.CacheMode = true;
-                report.RenderedPages.CanUseCacheMode = true;
-            }
+            //if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
+            //    && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
+            //{
+            //    report.ReportCacheMode = StiReportCacheMode.On;
+            //    report.RenderedPages.CacheMode = true;
+            //    report.RenderedPages.CanUseCacheMode = true;
+            //}
             //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
             return report;

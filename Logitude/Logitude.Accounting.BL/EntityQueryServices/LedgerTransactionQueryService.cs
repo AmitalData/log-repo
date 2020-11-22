@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetAnyLedgerTransactionByJournalId(journalId, tenant);
         }
+
         public string GetCurrencyWhenMultiOff(string gLAccointId, int tenant)
         {
             string anyCurrencyId = this.repository.GetAnyLedgerTransactionCurrency(gLAccointId, tenant);
@@ -475,6 +476,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             ledgerTransactionPOCOs = repository.GetByJournalId(journalId, tenant).ToList();
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
+        }
+
+        public IQueryable<LedgerTransaction> GetIQueryableLedgerTransactionsByGLAccountIdsList(List<string> GLAccountIdsList, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetAll(tenant).Where(s => GLAccountIdsList.Contains(s.AccountId));
+             return ledgerTransactionPOCOs;
         }
 
         public LedgerTransaction GetCreditTransactionByJournalId(string journalId, int tenant)
