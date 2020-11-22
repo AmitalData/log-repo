@@ -198,7 +198,9 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-            
+            dataProvider.BranchName = shipment.BranchName;
+            dataProvider.BranchAdress = shipment.BranchAddress;
+
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
                 Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();

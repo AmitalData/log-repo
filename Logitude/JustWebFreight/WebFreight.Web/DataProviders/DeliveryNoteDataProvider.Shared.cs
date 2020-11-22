@@ -198,5 +198,7 @@ namespace WebFreight.Web.DataProviders
         public string WarehouseReferenceNumber { get; set; }
         public int? StorageFreeDays { get; set; }
 
+        public string BranchName { get; set; }
+        public string BranchAdress { get; set; }
     }
 }
