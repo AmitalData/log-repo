@@ -1279,6 +1279,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
                             }
+
+
+                            AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
+                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(amendment.AmendmentRequestInitiatorType, false, true);
+                            if (amendCancellRequestInitiatorPM != null)
+                            {
+                                amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
+
+                            }
+
+                            amendment.FieldAmendmentRejectReasonRemarks = amendment.FieldAmendmentRejectReasonRemarks;
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1361,6 +1372,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
                             }
+
+                            AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
+                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(error.AmendmentRequestInitiatorType, false, true);
+                            if (amendCancellRequestInitiatorPM != null)
+                            {
+                                amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
+
+                            }
+
+                            amendment.FieldAmendmentRejectReasonRemarks = error.FieldAmendmentRejectReasonRemarks;
+
                             generalData.AmendmentViews.Add(amendment);
 
                         }

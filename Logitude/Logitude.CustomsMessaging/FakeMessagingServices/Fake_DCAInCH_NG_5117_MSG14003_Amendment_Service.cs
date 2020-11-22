@@ -57,6 +57,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 AmendmentFieldStatusSpecified = true,
                 AmendmentFieldStatus=1,
                FieldAmendmentRejectReasonRemarks="TEST",
+               AmendmentRequestInitiatorTypeSpecified=true,
+               AmendmentRequestInitiatorType=2,
                Pointer= new ResponseAmendmentPointer[1]{
                      new ResponseAmendmentPointer(){DocumentSectionCode=new PointerDocumentSectionCodeType(){Value="42A" },SequenceNumeric=0}
                 }
