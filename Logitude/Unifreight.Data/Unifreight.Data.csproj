@@ -147,6 +147,7 @@
     <Compile Include="AmitalModel\EntityKeys\GDMFILEVERKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMFILINGKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMFLDRTRKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMLOCKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMREFKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GGGQKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GITITEMKeys.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.NO.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFLDRTR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMLOCK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMREF.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQ.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEM.cs" />
@@ -301,6 +303,7 @@
     <Compile Include="AmitalModel\Repsitories\GDMFILEVERRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMFILINGRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMFLDRTRRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMLOCKRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMREFRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GGGQRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GITITEMRepository.cs" />

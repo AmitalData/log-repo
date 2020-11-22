@@ -5592,6 +5592,39 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+
+            #region GDMLOCK
+
+            modelBuilder.Entity<GDMLOCK>()
+                .HasKey(p => p.COMID)
+                .ToTable("GDMLOCK", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GDMLOCK>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GDMLOCK>()
+                .Property(p => p.FILINGUPDATED)
+                    .HasColumnName(@"FILING_UPDATED")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GDMLOCK>()
+                .Property(p => p.OCR)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GDMLOCK>()
+                .Property(p => p.CONVERT2TIFF)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GDMLOCK>()
+                .Property(p => p.PAGECOUNT)
+                    .HasColumnName(@"PAGE_COUNT")
+                    .HasColumnType("int");
+
+            #endregion
             #region Disabled conventions
 
 
@@ -5984,5 +6017,7 @@ namespace Unifreight.Data.AmitalModel
         /// There are no comments for CFIMSVFLINE in the schema.
         /// </summary>
         public virtual DbSet<CFIMSVFLINE> CFIMSVFLINEs { get; set; }
+
+        public virtual DbSet<GDMLOCK> GDMLOCKs { get; set; }
     }
 }
