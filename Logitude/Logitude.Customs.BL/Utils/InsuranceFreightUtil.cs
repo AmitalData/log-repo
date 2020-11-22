@@ -239,7 +239,7 @@ namespace Logitude.Customs.BL.Utils
 
             var rateUSDCurrency = rateQuery.GetCustomsExchangeRateForDateAndCurrencyTypeCode("USD", taxationDateTime, tenant);
             rateUSDCurrency = rateUSDCurrency ?? new CustomsExchangeRatePM();
-            if (rateUSDCurrency.ExchangeRate == 0)
+            if (rateUSDCurrency.ExchangeRate == 0 || rateUSDCurrency.ExchangeRate == null)
             {
                 return null;
             }
