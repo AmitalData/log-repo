@@ -971,6 +971,13 @@
       Nullable="true" />
   </Column>
 
+  <Column
+    Name="PalestinianCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1172,6 +1179,11 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 
+  <Relation
+    ForeignKeyColumn="PalestinianCode"
+    ReferencedTable="Clients"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index

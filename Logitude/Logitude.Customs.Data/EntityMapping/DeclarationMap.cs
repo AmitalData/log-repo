@@ -306,6 +306,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FinalLoadingSite).HasColumnName("FinalLoadingSite").HasMaxLength(10).IsUnicode(false);
 
+
+            this.Property(t => t.PalestinianCode).HasColumnName("PalestinianCode").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
