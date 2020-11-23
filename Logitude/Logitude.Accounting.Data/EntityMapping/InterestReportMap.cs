@@ -61,7 +61,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.InvoiceFailureReason).HasColumnName("InvoiceFailureReason").HasMaxLength(1024).IsUnicode(true);
 
-            this.Property(t => t.CreditAllotmentPercentage).HasColumnName("CreditAllotmentPercentage").HasPrecision(2, 2);
+            this.Property(t => t.CreditAllotmentPercentage).HasColumnName("CreditAllotmentPercentage").HasPrecision(4, 2);
 
             this.Property(t => t.CalCreditAllotmentCommission).HasColumnName("CalCreditAllotmentCommission").HasPrecision(4, 2);
         }
