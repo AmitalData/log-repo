@@ -960,6 +960,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransaction.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
+    <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />

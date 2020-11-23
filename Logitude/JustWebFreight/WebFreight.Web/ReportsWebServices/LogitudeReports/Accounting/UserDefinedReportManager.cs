@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -18,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
+using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Security;
 
@@ -56,8 +58,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void GetAllReportFilters(QueryOperations iQueryOperations)
         {
-            this.GetFirstPeriodDatesFilters(iQueryOperations);
-            this.GetSecoundPeriodDatesFilters(iQueryOperations);
+            this.GetFirstPeriodDateFromFilters(iQueryOperations);
+            this.GetFirstPeriodDateToFilters(iQueryOperations);
+            this.GetSecoundPeriodDateToFilters(iQueryOperations);
+            this.GetSecoundPeriodDateFromFilters(iQueryOperations);
             this.GetUserDefinedReportIdFilter(iQueryOperations);
             this.GetIncludeAnOpeningBalanceFilter(iQueryOperations);
             this.GetDetailedCurrenciesFilter(iQueryOperations);
@@ -93,14 +97,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void BuildSourceData()
         {
             UserDefinedReportPM UserDefinedReport = GetSingleUserDefinedReportByFilters();
-            GetChildsAccountsConnectWithChartsofAccountsWhenApplyExpandFilter();
             BuildCalculatedChartsofAccountPeriod(UserDefinedReport);
         }
-
-        private void GetChildsAccountsConnectWithChartsofAccountsWhenApplyExpandFilter()
-        {
-
-        }
+ 
         private UserDefinedReportPM GetSingleUserDefinedReportByFilters()
         {
             UserDefinedReportQueryService userDefinedReportQueryService = new UserDefinedReportQueryService(accountingContext);
@@ -112,13 +111,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         { 
             if (userDefinedReport != null && !userDefinedReport.IsCancelled)
             {
-                MappingUserDefinedReportDataProvider(userDefinedReport);
+                MapUserDefinedReportDataProvider(userDefinedReport);
                 FillAllCalculatedChartsofAccountsLineListDataProvider();
                 SetCalculatedChartsofAccountsLinesAmountByLedgerTransactionConnectedWithAccounts(userDefinedReport);
             }
 
         }
-        private void MappingUserDefinedReportDataProvider(UserDefinedReportPM userDefinedReport)
+        private void MapUserDefinedReportDataProvider(UserDefinedReportPM userDefinedReport)
         {
 
             iDataProvider.UserDefinedReportPeriod = new UserDefinedReportPeriod()
@@ -127,12 +126,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 LocalName = userDefinedReport.LocalName != null ? userDefinedReport.LocalName : userDefinedReport.EnglishName,
                 CreateByUserLocalName = userDefinedReport.CreatedByLocalName != null ? userDefinedReport.CreatedByLocalName : userDefinedReport.CreatedByEnglishName,
                 CreateByUserEnglishName = userDefinedReport.CreatedByEnglishName != null ? userDefinedReport.CreatedByEnglishName : userDefinedReport.CreatedByLocalName,
-                CalculatedChartsOfAccountPeriods = MappingCalculatedChartsOfAccountPeriods(userDefinedReport),
+                CalculatedChartsOfAccountPeriods = MapCalculatedChartsOfAccountPeriods(userDefinedReport),
             };
 
         }
 
-        private List<CalculatedChartsOfAccountPeriod>  MappingCalculatedChartsOfAccountPeriods(UserDefinedReportPM userDefinedReport)
+        private List<CalculatedChartsOfAccountPeriod>  MapCalculatedChartsOfAccountPeriods(UserDefinedReportPM userDefinedReport)
         {
             var CalculatedChartsOfAccountPeriods = (from a in userDefinedReport.CalculatedChartsOfAccounts.Where(s => !s.IsCancelled)
                                                     select new CalculatedChartsOfAccountPeriod()
@@ -143,13 +142,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                         ChartOfAccountTypeEnglishName = a.ChartOfAccountTypeEnglishName != null ? a.ChartOfAccountTypeEnglishName : a.ChartOfAccountTypeLocalName,
                                                         ChartOfAccountTypeLocalName = a.ChartOfAccountTypeLocalName != null ? a.ChartOfAccountTypeLocalName : a.ChartOfAccountTypeEnglishName,
                                                         Id = a.Id,
-                                                        CalculatedChartsOfAccountsLinePeriods = MappingCalculatedChartsOfAccountsLinePeriods(a),
+                                                        CalculatedChartsOfAccountsLinePeriods = MapCalculatedChartsOfAccountsLinePeriods(a),
                                                     }).ToList();
 
             return CalculatedChartsOfAccountPeriods;
 
         }
-        private List<CalculatedChartsOfAccountsLinePeriod> MappingCalculatedChartsOfAccountsLinePeriods(CalculatedChartsOfAccountPM  CalculatedChartsOfAccount )
+        private List<CalculatedChartsOfAccountsLinePeriod> MapCalculatedChartsOfAccountsLinePeriods(CalculatedChartsOfAccountPM  CalculatedChartsOfAccount )
         {
             var CalculatedChartsOfAccountsLinePeriods = (from b in CalculatedChartsOfAccount.CalculatedChartsOfAccountLines.Where(s => !s.IsCancelled)
                                                          select new CalculatedChartsOfAccountsLinePeriod()
@@ -177,10 +176,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
 
 
-        private CalculatedChartsOfAccountsLinePeriod MappingCalculatedChartsOfAccountsLinePeriodFromGLAccount(GLAccount gLAccount, CalculatedChartsOfAccountsLinePeriod line)
+        private CalculatedChartsOfAccountsLinePeriod MapCalculatedChartsOfAccountsLinePeriodFromGLAccount(GLAccount gLAccount, CalculatedChartsOfAccountsLinePeriod line)
         {
 
-            var MappingLine = new CalculatedChartsOfAccountsLinePeriod()
+            var MapLine = new CalculatedChartsOfAccountsLinePeriod()
             {
                 EnglishName = gLAccount.EnglishName != null ? gLAccount.EnglishName : gLAccount.LocalName,
                 LocalName = gLAccount.LocalName != null ? gLAccount.LocalName : gLAccount.EnglishName,
@@ -190,10 +189,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 EnglishType = "GLAccount",
                 ChartsofAccountTypeCode = line.ChartsofAccountTypeCode,
                 ParentChartsofAccountTypeCode = line.ParentChartsofAccountTypeCode,
-                LineTypeCode = line.LineTypeCode,
+                LineTypeCode = GLAccountType,
             };
 
-            return MappingLine;
+            return MapLine;
         }
         private void FillAllCalculatedChartsofAccountsLineListDataProvider()
         {
@@ -264,39 +263,90 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void SetCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds()
         {
-            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
-            IQueryable<LedgerTransaction> IQueryableledgerTransactions = ledgerTransactionQueryService.GetIQueryableLedgerTransactionsByGLAccountIdsList(ReportGLAccountIdsList, this.tenant);
-            SetCalculatedChartsofAcclountsLinesAmountsFields(IQueryableledgerTransactions, GLAccountType);
+            SetCalculatedChartsofAcclountsLinesAmountsFields(GLAccountType);
         }
 
         private void SetCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForChartsofAccounts()
         {
             List<string> GLAccountIdsList = new List<string>();
             GetAllGLAccountIdsConnectedToChartsofAccount(GLAccountIdsList);
-            if (!this.ExpandChartOfAccountToGLAccounts)
+            if (!this.ExpandChartOfAccountToGLAccounts && GLAccountIdsList.Count>0)
             {
-                LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
-                IQueryable<LedgerTransaction> IQueryableledgerTransactions = ledgerTransactionQueryService.GetIQueryableLedgerTransactionsByGLAccountIdsList(GLAccountIdsList, this.tenant);
-                SetCalculatedChartsofAcclountsLinesAmountsFields(IQueryableledgerTransactions, ChartofAccountType);
+                SetCalculatedChartsofAcclountsLinesAmountsFields(ChartofAccountType);
 
             }
            
         }
-        private void SetCalculatedChartsofAcclountsLinesAmountsFields(IQueryable<LedgerTransaction> IQueryableledgerTransactions, string LineChartsofAccountType)
+        private void SetCalculatedChartsofAcclountsLinesAmountsFields(string LineChartsofAccountType)
         {
-            IQueryable<LedgerTransaction> FirstPeriodLedgerTransaction = FilterLedgerTransactionByPeriod(this.FirstPeriodDateFrom, this.FirstPeriodDateTo, IQueryableledgerTransactions);
-            IQueryable<LedgerTransaction> SecoundPeriodLedgerTransaction = FilterLedgerTransactionByPeriod(this.SecoundPeriodDateFrom, this.SecoundPeriodDateTo, IQueryableledgerTransactions);
+          
             foreach (CalculatedChartsOfAccountsLinePeriod Line in this.iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Where(s => s.LineTypeCode == LineChartsofAccountType))
-            {       Line.FirstPeriodAmount = FirstPeriodLedgerTransaction.Where(s => Line.LineTypeCode == ChartofAccountType? s.Account.ChartOfAccountsId == Line.ChartsofAccountId:
-                                                                                      s.AccountId == Line.GLAccountId).ToList().Sum(s => s.LocalAmountDebit - s.LocalAmountCredit);
-                    Line.SecoundPeriodAmount = SecoundPeriodLedgerTransaction.Where(s => Line.LineTypeCode == ChartofAccountType ? s.Account.ChartOfAccountsId == Line.ChartsofAccountId :
-                                                                                         s.AccountId == Line.GLAccountId).ToList().Sum(s => s.LocalAmountDebit - s.LocalAmountCredit);
+            {
+                Line.FirstPeriodAmount = 0;
+                Line.SecoundPeriodAmount = 0;
+                if (this.FirstPeriodDateFrom !=null & this.FirstPeriodDateTo!=null)
+                    Line.FirstPeriodAmount = Line.LineTypeCode == ChartofAccountType ? GetChartsofAccountAmountFromLedgerTransactionBalanceFilter(Line.ChartsofAccountId, (DateTime)this.FirstPeriodDateFrom,(DateTime)this.FirstPeriodDateTo):
+                                                                                      GetGLAccountAmountFromLedgerTransactionBalanceFilter(Line.GLAccountId, (DateTime)this.FirstPeriodDateFrom, (DateTime)this.FirstPeriodDateTo);
+                if (this.SecoundPeriodDateFrom != null & this.SecoundPeriodDateTo != null)
+                    Line.SecoundPeriodAmount = Line.LineTypeCode == ChartofAccountType ? GetChartsofAccountAmountFromLedgerTransactionBalanceFilter(Line.ChartsofAccountId, (DateTime)this.SecoundPeriodDateFrom, (DateTime)this.SecoundPeriodDateTo) :
+                                                                                       GetGLAccountAmountFromLedgerTransactionBalanceFilter(Line.GLAccountId, (DateTime)this.SecoundPeriodDateFrom, (DateTime)this.SecoundPeriodDateTo);
                     Line.Difference = Line.FirstPeriodAmount==0 && Line.SecoundPeriodAmount == 0?0: 
                                       Line.FirstPeriodAmount == 0?100:
                                       SetLineDefferenceField(Line);
                     SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(Line);
                     SetSubParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(Line);
             }
+        }
+
+
+        private decimal GetGLAccountAmountFromLedgerTransactionBalanceFilter(string GLAccountId,DateTime FromDate,DateTime ToDate)
+        {
+            LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter
+            {
+                PageSize = 100,
+                Tenant = this.tenant,
+                From = FromDate,
+                To = ToDate,
+                IncludeChildAccounts = false,
+                IncludeRelatedCurrenciesAccount = false,
+                SearchFields = null,
+                CurrencyId = null,
+                DateTypeCode = "1",
+                CheckHaveAccountingQueued = false,
+                GLAccountId = GLAccountId,
+            };
+
+            decimal GLAccountAmount=0;
+            try
+            {
+                TransactionsBalanceByFiltersService transactionsBalanceByFiltersService = new TransactionsBalanceByFiltersService();
+                TransactionsBalanceByFiltersResult transactionsBalanceByFiltersResult = transactionsBalanceByFiltersService.GetTransactionsBalanceByFilters(this.tenant, null, ledgerTransactionBalanceFilter);
+                decimal? GLAccountStartBalanceLocal = transactionsBalanceByFiltersResult.CallBack.StartBalanceLocal;
+                decimal? GLAccountEndBalanceLocal = transactionsBalanceByFiltersResult.CallBack.EndBalanceLocal;
+                GLAccountAmount = this.IncludeAnOpeningBalance ? GLAccountEndBalanceLocal!=null?(decimal)GLAccountEndBalanceLocal:0 
+                                                                : GLAccountEndBalanceLocal!=null && GLAccountStartBalanceLocal!=null? (decimal)GLAccountEndBalanceLocal - (decimal)GLAccountStartBalanceLocal:
+                                                                  GLAccountEndBalanceLocal != null ? (decimal)GLAccountEndBalanceLocal :
+                                                                  GLAccountStartBalanceLocal!=null? -(decimal)GLAccountStartBalanceLocal:0;
+            }
+            catch (Exception e)
+            {
+                GLAccountAmount = 0;
+            }
+           
+            return GLAccountAmount;
+        }
+
+        private decimal GetChartsofAccountAmountFromLedgerTransactionBalanceFilter(string chartsofAccountsId, DateTime fromDate, DateTime toDate)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accountingContext);
+            List<GLAccount> GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(this.tenant, chartsofAccountsId);
+            decimal ChartsofAccountAmount = 0;
+            foreach (GLAccount glAccount in GLAccountsConnectedWithChartofAccount)
+            {
+                ChartsofAccountAmount+= GetGLAccountAmountFromLedgerTransactionBalanceFilter(glAccount.Id, fromDate, toDate);
+            }
+ 
+            return ChartsofAccountAmount;
         }
 
         private void SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(CalculatedChartsOfAccountsLinePeriod line)
@@ -339,15 +389,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return line.Difference;
 
         }
-        private IQueryable<LedgerTransaction> FilterLedgerTransactionByPeriod(DateTime?  periodDateFrom , DateTime?  periodDateTo , IQueryable<LedgerTransaction> ledgerTransactions)
-        {
-            IQueryable<LedgerTransaction>  PeriodLedgerTransaction = ledgerTransactions.Where(s => DbFunctions.TruncateTime(s.AccountingDate) >= DbFunctions.TruncateTime(periodDateFrom) &&
-                                                                                 DbFunctions.TruncateTime(s.AccountingDate) <= DbFunctions.TruncateTime(periodDateTo));
-
-            return PeriodLedgerTransaction;
-
-        }
-
+   
         private void GetAllGLAccountIdsConnectedToChartsofAccount(List<string> gLAccountIdsList)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accountingContext);
@@ -363,7 +405,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 foreach (GLAccount GLAccount in GLAccountsConnectedWithChartofAccount)
                 {
                     if(this.ExpandChartOfAccountToGLAccounts)
-                      iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Add(this.MappingCalculatedChartsOfAccountsLinePeriodFromGLAccount(GLAccount, itemToRemove));
+                      iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Add(this.MapCalculatedChartsOfAccountsLinePeriodFromGLAccount(GLAccount, itemToRemove));
                     else
                       gLAccountIdsList.Add(GLAccount.Id);
                 }
@@ -440,16 +482,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
-        private void GetFirstPeriodDatesFilters(QueryOperations iQueryOperations)
+        private void GetFirstPeriodDateToFilters(QueryOperations iQueryOperations)
         {
-            QueryFilterItem filterItem_FirstPeriodDateFrom = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FirstPeriodDateFrom").FirstOrDefault();
-            if (filterItem_FirstPeriodDateFrom != null)
-            {
-                if (filterItem_FirstPeriodDateFrom.FieldValue != null)
-                {
-                    FirstPeriodDateFrom = (DateTime)filterItem_FirstPeriodDateFrom.FieldValue;
-                }
-            }
+            
             QueryFilterItem filterItem_FirstPeriodDateTo = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FirstPeriodDateTo").FirstOrDefault();
             if (filterItem_FirstPeriodDateTo != null)
             {
@@ -460,7 +495,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
-        private void GetSecoundPeriodDatesFilters(QueryOperations iQueryOperations)
+
+        private void GetFirstPeriodDateFromFilters(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_FirstPeriodDateFrom = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FirstPeriodDateFrom").FirstOrDefault();
+            if (filterItem_FirstPeriodDateFrom != null)
+            {
+                if (filterItem_FirstPeriodDateFrom.FieldValue != null)
+                {
+                    FirstPeriodDateFrom = (DateTime)filterItem_FirstPeriodDateFrom.FieldValue;
+                }
+            }
+           
+        }
+
+        private void GetSecoundPeriodDateFromFilters(QueryOperations iQueryOperations)
         {
             QueryFilterItem filterItem_SecoundPeriodDateFrom = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SecoundPeriodDateFrom").FirstOrDefault();
             if (filterItem_SecoundPeriodDateFrom != null)
@@ -470,6 +519,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     SecoundPeriodDateFrom = (DateTime)filterItem_SecoundPeriodDateFrom.FieldValue;
                 }
             }
+            
+        }
+
+
+        private void GetSecoundPeriodDateToFilters(QueryOperations iQueryOperations)
+        {
+            
             QueryFilterItem filterItem_SecoundPeriodDateTo = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SecoundPeriodDateTo").FirstOrDefault();
             if (filterItem_SecoundPeriodDateTo != null)
             {
@@ -479,8 +535,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 }
             }
         }
-
-
     }
 
 }
