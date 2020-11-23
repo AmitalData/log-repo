@@ -127,6 +127,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CheckDigitControlAlgorithmCode = entityPM.CheckDigitControlAlgorithmCode;
             poco.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
             poco.VatUniquePartnerTypeCode = entityPM.VatUniquePartnerTypeCode;
+            poco.TransferQuotationsToUnifreightTrigger = entityPM.TransferQuotationsToUnifreightTrigger;
 
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);

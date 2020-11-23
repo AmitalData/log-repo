@@ -396,7 +396,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private void SendQuoteToIntegratedSystem(string objectTableId)
         {
-            if (IsSendQuoteToIntegratedSystem())
+            if (CanSendQuoteToIntegratedSystem())
             {
                 Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService quoteQueryService = new Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService(entityPM.Tenant);
                 Logitude.BL.QuoteModel.APIDataContract.ApiV1.Quote quote = quoteQueryService.GetQuoteById(entityPM.Id, entityPM.Tenant);
@@ -405,29 +405,50 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 {
                     xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quote);
                 }
-                CommunicationsParams tasklogParams = GetCommunicationsParams(objectTableId);
+                CommunicationsParams tasklogParams = GetQuotationDocumentCommunicationsParams(objectTableId);
                 List<QueueTask> queue2Tasks = new List<QueueTask>();
-                queue2Tasks.Add(new QueueTask(){Action = "ExportQuotationsToIntegratedSystem",Parameters = new List<Parameter>() { new Parameter { Name = "QuoteMetaData", Order = 1, Value = xmlstring }, }});
+                queue2Tasks.Add(new QueueTask()
+                {
+                    Action = "ExportQuotationsToIntegratedSystem",
+                    Parameters = new List<Parameter>() {
+                        new Parameter {
+                            Name = "QuoteMetaData",
+                            Order = 1,
+                            Value = xmlstring },
+                    }
+                });
+
                 tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
                 Communications.AddCommunicationLog(tasklogParams);
             }
         }
 
 
-        private bool IsSendQuoteToIntegratedSystem()
+        private bool CanSendQuoteToIntegratedSystem()
         {
             bool isSendQuote = false;
-            QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
-            QuoteStage quoteStageSend = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTST").FirstOrDefault();
-            if (quoteStageSend != null && quoteStageSend.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageSend.Id)
+
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+            if (tenantPM.ExportQuotationsToIntegratedSystem)
             {
-                TenantQuery tenantQuery = new TenantQuery(tenant);
-                TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-                if (tenantPM.ExportQuotationsToIntegratedSystem) isSendQuote = true;
+                QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
+                QuoteStage quoteStageSend = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTST").FirstOrDefault();
+                QuoteStage quoteStageAccepted = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTAC").FirstOrDefault();
+
+                bool quoteStatusChangedToSent = (quoteStageSend != null && quoteStageSend.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageSend.Id);
+                bool quoteStatusChangedAccept = (quoteStageAccepted != null && quoteStageAccepted.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageAccepted.Id);
+
+                if ((tenantPM?.TransferQuotationsToUnifreightTrigger == "OnSend" && quoteStatusChangedToSent)
+                    || (tenantPM?.TransferQuotationsToUnifreightTrigger == "OnAccept" && quoteStatusChangedAccept))
+                {
+                    isSendQuote = true;
+                }
             }
+
             return isSendQuote;
         }
-        private CommunicationsParams GetCommunicationsParams(string objectTableId)
+        private CommunicationsParams GetQuotationDocumentCommunicationsParams(string objectTableId)
         {
             return new CommunicationsParams()
             {

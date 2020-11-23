@@ -700,6 +700,15 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TransferQuotationsToUnifreightTrigger"
+    ShortName="TransferQuotationsToUNFTrigger"
+    Type="varchar"
+    Size="10"
+    DefaultValue="'OnSend'">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"
