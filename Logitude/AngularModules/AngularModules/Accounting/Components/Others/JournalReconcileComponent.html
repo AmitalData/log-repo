@@ -21,8 +21,8 @@
                             {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                         </td>
 
-                        <td style="width: 180px;">
-                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalDifference!=0">{{TotalDifference | NumbersPipe:'N2'}}</div>                            
+                        <td style="width: 180px;" text-start>
+                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalDifference!=0" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>                            
                         </td>
                         <td><div></div></td>
                     </tr>
