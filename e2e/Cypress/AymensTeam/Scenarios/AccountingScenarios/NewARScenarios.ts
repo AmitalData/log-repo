@@ -23,7 +23,7 @@ export class NewARScenarios {
         cy.wait('@entityLoaded');
         cy.get('#ARInvoice_AmountPaid').type('100');
         //cy.get('#APPayment-SaveClose').click({ force: true });
-        cy.get('#ARPayment-Save').click();
+        Resolvers.ButtonResolver.Selector('#ARPayment-Save').Click();
         cy.get('#EditBackbutton').click();
 
 

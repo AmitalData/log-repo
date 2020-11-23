@@ -21,9 +21,10 @@ export class NewAPScenarios {
         cy.wait('@entityLoaded');
         cy.get('#APInvoice_AmountPaid').click({ force: true });
         cy.wait('@entityLoaded');
-        cy.get('#APInvoice_AmountPaid').type('100');  
+        cy.get('#APInvoice_AmountPaid').type('100'); 
+        cy.wait('@entityLoaded');
         //cy.get('#APPayment-SaveClose').click({ force: true });
-        cy.get('#APPayment-Save').click();
+        Resolvers.ButtonResolver.Selector('#APPayment-Save').Click();
         cy.get('#EditBackbutton').click();
 
        
