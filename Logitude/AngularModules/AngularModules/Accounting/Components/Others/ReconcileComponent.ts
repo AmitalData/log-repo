@@ -453,16 +453,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
 
     private openAmountSelectedOperator: any;
-    get SelectedOperator() { return this.openAmountSelectedOperator; }
-    set SelectedOperator(value: any) {
+    get OpenAmountSelectedOperator() { return this.openAmountSelectedOperator; }
+    set OpenAmountSelectedOperator(value: any) {
         if (this.openAmountSelectedOperator != value) {
             this.openAmountSelectedOperator = value;
             this.OpenAmountTextChanged(this.openAmount,true);
         }
     }
     private foreignAmountSelectedOperator: any;
-    get SelectedOperator2() { return this.foreignAmountSelectedOperator; }
-    set SelectedOperator2(value: any) {
+    get ForeignAmountSelectedOperator() { return this.foreignAmountSelectedOperator; }
+    set ForeignAmountSelectedOperator(value: any) {
         if (this.foreignAmountSelectedOperator != value) {
             this.foreignAmountSelectedOperator = value;
             this.ForeignAmountTextChanged(this.foreignAmount,true);
@@ -510,10 +510,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.SelectedOperator)) {
+        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
 
             this.timerToken = setTimeout(() => {
-                var OpenAmountFilterOperator = this.SelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
+                var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals")
                 {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, -1 * searchtext, null, OpenAmountFilterOperator, false, false, false, "number", false);
@@ -545,10 +545,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     }
     ForeignAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.SelectedOperator2)) {
+        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.ForeignAmountSelectedOperator)) {
 
             this.timerToken = setTimeout(() => {
-                var ForeignAmountFilterOperator = this.SelectedOperator2.EnglishName.replace(/ /g, ''); // remove white spaces
+                var ForeignAmountFilterOperator = this.ForeignAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (ForeignAmountFilterOperator == "Equals")
                 {
                     this.foreignAmountFilter = new FilterItem("ForeignAmount", searchtext, -1 * searchtext, null, ForeignAmountFilterOperator, false, false, false, "number", false);
@@ -574,7 +574,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             if (OperatorChanged == true && AppTool.IsNullOrEmpty(searchtext)) {
                 return;
             }
-            this.openAmountFilter = null;
+            this.foreignAmountFilter = null;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
 
@@ -1162,7 +1162,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         // this.SelectedLines.Clear();
         this.CalculateTotals();
     }
-    //#endregion
+    //#endregion 
 
     //#region Totals Work
     TotalCredit: number = 0;
@@ -1621,6 +1621,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.OpenAmount = null;
         this.FromDate = null;
         this.ToDate = null;
+        this.SelectedDatePreset = null;        
+        this.openAmountSelectedOperator = this.Operators[0];
+        this.foreignAmountSelectedOperator = this.Operators[0];
+
+        this.ReloadScreen();
     }
 
     

@@ -127,8 +127,8 @@
                         {{'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe}}:</li>
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
                         <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="openAmountSelectedOperator"
-                            (SelectedItemChanged)="openAmountSelectedOperator = $event"></ComboBox>
+                            [SelectedItem]="OpenAmountSelectedOperator"
+                            (SelectedItemChanged)="OpenAmountSelectedOperator = $event"></ComboBox>
                     </li>
                     <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                         <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
@@ -142,8 +142,8 @@
                         {{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
                         <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="foreignAmountSelectedOperator"
-                            (SelectedItemChanged)="foreignAmountSelectedOperator = $event"></ComboBox>
+                            [SelectedItem]="ForeignAmountSelectedOperator"
+                            (SelectedItemChanged)="ForeignAmountSelectedOperator = $event"></ComboBox>
                     </li>
                     <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                         <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
