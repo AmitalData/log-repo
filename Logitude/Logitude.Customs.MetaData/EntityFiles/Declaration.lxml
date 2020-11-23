@@ -17023,6 +17023,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;ce0089c9-4569-4c1b-823d-158c1079815f&quot;"
     FieldName="&quot;TransshipmentApprovalDateTime&quot;"
@@ -17177,6 +17178,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -21999,6 +22001,18 @@
       Code="&quot;Customs.Declaration.O.AmendmentFieldStatus&quot;"
       DefaultText="&quot;Status&quot;"
       LocalDefaultText="&quot;סטטוס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.AmendmentRequestInitiatorType&quot;"
+      DefaultText="&quot;Amendment Request Initiator Type&quot;"
+      LocalDefaultText="&quot;יוזם התיקון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.FieldAmendmentRejectReasonRemarks&quot;"
+      DefaultText="&quot;Amendment Reject Reason Remarks&quot;"
+      LocalDefaultText="&quot;סיבת דחיה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -141,7 +141,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.UpdateContactSearchField(itemPM);
             }
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         public void Update(VendorPM entityPM, bool mapComposition = false)
@@ -203,8 +207,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Vendor");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Vendor");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 

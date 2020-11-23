@@ -956,6 +956,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="TransshipmentApprovalDateTime"
     Type="datetime">
@@ -969,6 +970,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1169,6 +1171,7 @@
     ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index

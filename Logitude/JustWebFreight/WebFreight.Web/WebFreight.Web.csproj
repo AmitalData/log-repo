@@ -988,6 +988,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HorseController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendCancellRequestInitiatorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentFieldStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentRequestRejectReasonTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AutonomyRegionTypeViewsController.Generated.cs" />
@@ -2862,6 +2863,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccumalationStateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ActionCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AgentTalkBackTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendCancellRequestInitiatorUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentFieldStatusTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentRequestRejectReasonTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentStatusUpdateClass.cs" />

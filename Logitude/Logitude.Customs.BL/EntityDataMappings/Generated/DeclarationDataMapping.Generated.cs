@@ -160,9 +160,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar, 
+	         FOBValueDollar,
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite,
+
 	      }
 
 
@@ -383,7 +384,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
 	         FOBValueDollar, 
-	         AmendmentRejectionReasonName, 
+	         AmendmentRejectionReasonName,
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite,
 	      }
@@ -1084,6 +1085,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
 			}
 			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
             {
 				entityPOCO.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
@@ -1094,6 +1096,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.FinalLoadingSite = entityPM.FinalLoadingSite;
 			}
 			
+
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -1800,10 +1803,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.TransshipmentApprovalDateTime = entityPOCO.TransshipmentApprovalDateTime;
             }
 
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalLoadingSite))
             {
 					entityPM.FinalLoadingSite = entityPOCO.FinalLoadingSite;
             }
+
 
 		}
 
@@ -2501,6 +2506,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
             {
                 oldEntityPM.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
@@ -2510,7 +2516,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.FinalLoadingSite = entityPM.FinalLoadingSite;
             }
-			
+
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)

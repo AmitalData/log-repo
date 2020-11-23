@@ -103,6 +103,7 @@
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
+    <Compile Include="EntityKeys\AmendCancellRequestInitiatorKeys.cs" />
     <Compile Include="EntityKeys\AmendmentFieldStatusTypeKeys.cs" />
     <Compile Include="EntityKeys\AmendmentRequestRejectReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\AmendmentStatusKeys.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AmendCancellRequestInitiatorListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentFieldStatusTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentRequestRejectReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentStatusListQueryService.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AmendCancellRequestInitiatorListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentFieldStatusTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentRequestRejectReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentStatusListQueryService.Generated.cs" />
@@ -385,6 +388,7 @@
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AmendCancellRequestInitiatorList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentFieldStatusTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentRequestRejectReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentStatusList.Generated.cs" />
@@ -480,6 +484,7 @@
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
+    <Compile Include="EntityMapping\AmendCancellRequestInitiatorMap.cs" />
     <Compile Include="EntityMapping\AmendmentFieldStatusTypeMap.cs" />
     <Compile Include="EntityMapping\AmendmentRequestRejectReasonTypeMap.cs" />
     <Compile Include="EntityMapping\AmendmentStatusMap.cs" />
@@ -574,6 +579,7 @@
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
+    <Compile Include="EntityPOCOs\AmendCancellRequestInitiator.cs" />
     <Compile Include="EntityPOCOs\AmendmentFieldStatusType.cs" />
     <Compile Include="EntityPOCOs\AmendmentRequestRejectReasonType.cs" />
     <Compile Include="EntityPOCOs\AmendmentStatus.cs" />
@@ -669,6 +675,7 @@
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
+    <Compile Include="Repsitories\AmendCancellRequestInitiatorRepository.cs" />
     <Compile Include="Repsitories\AmendmentFieldStatusTypeRepository.cs" />
     <Compile Include="Repsitories\AmendmentRequestRejectReasonTypeRepository.cs" />
     <Compile Include="Repsitories\AmendmentStatusRepository.cs" />
@@ -730,6 +737,7 @@
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AmendCancellRequestInitiatorRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentFieldStatusTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentRequestRejectReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentStatusRepository.Generated.cs" />

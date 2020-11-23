@@ -187,11 +187,13 @@ export class DeclarationList {
 	ReplacingRepairRequest: string;
 	FOBValueNIS: number;
 	FOBValueDollar: number;
+ 
 	CreateDateForExport: Date;
 	TransportModeForExport: string;
 	CustomFileForExport: string;
 	TransshipmentApprovalDateTime: Date;
 	FinalLoadingSite: string;
+ 
 	
 }
  

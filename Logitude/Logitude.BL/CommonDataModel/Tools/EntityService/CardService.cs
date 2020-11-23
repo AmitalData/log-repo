@@ -156,7 +156,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void RunStoredProcedures()
         {
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
 

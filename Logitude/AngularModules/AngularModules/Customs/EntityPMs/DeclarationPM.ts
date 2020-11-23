@@ -1329,6 +1329,9 @@ export class DeclarationPM {
     public set FinalLoadingSite(newValue: string) { if (this.finalLoadingSite != newValue) { this.finalLoadingSite = newValue; this.MarkAsDirty("FinalLoadingSite"); } }
        
 	 
+       
+	 
+
 
     public OldEntityPM: DeclarationPM;
 		
@@ -1353,4 +1356,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

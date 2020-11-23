@@ -466,7 +466,7 @@ namespace WebFreight.Web.WcfApi
                                         if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
                                         {
                                             entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                                            if(entity != null && (entity.Card.Code != entityPM.Code))
+                                            if (entity != null && (entity.Card.Code != entityPM.Code))
                                             {
                                                 response.HasError = true;
                                                 response.ErrorMessage = "A customer with the same vat and different code already exists.";
@@ -494,7 +494,7 @@ namespace WebFreight.Web.WcfApi
                         bool exist = SecurityUtility.CheckFeature("Customer", "EDITCREDITAMOUNT", entity.Tenant);
                         if (exist)
                         {
-                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
+                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;
                         }
 
 

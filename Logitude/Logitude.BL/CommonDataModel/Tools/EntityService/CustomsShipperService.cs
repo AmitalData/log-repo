@@ -105,7 +105,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
 
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                if (dbms != "oracle")
+                {
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                }
                 scope.Complete();
             }
    
@@ -147,8 +151,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                if (dbms != "oracle")
+                {
+                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+                }
                 scope.Complete();
             }
         }
