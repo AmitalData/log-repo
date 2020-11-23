@@ -478,10 +478,10 @@
       Name="&quot;License Management&quot;"
       SearchFields="&quot;LIC,License Management&quot;" />
     <Record
-      Name="&quot;Charge types Direction Restricted Mode&quot;"
+      Name="&quot;Charges Types Direction Restrictions&quot;"
       Code="&quot;CTR&quot;"
-      SearchFields="&quot;CTR,Charge types Direction Restricted Mode&quot;"
-      Description="&quot;Charge types Direction Restricted Mode&quot;" />
+      SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
+      Description="&quot;Charges Types Direction Restrictions&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

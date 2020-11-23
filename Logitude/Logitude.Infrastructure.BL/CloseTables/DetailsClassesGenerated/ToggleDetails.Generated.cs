@@ -171,10 +171,10 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Charge types Direction Restricted Mode", 
+                Name = "Charges Types Direction Restrictions", 
                 Code = "CTR", 
-                SearchFields = "CTR,Charge types Direction Restricted Mode", 
-                Description = "Charge types Direction Restricted Mode", 
+                SearchFields = "CTR,Charges Types Direction Restrictions", 
+                Description = "Charges Types Direction Restrictions", 
 			});
 			
             return all;
