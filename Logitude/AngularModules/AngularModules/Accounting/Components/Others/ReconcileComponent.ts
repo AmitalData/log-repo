@@ -1163,8 +1163,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         return newEntity;
     }
     SubmitChanges(entity) {
-        this._ReconciliationExtendedPMService.insert(entity).subscribe((myResult:ServiceResponse) => {
+        SessionLocator.SelectedSession.StartBusyIndicator("Saving");
 
+        this._ReconciliationExtendedPMService.insert(entity).subscribe((myResult: ServiceResponse) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
             var mm: ServiceResponse = myResult;
             var _callback:RecoCallback = mm.Result;
             if (!mm.HasError) {
