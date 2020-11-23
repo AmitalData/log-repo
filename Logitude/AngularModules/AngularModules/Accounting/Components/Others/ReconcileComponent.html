@@ -109,16 +109,16 @@
                         (SelectedItemChanged)="SelectedDateType = $event"></ComboBox>
                     </li>
 
-                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
+                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 130px;">
                         <ComboBox [ItemsSource]="DateFilterPresetsList" [Binding]="'LocalName'" [SelectedItem]="SelectedDatePreset"
                             (SelectedItemChanged)="SelectedDatePreset = $event"></ComboBox>
                     </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
                         <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
                             [SelectedDateValue]="FromDate" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true">
                         </LogDatePicker>
                     </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
                         <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
                             [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
                             [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
