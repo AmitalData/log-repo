@@ -333,6 +333,36 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsDirectionRestricted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsActiveInExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsActiveInImport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsActiveInDomestic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsActiveInDrop"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"

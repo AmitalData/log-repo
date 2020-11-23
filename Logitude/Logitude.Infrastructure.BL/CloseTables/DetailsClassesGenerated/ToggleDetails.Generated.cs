@@ -168,6 +168,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "License Management", 
                 SearchFields = "LIC,License Management", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Charge types Direction Restricted Mode", 
+                Code = "CTR", 
+                SearchFields = "CTR,Charge types Direction Restricted Mode", 
+                Description = "Charge types Direction Restricted Mode", 
+			});
 			
             return all;
        }

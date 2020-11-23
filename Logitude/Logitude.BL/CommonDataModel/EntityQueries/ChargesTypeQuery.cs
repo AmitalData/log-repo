@@ -90,6 +90,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ApplyRegionalTax = a.ApplyRegionalTax,
                           HasPickup = a.HasPickup,
                           HasDelivery = a.HasDelivery,
+                          IsDirectionRestricted = a.IsDirectionRestricted,
+                          IsActiveInExport = a.IsActiveInExport,
+                          IsActiveInImport = a.IsActiveInImport,
+                          IsActiveInDrop= a.IsActiveInDrop,
+                          IsActiveInDomestic = a.IsActiveInDomestic,
+                          
                       }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -160,6 +166,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         ApplyRegionalTax = a.ApplyRegionalTax,
                                         HasPickup = a.HasPickup,
                                         HasDelivery = a.HasDelivery,
+                                        IsDirectionRestricted = a.IsDirectionRestricted,
+                                        IsActiveInExport = a.IsActiveInExport,
+                                        IsActiveInImport = a.IsActiveInImport,
+                                        IsActiveInDrop = a.IsActiveInDrop,
+                                        IsActiveInDomestic = a.IsActiveInDomestic,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -237,6 +248,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ApplyRegionalTax = a.ApplyRegionalTax,
                                   HasPickup = a.HasPickup,
                                   HasDelivery = a.HasDelivery,
+                                  IsDirectionRestricted = a.IsDirectionRestricted,
+                                  IsActiveInExport = a.IsActiveInExport,
+                                  IsActiveInImport = a.IsActiveInImport,
+                                  IsActiveInDrop = a.IsActiveInDrop,
+                                  IsActiveInDomestic = a.IsActiveInDomestic,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -322,6 +338,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ApplyRegionalTax = a.ApplyRegionalTax,
                               HasPickup = a.HasPickup,
                               HasDelivery = a.HasDelivery,
+                              IsDirectionRestricted = a.IsDirectionRestricted,
+                              IsActiveInExport = a.IsActiveInExport,
+                              IsActiveInImport = a.IsActiveInImport,
+                              IsActiveInDrop = a.IsActiveInDrop,
+                              IsActiveInDomestic = a.IsActiveInDomestic,
                           }).FirstOrDefault();
 
 
@@ -419,6 +440,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     ApplyRegionalTax = a.ApplyRegionalTax,
                                                     HasPickup = a.HasPickup,
                                                     HasDelivery = a.HasDelivery,
+                                                    IsDirectionRestricted = a.IsDirectionRestricted,
+                                                    IsActiveInExport = a.IsActiveInExport,
+                                                    IsActiveInImport = a.IsActiveInImport,
+                                                    IsActiveInDrop = a.IsActiveInDrop,
+                                                    IsActiveInDomestic = a.IsActiveInDomestic,
                                                 };
             return charges;
         }
@@ -487,6 +513,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ApplyRegionalTax = a.ApplyRegionalTax,
                              HasPickup = a.HasPickup,
                              HasDelivery = a.HasDelivery,
+                             IsDirectionRestricted = a.IsDirectionRestricted,
+                             IsActiveInExport = a.IsActiveInExport,
+                             IsActiveInImport = a.IsActiveInImport,
+                             IsActiveInDrop = a.IsActiveInDrop,
+                             IsActiveInDomestic = a.IsActiveInDomestic,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;

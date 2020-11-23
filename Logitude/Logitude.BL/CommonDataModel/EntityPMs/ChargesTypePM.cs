@@ -183,6 +183,15 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool HasPickup { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool HasDelivery { get; set; }
-
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsDirectionRestricted { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsActiveInExport { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsActiveInImport { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsActiveInDomestic { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsActiveInDrop { get; set; }
     }
 }
