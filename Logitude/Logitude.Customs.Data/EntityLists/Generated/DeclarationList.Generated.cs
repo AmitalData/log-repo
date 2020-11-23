@@ -372,7 +372,6 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? FOBValueNIS  { get; set; }
        [DataMember]
        public decimal? FOBValueDollar  { get; set; }
-
        [DataMember]
        public DateTime? CreateDateForExport  { get; set; }
        [DataMember]
@@ -383,7 +382,6 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? TransshipmentApprovalDateTime  { get; set; }
        [DataMember]
        public string FinalLoadingSite  { get; set; }
-
    }
 
 }
