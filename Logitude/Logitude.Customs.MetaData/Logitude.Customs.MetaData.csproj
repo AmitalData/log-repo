@@ -145,6 +145,7 @@
     <None Include="DBTables\AddressContactState.dxml" />
     <None Include="DBTables\AddressPurpose.dxml" />
     <None Include="DBTables\AgentTalkBackType.dxml" />
+    <None Include="DBTables\AmendCancellRequestInitiator.dxml" />
     <None Include="DBTables\AmendmentFieldReasonType.dxml" />
     <None Include="DBTables\AmendmentFieldStatusType.dxml" />
     <None Include="DBTables\AmendmentRequestRejectReasonType.dxml" />
@@ -579,6 +580,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ReferantException.lxml" />
+    <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

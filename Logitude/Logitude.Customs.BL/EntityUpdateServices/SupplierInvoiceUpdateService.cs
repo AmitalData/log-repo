@@ -202,7 +202,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.openTaskForUnifreight = true;
                 }
             }
-
+            string remarks = "";
+            foreach (SupplierInvoiceItemPM itemPM in entityPM.SupplierInvoiceItems)
+            {
+                if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource)
+                {
+                    if (remarks != "")
+                    {
+                        remarks += "\r";
+                    }
+                    remarks += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
+                    remarks += " שורת פרט מכס: " + itemPM.LineNumber;
+                    remarks += " פרט מכס ישן: " + itemPM.ClassificationCodeSource;
+                    remarks += " פרט מכס חדש: " + itemPM.ClassificationCode;
+                }
+            }
+            if (remarks != "")
+            {
+                SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarks);
+            }
             base.OnUpdating(entityPM, entityPOCO);
         }
         protected override void OnUpdating(SupplierInvoicePM entityPM)
@@ -309,6 +327,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var myDBEntity = supplierInvoiceQueryService.GetSingle(dirtySupplierInvoicePM.DeclarationId, dirtySupplierInvoicePM.InvoiceCounterKey, true, false);
             return myDBEntity ?? new SupplierInvoicePM();
 
+        }
+
+        public void SendClass(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
+        {
+            if (string.IsNullOrWhiteSpace(loggedContactId))
+            {
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+            }
+            string unifrieghtEvent = "CLASS";
+            string eventRemarks = remarks;
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
         }
 
         private void SetDeclarationChanged(SupplierInvoicePM entityPM)

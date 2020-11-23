@@ -242,7 +242,10 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             {
                 //Add New Entity Error
                 var myEntityError = new error();
-                myEntityError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+              if(amendmentItem.AmendmentFieldStatus!=null)   myEntityError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+              if(amendmentItem.AmendmentRequestInitiatorType!=null)  myEntityError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+              if(amendmentItem.FieldAmendmentRejectReasonRemarks!=null) myEntityError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
+
                 myEntityError.Code = amendmentItem.ChangeReasonCode.Value;
                 myEntityError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
@@ -271,6 +274,9 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 var myFieldError = new field();
                 myFieldError.Code = amendmentItem.ChangeReasonCode.Value;
                 myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                if (amendmentItem.AmendmentFieldStatus != null) myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                if (amendmentItem.AmendmentRequestInitiatorType != null) myFieldError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+                if (amendmentItem.FieldAmendmentRejectReasonRemarks != null) myFieldError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
 
                 myFieldError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
