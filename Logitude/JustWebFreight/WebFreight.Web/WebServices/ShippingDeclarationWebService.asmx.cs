@@ -50,7 +50,7 @@ namespace WebFreight.Web.WebServices
         private ShipmentPM shipment;
         private AddressRepository addressRepository;
         private CountryRepository countryRepository;
-
+        
         [WebMethod]
         public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
@@ -2396,6 +2396,7 @@ namespace WebFreight.Web.WebServices
 
                 if (myPickup == null)
                 {
+                    myDataProvider.PickupTo = FillPickUpToAddress(myPickup);
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
                     {
                         Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
@@ -3983,7 +3984,18 @@ namespace WebFreight.Web.WebServices
             }
             #endregion
         }
-         
+        private string FillPickUpToAddress(ShipmentPickUpPM myPickup)
+        {
+            PickUpAndDeliveriesArguments pickUpAndDeliveriesArguments = new PickUpAndDeliveriesArguments();
+            pickUpAndDeliveriesArguments.PartnerCardId = myPickup.ToPartnerCardId;
+            pickUpAndDeliveriesArguments.PortId = myPickup.ToPortId;
+            pickUpAndDeliveriesArguments.TypeCode = myPickup.PickUpDeliveryToTypeCode;
+            pickUpAndDeliveriesArguments.AddressCity = myPickup.ToAddressCity;
+            pickUpAndDeliveriesArguments.AddressCountryId = myPickup.ToAddressCountryId;
+            pickUpAndDeliveriesArguments.AddressId = myPickup.ToAddressId;
+            pickUpAndDeliveriesArguments.AddressZipCode = myPickup.ToAddressZipCode;
+            return myServicHelper.GetDeliveryPickUpAddress(pickUpAndDeliveriesArguments);
+        }
         private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
         {
             return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
