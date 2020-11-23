@@ -160,11 +160,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReplacingRepairRequest, 
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
-	         FOBValueDollar,
-	         TransshipmentApprovalDateTime, 
-	         FinalLoadingSite,
-
 	         FOBValueDollar, 
+	         TransshipmentApprovalDateTime, 
+	         FinalLoadingSite, 
 	         PalestinianCode,
 	      }
 
@@ -386,10 +384,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentErrorXml, 
 	         FOBValueNIS, 
 	         FOBValueDollar, 
-	         AmendmentRejectionReasonName,
-	         TransshipmentApprovalDateTime, 
-	         FinalLoadingSite,
 	         AmendmentRejectionReasonName, 
+	         TransshipmentApprovalDateTime, 
+	         FinalLoadingSite, 
 	         PalestinianCode,
 	      }
 
@@ -1089,7 +1086,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.FOBValueDollar = entityPM.FOBValueDollar;
 			}
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
             {
 				entityPOCO.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
@@ -1100,7 +1096,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.FinalLoadingSite = entityPM.FinalLoadingSite;
 			}
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
             {
 				entityPOCO.PalestinianCode = entityPM.PalestinianCode;
@@ -1812,16 +1807,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.TransshipmentApprovalDateTime = entityPOCO.TransshipmentApprovalDateTime;
             }
 
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalLoadingSite))
             {
 					entityPM.FinalLoadingSite = entityPOCO.FinalLoadingSite;
             }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PalestinianCode))
             {
 					entityPM.PalestinianCode = entityPOCO.PalestinianCode;
             }
-
 
 		}
 
@@ -2519,7 +2513,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.FOBValueDollar = entityPM.FOBValueDollar;
             }
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransshipmentApprovalDateTime))
             {
                 oldEntityPM.TransshipmentApprovalDateTime = entityPM.TransshipmentApprovalDateTime;
@@ -2529,7 +2522,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.FinalLoadingSite = entityPM.FinalLoadingSite;
             }
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
             {
                 oldEntityPM.PalestinianCode = entityPM.PalestinianCode;

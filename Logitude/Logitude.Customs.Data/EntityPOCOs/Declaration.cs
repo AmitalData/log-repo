@@ -414,7 +414,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? FOBValueNIS { get; set; }
         [Column("FOBValueDollar")]
 	    public decimal? FOBValueDollar { get; set; }
-
         [Column("TransshipmentApprovalDateTime")]
 	    public DateTime? TransshipmentApprovalDateTime { get; set; }
         [ForeignKey("LoadingSiteType")]
@@ -422,7 +421,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FinalLoadingSite { get; set; }
 	      
         public virtual LoadingSiteType LoadingSiteType { get; set; }
-
         [ForeignKey("PalestinianImporter")]
         [Column("PalestinianCode")]
 	    public string PalestinianCode { get; set; }
