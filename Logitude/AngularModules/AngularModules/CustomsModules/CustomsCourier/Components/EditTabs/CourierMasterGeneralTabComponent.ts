@@ -106,7 +106,12 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
             this.EntityPM.OriginPortCode = value;
         }
     }
-
+    get CourierMasterRemarks() { return this.EntityPM.CourierMasterRemarks; }
+    set CourierMasterRemarks(value: string) {
+        if (this.EntityPM.CourierMasterRemarks != value) {
+            this.EntityPM.CourierMasterRemarks = value;
+        }
+    }
     get ManifestNumber() { return this.EntityPM.ManifestNumber; }
     set ManifestNumber(value: string) {
         if (this.EntityPM.ManifestNumber != value) {
