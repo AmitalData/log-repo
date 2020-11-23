@@ -24,6 +24,8 @@ export class NewChargesTypeComponent extends BaseComponent {
     public EntityPM: ChargesTypePM;
     private CurrentSession = SessionLocator.SelectedSession;
     public MeasurementsQueryFilters: ApiQueryFilters;
+    public IsChargeTypesRestrictedFeatureToggleOn = false;
+
     constructor() {
         super();
 
@@ -53,6 +55,13 @@ export class NewChargesTypeComponent extends BaseComponent {
 
         this.BuildQueryFilters(); 
         this.SetUIProperties();
+        this.SetUIProperties_DirectionFields();
+        this.ReadChargeTypesRestrictedFeatureToggleFeature();
+    }
+
+    ReadChargeTypesRestrictedFeatureToggleFeature() {
+        this.IsChargeTypesRestrictedFeatureToggleOn = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTR" && d.TenantNumber == SessionLocator.Tenant)[0]
+            != null ? true : false;
     }
 
     private BuildQueryFilters() {
@@ -248,6 +257,51 @@ export class NewChargesTypeComponent extends BaseComponent {
     set ViewOrder(newValue: number) {
         if (this.EntityPM.ViewOrder != newValue) {
             this.EntityPM.ViewOrder = newValue;
+        }
+    }
+
+
+    get IsDirectionRestricted() { return this.EntityPM.IsDirectionRestricted; }
+    set IsDirectionRestricted(newValue: boolean) {
+        if (this.EntityPM.IsDirectionRestricted != newValue) {
+            this.EntityPM.IsDirectionRestricted = newValue;
+            this.SetUIProperties_DirectionFields();
+        }
+    }
+
+    SetIsDirectionRestricted(value: boolean) {
+        this.IsDirectionRestricted = value;
+    }
+
+    private SetUIProperties_DirectionFields() {
+        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, this.IsDirectionRestricted);
+    }
+
+    get IsActiveInDomestic() { return this.EntityPM.IsActiveInDomestic; }
+    set IsActiveInDomestic(newValue: boolean) {
+        if (this.EntityPM.IsActiveInDomestic != newValue) {
+            this.EntityPM.IsActiveInDomestic = newValue;
+        }
+    }
+    get IsActiveInDrop() { return this.EntityPM.IsActiveInDrop; }
+    set IsActiveInDrop(newValue: boolean) {
+        if (this.EntityPM.IsActiveInDrop != newValue) {
+            this.EntityPM.IsActiveInDrop = newValue;
+        }
+    }
+    get IsActiveInExport() { return this.EntityPM.IsActiveInExport; }
+    set IsActiveInExport(newValue: boolean) {
+        if (this.EntityPM.IsActiveInExport != newValue) {
+            this.EntityPM.IsActiveInExport = newValue;
+        }
+    }
+    get IsActiveInImport() { return this.EntityPM.IsActiveInImport; }
+    set IsActiveInImport(newValue: boolean) {
+        if (this.EntityPM.IsActiveInImport != newValue) {
+            this.EntityPM.IsActiveInImport = newValue;
         }
     }
 

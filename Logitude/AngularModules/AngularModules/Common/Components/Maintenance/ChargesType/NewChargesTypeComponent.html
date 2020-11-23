@@ -17,7 +17,7 @@
     }
 
     .FieldSet {
-        display: block;
+        display: flex;
         margin-left: 5px;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -166,8 +166,8 @@
                     <table>
                         <tr>
                             <td style="width:450px;">
-                                <fieldset class="FieldSet">
-                                    <legend style="margin-left:5px; font-size:13px;">{{'ChargesType.O.Transport' | TextCodeTranslationPipe}}</legend>
+                                <fieldset class="FieldSet" style="height:270px;">
+                                    <legend style="margin-left:5px; font-size:13px;">{{'ChargesType.O.ActiveIn' | TextCodeTranslationPipe}}</legend>
 
                                     <table style="margin:7px;">
                                         <tr class="FormFieldRow">
@@ -177,76 +177,238 @@
                                         <tr>
                                             <td>
                                                 <table>
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width:18px;">
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAir'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    <tr>
+
+                                                        <!-- Transport mode -->
+                                                        <td>
+                                                            <table>
+                                                                <tr class="SectionHeader">
+                                                                    <td style="padding-left:5px; font-size:12px;">{{'ChargesType.O.Transport' | TextCodeTranslationPipe}}</td>
+                                                                </tr>
+
+                                                                <tr style="height:5px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr class="FormFieldRow">
+                                                                                <td style="width:18px;">
+                                                                                    <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAir'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                </td>
+
+                                                                                <td style="width:10px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width:25px;">
+                                                                                    <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/A.png" />
+                                                                                </td>
+
+                                                                                <td style="width:50px;">
+                                                                                    <label class="Label">{{'ChargesType.F.IsAir' | TextCodeTranslationPipe}}</label>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsInland'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/I.png" />
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <label class="Label">{{'ChargesType.F.IsInland' | TextCodeTranslationPipe}}</label>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsOcean'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/O.png" />
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <label class="Label">{{'ChargesType.F.IsOcean' | TextCodeTranslationPipe}}</label>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <!--Direction-->
+                                                        <td *ngIf="IsChargeTypesRestrictedFeatureToggleOn">
+                                                            <table>
+                                                                <tr class="SectionHeader">
+                                                                    <td style="padding-left:5px; font-size:12px;">{{'ChargesType.O.Direction' | TextCodeTranslationPipe}}</td>
+                                                                </tr>
+
+                                                                <tr style="height:5px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <RadioButton [Name]="'IsDirectionRestricted'" [IsChecked]="!IsDirectionRestricted" (Checked)="SetIsDirectionRestricted(false)" [Text]="'ChargesType.O.ActiveInAllDirections' | TextCodeTranslationPipe"></RadioButton>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <RadioButton [Name]="'IsDirectionRestricted'" [IsChecked]="IsDirectionRestricted" (Checked)="SetIsDirectionRestricted(true)" [Text]="'ChargesType.O.ActiveInSomeDirections' | TextCodeTranslationPipe"></RadioButton>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr style="height:20px;">
+                                                                                            <td style="width:20px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="width:20px;">
+                                                                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInExport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                            </td>
+
+                                                                                            <td style="width:10px;"><div></div></td>
+
+                                                                                            <td style="width:25px;">
+                                                                                                <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/E.png" />
+                                                                                            </td>
+
+                                                                                            <td style="width:50px;">
+                                                                                                <label class="Label">{{'ChargesType.F.IsActiveInExport' | TextCodeTranslationPipe}}</label>
+                                                                                            </td>
+
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height:20px;">
+                                                                                            <td style="width:20px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInImport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                            </td>
+
+                                                                                            <td style="width:10px;"><div></div></td>
+
+                                                                                            <td>
+                                                                                                <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/I.png" />
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <label class="Label">{{'ChargesType.F.IsActiveInImport' | TextCodeTranslationPipe}}</label>
+                                                                                            </td>
+
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height:20px;">
+                                                                                            <td style="width:20px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInDomestic'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                            </td>
+
+                                                                                            <td style="width:10px;"><div></div></td>
+
+                                                                                            <td>
+                                                                                                <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/D.png" />
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <label class="Label">{{'ChargesType.F.IsActiveInDomestic' | TextCodeTranslationPipe}}</label>
+                                                                                            </td>
+
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height:20px;">
+                                                                                            <td style="width:20px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInDrop'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                            </td>
+
+                                                                                            <td style="width:10px;"><div></div></td>
+
+                                                                                            <td>
+                                                                                                <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/R.png" />
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <label class="Label">{{'ChargesType.F.IsActiveInDrop' | TextCodeTranslationPipe}}</label>
+                                                                                            </td>
+
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
                                                         <td style="width:10px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:25px;">
-                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/A.png" />
-                                                        </td>
-
-                                                        <td style="width:50px;">
-                                                            <label class="Label">{{'ChargesType.F.IsAir' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsInland'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                        <td>
-                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/I.png" />
-                                                        </td>
-
-                                                        <td>
-                                                            <label class="Label">{{'ChargesType.F.IsInland' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsOcean'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td>
-                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/O.png" />
-                                                        </td>
-
-                                                        <td>
-                                                            <label class="Label">{{'ChargesType.F.IsOcean' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
-
                                     </table>
-
                                 </fieldset>
                             </td>
 
@@ -255,7 +417,7 @@
                             </td>
 
                             <td style="width:450px;">
-                                <fieldset class="FieldSet">
+                                <fieldset class="FieldSet" style="height:270px;">
                                     <legend style="margin-left:5px; font-size:13px;">{{'ChargesType.O.AutoDisplay' | TextCodeTranslationPipe}}</legend>
 
                                     <table style="margin:7px;">
@@ -324,6 +486,11 @@
 
                                                                     <td><div></div></td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
                                                             </table>
                                                         </td>
 
@@ -388,6 +555,12 @@
 
                                                                     <td><div></div></td>
                                                                 </tr>
+
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
                                                             </table>
                                                         </td>
 
@@ -400,10 +573,8 @@
                                         </tr>
 
                                     </table>
-
                                 </fieldset>
                             </td>
-
                         </tr>
                     </table>
                 </div>

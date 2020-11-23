@@ -609,6 +609,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      ApplyRegionalTax = f.ApplyRegionalTax,
                                                      HasPickup = f.HasPickup,
                                                      HasDelivery = f.HasDelivery,
+                                                     IsDirectionRestricted = f.IsDirectionRestricted,
+                                                     IsActiveInExport = f.IsActiveInExport,
+                                                     IsActiveInImport = f.IsActiveInImport,
+                                                     IsActiveInDrop = f.IsActiveInDrop,
+                                                     IsActiveInDomestic = f.IsActiveInDomestic,
                                                  };
             return result;
         }
@@ -673,6 +678,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ApplyRegionalTax = f.ApplyRegionalTax,
                                                    HasPickup = f.HasPickup,
                                                    HasDelivery = f.HasDelivery,
+                                                   IsDirectionRestricted = f.IsDirectionRestricted,
+                                                   IsActiveInExport = f.IsActiveInExport,
+                                                   IsActiveInImport = f.IsActiveInImport,
+                                                   IsActiveInDrop = f.IsActiveInDrop,
+                                                   IsActiveInDomestic = f.IsActiveInDomestic,
+
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -740,6 +751,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ApplyRegionalTax = f.ApplyRegionalTax,
                              HasPickup = f.HasPickup,
                              HasDelivery = f.HasDelivery,
+                             IsDirectionRestricted = f.IsDirectionRestricted,
+                             IsActiveInExport = f.IsActiveInExport,
+                             IsActiveInImport = f.IsActiveInImport,
+                             IsActiveInDrop = f.IsActiveInDrop,
+                             IsActiveInDomestic = f.IsActiveInDomestic,
+
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 
@@ -819,6 +836,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ApplyRegionalTax = f.ApplyRegionalTax,
                                                    HasPickup = f.HasPickup,
                                                    HasDelivery = f.HasDelivery,
+                                                   IsDirectionRestricted = f.IsDirectionRestricted,
+                                                   IsActiveInExport = f.IsActiveInExport,
+                                                   IsActiveInImport = f.IsActiveInImport,
+                                                   IsActiveInDrop = f.IsActiveInDrop,
+                                                   IsActiveInDomestic = f.IsActiveInDomestic,
+
                                                }).FirstOrDefault();
 
             return chargesTypeList;

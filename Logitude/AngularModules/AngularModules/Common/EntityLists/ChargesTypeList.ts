@@ -65,5 +65,10 @@ export class ChargesTypeList {
 		ApplyRegionalTax: boolean;
 		HasPickup: boolean;
 		HasDelivery: boolean;
+		IsDirectionRestricted: boolean;
+		IsActiveInExport: boolean;
+		IsActiveInImport: boolean;
+		IsActiveInDomestic: boolean;
+		IsActiveInDrop: boolean;
 	
 }

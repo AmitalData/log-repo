@@ -109,9 +109,18 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("ApplyRegionalTax", this.ObjectTableName, fieldsEnabled);
         this.UIProperties.SetEnabled("HasPickup", this.ObjectTableName, fieldsEnabled);
         this.UIProperties.SetEnabled("HasDelivery", this.ObjectTableName, fieldsEnabled);
-        //if (this.IsBackToBack) {
-        //    this.UIProperties.SetEnabled("IsReceivable", this.ObjectTableName, false);
-        //}
+        this.UIProperties.SetEnabled("IsDirectionRestricted", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, fieldsEnabled);
+        this.SetUIProperties_DirectionFields();
+    }
+    private SetUIProperties_DirectionFields() {
+        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, this.IsDirectionRestricted);
+        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, this.IsDirectionRestricted);
     }
 
     public ValidationWarningsList: string[];
@@ -410,6 +419,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     set IsDirectionRestricted(newValue: boolean) {
         if (this.EntityPM.IsDirectionRestricted != newValue) {
             this.EntityPM.IsDirectionRestricted = newValue;
+            this.SetUIProperties_DirectionFields();
         }
     }
 
