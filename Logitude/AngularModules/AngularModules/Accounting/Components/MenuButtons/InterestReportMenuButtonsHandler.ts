@@ -342,8 +342,8 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
     _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
     _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
     _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
-    _ARInvoiceLinePM.Quantity = 1; 
-    _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount; 
+      _ARInvoiceLinePM.Quantity = 1;
+      _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
     _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount;
     _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
     _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
