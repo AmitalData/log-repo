@@ -115,6 +115,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageToPortName { get; set; }
         public double? PackagesGrossWeight { get; set; }
         public double? PackagesVolumetricWeight { get; set; }
+        public double? PackagesChargeableWeight { get; set; }
         public int? PackagesQuantity { get; set; }
         
         public bool? ContainerFollowUp { get; set; }
@@ -162,6 +163,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public int? PackageQuantity { get; set; }
         public string MoveTypeName { get; set; }
         public double? PackageVolumeitricWeight { get; set; }
+        public double? PackageChargeableWeight { get; set; } 
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public DateTime? MainCarriageDateFilter { get; set; }
