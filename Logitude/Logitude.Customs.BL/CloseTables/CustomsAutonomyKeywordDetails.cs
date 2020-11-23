@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = "",
                 ViaMethod = ""
             }
-
+            ,
 
             new InterfaceDetails()
             {
