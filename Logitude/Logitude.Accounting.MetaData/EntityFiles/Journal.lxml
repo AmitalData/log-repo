@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;cbc2&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -3580,6 +3581,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsNew&quot;"
     ListPropertyPath="&quot;IsNew&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4209,6 +4211,13 @@
         DefaultText="&quot;Print&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;CopyJournal&quot;"
+        DefaultText="&quot;Copy Journal&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;העתק&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
