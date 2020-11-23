@@ -313,8 +313,21 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipment> FilterShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipment> shipments)
         {
-            shipments = shipments.Where(d => shipmentFilters.CustomersIds.Contains(d.CustomerId));
+            List<string> modes = GetTransportModesToFilterBy(shipmentFilters);
+
+            shipments = shipments.Where(d =>
+                shipmentFilters.CustomersIds.Contains(d.CustomerId)
+                && modes.Contains(d.TransportModeId)
+            );
             return shipments;
+        }
+
+        private static List<string> GetTransportModesToFilterBy(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            List<string> modes = new List<string>() { "A", "O", "I"};
+            if (!string.IsNullOrEmpty(shipmentFilters.TransportModeCodes))
+                modes = shipmentFilters.TransportModeCodes.Split(',').ToList();
+            return modes;
         }
 
         private IQueryable<CargoTrackingShipment> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)

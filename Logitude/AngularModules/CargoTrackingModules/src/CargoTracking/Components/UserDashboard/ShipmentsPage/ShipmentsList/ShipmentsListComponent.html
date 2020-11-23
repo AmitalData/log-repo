@@ -6,7 +6,7 @@
     <div class="toolbar">
 
         <div class="search-bar">
-            <form [formGroup]="searchForm" (ngSubmit)="Search()">
+            <form [formGroup]="searchForm" (ngSubmit)="LoadShipments()">
 
                 <div class="search-text ">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText " placeholder="Free search ..."
@@ -23,7 +23,7 @@
                 </div>
 
                 <button class="search-button hide-mobile" type="submit"
-                    (onsubmit)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
+                    (onsubmit)="LoadShipments()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
 
@@ -31,13 +31,13 @@
             <ul class="toolbar-filters">
                 <li *ngFor="let filter of SearchFilters" (click)="SelectFilter(filter)">{{filter.Name}}
                     ({{filter.Count}})</li>
-                <li class="toggle-menu">
+                <!-- <li class="toggle-menu">
                     Company
                     <ul class="menu-drawer">
                         <li>Company 1</li>
                         <li>Company 2</li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </div>
 

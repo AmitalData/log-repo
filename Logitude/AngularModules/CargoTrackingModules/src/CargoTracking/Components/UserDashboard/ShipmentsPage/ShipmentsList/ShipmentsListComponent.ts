@@ -7,6 +7,7 @@ import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/Ca
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class ShipmentsListComponent implements AfterViewInit
     showShipmentDetailsMenu: boolean = false;
     InvitedCustomersIds: string[];
     ShipmentsDS;
+    @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -77,7 +79,7 @@ export class ShipmentsListComponent implements AfterViewInit
             .map(d => d.CardId);
             console.log("[Invited Customers]",this.InvitedCustomersIds);     
             
-        this.Search();
+        this.LoadShipments();
     }
 
     private GetTenantFromURL()
@@ -93,12 +95,13 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         this.searchForm = this.formBuilder.group({
             SearchText: ''
+        
         });
     }
 
     
 
-    private _SearchText: string;
+    private _SearchText: string = '';
     public get SearchText(): string
     {
         return this._SearchText;
@@ -106,8 +109,8 @@ export class ShipmentsListComponent implements AfterViewInit
     public set SearchText(v: string)
     {
         this._SearchText = v;
-        if (!this.SearchText)
-            this.Search();
+        if (this.SearchText)
+            this.LoadShipments();
     }
 
     Clear()
@@ -115,16 +118,7 @@ export class ShipmentsListComponent implements AfterViewInit
         this.SearchText = '';
         this.LoadShipments();
     }
-    Search()
-    {
-        if (this.tenant) {
-            this.Shipments = [];
-            this.ShipmentsDS = null;
-            this.changeDetector.detectChanges();
-            this.LoadShipments();
-        }
-
-    }
+    
 
 
     ItemClicked(item)
@@ -136,19 +130,47 @@ export class ShipmentsListComponent implements AfterViewInit
     }
     LoadShipments()
     {
-
-        this.noResult = false;
-        var searchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
-            var shipmentFilters = new CargoTrackingShipmentFilters();
-            shipmentFilters.Tenant = this.tenant;
-            shipmentFilters.SearchText = searchText;
-            shipmentFilters.CustomersIds = this.InvitedCustomersIds;
-            shipmentFilters.CustomersIdsString = this.InvitedCustomersIds?.join(',');
-            
-            this.ShipmentsDS = new ShipmentDataSource(this.changeDetector, this.searchService,shipmentFilters, this);
-            this.changeDetector.detectChanges();
+        if(this.tenant) {
+            var shipmentFilters = this.BuildShipmentFilters();
+            if(this.ShipmentsDS){
+                this.ShipmentsDS.ReloadData(shipmentFilters);
+                this.virtualScroll.scrollToIndex(0);
+            }else{
+                this.ShipmentsDS = new ShipmentDataSource(this.changeDetector, this.searchService,shipmentFilters, this);
+                this.changeDetector.detectChanges();
+            }
+        }
     }
     references: string[];
+    private BuildShipmentFilters()
+    {
+        var shipmentFilters = new CargoTrackingShipmentFilters();
+        shipmentFilters.Tenant = this.tenant;
+        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
+        shipmentFilters.CustomersIds = this.InvitedCustomersIds;
+        shipmentFilters.CustomersIdsString = this.InvitedCustomersIds?.join(',');
+        
+        this.SetTransportModeFilters(shipmentFilters);
+        this.SetDirectionFilters(shipmentFilters);
+        return shipmentFilters;
+    }
+
+    private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        var direction = "";
+        if(this.SelectedFilters.length > 0)
+            direction = this.SelectedFilters.filter(d=>['IM','EX'].includes(d.Code)).map(d=>d.Code).join(',');
+        shipmentFilters.DirectionCodes = direction;
+    }
+
+    private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        var transportMode = "";
+        if(this.SelectedFilters.length > 0)
+            transportMode = this.SelectedFilters.filter(d=>['A','I','O'].includes(d.Code)).map(d=>d.Code).join(',');
+        shipmentFilters.TransportModeCodes = transportMode;
+    }
+
     SplitReference(reference: string)
     {
         this.references = reference != null ? reference.split(',') : null;
@@ -179,11 +201,11 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     SearchFilters: SearchFilter[] = [
-        new SearchFilter('Import'),
-        new SearchFilter('Export'),
-        new SearchFilter('Air'),
-        new SearchFilter('Land'),
-        new SearchFilter('Sea'),
+        new SearchFilter('IM','Import'),
+        new SearchFilter('EX','Export'),
+        new SearchFilter('A','Air'),
+        new SearchFilter('I','Land'),
+        new SearchFilter('O','Sea'),
     ];
 
     SelectedFilters: SearchFilter[] = [];
@@ -192,11 +214,16 @@ export class ShipmentsListComponent implements AfterViewInit
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
         if (!item)
             this.SelectedFilters.push(filter);
+
+            this.LoadShipments();
     }
     DeselectFilter(filter: SearchFilter)
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
+
+        this.LoadShipments();
+
     }
     ClearFilters()
     {
@@ -237,8 +264,9 @@ export class ShipmentsListComponent implements AfterViewInit
 
 export class SearchFilter
 {
-    constructor(name: string)
+    constructor(code: string,name: string)
     {
+        this.Code = code;
         this.Name = name;
     }
 
@@ -265,6 +293,16 @@ export class SearchFilter
         this._Count = v;
     }
 
+    
+    private _Code : string;
+    public get Code() : string {
+        return this._Code;
+    }
+    public set Code(v : string) {
+        this._Code = v;
+    }
+    
+
 
 }
 export class CargoTrackingShipmentFilters{
@@ -272,6 +310,16 @@ export class CargoTrackingShipmentFilters{
     public SearchText: string;
     public CustomersIds: string[] = [];
     public CustomersIdsString: string;
+
+    public TransportModeCodes: string;
+    public DirectionCodes: string;
+
+    // public GetAirShipments: boolean = false;
+    // public GetLandShipments: boolean = false;
+    // public GetOceanShipments: boolean = false;
+
+    // public GetImportShipments: boolean = false;
+    // public GetExportShipments: boolean = false;
 
 }
 export class ShipmentDataSource extends DataSource<any | undefined> {
@@ -292,14 +340,22 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         super();
 
         this.InitComponent();
-
     }
 
     private InitComponent()
     {
         this.CachedShipments = Array.from<any>({ length: this.ShipmentsCount });
-    }
+        this.FetchedPages = new Set<number>();
+}
 
+    ReloadData(filters){
+        this.InitComponent();
+        this.ShipmentsFilters = filters;
+        this.FetchPage(0);
+
+        this.ChangeDetector.detectChanges();
+        this._dataStream.next(this.CachedShipments);
+    }
     connect(collectionViewer: CollectionViewer): Observable<(any | undefined)[]>
     {
         this._subscription.add(collectionViewer.viewChange.subscribe(range =>
@@ -340,10 +396,10 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
             var fetchedShipments = result.Shipments;
 
-            if(result.Count != this.ShipmentsCount){
+            if(page == 0 && result.Count != this.ShipmentsCount){
                 this.ShipmentsCount = result.Count;
                 this.parent.ShipmentsCount = result.Count;
-                this.FetchedPages = new Set<number>();
+                // this.FetchedPages = new Set<number>();
                 this.CachedShipments = Array.from<any>({ length: result.Count });
             }
 
