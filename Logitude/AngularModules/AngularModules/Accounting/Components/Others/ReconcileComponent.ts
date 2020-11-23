@@ -309,7 +309,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 { EnglishName: 'Last year', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastyear") },
                 { EnglishName: 'Custom', LocalName: TextCodeTranslator.Translate("Accounting.O.Custom") },
             ];
-    }
+            this.DateTypes =
+            [
+                { FieldName: 'AccountingDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate") },
+                { FieldName: 'DocumentDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate") },
+                { FieldName: 'DueDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate") },
+            ];
+            this.SelectedDateType = this.DateTypes[0];
+        }
 
     public ExportToExcelClick(){
          this.AddAccountIdFilterForFilterAgrs();
@@ -468,6 +475,20 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.ForeignAmountTextChanged(this.foreignAmount,true);
         }
     }
+    private selectedDateType: any;
+    get SelectedDateType() { return this.selectedDateType; }
+    set SelectedDateType(value: any) {
+        if(!value)
+            value = this.DateTypes[0];
+        if (this.selectedDateType != value) {
+            this.selectedDateType = value;
+            if(this.dateFilter){
+                this.dateFilter.FieldName = value.FieldName;
+            }
+            this.ReloadScreen();
+        }
+    }
+
     private automaticReconcileId: string;
     get AutomaticReconcileId() { return this.automaticReconcileId; }
     set AutomaticReconcileId(value: string) {
@@ -1480,6 +1501,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     public DateFilterPresetsList: any[] = [];
+    public DateTypes: any[] = [];
 
     private selectedDatePreset: any;
     get SelectedDatePreset() { return this.selectedDatePreset; }
@@ -1571,8 +1593,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     private DisableDates()
     {
-        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
     }
 
     get FromDate() { return this.fromDate; }
@@ -1580,7 +1602,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.fromDate != value) {
             this.fromDate = value;
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
-                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else 
                 this.dateFilter = null;
             this.ReloadScreen();
@@ -1593,7 +1615,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.toDate != value) {
             this.toDate = value;
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
-                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else 
                 this.dateFilter = null;
             this.ReloadScreen();
