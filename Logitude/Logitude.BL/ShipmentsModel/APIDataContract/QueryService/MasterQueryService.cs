@@ -230,21 +230,18 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
                         case 2:
                             {
-                                fromPort = item.FromPort != null ? item.FromPort.Code : null;
                                 toPort = item.ToPort != null ? item.ToPort.Code : null;
                                 break;
                             }
 
                         case 3:
                             {
-                                fromPort = item.FromPort != null ? item.FromPort.Code : null;
                                 toPort = item.ToPort != null ? item.ToPort.Code : null;
                                 break;
                             }
 
                         case 4:
                             {
-                                fromPort = item.FromPort != null ? item.FromPort.Code : null;
                                 toPort = item.ToPort != null ? item.ToPort.Code : null;
                                 break;
                             }
