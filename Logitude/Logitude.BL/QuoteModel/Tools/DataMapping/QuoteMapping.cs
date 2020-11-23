@@ -23,18 +23,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPoco.TransportModeId = entityPM.TransportModeId;
                 entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
-
-                if (entityPoco.DirectionId == "C")
-                {
-                    entityPM.ProductCode = "CI";
-                    entityPoco.ProductCode = "CI";
-                }
-
-                else
-                {
-                    entityPM.ProductCode = entityPoco.TransportModeId + entityPoco.DirectionId;
-                    entityPoco.ProductCode = entityPoco.TransportModeId + entityPoco.DirectionId;
-                }
+                entityPoco.ProductCode = entityPM.ProductCode;
             }
 
             entityPoco.TotalPerContainer = entityPM.TotalPerContainer;  
