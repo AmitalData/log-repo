@@ -3245,7 +3245,7 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.BankIsNull = true;
                                     this.methodPM.MethodTypeCode = "2";
                                     this.methodPM.PayerActivityTypeCode = "3";
-                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax ;
+                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
                                     this.InternalBankName = null;
                                     this.InternalBankId = null;
                                     this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
@@ -3256,6 +3256,15 @@ export class PaymentMethodModel extends BaseComponent {
                                     });
 
                                     this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
+                                }
+
+                                else {
+                                    if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
+                                        for (let item of this.parent.paymentPM.DeclarationPaymentMethods) {
+                                            this.parent.PaymentMethodsList.Insert(new PaymentMethodModel(item, this.parent));
+                                        }
+                                    }
+                                   // this.parent.PaymentMethodsList.Insert(this.methodPM);
                                 }
                             }
                         }
