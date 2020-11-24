@@ -264,6 +264,13 @@ export class GLAccountInterestComponent extends BaseComponent {
     get CreditAllotmentPercentage() { return this.EntityPM.CreditAllotmentPercentage; }
     set CreditAllotmentPercentage(newValue: number) {
         if (this.EntityPM.CreditAllotmentPercentage != newValue) {
+            if (newValue > 99.99) {
+                this.UIProperties.SetValidity("CreditAllotmentPercentage", "GLAccount", false, TextCodeTranslator.Translate("GLAccount.O.CreditAllotmentLimit"));
+
+            }
+            else {
+                this.UIProperties.SetValidity("CreditAllotmentPercentage", "GLAccount", true,null);
+            }
             this.EntityPM.CreditAllotmentPercentage = newValue;
         }
     }

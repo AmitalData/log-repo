@@ -103,7 +103,11 @@ namespace Logitude.Accounting.BL.Validators
             //        }
             //    }
             //}
+            if(myGLAccountPM.CreditAllotmentPercentage != null && myGLAccountPM.CreditAllotmentPercentage >(decimal?) 99.99)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccount.O.CreditAllotmentLimit", myGLAccountPM.Tenant, showLocals));
 
+            }
 
             if (!String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {

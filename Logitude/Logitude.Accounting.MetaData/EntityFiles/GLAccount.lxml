@@ -13886,6 +13886,12 @@
       LocalDefaultText="&quot;לא ניתן להגדיר תנאי ריבית לכרטיס במטבע זר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CreditAllotmentLimit&quot;"
+      DefaultText="&quot;The Credit Allotment Percentage should be between 0 and 99.99&quot;"
+      LocalDefaultText="&quot;אחוז הקצאת האשראי צריך להיות בין 0 ל -99.99&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
