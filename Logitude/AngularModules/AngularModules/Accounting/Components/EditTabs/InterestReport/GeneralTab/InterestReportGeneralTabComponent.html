@@ -223,14 +223,8 @@
                                                         <tr style="height:15px;">
                                                             <LogLabel [ObjectFieldName]="'GLAccountInterestCreditLimit'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </tr>
-                                                        <tr style="height:5px;">
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><div></div></td>
-                                                        </tr>
+                                                        
+                                                     
                                                     </table>
                                                 </td>
                                                 <td>
@@ -238,27 +232,43 @@
                                                         <tr style="height:5px;">
                                                             <LogTextBox [Text]="GLAccountInterestCreditLimit" [ObjectFieldName]="'GLAccountInterestCreditLimit'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                         </tr>
-                                                        <tr style="height:20px;">
-                                                            <td><div></div></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><div></div></td>
-                                                        </tr>
+                                                       
+                                                    
                                                     </table>
                                                 </td>
                                                 <td>
                                                     <div></div>
                                                 </td>
-                                           
+
                                             </tr>
-                                            <tr style="height:5px;">
+                                            <!--<tr style="height:5px;">
                                                 <td>
                                                     <div></div>
                                                 </td>
-                                            </tr>
-                                          
+                                            </tr>-->
+
                                             <tr class="FormFieldRow">
-                                                
+
+                                                <td style="width: 130px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'CreditAllotmentPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                       
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <LogTextBox [Text]="CreditAllotmentPercentage" [ObjectFieldName]="'CreditAllotmentPercentage'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </tr>
+                                                      
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
                                             </tr>
                                             <tr><td></td></tr>
                                         </table>
@@ -317,13 +327,20 @@
             </div>
         </div>
 
-        <div float-start style="width: calc(100% - 300px); overflow: auto;" >
+        <div float-start style="width: calc(100% - 300px); overflow: auto;">
             <div class="footer-title">
                 {{'InterestReport.F.InvoiceAmount' | TextCodeTranslationPipe}}:
-                <span  style="font-size: 15px; color:#21a373;direction: ltr;">
-                    {{EntityPM.InvoiceAmount | NumbersPipe:'N2'}}    
+                <span style="font-size: 15px; color:#21a373;direction: ltr;">
+                    {{EntityPM.InvoiceAmount | NumbersPipe:'N2'}}
                 </span>
             </div>
+            <div style="margin-top: 5px;" class="footer-title">
+                {{'InterestReport.F.CalCreditAllotmentCommission' | TextCodeTranslationPipe}}:
+                <span style="font-size: 15px; color:#21a373;direction: ltr;">
+                    {{EntityPM.CalCreditAllotmentCommission  | NumbersPipe:'N2'}}
+                </span>
+            </div>
+
         </div>
     </div>
 </div>
