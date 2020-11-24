@@ -19,7 +19,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         List<ReconciliationPM> paymentReconciliations = new List<ReconciliationPM>();
 
         List<ReconciliationLinePM> paymentsRecoLines = new List<ReconciliationLinePM>();
-        List<ReconciliationLinePM> nonPaymentsRecoLines = new List<ReconciliationLinePM>();
+        static List<ReconciliationLinePM> nonPaymentsRecoLines = new List<ReconciliationLinePM>();
 
         public MultipleARPaymentReconciliationSplitter(ReconciliationPM reconcileToSplit)
         {
