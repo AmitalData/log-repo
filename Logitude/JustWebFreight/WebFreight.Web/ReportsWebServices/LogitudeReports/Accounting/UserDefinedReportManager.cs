@@ -293,7 +293,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Line.Difference = Line.FirstPeriodAmount==0 && Line.SecoundPeriodAmount == 0?0: 
                                       Line.FirstPeriodAmount == 0?100:
                                       SetLineDefferenceField(Line);
-                    SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(Line);
                     SetSubParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(Line);
             }
         }
@@ -351,17 +350,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(CalculatedChartsOfAccountsLinePeriod line)
         {
-            FillParentsLinesFieldsFromSubLinesFields(line, ParentCalculatedChartsofAccountsLines);
+            FillParentsLinesFieldsFromSubLinesFields(line);
         }
 
         private void SetSubParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(CalculatedChartsOfAccountsLinePeriod line)
         {
-            FillParentsLinesFieldsFromSubLinesFields(line, SubParentCalculatedChartsofAccountsLines);
+            FillSubParentsLinesFieldsFromSubLinesFields(line);
         }
 
-        private void FillParentsLinesFieldsFromSubLinesFields(CalculatedChartsOfAccountsLinePeriod line, List<CalculatedChartsOfAccountsLinePeriod> Parents)
+        private void FillSubParentsLinesFieldsFromSubLinesFields(CalculatedChartsOfAccountsLinePeriod line)
         {
-            foreach (CalculatedChartsOfAccountsLinePeriod parentLine in Parents)
+            foreach (CalculatedChartsOfAccountsLinePeriod SubParentLine in SubParentCalculatedChartsofAccountsLines)
+            {
+                if (SubParentLine.ParentChartsofAccountTypeCode == line.ChartsofAccountTypeCode)
+                {
+                    FillParentLineAmountFromSubLineAmount(SubParentLine, line);
+                    SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(SubParentLine);
+                    break;
+                }
+            }
+        }
+
+        private void FillParentsLinesFieldsFromSubLinesFields(CalculatedChartsOfAccountsLinePeriod line)
+        {
+            foreach (CalculatedChartsOfAccountsLinePeriod parentLine in  ParentCalculatedChartsofAccountsLines)
             {
                 if (parentLine.ParentChartsofAccountTypeCode == line.ChartsofAccountTypeCode)
                 {
@@ -384,7 +396,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             line.Difference = line.FirstPeriodAmount == 0 && line.SecoundPeriodAmount == 0 ? 0 :
                                  line.FirstPeriodAmount == 0 ? 100 :
-                                 Math.Abs(((line.FirstPeriodAmount - line.SecoundPeriodAmount) / line.FirstPeriodAmount) * 100);
+                                 Math.Abs(((line.SecoundPeriodAmount - line.FirstPeriodAmount) / line.FirstPeriodAmount) * 100);
 
             return line.Difference;
 
