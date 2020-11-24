@@ -76,9 +76,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 var myGLAccountTotalByMonthsList = new List<GLAccountTotalByMonthsDTO>();
                 foreach (string dateTypeValue in listOfDateTypeValues)
                 {
-                    using (var scope = TransactionFactory.GetNewTransaction())
+                    using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(25)))
                     {
                         _AccountingContext = AccountingContext.GetContext(_Tenant);
+
+                        if ((this._AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout < 1200)//wrokerrole mode !!!
+                        {
+                            (this._AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 1200;
+                        }
                         var myGLAccountRepo = new GLAccountRepository(_AccountingContext);
                         var quaryAllControlAccount = myGLAccountRepo.GetQuaryAllControlAccount(_Tenant);
                         var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
@@ -119,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
                         var qLedgerAsGLAccountTotalByMonthByAccountingDate = ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCode(
-                            dateTypeValue,startDayOfMonth, endDayOfMonth, _Tenant, listOfAccId);
+                            dateTypeValue, startDayOfMonth, endDayOfMonth, _Tenant, listOfAccId);
 
 
 
@@ -213,7 +218,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             myGLAccountTotalByMonthsList.Add(r);
                         });
 
-                        
+
                     }
 
                     CompareReport = new CompareReportM()

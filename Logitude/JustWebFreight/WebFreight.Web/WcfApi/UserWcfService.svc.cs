@@ -186,22 +186,31 @@ namespace WebFreight.Web.WcfApi
                     }
                     else
                     {
-
+                        if (entityPM.DocumentFilingInbox == null)
+                            entityPM.DocumentFilingInbox = entity.DocumentFilingInbox;
                         if (entityPM.Roles != null && entityPM.Roles.Count != 0) // DON'T DELETE EXISTING ROLES IF NOT SENT BY HYBRID
                         {
                             List<RolePM> oldRoles = rolesQuery.GetRolesForContact(entity.Id, entity.Tenant).Where(r => r.Exists).ToList();
                             foreach (RolePM role in oldRoles)
                             {
-                                UserRolesPM userRolePM = new UserRolesPM()
+                                var sentRole = entityPM.Roles.FirstOrDefault(r => r.Name == role.Name && r.Added);
+                                if (sentRole == null)
                                 {
-                                    Id = role.Id,
-                                    Name = role.Name,
-                                    Removed = true,
-                                    UserId = entity.Id,
-                                    Tenant = entity.Tenant,
-                                };
+                                    UserRolesPM userRolePM = new UserRolesPM()
+                                    {
+                                        Id = role.Id,
+                                        Name = role.Name,
+                                        Removed = true,
+                                        UserId = entity.Id,
+                                        Tenant = entity.Tenant,
+                                    };
 
-                                entityPM.Roles.Add(userRolePM);
+                                    entityPM.Roles.Add(userRolePM);
+                                }
+                                else
+                                {
+                                    sentRole.Added = false;// rebuild an existing role
+                                }
                             }
                         }
 

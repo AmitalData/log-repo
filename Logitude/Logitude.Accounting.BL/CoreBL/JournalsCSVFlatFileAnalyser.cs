@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 _contact = _contactRep.GetSingleContactByEmail(_resolveLoggingUserId, tenant);
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
-                ValidateFlatFile();
+                ValidateFlatFile(tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
@@ -76,7 +76,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         CreateDate = @now,
                         AccountingDate = j1stLineDTO.AccountingDate,
                         TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
-                        StatusCode = "2",
+                        StatusCode = "1", // "2", //1=Waiting Approval, 2=Approved 
                         AccountingEntityCode = "1",// - Journal
                         AccountingEntityId = null, 
                         AccountingEntityReference = null, 
@@ -107,8 +107,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             JournalId = journal.Id,
                             AccountingDate = jLineDTO.AccountingDate,
                             ActionCode = jLineDTO.ActionCode,
-                            DebitAccountId = jLineDTO.DebitGLAccount,
-                            CreditAccountId = jLineDTO.CreditGLAccount,
+                            DebitAccountId = jLineDTO.DebitGLAccountId,
+                            CreditAccountId = jLineDTO.CreditGLAccountId,
                             LocalAmount = jLineDTO.LocalAmount,
                             CurrencyCode  = jLineDTO.CurrencyCode,
                             ForeignAmount = jLineDTO.ForeignAmount,
@@ -276,7 +276,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private void ValidateFlatFile()
+        private void ValidateFlatFile(int tenant)
         {
             string text;
             string text_2;
@@ -324,61 +324,91 @@ namespace Logitude.Accounting.BL.CoreBL
             //    throw new Exception($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
             //}
 
-
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             long count = 1;
             foreach (JournalSrcLineDTO jLine in _JournalSrcLinesDTO)
             {
-                if (String.IsNullOrEmpty(jLine.CreditGLAccount))
+                if (jLine.ActionCode != "2")
                 {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    if (String.IsNullOrEmpty(jLine.CreditGLAccount))
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    }
+                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.CreditGLAccount, tenant);
+                    if (creditPM == null)
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
+                    }
+                    else
+                    {
+                        jLine.CreditGLAccountId = creditPM.Id;
+                    }
                 }
-                if (String.IsNullOrEmpty(jLine.DebitGLAccount))
+                if (jLine.ActionCode != "1")
                 {
-                    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
-                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    if (String.IsNullOrEmpty(jLine.DebitGLAccount))
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                    }
+                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.DebitGLAccount, tenant);
+                    if (debitPM == null)
+                    {
+                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                        this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
+                    }
+                    else
+                    {
+                        jLine.DebitGLAccountId = debitPM.Id;
+                    }
                 }
                 //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
                 //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.LocalName", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44}");
                 //}
                 //if (String.IsNullOrEmpty(jLine.ChartCode))
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
                 //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ChartCode", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
                 //}
                 //if (!jLine.IsMulti && String.IsNullOrEmpty(jLine.CurrencyCode))
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
                 //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
                 //}
                 //if (!jLine.IsMulti && jLine.CurrencyCode == "##")
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
                 //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
                 //}
                 //if (jLine.IsMulti && !String.IsNullOrEmpty(jLine.CurrencyCode) && jLine.CurrencyCode != "##")
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AccountIsaMulti", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_44} ");
                 //}
                 //if (jLine.RecoMethod == "1" && (jLine.IsMulti || jLine.CurrencyCode == "NIS"))
                 //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.AccountLineNo", 0, useLocal);
+                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
                 //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.Wrong", 0, useLocal);
                 //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ReconciliationMethod", 0, useLocal);
                 //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
@@ -511,7 +541,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public string CurrencyCode { get; private set; }
 
         public string DebitGLAccount { get; private set; }
+        public string DebitGLAccountId { get; set; }
         public string CreditGLAccount { get; private set; }
+        public string CreditGLAccountId { get; set; }
         public decimal LocalAmount { get; private set; }
         public decimal ForeignAmount { get; private set; }
         public decimal ExternalOpenAmount { get; private set; }
@@ -553,13 +585,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     case "c":
                     case "C":
                     case "ז":
-                    case "1":
+                    case "2": //  2 = credit in the input file
                         rec.ActionCode = "1";
                         break;
                     case "d":
                     case "D":
                     case "ח":
-                    case "2":
+                    case "1": //  1 = debit in the input file
                         rec.ActionCode = "2";
                         break;
                     case "3":

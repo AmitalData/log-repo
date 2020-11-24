@@ -211,6 +211,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool TransferToDropboxActivated;
         private bool transferToFTPActivated;
         private bool canTransferToFTP;
+        private bool isTransferEnabled = false;
         private void GetAccountingSystem()
         {
         
@@ -230,6 +231,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
                     this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
                     this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+
+                    if (accountingSetting.IsARInvoicesTransferEnabled && accountingSystem.AllowARInvoicesTransfer)
+                    {
+                        isTransferEnabled = true;
+                    }
                 }
             }
         }
@@ -987,7 +993,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARInvoiceMessage(bool setApproved)
         {
-            if (setApproved)
+            if (setApproved && isTransferEnabled)
             {
                 if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {

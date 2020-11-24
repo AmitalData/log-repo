@@ -23,6 +23,17 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.TaxReportId == reportId && a.Tenant == tenant
                     select a);
         }
+
+        public List<int> CheckErrorsInLines(string taxReportId, int tenant, List<string> errorCodes)
+        {
+           
+            return (from a in context.TaxReportLines
+                  
+                    where a.TaxReportId == taxReportId && a.Tenant == tenant && errorCodes.Contains(a.StatusCode)
+                    select   a.Line).ToList();
+
+        }
+
         public IQueryable<TaxReportLine> GetAllExternalLines(int tenant, string taxReportId)
         {
             var q = (from a in context.TaxReportLines

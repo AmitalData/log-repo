@@ -83,8 +83,48 @@
                                                                             <td></td>
                                                                         </tr>
 
+                                                                        <tr class="FormFieldRow" *ngIf="IsFTP">
+                                                                            <td style="width:90px;vertical-align:central">
+                                                                                <LogLabel [ObjectFieldName]="'Format'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            </td>
+
+
+                                                                            <td style="width:250px;height:5px">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <ComboBox (SelectedItemChanged)="FormatSelectionChanged($event)" [SelectedItem]="SelectedFormat" [ItemsSource]="SchedulerFormats" [Binding]="'Name'"></ComboBox>
+                                                                                        </td>
+                                                                                        <td style="width:10%">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
+                                                                        <tr class="FormFieldRow" *ngIf="IsFTP && SelectedFormat && SelectedFormat.Code == 'EXCLA'">
+                                                                            <td style="width:90px;vertical-align:central">
+                                                                            </td>
+
+
+                                                                            <td style="width:250px;height:5px">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="SelectedFormatAdvanced == 'DO'" (Checked)="SetFormatAdvanced('DO')" [Text]="'Data Only'" [Top]="5"></RadioButton>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="SelectedFormatAdvanced == 'OP'" (Checked)="SetFormatAdvanced('OP')" [Text]="'One Page Header and Footer'" [Top]="5"></RadioButton>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
                                                                         <tr>
-                                                                            <td colspan="3"></td>
+                                                                            <td colspan="4"></td>
                                                                         </tr>
                                                                     </table>
                                                                 </td>

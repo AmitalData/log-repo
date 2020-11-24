@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 
     template:
     `
-    <div   [hidden]="!IsBusy"  class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
+    <div Id="CargoTracking_BusyIndicator"  [hidden]="!IsBusy"  class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
     <div   [hidden]="!IsBusy" class="BusyIndicatorControl">
         <div class="BusyIndicatorControlOuter" [style.margin-top.px]="innerHeight" [style.width.px]="Width" [style.height.px]="Height">
             <div class="BusyIndicatorControlInner" [style.width.px]="Width" [style.height.px]="Height">

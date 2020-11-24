@@ -116,7 +116,9 @@ namespace WarehouseData.Helper
         {
         
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, tableLists);
-   
+            ExecuteScript("Others", "Day 21 [Abed ] AddIndexesToFactTables", connectionString);
+
+
         }
 
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)

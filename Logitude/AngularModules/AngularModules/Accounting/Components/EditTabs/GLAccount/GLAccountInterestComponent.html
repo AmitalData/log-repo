@@ -7,6 +7,16 @@
         user-select: text;
         -webkit-user-select: text;
     }
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
 </style>
 <div class="TabHolder">
     <table>
@@ -16,7 +26,28 @@
             </td>
         </tr>
         <tr class="TabTitleRow">
-            <td>{{'Accounting.General.O.Interest' | TextCodeTranslationPipe}}</td>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:1px">{{'Accounting.General.O.Interest' | TextCodeTranslationPipe}}</td>
+                        <td></td>
+
+                        <td>
+                            <div *ngIf="Disabled" style="width: 100%;text-align:center">
+                                <div class="DisbleBox">
+
+                                    {{'GLAccount.O.InterestForeignCurrencyAccount' | TextCodeTranslationPipe}}
+
+
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        
+        
         </tr>
         <tr class="TabTitleRow">
             <td>
@@ -291,164 +322,164 @@
                     <!--PeriodStartDate-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.PeriodStartDate | DateTimeToDatePipe}}</span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode">
-                                <LogDatePicker [ObjectFieldName]="'PeriodStartDate'" [ObjectTableName]="'GLAccountInterestPeriod'"
-                                               [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.PeriodStartDate | DateTimeToDatePipe}}</span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogDatePicker [ObjectFieldName]="'PeriodStartDate'" [ObjectTableName]="'GLAccountInterestPeriod'"
+                                                   [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--StandardInterestRateBaseId-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="StandardInterestRateBaseIdHeader" [binding]="'StandardInterestRateBaseId'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.StandardInterestRateBaseName}}</span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode">
-                                <LogLov [ObjectFieldName]="'StandardInterestRateBaseId'"
-                                        [ObjectTableName]="'GLAccountInterestPeriod'"
-                                        [DataContext]="item"
-                                        (SelectedItemChanged)="item.StandardInterestRateBase = $event"
-                                        [LookUpTableName]="'InterestBasesType'"
-                                        [DisplayMemberPath]="'LocalName'"
-                                        [HideColumns]="true"
-                                        [RunToggleMode]="true"
-                                        [FocusOnMe]="'true'">
-                                </LogLov>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.StandardInterestRateBaseName}}</span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'StandardInterestRateBaseId'"
+                                            [ObjectTableName]="'GLAccountInterestPeriod'"
+                                            [DataContext]="item"
+                                            (SelectedItemChanged)="item.StandardInterestRateBase = $event"
+                                            [LookUpTableName]="'InterestBasesType'"
+                                            [DisplayMemberPath]="'LocalName'"
+                                            [HideColumns]="true"
+                                            [RunToggleMode]="true"
+                                            [FocusOnMe]="'true'">
+                                    </LogLov>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--StandardAddInterestPercent-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="StandardAdditionalInterestPercentageHeader" [binding]="'StandardAddInterestPercent'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
+                            <log-cell-template #logcelltemplate>
 
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span> {{item.StandardAddInterestPercent}} </span>
-                            </div>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span> {{item.StandardAddInterestPercent}} </span>
+                                </div>
 
-                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
-                                            [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
-                            </div>
+                                <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                                </div>
 
-                        </log-cell-template>
-                    </ng-template>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--ExceptionalInterestRateBaseId-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="ExceptionalInterestRateBaseIdHeader" [binding]="'ExceptionalInterestRateBaseId'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.ExceptionalInterestRateName}} </span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode">
-                                <LogLov [ObjectFieldName]="'ExceptionalInterestRateBaseId'"
-                                        [ObjectTableName]="'GLAccountInterestPeriod'"
-                                        [DataContext]="item"
-                                        (SelectedItemChanged)="item.ExceptionalInterestRateBase = $event"
-                                        [LookUpTableName]="'InterestBasesType'"
-                                        [DisplayMemberPath]="'LocalName'"
-                                        [HideColumns]="true"
-                                        [RunToggleMode]="true"
-                                        [FocusOnMe]="'true'">
-                                </LogLov>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.ExceptionalInterestRateName}} </span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'ExceptionalInterestRateBaseId'"
+                                            [ObjectTableName]="'GLAccountInterestPeriod'"
+                                            [DataContext]="item"
+                                            (SelectedItemChanged)="item.ExceptionalInterestRateBase = $event"
+                                            [LookUpTableName]="'InterestBasesType'"
+                                            [DisplayMemberPath]="'LocalName'"
+                                            [HideColumns]="true"
+                                            [RunToggleMode]="true"
+                                            [FocusOnMe]="'true'">
+                                    </LogLov>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--ExceptionalAddInterestPercent-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="ExceptionalAdditionalInterestPercentageHeader" [binding]="'ExceptionalAddInterestPercent'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.ExceptionalAddInterestPercent}}</span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ExceptionalAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
-                                            [Text]="item.ExceptionalAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.ExceptionalAddInterestPercent}}</span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ExceptionalAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                [Text]="item.ExceptionalAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--CreditInterestRateBaseId-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'125'" [header]="CreditInterestRateBaseIdHeader" [binding]="'CreditInterestRateBaseId'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span> {{item.CreditInterestRateBaseName}} </span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode">
-                                <LogLov [ObjectFieldName]="'CreditInterestRateBaseId'"
-                                        [ObjectTableName]="'GLAccountInterestPeriod'"
-                                        [DataContext]="item"
-                                        (SelectedItemChanged)="item.CreditInterestRateBase = $event"
-                                        [LookUpTableName]="'InterestBasesType'"
-                                        [DisplayMemberPath]="'LocalName'"
-                                        [HideColumns]="true"
-                                        [RunToggleMode]="true"
-                                        [FocusOnMe]="'true'">
-                                </LogLov>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span> {{item.CreditInterestRateBaseName}} </span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'CreditInterestRateBaseId'"
+                                            [ObjectTableName]="'GLAccountInterestPeriod'"
+                                            [DataContext]="item"
+                                            (SelectedItemChanged)="item.CreditInterestRateBase = $event"
+                                            [LookUpTableName]="'InterestBasesType'"
+                                            [DisplayMemberPath]="'LocalName'"
+                                            [HideColumns]="true"
+                                            [RunToggleMode]="true"
+                                            [FocusOnMe]="'true'">
+                                    </LogLov>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--CreditAddInterestPercent-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="CreditAdditionalInterestPercentageHeader" [binding]="'CreditAddInterestPercent'">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.CreditAddInterestPercent}}</span>
-                            </div>
-                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'CreditAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
-                                            [Text]="item.CreditAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.CreditAddInterestPercent}}</span>
+                                </div>
+                                <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'CreditAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                [Text]="item.CreditAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--UpdatedByUser-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="UpdatedByUserHeader">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'">
-                                <span>{{item.UpdatedByUserName}}</span>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <span>{{item.UpdatedByUserName}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--UpdateDateTime-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="UpdateDateTimeHeader">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDateTime | DateTimeToDatePipe}} </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDateTime | DateTimeToDatePipe}} </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                     <!--NULL-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
                         <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="RemoveLine(item)"></IconButton>
-                            </div>
-                        </log-cell-template>
-                    </ng-template>
+                            <log-cell-template #logcelltemplate>
+                                <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="RemoveLine(item)"></IconButton>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

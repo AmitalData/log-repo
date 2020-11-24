@@ -954,8 +954,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         var xx = this.rows;
         //this.FiltersChangedsubscription = this.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
-        this.FiltersChangedsubscription = this.FilterChangedEvent.subscribe(change => this.filterChanged(change));
-
+        if (this.FilterChangedEvent) {
+            this.FiltersChangedsubscription = this.FilterChangedEvent.subscribe(change => this.filterChanged(change));
+        }
         if (this.pubSubAdvanceQueryFiltersServiceRecived) {
             this.pubSubAdvanceQueryFiltersSub = this.pubSubAdvanceQueryFiltersServiceRecived.Stream.subscribe(filters => this.processQueryFilter(filters));
         }
@@ -1519,6 +1520,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.requestedRowCountSub.unsubscribe();
         }
         this.requestedRowCountSub = this.controller.requestedRowCount.subscribe((res) => {
+
+            if (this.UseBusyIndecator && res == 0)
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             this.rowCount = res;
             this.CountReady.emit(res);

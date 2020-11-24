@@ -163,6 +163,13 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "QuoteAutomaticallyClosingTask", 
                 Description = "QuoteAutomaticallyClosingTask", 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldCargoTrackingData", 
+                Name = "DeleteOldCargoTrackingData", 
+                SearchFields = "DeleteOldCargoTrackingData", 
+			});
 			
             return all;
        }

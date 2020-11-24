@@ -371,6 +371,7 @@
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171200_ModifyAnalyzeQueueIdOfInboundEmailTable.sxml" />
+    <None Include="DBScripts\InvoiceModel\202011170423APPaymentSearchFields.sxml" />
     <None Include="DBScripts\InvoiceModel\202006151350_DeleteOldPaymentMethodsMetadata.sxml" />
     <None Include="DBScripts\InvoiceModel\202006291330_FillPaidDateOfInvoices.sxml" />
     <None Include="DBScripts\QuoteModel\202006132005_AddDepartureFrequencyToQuoteDetails.sxml" />

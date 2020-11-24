@@ -1,6 +1,7 @@
 ﻿
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,8 @@ namespace CargoTrackingWinService.Helper
                                 ApplicationInfo.Cards = 0;
                                 ApplicationInfo.Countries = 0;
                             }
-                            cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
-                            bool IsFromBuild = AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
+                            bool IsFromBuild = AddAllTablesToThread(CargoTrackingTableList.FillCargoTableList());
                             ApplicationInfo.UpdateCounter++;
                             if (ApplicationInfo.UpdateCounter==10)
                             {

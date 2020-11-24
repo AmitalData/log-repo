@@ -14,8 +14,8 @@
 body {
     padding: 0;
     margin: 0;
-    background: var(--BGColor);
-    /* background: #F5F6FF; */ 
+    /* background: var(--BGColor); */
+     background: #F5F6FF;  
     font-family: 'Open Sans';
     font-size: 16px;
     line-height: 22px;
@@ -100,6 +100,28 @@ h3 {
     display: none;
 }
 
+.show{
+    display: block;
+}
+
+.dashboard-container{
+    padding: 0 46px;
+}
+
+@media screen and (max-width: 1000px) {
+    .hide-tablet {
+        display: none;
+    }
+    .tablet-only {
+        display: block;
+    }
+    
+    .dashboard-container{
+        padding: 0 20px;
+    }
+}
+
+
 @media screen and (max-width: 479px) {
     h1 {
         font-size: 24px;
@@ -126,16 +148,70 @@ h3 {
     .mobile-only {
         display: block;
     }
-}
-
-@media screen and (max-width: 1000px) {
-    .hide-tablet {
-        display: none;
-    }
-    .tablet-only {
-        display: block;
+    
+    
+    .dashboard-container{
+        padding: 50px 0px 0 0px;
     }
 }
 
 
 /* EOF Typings */
+
+
+
+
+
+.spinner {
+    margin: 100px auto;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+  }
+  
+  .spinner > div {
+    background-color: var(--MainColor);
+    height: 100%;
+    width: 3px;
+    display: inline-block;
+    margin: 0 1px;
+    
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  }
+  
+  .spinner .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+  }
+  
+  .spinner .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+  
+  .spinner .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
+  
+  .spinner .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+  }
+  
+  @-webkit-keyframes sk-stretchdelay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+    20% { -webkit-transform: scaleY(1.0) }
+  }
+  
+  @keyframes sk-stretchdelay {
+    0%, 40%, 100% { 
+      transform: scaleY(0.4);
+      -webkit-transform: scaleY(0.4);
+    }  20% { 
+      transform: scaleY(1.0);
+      -webkit-transform: scaleY(1.0);
+    }
+  }

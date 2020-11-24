@@ -13,7 +13,7 @@
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="100">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -47,5 +47,9 @@
   <Index
     Columns="Tenant,SearchFields,IsPublic" />
   <Index
+    Columns="Tenant,ShipmentId,IsPublic" />
+  <Index
     Columns="ShipmentId" />
+  <Index
+    Columns="ShipmentDate" />
 </Table>

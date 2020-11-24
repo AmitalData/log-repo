@@ -381,29 +381,43 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
       }
 
     } this.SetCreateInvoiceButtonText();
-  }
-  CreateInvoiceButtonClicked() {
-      var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-      this.CurrentSession.StartBusyIndicatorLoading();
-      this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
-      this.CurrentSession.StopBusyIndicator();
-        var mm: ServiceResponse = response;
-        if (!mm.HasError) {
-            this.BatchId= mm.Result;
-            this.CancelButtonClicked();
+    }
+    IsCloseWithoutInvoice: boolean = false;
+    CloseWithoutInvoice() {
+        if (this.SelectedItemsCount == 0) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
         }
         else {
-          if(mm.ErrorsArray){
-            var msg = new MessageWindow();
-            msg.RTL = this.isRTL;
-            msg.Width = 400;
-            msg.Show(mm.ErrorsArray[0]);
+            this.ConfirmClosingWithoutInvoice();
         }
-        }
-
-      });
+      
+    }
+    CreateInvoiceButtonClicked() {
+        this.IsCloseWithoutInvoice = false;;
+        this.UpdateInterestReportsStatuses();
+     
   }
+    UpdateInterestReportsStatuses() {
+        var interestReportArgs: InterestReportArguments = this.FillInterestReportArgs();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var mm: ServiceResponse = response;
+            if (!mm.HasError) {
+                this.BatchId = mm.Result;
+                this.CancelButtonClicked();
+            }
+            else {
+                if (mm.ErrorsArray) {
+                    var msg = new MessageWindow();
+                    msg.RTL = this.isRTL;
+                    msg.Width = 400;
+                    msg.Show(mm.ErrorsArray[0]);
+                }
+            }
 
+        });
+    }
   ShowInvoiceDateForBatchInvoiceComponent(){
     var logWindow = new LogitudeWindow();
     logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate");
@@ -506,7 +520,22 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     date.setUTCMilliseconds(0);
 
     return date;
-}
+    }
+
+    ConfirmClosingWithoutInvoice() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 390;
+        var NumberIdsSelected: number = 0;
+       
+        confirmWindow.Show( TextCodeTranslator.Translate("InterestReport.O.CloseAllSelectedWithoutInvoice"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.IsCloseWithoutInvoice = true;
+                this.UpdateInterestReportsStatuses();                
+                
+            }
+        });
+    }
 ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
@@ -533,14 +562,16 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
           }
       });
 }  
- 
+    public CloseWithoutInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice");
   
 SetCreateInvoiceButtonText(){
 if (this.SelectedItemsCount > 0) {
-this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";
+    this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";
+    this.CloseWithoutInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice")+ "(" + this.SelectedItemsCount + ")";
  }
 else{
-this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
+    this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
+    this.CloseWithoutInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CloseWithoutInvoice");
 }
 }
   FillInterestReportArgs() {
@@ -548,7 +579,8 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
     interestReportArgs.AllSelected = this.AllSelected;
     interestReportArgs.FromDate = this.FromDate;
     interestReportArgs.ToDate = this.ToDate;
-    interestReportArgs.InvoiceDate = this.InvoiceDate;
+      interestReportArgs.InvoiceDate = this.InvoiceDate;
+      interestReportArgs.CloseWithoutInvoice = this.IsCloseWithoutInvoice;
     interestReportArgs.SelectedIds = [];
     interestReportArgs.ExcludedIds = [];
     interestReportArgs.Tenant =SessionLocator.TenantPM.Id;

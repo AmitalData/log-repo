@@ -178,7 +178,8 @@ namespace Logitude.Accounting.BL.InterestService
             string BatchId = null;
             interestReportArgs.Tenant = tenant;
             interestReportArgs.Email = email;
-            BatchId = CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
+            string BatchName = interestReportArgs.CloseWithoutInvoice ? "Create Close Without Invoice Batch" : "Create Batch Invoice";
+            BatchId = CreateBatchTaskExecution(interestReportArgs, BatchName, "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
 
             return BatchId;
         }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "cbe4e6f6b0b4a397940d1d4761513473";
+		public const string HashString = "2cb8b6f8f2f32ae08c776c1f4cbbf8b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "6f9d",
+			      				    Code =  "47bd",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1117,6 +1117,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOSelectOneAutoRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.SelectOneAutoRecoMethod", DefaultText = "At least one Automatic Reconcile method should be selected",LocalDefaultText = @"יש לסמן לפחות שיטת התאמה אחת", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAutoRecoByRefDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAutoRecoByRefDate", DefaultText = "You cannot automatically reconcile only by reference date. It must be paired with another option",LocalDefaultText = @"לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAdjustLedgersOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAdjustLedgersOnly", DefaultText = "Cant adjust only transaction lines",LocalDefaultText = @"לא ניתן לבצע התאמה עם שורות מהכרטיס בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

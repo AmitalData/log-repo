@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class SchedulerProcedureUpdateClass
    {  		
-		public const string HashString = "03698f5beb4fe9209daa5f3027b1a2cf";
+		public const string HashString = "43678944fc8bb4c33c181f652dbab497";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,6 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "SchedulerProcedure",
 			      				    IsNew =  true,
 			      				    DBTableName =  "SchedulerProcedure",
+			      				    OldDBTableName =  "SchedulerProcedure",
 			      				    ObjectTableSingular =  "SchedulerProcedure",
 			      				    ObjectTablePlural =  "SchedulerProcedures",
 			      				    HasCustomFilter =  false,
@@ -120,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Scheduler Procedure",
-			      				    Code =  "35dc",
+			      				    Code =  "b2a3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -146,6 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -205,6 +207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
+					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -264,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -323,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Description",
+					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -382,6 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsInternallyDefined",
+					  						OldFieldName =  "IsInternallyDefined",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

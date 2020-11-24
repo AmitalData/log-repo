@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,12 +21,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 {
                     bulkDataPreperation.dataTable2 = bulkDataPreperation.dataTable.Clone();
                 }
-                AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
-                 AddCustomerRefrences(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
-                 AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
-                if (!TableRow["ShipmentNumber"].Equals(null) && TableRow["ShipmentNumber"].GetType().Name != "DBNull")
-                { TableRow.SetField("SearchFields", TableRow["ShipmentNumber"]); }
+
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipmentNumber");
+                AddSplittedData(TableRow, bulkDataPreperation.dataTable2, "CustomerReference1");
+                AddSplittedData(TableRow, bulkDataPreperation.dataTable2, "CustomerReference2");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "Master");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "House");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ForwarderShipmentNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomFileNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "CustomsDeclarationNumber");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ShipperName");
+                AddNewRecord(TableRow, bulkDataPreperation.dataTable2, "ConsigneeName");
+                AddSplittedData(TableRow, bulkDataPreperation.dataTable2, "ContainersNumbers");
+
 
             }
 
@@ -33,42 +41,54 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
 
-        private static void AddCustomerRefrences(DataRow TableRow, DataTable dataTable,string CoulmnNmae)
-        {
-            string SearchField = null;
-            if (!TableRow[CoulmnNmae].Equals(null) && TableRow[CoulmnNmae].GetType().Name != "DBNull")
-            { SearchField = (string)TableRow[CoulmnNmae]; 
-
-            string[] SearchArr = SearchField.Split(',');
-            for (int i = 0; i < SearchArr.Length; i++)
+        private static void AddSplittedData(DataRow TableRow, DataTable dataTable,string CoulmnName)
+        { 
+            if (!IsNullOrEmpty(TableRow, CoulmnName))
             {
-  
+                var Value = TableRow[CoulmnName];
+                string SearchField = (string)Value;
+                string[] SearchArr = SearchField.Split(',');
+                for (int i = 0; i < SearchArr.Length; i++)
+                {
                     DataRow TableRow1 = dataTable.NewRow();
                     TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchArr[i]);
-                    dataTable.Rows.Add(TableRow1);
-         
-
-            }
-           } 
+                    TableRow1.SetField("SearchFields", SearchArr[i].Trim());
+                    if (!IsNullOrEmpty(TableRow1, "SearchFields"))
+                        dataTable.Rows.Add(TableRow1);
+                }
+            } 
         }
 
 
 
-        private static void AddNewRecord(DataRow TableRow, DataTable dataTable, string CoulmnNmae)
+        private static void AddNewRecord(DataRow TableRow, DataTable dataTable, string CoulmnName)
         {
-            string SearchField = null;
-            if (!TableRow[CoulmnNmae].Equals(null) && TableRow[CoulmnNmae].GetType().Name != "DBNull")
+            if (!IsNullOrEmpty(TableRow, CoulmnName))
             {
-                    SearchField = (string)TableRow[CoulmnNmae];
+                    var Value = TableRow[CoulmnName];
+                    string SearchField = (string)Value;
                     DataRow TableRow1 = dataTable.NewRow();
                     TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
-                    TableRow1.SetField("SearchFields", SearchField);
-                    dataTable.Rows.Add(TableRow1);
+                    TableRow1.SetField("SearchFields", SearchField.Trim());
+                    if (!IsNullOrEmpty(TableRow1, "SearchFields"))
+                        dataTable.Rows.Add(TableRow1);
  
             }
         }
 
+
+
+        private static bool IsNullOrEmpty(DataRow TableRow,  string CoulmnName)
+        {
+            bool IsNull = false;
+            var Value = TableRow[CoulmnName];
+            if (Value.Equals(null) || Value.GetType().Name == "DBNull" || string.IsNullOrEmpty((string)Value) ||  string.IsNullOrWhiteSpace((string)Value))
+            {
+                IsNull = true;
+            }
+            return IsNull;
+        }
+ 
     }
 
 }

@@ -55,7 +55,17 @@ export class GLAccountInterestComponent extends BaseComponent {
     }
     ngOnInit() {
     }
+    public Disabled: boolean;
     SetUIProperties() {
+
+        if (!this.EntityPM.IsMultiCurrency && this.TenantPM.CurrencyId != this.EntityPM.CurrencyId && !this.EntityPM.IsSplitted) {
+            this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", false);
+            this.Disabled = true;
+        }
+        else {
+            this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", true);
+            this.Disabled = false;
+        }
         if (this.EntityPM.ActiveForInterest) {
             if(!this.EntityPM.IsSplitted){
                 this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);

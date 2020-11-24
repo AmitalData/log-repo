@@ -12778,9 +12778,6 @@ namespace HypredTest.CustomerProxy {
         private string ActivationRequestedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActivityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ActivityWatchField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -13270,19 +13267,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.ActivationRequestedByUserNameField, value) != true)) {
                     this.ActivationRequestedByUserNameField = value;
                     this.RaisePropertyChanged("ActivationRequestedByUserName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Activity {
-            get {
-                return this.ActivityField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActivityField, value) != true)) {
-                    this.ActivityField = value;
-                    this.RaisePropertyChanged("Activity");
                 }
             }
         }

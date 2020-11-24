@@ -69,6 +69,10 @@ export class CargoTrackingShipmentList {
 	TransportModeName: string;
 	FromPortCountryCode: string;
 	ToPortCountryCode: string;
+	IsFavorite: boolean;
+	FutureMilstoneCode: string;
+	FutureMilstoneDate: Date;
+	FutureMilstoneName: string;
 	
 }
  
