@@ -86,7 +86,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     CheckIfTotalNotEqualsZero(reconciliationPM);
 
                     MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
-                    List<ReconciliationPM> paymentReconciliations = splitter.Split();
+
+                   List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayments();
+
 
                     SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
                     recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
