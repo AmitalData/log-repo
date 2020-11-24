@@ -366,38 +366,34 @@
         </tr>
         <tr *ngIf="ErrorMessages">
             <td colspan="13">
-                <table style="min-height: 40px;">
-                    <tr>
-                        <td>
-                            <div class="ValidationSummary" style="overflow-y: auto ; overflow-x: hidden ; direction:ltr">
-                                <table>
-                                    <tr>
-                                        <td style="position: relative; vertical-align:top;">
-                                            <ul style="direction:rtl; left:90%; overflow:hidden;">
-                                                <li class="ValidationItem" *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
-                                                    <div *ngIf="item.E != null ">
-                                                        <img src="./Images/Error.png" style="width:15px;height:13px" />
-                                                        <span [style.text-align]="'right'">{{item.E}}</span>
-                                                    </div>
-                                                    <div *ngIf="item.W != null ">
-                                                        <img src="./Images/SimplogIcons/Warning.png" style="width:15px;height:15px" />
-                                                        <span [style.text-align]="'right'">{{item.W}}</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 5px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
+                <div style="height:36px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="ValidationSummary" style="overflow-y: auto ; overflow-x: auto ; direction:ltr">
+                                    <table>
+                                        <tr>
+                                            <td style="position: relative; vertical-align:top;">
+                                                <ul style="direction:rtl; left:90%;">
+                                                    <li class="ValidationItem" *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
+                                                        <div *ngIf="item.E != null" style="height:18px;">
+                                                            <img src="./Images/Error.png" style="width:15px;height:13px" />
+                                                            <span [style.text-align]="'right'" style="height:13px;">{{item.E}}</span>
+                                                        </div>
+                                                        <div *ngIf="item.W != null " style="height:18px;">
+                                                            <img src="./Images/SimplogIcons/Warning.png" style="width:15px;height:13px" />
+                                                            <span [style.text-align]="'right'" style="height:13px;">{{item.W}}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </td>
         </tr>
     </table>
@@ -654,7 +650,7 @@
                                 <ng-template let-item>
 
                                     <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div style="text-align:right; direction: ltr; display: inline-block;">
+                                        <div style="text-align:right;">
                                             <span>{{item.InvoiceAmount}}</span>
                                         </div>
                                     </log-cell-template>
