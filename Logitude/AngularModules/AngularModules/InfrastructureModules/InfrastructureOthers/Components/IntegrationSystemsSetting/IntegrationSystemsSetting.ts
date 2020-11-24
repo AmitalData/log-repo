@@ -33,7 +33,8 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
         }
 
-        this.DisplayQuotationTransferTriggers = SessionLocator.LoggedUserPM.IsCustomerCare;
+
+        this.DisplayQuotationTransferTriggers = SessionLocator.LoggedUserPM.IsCustomerCare; 
 
         this.QuotationTransferTriggersList.push(new CodeNameClass("OnSend", "On Send"));
         this.QuotationTransferTriggersList.push(new CodeNameClass("OnAccept", "On Accept"));
