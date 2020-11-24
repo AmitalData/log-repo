@@ -115,7 +115,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageToPortName { get; set; }
         public double? PackagesGrossWeight { get; set; }
         public double? PackagesVolumetricWeight { get; set; }
-        public double? PackagesChargeableWeight { get; set; }
         public int? PackagesQuantity { get; set; }
         
         public bool? ContainerFollowUp { get; set; }
