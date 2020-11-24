@@ -164,6 +164,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
+                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -335,6 +336,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                         HideFCLAllIn = tt.HideFCLAllIn,
                         DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
+                        SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -496,6 +498,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ShowTaxAmountWarning = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                     HideFCLAllIn = tt.HideFCLAllIn,
                     DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
+                    SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -639,6 +642,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            HideFCLAllIn = a.HideFCLAllIn,
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
+                                           SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -778,6 +782,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        HideFCLAllIn = a.HideFCLAllIn,
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
+                                       SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -929,6 +934,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                                ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                                DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
+                                               SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1082,6 +1088,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                            ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
+                                           SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1223,6 +1230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
                                        ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
+                                       SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1383,6 +1391,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ShowTaxAmountWarning = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
                     DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
+                    SharedLogisMasterMessageLink = myPOCO.SharedLogisMasterMessageLink,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1500,6 +1509,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                 HideFCLAllIn = a.HideFCLAllIn,
+                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                             };
             return result;
         }

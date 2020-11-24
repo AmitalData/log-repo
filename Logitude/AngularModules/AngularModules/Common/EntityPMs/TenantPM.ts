@@ -690,6 +690,11 @@ export class TenantPM {
     public set VatUniquePartnerTypeCode(newValue: string) { if (this.vatUniquePartnerTypeCode != newValue) { this.vatUniquePartnerTypeCode = newValue; this.MarkAsDirty("VatUniquePartnerTypeCode"); } }
        
 	 
+    private sharedLogisMasterMessageLink: boolean;
+    public get SharedLogisMasterMessageLink() { return this.sharedLogisMasterMessageLink; }
+    public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

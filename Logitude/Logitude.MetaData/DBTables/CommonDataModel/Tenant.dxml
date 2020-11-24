@@ -700,6 +700,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SharedLogisMasterMessageLink"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

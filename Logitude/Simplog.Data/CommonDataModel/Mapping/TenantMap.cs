@@ -198,6 +198,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
             this.Property(t => t.VatUniquePartnerTypeCode).HasColumnName("VatUniquePartnerTypeCode");
+            this.Property(t => t.SharedLogisMasterMessageLink).HasColumnName("SharedLogisMasterMessageLink");
 
             this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
