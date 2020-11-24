@@ -1651,6 +1651,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.SelectedDatePreset = null;        
         this.openAmountSelectedOperator = this.Operators[0];
         this.foreignAmountSelectedOperator = this.Operators[0];
+        this.openAmountFilter = null;
+        this.foreignAmountFilter = null;
 
         this.ReloadScreen();
     }
