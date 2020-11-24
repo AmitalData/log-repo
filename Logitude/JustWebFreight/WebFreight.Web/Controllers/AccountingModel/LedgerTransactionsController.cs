@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -109,81 +110,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-
-
-                LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-                List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
-                LTBFilter.PageSize = filters.PageSize;
-                LTBFilter.PageStartAtRecordIndex = filters.PageIndex;
-                LTBFilter.Tenant = tenant;
-
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-                    var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
-                    var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
-                    var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
-                    var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
-                    var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
-                    string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
-
-                    var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
-                    if (currencyIdFilter != null)
-                    {
-                        var currencyId = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault().FieldValue.ToString();
-                        LTBFilter.CurrencyId = currencyId;
-                    }
-                    //search
-                    var searchFieldsf = filters_list.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
-                    if (searchFieldsf != null)
-                    {
-                        var searchFields = searchFieldsf.FieldValue.ToString();
-                        LTBFilter.SearchFields = searchFields;
-                    }
-                    LTBFilter.GLAccountId = glAccountId;
-
-                    string[] fromDate = from.ToString().Split(';');
-                    LTBFilter.From = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1])+1, int.Parse(fromDate[2]),0,0,0);
-
-                    string[] toDate = to.ToString().Split(';');
-                    LTBFilter.To = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1])+1, int.Parse(toDate[2]), 23, 59, 59);
-
-                    LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
-                    LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
-                    LTBFilter.DateTypeCode = _dateTypeCode;
-                }
-                var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
-                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-                ledgerTransactionBalanceService.Run();
-
-                LTBFilter.CallBack = new LedgerTransactionBalanceFilterCallBack()
-                {
-                    //EndBalanceForeign = ledgerTransactionBalanceService.Response.EndBalanceForeign,
-                    EndBalanceForeignList = ledgerTransactionBalanceService.Response.EndBalanceForeignList,
-                    EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
-                    Have1CurrencyIdInPeriod = ledgerTransactionBalanceService.Response.Have1CurrencyIdInPeriod,
-                    MaxCreateAt = ledgerTransactionBalanceService.Response.MaxCreateAt,
-
-                    //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                    StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
-                    StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
-                    TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
-                    YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
-
-                    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
-
-                };
+                TransactionsBalanceByFiltersService transactionsBalanceByFiltersService = new TransactionsBalanceByFiltersService();
+                TransactionsBalanceByFiltersResult transactionsBalanceByFiltersResult = transactionsBalanceByFiltersService.GetTransactionsBalanceByFilters(tenant, filters);
+               
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = ledgerTransactionBalanceService.Response.TotalRowCount.Value;
+                    int count = transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                     response.Count = count;
                 }
 
-                response.Result = LTBFilter.CallBack;
+                response.Result = transactionsBalanceByFiltersResult.CallBack;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

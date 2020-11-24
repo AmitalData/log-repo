@@ -228,8 +228,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                ChargesTypeCustomFilter customfilters = new ChargesTypeCustomFilter(tenant);
+				                
+				ChargesTypeCustomFilter customfilters = new ChargesTypeCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 	
                 entityPocos = genericFilter.GetFilteredQuery<ChargesType>(nonListQueryOperation, entityPocos);
