@@ -23,7 +23,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
     ExportQuotationsToIntegratedSystem: boolean = false;
     myTenantPM: TenantPM;
     public QuotationTransferTriggersList: CodeNameClass[] = [];
-
+    public DisplayQuotationTransferTriggers: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -33,6 +33,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
         }
 
+        this.DisplayQuotationTransferTriggers = SessionLocator.LoggedUserPM.IsCustomerCare;
 
         this.QuotationTransferTriggersList.push(new CodeNameClass("OnSend", "On Send"));
         this.QuotationTransferTriggersList.push(new CodeNameClass("OnAccept", "On Accept"));
