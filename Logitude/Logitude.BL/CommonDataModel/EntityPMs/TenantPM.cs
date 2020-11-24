@@ -392,5 +392,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VatUniquePartnerTypeCode { get; set; }
+
+        public string TransferQuotationsToUnifreightTrigger { get; set; }
     }
 }

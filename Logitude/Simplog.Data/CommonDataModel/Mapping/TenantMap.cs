@@ -73,6 +73,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasMaxLength(4).IsRequired().IsUnicode(false);
             this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
             this.Property(t => t.VatUniquePartnerTypeCode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasMaxLength(10).IsUnicode(false);
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -198,6 +199,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
             this.Property(t => t.VatUniquePartnerTypeCode).HasColumnName("VatUniquePartnerTypeCode");
+            this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUnifreightTrigger");
 
             this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);

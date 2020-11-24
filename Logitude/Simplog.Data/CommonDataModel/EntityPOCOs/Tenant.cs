@@ -186,6 +186,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AllowCustomersInAgentsLOV { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public bool DisplayDocumentsAndEvents { get; set; }
+        public string TransferQuotationsToUnifreightTrigger { get; set; }
 
     }
 }

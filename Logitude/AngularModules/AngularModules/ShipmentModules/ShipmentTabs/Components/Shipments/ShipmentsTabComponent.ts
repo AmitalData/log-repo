@@ -632,7 +632,7 @@ class HAWBItem {
     public CellNotes: string = null;
 
     private SetIsMatched() {
-        if (AppTool.IsNullOrEmpty(this.item.MasterShipmentDataId) && this.item.FromPortId == this.fatherComponent.EntityPM.MainCarriageFromPortId && this.item.ToPortId == this.fatherComponent.EntityPM.MainCarriageFinalDestinationPortId && this.item.BranchId == this.fatherComponent.EntityPM.BranchId) {
+        if (AppTool.IsNullOrEmpty(this.item.MasterShipmentDataId) && this.item.FromPortId == this.fatherComponent.EntityPM.MainCarriageFromPortId && this.item.ToPortId == this.fatherComponent.EntityPM.MainCarriageFinalDestinationPortId ) {
             this.IsMatched = true;
         }
     }    

@@ -40,8 +40,10 @@ export class UserDashboardComponent implements AfterViewInit
     SignOutClicked(){
         this._Tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
-        if(!this._Tenant) this._Tenant = 0;
-        this.router.navigate([this._Tenant, 'login'])
+        if(this._Tenant)
+            this.router.navigate(["login"],{ queryParams: {tenant: this._Tenant}});
+        else
+            this.router.navigate(["login"]);
     }
 
     ngAfterViewInit()

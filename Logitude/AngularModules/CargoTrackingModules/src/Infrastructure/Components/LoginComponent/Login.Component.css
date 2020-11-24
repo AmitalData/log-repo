@@ -33,23 +33,22 @@ body, html {
     top: 50%;
     left: calc(50% - 14em);
     transform: translate(calc(50% - 12em), -50%);
+    padding: 2.5em 3.44em 2em 3.44em;
+    background-color: white;
 }
 
 .wrap-login {
     width: 100%;
-    max-width: 380px;
+    max-width: 270px;
     min-width: 200px;
     background: #fff;
     overflow: hidden;
     position: relative;
-    padding: 2.5em 3.44em 2em 3.44em;
 }
-
-
 
 .wrap-login-additional {
     width: 100%;
-    max-width: 380px;
+    max-width: 270px;
     min-width: 200px;
     background: #fff;
     overflow: hidden;
@@ -64,7 +63,7 @@ body, html {
     border: 1px solid #adadad;
     border-radius: 3px;
     margin-bottom: 8px;
-    background-color: #FAFAFA;
+    background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%);
 }
 
 .input {
@@ -80,12 +79,12 @@ body, html {
     padding: 0 5px;
     box-shadow: none;
 }
-
-.input:hover:not(:disabled):not(:read-only) {
-    border: none;
-}.input:focus:not(:disabled):not(:read-only) {
-    border: none;
-}
+    .input:hover:not(:disabled):not(:read-only) {
+        border: none;
+    }
+    .input:focus:not(:disabled):not(:read-only) {
+        border: none;
+    }
 
 .logo-img {
     width: 270px;
@@ -121,7 +120,7 @@ body, html {
     z-index: -1;
     width: 300%;
     height: 100%;
-    background: #3696F9;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3696F9), color-stop(1, #2d82d6) );
     top: 0;
     left: -100%;
 }
@@ -166,16 +165,13 @@ a {
     color: #6a7dfe;
     margin: 0px;
 }
-
     a:focus {
         outline: none !important;
     }
-
     a:hover {
         text-decoration: none;
         color: #6a7dfe;
     }
-
 
 p {
     font-size: 14px;
@@ -189,7 +185,6 @@ button {
     border: none;
     background: transparent;
 }
-
     button:hover {
         cursor: pointer;
     }
@@ -213,20 +208,19 @@ button {
 /*---[ Responsive ]---*/
 @media screen and (max-height: 600px) {
     .container-login {
-        min-height: initial;
         background: #fff;
-    }
-    .container-login-child {
-        bottom: 1vh;
     }
 }
 
 @media screen and (max-width: 480px) {
     .container-login {
-        min-height: initial;
         background: #fff;
     }
     
+    .container-login-child {
+        transform: translate(calc(50% - 12em), -55%);
+    }
+
     .wrap-login-additional{
         display: none;
     }
@@ -234,27 +228,28 @@ button {
 
 @media screen and (max-width: 380px) {
     .container-login-child {
-        left: calc(50% - 13.5em);
+        width: 100%;
+        left: 50%;
+        transform: translate(-50%, -60%);
     }
 }
 
 @media screen and (max-width: 345px) {
     .container-login-child {
-        transform: translate(calc(50% - 10em), -50%);
-        left: calc(50% - 13em);
+        transform: translate(-50%, -60%);
+        left: 50%;
     }
 }
 
 @media screen and (max-width: 305px) {
     .container-login-child {
-        transform: translate(calc(50% - 9em), -50%);
-        left: calc(50% - 12em);
+        left: 48%;
     }
 }
 
 @media screen and (max-width: 279px) {
     .container-login-child {
         min-width: 250px;
-        left: 0;
+        left: 45%;
     }
 }

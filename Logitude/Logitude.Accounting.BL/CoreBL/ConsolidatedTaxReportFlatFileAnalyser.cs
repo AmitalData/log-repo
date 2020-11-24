@@ -103,6 +103,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     foreach (TaxReportLineDTO taxLineDTO in _TaxReportLinesDTO)
                     {
                         nextLine++;
+
+                        decimal? v_vatable = null;
+                        decimal? v_total;
+                        switch (taxLineDTO.LineTypeCode)
+                        {
+                            case "S":
+                            case "M":
+                            case "I":
+                                v_vatable = taxLineDTO.VatableInvoiceAmount;
+                                v_total = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount;
+                                break;
+
+                            default:
+                                v_total = taxLineDTO.VatableInvoiceAmount;
+                                break;
+                        }
                         var taxReportLine = new TaxReportLinePM()
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -114,9 +130,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             Reference = taxLineDTO.Reference,
                             ReferenceDate = taxLineDTO.ReferenceDate,
                             VatNumber = taxLineDTO.VatNumber,
-                            VatableInvoiceAmount = taxLineDTO.VatableInvoiceAmount,
+                         //   VatableInvoiceAmount = taxLineDTO.VatableInvoiceAmount,
+                            VatableInvoiceAmount = v_vatable,
                             VatAmount = taxLineDTO.VatAmount,
-                            TotalInvoiceAmount = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount,
+                          //  TotalInvoiceAmount = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount,
+                            TotalInvoiceAmount = v_total,
                             OutputOrInput = taxLineDTO.OutputOrInput,
                             ReferecneGroup = taxLineDTO.ReferenceGroup,
                             UpdatedByUserId = _contact.Id,
