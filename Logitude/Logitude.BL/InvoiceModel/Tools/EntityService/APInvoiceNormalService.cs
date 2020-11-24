@@ -2533,7 +2533,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                                             LocalAmount =(decimal)g.Sum(a => 
                                                             (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
-                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
+                                                               Math.Round((double)(a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2))), 2)),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
@@ -2584,18 +2584,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
                         totalDebitLines = totalDebitLines + journalLine.LocalAmount;
+                        journalDebitLines.Add(journalLine);
                         journal.JournalLines.Add(journalLine);
                     }
                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
                     var difference = journalCreditAmount - totalDebitLines  ;
 
-                        if (Math.Abs(difference) < (decimal) 0.06)
+                        if (Math.Abs(difference) < (decimal) 0.07)
                         {
                             JournalLinePM largestJournalAmount = journalDebitLines.Where(d =>  d.LocalAmount == journalDebitLines.Max(a=> a.LocalAmount)).FirstOrDefault();
                             journal.JournalLines.Where(d => d.Line == largestJournalAmount.Line).ToList().ForEach(d => { d.LocalAmount = d.LocalAmount + difference; d.ForeignAmount = d.ForeignAmount + difference; });
                         }
+                 
 
-                    
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);
                 }
