@@ -1924,7 +1924,7 @@ User/Pass",
 
         private void DownLoadZipFile_Click(object sender, EventArgs e)
         {
-            TenantsUpdateClass.DownloadEntityResource();
+            TenantsUpdateClass.DownloadEntityResource("InvoiceType", @"D:\zevel\Mohammad");
 
             label1.Text = "DownLoad Zip File completed successfully";
         }
