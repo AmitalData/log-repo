@@ -255,12 +255,13 @@ export class JournalMenuButtonsHandler {
     }
     OpenCopyJournalScreen() {
         var windowTitle = "Copy Journal";
-     
+        var windowArgs: any = {};
+        windowArgs.JournalPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 220;
         logWindow.Title = windowTitle;
-       // logWindow.WindowArgs = windowArgs;
+        logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
