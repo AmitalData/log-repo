@@ -85,6 +85,20 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
+    public get SharedLogisticsMasterMessageLink() {
+
+        if (this.TenantPM) {
+            return this.TenantPM.SharedLogisMasterMessageLink;
+        }
+        else return false;
+    }
+    public set SharedLogisticsMasterMessageLink(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.SharedLogisMasterMessageLink = value;
+        }
+
+    }
+
 
     IsShowAreaColseAndCancelButton: boolean;
     IsSharedLogisticsActivatedEnable: boolean;
@@ -98,12 +112,14 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     
     SharedLogisticsMessageLinkEnable: boolean;
+    SharedLogisticsMasterMessageLinkEnable: boolean = true;
 
 
     IsSharedLogisticsActivatedCheckboxBoxId: string;
     IsMobileActivatedCheckboxBoxId: string;
     IsWebAccessActivatedCheckboxBoxId: string;
     SharedLogisticsMessageLinkCheckboxBoxId: string;
+    SharedLogisticsMasterMessageLinkCheckboxBoxId: string;
 
     IsShowActivateWebAccessArea: boolean = true;
 
@@ -141,6 +157,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
          this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
          this.IsMobileActivated = this.TenantPM.IsMobileActivated;
          this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
+         this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
 
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE")) {
             this.IsShowMobileActivateArea = false;
@@ -157,8 +174,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.IsShowActivateWebAccessArea = true;
         }
 
-    
-
+        if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK")) {
+            this.SharedLogisticsMasterMessageLinkEnable = false;
+        }
 
 
 
@@ -166,6 +184,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.IsMobileActivatedCheckboxBoxId = Guid.newGuid();
         this.IsWebAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
+        this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
 
         this.SetPropertiesEnable();
 
@@ -247,6 +266,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('IsMobileActivated');
         this.myCloner.AddField('SharedLogisticsMessageLink');
         this.myCloner.AddField('DisplayDocumentsAndEvents');
+        this.myCloner.AddField('SharedLogisticsMasterMessageLink');
         this.myCloner.AddEntity(this.TenantPM);
     }
     private RejectChanges() {

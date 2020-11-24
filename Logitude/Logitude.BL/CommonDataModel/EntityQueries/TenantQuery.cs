@@ -165,6 +165,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                                 TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -337,6 +338,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         HideFCLAllIn = tt.HideFCLAllIn,
                         DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                         TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
+                        SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -499,6 +501,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     HideFCLAllIn = tt.HideFCLAllIn,
                     DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
+                    SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -643,6 +646,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            HideFCLAllIn = a.HideFCLAllIn,
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                           SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -783,6 +787,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        HideFCLAllIn = a.HideFCLAllIn,
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                       SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -935,6 +940,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                                DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                                TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                               SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1089,6 +1095,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                           SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1231,6 +1238,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
+                                       SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1392,6 +1400,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
                     DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = myPOCO.TransferQuotationsToUnifreightTrigger,
+                    SharedLogisMasterMessageLink = myPOCO.SharedLogisMasterMessageLink,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1509,6 +1518,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                 HideFCLAllIn = a.HideFCLAllIn,
+                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                             };
             return result;
         }
