@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool CheckIfsAutonomy(string city, string phone ,   int tenant)
+        public bool CheckIfsAutonomy(string city, string phone , string palestinianPrefix,  int tenant)
         {
 
             CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
@@ -38,6 +38,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[0].Code, city, tenant)) return true;
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[1].Code, phone, tenant)) return true;
+            if (CheckIfsAutonomyByType(customsAutonomyKeywords[2].Code, palestinianPrefix, tenant)) return true;
 
             return false;
 

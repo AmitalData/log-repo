@@ -110,7 +110,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 MeasurmentUnitPM measurmentUnit = measurmentUnitQueryService.GetSingle(entityPOCO.AdditionalQuantityType, false, true);
                 entityPM.AdditionalQuantityTypeName = measurmentUnit.LocalName;
             }
-
+            if (entityPOCO.ClassificationCode != null)
+            {
+                entityPM.ClassificationCodeSource = entityPOCO.ClassificationCode;
+            }
             //if (entityPOCO.TaxExemptCode != null)
             //{
             //    ValidCustomsItemQueryService validCustomsItemQueryService = new ValidCustomsItemQueryService(entityPOCO.Tenant);
