@@ -2,7 +2,7 @@ import { BankDepositExtendedPMService } from './../../../Accounting/Services/Ext
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 declare var window: any;
-import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
@@ -79,6 +79,43 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
+
+    @HostListener('document:keydown.control.s') hotKeySaveChanges(){
+        
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
+        console.log('Saving......');
+        this.SaveChangesAndClose();
+        }
+        return false;
+    }
+    
+    @HostListener('document:keydown.arrowright') hotKeyNext(){
+        if(this.NextButtonDisabled==false
+            && this.NextPreviousVisible==true
+            && this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
+        console.log('Next');
+        this.Next();
+    }
+        return false;
+    }
+    
+    @HostListener('document:keydown.arrowleft') hotKeyPrevious(){
+        if(this.PreviousButtonDisabled==false 
+            && this.NextPreviousVisible==true
+            && this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
+        console.log('Previous');
+        this.Previous();
+        }
+        return false;
+    }
+    @HostListener('document:keydown.escape') hotKeyBack(){
+        if(this.ComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId){
+        console.log('Back button clicked method');
+        this.BackButtonClicked();
+        }
+        return false;
+    }
+
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();

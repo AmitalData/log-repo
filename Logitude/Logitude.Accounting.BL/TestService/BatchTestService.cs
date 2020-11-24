@@ -22,7 +22,7 @@ namespace Logitude.Accounting.BL.TestService
             int y = 900;
 
             Debug.WriteLine(this.BatchTaskExecution.StatusCode);
-            base.RunCode();
+            
             Debug.WriteLine(this.BatchTaskExecution.StatusCode);
         }
     }

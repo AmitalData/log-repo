@@ -66,7 +66,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
-    public IsNavigateButtonVisible: boolean = false;
+    public IsNavigateButtonVisible: boolean = true;
     public ComponentRef: ComponentRef<ListComponent>;
     public ReattachToDetection: boolean;
     public columnsObjectFields: any[] = [];
@@ -632,9 +632,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
       //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
       //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-      if (this.ObjectTableName.startsWith("Customs.")) {
-          this.IsNavigateButtonVisible = false;
-      }
+    //   if (this.ObjectTableName.startsWith("Customs.")) {
+    //       this.IsNavigateButtonVisible = false;
+    //   }
         this.Listen();
         //this.CD.detectChanges();
     }
