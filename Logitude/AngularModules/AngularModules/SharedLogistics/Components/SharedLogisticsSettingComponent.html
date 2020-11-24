@@ -190,6 +190,37 @@
 
                                     </tr>
 
+
+                                    <!--Send Master Link in email messages to your partners.-->
+                                    <tr *ngIf="SharedLogisticsMasterMessageLinkEnable" style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <input [attr.id]="SharedLogisticsMasterMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMasterMessageLink" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="SharedLogisticsMasterMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Masters Documents Link for Agents</div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each master email message sent to the agent, that will enable viewing documents from the master and its connected houses.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </td>
+
+                                    </tr>
                                     <tr>
                                         <td>
                                             <div></div>

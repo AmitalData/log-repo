@@ -66,7 +66,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         ErrorLog, 
 	         ChartOfAccountIdForValidate, 
-	         ChartOfAccountTypeCode,
+	         ChartOfAccountTypeCode, 
+	         GLAccountDisplayNumber, 
+	         ChartsofAccountCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

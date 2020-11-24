@@ -106,6 +106,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsCustomerAddress1Required { get; set; }
         public bool HasPrimaryContact { get; set; }
         public bool AllowEAWBMoreThanTenPackages { get; set; }
+        public bool SharedLogisMasterMessageLink { get; set; }
 
         public bool ExportQuotationsToIntegratedSystem { get; set; }
 
@@ -186,6 +187,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AllowCustomersInAgentsLOV { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public bool DisplayDocumentsAndEvents { get; set; }
+        public string TransferQuotationsToUnifreightTrigger { get; set; }
 
     }
 }

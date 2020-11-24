@@ -107,5 +107,6 @@ export class TenantList {
 		HideFCLAllIn: boolean;
 		AllowCustomersInAgentsLOV: boolean;
 		VatUniquePartnerTypeCode: string;
+		SharedLogisMasterMessageLink: boolean;
 	
 }

@@ -29,11 +29,28 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     public RunReportTitle: string = 'Run Report';
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.FromDate = DateTool.GetCurrentDateAsUtc();
-        this.FromDate.setMonth(this.FromDate.getMonth() - 1);
-        this.ToDate = DateTool.GetCurrentDateAsUtc();
-        //this.RunReport(false);
+
+
+        //this.FromDate = DateTool.GetCurrentDateAsUtc();
+        //this.FromDate.setMonth(this.FromDate.getMonth() - 1);
+        //this.ToDate = DateTool.GetCurrentDateAsUtc();
+
+        var month = new Date().getMonth();
+        var Year = new Date().getFullYear();
+        this.FromDate = this.SetDate(Year, month - 1);
+        this.ToDate = this.SetDate(Year, month);
     }
+  
+    SetDate(year: number, month: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        return date;
+    }
+
     SetRunReportTitle() {
         this.RunReportTitle = 'Preview';
     }

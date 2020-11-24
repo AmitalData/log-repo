@@ -269,6 +269,8 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccount>().Property(x => x.InterestCreditLimit).HasPrecision(18, 2);
 				
+			modelBuilder.Entity<GLAccount>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
+				
 			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.ExceptionalAddInterestPercent).HasPrecision(4, 2);
@@ -302,6 +304,10 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<InterestReport>().Property(x => x.InvoiceAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReport>().Property(x => x.GLAccountInterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
 				

@@ -21,7 +21,7 @@
                     </div>
 
                     <div *ngIf="IsShowAreaCaptcha">
-                        <img (click)="passEyeClicked()" alt="" class="btn-captcha-img" src="{{CaptchaImageUrl}}">
+                        <img alt="" class="btn-captcha-img" src="{{CaptchaImageUrl}}">
                     </div>
 
                     <div *ngIf="IsShowAreaCaptcha" class="wrap-input">
@@ -39,9 +39,13 @@
                     </div>
 
                     <div class="text-center" style="margin:20px;margin-bottom:10px;">
-                        <a class="txt1" href="1/search" style="cursor: pointer;">
+                        <a class="txt1" (click)="ForgotPasswordClicked()" style="cursor: pointer;">
                             Forgot Password?
                         </a>
+                    </div>
+
+                    <div *ngIf="ShowbusyIndicator" class="text-center" style="margin:20px;margin-bottom:10px;">
+                        <img width="50" height="50" src="./assets/images/Gif/indicator.gif" alt='loading' />
                     </div>
 
                     <div class="text-center" style="margin:20px;margin-bottom:10px;">

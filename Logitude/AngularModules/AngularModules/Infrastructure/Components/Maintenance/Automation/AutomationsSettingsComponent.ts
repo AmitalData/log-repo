@@ -184,6 +184,12 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 });
 
+                if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    this.AutomationList = this.AutomationList.filter(d => d.ResultCode != "SENDINTERFACE");
+                }
+
+
+
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
                 this.CurrentSession.StopBusyIndicator();

@@ -52,6 +52,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public int Line  { get; set; }
        [DataMember]
        public string ErrorLog  { get; set; }
+       [DataMember]
+       public string GLAccountDisplayNumber  { get; set; }
+       [DataMember]
+       public string ChartsofAccountCode  { get; set; }
    }
 
 }

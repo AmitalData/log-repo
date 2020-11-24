@@ -670,8 +670,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
                 }
 
-                this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
-
+                if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+                }
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
@@ -1377,6 +1378,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ValidationErrorsList.push("Please add at least one recipient");
             }
         }
+
+        //if (this.CurrentEntityPM.ResultCode == "EMAIL") {
+        //    if (AppTool.IsNullOrEmpty(this.CurrentEntityPM.DocumentTypeId) || AppTool.IsNullOrEmpty(this.CurrentEntityPM.TemplateId)) {
+        //        this.ValidationErrorsList.push("Please select email template");
+
+        //    }
+        //}
+
+
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
             this.AutomationSetValueLists.forEach((item) => {

@@ -49,6 +49,7 @@ namespace WebFreight.Web.ReportsWebServices
         private PortRepository portRepository;
         private AddressRepository addressRepository;       
         private byte[] output;
+        private BranchRepository branchRepository;
 
         [WebMethod]
         public byte[] GetPickupData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
@@ -98,7 +99,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.portRepository = new PortRepository(commonContext);
             this.addressRepository = new AddressRepository(commonContext);
-
+            this.branchRepository = new BranchRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
 
@@ -198,7 +199,9 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-            
+            dataProvider.BranchName = shipment.BranchName;
+            MapBranchAddress();
+
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
                 Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
@@ -225,6 +228,22 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentMoveType();
             this.MapShipmentInsidePackages();
             this.MapShipmentCustomFields();
+        }
+        private void MapBranchAddress()
+        {
+            if (!string.IsNullOrEmpty(shipment.BranchId))
+            {
+                Branch branch = branchRepository.GetSingleBranch(shipment.BranchId, tenant);
+                if (branch != null)
+                {
+
+                    if (!string.IsNullOrEmpty(branch.AddressId))
+                    {
+                        Address branchAddress = addressRepository.GetSingleAddress(branch.AddressId, tenant);
+                        dataProvider.BranchAddress = DataProviders.General.GetAddress(branchAddress);
+                    }
+                }
+            }
         }
         private void MapShipmentFrom()
         {

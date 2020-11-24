@@ -11,6 +11,7 @@ import { PanelComponent } from "src/Infrastructure/Components/PanelComponent/Pan
 import { CheckBoxComponent } from 'src/Infrastructure/Components/CheckBox/CheckBoxComponent';
 import { DetailsMenuComponent } from 'src/Infrastructure/Components/DetailsMenu/DetailsMenuComponent';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
+import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FavoritesPageComponent } from '../CargoTracking/Components/UserDashboard/FavoritesPage/FavoritesPageComponent';
@@ -23,6 +24,9 @@ import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/Login
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { ShipmentDetailsComponent } from 'src/CargoTracking/Components/UserDashboard/ShipmentsPage/ShipmentDetails/ShipmentDetailsComponent';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
+import { AuthService } from './auth.service';
+import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
 
 
 export function getBaseUrl() {
@@ -48,6 +52,8 @@ export function getBaseUrl() {
         CheckBoxComponent,
         DetailsMenuComponent,
         LoginComponent,
+        ResetPasswordComponent,
+        ChangePasswordComponent,
         
     ],
     imports: [
@@ -56,7 +62,7 @@ export function getBaseUrl() {
         AppRoutingModule,
         ReactiveFormsModule,
         ScrollingModule,
-        FormsModule, HttpClientModule, NoopAnimationsModule
+        FormsModule, HttpClientModule, NoopAnimationsModule,
     ],
     providers: [
         CargoTrackingSearchService,
@@ -64,6 +70,8 @@ export function getBaseUrl() {
         LoginExtendedService,
         CommonDataExtendedService,
         CargoTrackingMilestoneService,
+        AuthGuardService,
+        AuthService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]

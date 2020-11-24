@@ -45,166 +45,168 @@ namespace WebFreight.Web.Helpers
           
             var automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
             bool allActiveUsers = automatedBackup.IsAutomationResultEmailAllActiveUsers;
+            string subject = string.Empty ;
+            string from = string.Empty;
+            string replyTo = string.Empty;
+            string cc = string.Empty;
+            string bcc = string.Empty;
+            string userId = string.Empty;
+            string htmlTemplateBody = string.Empty;
 
             //  #region Send Email Prosess
 
             if (automationResultEmailRecipientLists.Count > 0 || allActiveUsers)
             {
+                #region Template
                 if (!string.IsNullOrEmpty(automation.TemplateId))
                 {
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
                     DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(automationSendEmailArgs.Tenant);
                     DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
-
-
                     if (template != null)
                     {
-                        #region Get TemplateHtml
-
-                        string subject = template.Subject;
-                        string from = template.From;
-                        string replyTo = template.ReplyTo;
-                        string cc = template.CC;
-                        string bcc = template.BCC;
-                        string userId = template.LastUpdatedByUserId;
+                        subject = template.Subject;
+                        from = template.From;
+                        replyTo = template.ReplyTo;
+                        cc = template.CC;
+                        bcc = template.BCC;
+                        userId = template.LastUpdatedByUserId;
                         if (!string.IsNullOrEmpty(automationSendEmailArgs.CreateByUserId)) userId = automationSendEmailArgs.CreateByUserId;
-                        byte[] htmldata = null;
                         try
                         {
-
-                            string html = htmlEditorHelper.GetEditorHtmlData("", automationSendEmailArgs.EntityId, automationSendEmailArgs.ObjectTableId, "", "", automationSendEmailArgs.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
-
-                            if (!string.IsNullOrEmpty(html))
-                            {
-                                var start = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body>";
-                                var end = "</body></html>";
-                                html = start + html + end;
-                                html = htmlEditorHelper.GetLogoHtmlString(html);
-
-                            }
-                            else html = "";
-
-                            htmldata = Encoding.UTF8.GetBytes(html);
-
+                            htmlTemplateBody = htmlEditorHelper.GetEditorHtmlData("", automationSendEmailArgs.EntityId, automationSendEmailArgs.ObjectTableId, "", "", automationSendEmailArgs.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
+                            if (!string.IsNullOrEmpty(htmlTemplateBody)) htmlTemplateBody = htmlEditorHelper.GetLogoHtmlString(htmlTemplateBody);
                         }
                         catch (Exception ex)
                         {
                             ExceptionHandler.HandleException(ex, DateTime.Now, automation.Tenant, "", "EntityChangeWorkerRole", "", null);
                         }
+                    }
+                }
+                #endregion
 
-                        #endregion
+       
 
-                        #region  Automation Email Recipient
+       
+                    #region  Automation Email Recipient
+                    List<string> contactIds = new List<string>();
+                    List<string> notifyBackContactIds = new List<string>();
+                    List<string> notifyBackPartners = new List<string>();
+                    string Emails = "";
+                    string NotifyBackEmails = "";
 
-                        List<string> contactIds = new List<string>();
-                        List<string> notifyBackContactIds = new List<string>();
-                        List<string> notifyBackPartners = new List<string>();
-                        string Emails = "";
-                        string NotifyBackEmails = "";
+                    if (allActiveUsers)
+                    {
+                        UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
+                        contactIds = userQuery.GetUserIdsByTenant(automationSendEmailArgs.Tenant);
+                    }
 
-                        if (allActiveUsers)
+
+                    foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
+                    {
+                        if (automationResultEmail.IsNotifyBack)
                         {
-                            UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
-                            contactIds = userQuery.GetUserIdsByTenant(automationSendEmailArgs.Tenant);
-                        }
-
-
-                        foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
-                        {
-                            if (automationResultEmail.IsNotifyBack)
+                            if (automationResultEmail.RecipientType == "Fixed")
                             {
-                                if (automationResultEmail.RecipientType == "Fixed") {
-                                    if (!notifyBackContactIds.Contains(automationResultEmail.RecipientValue)) notifyBackContactIds.Add(automationResultEmail.RecipientValue);
-                                }
-                                else
-                                {
-                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
-                                    if (!notifyBackContactIds.Contains(entityContactVariable.Value)) notifyBackContactIds.Add(entityContactVariable.Value);
-                                }
-                            }
-                            else if (automationResultEmail.RecipientType == "Fixed")
-                            {
-                                if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
+                                if (!notifyBackContactIds.Contains(automationResultEmail.RecipientValue)) notifyBackContactIds.Add(automationResultEmail.RecipientValue);
                             }
                             else
                             {
-                                if (AutomationConditionFieldLists != null)
+                                Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
+                                if (!notifyBackContactIds.Contains(entityContactVariable.Value)) notifyBackContactIds.Add(entityContactVariable.Value);
+                            }
+                        }
+                        else if (automationResultEmail.RecipientType == "Fixed")
+                        {
+                            if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
+                        }
+                        else
+                        {
+                            if (AutomationConditionFieldLists != null)
+                            {
+                                Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
+                                if (entityContactVariable != null)
                                 {
-                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
-                                    if (entityContactVariable != null)
+                                    if (automationResultEmail.RecipientType == "Emails")
                                     {
-                                        if (automationResultEmail.RecipientType == "Emails")
+                                        if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
+                                    }
+                                    else
+                                    {
+                                        if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
+                                        if (string.IsNullOrEmpty(entityContactVariable.Value))
                                         {
-                                            if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
-                                        }
-                                        else
-                                        {
-                                            if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
-                                            if (string.IsNullOrEmpty(entityContactVariable.Value))
-                                            {
-                                                if (!notifyBackPartners.Contains(entityContactVariable.PropertyName))
-                                                    notifyBackPartners.Add(entityContactVariable.PropertyName);
-                                            }
+                                            if (!notifyBackPartners.Contains(entityContactVariable.PropertyName))
+                                                notifyBackPartners.Add(entityContactVariable.PropertyName);
                                         }
                                     }
                                 }
                             }
                         }
-
-
-                        if (contactIds.Count > 0)
-                        {
-                            ContactQuery contactQuery = new ContactQuery(automation.Tenant);
-                            List<string> contactEmailLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
-                            foreach (string contactEmail in contactEmailLists)
-                            {
-                                if (!string.IsNullOrEmpty(contactEmail))
-                                {
-                                    if (!Emails.Split(';').Contains(contactEmail)) Emails += contactEmail + ";";
-                                }
-                             
-                            }
-
-                        }
-
-                        if (notifyBackContactIds.Count > 0 && notifyBackPartners.Count > 0)
-                        {
-                            ContactQuery contactQuery = new ContactQuery(automation.Tenant);
-                            List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
-                            foreach (string contactEmail in notifyBackContactEmailLists)
-                            {
-                                if (!string.IsNullOrEmpty(contactEmail))
-                                {
-                                    if (!NotifyBackEmails.Split(';').Contains(contactEmail)) NotifyBackEmails += contactEmail + ";";
-                                }
-
-                            }
-
-                        }
-
-                        #endregion
-
-                        if (!string.IsNullOrEmpty(Emails) && htmldata != null)
-                        {
-                            string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, htmldata, Emails, from, replyTo, cc,bcc, subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
-                            comunicationLogId = communicationLog;
-                        }
-
-                        if (!string.IsNullOrEmpty(NotifyBackEmails))
-                        {
-                            EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
-                            Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
-                        }
                     }
 
 
-     
+                    if (contactIds.Count > 0)
+                    {
+                        ContactQuery contactQuery = new ContactQuery(automation.Tenant);
+                        List<string> contactEmailLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
+                        foreach (string contactEmail in contactEmailLists)
+                        {
+                            if (!string.IsNullOrEmpty(contactEmail))
+                            {
+                                if (!Emails.Split(';').Contains(contactEmail)) Emails += contactEmail + ";";
+                            }
 
+                        }
 
+                    }
+
+                    if (notifyBackContactIds.Count > 0 && notifyBackPartners.Count > 0)
+                    {
+                        ContactQuery contactQuery = new ContactQuery(automation.Tenant);
+                        List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
+                        foreach (string contactEmail in notifyBackContactEmailLists)
+                        {
+                            if (!string.IsNullOrEmpty(contactEmail))
+                            {
+                                if (!NotifyBackEmails.Split(';').Contains(contactEmail)) NotifyBackEmails += contactEmail + ";";
+                            }
+
+                        }
+
+                    }
+
+                    #endregion
+
+                    if (!string.IsNullOrEmpty(Emails))
+                    {
+                        var emailBodyData = GetEmailBodyData(htmlTemplateBody);
+                        string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, emailBodyData, Emails, from, replyTo, cc, bcc, subject, automationSendEmailArgs.ExternalAttachmentDocumentId, objectTableName);
+                        comunicationLogId = communicationLog;
+                    }
+
+                    if (!string.IsNullOrEmpty(NotifyBackEmails))
+                    {
+                        EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
+                        Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
+                    }
                 }
-            }
+
+                     
+                    
+
+                
+            
             return comunicationLogId;
             //  #endregion
+        }
+
+        private byte[] GetEmailBodyData(string htmlTemplateBody)
+        {
+            string htmlString = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body>";
+            htmlString += htmlTemplateBody;
+            htmlString += "</body></html>";
+          return  Encoding.UTF8.GetBytes(htmlString);
         }
 
         private EmailCommunicationParams BuildNotifyBackEmailCommunications(Automation automation, List<string> notifyBackPartners, string NotifyBackEmails)
@@ -358,6 +360,7 @@ namespace WebFreight.Web.Helpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
+                
             };
 
 
