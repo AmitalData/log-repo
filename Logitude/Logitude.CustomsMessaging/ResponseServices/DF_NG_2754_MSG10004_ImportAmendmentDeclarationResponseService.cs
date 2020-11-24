@@ -195,6 +195,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     else
 
                     {
+                        if(declarationOrg.IsAmendment == true)
+                            declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+
+                        else
+
                         declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
 
                     }
