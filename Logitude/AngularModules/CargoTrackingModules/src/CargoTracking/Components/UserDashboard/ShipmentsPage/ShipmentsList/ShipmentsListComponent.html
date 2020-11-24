@@ -1,3 +1,8 @@
+<style>
+    .FlipImgVert {
+        transform: rotate(180deg);
+    }
+</style>
 <div class="dashboard-container">
 
 
@@ -9,7 +14,7 @@
             <form [formGroup]="searchForm" (ngSubmit)="LoadShipments()">
 
                 <div class="search-text ">
-                    <input #input type="text " class="gray " [(ngModel)]="SearchText " placeholder="Free search ..."
+                    <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
                         formControlName="SearchText" name="SearchText " />
                     <!-- [(ngModel)]="SearchText " -->
 
@@ -44,7 +49,7 @@
         <div class="actions-buttons hide-mobile">
             <div (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img
                     src="./assets/images/icons/filter@1x.png" alt=" " /></div>
-            <div><img src="./assets/images/icons/sort@1x.png" alt=" " /></div>
+            <div (click)="SortClicked()" ><img src="./assets/images/icons/sort@1x.png" [class.FlipImgVert]="!isSortDescending" alt=" " /></div>
         </div>
 
 
@@ -81,15 +86,15 @@
         Something wrong! Please try again later.
     </div>
     <!-- Row Count -->
-    <div class="row-count"> 
+    <div class="row-count" *ngIf="ShipmentsCount != 0"> 
         {{ShipmentsCount}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
-    <div class="scrollable-table">
-        <div class="table">
+    <div class="scrollable-table" style="height: calc(100vh - 274px)">
+        <div class="table" style="height: calc(100vh - 274px)">
             
-            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDS" class="shipment-cards-holder" [itemSize]="170">
+            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDS" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
             
             
                 <div *cdkVirtualFor="let shipment of ShipmentsDS" class="row record-row" (click)="ItemClicked(shipment)"
@@ -212,11 +217,9 @@
                         </div>
                     </div>
                 </div>
+                
             </cdk-virtual-scroll-viewport>
 
-            <br>
-            <br>
-            <br>
 
         </div>
     </div>
@@ -290,8 +293,8 @@
       </div>
 
     <!-- Details Menu - sort -->
-    <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort By'"
-        [Buttons]="[{Code: 'bytype', Name:'Type'}, {Code: 'bydate', Name:'Date created'}, {Code: 'bylastmod', Name:'By Last Modify'}]"
+    <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort'"
+        [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
         (ButtonClicked)="SortMenuClicked($event)"></details-menu>
     
     <!-- Details Menu - shipment more -->
@@ -308,7 +311,7 @@
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li><img src="./assets/images/icons/search@1x.png" alt=""></li>
         <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
-        <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="./assets/images/icons/sort@1x-white.png" alt=""></li>
+        <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="./assets/images/icons/sort@1x-white.png" [class.FlipImgVert]="!isSortDescending" alt=""></li>
     </ul>
 </div>
 

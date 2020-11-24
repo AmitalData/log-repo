@@ -110,13 +110,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
 
                 var count = GetAllShipmentsCount(pageIndex, shipmentFilters);
-
                 List<CargoTrackingShipmentList> shipments
                     = shipmentSearchQuery
                         .GetShipments(pageIndex, pageSize, shipmentFilters)
-                        .OrderByDescending(s => s.CreateDate)
                         .ToList();
-
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, new { Shipments = shipments, Count = count });
 
