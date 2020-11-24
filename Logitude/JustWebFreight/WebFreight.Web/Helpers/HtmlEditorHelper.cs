@@ -1351,8 +1351,16 @@ namespace WebFreight.Web.Helpers
 
                     if (securityKeyNode.ParentNode != null)
                     {
-
-                        HtmlNode newLogoSection = GetNewNodeHtml(GetSecurityKeyLinkHtml(securityKey, entityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
+                        SharedLinkHTMLArgs sharedLinkHTMLArgs = new SharedLinkHTMLArgs
+                        {
+                            Key = securityKey,
+                            Entity = entity,
+                            Tenant = tenant,
+                            OriginalNodeInnerText = securityKeyNode.OuterHtml,
+                            HideSharedlogistics = HideSharedlogistics,
+                            SystemUrl = SystemUrl,
+                        };
+                        HtmlNode newLogoSection = GetNewNodeHtml(GetSecurityKeyLinkHtml(sharedLinkHTMLArgs));
                         foreach (HtmlNode childNode in newLogoSection.ChildNodes)
                         {
                             if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
@@ -5322,26 +5330,30 @@ namespace WebFreight.Web.Helpers
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
 
-                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink)
+                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null)
                                 {
-                                    if (propertyName == "SecurityKey")
+                                    string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
+                                    if ((CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != "C") || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"))
                                     {
-                                        this.securityKey = resultValue;
-                                        shipmentNumbersNodesHtml.Add(node);
-                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
+                                        if (propertyName == "SecurityKey")
+                                        {
+                                            this.securityKey = resultValue;
+                                            shipmentNumbersNodesHtml.Add(node);
+                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
 
-                                    }
-                                    else
-                                    {
-                                        this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
-                                        // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
+                                        }
+                                        else
+                                        {
+                                            this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+                                            // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
 
-                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
 
 
 
-                                        //this.securityKeyNode = node;
-                                        shipmentNumbersNodesHtml.Add(node);
+                                            //this.securityKeyNode = node;
+                                            shipmentNumbersNodesHtml.Add(node);
+                                        }
                                     }
                                 }
 
@@ -5832,33 +5844,60 @@ namespace WebFreight.Web.Helpers
         #endregion
 
         #region GetSecurityKeyLinkHtml
-        public string GetSecurityKeyLinkHtml(string key, string entityId, string originalNodeInnerText, int tenant, bool hideSharedlogistics, string systemUrl)
+        public string GetSecurityKeyLinkHtml(SharedLinkHTMLArgs sharedLinkHTMLArgs)
         {
-            //   "<t:Span FontFamily=\"Verdana\" FontSize=\"13.3299999237061\" Text=\"Our File  : SHIP_7180 \" UnderlineColor=\"#FF000000\" UnderlineDecoration=\"None\" xmlns:t=\"clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents\" />"
-            originalNodeInnerText = originalNodeInnerText.Replace("\"", "'");
+            string url = sharedLinkHTMLArgs.SystemUrl;
+            if (url.Contains("login.aspx"))
+                url = RemoveLoginWordFromSystemUrl(url);
 
-            //   string serverPath = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationManager.AppSettings.Get("LogitudeURL");//HttpContext.Current.Request.UrlReferrer.AbsoluteUri.Replace(HttpContext.Current.Request.UrlReferrer.PathAndQuery, "");
-            string url = systemUrl;
-            if (systemUrl.Contains("login.aspx"))
-            {
-                string[] test = systemUrl.Split('/');
-                if (test != null && test.Length > 0)
-                {
-                    url = systemUrl.Replace("/" + test[test.Length - 1], "");
-                }
-            }
-
-
-
-            string pageLink = (url + @"/SharedLogistic/ShipmentPage.aspx").ToLower() + "?securitykey=" + key + ":" + entityId + ":" + tenant + ":" + hideSharedlogistics;
-            string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
-
-            string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View online</a>";
-
-            string reslut = "<p>" + originalNodeInnerText + Textlink + "</p>";
+            string pageLink = GetSecurityPageLinkPath(sharedLinkHTMLArgs, url);
+            string originalNodeInnerText = sharedLinkHTMLArgs.OriginalNodeInnerText.Replace("\"", "'");
+            string reslut = BuildSecurityKeyHtml(pageLink, originalNodeInnerText);
 
             return reslut;
         }
+
+        private string BuildSecurityKeyHtml(string pageLink, string originalNodeInnerText)
+        {
+            string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
+            string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View online</a>";
+            string reslut = "<p>" + originalNodeInnerText + Textlink + "</p>";
+            return reslut;
+        }
+
+        private string GetSecurityPageLinkPath(SharedLinkHTMLArgs sharedLinkHTMLArgs, string url)
+        {
+            string entityId = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "Id");
+            string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
+
+            string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
+            if (shipmentLevelCode == "C") pagePath = @"/SharedMasterDocumentsPage.aspx";
+
+            string pageLink = (url + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
+                              sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
+            return pageLink;
+        }
+
+        private string GetEntityPropertyValue(object entity, string property)
+        {
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(property);
+            string value = propertyInfo.GetValue(entity)?.ToString();
+
+            return value;
+        }
+
+        private string RemoveLoginWordFromSystemUrl(string systemUrl)
+        {
+            string url = systemUrl;
+            string[] test = systemUrl.Split('/');
+            if (test != null && test.Length > 0)
+            {
+                url = systemUrl.Replace("/" + test[test.Length - 1], "");
+            }
+
+            return url;
+        }
+
         public string GetSharedDocumentLinkHtml(string key, string entityId, string originalNodeInnerText, int tenant, bool hideSharedlogistics, string systemUrl)
         {
             //   "<t:Span FontFamily=\"Verdana\" FontSize=\"13.3299999237061\" Text=\"Our File  : SHIP_7180 \" UnderlineColor=\"#FF000000\" UnderlineDecoration=\"None\" xmlns:t=\"clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents\" />"
@@ -7142,5 +7181,15 @@ namespace WebFreight.Web.Helpers
         public string HtmlString { get; set; }
         public string UserId { get; set; }
 
+    }
+
+    public class SharedLinkHTMLArgs
+    {
+        public string SystemUrl { get; set; }
+        public string Key { get; set; }
+        public object Entity { get; set; }
+        public string OriginalNodeInnerText { get; set; }
+        public int Tenant { get; set; }
+        public bool HideSharedlogistics { get; set; }
     }
 }
