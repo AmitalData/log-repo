@@ -50,7 +50,7 @@ namespace WebFreight.Web.WebServices
         private ShipmentPM shipment;
         private AddressRepository addressRepository;
         private CountryRepository countryRepository;
-
+        
         [WebMethod]
         public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
@@ -2393,7 +2393,7 @@ namespace WebFreight.Web.WebServices
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
-
+                   
                 if (myPickup == null)
                 {
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
@@ -2414,8 +2414,8 @@ namespace WebFreight.Web.WebServices
 
                 else
                 {
+                    myDataProvider.PickupTo = FillPickUpToAddress(myPickup);
                     myDataProvider.PickUpAddress = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myPickup);
-
                     if (myPickup.ToAddressId != null)
                     {
                         Address toAddress = addressRepository.GetSingleAddress(myPickup.ToAddressId, tenant);
@@ -3983,7 +3983,18 @@ namespace WebFreight.Web.WebServices
             }
             #endregion
         }
-         
+        private string FillPickUpToAddress(ShipmentPickUpPM myPickup)
+        {
+            PickUpAndDeliveriesArguments pickUpAndDeliveriesArguments = new PickUpAndDeliveriesArguments();
+            pickUpAndDeliveriesArguments.PartnerCardId = myPickup.ToPartnerCardId;
+            pickUpAndDeliveriesArguments.PortId = myPickup.ToPortId;
+            pickUpAndDeliveriesArguments.TypeCode = myPickup.PickUpDeliveryToTypeCode;
+            pickUpAndDeliveriesArguments.AddressCity = myPickup.ToAddressCity;
+            pickUpAndDeliveriesArguments.AddressCountryId = myPickup.ToAddressCountryId;
+            pickUpAndDeliveriesArguments.AddressId = myPickup.ToAddressId;
+            pickUpAndDeliveriesArguments.AddressZipCode = myPickup.ToAddressZipCode;
+            return myServicHelper.GetDeliveryPickUpAddress(pickUpAndDeliveriesArguments);
+        }
         private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
         {
             return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
