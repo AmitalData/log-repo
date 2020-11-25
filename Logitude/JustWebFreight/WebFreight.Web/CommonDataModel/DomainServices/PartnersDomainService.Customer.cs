@@ -1040,18 +1040,25 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 customers = myBusinessUnitFilter.RunFilter(customers);
             }
 
-            if (!string.IsNullOrEmpty(mySearchText))
+            if (!string.IsNullOrEmpty(mySearchText) && FeatureToggleHelper.HasFeatureToggle("CQS", tenant))
             {
-                customers = customers.Where(d => d.SearchFields.ToLower().Contains(mySearchText.ToLower()));
+                myResult = GetCustomerListsByApplyCardSearchMechanizm(tenant, mySearchText, customers);
             }
-
-            if (customers.Count() > 0)
+            else
             {
-                customers = customers.OrderByDescending(d => d.EnglishName);
-                customers = customers.Take(11);
+                if (!string.IsNullOrEmpty(mySearchText))
+                {
+                    customers = customers.Where(d => d.SearchFields.ToLower().Contains(mySearchText.ToLower()));
+                }
 
-                IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
-                myResult = myListQuery.ToList();
+                if (customers.Count() > 0)
+                {
+                    customers = customers.OrderByDescending(d => d.EnglishName);
+                    customers = customers.Take(11);
+
+                    IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
+                    myResult = myListQuery.ToList();
+                }
             }
 
             if (setBlockedFlag)
@@ -1059,6 +1066,22 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 myBusinessUnitFilter.SetBlockedQuickSearch(myResult);
             }
 
+            return myResult;
+        }
+
+        private List<CustomerList> GetCustomerListsByApplyCardSearchMechanizm(int tenant, string mySearchText, IQueryable<CustomersDataView> customers)
+        {
+            List<CustomerList> myResult;
+            IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
+            CustomerSearchFilterArgs customerSearchFilterArgs = new CustomerSearchFilterArgs()
+            {
+                Tenant = tenant,
+                SearchText = mySearchText,
+                PageSize = 11,
+                Customers = myListQuery,
+            };
+            CustomerSearchFilter customerSearchFilter = new CustomerSearchFilter(customerSearchFilterArgs);
+            myResult = customerSearchFilter.Run();
             return myResult;
         }
 

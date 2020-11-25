@@ -422,5 +422,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string GLAccountNumber { get; set; }
 
+        public int SearchWeight { get; set; }
+
     }
 }
