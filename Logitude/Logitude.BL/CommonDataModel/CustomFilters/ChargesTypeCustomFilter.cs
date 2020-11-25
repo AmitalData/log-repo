@@ -51,14 +51,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 case "E":
                     {
                         queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInExport));
-                        var mm = queryableData.ToList();
                         break;
                     }
 
                 case "I":
                     {
                         queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInImport));
-                        var mm = queryableData.ToList();
                         break;
                     }
 
