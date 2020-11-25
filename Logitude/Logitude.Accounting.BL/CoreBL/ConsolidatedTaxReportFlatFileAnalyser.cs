@@ -160,8 +160,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     TaxReportLineUpdateService taxReportLineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
                     taxReportLineUpdateService.UpdateMulti(newLines, externalLines, MyTaxReportPM, true);
 
+                    TaxReportPM RefreshedTaxReportPM = taxReportQueryService.GetSingle(taxReportId, true, false);
+                    RefreshedTaxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                    TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                    taxReportUpdateService.Update(RefreshedTaxReportPM, true);
 
 
                     if (MyFlatFileLoadResult.ErrorRowList.Count > 0)
