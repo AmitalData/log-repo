@@ -145,5 +145,6 @@ export class CustomerList {
 		StateName: string;
 		StorageFreeDays: number;
 		GLAccountNumber: string;
+		SearchWeight: number;
 	
 }
