@@ -87,7 +87,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
 
+
                    List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayments();
+
 
 
                     SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
