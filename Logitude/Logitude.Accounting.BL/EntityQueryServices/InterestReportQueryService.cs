@@ -38,6 +38,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a).Any();
         }
 
+        public bool CheckRecentCustomerReports(DateTime interestDate, InterestReportPM InterestReportPM)
+        {
+            return (from a in context.InterestReports
+                    where a.Tenant == InterestReportPM.Tenant && a.InterestCalculationDate > interestDate && a.InterestReportStatusCode != "3" && a.CustomerId == InterestReportPM.CustomerId && a.Id != InterestReportPM.Id
+                    select a).Any();
+        }
+
         public List<string> GetInterestReprtsWithInvocies(int tenant, List<string> ARInvoiceIds)
         {
             return (from a in context.InterestReports

@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using System;
@@ -26,7 +27,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     nextInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i + 1];
                 }
-                accumulatedAmount = accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
+                bool isLinehasRecent = CheckRecentCustomerReportForLine(interestReportLinesByDateCreationParams.InterestReportPM,
+                                                                        currentInterestTransactionGroupedByDate.GroupInterestValueDate);
+                accumulatedAmount = isLinehasRecent? currentInterestTransactionGroupedByDate.TotalLocalAmount : accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams = new InterestReportLinesByDateMappingParams(
                     currentInterestTransactionGroupedByDate,
                     nextInterestTransactionGroupedByDate,
@@ -41,6 +44,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 interestReportLinesByDatePMs.Add(interestReportLinesByDatePM);
             }
             return interestReportLinesByDatePMs;
+        }
+
+        private bool CheckRecentCustomerReportForLine(InterestReportPM InterestReportPM, DateTime fromDate)
+        {
+            InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
+            bool hasRecent =  ReportQueryService.CheckRecentCustomerReports(fromDate, InterestReportPM);
+            return hasRecent;
         }
 
         private InterestReportLinesByDatePM GetMappedInterestReportLinesByDatePM(InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams)
