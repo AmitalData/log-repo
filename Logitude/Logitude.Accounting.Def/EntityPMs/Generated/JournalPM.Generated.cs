@@ -1064,6 +1064,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool copied ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Copied  
+	   {
+	    
+	     get
+		{
+		   return copied;
+		 }
+		 set
+		 {
+		   if(copied != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Copied",OldValue=copied,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   copied=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

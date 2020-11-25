@@ -96,7 +96,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DueDate, 
 	         APPaymentCancelDate, 
 	         CurrencyId, 
-	         IsNew,
+	         IsNew, 
+	         Copied,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
