@@ -29,16 +29,19 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     public RunReportTitle: string = 'Run Report';
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
+        this.FillDefaultDateDetails();
+    }
 
-
-        //this.FromDate = DateTool.GetCurrentDateAsUtc();
-        //this.FromDate.setMonth(this.FromDate.getMonth() - 1);
-        //this.ToDate = DateTool.GetCurrentDateAsUtc();
-
+    FillDefaultDateDetails() {
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
-        this.FromDate = this.SetDate(Year, month - 1);
-        this.ToDate = this.SetDate(Year, month);
+        if (AppTool.IsNullOrEmpty(this.ToDate)) {
+            this.ToDate = this.SetDate(Year, month);
+        }
+
+        if (AppTool.IsNullOrEmpty(this.FromDate)) {
+            this.FromDate = this.SetDate(Year, month - 1);
+        }
     }
   
     SetDate(year: number, month: number) {
