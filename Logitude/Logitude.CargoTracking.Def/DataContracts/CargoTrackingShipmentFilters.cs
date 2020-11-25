@@ -11,15 +11,16 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public int Tenant { get; set; }
         public string SearchText { get; set; }
         public string CustomersIdsString { get; set; }
-        public List<string> CustomersIds { get; set; }
-        public string TransportModeCodes { get; set; }
+
+        public List<string> CustomersIds
+        {
+            get { return CustomersIdsString.Split(',').ToList(); }
+        }
+
+public string TransportModeCodes { get; set; }
         public string DirectionCodes { get; set; }
         public bool SortDescending { get; set; }
         public string SortFieldName { get; set; }
-        //public bool GetAirShipments { get; set; }
-        //public bool GetLandShipments { get; set; }
-        //public bool GetOceanShipments { get; set; }
-        //public bool GetImportShipments { get; set; }
-        //public bool GetExportShipments { get; set; }
+
     }
 }

@@ -34,7 +34,7 @@
 
         <div class="filters hide-mobile">
             <ul class="toolbar-filters">
-                <li *ngFor="let filter of SearchFilters" (click)="SelectFilter(filter)">{{filter.Name}}
+                <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">{{filter.Name}}
                     ({{filter.Count}})</li>
                 <!-- <li class="toggle-menu">
                     Company
@@ -82,8 +82,8 @@
 
     </div>
 
-    <div class="error" *ngIf="error">
-        Something wrong! Please try again later.
+    <div class="error" *ngIf="ShipmentsLoadingError">
+        Something went wrong! Please try again later.
     </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0"> 

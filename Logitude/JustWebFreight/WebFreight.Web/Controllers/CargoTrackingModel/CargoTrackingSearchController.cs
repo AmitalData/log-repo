@@ -37,6 +37,7 @@ using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
 using Logitude.CargoTracking.Def.DataContracts;
+using Logitude.CargoTracking.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -82,7 +83,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
-                List<Milestone> milestones = shipmentsQuery.GetMilestonesFieldsFromCargoTrackingShipment(shipment);
+                List<Milestone> milestones = shipmentsQuery.GetCargoTrackingShipmentMilestones(shipment);
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
@@ -105,17 +106,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                shipmentFilters.CustomersIds = shipmentFilters.CustomersIdsString.Split(',').ToList();
+                CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
+                CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
 
-                CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-
-                var count = GetAllShipmentsCount(pageIndex, shipmentFilters);
-                List<CargoTrackingShipmentList> shipments
-                    = shipmentSearchQuery
-                        .GetShipments(pageIndex, pageSize, shipmentFilters)
-                        .ToList();
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, new { Shipments = shipments, Count = count });
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
             }
@@ -124,23 +118,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
-        }
-
-        private static int GetAllShipmentsCount(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
-        {
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            var count = 0;
-            if (pageIndex == 0)
-                count = shipmentSearchQuery.GetShipmentsCount(shipmentFilters);
-
-            return count;
-        }
-
-        private static CargoTrackingShipmentSearchListQueryService GetCargoTrackingShipmentSearchQuery(CargoTrackingShipmentFilters shipmentFilters)
-        {
-            ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(shipmentFilters.Tenant);
-            CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
-            return cargoTrackingShipmentSearchQuery;
         }
 
         [HttpGet]
@@ -190,6 +167,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+
 
         private static List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)
         {
