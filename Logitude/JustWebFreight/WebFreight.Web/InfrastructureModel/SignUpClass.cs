@@ -1281,6 +1281,7 @@ namespace WebFreight.Web.InfrastructureModel
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
                 CheckDigitControlAlgorithmCode = "NONE",
+                TransferQuotationsToUnifreightTrigger = "OnSend",
             };
 
             return newTenant;
