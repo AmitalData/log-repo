@@ -3241,7 +3241,7 @@ export class PaymentMethodModel extends BaseComponent {
 
                                 }
 
-                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3") {
+                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length==0) {
                                     this.BankIsNull = true;
                                     this.methodPM.MethodTypeCode = "2";
                                     this.methodPM.PayerActivityTypeCode = "3";
@@ -3258,7 +3258,7 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
                                 }
 
-                                else {
+                                else if (this.parent.PaymentMethodsList.Length == 0) {
                                     if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
                                         for (let item of this.parent.paymentPM.DeclarationPaymentMethods) {
                                             this.parent.PaymentMethodsList.Insert(new PaymentMethodModel(item, this.parent));
