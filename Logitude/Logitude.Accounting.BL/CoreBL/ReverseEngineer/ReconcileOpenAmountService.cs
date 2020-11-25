@@ -15,10 +15,15 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         public List<LedgerOpenAmountRecoDiffM> GetLedgerOpenAmountDiff(int tenant, int yyyy)
         {
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(30)))
             {
 
                 var _AccountingContext = AccountingContext.GetContext(tenant);
+                if ((_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout < 1200)//wrokerrole mode !!!
+                {
+                    (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 1200;
+                }
+
                 var myGLAccountRepository = new GLAccountRepository(_AccountingContext);
                 var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
                 var myJournalRepository = new JournalRepository(_AccountingContext);

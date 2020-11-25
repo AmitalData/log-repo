@@ -13,40 +13,54 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
     public class MultipleARPaymentReconciliationSplitter
     {
         int tenant;
-        ReconciliationPM reconciliationPM;
+        ReconciliationPM originalReconciliation;
         List<LedgerTransactionPM> recoTransactions;
-        List<ReconciliationLinePM> paymentsRecoLines;
         List<ReconciliationLinePM> remainingPaymentRecoLines;
         List<ReconciliationPM> paymentReconciliations = new List<ReconciliationPM>();
+
+        List<ReconciliationLinePM> paymentsRecoLines = new List<ReconciliationLinePM>();
+        static List<ReconciliationLinePM> nonPaymentsRecoLines = new List<ReconciliationLinePM>();
 
         public MultipleARPaymentReconciliationSplitter(ReconciliationPM reconcileToSplit)
         {
             tenant = reconcileToSplit.Tenant;
-
-            reconciliationPM = reconcileToSplit;
-            recoTransactions = GetReconcileTransactions();
+            originalReconciliation = reconcileToSplit;
+            
+            InitLines();
         }
 
-        public List<ReconciliationPM> Split()
+        private void InitLines()
         {
-            List<ReconciliationLinePM> paymentsRecoLines = GetPaymentReconciliationLines();
-            List<ReconciliationLinePM> nonPaymentsRecoLines = GetNonPaymentReconciliationLines();
+            recoTransactions = GetReconcileTransactions();
+            paymentsRecoLines = GetPaymentReconciliationLines();
+            nonPaymentsRecoLines = GetNonPaymentReconciliationLines();
+        }
 
+        public List<ReconciliationPM> SplitReconciliationByPayments()
+        {
             foreach (ReconciliationLinePM paymentReconcileLine in paymentsRecoLines)
             {
-                ReconciliationPM newReconciliation;
                 if (nonPaymentsRecoLines.Count > 0)
-                {
-                    newReconciliation = ReconcilePaymentWithOtherLines(nonPaymentsRecoLines, paymentReconcileLine);
-                    paymentReconciliations.Add(newReconciliation);
-                }
+                    CreateReconcileForPaymentWithNonPaymentLines(paymentReconcileLine);
                 else if (paymentsRecoLines.Count == 2)
                 {
-                    paymentReconciliations.Add(ReconcilePaymentsOnly(paymentsRecoLines));
+                    CreateReconcileForPaymentWithPayments();
                     break;
                 }
             }
             return paymentReconciliations;
+        }
+
+        private void CreateReconcileForPaymentWithNonPaymentLines(ReconciliationLinePM paymentReconcileLine)
+        {
+            ReconciliationPM newReconciliation = ReconcilePaymentWithOtherLines(paymentReconcileLine);
+            paymentReconciliations.Add(newReconciliation);
+        }
+
+        private void CreateReconcileForPaymentWithPayments()
+        {
+            ReconciliationPM paymentsReconciliation = ReconcilePaymentsOnly(paymentsRecoLines);
+            paymentReconciliations.Add(paymentsReconciliation);
         }
 
         private ReconciliationPM ReconcilePaymentsOnly(List<ReconciliationLinePM> paymentsRecoLines)
@@ -59,13 +73,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         //List<ReconciliationLinePM> oppositePaymentsRecoLines = GetNonUsedPaymentRecoLines(paymentReconcileLine);
         //ReconciliationLinePM oppositeRecoLine = nonPaymentsRecoLines.Count > 0 ? nonPaymentsRecoLines.First() : oppositePaymentsRecoLines.First();
 
-        ReconciliationPM ReconcilePaymentWithOtherLines(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationLinePM paymentReconcileLine)
+        ReconciliationPM ReconcilePaymentWithOtherLines(ReconciliationLinePM paymentReconcileLine)
         {
             ReconciliationPM newReconciliation = InitNewReconciliation();
 
             AddPaymentReconcileLine(paymentReconcileLine, newReconciliation);
 
-            AddNonPaymentReconcileLine(nonPaymentsRecoLines, paymentReconcileLine, newReconciliation);
+            AddNonPaymentReconcileLine(paymentReconcileLine, newReconciliation);
 
             return newReconciliation;
         }
@@ -75,16 +89,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             newReconciliation.ReconciliationLines.Add(paymentReconcileLine);
         }
 
-        private void AddNonPaymentReconcileLine(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationLinePM paymentReconcileLine, ReconciliationPM newReconciliation)
+        private void AddNonPaymentReconcileLine(ReconciliationLinePM paymentReconcileLine, ReconciliationPM newReconciliation)
         {
             while (paymentReconcileLine.ReconciliationAmount != 0)
             {
-                ReconciliationLinePM lineToAdd = GetOppositeRecoLine(nonPaymentsRecoLines);
+                ReconciliationLinePM lineToAdd = GetOppositeRecoLine();
 
                 if (IsLineHasAmountGreaterThanPaymentLine(paymentReconcileLine, lineToAdd))
                     lineToAdd = SliceLine(paymentReconcileLine.ReconciliationAmount, lineToAdd);
 
-                AddLine(nonPaymentsRecoLines, newReconciliation, lineToAdd);
+                AddLine(newReconciliation, lineToAdd);
                 SubtractLineAmountFromPaymentLine(paymentReconcileLine, lineToAdd);
             }
         }
@@ -94,12 +108,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             return Math.Abs(oppositeRecoLine.ReconciliationAmount) > Math.Abs(paymentReconcileLine.ReconciliationAmount);
         }
 
-        private static ReconciliationLinePM GetOppositeRecoLine(List<ReconciliationLinePM> nonPaymentsRecoLines)
+        private ReconciliationLinePM GetOppositeRecoLine()
         {
             return nonPaymentsRecoLines.First();
         }
 
-        private static void AddLine(List<ReconciliationLinePM> nonPaymentsRecoLines, ReconciliationPM newReconciliation, ReconciliationLinePM oppositeRecoLine)
+        private static void AddLine(ReconciliationPM newReconciliation, ReconciliationLinePM oppositeRecoLine)
         {
             newReconciliation.ReconciliationLines.Add(oppositeRecoLine);
 
@@ -137,9 +151,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
         List<LedgerTransactionPM> GetReconcileTransactions()
         {
-            List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
-            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
-            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, reconciliationPM.Tenant);
+            List<string> transactionsIds = originalReconciliation.ReconciliationLines.Select(d => d.TransactionId).ToList();
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(originalReconciliation.Tenant);
+            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, originalReconciliation.Tenant);
             return recoTransactions;
         }
         List<LedgerTransactionPM> GetPaymentTransactions()
@@ -148,14 +162,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         }
         ReconciliationLinePM FindCorrspondingRecoLineFromTransactionId(string transactionId)
         {
-            return reconciliationPM.ReconciliationLines.Where(d => d.TransactionId == transactionId).FirstOrDefault();
+            return originalReconciliation.ReconciliationLines.Where(d => d.TransactionId == transactionId).FirstOrDefault();
         }
         List<ReconciliationLinePM> GetNonPaymentReconciliationLines()
         {
             List<LedgerTransactionPM> nonPaymentsTransactions = GetNonPaymentTransactions();
 
             List<string> transactionsIds = nonPaymentsTransactions.Select(d => d.Id).ToList();
-            List<ReconciliationLinePM> lines = reconciliationPM.ReconciliationLines
+            List<ReconciliationLinePM> lines = originalReconciliation.ReconciliationLines
                 .Where(d => transactionsIds.Contains(d.TransactionId))
                 .OrderBy(d=>d.DueDate)
                 .ThenBy(d=>d.CreateDate)
@@ -167,7 +181,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             List<LedgerTransactionPM> paymentsTransactions = GetPaymentTransactions();
 
             List<string> transactionsIds = paymentsTransactions.Select(d => d.Id).ToList();
-            List<ReconciliationLinePM> lines = reconciliationPM.ReconciliationLines
+            List<ReconciliationLinePM> lines = originalReconciliation.ReconciliationLines
                 .Where(d => transactionsIds.Contains(d.TransactionId))
                 .OrderBy(d => d.DueDate)
                 .ThenBy(d => d.CreateDate)
@@ -179,20 +193,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             return new ReconciliationPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Id = reconciliationPM.Id,
-                Tenant = reconciliationPM.Tenant,
-                AccountId = reconciliationPM.AccountId,
-                Number = reconciliationPM.Number,
-                CreateDate = reconciliationPM.CreateDate,
-                CreatedByUserId = reconciliationPM.CreatedByUserId,
-                SearchFields = reconciliationPM.SearchFields,
-                CreatedByUserName = reconciliationPM.CreatedByUserName,
-                AccountNumber = reconciliationPM.AccountNumber,
-                AccountName = reconciliationPM.AccountName,
-                IsCancelled = reconciliationPM.IsCancelled,
-                CurrencyCode = reconciliationPM.CurrencyCode,
-                AccountReconcileMethodCode = reconciliationPM.AccountReconcileMethodCode,
-                AccountCurrencyId = reconciliationPM.AccountCurrencyId,                
+                Id = originalReconciliation.Id,
+                Tenant = originalReconciliation.Tenant,
+                AccountId = originalReconciliation.AccountId,
+                Number = originalReconciliation.Number,
+                CreateDate = originalReconciliation.CreateDate,
+                CreatedByUserId = originalReconciliation.CreatedByUserId,
+                SearchFields = originalReconciliation.SearchFields,
+                CreatedByUserName = originalReconciliation.CreatedByUserName,
+                AccountNumber = originalReconciliation.AccountNumber,
+                AccountName = originalReconciliation.AccountName,
+                IsCancelled = originalReconciliation.IsCancelled,
+                CurrencyCode = originalReconciliation.CurrencyCode,
+                AccountReconcileMethodCode = originalReconciliation.AccountReconcileMethodCode,
+                AccountCurrencyId = originalReconciliation.AccountCurrencyId,                
             };
         }
         List<LedgerTransactionPM> GetNonPaymentTransactions()

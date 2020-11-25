@@ -1,4 +1,4 @@
-﻿import {EventEmitter} from '@angular/core';
+import {EventEmitter} from '@angular/core';
 
 
 export class ObservableCollection {
@@ -19,7 +19,7 @@ export class ObservableCollection {
         if (myCollection) {
             this.Collection = myCollection;
             this.UpdateLength();
-            this.Changed.emit({ IsCollection: true, PreventScroll: preventScroll });
+            this.Changed.emit({ IsCollection: true, PreventScroll: preventScroll, Items: myCollection});
         }
     }
 

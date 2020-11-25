@@ -18,6 +18,7 @@ import { ShipmentsListComponent } from '../CargoTracking/Components/UserDashboar
 import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 import { SearchComponent } from 'src/CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
   
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -53,6 +54,7 @@ export function getBaseUrl() {
     providers: [
         CargoTrackingSearchService,
         CargoTrackingBrandingDataExtendedService,
+        CargoTrackingMilestoneService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]
