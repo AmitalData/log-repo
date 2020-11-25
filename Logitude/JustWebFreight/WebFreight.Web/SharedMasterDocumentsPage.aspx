@@ -37,15 +37,23 @@
         border: 0px;
         outline: none;
         visibility: hidden;
-        vertical-align: middle;
     }
 
-    #EntityHeaderArea {
+   /* #EntityHeaderArea {
         height: 60px;
         margin: 0 5px;
-        background: #F7F7F7;
+        background: #FFFFFF;
         border: 1px solid #DADADA;
         padding-top: 3px;
+        border-color:#639527;
+    }*/
+
+    .DocumentEntityArea {
+        margin: 0 5px;
+        background: #FFFFFF;
+        border: 2px solid #639527;
+        padding-top: 3px;
+        margin:0 50px;
     }
 
     .DocumentListBoxItem {
@@ -61,6 +69,46 @@
         -moz-border-radius: 5px;
     }
 
+    .k-grid td{
+     border: 0;
+     border-width: 0;
+
+}
+
+    .k-grid .k-header
+    {
+        height: 1px;
+        border: 0;
+        border-width: 0;
+        border-color: white;
+        background: white;
+        color: black;
+        font-size: 13px;
+    }
+
+    .k-grid
+    {
+        border: 0;
+        border-width: 0;
+        border-color: white;
+    }
+
+    .k-grid-content 
+    {
+        overflow-y: visible;
+    }
+
+    .k-grid-header
+    {
+        border: 0;
+        border-width: 0;
+        border-color: white;
+        background-color: white;
+    }
+
+    .k-grid-header-wrap {
+        border-color: white;
+    }
 </style>
 
 </head>
@@ -71,36 +119,25 @@
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
 
-    <div id="ContainerHeader" style="position:absolute; top:0px; z-index:0; width:100%; height:40px; background: url('../HtmlHelpers/Images/Bars_Images/HeaderBar.png') repeat-x; border-bottom:1px solid #D1D1D1"></div>
+    <%--<div id="ContainerHeader" style="position:absolute; top:0px; z-index:0; width:100%; height:40px; background: url('../HtmlHelpers/Images/Bars_Images/HeaderBar.png') repeat-x; border-bottom:1px solid #D1D1D1"></div>--%>
 
     <div id="Container" style="position:absolute; top:0px; z-index:3; width:100%;display:normal">
         <table style="height:100%;">
 
-            <thead style="background-color:red">
-                <tr style="height:40px;">
+            <thead style="background-color:#639527">
+                <tr style="height:50px;">
                     <td style="vertical-align:top;">
                     
                         <table style="margin:5px 0 0 0;">
                             <tr>
-                                <td style="width:5px;"></td>
+                                <td style="width:10px;"></td>
 
                                 <td id="companyLogoArea" style="width:50px;">
-                                    <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
+                                    <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:55px;"/>                    
                                 </td>
 
                                 <td style="vertical-align:central; text-indent: 5px;">
-                                    <span id="CompanyText" style="font-size:13px; color:#45494A">Sample</span>
-                                </td>
-
-                                <td style="text-align:right; vertical-align:top;">
-                                    <div style="margin-top:-3px;">                               
-                                        <span style="font-size:11px; color:#45494A" id="MemberText"></span>
-                                        <span style="font-size:11px; color:#838889" id="MemberCardText"></span>
-                                    </div>
-                                </td>
-
-                                <td style="width:22px; vertical-align:top;">
-                                    <div style="margin-top:-5px;" ></div> 
+                                    <%--<span id="CompanyText" style="font-size:13px; color:#FFFF"></span>--%>
                                 </td>
 
                                 <td style="width:5px;"></td>
@@ -118,7 +155,7 @@
                             <tr>
                                 <td style="width:20px;"><div></div></td>
 
-                                <td class="Footer_LOG" style="width:190px; display:none;">
+                                <%--<td class="Footer_LOG" style="width:190px; display:none;">
                                     <a class="PoweredArea" href="http://www.logitudeworld.com" target="_blank" style="padding:0; margin:0; cursor:pointer; text-decoration:none;">
                                         <table style="height:100%">
                                             <tr>
@@ -145,7 +182,7 @@
                                 </td>
 
                                 <td><div></div></td>
-                                <td style="width:20px;"><div></div></td>
+                                <td style="width:20px;"><div></div></td>--%>
                             </tr>
 
                         </table>
@@ -157,14 +194,61 @@
 
                 <tr style="height:40px;">                   
                     <td style="vertical-align:central;">
-                        
+                        <div style="margin:0 60px;font-size:18px;color:#464951">
+                               Master <span id="LongMasterNumber"></span><span id="ConnectedShipments" style="font-size:14px;"></span>
+                        </div>
                     </td>
                 </tr>
 
                 <tr style="height:60px;">
                     <td style="vertical-align:top;">
-                                        <div id="EntityHeaderArea" style="margin:0 10px;">
-                                         
+                                        <div id="EntityHeaderArea" class="DocumentEntityArea" style="height: 40px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="height:7px;"></td>
+                                                </tr>
+                                                                <tr style="font-size:15px;">
+                                                                    <td style="width: 15px;"></td>
+                                                                    <td style="width: 50px;">Routing: </td>
+                                                                    <td style="width: 20px;">
+                                                                        <img style="width:20px; display:inline; height:20px; vertical-align:middle" data-bind="attr: { src: FromCountySRC }" />
+                                                                    </td>
+                                                                    <td style="width: 1px; max-width: 160px;">
+                                                                        <div class="ValueTextStyle" style="max-width: 160px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;" data-bind="text: FromPortName"></div> 
+                                                                    </td>
+
+                                                                    <td style="width: 20px;">
+                                                                        <img class="ShowOnDataControl" src="../HtmlHelpers/Images/Arrow.png" style="height: 16px; width: 16px; display:block; margin:auto;"/>
+                                                                    </td>
+
+                                                                    <td style="width: 20px;">
+                                                                        <img style="width:20px; display:inline; height:20px; vertical-align:middle" data-bind="attr: { src: ToCountySRC }" />
+                                                                    </td>
+
+                                                                    <td style="width: 1px; max-width: 160px;">
+                                                                        <div class="ValueTextStyle" style="max-width: 160px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;" data-bind="text: ToPortName"></div> 
+                                                                    </td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td style="width: 50px;">ATD:  <span id="MainCarriageATD"></span></td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td style="width: 50px;">Airline:</td>
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height:60px;">
+                    <td style="vertical-align:top;">
+                                        <div class="DocumentEntityArea">
+                                         <table>
+                                             <tr>
+                                                 <td id="DocumentsTabPageControl">
+                                                     <div id="DocumentsGrid" style="padding-bottom:20px;"></div> 
+                                                 </td>
+                                             </tr>
+                                         </table>
                                         </div>
                     </td>
                 </tr>
@@ -175,7 +259,6 @@
                         <div class="pageContent" style="width:100%; position:relative; margin:-10px 0 0px 0;">
                              <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
                                 <tr>
-                                    <td style="width:10px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:9px; margin-bottom:-0px;"></div></td>
 
                                     <td style="vertical-align:top;">
                                         <div>
@@ -187,24 +270,9 @@
                                         </div>
                                     </td>
 
-                                    <td style="width:10px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:0px; margin-bottom:-0px;"></div></td>                                
                                </tr>
                             </table>
                         </div>
-                    </td>
-                </tr>
-
-                <tr style="height:16px;">
-                    <td>
-                            <div style="width:100%; height:16px; margin-top:0px;">
-                                <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                    <tr>                                                                             
-                                       <td style="width:21px;"><div style="width:21px; height:16px; margin:-1px -5px 0 5px; background:url('../HtmlHelpers/Images/bars_Images/bottom-left.png') no-repeat"></div></td>
-                                       <td style="background:url('../HtmlHelpers/Images/bars_Images/bottom-middle.png') repeat-x"></td>
-                                       <td style="width:21px; background:url('../HtmlHelpers/Images/bars_Images/bottom-right.png') no-repeat"></td>     
-                                    </tr>
-                                </table>
-                            </div>
                     </td>
                 </tr>
 
@@ -433,7 +501,7 @@
         }
     </script>
    
-    <script type="text/javascript" src="DocumentsApprovalPageViewModel.js"></script>
+    <script type="text/javascript" src="SharedDocuments/SharedMasterDocumentsPageViewModel.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function () {
