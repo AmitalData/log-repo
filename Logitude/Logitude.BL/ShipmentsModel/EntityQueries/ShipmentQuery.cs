@@ -1102,14 +1102,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ReleasingAgentId, shipment.Tenant, true);
                 shipmentPM.ReleasingAgentName = loadedCard.EnglishName;
                 shipmentPM.ReleasingAgentNote = loadedCard.Notes;
-                if (!string.IsNullOrEmpty(shipment.ReleasingAgentAddressId))
-                {
-                    Address releasingAgentAddress = addressRepository.GetSingleAddress(shipmentPM.ReleasingAgentAddressId, tenant);
-                    if (releasingAgentAddress != null)
-                    {
-                        shipmentPM.ConsigneeCountryId = releasingAgentAddress.CountryId;
-                    }
-                }
             }
             #endregion
             #endregion
