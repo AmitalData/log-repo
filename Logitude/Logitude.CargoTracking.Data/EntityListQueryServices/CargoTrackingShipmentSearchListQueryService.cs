@@ -76,7 +76,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipments;
         }
-        public List<CargoTrackingShipmentList> GetShipments(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
+        public List<CargoTrackingShipmentList> GetShipmentsByFilters(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
             List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
 

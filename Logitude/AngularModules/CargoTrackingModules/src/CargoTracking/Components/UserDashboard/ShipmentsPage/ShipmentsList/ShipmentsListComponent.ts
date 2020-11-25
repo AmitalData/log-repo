@@ -1,15 +1,13 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
-import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
-import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
+import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-
-
+import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
+import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTrackingShipmentFilters';
+  
 @Component({
     selector: 'ShipmentsListComponent',
     templateUrl: './ShipmentsListComponent.html',
@@ -165,16 +163,20 @@ export class ShipmentsListComponent implements AfterViewInit
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
     {
         var direction = "";
-        if (this.SelectedFilters.length > 0)
-            direction = this.SelectedFilters.filter(d => ['IM', 'EX'].includes(d.Code)).map(d => d.Code).join(',');
+        if (this.SelectedFilters.length > 0){
+            const directionsCodes = ['IM', 'EX'];
+            direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
+        }
         shipmentFilters.DirectionCodes = direction;
     }
 
     private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters)
     {
         var transportMode = "";
-        if (this.SelectedFilters.length > 0)
-            transportMode = this.SelectedFilters.filter(d => ['A', 'I', 'O'].includes(d.Code)).map(d => d.Code).join(',');
+        if (this.SelectedFilters.length > 0){
+            const transportModeCodes = ['A', 'I', 'O'];
+            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
+        }
         shipmentFilters.TransportModeCodes = transportMode;
     }
 
@@ -187,36 +189,35 @@ export class ShipmentsListComponent implements AfterViewInit
     GetModeIcon(mode: string)
     {
         var iconPath = "";
+        const Air = 'A';
+        const Ocean = 'O';
+        const InLand = 'I';
         switch (mode) {
-            case 'A':
+            case Air:
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
-
-            case 'O':
+            case Ocean:
                 iconPath = "./assets/images/misc/ship.svg";
                 break;
-
-            case 'I':
+            case InLand:
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
-
             default:
                 break;
         }
-
         return iconPath;
     }
 
-    SearchFilters: SearchFilter[] = [
-        new SearchFilter('IM', 'Import'),
-        new SearchFilter('EX', 'Export'),
-        new SearchFilter('A', 'Air'),
-        new SearchFilter('I', 'Land'),
-        new SearchFilter('O', 'Sea'),
+    ToggleFilters: ToggleFilter[] = [
+        new ToggleFilter('IM', 'Import'),
+        new ToggleFilter('EX', 'Export'),
+        new ToggleFilter('A', 'Air'),
+        new ToggleFilter('I', 'Land'),
+        new ToggleFilter('O', 'Sea'),
     ];
 
-    SelectedFilters: SearchFilter[] = [];
-    SelectFilter(filter: SearchFilter)
+    SelectedFilters: ToggleFilter[] = [];
+    SelectFilter(filter: ToggleFilter)
     {
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
         if (!item)
@@ -224,7 +225,7 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.LoadShipments();
     }
-    DeselectFilter(filter: SearchFilter)
+    DeselectFilter(filter: ToggleFilter)
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
@@ -267,10 +268,10 @@ export class ShipmentsListComponent implements AfterViewInit
 
     ShipmentsCount: number = 0;
 
-    error: string;
+    ShipmentsLoadingError: string;
 }
 
-export class SearchFilter
+export class ToggleFilter
 {
     constructor(code: string, name: string)
     {
@@ -279,165 +280,39 @@ export class SearchFilter
     }
 
 
-    private _Name: string;
+    private name: string;
     public get Name(): string
     {
-        return this._Name;
+        return this.name;
     }
     public set Name(v: string)
     {
-        this._Name = v;
+        this.name = v;
     }
 
 
 
-    private _Count: number = 0;
+    private count: number = 0;
     public get Count(): number
     {
-        return this._Count;
+        return this.count;
     }
     public set Count(v: number)
     {
-        this._Count = v;
+        this.count = v;
     }
 
 
-    private _Code: string;
+    private code: string;
     public get Code(): string
     {
-        return this._Code;
+        return this.code;
     }
     public set Code(v: string)
     {
-        this._Code = v;
+        this.code = v;
     }
 
 
 
 }
-export class CargoTrackingShipmentFilters
-{
-    public Tenant: number;
-    public SearchText: string;
-    public CustomersIds: string[] = [];
-    public CustomersIdsString: string;
-
-    public TransportModeCodes: string;
-    public DirectionCodes: string;
-
-    public SortDescending: boolean = true;
-    public SortFieldName: string;
-
-
-}
-export class ShipmentDataSource extends DataSource<any | undefined> {
-    private PAGE_SIZE = 50;
-    private CachedShipments = Array.from<any>({ length: this.ShipmentsCount });
-    private FetchedPages = new Set<number>();
-    private _dataStream = new BehaviorSubject<(any | undefined)[]>(this.CachedShipments);
-    private _subscription = new Subscription();
-
-    constructor(
-        private ChangeDetector: ChangeDetectorRef,
-        private ShipmentSearchService: CargoTrackingSearchService,
-        private ShipmentsFilters: CargoTrackingShipmentFilters,
-        private parent: ShipmentsListComponent,
-        private ShipmentsCount = 1
-    )
-    {
-        super();
-
-        this.InitComponent();
-    }
-
-    private InitComponent()
-    {
-        this.parent.ShipmentsCount = 0;
-        this.parent.noResult = false;
-        this.CachedShipments = Array.from<any>({ length: this.ShipmentsCount || 1 });
-        this.FetchedPages = new Set<number>();
-    }
-
-    ReloadData(filters)
-    {
-        this.InitComponent();
-        this.ShipmentsFilters = filters;
-        this.FetchPage(0);
-
-        this.ChangeDetector.detectChanges();
-        this._dataStream.next(this.CachedShipments);
-    }
-    connect(collectionViewer: CollectionViewer): Observable<(any | undefined)[]>
-    {
-        this._subscription.add(collectionViewer.viewChange.subscribe(range =>
-        {
-            const startPage = this.GetPageForIndex(range.start);
-            const endPage = this.GetPageForIndex(range.end - 1);
-            for (let i = startPage; i <= endPage; i++) {
-                this.FetchPage(i);
-            }
-        }));
-        return this._dataStream;
-    }
-
-    disconnect(): void
-    {
-        this._subscription.unsubscribe();
-    }
-
-    private GetPageForIndex(index: number)
-    {
-        return Math.floor(index / this.PAGE_SIZE);
-    }
-
-    private FetchPage(pageNumber: number)
-    {
-        if (!this.FetchedPages.has(pageNumber)) {
-            this.FetchedPages.add(pageNumber);
-            this.GetShipmentsPage(pageNumber);
-        }
-    }
-
-    private GetShipmentsPage(page: number)
-    {
-        this.ShipmentSearchService.GetUserShipments(page, this.PAGE_SIZE, this.ShipmentsFilters)
-            .subscribe((result: any) =>
-            {
-                this.parent.error = "";
-
-                var fetchedShipments = result.Shipments;
-
-                if (page == 0 && result.Count != this.ShipmentsCount) {
-                    this.ShipmentsCount = result.Count;
-                    this.parent.ShipmentsCount = result.Count;
-                    // this.FetchedPages = new Set<number>();
-                    this.CachedShipments = Array.from<any>({ length: result.Count });
-                }
-
-                if (page == 0) this.parent.noResult = (this.ShipmentsCount == 0);
-
-
-                this.CacheShipments(page, fetchedShipments);
-
-                this.ChangeDetector.detectChanges();
-
-                this._dataStream.next(this.CachedShipments);
-            }, error =>
-            {
-                this.parent.error = error.statusText;
-                console.error(error);
-
-                this.ChangeDetector.detectChanges();
-
-            });
-    }
-
-    private CacheShipments(pageNumber: number, shipments: any)
-    {
-        this.CachedShipments.splice(
-            pageNumber * this.PAGE_SIZE,
-            this.PAGE_SIZE,
-            ...shipments);
-    }
-}
-
