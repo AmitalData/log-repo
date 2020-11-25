@@ -449,4 +449,6 @@
     Columns="EntityId,ChildEntityId"  />
  <Index
     Columns="ChildEntityId" />
+  <Index
+   Columns="DocumentId" />
 </Table>
