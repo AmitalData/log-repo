@@ -1692,7 +1692,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Amount
         this.OpenAmount = null;
-        this.SelectedOperator = null;
+        this.SelectedOperator = this.OperatorsList[0];
     }
 
     reapeatCount: number = 1;
