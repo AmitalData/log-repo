@@ -38,10 +38,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a).Any();
         }
 
+        private static List<string> GetRecentStatuesAreNotAllowed()
+        {
+            List<string> RecentStatuesAreNotAllowed = new List<string>();
+            RecentStatuesAreNotAllowed.Add("3");
+            RecentStatuesAreNotAllowed.Add("6");
+            RecentStatuesAreNotAllowed.Add("9");
+            RecentStatuesAreNotAllowed.Add(null);
+
+            return RecentStatuesAreNotAllowed;
+        }
+
+
         public bool CheckRecentCustomerReports(DateTime interestDate, InterestReportPM InterestReportPM)
         {
+            List<string> RecentStatuesAreNotAllowed = GetRecentStatuesAreNotAllowed();
             return (from a in context.InterestReports
-                    where a.Tenant == InterestReportPM.Tenant && a.InterestCalculationDate > interestDate && a.InterestReportStatusCode != "3" && a.CustomerId == InterestReportPM.CustomerId && a.Id != InterestReportPM.Id
+                    where a.Tenant == InterestReportPM.Tenant && a.InterestCalculationDate > interestDate && !RecentStatuesAreNotAllowed.Contains(a.InterestReportStatusCode)  && a.CustomerId == InterestReportPM.CustomerId && a.Id != InterestReportPM.Id
                     select a).Any();
         }
 
