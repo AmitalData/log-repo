@@ -357,6 +357,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.originalAmountCurrency = args.originalAmountCurrency;
 
             this.CheckIfThereIsDraftReconcile();
+            this.DisableDates();        
+
         }
     }
    getScreenHeight() {
@@ -1643,10 +1645,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.OpenAmount = null;
         this.FromDate = null;
         this.ToDate = null;
-        this.SelectedDatePreset = null;        
         this.openAmountSelectedOperator = this.Operators[0];
         this.foreignAmountSelectedOperator = this.Operators[0];
-
+        
+        this.SelectedDatePreset = null;
+        this.DisableDates();        
+        
         this.ReloadScreen();
     }
 
