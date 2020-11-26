@@ -66,8 +66,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
              
             if (myCustomsAutonomyKeyword != null && myCustomsAutonomyKeyword.Count() > 0)
             {
-                if (myCustomsAutonomyKeyword.FirstOrDefault(x=>x.KeywordsList == valueToSearch)!=null)
-                    return true;
+                if (type == "3")
+                {
+                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.StartsWith(x.KeywordsList)) != null)
+                        return true;
+                }
+                else
+                {
+                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => x.KeywordsList == valueToSearch) != null)
+                        return true;
+                }
             }
 
             return false;
