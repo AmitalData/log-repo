@@ -1,0 +1,9 @@
+﻿<Script DBType="Global" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+    
+update CardSearches set IsCustomer = (select IsCustomer From Cards where id =CardSearches.CardId and Tenant =  CardSearches.Tenant)
+    ]]>
+  </Sql>
+</Script>
+

@@ -1040,7 +1040,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 customers = myBusinessUnitFilter.RunFilter(customers);
             }
 
-            if (!string.IsNullOrEmpty(mySearchText) && FeatureToggleHelper.HasFeatureToggle("CQS", tenant))
+            if (!string.IsNullOrEmpty(mySearchText) && !FeatureToggleHelper.HasFeatureToggle("CQS", tenant))
             {
                 myResult = GetCustomerListsByApplyCardSearchMechanizm(tenant, mySearchText, customers);
             }
@@ -1072,16 +1072,18 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         private List<CustomerList> GetCustomerListsByApplyCardSearchMechanizm(int tenant, string mySearchText, IQueryable<CustomersDataView> customers)
         {
             List<CustomerList> myResult;
+
             IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
-            CustomerSearchFilterArgs customerSearchFilterArgs = new CustomerSearchFilterArgs()
+            CustomerSearchArgs customerSearchArgs = new CustomerSearchArgs()
             {
                 Tenant = tenant,
                 SearchText = mySearchText,
                 PageSize = 11,
                 Customers = myListQuery,
             };
-            CustomerSearchFilter customerSearchFilter = new CustomerSearchFilter(customerSearchFilterArgs);
+            CustomerSearchService customerSearchFilter = new CustomerSearchService(customerSearchArgs);
             myResult = customerSearchFilter.Run();
+
             return myResult;
         }
 
