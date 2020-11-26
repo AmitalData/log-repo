@@ -236,6 +236,7 @@ export class ShipmentsListComponent implements AfterViewInit
     ClearFilters()
     {
         this.SelectedFilters = [];
+        this.LoadShipments();
     }
 
     ApplyFilterButtonClicked()

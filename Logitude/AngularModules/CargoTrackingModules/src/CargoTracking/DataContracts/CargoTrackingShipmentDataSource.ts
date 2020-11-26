@@ -102,6 +102,9 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
     private ResetDataSourceVariablesForFirstPage(shipmentsResponse: any)
     {
+        if(this.parent.ShipmentsCount != shipmentsResponse.ShipmentsCount)
+            this.parent.ShipmentsCount = shipmentsResponse.ShipmentsCount
+            
         if (shipmentsResponse.ShipmentsCount != this.ShipmentsCount) {
             this.SetShipmentsCount(shipmentsResponse.ShipmentsCount);
             this.ResetCachedShipmentsArray(shipmentsResponse.ShipmentsCount);
