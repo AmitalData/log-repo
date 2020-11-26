@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
-    public class CustomerSearchFilter
+    public class CustomerSearchService
     {
         private CardSearchFilter cardSearchFilter = null;
         private List<CardSearchResult> allCardSearchResultLists = null;
-        private CustomerSearchFilterArgs customerSearchFilterArgs = null;
+        private CustomerSearchArgs customerSearchArgs = null;
         private CardSearchResultArgs cardSearchResultArgs = null;
-        public CustomerSearchFilter(CustomerSearchFilterArgs customerSearchFilterArgs)
+        public CustomerSearchService(CustomerSearchArgs customerSearchArgs)
         {
-            this.customerSearchFilterArgs = customerSearchFilterArgs;
+            this.customerSearchArgs = customerSearchArgs;
             allCardSearchResultLists = new List<CardSearchResult>();
             cardSearchFilter = new CardSearchFilter();
             cardSearchResultArgs = GetCardSearchResultArgs();
@@ -26,16 +26,16 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         public List<CustomerList> Run()
         {
-            IQueryable<CardSearch> cardSearches = GetCardSearches();
-            List<CustomerList>  customerLists = GetCustomerLists(customerSearchFilterArgs.Customers, cardSearches);
+            IQueryable<CardSearch> cardSearches = GetCardSearchEntities();
+            List<CustomerList>  customerLists = GetCustomerLists(customerSearchArgs.Customers, cardSearches);
             customerLists = SortCustomerListBySearchWeight( customerLists);
             return customerLists;
         }
 
-        private IQueryable<CardSearch> GetCardSearches()
+        private IQueryable<CardSearch> GetCardSearchEntities()
         {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(customerSearchFilterArgs.Tenant);
-            IQueryable<CardSearch> cardSearches = (from a in commonDataContext.CardSearches where a.Tenant == customerSearchFilterArgs.Tenant && a.PartnerTypeId != "AC" select a);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(customerSearchArgs.Tenant);
+            IQueryable<CardSearch> cardSearches = (from a in commonDataContext.CardSearches where a.Tenant == customerSearchArgs.Tenant && a.PartnerTypeId != "AC" && a.IsCustomer  select a);
             return cardSearches;
         }
 
@@ -44,9 +44,9 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             List<CustomerList> customerLists = new List<CustomerList>();
             List<string> cardIds = new List<string>();
             bool isFirstTime = true;
-            while ((customerLists.Count < customerSearchFilterArgs.PageSize && cardIds.Count() >= customerSearchFilterArgs.PageSize) || isFirstTime)
+            while ((customerLists.Count < customerSearchArgs.PageSize && cardIds.Count() >= customerSearchArgs.PageSize) || isFirstTime)
             {
-                List<CardSearchResult> cardSearchResults = GetCardSearchResultLists(cardSearches);
+                List<CardSearchResult> cardSearchResults = GetFilteredCardSearchResultList(cardSearches);
                 cardIds = cardSearchResults.Select(d => d.CardId).ToList();
                 customerLists = customerLists.Concat(customers.Where(d => cardIds.Contains(d.Id)).ToList()).ToList();
                 allCardSearchResultLists = allCardSearchResultLists.Concat(cardSearchResults).ToList();
@@ -64,11 +64,11 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 customerList.SearchWeight = allCardSearchResultLists.First(c => c.CardId == customerList.Id).Weight;
             }
 
-            sortedList = sortedList.OrderByDescending(c => c.SearchWeight).ThenBy(d => d.EnglishName).Take(customerSearchFilterArgs.PageSize).ToList();
+            sortedList = sortedList.OrderByDescending(c => c.SearchWeight).ThenBy(d => d.EnglishName).Take(customerSearchArgs.PageSize).ToList();
             return customerLists;
         }
 
-        private List<CardSearchResult> GetCardSearchResultLists(IQueryable<CardSearch> cardSearches)
+        private List<CardSearchResult> GetFilteredCardSearchResultList(IQueryable<CardSearch> cardSearches)
         {
             var cardSearchResultLists = cardSearchFilter.GetCardSearchDataResults(cardSearchResultArgs, cardSearches);
             cardSearchResultLists = cardSearchResultLists.Where(d => !allCardSearchResultLists.Select(a => a.CardId).ToList().Contains(d.CardId)).ToList();
@@ -79,15 +79,15 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         {
             return new CardSearchResultArgs()
             {
-                SeachText = customerSearchFilterArgs.SearchText, 
-                Take =(int) (customerSearchFilterArgs.PageSize * 2.5), 
+                SeachText = customerSearchArgs.SearchText, 
+                Take =(int) (customerSearchArgs.PageSize * 2.5), 
                 Skip  = 0 ,
-                Tenant = customerSearchFilterArgs.Tenant,
+                Tenant = customerSearchArgs.Tenant,
             };
         }
 
     }
-    public class CustomerSearchFilterArgs
+    public class CustomerSearchArgs
     {
         public string SearchText { get; set; }
         public int Tenant { get; set; }
