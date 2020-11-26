@@ -100,7 +100,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.VatNumber = MyEntityPM.VatNumber;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
-				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;					
+				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;
+				   temp.ReceivablesAccountingCard = MyEntityPM.ReceivablesAccountingCard;
+				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -238,6 +240,22 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
 					{							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
 							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ReceivablesAccountingCard))
+					{							//throw new ApplicationException("ReceivablesAccountingCard Can't be update"); 
+							temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PayablesAccountingCard))
+					{							//throw new ApplicationException("PayablesAccountingCard Can't be update"); 
+							temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
 
 										}  
 
