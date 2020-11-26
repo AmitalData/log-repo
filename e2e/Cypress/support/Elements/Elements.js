@@ -91,7 +91,13 @@ Cypress.Commands.add("SaveClick", (url, selector, contains = null) => {
 
 })
 
-Cypress.Commands.add("ToggleCheckBox", (selector) => {
+Cypress.Commands.add("ClickCheckBox", (selector) => {
+
+    cy.get(selector).next("label").click()
+
+})
+
+Cypress.Commands.add("ClickRadio", (selector) => {
 
     cy.get(selector).next("label").click()
 

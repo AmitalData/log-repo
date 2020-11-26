@@ -17,10 +17,10 @@ describe("Charges Types", () => {
         cy.FillLogLov("#ChargesType_MeasurementId", "FIXD", true)
 
         cy.Click("button", "Next")
-        cy.ToggleCheckBox("#ChargesType_IsAutoDisplayInShipment")
-        cy.ToggleCheckBox("#ChargesType_IsExport")
+        cy.ClickCheckBox("#ChargesType_IsAutoDisplayInShipment")
+        cy.ClickCheckBox("#ChargesType_IsExport")
         cy.Click("button", "Next")
-        cy.SaveClick("**/chargestypes", "button", "Finish")
+        //cy.SaveClick("**/chargestypes", "button", "Finish")
 
     })
 
