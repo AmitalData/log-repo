@@ -12,9 +12,34 @@
         word-break: break-all;
         white-space: normal;
     }
+
+    #table-wrapper {
+  position:relative;
+}
+#table-scroll {
+  height:150px;
+  overflow:auto;  
+  margin-top:20px;
+}
+#table-wrapper table {
+  width:100%;
+
+}
+#table-wrapper table * {
+  background:yellow;
+  color:black;
+}
+#table-wrapper table thead th .text {
+  position:absolute;   
+  top:-20px;
+  z-index:2;
+  height:20px;
+  width:35%;
+  border:1px solid red;
+}
 </style>
 
-<table *ngIf="Loaded">
+<table *ngIf="Loaded" class="table-wrapper" height="300px">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -27,7 +52,7 @@
     <tr>
         <td colspan="4" style="">
 
-            <table style="table-layout: fixed;">
+            <table style="table-layout: fixed;" >
                 <tr style="height: 10px;">
                     <td style="width: 130px;"></td>
                     <td style="width: 170px;"></td>
@@ -51,40 +76,42 @@
                     </td>
                     <td></td>
                 </tr>
-
-                <!-- Param1 -->
-                <tr class="FormFieldRow">
+                <tr  class="FormFieldRow" *ngFor="let paramter of parametres">
                     <td>
-                        <LogLabel [ObjectFieldName]="'Param1'" [ObjectTableName]="ObjectTableName" [Text]="'פרמטר 1'"
+                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Code"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'Param1'" [ObjectTableName]="ObjectTableName" [Text]="Param1"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"></LogTextBox>
+                        <!--<LogLabel [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value"
+                                  [DataContext]="DataContext"></LogLabel>-->
+                        <LogTextBox [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value" [NoObjectField]="'true'"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
                     </td>
 
                     <td></td>
                 </tr>
+
 
                 <!-- Param2 -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="'פרמטר 2'"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="Param2"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"></LogTextBox>
-                    </td>
+                <!--<tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="'פרמטר 2'"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <LogTextBox [ObjectFieldName]="'Param2'" [ObjectTableName]="ObjectTableName" [Text]="Param2"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"></LogTextBox>
+        </td>
 
-                    <td></td>
-                </tr>
+        <td></td>
+    </tr>-->
 
                 <tr>
                     <td></td>
                 </tr>
 
             </table>
+           
 
         </td>
     </tr>

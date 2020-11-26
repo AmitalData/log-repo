@@ -5,6 +5,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'SendDeclarationTastCaseComponent',
@@ -60,6 +61,10 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
+        debugger;
+        if (!AppTool.IsNullOrEmpty(this.parametres))
+        this.Param1 = JSON.stringify(this.parametres);
+
         var errors = [];
         if (this._ScenarioCode == null) {
             errors.push("אנא בחר קוד תרחיש");
@@ -83,11 +88,26 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindowEmit("");
     }
     public _ScenarioCode: String;
+    parametres: Parameter[];
+
     ScenarioCodeClicked(evKey) {
         this._ScenarioCode = evKey;
         let detail = this.SincroTestCaseDetailList.filter(r => r.Code == this._ScenarioCode)[0];
-        this.Param1 = detail.Param1;
-        this.Param2 = detail.Param2;
+        debugger;
+        var list = JSON.parse(detail.Param1);
+        var jsonListKeys = Object.keys(list);
+        this.parametres = [];
+        for (var key in jsonListKeys) {
+          var  p: Parameter = new Parameter();
+            var property = jsonListKeys[key];
+            p.Value = list[property];
+            p.Code = property;
+            //this.Param2 = list[property];
+            this.parametres.push(p);
+        }
+
+        //this.Param1 = detail.Param1;
+        //this.Param2 = detail.Param2;
     }
 }
 
@@ -98,4 +118,10 @@ export class SincroTestCaseDetail {
     IsDCA: boolean
     Param1: string
     Param2: string
+}
+
+export class Parameter {
+
+    public Code: string;
+    public Value: string;
 }
