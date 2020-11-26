@@ -449,6 +449,10 @@
     Columns="EntityId,ChildEntityId"  />
  <Index
     Columns="ChildEntityId" />
+  
+  
+  <!--
+  Unnecessary Index On Columns DUE IS FOREIGN KEY
   <Index
-   Columns="DocumentId" />
+   Columns="DocumentId" />-->
 </Table>
