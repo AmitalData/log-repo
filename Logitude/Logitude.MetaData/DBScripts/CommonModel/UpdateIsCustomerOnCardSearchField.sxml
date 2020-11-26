@@ -1,4 +1,4 @@
-﻿<Script DBType="Global" Module="Common">
+﻿<Script DBType="Main" Module="Common"  TargetTableName="CardSearches">
   <Sql Version="1">
     <![CDATA[
     
