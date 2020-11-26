@@ -641,7 +641,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
-        filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+        filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
 
         if(this.ObjectTableName == "BankAccount")
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
@@ -1110,7 +1110,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
             // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
-            filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+            filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
 
             if(this.ObjectTableName == "BankAccount")
                 filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
@@ -1698,7 +1698,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Amount
         this.OpenAmount = null;
-        this.SelectedOperator = null;
+        this.SelectedOperator = this.OperatorsList[0];
     }
 
     reapeatCount: number = 1;

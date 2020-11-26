@@ -618,6 +618,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string gLAccountDisplayNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountDisplayNumber  
+	   {
+	    
+	     get
+		{
+		   return gLAccountDisplayNumber;
+		 }
+		 set
+		 {
+		   if(gLAccountDisplayNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountDisplayNumber",OldValue=gLAccountDisplayNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountDisplayNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string chartsofAccountCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartsofAccountCode  
+	   {
+	    
+	     get
+		{
+		   return chartsofAccountCode;
+		 }
+		 set
+		 {
+		   if(chartsofAccountCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartsofAccountCode",OldValue=chartsofAccountCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartsofAccountCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

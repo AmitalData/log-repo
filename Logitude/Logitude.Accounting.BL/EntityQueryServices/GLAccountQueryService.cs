@@ -112,7 +112,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //return pms;
         }
 
- 
+        public List<GLAccount> GetAllGLAccountIdsByChartsofAccountId(int tenant,string chartsofAccountId)
+        {
+            List<GLAccount> GLAccounts = this.repository.GetAll(tenant).Where(s => s.Inactive == false && s.ChartOfAccountsId == chartsofAccountId).ToList();
+            return GLAccounts;
+        }
 
         public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
         {

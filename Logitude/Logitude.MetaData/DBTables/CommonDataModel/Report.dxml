@@ -55,14 +55,14 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
+    Type="nvarchar"
     Size="250">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"
-    Type="varchar"
+    Type="nvarchar"
     Size="1000">
     <Constraints
       Nullable="true" />
@@ -72,7 +72,7 @@
     Type="varchar"
     Size="4">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="InActive"

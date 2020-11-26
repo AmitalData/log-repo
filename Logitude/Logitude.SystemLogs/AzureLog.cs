@@ -221,7 +221,11 @@ namespace Logitude.SystemLogs
 
             if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
                 return;
-            stackTrace = GetStackTrace(exception);
+            string myStackTrace = GetStackTrace(exception);
+            if (!string.IsNullOrEmpty(myStackTrace))
+            {
+                stackTrace = myStackTrace;
+            }
             if (stackTrace.Length > 7000)
             {
                 stackTrace = stackTrace.Substring(0, 6999);

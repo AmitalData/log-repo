@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -13,6 +14,8 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 {
@@ -28,6 +31,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private string consigneeId = null;
         private PortRepository portRepository;
         private CardRepository cardRepository;
+        private ContactRepository contactRepository;
 
         public FlightBookingsManifestManager(byte[] xmlFilters, int tenant)
         {
@@ -36,6 +40,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             this.portRepository = new PortRepository(commonDataContext);
             this.cardRepository = new CardRepository(commonDataContext);
+            this.contactRepository = new ContactRepository(commonDataContext);
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -146,6 +151,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.Weight = shipmentPackage.PackagesGrossWeight;
                     myDataRecord.Volume = shipmentPackage.PackageVolume;
                     myDataRecord.VolumetricWeight = shipmentPackage.PackageVolumeitricWeight;
+                    myDataRecord.ChargeableWeight = shipmentPackage.PackageChargeableWeight;
                     myDataRecord.MoveType = shipmentPackage.MoveTypeName;
                     myDataRecord.CustomAgentImportId = shipmentPackage.CustomAgentImportId;
                     myDataRecord.MasterLong = shipmentPackage.AirlinePrefix + "-" + shipmentPackage.MasterNumber;
@@ -220,8 +226,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             myDataProvider.FromDate = fromDate;
             myDataProvider.ToDate = toDate;
             myDataProvider.FlightNumber = flightNumber;
-
-            if(!string.IsNullOrEmpty(mainCarriageFromPortId))
+            myDataProvider.UserName = GetLoggedContact(tenant).EnglishName;
+            if (!string.IsNullOrEmpty(mainCarriageFromPortId))
             {
                 Simplog.Data.CommonDataModel.EntityPOCOs.Port fromPort = portRepository.GetSinglePort(mainCarriageFromPortId, tenant);
                 if(fromPort != null)
@@ -340,6 +346,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackagesGrossWeight = package.Weight,
                      PackageVolume = package.Volume,
                      PackageVolumeitricWeight = package.VolumetricWeight,
+                     PackageChargeableWeight = (package.Weight == null)? package.VolumetricWeight : (package.VolumetricWeight == null) ? package.Weight : (package.VolumetricWeight> package.Weight)? package.VolumetricWeight : package.Weight,
                      ShipmentPackageReference1 = package.Reference1,
                      ShipmentPackageReference2 = package.Reference2,
                      ShipmentPackageReference3 = package.Reference3,
@@ -347,6 +354,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
+
                  });
 
             return dataList;
@@ -395,6 +403,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             }
 
             return shipmentPackageList.ToList();
+        }
+
+        private Simplog.Data.CommonDataModel.EntityPOCOs.Contact GetLoggedContact(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
         }
     }
 }
