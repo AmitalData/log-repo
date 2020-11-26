@@ -799,7 +799,7 @@ function BuildMasterDocumentsTabPageViewModel(documents, PathPrefix) {
 
     var downloadAllTemplate = "";
     downloadAllTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadAllDocument()'>";
-    downloadAllTemplate += "<div style='cursor:pointer; font-size:11px; color:\\#27AAE1; text-align:right; padding-right: 10px;'>DownloadAll</div>";
+    downloadAllTemplate += "<div style='cursor:pointer; font-size:13px; color:\\#27AAE1; text-align:right;'>Download All</div>";
     downloadAllTemplate += "</a>";
     GridColumns.push({ title: downloadAllTemplate });
 
@@ -822,6 +822,22 @@ function BuildMasterDocumentsTabPageViewModel(documents, PathPrefix) {
     });
 
     $("#DocumentsGrid").kendoGrid(
+        {
+            columns: GridColumns,
+            dataSource: {
+                data: GridDataSource
+            }
+        });
+
+    $("#DocumentsGrid2").kendoGrid(
+        {
+            columns: GridColumns,
+            dataSource: {
+                data: GridDataSource
+            }
+        });
+
+    $("#DocumentsGrid3").kendoGrid(
         {
             columns: GridColumns,
             dataSource: {

@@ -194,9 +194,25 @@
 
                 <tr style="height:40px;">                   
                     <td style="vertical-align:central;">
-                        <div style="margin:0 60px;font-size:18px;color:#464951">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div style="margin:0 60px;font-size:18px;color:#464951">
                                Master <span id="LongMasterNumber"></span><span id="ConnectedShipments" style="font-size:14px;"></span>
                         </div>
+                                </td>
+                                <td>
+                        <div>
+                               <a id="#= Id #">
+                                   <div style="cursor:pointer; font-size:13px; color:rgb(0, 136, 204); text-align:right; padding-right: 50px;">Download All Master & House Documents</div>
+                                   
+                               </a>
+                        </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                        
                     </td>
                 </tr>
 
@@ -209,7 +225,7 @@
                                                 </tr>
                                                                 <tr style="font-size:15px;">
                                                                     <td style="width: 15px;"></td>
-                                                                    <td style="width: 50px;">Routing: </td>
+                                                                    <td style="width: 70px;">Routing : </td>
                                                                     <td style="width: 20px;">
                                                                         <img style="width:20px; display:inline; height:20px; vertical-align:middle" data-bind="attr: { src: FromCountySRC }" />
                                                                     </td>
@@ -229,9 +245,9 @@
                                                                         <div class="ValueTextStyle" style="max-width: 160px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;" data-bind="text: ToPortName"></div> 
                                                                     </td>
                                                                     <td style="width: 70px;"></td>
-                                                                    <td style="width: 50px;">ATD:  <span id="MainCarriageATD"></span></td>
-                                                                    <td style="width: 70px;"></td>
-                                                                    <td style="width: 50px;">Airline:</td>
+                                                                    <td style="width: 180px;">ATD :  <span id="MainCarriageATD"></span></td>
+                                                                    <td style="width: 50px;"></td>
+                                                                    <td >Airline :</td>
                                                                     <td><div></div></td>
                                                                 </tr>
                                                             </table>
@@ -254,27 +270,98 @@
                 </tr>
 
 
-                <tr>
-                    <td style="vertical-align:top;">
-                        <div class="pageContent" style="width:100%; position:relative; margin:-10px 0 0px 0;">
-                             <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                <tr>
 
-                                    <td style="vertical-align:top;">
-                                        <div>
 
-                                            <div id="mainTabsDiv">                                           
 
-                                            </div>                                               
-
-                                        </div>
-                                    </td>
-
-                               </tr>
-                            </table>
+                <tr style="height:40px;">                   
+                    <td style="vertical-align:central;">
+                        <div style="margin:0 60px;font-size:18px;color:#464951">
+                               House <span id="HouseNumberField">Test</span>
                         </div>
                     </td>
                 </tr>
+
+                <tr style="height:60px;">
+                    <td style="vertical-align:top;">
+                                        <div id="EntityHeaderArea2" class="DocumentEntityArea" style="height: 40px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="height:7px;"></td>
+                                                </tr>
+                                                                <tr style="font-size:15px;">
+                                                                    <td style="width: 15px;"></td>
+                                                                    <td style="width: 190px;">Shipper : Name</td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td style="width: 180px;">Consignee : Name</td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td >Qty / weight : # / ###Kg</td>
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height:60px;">
+                    <td style="vertical-align:top;">
+                                        <div class="DocumentEntityArea">
+                                         <table>
+                                             <tr>
+                                                 <td id="DocumentsTabPageControl2">
+                                                     <div id="DocumentsGrid2" style="padding-bottom:20px;"></div> 
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                        </div>
+                    </td>
+                </tr>
+
+
+                
+                <tr style="height:40px;">                   
+                    <td style="vertical-align:central;">
+                        <div style="margin:0 60px;font-size:18px;color:#464951">
+                               House <span id="HouseNumberField2">Test</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height:60px;">
+                    <td style="vertical-align:top;">
+                                        <div id="EntityHeaderArea3" class="DocumentEntityArea" style="height: 40px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="height:7px;"></td>
+                                                </tr>
+                                                                <tr style="font-size:15px;">
+                                                                    <td style="width: 15px;"></td>
+                                                                    <td style="width: 190px;">Shipper : Name</td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td style="width: 180px;">Consignee : Name</td>
+                                                                    <td style="width: 70px;"></td>
+                                                                    <td >Qty / weight : # / ###Kg</td>
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height:60px;">
+                    <td style="vertical-align:top;">
+                                        <div class="DocumentEntityArea">
+                                         <table>
+                                             <tr>
+                                                 <td id="DocumentsTabPageControl3">
+                                                     <div id="DocumentsGrid3" style="padding-bottom:20px;"></div> 
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                        </div>
+                    </td>
+                </tr>
+
+               
 
             </tbody>
 
