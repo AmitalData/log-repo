@@ -1741,7 +1741,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 }
             }
             SupplierInvoiceItemVehicleAddPM.Exempt_type = invoiceItemCar.EXEMPT_TYPE;
-            if(!isExemptTypeInDefault && !string.IsNullOrWhiteSpace(SupplierInvoiceItemVehicleAddPM.Exempt_type))
+            if(!string.IsNullOrWhiteSpace(exemptTypesForEntitlement) && !isExemptTypeInDefault && !string.IsNullOrWhiteSpace(SupplierInvoiceItemVehicleAddPM.Exempt_type))
             {
                 isExemptTypeInDefault = exemptTypesForEntitlement.Contains(SupplierInvoiceItemVehicleAddPM.Exempt_type);
             }
