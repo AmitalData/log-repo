@@ -254,12 +254,12 @@ export class JournalMenuButtonsHandler {
         });
     }
     OpenCopyJournalScreen() {
-        var windowTitle = "Copy Journal";
+        var windowTitle = TextCodeTranslator.Translate("Journal.B.CopyJournal");
         var windowArgs: any = {};
         windowArgs.JournalPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 220;
+        logWindow.Height = 250;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {

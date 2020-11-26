@@ -43,62 +43,92 @@ export class CopyJournalComponent extends BaseComponent {
  
     OkButtonClicked() {
       
-        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewJournal");
+        var valid: boolean = true;    
+         valid  = this.ValidateJournalDates();       
+        if (valid) {
+            var entityPM: JournalPM = new JournalPM();
+            this.NewJournalMapping(entityPM);
+            this.CopyJournalData(entityPM);
+            this.OpenJournalEditScreen(entityPM);
+        }
 
+    }
+    ValidateJournalDates() {
+        this.ValidationErrorsList = [];
+        if (!this.Dates && (!this.AccountingDate || !this.DueDate || !this.DocumentDate)) {
+            this.FillErrorMessage();       
+            return false
+        }
+        else return true;
+    }
+    FillErrorMessage() {
+        var FIELD_IS_REQUIERD: string = null;
+        FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (!this.AccountingDate) {
+            var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.AccountingDate"));
+            this.ValidationErrorsList.push(error);
+        }
+        if (!this.DueDate) {
+            var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.DueDate"));
+            this.ValidationErrorsList.push(error);
+        }
+        if (!this.DocumentDate) {
+            var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.DocumentDate"));
+            this.ValidationErrorsList.push(error);
+        }
+    }
 
-        var entityPM: JournalPM = new JournalPM();
-        entityPM.IsNew = true;
-        this.CopyJournalData(entityPM);
+    NewJournalMapping(journal: JournalPM) {
+        journal.IsNew = true;
+        journal.TypeCode = "0"; // Manual
+        journal.AccountingEntityCode = "1"; // Journal
+        journal.CreatedByUserId = SessionLocator.LoggedUserId;
+        journal.Tenant = SessionLocator.Tenant;
+        journal.AccountingDate = this.AccountingDate ? this.AccountingDate : this.EntityPM.AccountingDate;
+        journal.DueDate = this.DueDate ? this.DueDate : this.EntityPM.DueDate;
+        journal.DocumentDate = this.DocumentDate ? this.DocumentDate : this.EntityPM.DocumentDate;
+        journal.CurrencyId = this.AmountsAndCurrencies ? journal.CurrencyId : null;
+        journal.Copied = true;
+        journal.CopiedFrom = this.EntityPM.JournalNumber;
+            
        
-        entityPM.TypeCode = "0"; // Manual
-        entityPM.AccountingEntityCode = "1"; // Journal
-
-        entityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        entityPM.Tenant = SessionLocator.Tenant;
+    }
+    OpenJournalEditScreen(journal: JournalPM) {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
-                    EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main")
-                   
+                    EntityPM: journal, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Journal") + " " + this.EntityPM.JournalNumber
                 });
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    //this.LoadAllScreenData();
-                    ////this.isWindowOpened = false;
+                    this.CancelButtonClicked();
                 });
             });
     }
-
-    CopyJournalData(entityPM: JournalPM) {
-        entityPM.JournalLines = this.EntityPM.JournalLines;
-        if (!this.AmountsAndCurrencies) {
+    CopyJournalData(entityPM: JournalPM) {    
             for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
-                entityPM.JournalLines.push(this.NewJournalLine(entityPM, this.EntityPM.JournalLines[i]));
-            }
-        }
+                var line: JournalLinePM = this.NewJournalLine(entityPM, this.EntityPM.JournalLines[i]);
+                entityPM.JournalLines.push(line);
+            }       
         return entityPM;
 
     }
     NewJournalLine(journal: JournalPM, originalJourbnalLine:JournalLinePM) {
         var journalLine = new JournalLinePM(journal);
+        journalLine = originalJourbnalLine;
         journalLine.Reference1 = this.ReferencesAndNotes ? originalJourbnalLine.Reference1 : null;
         journalLine.Reference2 = this.ReferencesAndNotes ? originalJourbnalLine.Reference2 : null;
         journalLine.Reference3 = this.ReferencesAndNotes ? originalJourbnalLine.Reference3 : null;
         journalLine.Notes = this.ReferencesAndNotes ? originalJourbnalLine.Notes : null;
-        journalLine.AccountingDate = this.Dates ? originalJourbnalLine.AccountingDate : null;
-        journalLine.DueDate = this.Dates ? originalJourbnalLine.DueDate : null;
-        journalLine.DocumentDate = this.Dates ? originalJourbnalLine.DocumentDate : null;
+        journalLine.AccountingDate = this.Dates ? originalJourbnalLine.AccountingDate : this.AccountingDate;
+        journalLine.DueDate = this.Dates ? originalJourbnalLine.DueDate : this.DueDate;
+        journalLine.DocumentDate = this.Dates ? originalJourbnalLine.DocumentDate : this.DocumentDate;
         journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyId : null;
+        journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyCode : null;    
         journalLine.LocalAmount = this.AmountsAndCurrencies ? originalJourbnalLine.LocalAmount : null;
         journalLine.ForeignAmount = this.AmountsAndCurrencies ? originalJourbnalLine.ForeignAmount : null;
-        journalLine.Line = originalJourbnalLine.Line;
-        journalLine.Tenant = originalJourbnalLine.Tenant;
-        journalLine.DebitAccountId = originalJourbnalLine.DebitAccountId;
-        journalLine.CreditAccountId = originalJourbnalLine.CreditAccountId;
-        journalLine.ActionTypeCode = originalJourbnalLine.ActionTypeCode;
         
-
         return journalLine;
     }
     private amountsAndCurrencies: boolean = true;
@@ -122,6 +152,30 @@ export class CopyJournalComponent extends BaseComponent {
     set Dates(value: boolean) {
         if (this.dates != value) {
             this.dates = value;
+        }
+    }
+
+    private accountingDate: Date;
+    get AccountingDate() { return this.accountingDate; }
+    set AccountingDate(value: Date) {
+        if (this.accountingDate != value) {
+            this.accountingDate = value;
+        }
+    }
+
+    private dueDate: Date;
+    get DueDate() { return this.dueDate; }
+    set DueDate(value: Date) {
+        if (this.dueDate != value) {
+            this.dueDate = value;
+        }
+    }
+
+    private documentDate: Date;
+    get DocumentDate() { return this.documentDate; }
+    set DocumentDate(value: Date) {
+        if (this.documentDate != value) {
+            this.documentDate = value;
         }
     }
 }

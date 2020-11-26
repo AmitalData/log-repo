@@ -299,6 +299,11 @@ export class JournalPM {
     public set Copied(newValue: boolean) { if (this.copied != newValue) { this.copied = newValue; this.MarkAsDirty("Copied"); } }
        
 	 
+    private copiedFrom: string;
+    public get CopiedFrom() { return this.copiedFrom; }
+    public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

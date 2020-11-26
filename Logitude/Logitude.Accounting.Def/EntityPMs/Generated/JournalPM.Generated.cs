@@ -1087,6 +1087,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string copiedFrom ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CopiedFrom  
+	   {
+	    
+	     get
+		{
+		   return copiedFrom;
+		 }
+		 set
+		 {
+		   if(copiedFrom != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CopiedFrom",OldValue=copiedFrom,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   copiedFrom=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
