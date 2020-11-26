@@ -66,7 +66,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transshipment1ETD { get; set; }
         public DateTime? Transshipment2ETD { get; set; }
         public DateTime? Transshipment3ETD { get; set; }
-
         public string ShippingLine { get; set; }
         public string Voyage { get; set; }
         public string Vessel { get; set; }

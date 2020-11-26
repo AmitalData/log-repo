@@ -39,6 +39,7 @@ export class InterestReportList {
 	EnableInvoiceing: boolean;
 	InvoiceFailureReason: string;
 	CreditAllotmentPercentage: number;
+	CalCreditAllotmentCommission: number;
 	
 }
  

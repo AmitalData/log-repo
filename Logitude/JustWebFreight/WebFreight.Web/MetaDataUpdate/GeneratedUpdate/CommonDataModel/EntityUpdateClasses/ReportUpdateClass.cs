@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "ac2c3e29511ecbb7d3aa53ba76b2c309";
+		public const string HashString = "0d15c766e86aa4a4bc3b2c83baaf6c82";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1083,6 +1083,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_RCRF = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RCRF", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.RacingReportFeature", NameTextCodeDefaultText = @"Racing - Quotes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_ExternalReconciliationLinesReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliationLinesReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ExternalReconciliationLinesReport", NameTextCodeDefaultText = @"External Reconciliation Lines Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
+		   Feature ReportFeature_UserDefinedReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UserDefinedReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.UserDefinedReport", NameTextCodeDefaultText = @"User Defined Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
    
 	    

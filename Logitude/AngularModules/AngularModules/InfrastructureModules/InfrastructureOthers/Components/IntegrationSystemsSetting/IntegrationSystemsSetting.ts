@@ -9,6 +9,7 @@ import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMS
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 @Component({
     
     selector: 'IntegrationSystemsSetting',
@@ -21,6 +22,8 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
     DataContext: IntegrationSystemsSetting = this;
     ExportQuotationsToIntegratedSystem: boolean = false;
     myTenantPM: TenantPM;
+    public QuotationTransferTriggersList: CodeNameClass[] = [];
+    public DisplayQuotationTransferTriggers: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -28,7 +31,13 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
 
-        } 
+        }
+
+
+        this.DisplayQuotationTransferTriggers = SessionLocator.LoggedUserPM.IsCustomerCare; 
+
+        this.QuotationTransferTriggersList.push(new CodeNameClass("OnSend", "On Send"));
+        this.QuotationTransferTriggersList.push(new CodeNameClass("OnAccept", "On Accept"));
 
         this.LoadCurrentTenant();
 
@@ -44,6 +53,18 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
     }
 
+    private selectedTransferToUnfreightTriggerType: CodeNameClass;
+    get SelectedTransferToUnfreightTriggerType() { return this.selectedTransferToUnfreightTriggerType; }
+    set SelectedTransferToUnfreightTriggerType(value: CodeNameClass) {
+        if (this.selectedTransferToUnfreightTriggerType != value) {
+            this.selectedTransferToUnfreightTriggerType = value;
+
+             
+
+            
+        }
+    }
+
     LoadCurrentTenant() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
@@ -55,6 +76,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
                     this.myTenantPM = myResult;
                     if (this.myTenantPM) {
                         this.ExportQuotationsToIntegratedSystem = this.myTenantPM.ExportQuotationsToIntegratedSystem;
+                        this.SelectedTransferToUnfreightTriggerType = this.QuotationTransferTriggersList.filter(f => f.Code === this.myTenantPM.TransferQuotationsToUnifreightTrigger)[0];
                     }
                 }
             }
@@ -71,14 +93,17 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
     SaveButtonClicked() {
         if (this.myTenantPM) {
-            if (this.ExportQuotationsToIntegratedSystem != this.myTenantPM.ExportQuotationsToIntegratedSystem) {
+            if (this.ExportQuotationsToIntegratedSystem !== this.myTenantPM.ExportQuotationsToIntegratedSystem
+                || this.SelectedTransferToUnfreightTriggerType?.Code !== this.myTenantPM.TransferQuotationsToUnifreightTrigger) {
                 this.myTenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
+                this.myTenantPM.TransferQuotationsToUnifreightTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
                 this.CurrentSession.StartBusyIndicatorSaving();
                 this.tenantPMService.update(this.myTenantPM).subscribe((res:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         SessionLocator.TenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
+                        SessionLocator.TenantPM.TransferQuotationsToUnifreightTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
                         this.CloseButtonClicked();
                     }
                 });
