@@ -344,10 +344,10 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
     _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
       _ARInvoiceLinePM.Quantity = 1;
       _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
-    _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount;
-    _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount;
-    _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount;
-    _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
+      _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
+      _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
+      _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
+      _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount + this.EntityPM.CalCreditAllotmentCommission;
         _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
         var length = this.EntityPM.InterestReportLinesByDates.length;
         _ARInvoiceLinePM.Description = "Interest between " +this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " and " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
