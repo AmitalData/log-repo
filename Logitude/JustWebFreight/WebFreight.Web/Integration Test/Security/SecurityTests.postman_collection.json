@@ -923,7 +923,7 @@
 							"value": null
 						},
 						{
-							"key": null,
+							"key": "",
 							"value": null
 						}
 					]
@@ -975,10 +975,6 @@
 					{
 						"key": "accept",
 						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "cookie",
-						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
 					{
 						"key": "token",
@@ -2270,6 +2266,982 @@
 						{
 							"key": "{{Tenant}}",
 							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBIReportsFolder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18c5509f-23af-40fa-b552-0ac68e978a12",
+						"exec": [
+							"\r",
+							"pm.test(\"GetBIReportsFolder\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    var idvalue1 = (pm.response.json().filter(a => a.Name == 'IntegrationTest')[0].Id);\r",
+							"    var idvalue2 = (pm.response.json().filter(a => a.Name == 'IntegrationTest')[0].Name);\r",
+							"\r",
+							"    if (!idvalue1 === null) {\r",
+							"\r",
+							"        tests[\"No BIReportFolder found please open a new one\"] = !idvalue1 === null ;\r",
+							"        postman.setNextRequest(\"CreateBIReportFolder\");\r",
+							"    }\r",
+							"    else {\r",
+							"        tests[\"IntegrationTest BIReportFolder found\"] = idvalue1 != null;\r",
+							"        pm.environment.set(\"BIReportFolderId\", idvalue1);\r",
+							"        pm.environment.set(\"BIReportFolderName\", idvalue2);\r",
+							"        postman.setNextRequest(\"GetBIReportId\");\r",
+							"    }\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/bireportfolderviews/getall",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"bireportfolderviews",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBIReportFolder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d67800e-909c-4003-a065-5b238e469505",
+						"exec": [
+							"\r",
+							"pm.test(\"CreateBIReportFolder\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    var idvalue1 = pm.response.json().Id;\r",
+							"    \r",
+							"    var id1exist = idvalue1 !== null;\r",
+							"        \r",
+							"    pm.expect(id1exist);\r",
+							"\r",
+							"        pm.environment.set(\"BIReportFolderId\", idvalue1);\r",
+							"       \r",
+							"        //postman.setNextRequest(\"CreatebIReportFolders Copy\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"tenant\": \"{{Tenant}}\",\n  \"createdByUserId\": \"{{LoggedUserId}}\",\n  \"updatedByUserId\": \"{{LoggedUserId}}\",\n  \"name\": \"IntegrationTest\",\n  \"description\": \"IntegrationTest\",\n  \"OldEntityPM\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/bireportfolders",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"bireportfolders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBIReportId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a03d3d6d-a482-4e2f-809f-1a3931f5fff5",
+						"exec": [
+							"\r",
+							"pm.test(\"GetBIReportId\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/bireportviews/getbyfilters?&&ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=17&SortBy=CreateDate&SortDirection=Ascending&Filter1Name=SearchFields&Filter1Operator=equal&Filter1Value=IntegrationTestBiReport",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"bireportviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "17"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equal"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "IntegrationTestBiReport"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDWObjectTable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4bc2a2f7-a26e-4eb5-93fd-39ba72f9d2cb",
+						"exec": [
+							"\r",
+							"pm.test(\"GetAllDWObjectTable\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwobjecttableviews/getall",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwobjecttableviews",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFactShipmentsCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec4c79ef-a4bc-49b4-8b68-ef72d68dd162",
+						"exec": [
+							"\r",
+							"pm.test(\"GetFactShipmentsCode\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwobjecttables/getsingle?code=Fact_Shipments",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwobjecttables",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "Fact_Shipments"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDWObjectFieldsGroupedByCategory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6bc6a4c-ff18-4229-b3a3-21682fe5f423",
+						"exec": [
+							"\r",
+							"pm.test(\"GetAllDWObjectFieldsGroupedByCategory\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwobjectfields/GetDWObjectFieldsByDWTableIdGroupedByCategory?DWOTId=Fact_Shipments",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwobjectfields",
+						"GetDWObjectFieldsByDWTableIdGroupedByCategory"
+					],
+					"query": [
+						{
+							"key": "DWOTId",
+							"value": "Fact_Shipments"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckIfReportNameExist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad71a134-1d24-4906-a89c-3a4f06c9fae1",
+						"exec": [
+							"\r",
+							"pm.test(\"CheckIfReportNameExist\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    var idvalue1 = pm.response.json()\r",
+							"    var idvalue2 = pm.response.json()\r",
+							"\r",
+							"    if (idvalue1 === true) {\r",
+							"\r",
+							"        tests[\"IntegrationTestBiReport found\"] = idvalue1 === true ;\r",
+							"        postman.setNextRequest(\"GetByBIReportIdWithDetails\");\r",
+							"    }\r",
+							"    else {\r",
+							"        tests[\"IntegrationTestBiReport not found\"] = idvalue2 === false;\r",
+							"       \r",
+							"        postman.setNextRequest(\"CreateDWSubQuery\");\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/BIReportsExtended/getReportExist?name=IntegrationTestBiReport&folderId={{BIReportFolderId}}",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"BIReportsExtended",
+						"getReportExist"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "IntegrationTestBiReport"
+						},
+						{
+							"key": "folderId",
+							"value": "{{BIReportFolderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDWSubQuery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fda8fcc-609b-4656-91b0-ef0e7127fbf2",
+						"exec": [
+							"\r",
+							"pm.test(\"CreateBIReportFolder\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    var idvalue1 = pm.response.json().Id;\r",
+							"    var idvalue2 = pm.response.json().DWQueryId;\r",
+							"    \r",
+							"    var id1exist = idvalue1 !== null;\r",
+							"        \r",
+							"    pm.expect(id1exist);\r",
+							"\r",
+							"        pm.environment.set(\"DWSubQuery\", idvalue1);\r",
+							"        pm.environment.set(\"DWQueryId\", idvalue2);\r",
+							"       \r",
+							"        //postman.setNextRequest(\"CreatebIReportFolders Copy\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 OPR/68.0.3618.125"
+					},
+					{
+						"key": "token",
+						"value": "EGlykkS5WB0bWEN+7FaA+qm1NoRJaKyTptc="
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"SubQueryData\": {\n    \"tenant\": \"{{Tenant}}\",\n    \"dWFactTableCode\": \"Fact_Shipments\",\n    \"sQLString\": \"\"\n  },\n  \"Columns\": [\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"3\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 0,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Shipment Number\",\n        \"DisplayName\": \"numero de envío\",\n        \"Code\": \"[Shipment Number]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Text\",\n        \"ParentDataTypeCode\": \"Text\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 0,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Shipment Number\",\n      \"code\": \"[Shipment Number]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[Shipment Number]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Text\",\n      \"dataTypeCode\": \"Text\",\n      \"TranslationText\": \"Shipment Number\",\n      \"displayname\": \"numero de envío\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"4\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 1,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"House\",\n        \"DisplayName\": \"Casa\",\n        \"Code\": \"[House]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Text\",\n        \"ParentDataTypeCode\": \"Text\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 1,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"House\",\n      \"code\": \"[House]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[House]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Text\",\n      \"dataTypeCode\": \"Text\",\n      \"TranslationText\": \"House\",\n      \"displayname\": \"Casa\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"5\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 2,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Direct / House\",\n        \"DisplayName\": \"Direct / House\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Levels\",\n        \"DWObjectTableCode\": \"DIM_Levels\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Levels\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": \"[Code]\",\n        \"HideTree\": true,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 2,\n      \"customPickListCode\": null,\n      \"hideTree\": true,\n      \"lOVAdditionalColumns\": \"[Code]\",\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Direct / House\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Levels\",\n      \"dimensionTableCode\": \"DIM_Levels\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": false,\n      \"TranslationText\": \"Direct / House\",\n      \"displayname\": \"Direct / House\",\n      \"parentDimTabelName\": \"DIM_Levels\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"6\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 3,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Account Manager\",\n        \"DisplayName\": \"Gerente de cuentas\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Users\",\n        \"DWObjectTableCode\": \"DIM_Users\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Users\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": \"[Email]\",\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 3,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": \"[Email]\",\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Account Manager\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Users\",\n      \"dimensionTableCode\": \"DIM_Users\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Account Manager\",\n      \"displayname\": \"Gerente de cuentas\",\n      \"parentDimTabelName\": \"DIM_Users\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": false,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"7\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 4,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Arrived\",\n        \"DisplayName\": \"Arrived\",\n        \"Code\": \"[Is Arrived]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Boolean\",\n        \"ParentDataTypeCode\": \"Boolean\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": false,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 4,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Arrived\",\n      \"code\": \"[Is Arrived]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[Is Arrived]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Boolean\",\n      \"dataTypeCode\": \"Boolean\",\n      \"TranslationText\": \"Arrived\",\n      \"displayname\": \"Arrived\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": false,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"8\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 5,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Operationally Closed\",\n        \"DisplayName\": \"Está operacional cerrado\",\n        \"Code\": \"[Operationally Closed]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Boolean\",\n        \"ParentDataTypeCode\": \"Boolean\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": false,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 5,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Operationally Closed\",\n      \"code\": \"[Operationally Closed]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[Operationally Closed]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Boolean\",\n      \"dataTypeCode\": \"Boolean\",\n      \"TranslationText\": \"Operationally Closed\",\n      \"displayname\": \"Está operacional cerrado\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"9\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 6,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Shipment Notes\",\n        \"DisplayName\": \"Notas\",\n        \"Code\": \"[Shipment Notes]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Text\",\n        \"ParentDataTypeCode\": \"Text\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 6,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Shipment Notes\",\n      \"code\": \"[Shipment Notes]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[Shipment Notes]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Text\",\n      \"dataTypeCode\": \"Text\",\n      \"TranslationText\": \"Shipment Notes\",\n      \"displayname\": \"Notas\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"10\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 7,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Salesman\",\n        \"DisplayName\": \"Salesman\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Users\",\n        \"DWObjectTableCode\": \"DIM_Users\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Users\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": \"[Email]\",\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 7,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": \"[Email]\",\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Salesman\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Users\",\n      \"dimensionTableCode\": \"DIM_Users\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Salesman\",\n      \"displayname\": \"Salesman\",\n      \"parentDimTabelName\": \"DIM_Users\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"11\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 8,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Shipper\",\n        \"DisplayName\": \"Shipper\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Partners\",\n        \"DWObjectTableCode\": \"DIM_Partners\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Partners\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 8,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Shipper\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Partners\",\n      \"dimensionTableCode\": \"DIM_Partners\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Shipper\",\n      \"displayname\": \"Shipper\",\n      \"parentDimTabelName\": \"DIM_Partners\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"18\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 15,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Create Date\",\n        \"DisplayName\": \"Fecha de Creación\",\n        \"Code\": \"[Full Date]\",\n        \"ParentDimTabelName\": \"DIM_Dates\",\n        \"DWObjectTableCode\": \"DIM_Dates\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Date\",\n        \"ParentDataTypeCode\": \"LookUp\",\n        \"DimensionTableCode\": \"DIM_Dates\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 15,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Create Date\",\n      \"code\": \"[Full Date]\",\n      \"dWObjectTableCode\": \"DIM_Dates\",\n      \"dimensionTableCode\": \"DIM_Dates\",\n      \"fieldCode\": \"[Full Date]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"LookUp\",\n      \"dataTypeCode\": \"Date\",\n      \"TranslationText\": \"Create Date\",\n      \"displayname\": \"Fecha de Creación\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": \"DIM_Dates\"\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"19\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 16,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Main Carriage ATA\",\n        \"DisplayName\": \"Carro principal ATA\",\n        \"Code\": \"[Main Carriage ATA]\",\n        \"ParentDimTabelName\": null,\n        \"DWObjectTableCode\": \"Fact_Shipments\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"DateTime\",\n        \"ParentDataTypeCode\": \"DateTime\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 16,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Main Carriage ATA\",\n      \"code\": \"[Main Carriage ATA]\",\n      \"dWObjectTableCode\": \"Fact_Shipments\",\n      \"fieldCode\": \"[Main Carriage ATA]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"DateTime\",\n      \"dataTypeCode\": \"DateTime\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Main Carriage ATA\",\n      \"displayname\": \"Carro principal ATA\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": null\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"20\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 17,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Consignee\",\n        \"DisplayName\": \"Consignee\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Partners\",\n        \"DWObjectTableCode\": \"DIM_Partners\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Partners\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 17,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Consignee\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Partners\",\n      \"dimensionTableCode\": \"DIM_Partners\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Consignee\",\n      \"displayname\": \"Consignee\",\n      \"parentDimTabelName\": \"DIM_Partners\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"21\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 18,\n        \"IsPrimaryKey\": false,\n        \"Name\": \"Agent\",\n        \"DisplayName\": \"Releasing Agent\",\n        \"Code\": \"[Name]\",\n        \"ParentDimTabelName\": \"DIM_Partners\",\n        \"DWObjectTableCode\": \"DIM_Partners\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Dimension\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": \"DIM_Partners\",\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": null,\n        \"LOVAdditionalColumns\": null,\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 18,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": null,\n      \"dimensionTableDisplayName\": null,\n      \"name\": \"Agent\",\n      \"code\": \"[Name]\",\n      \"dWObjectTableCode\": \"DIM_Partners\",\n      \"dimensionTableCode\": \"DIM_Partners\",\n      \"fieldCode\": \"[Name]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Dimension\",\n      \"hasTree\": true,\n      \"TranslationText\": \"Agent\",\n      \"displayname\": \"Releasing Agent\",\n      \"parentDimTabelName\": \"DIM_Partners\",\n      \"isPrimaryKey\": false,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": []\n    },\n    {\n      \"UIProperties\": true,\n      \"TooltipId\": true,\n      \"TooltipContentId\": true,\n      \"CurrentSession\": true,\n      \"IsHaveTranslation\": false,\n      \"Items\": true,\n      \"FilterItems\": [],\n      \"isCustom\": false,\n      \"isGroup\": false,\n      \"showBtns\": false,\n      \"boolValue\": \"No\",\n      \"textValue\": null,\n      \"filterType\": \"Ask User\",\n      \"isSetDefaults\": true,\n      \"isMandatoryFilter\": false,\n      \"DontSaveChanges\": false,\n      \"ShowSampleDateCommand\": true,\n      \"startsWithOp\": {\n        \"code\": \"StartsWith\",\n        \"name\": \"Starts With\"\n      },\n      \"equalsOp\": {\n        \"code\": \"Equals\",\n        \"name\": \"Equals to\"\n      },\n      \"notEqualsOp\": {\n        \"code\": \"NotEqual\",\n        \"name\": \"Not Equal to\"\n      },\n      \"largerThanOp\": {\n        \"code\": \"LargerThan\",\n        \"name\": \"Greater Than\"\n      },\n      \"lessThanOp\": {\n        \"code\": \"LessThan\",\n        \"name\": \"Less Than\"\n      },\n      \"greaterThanOrEqualOp\": {\n        \"code\": \"GreaterThanOrEqual\",\n        \"name\": \"Greater Than Or Equal\"\n      },\n      \"lessThanOrEqualOp\": {\n        \"code\": \"LessThanOrEqual\",\n        \"name\": \"Less Than Or Equal\"\n      },\n      \"IsNullOp\": {\n        \"code\": \"IsNull\",\n        \"name\": \"Is Empty\"\n      },\n      \"IsNotNullOp\": {\n        \"code\": \"IsNotNull\",\n        \"name\": \"Has Value\"\n      },\n      \"beforeOp\": {\n        \"code\": \"Before\",\n        \"name\": \"Before\"\n      },\n      \"afterOp\": {\n        \"code\": \"After\",\n        \"name\": \"After\"\n      },\n      \"previousOp\": {\n        \"code\": \"Previous\",\n        \"name\": \"Previous\"\n      },\n      \"currentOp\": {\n        \"code\": \"Current\",\n        \"name\": \"Current\"\n      },\n      \"nextOp\": {\n        \"code\": \"Next\",\n        \"name\": \"Next\"\n      },\n      \"BetweenOp\": {\n        \"code\": \"Between\",\n        \"name\": \"Between\"\n      },\n      \"BaseDWObjectField\": {\n        \"$id\": \"22\",\n        \"FilterItems\": [],\n        \"Category1\": null,\n        \"Category2\": null,\n        \"IndexOrder\": 19,\n        \"IsPrimaryKey\": true,\n        \"Name\": \"Tenant Number\",\n        \"DisplayName\": \"Source Tenant Tenant Number\",\n        \"Code\": \"[Tenant Number]\",\n        \"ParentDimTabelName\": \"DIM_Tenants\",\n        \"DWObjectTableCode\": \"DIM_Tenants\",\n        \"IsMeasurement\": false,\n        \"AggregationTypeCode\": null,\n        \"DataTypeCode\": \"Integer\",\n        \"ParentDataTypeCode\": \"Dimension\",\n        \"DimensionTableCode\": null,\n        \"TextValue\": null,\n        \"Operation\": null,\n        \"OperationCode\": null,\n        \"OperationName\": null,\n        \"AndOr\": null,\n        \"IsSetDefaults\": true,\n        \"IsMandatoryFilter\": false,\n        \"FilterType\": \"Ask User\",\n        \"DimensionTableDisplayName\": \"Source Tenant\",\n        \"LOVAdditionalColumns\": \"[Tenant Name]\",\n        \"HideTree\": false,\n        \"IsCustom\": false,\n        \"CustomPickListCode\": null,\n        \"IsMultipleSelection\": false,\n        \"MultiSelectedValueLists\": []\n      },\n      \"FilterTypes\": [\n        {\n          \"code\": \"Fixed Filter\",\n          \"name\": \"Fixed Filter\"\n        },\n        {\n          \"code\": \"Ask User\",\n          \"name\": \"Dynamic Filter\"\n        }\n      ],\n      \"MyParentClass\": true,\n      \"indexOrder\": 19,\n      \"customPickListCode\": null,\n      \"hideTree\": false,\n      \"lOVAdditionalColumns\": \"[Tenant Name]\",\n      \"dimensionTableDisplayName\": \"Source Tenant\",\n      \"name\": \"Tenant Number\",\n      \"code\": \"[Tenant Number]\",\n      \"dWObjectTableCode\": \"DIM_Tenants\",\n      \"fieldCode\": \"[Tenant Number]\",\n      \"isMultipleSelection\": false,\n      \"parentDataTypeCode\": \"Dimension\",\n      \"dataTypeCode\": \"Integer\",\n      \"TranslationText\": \"Tenant Number\",\n      \"displayname\": \"Source Tenant Tenant Number\",\n      \"isPrimaryKey\": true,\n      \"isMeasurement\": false,\n      \"multiSelectedValueLists\": [],\n      \"parentDimTabelName\": \"DIM_Tenants\"\n    }\n  ],\n  \"Filters\": {\n    \"UIProperties\": true,\n    \"TooltipId\": true,\n    \"TooltipContentId\": true,\n    \"CurrentSession\": true,\n    \"IsHaveTranslation\": false,\n    \"cannotFilter\": false,\n    \"Items\": true,\n    \"FilterItems\": [\n      {\n        \"UIProperties\": true,\n        \"TooltipId\": true,\n        \"TooltipContentId\": true,\n        \"CurrentSession\": true,\n        \"IsHaveTranslation\": false,\n        \"Items\": true,\n        \"FilterItems\": [],\n        \"isCustom\": false,\n        \"isGroup\": false,\n        \"showBtns\": false,\n        \"boolValue\": \"No\",\n        \"textValue\": \"2018-01-01\",\n        \"filterType\": \"Ask User\",\n        \"isSetDefaults\": true,\n        \"isMandatoryFilter\": false,\n        \"DontSaveChanges\": false,\n        \"ShowSampleDateCommand\": true,\n        \"startsWithOp\": {\n          \"code\": \"StartsWith\",\n          \"name\": \"Starts With\"\n        },\n        \"equalsOp\": {\n          \"code\": \"Equals\",\n          \"name\": \"Equals to\"\n        },\n        \"notEqualsOp\": {\n          \"code\": \"NotEqual\",\n          \"name\": \"Not Equal to\"\n        },\n        \"largerThanOp\": {\n          \"code\": \"LargerThan\",\n          \"name\": \"Greater Than\"\n        },\n        \"lessThanOp\": {\n          \"code\": \"LessThan\",\n          \"name\": \"Less Than\"\n        },\n        \"greaterThanOrEqualOp\": {\n          \"code\": \"GreaterThanOrEqual\",\n          \"name\": \"Greater Than Or Equal\"\n        },\n        \"lessThanOrEqualOp\": {\n          \"code\": \"LessThanOrEqual\",\n          \"name\": \"Less Than Or Equal\"\n        },\n        \"IsNullOp\": {\n          \"code\": \"IsNull\",\n          \"name\": \"Is Empty\"\n        },\n        \"IsNotNullOp\": {\n          \"code\": \"IsNotNull\",\n          \"name\": \"Has Value\"\n        },\n        \"beforeOp\": {\n          \"code\": \"Before\",\n          \"name\": \"Before\"\n        },\n        \"afterOp\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        },\n        \"previousOp\": {\n          \"code\": \"Previous\",\n          \"name\": \"Previous\"\n        },\n        \"currentOp\": {\n          \"code\": \"Current\",\n          \"name\": \"Current\"\n        },\n        \"nextOp\": {\n          \"code\": \"Next\",\n          \"name\": \"Next\"\n        },\n        \"BetweenOp\": {\n          \"code\": \"Between\",\n          \"name\": \"Between\"\n        },\n        \"BaseDWObjectField\": {\n          \"$id\": \"24\",\n          \"FilterItems\": [],\n          \"Category1\": null,\n          \"Category2\": null,\n          \"IndexOrder\": 21,\n          \"IsPrimaryKey\": false,\n          \"Name\": \"Create Date\",\n          \"DisplayName\": \"Fecha de Creación\",\n          \"Code\": \"[Full Date]\",\n          \"ParentDimTabelName\": \"DIM_Dates\",\n          \"DWObjectTableCode\": \"DIM_Dates\",\n          \"IsMeasurement\": false,\n          \"AggregationTypeCode\": null,\n          \"DataTypeCode\": \"Date\",\n          \"ParentDataTypeCode\": \"Date\",\n          \"DimensionTableCode\": \"DIM_Dates\",\n          \"TextValue\": \"2018-01-01\",\n          \"Operation\": {\n            \"$id\": \"25\",\n            \"Code\": \"After\",\n            \"Name\": \"After\"\n          },\n          \"OperationCode\": \"After\",\n          \"OperationName\": \"After\",\n          \"AndOr\": null,\n          \"IsSetDefaults\": true,\n          \"IsMandatoryFilter\": false,\n          \"FilterType\": \"Ask User\",\n          \"DimensionTableDisplayName\": null,\n          \"LOVAdditionalColumns\": null,\n          \"HideTree\": false,\n          \"IsCustom\": false,\n          \"CustomPickListCode\": null,\n          \"IsMultipleSelection\": false,\n          \"MultiSelectedValueLists\": []\n        },\n        \"FilterTypes\": [\n          {\n            \"code\": \"Fixed Filter\",\n            \"name\": \"Fixed Filter\"\n          },\n          {\n            \"code\": \"Ask User\",\n            \"name\": \"Dynamic Filter\"\n          }\n        ],\n        \"MyParentClass\": true,\n        \"indexOrder\": 20,\n        \"customPickListCode\": null,\n        \"hideTree\": false,\n        \"lOVAdditionalColumns\": null,\n        \"name\": \"Create Date\",\n        \"code\": \"[Full Date]\",\n        \"dWObjectTableCode\": \"DIM_Dates\",\n        \"dimensionTableCode\": \"DIM_Dates\",\n        \"fieldCode\": \"[Full Date]\",\n        \"isMultipleSelection\": false,\n        \"parentDataTypeCode\": \"Date\",\n        \"dataTypeCode\": \"Date\",\n        \"TranslationText\": \"Create Date\",\n        \"displayname\": \"Fecha de Creación\",\n        \"isPrimaryKey\": false,\n        \"isMeasurement\": false,\n        \"parentDimTabelName\": \"DIM_Dates\",\n        \"multiSelectedValueLists\": [],\n        \"operationCode\": \"After\",\n        \"operationName\": \"After\",\n        \"operation\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        },\n        \"list\": [\n          null,\n          null,\n          null,\n          null,\n          null,\n          null\n        ]\n      }\n    ],\n    \"isCustom\": false,\n    \"isGroup\": true,\n    \"showBtns\": false,\n    \"boolValue\": \"No\",\n    \"textValue\": null,\n    \"filterType\": \"Ask User\",\n    \"isSetDefaults\": true,\n    \"isMandatoryFilter\": false,\n    \"DontSaveChanges\": false,\n    \"ShowSampleDateCommand\": true,\n    \"startsWithOp\": {\n      \"code\": \"StartsWith\",\n      \"name\": \"Starts With\"\n    },\n    \"equalsOp\": {\n      \"code\": \"Equals\",\n      \"name\": \"Equals to\"\n    },\n    \"notEqualsOp\": {\n      \"code\": \"NotEqual\",\n      \"name\": \"Not Equal to\"\n    },\n    \"largerThanOp\": {\n      \"code\": \"LargerThan\",\n      \"name\": \"Greater Than\"\n    },\n    \"lessThanOp\": {\n      \"code\": \"LessThan\",\n      \"name\": \"Less Than\"\n    },\n    \"greaterThanOrEqualOp\": {\n      \"code\": \"GreaterThanOrEqual\",\n      \"name\": \"Greater Than Or Equal\"\n    },\n    \"lessThanOrEqualOp\": {\n      \"code\": \"LessThanOrEqual\",\n      \"name\": \"Less Than Or Equal\"\n    },\n    \"IsNullOp\": {\n      \"code\": \"IsNull\",\n      \"name\": \"Is Empty\"\n    },\n    \"IsNotNullOp\": {\n      \"code\": \"IsNotNull\",\n      \"name\": \"Has Value\"\n    },\n    \"beforeOp\": {\n      \"code\": \"Before\",\n      \"name\": \"Before\"\n    },\n    \"afterOp\": {\n      \"code\": \"After\",\n      \"name\": \"After\"\n    },\n    \"previousOp\": {\n      \"code\": \"Previous\",\n      \"name\": \"Previous\"\n    },\n    \"currentOp\": {\n      \"code\": \"Current\",\n      \"name\": \"Current\"\n    },\n    \"nextOp\": {\n      \"code\": \"Next\",\n      \"name\": \"Next\"\n    },\n    \"BetweenOp\": {\n      \"code\": \"Between\",\n      \"name\": \"Between\"\n    },\n    \"BaseDWObjectField\": null,\n    \"FilterTypes\": [\n      {\n        \"code\": \"Fixed Filter\",\n        \"name\": \"Fixed Filter\"\n      },\n      {\n        \"code\": \"Ask User\",\n        \"name\": \"Dynamic Filter\"\n      }\n    ],\n    \"MyParentClass\": true,\n    \"indexOrder\": 0,\n    \"andOr\": null\n  }\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/DWSubQuery",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"DWSubQuery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBiReport",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e46d88e9-b759-4145-9844-a74d6ddfbedb",
+						"exec": [
+							"\r",
+							"pm.test(\"CreateAndRunBIReporFail\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"\r",
+							"\r",
+							"    var idvalue1 = pm.response.json().ErrorMessage\r",
+							"    \r",
+							"    var id1exist = idvalue1 !== null;\r",
+							"     pm.expect(idvalue1).to.contains('Sorry! you have no permission to do this operation');\r",
+							"        \r",
+							"    pm.expect(id1exist);\r",
+							"\r",
+							"        //postman.setNextRequest(\"CreatebIReportFolders Copy\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"tenant\": \"{{Tenant}}\",\n\n  \"createdByUserId\": \"{{LoggedUserId}}\",\n\n  \"updatedByUserId\": \"{{LoggedUserId}}\",\n  \"typeCode\": \"EXL\",\n  \"bIReportFolderId\": \"{{BIReportFolderId}}\",\n  \"factTableName\": \"Fact_Shipments\",\n  \"name\": \"IntegrationTestBiReport\",\n  \"dWQueryId\": \"{{DWQueryId}}\",\n  \"OldEntityPM\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/bireports",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"bireports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByBIReportIdWithDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ace3271-23d2-43b8-826e-9602719c14fe",
+						"exec": [
+							"\r",
+							"pm.test(\"GetByBIReportIdWithDetailsFail\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"\r",
+							"    \r",
+							"    var idvalue1 = pm.response.json().ErrorMessage;\r",
+							"    pm.expect(idvalue1).to.contains(\"Object reference not set to an instance of an object\");\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/InfrastructureDomain/GetByBIReportId?Id={{BIReportId}}&dWQueryId={{DWQueryId}}",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"InfrastructureDomain",
+						"GetByBIReportId"
+					],
+					"query": [
+						{
+							"key": "Id",
+							"value": "{{BIReportId}}"
+						},
+						{
+							"key": "dWQueryId",
+							"value": "{{DWQueryId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RunBIReport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52465a9b-bc94-43b6-9829-b05a78fc3116",
+						"exec": [
+							"\r",
+							"pm.test(\"RunBIReport1Fail Becuase you are not authorized to view the content\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"  \r",
+							"\r",
+							"    var idvalue1 = pm.response.json().ErrorMessage;\r",
+							"    pm.expect(idvalue1).to.contains(\"You are not authorized to view the content. The returned data is doesn't belong to the right tenant!\");\r",
+							"\r",
+							"\r",
+							"   \r",
+							"  \r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Columns\": [\n    {\n      \"$id\": \"4\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 0,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipment Number\",\n      \"DisplayName\": \"numero de envío\",\n      \"Code\": \"[Shipment Number]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"5\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 1,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"House\",\n      \"DisplayName\": \"Casa\",\n      \"Code\": \"[House]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"6\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 2,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Direct / House\",\n      \"DisplayName\": \"Direct / House\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Levels\",\n      \"DWObjectTableCode\": \"DIM_Levels\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Levels\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Code]\",\n      \"HideTree\": true,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"7\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 3,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Account Manager\",\n      \"DisplayName\": \"Gerente de cuentas\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Users\",\n      \"DWObjectTableCode\": \"DIM_Users\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Users\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Email]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"8\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 4,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Arrived\",\n      \"DisplayName\": \"Arrived\",\n      \"Code\": \"[Is Arrived]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Boolean\",\n      \"ParentDataTypeCode\": \"Boolean\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": false,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"9\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 5,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Operationally Closed\",\n      \"DisplayName\": \"Está operacional cerrado\",\n      \"Code\": \"[Operationally Closed]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Boolean\",\n      \"ParentDataTypeCode\": \"Boolean\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": false,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"10\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 6,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipment Notes\",\n      \"DisplayName\": \"Notas\",\n      \"Code\": \"[Shipment Notes]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"11\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 7,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Salesman\",\n      \"DisplayName\": \"Salesman\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Users\",\n      \"DWObjectTableCode\": \"DIM_Users\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Users\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Email]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"12\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 8,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipper\",\n      \"DisplayName\": \"Shipper\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"19\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 15,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Create Date\",\n      \"DisplayName\": \"Fecha de Creación\",\n      \"Code\": \"[Full Date]\",\n      \"ParentDimTabelName\": \"DIM_Dates\",\n      \"DWObjectTableCode\": \"DIM_Dates\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Date\",\n      \"ParentDataTypeCode\": \"LookUp\",\n      \"DimensionTableCode\": \"DIM_Dates\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"20\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 16,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Main Carriage ATA\",\n      \"DisplayName\": \"Carro principal ATA\",\n      \"Code\": \"[Main Carriage ATA]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"DateTime\",\n      \"ParentDataTypeCode\": \"DateTime\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"21\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 17,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Consignee\",\n      \"DisplayName\": \"Consignee\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"22\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 18,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Agent\",\n      \"DisplayName\": \"Releasing Agent\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"23\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 19,\n      \"IsPrimaryKey\": true,\n      \"Name\": \"Tenant Number\",\n      \"DisplayName\": \"Source Tenant Tenant Number\",\n      \"Code\": \"[Tenant Number]\",\n      \"ParentDimTabelName\": \"DIM_Tenants\",\n      \"DWObjectTableCode\": \"DIM_Tenants\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Integer\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": \"Source Tenant\",\n      \"LOVAdditionalColumns\": \"[Tenant Name]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"IsMultipleSelection\": false,\n      \"MultiSelectedValueLists\": []\n    }\n  ],\n  \"Filters\": {\n    \"UIProperties\": true,\n    \"Items\": true,\n    \"FilterItems\": [\n      {\n        \"UIProperties\": true,\n        \"Items\": true,\n        \"FilterItems\": [],\n        \"isGroup\": false,\n        \"showBtns\": false,\n        \"filterType\": \"Ask User\",\n        \"isSetDefaults\": true,\n        \"isMandatoryFilter\": false,\n        \"ShowSampleDateCommand\": true,\n        \"startsWithOp\": {\n          \"code\": \"StartsWith\",\n          \"name\": \"Starts With\"\n        },\n        \"equalsOp\": {\n          \"code\": \"Equals\",\n          \"name\": \"Equals to\"\n        },\n        \"notEqualsOp\": {\n          \"code\": \"NotEqual\",\n          \"name\": \"Not Equal to\"\n        },\n        \"largerThanOp\": {\n          \"code\": \"LargerThan\",\n          \"name\": \"Greater Than\"\n        },\n        \"lessThanOp\": {\n          \"code\": \"LessThan\",\n          \"name\": \"Less Than\"\n        },\n        \"greaterThanOrEqualOp\": {\n          \"code\": \"GreaterThanOrEqual\",\n          \"name\": \"Greater Than Or Equal\"\n        },\n        \"lessThanOrEqualOp\": {\n          \"code\": \"LessThanOrEqual\",\n          \"name\": \"Less Than Or Equal\"\n        },\n        \"BetweenOp\": {\n          \"code\": \"Between\",\n          \"name\": \"Between\"\n        },\n        \"IsNullOp\": {\n          \"code\": \"IsNull\",\n          \"name\": \"Is Empty\"\n        },\n        \"IsNotNullOp\": {\n          \"code\": \"IsNotNull\",\n          \"name\": \"Has Value\"\n        },\n        \"beforeOp\": {\n          \"code\": \"Before\",\n          \"name\": \"Before\"\n        },\n        \"afterOp\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        },\n        \"previousOp\": {\n          \"code\": \"Previous\",\n          \"name\": \"Previous\"\n        },\n        \"currentOp\": {\n          \"code\": \"Current\",\n          \"name\": \"Current\"\n        },\n        \"nextOp\": {\n          \"code\": \"Next\",\n          \"name\": \"Next\"\n        },\n        \"BaseDWObjectField\": {\n          \"$id\": \"23\",\n          \"FilterItems\": [],\n          \"Category1\": null,\n          \"Category2\": null,\n          \"IndexOrder\": 19,\n          \"IsPrimaryKey\": false,\n          \"Name\": \"Create Date\",\n          \"DisplayName\": \"Fecha de Creación\",\n          \"Code\": \"[Full Date]\",\n          \"ParentDimTabelName\": \"DIM_Dates\",\n          \"DWObjectTableCode\": \"DIM_Dates\",\n          \"IsMeasurement\": false,\n          \"AggregationTypeCode\": null,\n          \"DataTypeCode\": \"Date\",\n          \"ParentDataTypeCode\": \"Date\",\n          \"DimensionTableCode\": \"DIM_Dates\",\n          \"TextValue\": \"2018-01-01\",\n          \"Operation\": null,\n          \"OperationCode\": \"After\",\n          \"OperationName\": \"After\",\n          \"AndOr\": null,\n          \"IsSetDefaults\": true,\n          \"IsMandatoryFilter\": false,\n          \"FilterType\": \"Ask User\",\n          \"DimensionTableDisplayName\": null,\n          \"LOVAdditionalColumns\": null,\n          \"HideTree\": false,\n          \"IsCustom\": false,\n          \"CustomPickListCode\": null,\n          \"MultiSelectedValueLists\": []\n        },\n        \"lOVAdditionalColumns\": null,\n        \"name\": \"Create Date\",\n        \"code\": \"[Full Date]\",\n        \"dWObjectTableCode\": \"DIM_Dates\",\n        \"dimensionTableCode\": \"DIM_Dates\",\n        \"dataTypeCode\": \"Date\",\n        \"hasTree\": false,\n        \"isCustom\": false,\n        \"customPickListCode\": null,\n        \"displayname\": \"Fecha de Creación\",\n        \"isPrimaryKey\": false,\n        \"isMeasurement\": false,\n        \"FilterChanged\": {\n          \"_isScalar\": false,\n          \"observers\": [\n            {\n              \"closed\": false,\n              \"_parentOrParents\": null,\n              \"_subscriptions\": [\n                {\n                  \"closed\": false,\n                  \"_subscriptions\": null\n                }\n              ],\n              \"syncErrorValue\": null,\n              \"syncErrorThrown\": false,\n              \"syncErrorThrowable\": true,\n              \"isStopped\": false,\n              \"destination\": {\n                \"closed\": false,\n                \"_parentOrParents\": null,\n                \"_subscriptions\": null,\n                \"syncErrorValue\": null,\n                \"syncErrorThrown\": false,\n                \"syncErrorThrowable\": false,\n                \"isStopped\": false,\n                \"destination\": {\n                  \"closed\": true\n                }\n              }\n            }\n          ],\n          \"closed\": false,\n          \"isStopped\": false,\n          \"hasError\": false,\n          \"thrownError\": null,\n          \"__isAsync\": false\n        },\n        \"parentDataTypeCode\": \"Date\",\n        \"parentDimTabelName\": \"DIM_Dates\",\n        \"textValue\": \"2018-01-01\",\n        \"multiSelectedValueLists\": [],\n        \"operationCode\": \"After\",\n        \"operationName\": \"After\",\n        \"operation\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        }\n      }\n    ],\n    \"isGroup\": true,\n    \"showBtns\": false,\n    \"filterType\": \"Fixed Filter\",\n    \"isSetDefaults\": false,\n    \"isMandatoryFilter\": false,\n    \"ShowSampleDateCommand\": true,\n    \"startsWithOp\": {\n      \"code\": \"StartsWith\",\n      \"name\": \"Starts With\"\n    },\n    \"equalsOp\": {\n      \"code\": \"Equals\",\n      \"name\": \"Equals to\"\n    },\n    \"notEqualsOp\": {\n      \"code\": \"NotEqual\",\n      \"name\": \"Not Equal to\"\n    },\n    \"largerThanOp\": {\n      \"code\": \"LargerThan\",\n      \"name\": \"Greater Than\"\n    },\n    \"lessThanOp\": {\n      \"code\": \"LessThan\",\n      \"name\": \"Less Than\"\n    },\n    \"greaterThanOrEqualOp\": {\n      \"code\": \"GreaterThanOrEqual\",\n      \"name\": \"Greater Than Or Equal\"\n    },\n    \"lessThanOrEqualOp\": {\n      \"code\": \"LessThanOrEqual\",\n      \"name\": \"Less Than Or Equal\"\n    },\n    \"BetweenOp\": {\n      \"code\": \"Between\",\n      \"name\": \"Between\"\n    },\n    \"IsNullOp\": {\n      \"code\": \"IsNull\",\n      \"name\": \"Is Empty\"\n    },\n    \"IsNotNullOp\": {\n      \"code\": \"IsNotNull\",\n      \"name\": \"Has Value\"\n    },\n    \"beforeOp\": {\n      \"code\": \"Before\",\n      \"name\": \"Before\"\n    },\n    \"afterOp\": {\n      \"code\": \"After\",\n      \"name\": \"After\"\n    },\n    \"previousOp\": {\n      \"code\": \"Previous\",\n      \"name\": \"Previous\"\n    },\n    \"currentOp\": {\n      \"code\": \"Current\",\n      \"name\": \"Current\"\n    },\n    \"nextOp\": {\n      \"code\": \"Next\",\n      \"name\": \"Next\"\n    },\n    \"BaseDWObjectField\": null,\n    \"andOr\": \"And\"\n  },\n  \"PageIndex\": 0,\n  \"PageSize\": 1000,\n  \"ColumnsSort\": null,\n  \"FactTableName\": \"Fact_Shipments\"\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwquerybuilder/PostGetDWQueryData",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwquerybuilder",
+						"PostGetDWQueryData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RunBIReport2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac99bd27-5692-4957-9b7d-f1921ff3cc0f",
+						"exec": [
+							"\r",
+							"pm.test(\"RunBIReport2Fail Becuase you are not authorized to view the content\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"  \r",
+							"\r",
+							"    var idvalue1 = pm.response.json().ErrorMessage;\r",
+							"    pm.expect(idvalue1).to.contains(\"You are not authorized to view the content. The returned data is doesn't belong to the right tenant!\");\r",
+							"\r",
+							"\r",
+							"   \r",
+							"  \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Columns\": [\n    {\n      \"$id\": \"4\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 0,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipment Number\",\n      \"DisplayName\": \"numero de envío\",\n      \"Code\": \"[Shipment Number]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"5\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 1,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"House\",\n      \"DisplayName\": \"Casa\",\n      \"Code\": \"[House]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"6\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 2,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Direct / House\",\n      \"DisplayName\": \"Direct / House\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Levels\",\n      \"DWObjectTableCode\": \"DIM_Levels\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Levels\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Code]\",\n      \"HideTree\": true,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"7\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 3,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Account Manager\",\n      \"DisplayName\": \"Gerente de cuentas\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Users\",\n      \"DWObjectTableCode\": \"DIM_Users\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Users\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Email]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"8\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 4,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Arrived\",\n      \"DisplayName\": \"Arrived\",\n      \"Code\": \"[Is Arrived]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Boolean\",\n      \"ParentDataTypeCode\": \"Boolean\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": false,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"9\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 5,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Operationally Closed\",\n      \"DisplayName\": \"Está operacional cerrado\",\n      \"Code\": \"[Operationally Closed]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Boolean\",\n      \"ParentDataTypeCode\": \"Boolean\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": false,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"10\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 6,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipment Notes\",\n      \"DisplayName\": \"Notas\",\n      \"Code\": \"[Shipment Notes]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Text\",\n      \"ParentDataTypeCode\": \"Text\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"11\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 7,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Salesman\",\n      \"DisplayName\": \"Salesman\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Users\",\n      \"DWObjectTableCode\": \"DIM_Users\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Users\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Email]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"12\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 8,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Shipper\",\n      \"DisplayName\": \"Shipper\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"19\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 15,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Create Date\",\n      \"DisplayName\": \"Fecha de Creación\",\n      \"Code\": \"[Full Date]\",\n      \"ParentDimTabelName\": \"DIM_Dates\",\n      \"DWObjectTableCode\": \"DIM_Dates\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Date\",\n      \"ParentDataTypeCode\": \"LookUp\",\n      \"DimensionTableCode\": \"DIM_Dates\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"20\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 16,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Main Carriage ATA\",\n      \"DisplayName\": \"Carro principal ATA\",\n      \"Code\": \"[Main Carriage ATA]\",\n      \"ParentDimTabelName\": null,\n      \"DWObjectTableCode\": \"Fact_Shipments\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"DateTime\",\n      \"ParentDataTypeCode\": \"DateTime\",\n      \"DimensionTableCode\": null,\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"21\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 17,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Consignee\",\n      \"DisplayName\": \"Consignee\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"22\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 18,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Agent\",\n      \"DisplayName\": \"Releasing Agent\",\n      \"Code\": \"[Name]\",\n      \"ParentDimTabelName\": \"DIM_Partners\",\n      \"DWObjectTableCode\": \"DIM_Partners\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Partners\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": null,\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"MultiSelectedValueLists\": []\n    },\n    {\n      \"$id\": \"23\",\n      \"FilterItems\": [],\n      \"Category1\": null,\n      \"Category2\": null,\n      \"IndexOrder\": 19,\n      \"IsPrimaryKey\": false,\n      \"Name\": \"Source Tenant\",\n      \"DisplayName\": \"Source Tenant\",\n      \"Code\": \"[Tenant Name]\",\n      \"ParentDimTabelName\": \"DIM_Tenants\",\n      \"DWObjectTableCode\": \"DIM_Tenants\",\n      \"IsMeasurement\": false,\n      \"AggregationTypeCode\": null,\n      \"DataTypeCode\": \"Dimension\",\n      \"ParentDataTypeCode\": \"Dimension\",\n      \"DimensionTableCode\": \"DIM_Tenants\",\n      \"TextValue\": null,\n      \"Operation\": null,\n      \"OperationCode\": null,\n      \"OperationName\": null,\n      \"AndOr\": null,\n      \"IsSetDefaults\": true,\n      \"IsMandatoryFilter\": false,\n      \"FilterType\": \"Ask User\",\n      \"DimensionTableDisplayName\": null,\n      \"LOVAdditionalColumns\": \"[Tenant Number]\",\n      \"HideTree\": false,\n      \"IsCustom\": false,\n      \"CustomPickListCode\": null,\n      \"IsMultipleSelection\": false,\n      \"MultiSelectedValueLists\": []\n    }\n  ],\n  \"Filters\": {\n    \"UIProperties\": true,\n    \"Items\": true,\n    \"FilterItems\": [\n      {\n        \"UIProperties\": true,\n        \"Items\": true,\n        \"FilterItems\": [],\n        \"isGroup\": false,\n        \"showBtns\": false,\n        \"filterType\": \"Ask User\",\n        \"isSetDefaults\": true,\n        \"isMandatoryFilter\": false,\n        \"ShowSampleDateCommand\": true,\n        \"startsWithOp\": {\n          \"code\": \"StartsWith\",\n          \"name\": \"Starts With\"\n        },\n        \"equalsOp\": {\n          \"code\": \"Equals\",\n          \"name\": \"Equals to\"\n        },\n        \"notEqualsOp\": {\n          \"code\": \"NotEqual\",\n          \"name\": \"Not Equal to\"\n        },\n        \"largerThanOp\": {\n          \"code\": \"LargerThan\",\n          \"name\": \"Greater Than\"\n        },\n        \"lessThanOp\": {\n          \"code\": \"LessThan\",\n          \"name\": \"Less Than\"\n        },\n        \"greaterThanOrEqualOp\": {\n          \"code\": \"GreaterThanOrEqual\",\n          \"name\": \"Greater Than Or Equal\"\n        },\n        \"lessThanOrEqualOp\": {\n          \"code\": \"LessThanOrEqual\",\n          \"name\": \"Less Than Or Equal\"\n        },\n        \"BetweenOp\": {\n          \"code\": \"Between\",\n          \"name\": \"Between\"\n        },\n        \"IsNullOp\": {\n          \"code\": \"IsNull\",\n          \"name\": \"Is Empty\"\n        },\n        \"IsNotNullOp\": {\n          \"code\": \"IsNotNull\",\n          \"name\": \"Has Value\"\n        },\n        \"beforeOp\": {\n          \"code\": \"Before\",\n          \"name\": \"Before\"\n        },\n        \"afterOp\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        },\n        \"previousOp\": {\n          \"code\": \"Previous\",\n          \"name\": \"Previous\"\n        },\n        \"currentOp\": {\n          \"code\": \"Current\",\n          \"name\": \"Current\"\n        },\n        \"nextOp\": {\n          \"code\": \"Next\",\n          \"name\": \"Next\"\n        },\n        \"BaseDWObjectField\": {\n          \"$id\": \"23\",\n          \"FilterItems\": [],\n          \"Category1\": null,\n          \"Category2\": null,\n          \"IndexOrder\": 19,\n          \"IsPrimaryKey\": false,\n          \"Name\": \"Create Date\",\n          \"DisplayName\": \"Fecha de Creación\",\n          \"Code\": \"[Full Date]\",\n          \"ParentDimTabelName\": \"DIM_Dates\",\n          \"DWObjectTableCode\": \"DIM_Dates\",\n          \"IsMeasurement\": false,\n          \"AggregationTypeCode\": null,\n          \"DataTypeCode\": \"Date\",\n          \"ParentDataTypeCode\": \"Date\",\n          \"DimensionTableCode\": \"DIM_Dates\",\n          \"TextValue\": \"2018-01-01\",\n          \"Operation\": null,\n          \"OperationCode\": \"After\",\n          \"OperationName\": \"After\",\n          \"AndOr\": null,\n          \"IsSetDefaults\": true,\n          \"IsMandatoryFilter\": false,\n          \"FilterType\": \"Ask User\",\n          \"DimensionTableDisplayName\": null,\n          \"LOVAdditionalColumns\": null,\n          \"HideTree\": false,\n          \"IsCustom\": false,\n          \"CustomPickListCode\": null,\n          \"MultiSelectedValueLists\": []\n        },\n        \"lOVAdditionalColumns\": null,\n        \"name\": \"Create Date\",\n        \"code\": \"[Full Date]\",\n        \"dWObjectTableCode\": \"DIM_Dates\",\n        \"dimensionTableCode\": \"DIM_Dates\",\n        \"dataTypeCode\": \"Date\",\n        \"hasTree\": false,\n        \"isCustom\": false,\n        \"customPickListCode\": null,\n        \"displayname\": \"Fecha de Creación\",\n        \"isPrimaryKey\": false,\n        \"isMeasurement\": false,\n        \"FilterChanged\": {\n          \"_isScalar\": false,\n          \"observers\": [\n            {\n              \"closed\": false,\n              \"_parentOrParents\": null,\n              \"_subscriptions\": [\n                {\n                  \"closed\": false,\n                  \"_subscriptions\": null\n                }\n              ],\n              \"syncErrorValue\": null,\n              \"syncErrorThrown\": false,\n              \"syncErrorThrowable\": true,\n              \"isStopped\": false,\n              \"destination\": {\n                \"closed\": false,\n                \"_parentOrParents\": null,\n                \"_subscriptions\": null,\n                \"syncErrorValue\": null,\n                \"syncErrorThrown\": false,\n                \"syncErrorThrowable\": false,\n                \"isStopped\": false,\n                \"destination\": {\n                  \"closed\": true\n                }\n              }\n            }\n          ],\n          \"closed\": false,\n          \"isStopped\": false,\n          \"hasError\": false,\n          \"thrownError\": null,\n          \"__isAsync\": false\n        },\n        \"parentDataTypeCode\": \"Date\",\n        \"parentDimTabelName\": \"DIM_Dates\",\n        \"textValue\": \"2018-01-01\",\n        \"multiSelectedValueLists\": [],\n        \"operationCode\": \"After\",\n        \"operationName\": \"After\",\n        \"operation\": {\n          \"code\": \"After\",\n          \"name\": \"After\"\n        }\n      }\n    ],\n    \"isGroup\": true,\n    \"showBtns\": false,\n    \"filterType\": \"Fixed Filter\",\n    \"isSetDefaults\": false,\n    \"isMandatoryFilter\": false,\n    \"ShowSampleDateCommand\": true,\n    \"startsWithOp\": {\n      \"code\": \"StartsWith\",\n      \"name\": \"Starts With\"\n    },\n    \"equalsOp\": {\n      \"code\": \"Equals\",\n      \"name\": \"Equals to\"\n    },\n    \"notEqualsOp\": {\n      \"code\": \"NotEqual\",\n      \"name\": \"Not Equal to\"\n    },\n    \"largerThanOp\": {\n      \"code\": \"LargerThan\",\n      \"name\": \"Greater Than\"\n    },\n    \"lessThanOp\": {\n      \"code\": \"LessThan\",\n      \"name\": \"Less Than\"\n    },\n    \"greaterThanOrEqualOp\": {\n      \"code\": \"GreaterThanOrEqual\",\n      \"name\": \"Greater Than Or Equal\"\n    },\n    \"lessThanOrEqualOp\": {\n      \"code\": \"LessThanOrEqual\",\n      \"name\": \"Less Than Or Equal\"\n    },\n    \"BetweenOp\": {\n      \"code\": \"Between\",\n      \"name\": \"Between\"\n    },\n    \"IsNullOp\": {\n      \"code\": \"IsNull\",\n      \"name\": \"Is Empty\"\n    },\n    \"IsNotNullOp\": {\n      \"code\": \"IsNotNull\",\n      \"name\": \"Has Value\"\n    },\n    \"beforeOp\": {\n      \"code\": \"Before\",\n      \"name\": \"Before\"\n    },\n    \"afterOp\": {\n      \"code\": \"After\",\n      \"name\": \"After\"\n    },\n    \"previousOp\": {\n      \"code\": \"Previous\",\n      \"name\": \"Previous\"\n    },\n    \"currentOp\": {\n      \"code\": \"Current\",\n      \"name\": \"Current\"\n    },\n    \"nextOp\": {\n      \"code\": \"Next\",\n      \"name\": \"Next\"\n    },\n    \"BaseDWObjectField\": null,\n    \"andOr\": \"And\"\n  },\n  \"PageIndex\": 1000,\n  \"PageSize\": 1000,\n  \"ColumnsSort\": null,\n  \"FactTableName\": \"Fact_Shipments\"\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwquerybuilder/PostGetDWQueryData",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwquerybuilder",
+						"PostGetDWQueryData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDIMPartnersFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9baf0902-f280-432a-84b8-01395434b668",
+						"exec": [
+							"\r",
+							"pm.test(\"GetDIMPartnersFromNotMyTenantFail Becuase you are not authorized to view the content\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"  \r",
+							"\r",
+							"    var idvalue1 = pm.response.json().ErrorMessage;\r",
+							"    pm.expect(idvalue1).to.contains(\"You are not authorized to view the content. The returned data is doesn't belong to the right tenant!\");\r",
+							"\r",
+							"\r",
+							"   \r",
+							"  \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/dwquerybuilder/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=false&Filter1Name=DIM_Partners&Filter2Name=%5BCode%5D&Filter3Name=%5BLocal%20Name%5D%2C%5BPartner%20Type%5D&GetCount=true&PageIndex=0&PageSize=13&ObjectTableName=DIM_Partners",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"dwquerybuilder",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "DIM_Partners"
+						},
+						{
+							"key": "Filter2Name",
+							"value": "%5BCode%5D"
+						},
+						{
+							"key": "Filter3Name",
+							"value": "%5BLocal%20Name%5D%2C%5BPartner%20Type%5D"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						},
+						{
+							"key": "ObjectTableName",
+							"value": "DIM_Partners"
 						}
 					]
 				}
