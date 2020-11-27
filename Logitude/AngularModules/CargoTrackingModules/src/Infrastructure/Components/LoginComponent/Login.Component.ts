@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'login',
