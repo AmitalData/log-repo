@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers
             globalContext = GlobalContext.GetContext();
         }
 
-        public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string appMobileEnvironment, string brandingTenant)
+        public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string brandingTenant)
         {
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
             string reqNumber = GetResetRequestNumber();
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Helpers
             {
                 ResetPasswordParameters = resetPasswordParameters,
                 Result = emailBodyResults.Result,
-                AppMobileEnvironment = appMobileEnvironment,
+                AppMobileEnvironment = resetPasswordParameters.AppEnvironment,
             };
             CreateEmailCommunicationLog(emailBodyResults.HtmlTemplate, emailCommunicationLogBuilderArgs, privatelabel);
         }

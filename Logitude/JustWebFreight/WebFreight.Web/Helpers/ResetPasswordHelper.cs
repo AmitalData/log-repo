@@ -46,48 +46,85 @@ namespace WebFreight.Web.Helpers
         private UserData RequestToResetUserPassword(ResetPasswordParameters resetPasswordParameters, List<GlobalContact> contacts, string tenant)
         {
             UserData userData = new UserData();
-            contacts = contacts.Where(m => m.GlobalTenant.IsActive == true && m.InActive == false).ToList();
-            if (contacts.Count > 0)
+            bool hasActiveContact = HasActiveContact(contacts);
+            bool isValidContact = CheckIsValidContactByEmail(resetPasswordParameters.Email);
+            string logMessage;
+
+            if (hasActiveContact && isValidContact)
             {
-                CreateChangePasswordLogAfterCheckContactPassword(resetPasswordParameters, tenant);
+                ProceedToResetUserPassword(resetPasswordParameters, tenant);
+                logMessage = "(ForgetPassword) Email has been sent successfully";
             }
             else
             {
-                userData.HasError = true;
+                userData = GetErrorUserDataDetails(resetPasswordParameters.Email, hasActiveContact);
+                logMessage = "(ForgetPassword) Email is not sent successfully";
+            }
+
+            CreateChangePasswordLog(logMessage, "", "", resetPasswordParameters.Email);
+            return userData;
+        }
+
+        private UserData GetErrorUserDataDetails(string email, bool hasActiveContact)
+        {
+            UserData userData = new UserData();
+            userData.HasError = true;
+
+            if (!hasActiveContact)
+            {
                 userData.InActive = true;
-                CreateChangePasswordLog("(ForgetPassword) Email is not sent successfully", "", "", resetPasswordParameters.Email);
+            }
+            else
+            {
+                bool isLocked = CheckIsUserLockedByEmail(email);
+                userData.IsLocked = isLocked;
             }
 
             return userData;
         }
 
-        private void CreateChangePasswordLogAfterCheckContactPassword(ResetPasswordParameters resetPasswordParameters, string tenant)
+        private bool HasActiveContact(List<GlobalContact> contacts)
         {
-            UserData userData = new UserData();
-            PasswordCheckService passwordChkService = new PasswordCheckService();
-            bool result;
+            var activeContacts = contacts.Where(m => m.GlobalTenant.IsActive == true && m.InActive == false).ToList();
 
+            if (activeContacts.Count < 0 )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckIsValidContactByEmail(string email)
+        {
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault();
+
+            if (contactPassword == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckIsUserLockedByEmail(string email)
+        {
+            bool isLocked = false;
+
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            isLocked = globalObjectContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault().IsLocked;
+            
+            return isLocked;
+        }
+        
+        private void ProceedToResetUserPassword(ResetPasswordParameters resetPasswordParameters, string tenant)
+        {
             if (string.IsNullOrEmpty(resetPasswordParameters.AppEnvironment))
                 resetPasswordParameters.AppEnvironment = "Unifreight";
 
-            if (!string.IsNullOrEmpty(tenant))
-                result = passwordChkService.RequestResetUserPassword(resetPasswordParameters, resetPasswordParameters.AppEnvironment, tenant);
-            else
-                result = passwordChkService.RequestResetUserPassword(resetPasswordParameters, resetPasswordParameters.AppEnvironment);
-
-            bool inValidEmail = false;
-            if (!result)
-            {
-                userData.HasError = true;
-                bool isLocked = passwordChkService.CheckIfUserIsLocked(resetPasswordParameters.Email, ref inValidEmail);
-                userData.IsLocked = isLocked;
-                // userData.InValidMailOrPassword = inValidEmail;
-                CreateChangePasswordLog("(ForgetPassword) Email is not sent successfully", "", "", resetPasswordParameters.Email);
-            }
-            else
-            {
-                CreateChangePasswordLog("(ForgetPassword) Email has been sent successfully", "", "", resetPasswordParameters.Email);
-            }
+            ResetUserPasswordService resetUserPasswordService = new ResetUserPasswordService();
+            resetUserPasswordService.ResetUserPassword(resetPasswordParameters, tenant);
         }
 
         private static UserData CheckForgotPasswordCaptchaCode(ResetPasswordParameters resetPasswordParameters)
