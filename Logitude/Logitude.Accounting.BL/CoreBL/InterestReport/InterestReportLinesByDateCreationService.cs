@@ -18,7 +18,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = new List<InterestReportLinesByDatePM>();
             int sequence = 1;
-            decimal OpenBalance = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
+            decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
+            decimal OpenBalance = accumulatedAmount;
             for (int i = 0; i < interestTransactionsGroupedByDates.Count; i++)
             {
                 InterestTransactionsGroupedByDate currentInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i];
@@ -29,14 +30,15 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 }
                 bool isLinehasRecent = CheckRecentCustomerReportForLine(interestReportLinesByDateCreationParams.InterestReportPM,
                                                                         currentInterestTransactionGroupedByDate.GroupInterestValueDate);
-                decimal accumulatedAmount = isLinehasRecent? currentInterestTransactionGroupedByDate.TotalLocalAmount : OpenBalance + currentInterestTransactionGroupedByDate.TotalLocalAmount;
+                accumulatedAmount =  accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
+                decimal LineAccumulatedAmount = isLinehasRecent ? accumulatedAmount - OpenBalance: accumulatedAmount;
                 InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams = new InterestReportLinesByDateMappingParams(
                     currentInterestTransactionGroupedByDate,
                     nextInterestTransactionGroupedByDate,
                     interestReportLinesByDateCreationParams.InterestReportPM.Id,
                     interestReportLinesByDateCreationParams.InterestReportPM.Tenant,
                     interestReportLinesByDateCreationParams,
-                    accumulatedAmount);
+                    LineAccumulatedAmount);
                 tenant = interestReportLinesByDateCreationParams.InterestReportPM.Tenant;
                 InterestReportLinesByDatePM interestReportLinesByDatePM = GetMappedInterestReportLinesByDatePM(interestReportLinesByDateMappingParams);
                 interestReportLinesByDatePM.LineNumber = sequence++;
