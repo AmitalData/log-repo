@@ -5,6 +5,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Utilities;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -138,7 +139,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     MyBlance myBlance = GetStartBalanceOfCurrPage(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
                     CumulativeLocalAmount += myBlance.SumLocalAmount;
                     CumulativeForeignAmount += myBlance.SumForeignAmount;
-
+                    LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
                     LogIt("b4 list");
                     list.ForEach(rec =>
                     {
@@ -147,13 +148,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                         CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
                         rec.CumulativeLocalAmount = CumulativeLocalAmount;
-
                         if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
                         {
                             CumulativeForeignAmount += (rec.ForeignAmountDebit - rec.ForeignAmountCredit);
                             rec.CumulativeForeignAmount = CumulativeForeignAmount;
                         }
 
+
+                        rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+                        rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
+                        rec.Source = rec.IconCode + " " + rec.SourceNumber;
+                        rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
+                        rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+                        rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                        rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+                        rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+                        rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+                        rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+                        rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+                        if (isFromExcelGenerater)
+                        {
+                            ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+                        }
                     });
                     LogIt("after list");
                     //}

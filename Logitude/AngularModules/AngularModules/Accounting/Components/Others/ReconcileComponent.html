@@ -94,8 +94,8 @@
                         <div style="width: 30px; padding: 3px 4px;"  float-end>
                             <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
                         </div>
-                        <div [style.float]="isRTL ? 'left' : 'right'"  style="margin: 0 15px;padding: 3px 4px;">
-                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [IsSmall]="true"     (click)="ExportToExcelClick()"></IconButton>
+                        <div [style.float]="isRTL ? 'left' : 'right'"  style="padding: 3px 4px;">
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  (click)="ExportToExcelClick()"></IconButton>
                         </div>
                     </li>
                 </ul>

@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         private IQueryable<LedgerTransactionList> GetIqueryableList(IQueryable<LedgerTransaction> iQueryable)
         {
-            IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Currency").Include("Journal")
+            IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
                                                        select new LedgerTransactionList()
                                                        {
                                                            Id = a.Id,
@@ -36,7 +36,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            ForeignAmountCredit = a.ForeignAmountCredit,
                                                            ForeignAmountDebit = a.ForeignAmountDebit,
                                                            ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-
+                                                           ReconcileMethodCode = a.Account.ReconcileMethodCode,
                                                            JournalId = a.JournalId,
                                                            JournalNumber = a.JournalLine.Journal.JournalNumber,
                                                            Source = a.JournalLine.Journal.AccountingEntityReference,
@@ -507,8 +507,34 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Skip(skipped)
                 .Take(queryOperations.PageSize);
             var mylist = query2.ToList();
+            MapLedgerTransactionnList(mylist, callback.IsFromExcelGenerator);
             return mylist;
         }
+ 
+        private void MapLedgerTransactionnList (List<LedgerTransactionList> LedgerTransactions, bool  IsFromExcelGenerator)
+        {
+            LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
+            LedgerTransactions.ForEach(rec =>
+            {
+                rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+                rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
+                rec.Source =  rec.IconCode+" "+ rec.SourceNumber;
+                rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
+                rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+                rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+                rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+                rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+                if (IsFromExcelGenerator)
+                {
+                    ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+                }
+            });
+        }
+       
+      
         public List<LedgerTransactionList> GetReconciliationFilterList(QueryOperations queryOperations, GenericCallBack callback,
             string AccountId,
             int tenant)

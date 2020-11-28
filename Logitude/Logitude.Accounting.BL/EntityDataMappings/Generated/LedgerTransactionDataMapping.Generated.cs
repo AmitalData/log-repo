@@ -111,7 +111,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconciliationId, 
 	         PaymentReconciledAmount, 
 	         InProgressExternalReconcile, 
-	         OriginalAmount,
+	         OriginalAmount, 
+	         ReconcileMethodCode, 
+	         IsCumulativeForeignAmountPos, 
+	         IsForeignAmountCreditPos, 
+	         IsCumulativeLocalAmountPos, 
+	         IsLocalAmountCreditPos, 
+	         IsForeignAmountPos, 
+	         IsOriginalAmountPos, 
+	         IconCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
