@@ -777,14 +777,14 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     $("#DocumentsPageBusyIndicator").hide();
 }
 
-function BuildMasterDocumentsTabPageViewModel(documents, PathPrefix) {
+function BuildMasterDocumentsTabPageViewModel(entityId, documents, PathPrefix) {
 
     var GridColumns = [];
     var GridDataSource = [];
 
     var iconTemplate = "";
     iconTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
-    iconTemplate += "<img src='#= FileType #' style='width:20px; height:20px; vertical-align:middle; display: block; margin: auto;' />";
+    iconTemplate += "<img src='#= FileType #' style='width:20px; height:20px; vertical-align:middle; cursor:pointer; display: block; margin: auto;' />";
     iconTemplate += "</a>";
     GridColumns.push({ title: " ", field: "FileType", width: 25, template: iconTemplate });
     GridColumns.push({ title: "Document Type", field: "FileName", width: 200 });
@@ -820,8 +820,9 @@ function BuildMasterDocumentsTabPageViewModel(documents, PathPrefix) {
             Url: itemUrl
         });
     });
+    var documentsGridId = "#DocumentsGrid" + entityId;
 
-    $("#DocumentsGrid").kendoGrid(
+    $(documentsGridId).kendoGrid(
         {
             columns: GridColumns,
             dataSource: {
@@ -829,21 +830,6 @@ function BuildMasterDocumentsTabPageViewModel(documents, PathPrefix) {
             }
         });
 
-    $("#DocumentsGrid2").kendoGrid(
-        {
-            columns: GridColumns,
-            dataSource: {
-                data: GridDataSource
-            }
-        });
-
-    $("#DocumentsGrid3").kendoGrid(
-        {
-            columns: GridColumns,
-            dataSource: {
-                data: GridDataSource
-            }
-        });
 
     $("#DocumentsPageBusyIndicator").hide();
 }

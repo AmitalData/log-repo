@@ -5848,16 +5848,16 @@ namespace WebFreight.Web.Helpers
         {
             string url = sharedLinkHTMLArgs.SystemUrl;
             if (url.Contains("login.aspx"))
-                url = RemoveLoginWordFromSystemUrl(url);
+                url = GetOnlyDomainNameFromSystemUrl(url);
 
-            string pageLink = GetSecurityPageLinkPath(sharedLinkHTMLArgs, url);
+            string pageLink = GetSecurityPageLink(sharedLinkHTMLArgs, url);
             string originalNodeInnerText = sharedLinkHTMLArgs.OriginalNodeInnerText.Replace("\"", "'");
-            string reslut = BuildSecurityKeyHtml(pageLink, originalNodeInnerText);
+            string reslut = BuildSecurityKeyLinkHtml(pageLink, originalNodeInnerText);
 
             return reslut;
         }
 
-        private string BuildSecurityKeyHtml(string pageLink, string originalNodeInnerText)
+        private string BuildSecurityKeyLinkHtml(string pageLink, string originalNodeInnerText)
         {
             string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
             string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View online</a>";
@@ -5865,7 +5865,7 @@ namespace WebFreight.Web.Helpers
             return reslut;
         }
 
-        private string GetSecurityPageLinkPath(SharedLinkHTMLArgs sharedLinkHTMLArgs, string url)
+        private string GetSecurityPageLink(SharedLinkHTMLArgs sharedLinkHTMLArgs, string url)
         {
             string entityId = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "Id");
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
@@ -5886,7 +5886,7 @@ namespace WebFreight.Web.Helpers
             return value;
         }
 
-        private string RemoveLoginWordFromSystemUrl(string systemUrl)
+        private string GetOnlyDomainNameFromSystemUrl(string systemUrl)
         {
             string url = systemUrl;
             string[] test = systemUrl.Split('/');

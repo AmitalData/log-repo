@@ -41,6 +41,9 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
 using Logitude.BL.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace WebFreight.Web.WebServices
 {
@@ -647,7 +650,29 @@ namespace WebFreight.Web.WebServices
 
         }
 
+        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant)
+        {
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
+            List<Shipment> housesShipments = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
 
+            housesShipments.ForEach(shipment =>
+            {
+                myDocumentFilings = myDocumentFilings.Concat(myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(shipment.Id, tenant)).ToList();
+            });
+
+            return myDocumentFilings;
+        }
+
+        private static List<Shipment> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)
+        {
+            IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
+            ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(shipmentContext);
+            List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
+            return housesShipments;
+        }
 
         [WebMethod]
         public byte[] DownloadFile(string documentId, string documentExtension, string fileLocation, int tenant, bool withOutTenant = false)
