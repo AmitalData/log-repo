@@ -1504,21 +1504,27 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.ContainersItemsSourceView = [];
 
         var list: TariffLinesContainersPricePM[] = [];
+
         this.EntityPM.ContainersPrices.forEach((item) => {
             list.push(item);
         });
 
         if (list.length < 10) {
-            for (var i = list.length; i < 10; i++) {
+            for (var i = 0; i < 10; i++) {
+
                 var chargeId: string = this.FatherComponent['Surcharge' + (i + 1) + 'Id'];
 
                 if (!AppTool.IsNullOrEmpty(chargeId)) {
-                    var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
-                    item.Tenant = this.EntityPM.Tenant;
-                    item.TariffId = this.EntityPM.TariffId;
-                    item.TariffLineId = this.EntityPM.Id;
-                    item.SurchargeId = chargeId;
-                    list.push(item);
+                    if (list.filter(f => f.SurchargeId == chargeId).length == 0) {
+                        if (list.length < 10) {
+                            var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
+                            item.Tenant = this.EntityPM.Tenant;
+                            item.TariffId = this.EntityPM.TariffId;
+                            item.TariffLineId = this.EntityPM.Id;
+                            item.SurchargeId = chargeId;
+                            list.push(item);
+                        }
+                    }
                 }
             }
         }
