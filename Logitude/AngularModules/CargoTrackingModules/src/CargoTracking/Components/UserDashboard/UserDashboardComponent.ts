@@ -3,6 +3,9 @@ import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingS
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -18,17 +21,13 @@ export class UserDashboardComponent implements AfterViewInit
     noResult: boolean = false;
     currentDate = new Date();
     FilteredItems: any[] = [];
-    searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-    _Tenant:number;
-
-    constructor(private router: Router,
-        private searchService: CargoTrackingSearchService)
+    isTenantLoaded:boolean = false;
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router, )
     {
-        // this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-       
+         
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+         this.GetTenantByDomain();
 
     }
 
@@ -36,94 +35,27 @@ export class UserDashboardComponent implements AfterViewInit
     openNav(){
         this.isNavOpened = !this.isNavOpened;
     }
+    public GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
+    private GetTenantByDomain()
+    {
+        this.cargoTrackingDataExtendedService.GetTenantByDomain(location.hostname).subscribe((response: ServiceResponse) =>
+        { if(response.Result){
+            CargoTrackingBrandingData.Tenant = response.Result;
+            this.isTenantLoaded =true;
+          }
+          else{
+              this.GoToError401();
+          }
+        });
+    }
 
     ngAfterViewInit()
     { 
-    }
-
-  
-
-
-
-
-    private _SearchText: string;
-    public get SearchText(): string
-    {
-        return this._SearchText;
-    }
-    public set SearchText(v: string)
-    {
-        this._SearchText = v;
-        if (!this.SearchText)
-            this.Search();
-    }
-
-    Clear()
-    {
-        this.SearchText = '';
-        this.Search();
-    }
-    Search()
-    {
-        if(this._Tenant){
-            this.router.navigate([this._Tenant,'search', this.SearchText]);
-            this.LoadShipments();
-        }
-            
-    }
-    ItemClicked(item)
-    {
-        var SecurityKey = item.SecurityKey;
-
-        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
 
     }
-    LoadShipments()
-    {
 
-        this.noResult = false;
-        var searchText = this._SearchText.trim().toLowerCase();
-        if (searchText) {
-            this.isLoading = true;
-            this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {
-                this.isLoading = false;
-                console.log("[getShipments]", result);
-                this.Shipments = result;
-                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-
-            });
-        }else{
-            this.Shipments = [];
-        }
-
-    }
-    references: string[];
-    SplitReference(reference: string){
-      this.references =reference!= null?  reference.split(','): null;
     
-    }
-
-    GetModeIcon(mode: string)
-    {
-        var iconPath = "";
-        switch (mode) {
-            case 'A':
-                iconPath = "./assets/images/misc/plane.svg";
-                break;
-
-            case 'O':
-                iconPath = "./assets/images/misc/ship.svg";
-                break;
-
-            case 'I':
-                iconPath = "./assets/images/misc/Truck.svg";
-                break;
-
-            default:
-                break;
-        }
-
-        return iconPath;
-    }
 }

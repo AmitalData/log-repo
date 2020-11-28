@@ -21,8 +21,8 @@ export class HomeComponent
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
-    tenant: number;
     BackGroundImg:string;
+    Domain:string;
     MapImgSRC:string ="";
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router, 
         private location: Location)
@@ -34,23 +34,25 @@ export class HomeComponent
 
 
     private getcargoTrackingData()
-    {
-        this.cargoTrackingDataExtendedService.get(this.tenant).subscribe((response: ServiceResponse) =>
-        { 
-
+    {   console.log(location.hostname);
+        this.cargoTrackingDataExtendedService.get(location.hostname).subscribe((response: ServiceResponse) =>
+        { if(response.Result){
+            CargoTrackingBrandingData.Tenant = response.Result.Tenant;
             CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? this.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
             CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? this.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
-                document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
-                document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
-               // document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
-              //  document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
-                document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
-                        
-            this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
+            document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
-            this.IsBrandingDataLoaded = true;
+            this.Logo = response.Result.Logo != null ? response.Result.Logo:null;
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":this.MapImgSRC;
+            this.IsBrandingDataLoaded = true;
             this.listenToRouterEvents();
+        }
+        else{
+            this.GoToError401();
+        }
+         
         });
     }
     public Logo: string; 
@@ -58,36 +60,15 @@ export class HomeComponent
     {
        
         this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
-        this.router.events.subscribe(() =>
-        {
-            if (this.tenant == null || Number.isNaN(this.tenant)) {
-                // var params:any[] = event.snapshot.params;
-                // var tenant = params['Tenant'];
-                // this._Tenant = tenant;
-                var url: string =this.router.url;
-                var URLParts = url.split('/');
+        this.getcargoTrackingData();
+          
+    }
 
-                for (let i = 0; i < URLParts.length; i++) {
-                    if (URLParts && URLParts.length > 0 && URLParts[i]) {
-                        this.tenant = Number(URLParts[i]);
-                        if (!Number.isNaN(this.tenant)) {
-                            break;
-                        }
-                    }
-                }
-
-                if (Number.isNaN(this.tenant) || !this.tenant || this.tenant==null){
-                    this.tenant=1;
-                    this.back();  
-                }
-                // else{
-                //     this._Tenant=1; 
-                // }
-                this.getcargoTrackingData();
-            }
-
-        });
-
+    public GoToPrivateSite(){
+        this.router.navigate(['dashboard']);
+    }
+    public GoToError401(){
+        this.router.navigate(['Error401']);
     }
     private ConvertHexaToRGBA(color: string)
     {
@@ -104,7 +85,7 @@ export class HomeComponent
                 // Show loading indicator
                 // var url = window.location.pathname;
                 var url = event.urlAfterRedirects;
-                if (url == "/search/")
+                if (url == "public-tracking/search/")
                     this.showBackButton = false;
                 else // if (url.includes('/shipment/'))
                     this.showBackButton = true;
@@ -129,7 +110,7 @@ export class HomeComponent
 
     back()
     {
-        AppHelper.AppBack(this.router,this.location,this.tenant);
+        AppHelper.AppBack(this.router,this.location,CargoTrackingBrandingData.Tenant);
 
     }
  

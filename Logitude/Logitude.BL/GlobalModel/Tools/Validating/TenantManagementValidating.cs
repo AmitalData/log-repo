@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -41,7 +42,28 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
             if (tenantManagement.SecondaryColor != null) {
                 ValidateHexCode(tenantManagement.SecondaryColor);
             }
-         }
+            if (tenantManagement.CustomerURL != null)
+            {
+                ValidateIsDomainAlreadyExist(tenantManagement);
+            }
+        }
+        private static void ValidateIsDomainAlreadyExist(TenantManagementPM tenantManagement)
+        {
+            tenantManagement.CustomerURL = TrimDomainByRegex(tenantManagement.CustomerURL);
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+            bool IsExist = tenantManagementQuery.CheckIsdomainAlreadyExist(tenantManagement);
+            if (IsExist)
+            {
+                string msg = "This cargo tracking URL already exists";
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private static string TrimDomainByRegex(string domain)
+        {
+            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
+            return domain;
+        }
         private static void ValidateHexCode(string color)
         {
             Regex regex = new Regex("^#[A-Fa-f0-9]*$");

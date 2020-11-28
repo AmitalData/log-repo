@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { Location } from '@angular/common';
 import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-    _Tenant: number;
+  
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -33,7 +34,6 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private location: Location,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetVariablesFromURI();
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
 
@@ -42,6 +42,10 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
         this.InitForm();
     }
+
+   get  tenant(){
+    return CargoTrackingBrandingData.Tenant;
+   } 
     ngOnInit()
     {      
         
@@ -85,24 +89,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
 
-    private GetVariablesFromURI()
-    {
-
-
-        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
-        if (tenant != null && tenant != "") {
-            this._Tenant = Number(tenant);
-        }
-        else {
-            //  if(searchKey!=null && searchKey!=""){
-            //     this.router.navigate([1,'search',searchKey]);
-            //  }
-            //  else{
-            //     this.router.navigate([1,'search']);
-            //  }
-
-        }
-    }
+   
     private InitForm()
     {
         this.searchForm = this.formBuilder.group({
@@ -167,7 +154,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
-                if (url == "/" + this._Tenant + "/search/") {
+                if (url == "public-tracking/search/") {
                     this._SearchText = '';
                     // this.FilterItems();
                 }
@@ -198,9 +185,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
     Search()
     {
-        if (this._Tenant && this.SearchText) {
-            this.location.go(this._Tenant + '/search/' + this.SearchText);
-            // this.router.navigate([this._Tenant,'search', this.SearchText]);
+        if (this.tenant!=null && this.SearchText) {
+            this.location.go( 'public-tracking/search/' + this.SearchText);
             this.LoadShipments();
         }
 
@@ -212,7 +198,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
 
-            this.router.navigate([this._Tenant, 'search', 'shipment', SecurityKey]);
+            this.router.navigate(['public-tracking/search', 'shipment', SecurityKey]);
         }
     }
     LoadShipments()
@@ -227,7 +213,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.hasError = false;
             this.isLoading = true;
             RootContext.StartBusyIndicatorLoading();
-            this.searchService.getShipments(searchText, this._Tenant).subscribe(
+            this.searchService.getShipments(searchText, this.tenant).subscribe(
             (result: any) =>
             {   RootContext.StopBusyIndicator();
                 this.isLoading = false;
