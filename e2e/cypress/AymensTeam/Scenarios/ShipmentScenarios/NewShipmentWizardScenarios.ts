@@ -365,6 +365,11 @@ export class NewShipmentWizardScenarios {
             Resolvers.WindowResolver.Index(2).ShouldBeClosed();
         }
     }
+    private OperationailCloseShipment() {
+        Resolvers.ButtonResolver.Selector('#MenuButtons').Click();
+        Resolvers.ButtonResolver.Selector('#ShipmentBOperationalClose').Click();
+        Resolvers.ButtonResolver.Selector('#ShipmentBOperationalClose').Click();
+    }
     Save() {
 
         return new Cypress.Promise((resolve, reject) => {

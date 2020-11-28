@@ -26,6 +26,7 @@ export class ReceivablesTab {
                 expect(xhr.status).to.eq(200);
             }
         }).as('entityLoaded');
+        this.GoToGeneralTabInARInvoice();
         this.BackToShipmentsTab(this.count);
         cy.wait('@entityLoaded');
     }
@@ -42,6 +43,7 @@ export class ReceivablesTab {
                 expect(xhr.status).to.eq(200);
             }
         }).as('entityLoaded');
+        this.GoToGeneralTabInARInvoice();
         this.BackToShipmentsTab(this.count);
         cy.wait('@entityLoaded');;
     }
@@ -70,7 +72,7 @@ export class ReceivablesTab {
     private GoToGeneralTabInARInvoice() {
         cy.get('#ARInvoiceTHGeneral').click();
         Resolvers.LOVResolver.Selector('#ARInvoice_SalesmanUserId').SelectFirst();
-        cy.get('#ARInvoiceBApprove').click();
+     //   cy.get('#ARInvoiceBApprove').click();
 
     }
     private GoToPaymentsTabInARInvoice(EntityNumber: string) {
