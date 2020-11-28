@@ -17,30 +17,56 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
     public class CargoTrackingBrandingController: ApiController
     {
         [HttpGet]
-        public HttpResponseMessage GetCargoTrackingBrandingData(int tenant)
+        public HttpResponseMessage GetCargoTrackingBrandingData(string domain)
         {
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
-                Uploader uploaderService = new Uploader();
-                byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);            
-                CargoTrackingBrandingData data = new CargoTrackingBrandingData()
-                {
-                    Tenant = tenant,
-                    MainColor = tenantManagementPM.MainColor,
-                    SecondaryColor = tenantManagementPM.SecondaryColor,
-                    BackgroundId = tenantManagementPM.BackgroundId,
-                    Logo = CargoTrackingHelper.SetBrandingLogo(tenantManagementPM)
-                };
-                if (filedata != null)
-                {
-                    data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
-                }
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
                 ServiceResponse response = new ServiceResponse();
-                response.Result = data;
+                if (tenantManagementPM != null)
+                {
+                    Uploader uploaderService = new Uploader();
+                    byte[] filedata = uploaderService.DownloadFile(tenantManagementPM.BackgroundId, "jpg", "images", 0);
+                    CargoTrackingBrandingData data = new CargoTrackingBrandingData()
+                    {
+                        Tenant = tenantManagementPM.Id,
+                        MainColor = tenantManagementPM.MainColor,
+                        SecondaryColor = tenantManagementPM.SecondaryColor,
+                        BackgroundId = tenantManagementPM.BackgroundId,
+                        Logo = CargoTrackingHelper.SetBrandingLogo(tenantManagementPM)
+                    };
+                    if (filedata != null)
+                    {
+                        data.BackgroundImg = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                    }
+                    response.Result = data;
+                }
+              
+                
+               
                 return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCargoTrackingBrandingTenantByDomain(string domain)
+        {
+            try
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+                ServiceResponse response = new ServiceResponse();
+                int? tenant = tenantManagementQuery.GetTenantSinglePMByDomain(domain);
+                if (tenant != null && tenant!=0)
+                {
+                    response.Result = tenant;
+                }
+             
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

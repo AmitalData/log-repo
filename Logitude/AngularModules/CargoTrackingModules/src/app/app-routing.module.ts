@@ -1,6 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 import { SearchComponent } from 'src/CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
@@ -14,7 +15,7 @@ const routes: Routes = [
 
       
     { 
-        path: ':Tenant/dashboard', 
+        path: 'dashboard', 
         component: UserDashboardComponent,
         children: [
             { path: "", redirectTo: "shipments", pathMatch: "full" }, 
@@ -25,22 +26,20 @@ const routes: Routes = [
         ]
     },
     {
-        path: ':Tenant/search',
+        path: 'public-tracking/search',
         component: HomeComponent,
         children: [ 
-            // { path: "", redirectTo: "/:Tenant/search/", pathMatch: "full" },
             { path: "", component: SearchComponent }, 
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
-            { path: "shipment", redirectTo: ':Tenant/search' },
+            { path: "shipment", redirectTo: 'public-tracking/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
+            {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' }, 
         ]
     },
     
- 
-    {path: '', component: HomeComponent, pathMatch: 'full' },
-    {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
+    {path: 'Error401', component: Error401Component },
+    {path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
+    {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
     // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
  
