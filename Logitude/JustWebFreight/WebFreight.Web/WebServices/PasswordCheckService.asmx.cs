@@ -355,7 +355,7 @@ namespace WebFreight.Web.WebServices
                 exists = true;
 
                 ResetUserPasswordService resetUserPasswordService = new ResetUserPasswordService();
-                resetUserPasswordService.ResetUserPassword(resetPasswordParameters, appMobileEnvironment, tenant);
+                resetUserPasswordService.ResetUserPassword(resetPasswordParameters,tenant);
             }
 
             return exists;
