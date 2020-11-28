@@ -7,7 +7,8 @@ import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
 import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTrackingShipmentFilters';
-  
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+
 @Component({
     selector: 'ShipmentsListComponent',
     templateUrl: './ShipmentsListComponent.html',
@@ -28,7 +29,7 @@ export class ShipmentsListComponent implements AfterViewInit
     FilteredItems: any[] = [];
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-    tenant;
+
     isLoading: boolean = false;
     isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
@@ -40,12 +41,17 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentsDS;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
 
+    get tenant(){
+        return CargoTrackingBrandingData.Tenant;
+    }
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
         private searchService: CargoTrackingSearchService)
     {
+
 
         this.InitComponent();
 
@@ -57,9 +63,8 @@ export class ShipmentsListComponent implements AfterViewInit
 
     private InitComponent()
     {
-        this.InitForm();
-        this.GetTenantFromURL();
 
+        this.InitForm();
 
     }
 
@@ -80,14 +85,7 @@ export class ShipmentsListComponent implements AfterViewInit
         this.LoadShipments();
     }
 
-    private GetTenantFromURL()
-    {
-        var tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
-        if (tenant)
-            this.tenant = tenant;
-        else
-            console.error("Tenant not provided in URL");
-    }
+  
 
     private InitForm()
     {
@@ -95,7 +93,9 @@ export class ShipmentsListComponent implements AfterViewInit
             SearchText: ''
 
         });
+
     }
+ 
 
 
 
@@ -118,13 +118,23 @@ export class ShipmentsListComponent implements AfterViewInit
         this.LoadShipments();
     }
 
+    Search()
+    {
+        if (this.tenant!=null && this.SearchText) {
+            this.Shipments = [];
+            this.LoadShipments();
+        }
+
+    }
+
+
 
 
     ItemClicked(item)
     {
         var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this.tenant, 'dashboard', 'shipment', SecurityKey]);
+        this.router.navigate(['dashboard', 'shipment', SecurityKey]);
 
     }
     LoadShipments()

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     @ViewChild('SliderWrapper') SliderWrapperElement : ElementRef;
 
 
-    tenant;
+  
     isLoading: boolean  = false;
     showMoreReferences: boolean  = false;
     SecurityKey: string = "";
@@ -30,12 +31,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
         '5689974987646132',
         '5689974987646132',
     ]
-
+    get tenant(){
+        return CargoTrackingBrandingData.Tenant;
+    }
     constructor(private router: Router,
         private route: ActivatedRoute,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetVariablesFromURI();
+    
         this.GetIdFromURI();
 
     }
@@ -99,11 +102,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     private GetIdFromURI()
     {      
-        
-        // var tenant = this.route.snapshot.paramMap.get('SecurityKey');
-        if(this.tenant==null){
-            this.tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
-        }
+      
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
         return _id;
@@ -172,32 +171,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
         return iconPath;
     }
-    private GetVariablesFromURI()
-    {
-        // let searchKey = this.route.snapshot.paramMap.get('searchKey');
-
-
-        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
-        if (tenant != null && tenant != "") {
-            this.tenant = Number(tenant);
-        }
-        else {
-            //  if(searchKey!=null && searchKey!=""){
-            //     this.router.navigate([1,'search',searchKey]);
-            //  }
-            //  else{
-            //     this.router.navigate([1,'search']);
-            //  }
-
-        }
-    }
+  
     
     ItemClicked(item)
     {   var selection = window.getSelection();
         if(selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this.tenant,'dashboard','shipment', SecurityKey]);
+        this.router.navigate(['dashboard','shipment', SecurityKey]);
         }
     }
 

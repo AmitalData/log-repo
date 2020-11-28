@@ -18,8 +18,8 @@ export class CargoTrackingBrandingDataExtendedService {
         this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/CargoTrackingBranding';
     }
    
-    get(tenant:number) {
-        var url = '/GetCargoTrackingBrandingData?tenant='+tenant;
+    get(domain:string) {
+        var url = '/GetCargoTrackingBrandingData?domain='+domain;
         var callUrl = this._apiUrl.concat(url);
 
         return this._http.get(callUrl, { headers: this.httpHeaders}).pipe(
@@ -31,7 +31,18 @@ export class CargoTrackingBrandingDataExtendedService {
             catchError(null));
     }
 
-   
+    GetTenantByDomain(domain:string) {
+        var url = '/GetCargoTrackingBrandingTenantByDomain?domain='+domain;
+        var callUrl = this._apiUrl.concat(url);
+
+        return this._http.get(callUrl, { headers: this.httpHeaders}).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
     
    
 
