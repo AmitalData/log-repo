@@ -656,22 +656,32 @@ namespace WebFreight.Web.WebServices
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-            List<Shipment> housesShipments = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
-
-            housesShipments.ForEach(shipment =>
-            {
-                myDocumentFilings = myDocumentFilings.Concat(myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(shipment.Id, tenant)).ToList();
-            });
+            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery);
+            myDocumentFilings = myDocumentFilings.Concat(housesDocumentFilings).ToList();
 
             return myDocumentFilings;
         }
 
-        private static List<Shipment> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)
+        private static List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery)
+        {
+            List<string> housesShipmentsIds = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
+            List<DocumentsFilingPM> myDocumentFilings = new List<DocumentsFilingPM>();
+            for (int i = 0; i < housesShipmentsIds.Count(); i++)
+            {
+                List<DocumentsFilingPM> houseDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(housesShipmentsIds[i], tenant);
+                myDocumentFilings = myDocumentFilings.Concat(houseDocumentFilings).ToList();
+            }
+
+            return myDocumentFilings;
+        }
+
+        private static List<string> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)
         {
             IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
             ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(shipmentContext);
-            List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
-            return housesShipments;
+            List<string> housesShipmentsIds = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant)
+                                                                          .Select(shipment => shipment.Id).ToList();
+            return housesShipmentsIds;
         }
 
         [WebMethod]
