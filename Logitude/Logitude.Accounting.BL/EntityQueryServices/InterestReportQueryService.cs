@@ -16,6 +16,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class InterestReportQueryService
     {
+        const string CancelledType = "3";
+        const string FailedType = "6";
+        const string InvoicingFailedType = "9";
+
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal closedBalance = 0;
@@ -38,12 +42,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a).Any();
         }
 
-        private static List<string> GetRecentStatuesAreNotAllowed()
+        private static List<string> GetStatusesExcludedFromRecentInterestReports()
         {
             List<string> RecentStatuesAreNotAllowed = new List<string>();
-            RecentStatuesAreNotAllowed.Add("3");
-            RecentStatuesAreNotAllowed.Add("6");
-            RecentStatuesAreNotAllowed.Add("9");
+            RecentStatuesAreNotAllowed.Add(CancelledType);
+            RecentStatuesAreNotAllowed.Add(FailedType);
+            RecentStatuesAreNotAllowed.Add(InvoicingFailedType);
             RecentStatuesAreNotAllowed.Add(null);
 
             return RecentStatuesAreNotAllowed;
@@ -52,7 +56,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool CheckRecentCustomerReports(DateTime interestDate, InterestReportPM InterestReportPM)
         {
-            List<string> RecentStatuesAreNotAllowed = GetRecentStatuesAreNotAllowed();
+            List<string> RecentStatuesAreNotAllowed = GetStatusesExcludedFromRecentInterestReports();
             return (from a in context.InterestReports
                     where a.Tenant == InterestReportPM.Tenant && a.InterestCalculationDate > interestDate && !RecentStatuesAreNotAllowed.Contains(a.InterestReportStatusCode)  && a.CustomerId == InterestReportPM.CustomerId && a.Id != InterestReportPM.Id
                     select a).Any();
