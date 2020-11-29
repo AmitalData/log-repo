@@ -69,6 +69,8 @@ export class LedgerTransactionList {
 	IsForeignAmountPos: boolean;
 	IsOriginalAmountPos: boolean;
 	IconCode: string;
+	ForeignAmountCreditWithSign: string;
+	CumulativeForeignAmountSign: string;
 	
 }
  

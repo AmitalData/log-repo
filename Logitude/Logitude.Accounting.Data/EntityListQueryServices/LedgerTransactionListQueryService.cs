@@ -527,6 +527,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
                 rec.IsOriginalAmountPos = rec.OpenAmount < 0;
                 rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+                rec.ForeignAmountCreditWithSign = rec.ForeignAmountCredit + " " + rec.CurrencySign;
+                rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
                 if (IsFromExcelGenerator)
                 {
                     ledgerTransactionHelper.MapAmountWithNegativeValue(rec);

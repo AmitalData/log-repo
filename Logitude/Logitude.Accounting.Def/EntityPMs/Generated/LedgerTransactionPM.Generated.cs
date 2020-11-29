@@ -1423,6 +1423,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string foreignAmountCreditWithSign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForeignAmountCreditWithSign  
+	   {
+	    
+	     get
+		{
+		   return foreignAmountCreditWithSign;
+		 }
+		 set
+		 {
+		   if(foreignAmountCreditWithSign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignAmountCreditWithSign",OldValue=foreignAmountCreditWithSign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   foreignAmountCreditWithSign=value;
+		   }
+			
+		 }
+	   }
+	  private string cumulativeForeignAmountSign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CumulativeForeignAmountSign  
+	   {
+	    
+	     get
+		{
+		   return cumulativeForeignAmountSign;
+		 }
+		 set
+		 {
+		   if(cumulativeForeignAmountSign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CumulativeForeignAmountSign",OldValue=cumulativeForeignAmountSign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cumulativeForeignAmountSign=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

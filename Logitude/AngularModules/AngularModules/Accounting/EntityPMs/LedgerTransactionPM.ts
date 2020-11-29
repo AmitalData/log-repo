@@ -329,6 +329,16 @@ export class LedgerTransactionPM {
     public set IconCode(newValue: string) { if (this.iconCode != newValue) { this.iconCode = newValue; this.MarkAsDirty("IconCode"); } }
        
 	 
+    private foreignAmountCreditWithSign: string;
+    public get ForeignAmountCreditWithSign() { return this.foreignAmountCreditWithSign; }
+    public set ForeignAmountCreditWithSign(newValue: string) { if (this.foreignAmountCreditWithSign != newValue) { this.foreignAmountCreditWithSign = newValue; this.MarkAsDirty("ForeignAmountCreditWithSign"); } }
+       
+	 
+    private cumulativeForeignAmountSign: string;
+    public get CumulativeForeignAmountSign() { return this.cumulativeForeignAmountSign; }
+    public set CumulativeForeignAmountSign(newValue: string) { if (this.cumulativeForeignAmountSign != newValue) { this.cumulativeForeignAmountSign = newValue; this.MarkAsDirty("CumulativeForeignAmountSign"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

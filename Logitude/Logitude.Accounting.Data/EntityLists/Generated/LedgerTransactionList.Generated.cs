@@ -136,6 +136,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsOriginalAmountPos  { get; set; }
        [DataMember]
        public string IconCode  { get; set; }
+       [DataMember]
+       public string ForeignAmountCreditWithSign  { get; set; }
+       [DataMember]
+       public string CumulativeForeignAmountSign  { get; set; }
    }
 
 }
