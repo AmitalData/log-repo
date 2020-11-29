@@ -104,40 +104,42 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
         }
         private void SendDeclarationStatusRequest(DeclarationPM declarationPM)
         {
-            var loggedUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant);
-            var requestParams = new DeclarationStatusRequestParams()
+            if (declarationPM.DeclarationNumber != "" && declarationPM.DeclarationNumber != null)
             {
-                LoggingEnabled = true,
-                IsFakeResponse = true,
-                InterfaceTypeCode = "8250",
-                CustomFileNo = declarationPM.CustomFileNo,
-                DeclarationNumber = declarationPM.DeclarationNumber,
-                Tenant = declarationPM.Tenant,
-                RequestName = "Declaration Status Search",
-                ResponseName = "Declaration Status Search",
-                CargoRadio = false,
-                DeclarationRadio = true,
-                OldReshimonRadio = false,
-                OldReshimonNumber = null,
-                LoggingEntityId = declarationPM.Id,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                SuppressSplitWR = true
-            };
-            try
-            {
-                SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams
-                    , false, DateTime.Now
-                    );
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-            {
-                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                var loggedUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant);
+                var requestParams = new DeclarationStatusRequestParams()
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8520 RequestInProgress stop create a new one !! ");
+                    LoggingEnabled = true,
+                    IsFakeResponse = true,
+                    InterfaceTypeCode = "8250",
+                    CustomFileNo = declarationPM.CustomFileNo,
+                    DeclarationNumber = declarationPM.DeclarationNumber,
+                    Tenant = declarationPM.Tenant,
+                    RequestName = "Declaration Status Search",
+                    ResponseName = "Declaration Status Search",
+                    CargoRadio = false,
+                    DeclarationRadio = true,
+                    OldReshimonRadio = false,
+                    OldReshimonNumber = null,
+                    LoggingEntityId = declarationPM.Id,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    SuppressSplitWR = true
+                };
+                try
+                {
+                    SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams
+                        , false, DateTime.Now
+                        );
                 }
-                throw;
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                {
+                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8520 RequestInProgress stop create a new one !! ");
+                    }
+                    throw;
+                }
             }
-
         }
         public void SendNatr(int Tenant, string remarks, string UnifreightLeadingFile)
         {
