@@ -8,11 +8,13 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {NewGLAccountArgs} from '../../../Common/Args';
 import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ChartOfAccountTypes } from 'Accounting/DataContracts/ChartOfAccountTypes';
+import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
 
 @Component({
     selector: 'NewGLAccountComponent',
@@ -30,7 +32,7 @@ export class NewGLAccountComponent extends BaseComponent {
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
     myService: GLAccountPMService;
-    IsFromArgs: boolean = false;
+    WindowArgsPassed: boolean = false;
 
     public AccountTypeCode = "1";
 
@@ -48,73 +50,87 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.myService = new GLAccountPMService();
 
-        this.InitLOVFilters();
+        this.BuildAPIFilters();
 
         this.SetUIProperties();
         this.SelectDefaultValues();
     }
 
-    InitLOVFilters() {
+    BuildAPIFilters() {
+        this.BuildChartOfAccountTypeApiFilters();
+        this.BuildParentsGLAccountApiFilters();
+    }
 
-        //#region initialize query filters for ChartOfAccountType
+    
+    partnerType: string;
+    private BuildChartOfAccountTypeApiFilters()
+    {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
-        if (!this.IsFromArgs) {
-            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
-            //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
-        }
-        else if (this.IsFromArgs &&this.partnerType == "AC") {
-            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
-}
-        else {
-            this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
-            // customer
-            this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-        }
-        //#endregion
+        const isAccountingPartner = AccountingPartners.AccountingPartner;
+        const isCustomer = AccountingPartners.Customer;
+        const isVendor = AccountingPartners.Vendor;
 
-        //#region initialize query filters for Parent Account
+        if (isAccountingPartner) {
+            var excludedTypes = [ChartOfAccountTypes.Works, ChartOfAccountTypes.Banks].join(',');
+            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
+        }
+        else if (!isCustomer && !isVendor) {
+            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor].join(',');
+            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
+        }
+    }
+
+    private BuildParentsGLAccountApiFilters()
+    {
         this.ParentsFilterItems = new ApiQueryFilters();
         this.ParentsFilterItems.addAdditionalFilter("ChartOfAccountsId", this.ChartOfAccountsId, null, null, "Equals", false, false, false, "string", false, true);
         this.ParentsFilterItems.addAdditionalFilter("ParentAccountId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string", false, true);
-        //this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
-        //#endregion
-    }
-    partnerType: string;
-    SetWindowArgs(args: NewGLAccountArgs) {
-        if (args != null) {
-            this.IsFromArgs = true;
-            this.partnerType = args.PartnerType;
-            if (args.AccountType == "2") { // customer
-                this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
-               
-                // if (!AppTool.IsNullOrEmpty(this.LocalName)) {
-                    // this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-                // }
-                // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
-                this.AccountTypeCode = args.AccountType;
-                
-            }
-            else if (args.AccountType == "3") { // vendor
-                this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
-              
-                this.AccountTypeCode = args.AccountType;
-                // if (!AppTool.IsNullOrEmpty(this.LocalName)) {
-                //     this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-                // }
-                // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
-                
-            }
-               
-        }
-                this.DisplayNumber = args.DisplayNo;
-                this.LocalName = args.LocalName;
-                this.EnglishName = args.EnglishName;
-                this.EntityPM.NewGLAccountCardId = args.CardId;
-                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
-                this.InitLOVFilters();
-        // this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
     }
 
+    SetWindowArgs(args: NewGLAccountArgs)
+    {
+        if (args != null) {
+            this.WindowArgsPassed = true;
+            this.partnerType = args.PartnerType;
+            this.AccountTypeCode = args.AccountType;
+            this.DisplayNumber = args.DisplayNo;
+            this.LocalName = args.LocalName;
+            this.EnglishName = args.EnglishName;
+            this.EntityPM.NewGLAccountCardId = args.CardId;
+            this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
+            this.SetChartOfAccountType(args.ChartOfAccountType);
+        }
+        this.AfterWindowArgsPassed();
+    }
+
+    private AfterWindowArgsPassed()
+    {
+        this.BuildAPIFilters();
+    }
+
+    private SetChartOfAccountType(chartOfAccountType: string)
+    {
+        const customer = "2";
+        const vendor = "3";
+        if (this.AccountTypeCode == customer) {
+            this.ChartOfAccountsTypeCode = chartOfAccountType;
+            this.DisableChartOfAccountType();
+
+        }
+        else if (this.AccountTypeCode == vendor) {
+            this.ChartOfAccountsTypeCode = chartOfAccountType;
+            this.DisableChartOfAccountType();
+        }
+    }
+
+    private EnableChartOfAccountType()
+    {
+        this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, true);
+    }
+    private DisableChartOfAccountType()
+    {
+        this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
+    }
     //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(value: boolean) {
