@@ -208,24 +208,48 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    vendor: CardList;
+    VendorChanged(vednor:CardList){
+        this.vendor = vednor;
+        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
+        this.PaymentCurrencyId = null;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
+        }
+        this.GetCardProperties();
+        this.LoadData();
+        this.IsTaxUpdated = true;
+        this.LoadTaxPercentage();
+    }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
-        if (this.IsFullAccounting) {
-            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
-                        this.TaxDeductionPercentage = myResponse.Result.Percentage;
+        if (this.IsFullAccounting) 
+        {
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor) {
+                this.TaxDeductionPercentage = 0;
+            } else {
+
+                this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError) {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                            this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                        }
+                        else {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        }
                     }
                     else {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
-                }
-                else {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-            });
+                });
+            }
+
         }
     }
 
@@ -702,18 +726,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
-                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
-                this.PaymentCurrencyId = null;
-                if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
-                }
-                else {
-                    this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
-                }
-                this.GetCardProperties();
-                this.LoadData();
-                this.IsTaxUpdated = true;
-                this.LoadTaxPercentage();
+                
             }
         }
     }
