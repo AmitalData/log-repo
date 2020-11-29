@@ -1492,7 +1492,11 @@ export class APInvoiceLineItem extends BaseComponent {
 
     ApplyInvoiceLineChecked() {
         if (this.exists == true) {
-            this.ForiegnCurrencyAmount = this.OpenAmount;
+
+            if (this.invoiceLinePM.AmountTypeCode != "NEXP") {
+                this.ForiegnCurrencyAmount = this.OpenAmount;
+            }
+
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
         }
 
