@@ -12536,13 +12536,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1000"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -14726,6 +14727,7 @@
     SystemMaxLength="1000"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -17023,7 +17025,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;ce0089c9-4569-4c1b-823d-158c1079815f&quot;"
     FieldName="&quot;TransshipmentApprovalDateTime&quot;"
@@ -17178,7 +17179,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;f2ed09ae-c92b-4bc9-8010-f9879fadeb46&quot;"
     FieldName="&quot;PalestinianCode&quot;"

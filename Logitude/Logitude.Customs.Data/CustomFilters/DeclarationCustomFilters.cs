@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.Utils;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -16,7 +17,7 @@ namespace Logitude.Customs.Data.CustomFilters
    public class DeclarationCustomFilters
     {
 
-       public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData)
+       public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant)
        {
            List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -35,7 +36,21 @@ namespace Logitude.Customs.Data.CustomFilters
                {
                    queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
                }
-           //     queryableData = queryableData.Where(d => (d.AmendmentDontDisplayInList == false));
+
+                if (item.FieldName == "CourierPendingReasonList")
+                {
+                    //&& (x.CourierPendingReasonList== item.FieldValue || x.CourierPendingReasonList.Contains("," + item.FieldValue+","))
+                    List<string> declarations = queryableData.Select(x => (string)x.Id ).ToList();
+                    var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(tenant);
+                    var pocoDeclarationCourierStatus = repoDeclarationCourierStatus
+                        .GetDeclarationsByPendings(declarations, tenant, item.FieldValue.ToString());
+                        //.Where(x=> x.CourierPendingReasonList != null ).ToList();
+
+                 //   pocoDeclarationCourierStatus = pocoDeclarationCourierStatus.Where(x=> x.CourierPendingReasonList.Split(',').Contains(item.FieldValue)).ToList();
+                    var decs = pocoDeclarationCourierStatus.Select(x => (string) x.DeclarationId).ToList();
+                    queryableData = queryableData.Where(d => decs.Contains( d.Id));
+                }
+                //     queryableData = queryableData.Where(d => (d.AmendmentDontDisplayInList == false));
 
             }
 
