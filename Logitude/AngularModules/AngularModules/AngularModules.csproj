@@ -114,6 +114,7 @@
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.html" />
+    <Content Include="Accounting\Components\Others\CopyJournalComponent.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
     <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\BatchInvoicesComponent.html" />
@@ -286,6 +287,8 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
@@ -907,7 +910,6 @@
     <TypeScriptCompile Include="App\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
-    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsTokens.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
@@ -4331,10 +4333,8 @@
     <TypeScriptCompile Include="Accounting\Utilities\ReconcileEventManager.ts" />
     <TypeScriptCompile Include="App\AppComponent_Cust.ts" />
     <TypeScriptCompile Include="App\AppComponent.ts" />
-    <TypeScriptCompile Include="App\Bootstraper-Cust.ts" />
     <TypeScriptCompile Include="App\Bootstraper.ts" />
     <TypeScriptCompile Include="App\Module_APP.ts" />
-    <TypeScriptCompile Include="App\Module_APP_CUST.ts" />
     <TypeScriptCompile Include="Booking\Components\BookingWizard\NoRemainingStockComponent.ts" />
     <TypeScriptCompile Include="Booking\Services\ExtendedPMs\BookingProductExtendedPMService.ts" />
     <TypeScriptCompile Include="Booking\Services\StandardPMs\BookingProductPMService.ts" />

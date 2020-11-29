@@ -272,14 +272,14 @@ export class AddEditPayableComponent implements OnDestroy {
                 item.AccountedAmountInLocalCurrency = 0;
                 item.AccountedAmountInProfitCurrency = 0;
 
-                var exsistingEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId)[0];
+                var exsistingEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId)[0];
                 if (exsistingEntity == null) {
                     this.DataContext.ShipmentPM.AddPayable(item);
                 }
 
                 else {
-                    var acctEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && (f.ShipmentPayableLineStatusCode == "ACCT" || f.ShipmentPayableLineStatusCode == "PACC"))[0];
-                    var openEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && (f.ShipmentPayableLineStatusCode == "EMPT" || f.ShipmentPayableLineStatusCode == "OAMT"))[0];
+                    var acctEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId && (f.ShipmentPayableLineStatusCode == "ACCT" || f.ShipmentPayableLineStatusCode == "PACC"))[0];
+                    var openEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId && (f.ShipmentPayableLineStatusCode == "EMPT" || f.ShipmentPayableLineStatusCode == "OAMT"))[0];
 
                     if (acctEntity == null) {
                         openEntity.Quantity = item.Quantity;

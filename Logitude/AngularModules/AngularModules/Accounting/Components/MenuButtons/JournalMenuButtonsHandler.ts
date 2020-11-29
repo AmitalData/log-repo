@@ -25,6 +25,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -142,6 +143,17 @@ export class JournalMenuButtonsHandler {
                                 //}
                                 break;
                             }
+                        case "CopyJournal":
+                            {
+                                if (this.EntityPM.AccountingEntityCode == "1") {
+                                    button.IsDisabled = false;
+
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                                break;
+                            }
                     }
                 }
             }
@@ -219,7 +231,11 @@ export class JournalMenuButtonsHandler {
                     //}
                     break;
                 }
-
+            case "CopyJournal":
+                {
+                    this.OpenCopyJournalScreen();
+                    break;
+                }
         }
 
 
@@ -237,7 +253,20 @@ export class JournalMenuButtonsHandler {
             }
         });
     }
-
+    OpenCopyJournalScreen() {
+        var windowTitle = TextCodeTranslator.Translate("Journal.B.CopyJournal");
+        var windowArgs: any = {};
+        windowArgs.JournalPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 250;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+        logWindow.Show('./Accounting/Components/Others/CopyJournalComponent');
+    }
     copyAccountingDates() {
         // Copy AccountingDate from journal to journal lines:
         for (let line of this.EntityPM.JournalLines) {

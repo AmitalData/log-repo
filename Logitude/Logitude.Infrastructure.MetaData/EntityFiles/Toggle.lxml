@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;65b2&quot;"
+  Code="&quot;791f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -477,6 +477,11 @@
       Code="&quot;LIC&quot;"
       Name="&quot;License Management&quot;"
       SearchFields="&quot;LIC,License Management&quot;" />
+    <Record
+      Name="&quot;CRM Customer Quick Search&quot;"
+      Code="&quot;CQS&quot;"
+      SearchFields="&quot;CQS,CRM Customer Quick Search&quot;"
+      Description="&quot;CRM Customer Quick Search&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -168,6 +168,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "License Management", 
                 SearchFields = "LIC,License Management", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "CRM Customer Quick Search", 
+                Code = "CQS", 
+                SearchFields = "CQS,CRM Customer Quick Search", 
+                Description = "CRM Customer Quick Search", 
+			});
 			
             return all;
        }

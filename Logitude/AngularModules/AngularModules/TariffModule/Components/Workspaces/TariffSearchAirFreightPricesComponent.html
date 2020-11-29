@@ -976,7 +976,11 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:22px;">
-                                                                                                <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.Remarks}}</td>
+                                                                                                <td style="width:500px;">
+                                                                                                    <div class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;" [title]="item.Remarks">
+                                                                                                        {{item.Remarks}}
+                                                                                                    </div>
+                                                                                                </td>
                                                                                             </tr>
                                                                                             <tr style="height:22px;">
                                                                                                 <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>

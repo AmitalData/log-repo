@@ -10,7 +10,7 @@
                 <form [formGroup]="searchForm" (ngSubmit)="Search()">
 
                     <div class="search-text ">
-                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Type Customer/Booking/Shipment Reference no. " formControlName="SearchText" name="SearchText " />
+                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Type Customer/Booking/Reference No./Container No. " formControlName="SearchText" name="SearchText " />
                         <!-- [(ngModel)]="SearchText " -->
 
                         <div class="icon ">
@@ -30,8 +30,8 @@
 
             <div class="info-text " *ngIf="Shipments.length==0 && !noResult  && !hasError">
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                    survived not only five centuries.
+
+                 
                 </p>
             </div>
             <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
