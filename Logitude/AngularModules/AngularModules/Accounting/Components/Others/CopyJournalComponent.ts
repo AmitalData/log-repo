@@ -13,7 +13,7 @@ import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
     templateUrl: './CopyJournalComponent.html',
 })
 
-export class CopyJournalComponent extends BaseComponent {
+export class CopyJournalComponent extends BaseComponent implements OnInit  {
     public EntityPM: JournalPM;
     public DataContext: any = this;
     public ObjectTableName: string = "Journal";
@@ -77,7 +77,10 @@ export class CopyJournalComponent extends BaseComponent {
             this.ValidationErrorsList.push(error);
         }
     }
-
+    public forceFocus: boolean = false;
+    ngOnInit() {
+        var t = setTimeout(() => { this.forceFocus = true; }, 1);
+    }
     NewJournalMapping(journal: JournalPM) {
         journal.IsNew = true;
         journal.TypeCode = "0"; // Manual
