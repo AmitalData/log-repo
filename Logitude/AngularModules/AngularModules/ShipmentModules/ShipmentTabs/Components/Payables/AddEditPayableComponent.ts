@@ -11,6 +11,7 @@ import {ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import {CardList } from '../../../../Common/EntityLists/CardList';
 import {CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import {ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CommonTool } from '../../../../Common/Tools';
 
 @Component({
     
@@ -91,6 +92,7 @@ export class AddEditPayableComponent implements OnDestroy {
                 break;
             }
         }
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.ShipmentPM.DirectionId); 
     }
 
     CancelButtonClicked() {

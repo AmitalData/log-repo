@@ -20,13 +20,58 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         public IQueryable<ChargesType> GetFilteredQuery(QueryOperations operations, IQueryable<ChargesType> queryableData)
         {
-            
-            bool IsInterestFeatureVlid= SecurityUtility.CheckFeature("InterestReport", "Module", this.Tenant);
+
+            bool IsInterestFeatureVlid = SecurityUtility.CheckFeature("InterestReport", "Module", this.Tenant);
             if (!IsInterestFeatureVlid)
             {
-                queryableData=queryableData.Where(s => s.Code != "INT");
+                queryableData = queryableData.Where(s => s.Code != "INT");
             }
-            
+
+
+            List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
+            foreach (QueryFilterItem item in queryFilters)
+            {
+                if (item.IsCustom)
+                {
+                    if (item.FieldName == "ChargeTypesByDirectionFilter")
+                    {
+                        queryableData = this.FilterByDirection(queryableData, item);
+                    }
+                }
+            }
+           
+            return queryableData;
+        }
+
+        private IQueryable<ChargesType> FilterByDirection(IQueryable<ChargesType> queryableData, QueryFilterItem item)
+        {
+            string directionCode = item.FieldValue.ToString();
+            switch (directionCode)
+            {
+                case "E":
+                    {
+                        queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInExport));
+                        break;
+                    }
+
+                case "I":
+                    {
+                        queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInImport));
+                        break;
+                    }
+
+                case "D":
+                    {
+                        queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInDomestic));
+                        break;
+                    }
+
+                case "R":
+                    {
+                        queryableData = queryableData.Where(d => !d.IsDirectionRestricted || (d.IsDirectionRestricted && d.IsActiveInDrop));
+                        break;
+                    }
+            }
             return queryableData;
         }
     }
