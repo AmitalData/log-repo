@@ -1354,8 +1354,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             reference = reference + cheque.ChequeNumber + ",";
                         }
+                        if (count == 2)
+                        {
+                            break;
+                        }
 
                     }
+
+                    if(count==2 && reference.Length > 30)
+                    {
+                        reference = reference.Split(',')[0].Trim();
+                    }
+
 
                     journalLine.Reference2 = reference;
                 }
