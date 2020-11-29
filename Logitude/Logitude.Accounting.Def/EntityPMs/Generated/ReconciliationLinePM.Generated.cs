@@ -643,6 +643,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string reconciliationAmountWithSign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReconciliationAmountWithSign  
+	   {
+	    
+	     get
+		{
+		   return reconciliationAmountWithSign;
+		 }
+		 set
+		 {
+		   if(reconciliationAmountWithSign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciliationAmountWithSign",OldValue=reconciliationAmountWithSign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reconciliationAmountWithSign=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAmountDebitNegative ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAmountDebitNegative  
+	   {
+	    
+	     get
+		{
+		   return isAmountDebitNegative;
+		 }
+		 set
+		 {
+		   if(isAmountDebitNegative != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAmountDebitNegative",OldValue=isAmountDebitNegative,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAmountDebitNegative=value;
+		   }
+			
+		 }
+	   }
+	  private decimal transactionAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TransactionAmount  
+	   {
+	    
+	     get
+		{
+		   return transactionAmount;
+		 }
+		 set
+		 {
+		   if(transactionAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransactionAmount",OldValue=transactionAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   transactionAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
