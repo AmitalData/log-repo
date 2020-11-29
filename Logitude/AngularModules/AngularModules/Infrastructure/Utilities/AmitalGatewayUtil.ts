@@ -1323,7 +1323,7 @@ export class MapDocumentTypeCustomsData {
             "UnifaceNAME_HEB": UnifaceNAME_HEB
 
         };
-        logWindow.ShowCloseButton = true;
+        //logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
             //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
