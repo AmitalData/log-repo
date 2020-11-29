@@ -3,6 +3,7 @@ using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WebFreight.Web.DataContracts;
@@ -16,7 +17,7 @@ namespace WebFreight.Web.Helpers
             ///////////////////////////////////////////////////////////
 
 
-            
+
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
@@ -42,6 +43,8 @@ namespace WebFreight.Web.Helpers
                     dataTable.Columns.Remove(item);
                 }
             }
+            RemoveEqualFromAllColumns(dataTable);//avoid exception "David" is not valid named range due value:"= david 33"
+
             sheet.ImportDataTable(dataTable, true, 1, 1);
 
             // sheet Format - Width 
@@ -99,6 +102,29 @@ namespace WebFreight.Web.Helpers
             ///workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
             return memory.ToArray();
+        }
+
+        private static void RemoveEqualFromAllColumns(DataTable dataTable)
+        {
+            bool exportIt = false;
+            if (exportIt)
+            {
+                string fileName = Guid.NewGuid() + ".xml";
+                string filePath = Path.Combine(Path.GetTempPath(), fileName);
+                dataTable.WriteXml(filePath);
+            }
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    string columnName = column.ColumnName.ToString();
+                    string value = (row[columnName]) != null ? (row[columnName]).ToString() : "";
+                    if (value.StartsWith("="))
+                    {
+                        row[columnName] = value.Substring(1);
+                    }
+                }
+            }
         }
     }
 }
