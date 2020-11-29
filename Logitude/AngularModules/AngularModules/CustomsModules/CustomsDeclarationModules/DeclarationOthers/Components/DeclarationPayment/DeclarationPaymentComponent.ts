@@ -2775,7 +2775,7 @@ export class PaymentMethodModel extends BaseComponent {
     }
 
     LoadBanks() {
-            this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+             this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
                     let BlockAgentBankForMasabDefaultValue = "";
                     var result = response.Result.filter(d => !d.InActive);
                     console.log("[Response] GetCustomBanksForCard: ", result);
@@ -2804,7 +2804,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                             this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                             if (this.agentBanks.length == 1) {
                                                                 this.InternalBankId = this.agentBanks[0].Id;
-                                                                if (!this.BankIsNull) {
+                                                                if (!this.BankIsNull || this.MethodTypeCode!="2" ) {
                                                                     this.SelectedBank = this.agentBanks[0];
                                                                     this.BanksList = this.agentBanks;
                                                                 }
