@@ -253,7 +253,7 @@
                                         </td>
                                         <td style="width: 70px;"></td>
                                         <td>
-                                            Qty / weight : <%=houseShipment.BookingNumberOfPackages != null && houseShipment.BookingNumberOfPackages.ToString() != null? houseShipment.BookingNumberOfPackages.ToString() : "0"%> / <%=houseShipment.OrderGrossWeight != null && houseShipment.OrderGrossWeight.ToString() != null ? houseShipment.OrderGrossWeight.ToString() : "0"%>Kg
+                                            Qty / weight : <%=houseShipment.NumberOfPackages != null && houseShipment.NumberOfPackages.ToString() != null? houseShipment.NumberOfPackages.ToString() : "0"%> / <%=houseShipment.ChargeableWeight != null && houseShipment.ChargeableWeight.ToString() != null ? houseShipment.ChargeableWeight.ToString() : "0"%>Kg
                                         </td>
                                         <td style="width:35%">
                                             <div></div>
@@ -455,15 +455,15 @@
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function OnDownloadAllConnectedDocuments() {
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function GetURL() {
-            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            return "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
         }
     </script>
 
@@ -471,7 +471,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var myLogoMethodUrl = "../api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
+            var myLogoMethodUrl = "api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
             $.ajax({
                 url: myLogoMethodUrl,
                 type: 'GET',
@@ -498,7 +498,7 @@
     <style>
         .headerDiv {
             height: 25px;
-            background: url("../HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
+            background: url("HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
             border-radius: 5px 5px 0 0;
             -webkit-border-radius: 5px 5px 0 0;
             -moz-border-radius: 5px 5px 0 0;

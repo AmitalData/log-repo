@@ -100,7 +100,7 @@
             success: function (shipmentPM) {
                 if (shipmentPM) {
                     SetShipmentPM(shipmentPM);
-                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, $.TenantDateTimeFormat, "../"), document.getElementById("EntityHeaderArea"));
+                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, $.TenantDateTimeFormat, ""), document.getElementById("EntityHeaderArea"));
                     BuildRoutingLegs(shipmentPM, $.TenantDateTimeFormat);
                     $(".ShowOnDataControl").show();
                     $("#DocumentsPageBusyIndicator").hide();
