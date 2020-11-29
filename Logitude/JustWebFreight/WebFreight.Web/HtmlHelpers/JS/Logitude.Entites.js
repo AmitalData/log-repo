@@ -807,7 +807,7 @@ function BuildMasterDocumentsTabPageViewModel(entityId, documents, PathPrefix) {
     $.each(documents, function (index, item) {
 
         var itemId = $.trim(item.Id) == "" ? "" : item.Id;
-        var itemUrl = $.trim(item.Url) == "" ? "" : item.Url;
+        var itemUrl = $.trim(item.Url) == "" ? "" : item.Url == null ? "" : item.Url.replace("../", PathPrefix);
         var itemFileType = PathPrefix + "images/FileIcons/" + $.Convert.ToFileExtentionImage(item.FileExtension);
         var itemFileName = $.trim(item.FileName) == "" ? "" : item.FileName;
         var itemName = $.trim(item.Name) == "" ? "" : item.Name;
