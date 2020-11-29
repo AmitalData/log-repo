@@ -1363,7 +1363,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     if(count==2 && reference.Length > 30)
                     {
-                        reference.Split(',')[0].Trim();
+                        reference = reference.Split(',')[0].Trim();
                     }
 
 
