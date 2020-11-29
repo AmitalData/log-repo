@@ -712,6 +712,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal excelTransactionAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal ExcelTransactionAmount  
+	   {
+	    
+	     get
+		{
+		   return excelTransactionAmount;
+		 }
+		 set
+		 {
+		   if(excelTransactionAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcelTransactionAmount",OldValue=excelTransactionAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   excelTransactionAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsAmountDebitNegative  { get; set; }
        [DataMember]
        public decimal TransactionAmount  { get; set; }
+       [DataMember]
+       public decimal ExcelTransactionAmount  { get; set; }
    }
 
 }
