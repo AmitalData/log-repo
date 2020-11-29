@@ -29,7 +29,7 @@
 
     jQuery.GetCompanyLogo = (function () {
 
-        var url = "../api/commondata/?companyId=" + $.CurrentTenant;
+        var url = "api/commondata/?companyId=" + $.CurrentTenant;
 
         $.ajax({
             url: url,
@@ -55,7 +55,7 @@
 
     jQuery.GetLogginData = (function () {
 
-        var url = "../api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
+        var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
 
         $.ajax({
             url: url,
@@ -90,7 +90,7 @@
         $("#DocumentsPageBusyIndicator").show();
 
         if ($.IsExternalURL) {
-            var url = "../api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
+            var url = "api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -152,7 +152,7 @@
         var url = null;
 
         if ($.IsExternalURL) {
-            url = "../api/DocumentsData?securitykey=" + myEntityKey + "&entityId=" + myEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+            url = "api/DocumentsData?securitykey=" + myEntityKey + "&entityId=" + myEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -166,7 +166,7 @@
                 let documentsTabPageControlId = "#DocumentsTabPageControl" + myEntityId;
                 if (result.length > 0) {
                     $("#DownloadAllConnectedDocuments").show();
-                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, "../"), document.getElementById(documentsTabPageControlId));
+                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, ""), document.getElementById(documentsTabPageControlId));
                 }
 
                 else {
@@ -198,7 +198,7 @@
         var url = null;
 
         if ($.IsExternalURL) {
-            url = "../api/ShipmentDomain?entityId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
+            url = "api/ShipmentDomain?entityId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
         }
 
         $.ajax({
