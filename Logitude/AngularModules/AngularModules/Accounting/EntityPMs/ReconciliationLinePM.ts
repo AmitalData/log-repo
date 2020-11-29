@@ -177,6 +177,11 @@ export class ReconciliationLinePM {
     public set TransactionAmount(newValue: number) { if (this.transactionAmount != newValue) { this.transactionAmount = newValue; this.MarkAsDirty("TransactionAmount"); } }
        
 	 
+    private excelTransactionAmount: number;
+    public get ExcelTransactionAmount() { return this.excelTransactionAmount; }
+    public set ExcelTransactionAmount(newValue: number) { if (this.excelTransactionAmount != newValue) { this.excelTransactionAmount = newValue; this.MarkAsDirty("ExcelTransactionAmount"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

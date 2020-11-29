@@ -245,7 +245,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconciliationLineListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TransactionAmount",'Number',this.AmountText));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ExcelTransactionAmount",'Number',this.AmountText));
 
         this.columns.push({
             FieldName: 'ReconciliationAmount',

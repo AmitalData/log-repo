@@ -100,14 +100,19 @@ namespace Logitude.Accounting.Data.Utilities
             if (rec.IsCumulativeLocalAmountPos)
                 rec.CumulativeLocalAmount = rec.CumulativeLocalAmount * -1;
             if (rec.IsForeignAmountCreditPos)
+            {
+                rec.ForeignAmountCreditWithSign = (rec.ForeignAmountCredit * -1)+" "+ rec.CurrencySign;
                 rec.ForeignAmountCredit = rec.ForeignAmountCredit * -1;
+            }
             if (rec.IsCumulativeForeignAmountPos)
+            {
+                rec.CumulativeForeignAmountSign = (rec.CumulativeForeignAmount * -1)+" "+ rec.CurrencySign;
                 rec.CumulativeForeignAmount = rec.CumulativeForeignAmount * -1;
+            }
             if (rec.IsOriginalAmountPos)
                 rec.OriginalAmount = rec.OriginalAmount * -1;
             if (rec.IsForeignAmountPos)
                 rec.ForeignAmount = rec.ForeignAmount * -1;
-
         }
         public  decimal CalculateOriginalAmount(LedgerTransactionList LedgerTransaction)
         {
