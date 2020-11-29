@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e1253e5d4b09f4bebc908c86f16a518d";
+		public const string HashString = "52a473561ecd64d1fe9bd22f56b382e8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "14d1",
+			      				    Code =  "515b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -616,6 +616,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_CUSTOMSINTERFACESETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSINTERFACESETTINGS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSINTERFACESETTINGS", NameTextCodeDefaultText = @"Customs Interface Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_MASTERSDOCUMENTSLINK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTERSDOCUMENTSLINK", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MASTERSDOCUMENTSLINK", NameTextCodeDefaultText = @"Enable Masters Documents Link for Agents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_AGENTDOCUMENTSPERMISSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTDOCUMENTSPERMISSION", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AGENTDOCUMENTSPERMISSION", NameTextCodeDefaultText = @"Documents Permission Agent View under Others table" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
