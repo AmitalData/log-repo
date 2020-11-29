@@ -57,6 +57,15 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant && a.IsOpen == true
                     select a).ToList();
         }
+
+        public List<CourierMaster> GetAllOpenCourierMastersWithLandingDate(int tenant)
+        {
+            DateTime nowDate = DateTime.Now;
+            DateTime dayAgoDate = DateTime.Now.AddDays(-1);
+            return (from a in context.CourierMasters
+                    where a.Tenant == tenant && a.IsOpen == true && a.LandingDate < nowDate && a.LandingDate > dayAgoDate
+                    select a).ToList();
+        }
     }
 
 }
