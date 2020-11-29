@@ -154,24 +154,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                             rec.CumulativeForeignAmount = CumulativeForeignAmount;
                         }
 
-
-                        rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
-                        rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
-                        rec.Source = rec.IconCode + " " + rec.SourceNumber;
-                        rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
-                        rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
-                        rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
-                        rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
-                        rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
-                        rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
-                        rec.IsOriginalAmountPos = rec.OpenAmount < 0;
-                        rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
-                        rec.ForeignAmountCreditWithSign = rec.ForeignAmountCredit + " " + rec.CurrencySign;
-                        rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
-                        if (isFromExcelGenerater)
-                        {
-                            ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
-                        }
+                        MapLedgerTransactionLine(rec, ledgerTransactionHelper, isFromExcelGenerater);
                     });
                     LogIt("after list");
                     //}
@@ -180,6 +163,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
+        }
+
+        private void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerater)
+        {
+
+            rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+            rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
+            rec.Source = rec.IconCode + " " + rec.SourceNumber;
+            rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
+            rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+            rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+            rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+            rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+            rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+            rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+            rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+            rec.ForeignAmountCreditWithSign = rec.ForeignAmountCredit + " " + rec.CurrencySign;
+            rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
+            if (isFromExcelGenerater)
+            {
+                ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+            }
         }
  
         private void LogIt(string mess)

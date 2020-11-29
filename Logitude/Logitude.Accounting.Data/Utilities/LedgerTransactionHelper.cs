@@ -9,87 +9,34 @@ namespace Logitude.Accounting.Data.Utilities
 {
     public class LedgerTransactionHelper
     {
+        private   Dictionary<string, string> EntityIconsDictionary = new Dictionary<string, string>();
+        const string LocalCurrency = "0";
+        const string ForeignCurrency = "1";
+        public LedgerTransactionHelper()
+        {
+            FillEntityIconsDictionary();
+        }
+
+        public void FillEntityIconsDictionary()
+        {
+            if (EntityIconsDictionary.Count==0)
+            {
+                EntityIconsDictionary.Add("1", "JR");// 1-Journal
+                EntityIconsDictionary.Add("2", "IN");// 2-ARInvoice
+                EntityIconsDictionary.Add("3", "PY");// 3-ARPayment
+                EntityIconsDictionary.Add("4", "IN");// 4-APInvoice
+                EntityIconsDictionary.Add("5", "PY");// 5-APPayment
+                EntityIconsDictionary.Add("6", "DP");// 6-Cheque Deposit
+                EntityIconsDictionary.Add("7", "DP");// 7-Cash Deposit
+                EntityIconsDictionary.Add("8", "RV");// 8-Revaluation
+                EntityIconsDictionary.Add("9", "CH");// 9-PaymentCheque
+                EntityIconsDictionary.Add("10", "AJ");// 10-Adjustment
+            }
+        }
         public   string getEntityIcon(string _sourceTypeCode)
         {
-            var iconTxt = "";
-            switch (_sourceTypeCode)
-            {
-                // 1-Journal
-                case "1":
-                    {
-                        iconTxt = "JR";
-                        break;
-                    }
-
-                // 2-ARInvoice
-                case "2":
-                    {
-                        iconTxt = "IN";
-                        break;
-                    }
-
-                // 3-ARPayment
-                case "3":
-                    {
-                        iconTxt = "PY";
-                        break;
-                    }
-
-                // 4-APInvoice
-                case "4":
-                    {
-                        iconTxt = "IN";
-                        break;
-                    }
-
-                // 5-APPayment
-                case "5":
-                    {
-                        iconTxt = "PY";
-
-                        break;
-                    }
-
-                // 6-Cheque Deposit
-                case "6":
-                    {
-                        iconTxt = "DP";
-
-                        break;
-                    }
-
-                // 7-Cash Deposit
-                case "7":
-                    {
-                        iconTxt = "DP";
-
-                        break;
-                    }
-
-                // 8-Revaluation
-                case "8":
-                    {
-                        iconTxt = "RV";
-
-                        break;
-                    }
-
-                // 9-PaymentCheque
-                case "9":
-                    {
-                        iconTxt = "CH";
-
-                        break;
-                    }
-
-                // 10-Adjustment
-                case "10":
-                    {
-                        iconTxt = "AJ";
-
-                        break;
-                    }
-            }
+            var iconTxt = EntityIconsDictionary[_sourceTypeCode];
+           
             return iconTxt;
         }
 
@@ -113,26 +60,24 @@ namespace Logitude.Accounting.Data.Utilities
         {
             if (!string.IsNullOrEmpty(LedgerTransaction.ReconcileMethodCode))
             {
-                if (LedgerTransaction.ReconcileMethodCode == "0")
-                {   // 0-local currency
-                    if (LedgerTransaction.LocalAmountCredit == 0)
+                if (LedgerTransaction.ReconcileMethodCode == LocalCurrency)
+                {   if (LedgerTransaction.LocalAmountCredit == 0)
                     {
                         return LedgerTransaction.LocalAmountDebit;
                     }
                     else
                     {
-                        return LedgerTransaction.LocalAmountCredit; // -1 *
+                        return LedgerTransaction.LocalAmountCredit;  
                     }
                 }
-                else if (LedgerTransaction.ReconcileMethodCode == "1")
-                {   // 1-foreign currency
-                    if (LedgerTransaction.ForeignAmountCredit == 0)
+                else if (LedgerTransaction.ReconcileMethodCode == ForeignCurrency)
+                {   if (LedgerTransaction.ForeignAmountCredit == 0)
                     {
                         return LedgerTransaction.ForeignAmountDebit;
                     }
                     else
                     {
-                        return LedgerTransaction.ForeignAmountCredit;  // -1 *
+                        return LedgerTransaction.ForeignAmountCredit;   
                     }
                 }
             }

@@ -53,10 +53,10 @@
 
         <span title="{{rowData['SourceType']}}" *ngIf="IconCode"
               [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
-              (click)="OpenSource(rowData['SourceId'])">{{ rowData['IconCode'] }} </span>
+              (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
 
         <a href="javascript:;" (click)="OpenSource(rowData['SourceId'])">
-            {{ rowData['SourceNumber'] }}
+            {{rowData['SourceNumber']}}
         </a>
     </div>
 
