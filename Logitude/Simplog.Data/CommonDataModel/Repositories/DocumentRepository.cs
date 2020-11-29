@@ -138,7 +138,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return !isValid;
         }
 
-
+        public string GetFileNameByDocumentId(string id, int tenant)
+        {
+            string calculatedFileName = (from a in context.Documents
+                                         where a.Tenant == tenant && a.Id == id
+                                         select a.FileName).FirstOrDefault();
+            return calculatedFileName;
+        }
 
     }
 }

@@ -28,5 +28,11 @@ namespace WarehouseDataViews
             CompareViewForm m = new CompareViewForm();
             m.Show();
         }
+
+        private void CheckFeatureButton_Click(object sender, EventArgs e)
+        {
+            CheckFeatureForm m = new CheckFeatureForm();
+            m.Show();
+        }
     }
 }
