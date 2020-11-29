@@ -732,11 +732,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
                 {
+                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
                     this._MyDeclarationPM.ImporterId = null;
-                }
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))
-                {
-                    this._MyDeclarationPM.PalestinianCode = _AmitalCustomsFile.ImporterId;
                 }
             }
         }
