@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "0150507b44280b9ffba4d478fffbb286";
+		public const string HashString = "94cdb0c1542b41b6d6682a61a333a65e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2553,6 +2553,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalCreditAllotmentCommission",
 					  						DefaultText =  "Calculated Credit Allotment Commission",
+					  						FullLocalDefaultText =  "עמלת הקצאת אשראי מחושבת",
+					  						ListFieldLable =  "CalCreditAllotmentCommissionListLable",
+					  						ListLableDefaultText =  "Calculated Credit Allotment Commission",
+					  						ListLocalDefaultText =  "עמלת הקצאת אשראי מחושבת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
