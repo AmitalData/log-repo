@@ -52,7 +52,7 @@ namespace WebFreight.Web.Helpers
 
             if (hasActiveContact && isValidContact)
             {
-                ProceedToResetUserPassword(resetPasswordParameters, tenant);
+                PerformUserPasswordReset(resetPasswordParameters, tenant);
                 logMessage = "(ForgetPassword) Email has been sent successfully";
             }
             else
@@ -118,7 +118,7 @@ namespace WebFreight.Web.Helpers
             return isLocked;
         }
         
-        private void ProceedToResetUserPassword(ResetPasswordParameters resetPasswordParameters, string tenant)
+        private void PerformUserPasswordReset(ResetPasswordParameters resetPasswordParameters, string tenant)
         {
             if (string.IsNullOrEmpty(resetPasswordParameters.AppEnvironment))
                 resetPasswordParameters.AppEnvironment = "Unifreight";
