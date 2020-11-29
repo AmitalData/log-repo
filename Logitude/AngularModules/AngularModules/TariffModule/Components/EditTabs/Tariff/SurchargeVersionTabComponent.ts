@@ -332,7 +332,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
                 this['Surcharge' + index + 'MinPriceVisibility'] = !isMeasurmentFixed;
-                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;               
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.EnglishName;               
             }
         }
     }
