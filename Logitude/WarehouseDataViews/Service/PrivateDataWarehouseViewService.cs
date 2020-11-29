@@ -48,11 +48,11 @@ namespace WarehouseDataViews.Service
 
         private List<WarehouseView> GetDataWarehouseViewsListsByTenant(int tenant)
         {
-            FeaturePrivateDataWarehouseService featurePrivateDataWarehouseService = new FeaturePrivateDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString);
+            FeaturePrivateDataWarehouseService featurePrivateDataWarehouseService = new FeaturePrivateDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString , tenant);
             List<WarehouseView> dataWarehouseViews = new List<WarehouseView>();
             foreach (WarehouseView factView in DataWarehouseViewLists.Where(d => d.IsFactView).ToList())
             {
-                if (featurePrivateDataWarehouseService.CheckFeature("BIReport." + factView.ViewCode, tenant))
+                if (featurePrivateDataWarehouseService.CheckFeature("BIReport." + factView.ViewCode))
                 {
                     dataWarehouseViews = dataWarehouseViews.Concat(DataWarehouseViewLists.Where(d => !d.IsFactView && d.FactConnectedCodeLists.Contains(factView.ViewCode)).ToList()).ToList();
                     dataWarehouseViews.Add(factView);
