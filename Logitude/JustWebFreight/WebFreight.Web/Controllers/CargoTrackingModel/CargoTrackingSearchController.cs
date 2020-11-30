@@ -107,8 +107,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, references);
 
-                Thread.Sleep(4000);
-
                 return reponseMessage;
             }
             catch (Exception ex)
