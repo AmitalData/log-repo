@@ -958,8 +958,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set TaxDeductionPercentage(value: number) {
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
-                this.EntityPM.TaxDeductionPercentage = value;
-                this.CalculateTaxDeductionLocalAmount();
+
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor)
+                value = 0;
+            this.EntityPM.TaxDeductionPercentage = value;
+            this.CalculateTaxDeductionLocalAmount();
             }
         }
     }
