@@ -15,37 +15,37 @@ export class ReceivablesTab {
     }
     private AddARInvoice() {
         this.AddReceivable(this.EntityNumber);
-        this.CreateInvoice("ARInvoice");
-        this.FillInvoiceDetailes();
-        this.GoToPaymentsTabInARInvoice(this.EntityNumber);
-        cy.server();
-        cy.route({
-            method: 'GET',
-            url: '**/shipment/GetSingle?id=**',
-            onResponse: (xhr) => {
-                expect(xhr.status).to.eq(200);
-            }
-        }).as('entityLoaded');
-        this.GoToGeneralTabInARInvoice();
-        this.BackToShipmentsTab(this.count);
-        cy.wait('@entityLoaded');
+        //this.CreateInvoice("ARInvoice");
+        //this.FillInvoiceDetailes();
+        //this.GoToPaymentsTabInARInvoice(this.EntityNumber);
+        //cy.server();
+        //cy.route({
+        //    method: 'GET',
+        //    url: '**/shipment/GetSingle?id=**',
+        //    onResponse: (xhr) => {
+        //        expect(xhr.status).to.eq(200);
+        //    }
+        //}).as('entityLoaded');
+        //this.GoToGeneralTabInARInvoice();
+        //this.BackToShipmentsTab(this.count);
+        //cy.wait('@entityLoaded');
     }
     private AddCreditNoteInvoice() {
         this.AddReceivable("-" + this.EntityNumber);
-        this.CreateInvoice("CreditNote");
-        this.FillInvoiceDetailes();
-        this.count += 2;
-        cy.server();
-        cy.route({
-            method: 'GET',
-            url: '**/shipment/GetSingle?id=**',
-            onResponse: (xhr) => {
-                expect(xhr.status).to.eq(200);
-            }
-        }).as('entityLoaded');
-        this.GoToGeneralTabInARInvoice();
-        this.BackToShipmentsTab(this.count);
-        cy.wait('@entityLoaded');;
+        //this.CreateInvoice("CreditNote");
+        //this.FillInvoiceDetailes();
+        //this.count += 2;
+        //cy.server();
+        //cy.route({
+        //    method: 'GET',
+        //    url: '**/shipment/GetSingle?id=**',
+        //    onResponse: (xhr) => {
+        //        expect(xhr.status).to.eq(200);
+        //    }
+        //}).as('entityLoaded');
+        //this.GoToGeneralTabInARInvoice();
+        //this.BackToShipmentsTab(this.count);
+        //cy.wait('@entityLoaded');;
     }
     private GoToReceivablesTab() {
         cy.get('#ShipmentTHReceivables').click();

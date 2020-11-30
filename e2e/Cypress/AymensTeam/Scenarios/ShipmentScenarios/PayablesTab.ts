@@ -8,12 +8,12 @@ export class PayablesTab {
         this.EntityNumber = Random.GetRandomNumber();
         this.GoToPayablesTab();
         this.AddPayable();
-        this.ReceiveInvoice(this.EntityNumber);
-        this.FillInvoiceDetailes(this.EntityNumber);
+        //this.ReceiveInvoice(this.EntityNumber);
+        //this.FillInvoiceDetailes(this.EntityNumber);
        // this.GoToGeneralTabInAPInvoice();
-        this.SaveAP();
-        this.ApproveAP();
-        this.BackToShipmentsTab();
+        //this.SaveAP();
+        //this.ApproveAP();
+       // this.BackToShipmentsTab();
     }
     private GoToPayablesTab() {
         cy.get('#ShipmentTHPayables').click();
