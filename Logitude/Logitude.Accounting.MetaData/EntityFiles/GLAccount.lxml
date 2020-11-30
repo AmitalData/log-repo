@@ -9258,6 +9258,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreditAllotmentPercentage&quot;"
     ListPropertyPath="&quot;CreditAllotmentPercentage&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9271,7 +9272,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="2"
+    NumberOfDigits="4"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -13883,6 +13884,12 @@
       Code="&quot;GLAccount.O.InterestForeignCurrencyAccount&quot;"
       DefaultText="&quot;Interest cannot be defined for a foreign currency account&quot;"
       LocalDefaultText="&quot;לא ניתן להגדיר תנאי ריבית לכרטיס במטבע זר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CreditAllotmentLimit&quot;"
+      DefaultText="&quot;The Credit Allotment Percentage should be between 0 and 99.99&quot;"
+      LocalDefaultText="&quot;אחוז הקצאת האשראי צריך להיות בין 0 ל -99.99&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

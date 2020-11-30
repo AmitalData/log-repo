@@ -65,7 +65,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     private CurrentSession = SessionLocator.SelectedSession;
     ShowTotalPerContinerLink: boolean = false;
     ShowVATDetails :boolean = false;
-
+    DisplayRegoinalTax: boolean = false;
 
     constructor() {
         super();
@@ -78,6 +78,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
         if (FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) this.ShowTotalPerContinerLink = true;
+        if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) this.DisplayRegoinalTax = true;
 
     }
 

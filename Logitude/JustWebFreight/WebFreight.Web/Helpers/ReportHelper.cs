@@ -851,6 +851,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = ExternalReconciliationManager.GetData();
                         break;
                     }
+                case "URDR":
+                    {
+                        UserDefinedReportManager UserDefinedReportManager = new UserDefinedReportManager(filters, reportFliter.tenant);
+                        dataProvider = UserDefinedReportManager.GetData();
+                        break;
+                    }
                 case "UPTR":
                     {
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
@@ -1849,6 +1855,14 @@ namespace WebFreight.Web.Helpers
                         ExternalReconciliationLinesReportDataProvider reportDataProvider = (ExternalReconciliationLinesReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
+                case "URDR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
+                        UserDefinedReportDataProvider reportDataProvider = (UserDefinedReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "URDR", Name = "UserDefinedReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
 

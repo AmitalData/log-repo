@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -12,19 +12,39 @@
 
         <td>
             <table style="vertical-align:top">
-          
+
                 <tr class="FormFieldRow">
                     <td style="width:250px">
                         <LogLabel [Text]="'Export Quotations To Integrated System'"
                                   [NoObjectField]="true"
                                   [DataContext]="DataContext"></LogLabel>
 
-                       
+
                     </td>
 
                     <td style="width:30px">
                         <CheckBox [IsChecked]="ExportQuotationsToIntegratedSystem"
                                   (Checked)="ExportQuotationsToIntegratedSystem = $event"></CheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="DisplayQuotationTransferTriggers">
+                    <td style="width:250px">
+                        <LogLabel [Text]="'Transfer Quotations to Unifreight'"
+                                  [NoObjectField]="true"
+                                  [DataContext]="DataContext"></LogLabel>
+
+
+                    </td>
+
+
+                    <td style="width: 200px;">
+                        <ComboBox [ItemsSource]="QuotationTransferTriggersList" [Binding]="'Name'" [SelectedItem]="SelectedTransferToUnfreightTriggerType" (SelectedItemChanged)="SelectedTransferToUnfreightTriggerType = $event" ></ComboBox>
                     </td>
 
                     <td>

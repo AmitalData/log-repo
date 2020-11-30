@@ -17,6 +17,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Weight { get; set; }
         public string PartnerTypeId { get; set; }
         public bool InActive { get; set; }
+        public bool IsCustomer { get; set; }
 
 
         [ForeignKey("CardId")]

@@ -56,51 +56,57 @@ namespace Logitude.Accounting.BL.CoreBL
             return myReconciliationPM;
 
         }
-
+        private static Object thisLock = new Object();
         public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM)
         {
-
-            // changeset
-            if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
+            lock (thisLock)
             {
-                throw new Exception("Meanwhile Only Insert Enable ");
+                // changeset
+                if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
+                {
+                    throw new Exception("Meanwhile Only Insert Enable ");
+                }
+                reconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                foreach (var item in reconciliationPM.ReconciliationLines)
+                {
+                    item.ChangeSetOp = ChangeSetOperation.Insert;
+                }
+
+                RecoCallback recoCallBack = new RecoCallback();
+
+
+                List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
+
+                bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
+                bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
+                if (hasMultipleARPayments == true && !hasTwoPaymentsOnly)
+                {
+                    CheckIfReconcilePaymentOnly(reconciliationPM, recoTransactions);
+
+                    CheckIfTotalNotEqualsZero(reconciliationPM);
+
+                    MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
+
+
+                   List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayments();
+
+
+
+                    SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
+                    recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
+
+                }
+                else
+                {
+                    recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
+                }
+
+
+
+
+
+                return recoCallBack;
             }
-            reconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
-            foreach (var item in reconciliationPM.ReconciliationLines)
-            {
-                item.ChangeSetOp = ChangeSetOperation.Insert;
-            }
-
-            RecoCallback recoCallBack = new RecoCallback();
-
-
-            List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
-
-            bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
-            bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
-            if (hasMultipleARPayments == true && !hasTwoPaymentsOnly)
-            {
-                CheckIfReconcilePaymentOnly(reconciliationPM, recoTransactions);
-
-                CheckIfTotalNotEqualsZero(reconciliationPM);
-
-                MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
-                List<ReconciliationPM> paymentReconciliations = splitter.Split();
-
-                SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
-                recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
-
-            }
-            else
-            {
-                recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
-            }
-
-
-
-
-
-            return recoCallBack;
         }
 
         private static void CheckIfReconcilePaymentOnly(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)

@@ -46,6 +46,7 @@ using WebFreight.Web.Helpers;
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
                 TotalLocalAmount = interestTransactionLists ==null ? 0: interestTransactionLists.Sum(s => s.LocalAmount),
                 InterestTransactionList = interestTransactionLists ==null ?null: interestTransactionLists.Where(s=> s.InterestValueDate.Date == d.FromDate.Date).Select (a =>
+             
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityIconCode,
@@ -74,6 +75,8 @@ using WebFreight.Web.Helpers;
             InterestReportDP.InvoiceNumber = InteerstReportPM.ARInvoiceNumber;
             InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
             InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
+            InterestReportDP.CreditAllotmentPercentage = InteerstReportPM.CreditAllotmentPercentage;
+            InterestReportDP.CalCreditAllotmentCommission = InteerstReportPM.CalCreditAllotmentCommission;
             return InterestReportDP;
         }
     }

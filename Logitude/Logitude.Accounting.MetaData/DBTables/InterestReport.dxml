@@ -142,7 +142,15 @@
   <Column
     Name="CreditAllotmentPercentage"
     Type="decimal"
-    Precision="2"
+    Precision="4"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CalCreditAllotmentCommission"
+    Type="decimal"
+    Precision="18"
     Scale="2">
     <Constraints
       Nullable="true" />

@@ -91,7 +91,9 @@
                                 (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                         </div>
                         <div float-end style="padding-top: 5px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}</div>
-
+                        <div style="width: 30px; padding: 3px 4px;"  float-end>
+                            <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
+                        </div>
                         <div [style.float]="isRTL ? 'left' : 'right'"  style="margin: 0 15px;padding: 3px 4px;">
                             <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [IsSmall]="true"     (click)="ExportToExcelClick()"></IconButton>
                         </div>
@@ -104,22 +106,22 @@
 
                     <!-- Date -->
                     <li float-start style="padding-left: 20px;padding-top: 5px;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
+                    
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
-                        <ComboBox [ItemsSource]="DateFilterPresetsList" [Binding]="'LocalName'"
-                            [SelectedItem]="SelectedDatePreset"
+                        <ComboBox [ItemsSource]="DateTypes" [Binding]="'LocalName'" [SelectedItem]="SelectedDateType"
+                        (SelectedItemChanged)="SelectedDateType = $event"></ComboBox>
+                    </li>
+
+                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 130px;">
+                        <ComboBox [ItemsSource]="DateFilterPresetsList" [Binding]="'LocalName'" [SelectedItem]="SelectedDatePreset"
                             (SelectedItemChanged)="SelectedDatePreset = $event"></ComboBox>
                     </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
-                        <LogDatePicker 
-                            [ObjectFieldName]="'FromDate'" 
-                            [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true" 
-                            [SelectedDateValue]="FromDate" 
-                            [ForceSubscribe]="true"
-                            [DataContext]="DataContext" 
-                            [HideColumns]="true"></LogDatePicker>
+                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
+                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                            [SelectedDateValue]="FromDate" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true">
+                        </LogDatePicker>
                     </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
                         <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
                             [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
                             [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
@@ -132,8 +134,8 @@
                         {{'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe}}:</li>
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
                         <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="openAmountSelectedOperator"
-                            (SelectedItemChanged)="openAmountSelectedOperator = $event"></ComboBox>
+                            [SelectedItem]="OpenAmountSelectedOperator"
+                            (SelectedItemChanged)="OpenAmountSelectedOperator = $event"></ComboBox>
                     </li>
                     <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                         <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
@@ -147,8 +149,8 @@
                         {{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
                         <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="foreignAmountSelectedOperator"
-                            (SelectedItemChanged)="foreignAmountSelectedOperator = $event"></ComboBox>
+                            [SelectedItem]="ForeignAmountSelectedOperator"
+                            (SelectedItemChanged)="ForeignAmountSelectedOperator = $event"></ComboBox>
                     </li>
                     <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                         <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
@@ -166,9 +168,9 @@
                     <li float-start style="width: 20px;height: 100%;"></li>
 
                     <!-- Refresh Button -->
-                    <li float-start style="padding: 0 15px;padding-top: 4px;">
+                    <!-- <li float-start style="padding: 0 15px;padding-top: 4px;">
                         <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
-                    </li>
+                    </li> -->
 
 
                 </ul>

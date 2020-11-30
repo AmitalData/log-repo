@@ -334,6 +334,7 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CardSearchFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\ExternalService\CustomerSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\AddressTypeList.cs" />
@@ -603,9 +604,12 @@
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
+    <Compile Include="QuoteModel\Tools\Initializers\QuoteServiceInitializer.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteClosingReason.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />

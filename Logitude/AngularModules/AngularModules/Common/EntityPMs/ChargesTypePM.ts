@@ -368,6 +368,31 @@ export class ChargesTypePM {
     public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
        
 	 
+    private isDirectionRestricted: boolean;
+    public get IsDirectionRestricted() { return this.isDirectionRestricted; }
+    public set IsDirectionRestricted(newValue: boolean) { if (this.isDirectionRestricted != newValue) { this.isDirectionRestricted = newValue; this.MarkAsDirty("IsDirectionRestricted"); } }
+       
+	 
+    private isActiveInExport: boolean;
+    public get IsActiveInExport() { return this.isActiveInExport; }
+    public set IsActiveInExport(newValue: boolean) { if (this.isActiveInExport != newValue) { this.isActiveInExport = newValue; this.MarkAsDirty("IsActiveInExport"); } }
+       
+	 
+    private isActiveInImport: boolean;
+    public get IsActiveInImport() { return this.isActiveInImport; }
+    public set IsActiveInImport(newValue: boolean) { if (this.isActiveInImport != newValue) { this.isActiveInImport = newValue; this.MarkAsDirty("IsActiveInImport"); } }
+       
+	 
+    private isActiveInDomestic: boolean;
+    public get IsActiveInDomestic() { return this.isActiveInDomestic; }
+    public set IsActiveInDomestic(newValue: boolean) { if (this.isActiveInDomestic != newValue) { this.isActiveInDomestic = newValue; this.MarkAsDirty("IsActiveInDomestic"); } }
+       
+	 
+    private isActiveInDrop: boolean;
+    public get IsActiveInDrop() { return this.isActiveInDrop; }
+    public set IsActiveInDrop(newValue: boolean) { if (this.isActiveInDrop != newValue) { this.isActiveInDrop = newValue; this.MarkAsDirty("IsActiveInDrop"); } }
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		

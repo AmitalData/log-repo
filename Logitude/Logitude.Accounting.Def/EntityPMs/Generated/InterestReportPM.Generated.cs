@@ -952,6 +952,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? calCreditAllotmentCommission ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CalCreditAllotmentCommission  
+	   {
+	    
+	     get
+		{
+		   return calCreditAllotmentCommission;
+		 }
+		 set
+		 {
+		   if(calCreditAllotmentCommission != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalCreditAllotmentCommission",OldValue=calCreditAllotmentCommission,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   calCreditAllotmentCommission=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

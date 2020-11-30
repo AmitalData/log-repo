@@ -384,7 +384,7 @@
   <Column
     Name="CreditAllotmentPercentage"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />

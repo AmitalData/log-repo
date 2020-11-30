@@ -13,7 +13,7 @@
         </div>
 
         <div class="user-name ">
-            Saitama 
+            {{UserName}} 
         </div> 
 
         <div class="signout " style="cursor: pointer;" (click)="SignOutClicked()">Sign Out</div> 
@@ -49,5 +49,5 @@
 </div>
 
 <div class="content">
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="isTenantLoaded"></router-outlet>
 </div>

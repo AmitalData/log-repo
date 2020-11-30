@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "b96370c9454cb1d6a4064cc36ee4315f";
+		public const string HashString = "a151a691cad1687fa3a3fbb55dcba1c8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7546,6 +7546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreditAllotmentPercentage",
 					  						ListPropertyPath =  "CreditAllotmentPercentage",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -7559,7 +7560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  2,
+					  						NumberOfDigits =  4,
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -9658,6 +9659,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOThereIsExternalTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThereIsExternalTrans", DefaultText = "Includes ledger transactions from external system",LocalDefaultText = @"כולל תנועות ממערכת חיצונית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOInterestForeignCurrencyAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestForeignCurrencyAccount", DefaultText = "Interest cannot be defined for a foreign currency account",LocalDefaultText = @"לא ניתן להגדיר תנאי ריבית לכרטיס במטבע זר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCreditAllotmentLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditAllotmentLimit", DefaultText = "The Credit Allotment Percentage should be between 0 and 99.99",LocalDefaultText = @"אחוז הקצאת האשראי צריך להיות בין 0 ל -99.99", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

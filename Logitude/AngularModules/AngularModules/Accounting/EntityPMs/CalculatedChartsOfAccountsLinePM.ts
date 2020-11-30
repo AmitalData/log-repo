@@ -157,6 +157,16 @@ export class CalculatedChartsOfAccountsLinePM {
     public set ChartOfAccountTypeCode(newValue: string) { if (this.chartOfAccountTypeCode != newValue) { this.chartOfAccountTypeCode = newValue; this.MarkAsDirty("ChartOfAccountTypeCode"); } }
        
 	 
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+       
+	 
+    private chartsofAccountCode: string;
+    public get ChartsofAccountCode() { return this.chartsofAccountCode; }
+    public set ChartsofAccountCode(newValue: string) { if (this.chartsofAccountCode != newValue) { this.chartsofAccountCode = newValue; this.MarkAsDirty("ChartsofAccountCode"); } }
+       
+	 
 
     public OldEntityPM: CalculatedChartsOfAccountsLinePM;
 	

@@ -20,6 +20,9 @@ export class SessionInfo{
     public static get LoggedUserEmail(): string { return this.loggedUserEmail; }
     public static set LoggedUserEmail(newValue: string) { this.loggedUserEmail = newValue; }
 
+    public static LoggedUser: any;
+    public static LoggedUserCompanyLogins: any[] = [];
+
     //private static loggedUserPM: UserPM;
     //public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
     //public static set LoggedUserPM(newValue: UserPM)

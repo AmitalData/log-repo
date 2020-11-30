@@ -19,8 +19,8 @@
                             {{'ReconcileExternalPage.O.Difference' | TextCodeTranslationPipe}}
                         </td>
 
-                        <td style="width: 180px;">
-                            <div style="font-size: 15px;color:#0f9776;" [class.red]="TotalDifference!=0">
+                        <td style="width: 180px;" text-start>
+                            <div style="font-size: 15px;color:#0f9776;" [class.red]="TotalDifference!=0" text-start>
                                 {{TotalDifference | NumbersPipe: 'N2'}} {{ TotalDifferenceCurrency }}
                             </div>
                         </td>

@@ -1403,7 +1403,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             foreach (ObjectTable objectTable in ObjectTableList)
             {
+                if(objectTable.DBTableName == "ShipmentStoragePricings")
+                {
 
+                }
                 // if(objectTable.HashString == )
                 List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
                 if (fieldsList != null)

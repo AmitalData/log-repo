@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;ffa3&quot;"
+  Code="&quot;515b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7028,6 +7028,24 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CUSTOMSINTERFACESETTINGS&quot;"
       FeatureDefaultText="&quot;Customs Interface Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MASTERSDOCUMENTSLINK&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.MASTERSDOCUMENTSLINK&quot;"
+      FeatureDefaultText="&quot;Enable Masters Documents Link for Agents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AGENTDOCUMENTSPERMISSION&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.AGENTDOCUMENTSPERMISSION&quot;"
+      FeatureDefaultText="&quot;Documents Permission Agent View under Others table&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

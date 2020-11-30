@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -6,6 +7,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 
@@ -804,5 +806,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             shipmentPM.Transshipment3ETD = null;
             shipmentPM.Transshipment3CarrierPrefix = null;
         }
+
     }
 }

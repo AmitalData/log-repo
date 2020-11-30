@@ -162,5 +162,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
         }
+
+        public List<Shipment> GetMasterConnectedHouseShipments(string entityId, int tenant)
+        {
+            List<Shipment> allConnectedHouses = myRepository.GetHouseShipmentsForMaster(entityId, tenant);
+
+            return allConnectedHouses;
+        }
     }
 }

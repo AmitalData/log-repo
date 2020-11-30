@@ -700,6 +700,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetMasterConnectedHouseShipments(string entityId, int tenant)
+        {
+            try
+            {
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
+                
+                IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+                ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
+                List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, housesShipments);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetActivityStatus(string type, int lastMonths, int lastDays, int currentTenant, string customerid)
         {
             try

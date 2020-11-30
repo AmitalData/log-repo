@@ -254,6 +254,11 @@ export class InterestReportPM {
     public set CreditAllotmentPercentage(newValue: number) { if (this.creditAllotmentPercentage != newValue) { this.creditAllotmentPercentage = newValue; this.MarkAsDirty("CreditAllotmentPercentage"); } }
        
 	 
+    private calCreditAllotmentCommission: number;
+    public get CalCreditAllotmentCommission() { return this.calCreditAllotmentCommission; }
+    public set CalCreditAllotmentCommission(newValue: number) { if (this.calCreditAllotmentCommission != newValue) { this.calCreditAllotmentCommission = newValue; this.MarkAsDirty("CalCreditAllotmentCommission"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
