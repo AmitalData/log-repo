@@ -430,13 +430,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
+                    UpdateNoIdUnder150();
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
                     if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");
                     }
-                    UpdateNoIdUnder150();
                 }
             }
 
@@ -656,25 +656,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void CalcIsAutonomy()
         {
-            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "8")
+            /*if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "8")
             {
                 this.IsAutonomy = true;
                 return;
-            }
-
-            CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
-            var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
-            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
-            {
-                this.IsAutonomy = true;
-                return;
-            }
+            }*/
 
             if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && this._LogitudeCommDecFile.IsAutonomy.ToLower().Substring(0, 1) == "y")
             {
                 this.IsAutonomy = true;
+                return;
             }
+            var palestinianCode = !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) ? this._MyDeclarationPM.ImporterCode : !String.IsNullOrWhiteSpace(this._MyDeclarationPM.PalestinianCode) ? this._MyDeclarationPM.PalestinianCode : null;
+            CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
+            var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, ResolvedTenant()))
+            {
+                this.IsAutonomy = true;
+                return;
+            }
+
+            
         }
 
         private void UpdateNoIdUnder150()
@@ -691,7 +694,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
                         if (defValue == "Y")
                         {
-                            if(this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
+                            if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
                             {
                                 ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
                                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
@@ -703,12 +706,34 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                             }
-                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
                             {
                                 this._MyDeclarationPM.ImporterCode = null;
                             }
                         }
                     }
+                }
+            }
+
+
+            if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
+            {
+                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+                declarationUpdateService.Update(this._MyDeclarationPM, true);
+                _context = CustomContext.GetContext(ResolvedTenant());
+                var myQueryService = new DeclarationQueryService(_context);
+                this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
+            {
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+                {
+                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
+                    this._MyDeclarationPM.ImporterId = null;
                 }
             }
         }

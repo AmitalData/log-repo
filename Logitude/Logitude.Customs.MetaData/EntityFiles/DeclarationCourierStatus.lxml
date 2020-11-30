@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;1db5&quot;"
+  Code="&quot;8626&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"

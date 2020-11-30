@@ -13,7 +13,11 @@ namespace Simplog.Server.Infrastructure.Helpers
     {
         public IQueryable<T> GetSorterQuery<T,N>(QueryOperations queryOperations, IQueryable<T> querableData)
         {
-            string keyName = GetObjectTableKeyName(queryOperations);
+            string keyName = null;
+            if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
+            {
+                keyName = GetObjectTableKeyName(queryOperations);
+            }
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;

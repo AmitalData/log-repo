@@ -133,7 +133,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus != "2" && entityPOCO.AmendmentStatus != null)
             {
-                entityPM.AmendmentMessage = "ìúöåâä áìáã - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                entityPM.AmendmentMessage = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
                 entityPM.IsAmendmentDisplayOnly = true;
             }
 
@@ -461,11 +461,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 if (entityPM.FastIndividualProcessCode == "F")
                 {
-                    entityPM.FastIndividualProcessCode = "îäéø";
+                    entityPM.FastIndividualProcessCode = "ï¿½ï¿½ï¿½ï¿½";
                 }
                 else if (entityPM.FastIndividualProcessCode == "I")
                 {
-                    entityPM.FastIndividualProcessCode = "ôøèðé";
+                    entityPM.FastIndividualProcessCode = "ï¿½ï¿½ï¿½ï¿½ï¿½";
                 }
             }
 
@@ -635,7 +635,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 if (courierPendingReasonList.Contains(","))
                 {
-                    courierPendingReasonList = "øùéîä";
+                    courierPendingReasonList = "ï¿½ï¿½ï¿½ï¿½ï¿½";
                 }
                 else
                 {

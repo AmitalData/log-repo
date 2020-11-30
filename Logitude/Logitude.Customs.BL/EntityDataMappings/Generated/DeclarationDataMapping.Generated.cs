@@ -162,7 +162,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueNIS, 
 	         FOBValueDollar, 
 	         TransshipmentApprovalDateTime, 
-	         FinalLoadingSite,
+	         FinalLoadingSite, 
+	         PalestinianCode,
 	      }
 
 
@@ -385,7 +386,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueDollar, 
 	         AmendmentRejectionReasonName, 
 	         TransshipmentApprovalDateTime, 
-	         FinalLoadingSite,
+	         FinalLoadingSite, 
+	         PalestinianCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1092,6 +1094,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalLoadingSite))
             {
 				entityPOCO.FinalLoadingSite = entityPM.FinalLoadingSite;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
+            {
+				entityPOCO.PalestinianCode = entityPM.PalestinianCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1805,6 +1812,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FinalLoadingSite = entityPOCO.FinalLoadingSite;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PalestinianCode))
+            {
+					entityPM.PalestinianCode = entityPOCO.PalestinianCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2509,6 +2521,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalLoadingSite))
             {
                 oldEntityPM.FinalLoadingSite = entityPM.FinalLoadingSite;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PalestinianCode))
+            {
+                oldEntityPM.PalestinianCode = entityPM.PalestinianCode;
             }
 			
 		}

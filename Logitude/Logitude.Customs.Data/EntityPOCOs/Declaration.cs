@@ -421,6 +421,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FinalLoadingSite { get; set; }
 	      
         public virtual LoadingSiteType LoadingSiteType { get; set; }
+        [ForeignKey("PalestinianImporter")]
+        [Column("PalestinianCode")]
+	    public string PalestinianCode { get; set; }
+	      
+        public virtual Client PalestinianImporter { get; set; }
     }
 }
 	 

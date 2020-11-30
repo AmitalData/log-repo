@@ -876,7 +876,7 @@ export class SendDeclarationService implements OnDestroy {
                     var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
 
-                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
                     this.CurrentSession.CurrentEditComponent.SetSelectedTab();
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }

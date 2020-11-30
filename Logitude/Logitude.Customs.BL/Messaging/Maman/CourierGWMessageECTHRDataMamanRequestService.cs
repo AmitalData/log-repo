@@ -151,9 +151,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string distributorName = "";
             DeclarationCourierStatusRepository declarationCourierStatusRepository = new DeclarationCourierStatusRepository(myDeclarationPM.Tenant);
             var declarationCourierStatus = declarationCourierStatusRepository.GetSingle(myDeclarationPM.Id, myDeclarationPM.Tenant);
-            if (!string.IsNullOrWhiteSpace(declarationCourierStatus.TruckerId)) 
+            if (!string.IsNullOrWhiteSpace(declarationCourierStatus.TruckerId))
             {
-                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant); 
+                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
                 Card card = cardRep.GetSingleCardCache(declarationCourierStatus.TruckerId, myDeclarationPM.Tenant);
                 if (card != null)
                 {

@@ -377,6 +377,8 @@ import { CancellationReasonRequestTypeListService } from './Services/StandardLis
 import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
 import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
+import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -630,6 +632,8 @@ export class ModuleProviders {
             case "AmendRequestRejectReasonTypeListService": { myResult = new AmendRequestRejectReasonTypeListService(); break; }
             case "AmendmentFieldStatusTypeListService": { myResult = new AmendmentFieldStatusTypeListService(); break; }
             case "LoadingSiteTypeListService": { myResult = new LoadingSiteTypeListService(); break; }
+
+            case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
 
              //#endregion                
 
