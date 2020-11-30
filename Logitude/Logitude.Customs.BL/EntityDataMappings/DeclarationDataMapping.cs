@@ -107,7 +107,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             }
 
-
+            if(entityPOCO.PalestinianCode != null)
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPOCO.PalestinianCode,false,false);
+                if (client != null)
+                {
+                    entityPM.PalestinianCodeId = client != null ? client.Code : null;
+                    entityPM.PalestinianCode = client.Id != null ? client.Id : null;
+                }
+            }
            if(entityPOCO.IsAmendment == true)
             {
                 AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);

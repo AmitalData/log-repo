@@ -956,7 +956,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="TransshipmentApprovalDateTime"
     Type="datetime">
@@ -970,7 +969,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="PalestinianCode"
     Type="varchar"
@@ -1178,7 +1176,6 @@
     ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-
   <Relation
     ForeignKeyColumn="PalestinianCode"
     ReferencedTable="Clients"

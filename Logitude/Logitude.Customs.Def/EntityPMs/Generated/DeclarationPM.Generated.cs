@@ -5308,6 +5308,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string palestinianCodeId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PalestinianCodeId  
+	   {
+	    
+	     get
+		{
+		   return palestinianCodeId;
+		 }
+		 set
+		 {
+		   if(palestinianCodeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PalestinianCodeId",OldValue=palestinianCodeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   palestinianCodeId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
