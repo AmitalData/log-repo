@@ -30,6 +30,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
    public partial class AccountingIntegrityCheckUpdateService
    {
+        public double DelayQueueInMinutes { get;  set; }
 
         protected override void OnCreating(AccountingIntegrityCheckPM entityPM, EntityPM entityParentPM)
         {
@@ -91,7 +92,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
-                }, Tenant);
+                }, Tenant, TimeSpan.FromMinutes(this.DelayQueueInMinutes));
         }
 
 
