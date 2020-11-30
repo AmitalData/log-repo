@@ -8,38 +8,105 @@ using System.Threading.Tasks;
 
 namespace WarehouseDataViews.Service
 {
-  public  class FeaturePrivateDataWarehouseService
+    public class FeaturePrivateDataWarehouseService
     {
 
         private string globalDBConnetionstring = string.Empty;
         private string mainDBConnetionstring = string.Empty;
-
-        public FeaturePrivateDataWarehouseService(string globalDBConnetionstring, string mainDBConnetionstring)
+        private int tenant;
+        private List<string> tenantPackagesCodeLists = null;
+        public FeaturePrivateDataWarehouseService(string globalDBConnetionstring, string mainDBConnetionstring , int tenant)
         {
             this.globalDBConnetionstring = globalDBConnetionstring;
             this.mainDBConnetionstring = mainDBConnetionstring;
+            this.tenant = tenant;
+            tenantPackagesCodeLists =GetTenantPackagesCodeLists();
 
         }
 
-        public bool CheckFeature(string featureCode, int tenant)
+        public bool CheckFeature(string featureCode)
         {
-            bool result = false;
-            var mainPackageCode = RunSqlString(globalDBConnetionstring, "select PackageCode  from " + " dbo." + "TenantManagements where Id = " + tenant);
-            if (mainPackageCode != "DVMT")
+            bool isHaveFeature = true;
+            if (!IsTenantPackageDevelopment())
             {
-                result = IsHavePackgeFeature(featureCode, mainPackageCode) ? true : false;
+                foreach (string packageCode in tenantPackagesCodeLists)
+                {
+                    isHaveFeature = IsHavePackgeFeature(featureCode, packageCode);
+                    if (isHaveFeature) return isHaveFeature;
+                }
             }
-            else result = true;
+            return isHaveFeature;
+
+        }
+
+        private List<string> GetTenantPackagesCodeLists()
+        {
+            var packageLists = new List<string>();
+            var dataTable = ExecuteSQL(globalDBConnetionstring, "select PackageCode,IsMultiPackage  from " + " dbo." + "TenantManagements where Id = " + tenant);
+            DataRow dataRow = dataTable.AsEnumerable().FirstOrDefault();
+            if (dataRow != null)
+            {
+                string packageCode = dataRow["PackageCode"] != null ? dataRow["PackageCode"].ToString() : "";
+                bool isMultiPackage = dataRow["IsMultiPackage"] != null ? bool.Parse(dataRow["IsMultiPackage"].ToString()) : false;
+                if (isMultiPackage) packageLists = GetTenantMultiPackagesLists();
+                if (!packageLists.Contains(packageCode)) packageLists.Add(packageCode);
+            }
+            return packageLists;
+
+        }
+
+        private List<string> GetTenantMultiPackagesLists()
+        {
+            List<string> result = new List<string>();
+            var tenantManagementLicenseDataTable = ExecuteSQL(globalDBConnetionstring, "select PackageCode  from " + " dbo." + "TenantManagementLicenses where Tenant = " + tenant);
+            foreach (DataRow row in tenantManagementLicenseDataTable.AsEnumerable())
+            {
+                string factCode = row["PackageCode"] != null ? row["PackageCode"].ToString() : "";
+                result.Add(factCode);
+            }
+
             return result;
+        }
+
+        private bool IsTenantPackageDevelopment()
+        {
+            return tenantPackagesCodeLists.Contains("DVMT") ? true : false;
         }
 
         private bool IsHavePackgeFeature(string featureCode, string packageCode)
         {
-            var feature = RunSqlString(mainDBConnetionstring, ("select PackageConnectedPackages.PackageCode as PackageCode  from PackageFeatures inner join PackageConnectedPackages on PackageFeatures.PackageCode =PackageConnectedPackages.ConnectedPackageCode where FeatureUniqeCode = (select FeatureUniqeCode from Features where Code = '" + featureCode + "') and PackageConnectedPackages.PackageCode = '" + packageCode + "'"));
-            return !string.IsNullOrEmpty(feature) ? true : false;
+            List<string> connectedPackages = GetContectPackages(packageCode);
+            string connectedPackagesAsString = GetConnectedPackageAsString(connectedPackages);
+            var existFeatureDataTable = ExecuteSQL(mainDBConnetionstring, "select top(1) FeatureUniqeCode from PackageFeatures where PackageCode in " + connectedPackagesAsString + " and FeatureUniqeCode = (select FeatureUniqeCode from Features where Code = " + "'" + featureCode + "')");
+            return existFeatureDataTable.AsEnumerable().FirstOrDefault() !=null  ? true : false;
         }
 
-        private string RunSqlString(string connectionString, string sql)
+        private static string GetConnectedPackageAsString(List<string> connectedPackages)
+        {
+            string connectedPackagesAsString = "(";
+            foreach (string connectedPackage in connectedPackages)
+            {
+                connectedPackagesAsString += ("'" + connectedPackage + "'" + ",");
+            }
+            connectedPackagesAsString = connectedPackagesAsString.Remove(connectedPackagesAsString.Length - 1);
+            connectedPackagesAsString += ")";
+            return connectedPackagesAsString;
+        }
+
+        
+        private List<string> GetContectPackages(string packageCode)
+        {
+            var contectPackages = new List<string>();
+            var packageConnectedPackagesDataTable = ExecuteSQL(mainDBConnetionstring, "select ConnectedPackageCode from PackageConnectedPackages where PackageCode = " + "'" + packageCode + "'"   );
+            foreach (DataRow row in packageConnectedPackagesDataTable.AsEnumerable())
+            {
+                string connectedPackageCode = row["ConnectedPackageCode"] != null ? row["ConnectedPackageCode"].ToString() : "";
+                contectPackages.Add(connectedPackageCode);
+            }
+            return contectPackages;
+        }
+
+        private DataTable ExecuteSQL(string connectionString, string sql)
         {
             var dataTable = new DataTable();
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
@@ -51,11 +118,16 @@ namespace WarehouseDataViews.Service
                 reader.Close();
             }
 
-            return dataTable.Rows
-                 .Cast<DataRow>()
-                 .Select(r => (string)r["PackageCode"].ToString())
-                 .FirstOrDefault();
+            return dataTable;
         }
 
     }
+    public class TenantManagementDetails
+    {
+        public string PackageCode { get; set; }
+        public bool IsMultiPackage { get; set; }
+        public List<string> PackageCodeLists { get; set; }
+
+    }
+
 }

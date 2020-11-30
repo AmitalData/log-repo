@@ -88,21 +88,23 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private string GetCommunicationLogSettingAsJosnString()
         {
             string myResult = string.Empty;
-
-            CommunicationLogSettings settings = new CommunicationLogSettings()
+            
+            CommunicationLogSettings communicationLogSettings = new CommunicationLogSettings()
             {
                 Host = fTPDetails.Host,
                 Folder = fTPDetails.Folder,
                 Username = fTPDetails.UserName,
                 Password = fTPDetails.Password,
-                Filename = documentId,
             };
 
-            myResult = JsonConvert.SerializeObject(settings);
+            communicationLogSettings.Filename = GetDocumentFileName();
+            myResult = JsonConvert.SerializeObject(communicationLogSettings);
 
             return myResult;
 
         }
+
+ 
 
         private void AddFTPCommunicationLogQueue(CommunicationLog communicationLog)
         {
@@ -134,7 +136,13 @@ namespace WebFreight.Web.Helpers.AutomationModel
             result = tenantQuery.GetCompanyNameById(tenant);
             return result;
         }
-
+     
+        private string GetDocumentFileName()
+        {
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            string fileName = documentRepository.GetFileNameByDocumentId(documentId, tenant);
+            return fileName;
+        }
 
     }
 

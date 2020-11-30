@@ -150,7 +150,7 @@
   <Column
     Name="CalCreditAllotmentCommission"
     Type="decimal"
-    Precision="4"
+    Precision="18"
     Scale="2">
     <Constraints
       Nullable="true" />

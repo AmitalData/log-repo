@@ -30,6 +30,7 @@
         {
             this.BuildViewsButton = new System.Windows.Forms.Button();
             this.CompareViewButton = new System.Windows.Forms.Button();
+            this.CheckFeatureButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BuildViewsButton
@@ -52,11 +53,22 @@
             this.CompareViewButton.UseVisualStyleBackColor = true;
             this.CompareViewButton.Click += new System.EventHandler(this.CompareViewButton_Click);
             // 
+            // CheckFeatureButton
+            // 
+            this.CheckFeatureButton.Location = new System.Drawing.Point(224, 175);
+            this.CheckFeatureButton.Name = "CheckFeatureButton";
+            this.CheckFeatureButton.Size = new System.Drawing.Size(307, 23);
+            this.CheckFeatureButton.TabIndex = 2;
+            this.CheckFeatureButton.Text = "Check Feature";
+            this.CheckFeatureButton.UseVisualStyleBackColor = true;
+            this.CheckFeatureButton.Click += new System.EventHandler(this.CheckFeatureButton_Click);
+            // 
             // MainViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.CheckFeatureButton);
             this.Controls.Add(this.CompareViewButton);
             this.Controls.Add(this.BuildViewsButton);
             this.Name = "MainViewForm";
@@ -69,5 +81,6 @@
 
         private System.Windows.Forms.Button BuildViewsButton;
         private System.Windows.Forms.Button CompareViewButton;
+        private System.Windows.Forms.Button CheckFeatureButton;
     }
 }

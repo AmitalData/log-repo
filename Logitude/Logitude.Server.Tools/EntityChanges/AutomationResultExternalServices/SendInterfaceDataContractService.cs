@@ -61,7 +61,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             {
                 string josnString = LogitudeXmlSerializer.SerializeObjectToJosnString(sendInterfaceDataContractObject);
                 byte[] josnfile = Encoding.UTF8.GetBytes(josnString);
-                Document document = CreateDocument(josnfile, "Josn");
+                Document document = CreateDocument(josnfile, "Json");
                 StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = document.Id, Extension = document.Extension, FolderName = document.Folder, FileData = josnfile, Tenant = document.Tenant });
                 sendInterfaceDataContractJosnDocumentId = document.Id;
             }

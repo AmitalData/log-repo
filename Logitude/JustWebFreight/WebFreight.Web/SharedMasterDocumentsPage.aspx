@@ -10,22 +10,22 @@
 
     <title>Documents</title>
 
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css" />
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
+    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
+    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
 
-    <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
-    <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
+    <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
+    <script src="HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
 
 
     <style type="text/css">
@@ -102,8 +102,8 @@
 <body>
 
 
-    <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
     
     <div class="BusyIndicator" style="top:47.5%;width:20%;height:20%" id="DocumentsPageBusyIndicator"></div>  
 
@@ -117,7 +117,7 @@
                             <tr>
                                 <td style="width: 10px;"></td>
                                 <td id="companyLogoArea" style="width: 50px;">
-                                    <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 55px;" />
+                                    <img id="companyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 55px;" />
                                 </td>
                                 <td style="vertical-align: central; text-indent: 5px;">
                                     <%--<span id="CompanyText" style="font-size:13px; color:#FFFF"></span>--%>
@@ -183,7 +183,7 @@
                                     </td>
 
                                     <td style="width: 20px;">
-                                        <img class="ShowOnDataControl" src="../HtmlHelpers/Images/Arrow.png" style="height: 16px; width: 16px; display: block; margin: auto;" />
+                                        <img class="ShowOnDataControl" src="HtmlHelpers/Images/Arrow.png" style="height: 16px; width: 16px; display: block; margin: auto;" />
                                     </td>
 
                                     <td style="width: 20px;">
@@ -244,18 +244,18 @@
                                     </tr>
                                     <tr style="font-size: 15px;">
                                         <td style="width: 15px;"></td>
-                                        <td style="width: 190px;">
+                                        <td>
                                             Shipper : <%=houseShipment.ShipperName != null ? houseShipment.ShipperName : "---"%>
                                         </td>
                                         <td style="width: 70px;"></td>
-                                        <td style="width: 180px;">
+                                        <td>
                                             Consignee : <%=houseShipment.ConsigneeName != null ? houseShipment.ConsigneeName : "---"%>
                                         </td>
                                         <td style="width: 70px;"></td>
                                         <td>
-                                            Qty / weight : <%=houseShipment.BookingNumberOfPackages != null && houseShipment.BookingNumberOfPackages.ToString() != null? houseShipment.BookingNumberOfPackages.ToString() : "0"%> / <%=houseShipment.OrderGrossWeight != null && houseShipment.OrderGrossWeight.ToString() != null ? houseShipment.OrderGrossWeight.ToString() : "0"%>Kg
+                                            Qty / weight : <%=houseShipment.NumberOfPackages != null && houseShipment.NumberOfPackages.ToString() != null? houseShipment.NumberOfPackages.ToString() : "0"%> / <%=houseShipment.ChargeableWeight != null && houseShipment.ChargeableWeight.ToString() != null ? houseShipment.ChargeableWeight.ToString() : "0"%>Kg
                                         </td>
-                                        <td>
+                                        <td style="width:35%">
                                             <div></div>
                                         </td>
                                     </tr>
@@ -300,7 +300,7 @@
                                 <td style="width: 5px;"></td>
 
                                 <td style="width: 50px;">
-                                    <img id="invalidCompanyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 35px; vertical-align: bottom; position: absolute; top: 2px;" />
+                                    <img id="invalidCompanyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 35px; vertical-align: bottom; position: absolute; top: 2px;" />
                                 </td>
 
 
@@ -395,9 +395,9 @@
                                                     <p style="font-size: 11px; color: #27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</p>
                                                 </td>
                                                 <td style="width: 40px; vertical-align: central;">
-                                                    <img src="../HtmlHelpers/Images/Icons/LogitudeLogo.png" style="width: 40px; height: 20px;" /></td>
+                                                    <img src="HtmlHelpers/Images/Icons/LogitudeLogo.png" style="width: 40px; height: 20px;" /></td>
                                                 <td style="width: 85px; vertical-align: central;">
-                                                    <img src="../HtmlHelpers/Images/Icons/Logitude.png" style="width: 79px; height: 25px;" /></td>
+                                                    <img src="HtmlHelpers/Images/Icons/Logitude.png" style="width: 79px; height: 25px;" /></td>
                                                 <td></td>
                                             </tr>
                                         </table>
@@ -410,7 +410,7 @@
                                             <tr>
                                                 <td style="width: 65px; vertical-align: top; padding-top: 7px; white-space: nowrap; font-size: 11px; color: #27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</td>
                                                 <td style="width: 28px; vertical-align: middle;">
-                                                    <img src="../images/ApplicationLogo/UnifreightSmallLogo.png" style="width: 28px; height: 28px;" /></td>
+                                                    <img src="images/ApplicationLogo/UnifreightSmallLogo.png" style="width: 28px; height: 28px;" /></td>
                                                 <td style="width: 85px; vertical-align: middle; white-space: nowrap; font-size: 14px; color: #7F7F7F; font-weight: bold; font-family: 'Lucida Sans Unicode';">Unifreight Cloud Services</td>
                                                 <td></td>
                                             </tr>
@@ -455,15 +455,15 @@
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function OnDownloadAllConnectedDocuments() {
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            window.open("WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function GetURL() {
-            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            return "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
         }
     </script>
 
@@ -471,7 +471,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var myLogoMethodUrl = "../api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
+            var myLogoMethodUrl = "api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
             $.ajax({
                 url: myLogoMethodUrl,
                 type: 'GET',
@@ -498,7 +498,7 @@
     <style>
         .headerDiv {
             height: 25px;
-            background: url("../HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
+            background: url("HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
             border-radius: 5px 5px 0 0;
             -webkit-border-radius: 5px 5px 0 0;
             -moz-border-radius: 5px 5px 0 0;
