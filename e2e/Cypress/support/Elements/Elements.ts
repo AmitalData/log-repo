@@ -1,3 +1,16 @@
+declare namespace Cypress {
+    interface Chainable {
+        FillLogTextBox(selector: string, value: string, assertRequired?: boolean): Chainable<Element>
+        FillLogLov(selector: string, value: string, assertRequired?: boolean): Chainable<Element>
+        FillRandomString(selector: string, length: number, upperCase: boolean, assertRequired?: boolean): Chainable<Element>
+        FillRandomNumber(selector: string, minimum: number, maximum: number, assertRequired?: boolean): Chainable<Element>
+        Click(selector: string, contains?: string): Chainable<Element>
+        SaveClick(Url: string, selector: string, contains?: string): Chainable<Element>
+        ClickCheckBox(selector: string): Chainable<Element>
+        ClickRadio(selector: string): Chainable<Element>
+    }
+}
+
 Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired = false) => {
 
     if (assertRequired) {
@@ -43,10 +56,10 @@ Cypress.Commands.add("FillRandomString", (selector, length, upperCase, assertReq
 
 Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequired = false) => {
 
-    minimum = Math.ceil(minimum);
-    maximum = Math.floor(maximum);
+    minimum = Math.ceil(minimum)
+    maximum = Math.floor(maximum)
 
-    let randomNumber = Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
+    let randomNumber = (Math.floor(Math.random() * (maximum - minimum + 1) + minimum)).toString()
 
     if (assertRequired) {
         cy.get(selector).type(randomNumber).should("have.value", randomNumber)

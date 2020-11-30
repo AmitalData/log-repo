@@ -1,6 +1,14 @@
+declare namespace Cypress {
+    interface Chainable {
+        Login(): Chainable<Element>
+    }
+}
+
 Cypress.Commands.add("Login", () => {
 
-    cy.fixture("Data/Login.json").then((LoginData) => {
+    let jsonLoginData = Cypress.env("LoginData")
+
+    cy.fixture("Data/" + jsonLoginData + ".json").then((LoginData) => {
 
         cy.visit(LoginData.url)
         cy.get("#Email").type(LoginData.email)
