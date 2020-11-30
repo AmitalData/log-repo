@@ -1403,7 +1403,6 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
         };
         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-        //logWindow.ShowCloseButton = true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
@@ -1412,12 +1411,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
 
             });
         });
-        logWindow.Show(
-            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
-            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
-            //'./CustomsModules/CustomsMaintenance/Components/InvoiceQueueComponent'
-            './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
-        );
+        logWindow.Show('./CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent');
         /*
         logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
             //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
