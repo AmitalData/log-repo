@@ -1,21 +1,15 @@
-//import { Resolvers } from "../../../Resolvers/Resolvers";
-//import { NewEditActivitiesScenarios } from '../../../Scenarios/CRMScenarios/NewEditActivitiesScenarios';
-//import { LoginComp } from "../../../../Login/Login.po";
+import { Resolvers } from "../../../Resolvers/Resolvers";
+import { NewARScenarios } from '../../../Scenarios/AccountingScenarios/NewARScenarios';
+import { LoginComp } from "../../../../Login/Login.po";
 
-//describe('Activities', () => {
-//    let login: LoginComp = new LoginComp();
-//    let scenarios: NewEditActivitiesScenarios = new NewEditActivitiesScenarios();
-//    beforeEach(() => {
-//        Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
-//        Resolvers.MainMenuResolver.Selector('#CRMACT').Select();
-//    });
-// it('Test New Activities', () => {
-//        scenarios.RunScenario('T');  
-//    });
-//    it('Test New Activities', () => {
-//        scenarios.RunScenario('P');
-//    });
-//    it('Test New Activities', () => {
-//        scenarios.RunScenario('A');
-//    });
-//});
+describe('Accounts Receivable', () => {
+    let login: LoginComp = new LoginComp();
+    let scenarios: NewARScenarios = new NewARScenarios();
+    beforeEach(() => {
+        Resolvers.MainMenuResolver.Selector('#GeneralMHAccounting').Select();
+        Resolvers.MainMenuResolver.Selector('#RECEIVABLEAccounting').Select();
+    });
+    it('Test New Payment', () => {
+        scenarios.RunScenario();
+    });
+});
