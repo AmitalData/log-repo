@@ -170,12 +170,14 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
                     list.forEach(item => {
 
-                        if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
-                            unConnectedListNotMatched.push(item);
-                        }
+                        if (this.EntityPM.InvoicePayments.filter(f => f.APPaymentId == item.Id).length == 0) {
+                            if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
+                                unConnectedListNotMatched.push(item);
+                            }
 
-                        else {
-                            unConnectedMatchedList.push(item);
+                            else {
+                                unConnectedMatchedList.push(item);
+                            }
                         }
                     });
 
