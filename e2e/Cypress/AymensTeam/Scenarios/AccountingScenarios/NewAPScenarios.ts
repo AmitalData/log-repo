@@ -14,7 +14,7 @@ export class NewAPScenarios {
         Resolvers.LOVResolver.Selector('#APPayment_VendorId').Type('AR');
         Resolvers.LOVResolver.Selector('#APPayment_AccountingPaymentMethodId').Type('Cash');
         Resolvers.TextBoxResolver.Selector('#APPayment_AmountInPaymentCurrency').Type('100');
-        Resolvers.LOVResolver.Selector('#APPayment_PaymentCurrencyId').Type('EUR');
+        Resolvers.LOVResolver.Selector('#APPayment_PaymentCurrencyId').Type('NIS');
         Resolvers.ButtonResolver.Selector('#APPayment-Save').Click();
         cy.server();
         cy.route("**/apinvoiceviews/**").as('entityLoaded');
