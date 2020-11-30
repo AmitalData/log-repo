@@ -26,13 +26,12 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
             await CreateShipment();
             await GetShipment();
-          
+
         }
         private async Task CreateShipment()
         {
             var entityPM = new House()
             {
-              
                 Direction = new BL.InfrastructureModel.APIDataContract.ApiV1.Direction() //
                 {
                     Code = "E",
@@ -50,24 +49,14 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 Shipper = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
                 {
-                    Code = "",
-                    PartnerCode = "MSALOG",
-                    IsDisconnectedFromGLAccount = false
+                    Code = "10009",
                 },
-                Consignee = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
-                {
-                    Code = "",
-                    PartnerCode = "MSALOG",
-                    IsDisconnectedFromGLAccount = false
-                },
-
 
                 Customer = new BL.CommonDataModel.APIDataContract.ApiV1.Card() //
                 {
-                    Code = "",
-                    PartnerCode = "MSALOG",
-                    IsDisconnectedFromGLAccount = false
+                    Code = "10009",
                 },
+
                 GrossWeightUnit = new BL.CommonDataModel.APIDataContract.ApiV1.WeightUnit()//
                 {
                     Code = "KG",
@@ -85,66 +74,39 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 HouseNo = "CTIBGUM203248LAX", //
 
-                HouseDate =new DateTime(2020 , 11 , 11), //
+                HouseDate = new DateTime(2020, 11, 11), //
 
-          
+                FromPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
+                {
+                    Code = "DE222",
+                },
+
+                ToPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
+                {
+                    Code = "DE223",
+                },
 
                 Incoterm = new BL.CommonDataModel.APIDataContract.ApiV1.Incoterm()//
                 {
-                    Code = "CFR",
+                    Code = "CIF",
                 },
-                IsCancelled = false, //
-                IsOperationalClosed = false, //
-                IsAccountingClosed = false, // 
-                OrderIsDangerouseGoods =false,//
-                ComputingPartnerCode = "API",//
+
                 OceanOrInlandPackages = new List<OceanOrInlandPackage>(),
             };
 
+
             entityPM.OceanOrInlandPackages.Add(new OceanOrInlandPackage()
             {
                 PackageType = new BL.CommonDataModel.APIDataContract.ApiV1.PackageType()
                 {
-                    Code = "IP",
-                    PartnerCode=""
+                    Code = "20BU",
                 },
-                Length =22,
-                Width = 25,
-                Height=5,
-                Pieces = 1,
-                Volume = 1.59,
-                GrossWeight = 36,
-                Reference1 = "AUTO PARTS",
-                Reference2 = "15061200",
-                Reference3 = "10/28/2020",
-                Reference4 = "4236564",
-                IsDangerous =false,
-                Notes = "ROUGH COUNTRY",
 
-            });
-            entityPM.OceanOrInlandPackages.Add(new OceanOrInlandPackage()
-            {
-                PackageType = new BL.CommonDataModel.APIDataContract.ApiV1.PackageType()
-                {
-                    Code = "PL",
-                    PartnerCode = ""
-                },
-                Length = 79,
-                Width = 22,
-                Height = 1,
                 Pieces = 1,
-                Volume = 17.09,
-                GrossWeight = 117,
-                Reference1 = "HARDWARE",
-                Reference2 = "15061211",
-                Reference3 = "10/28/2020",
-                Reference4 = "WORGFAB",
-                IsDangerous = false,
-                Notes = "TRAIL GEAR",
 
+                GrossWeight = 250,
             });
 
-            
             shipmentId = await service.CreateHouse(entityPM);
         }
 
