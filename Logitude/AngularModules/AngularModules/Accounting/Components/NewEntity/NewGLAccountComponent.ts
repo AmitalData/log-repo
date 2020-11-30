@@ -66,9 +66,9 @@ export class NewGLAccountComponent extends BaseComponent {
     private BuildChartOfAccountTypeApiFilters()
     {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
-        const isAccountingPartner = AccountingPartners.AccountingPartner;
-        const isCustomer = AccountingPartners.Customer;
-        const isVendor = AccountingPartners.Vendor;
+        const isAccountingPartner = this.partnerType == AccountingPartners.AccountingPartner;
+        const isCustomer = this.partnerType == AccountingPartners.Customer;
+        const isVendor = this.partnerType == AccountingPartners.Vendor;
 
         if (isAccountingPartner) {
             var excludedTypes = [ChartOfAccountTypes.Works, ChartOfAccountTypes.Banks].join(',');
