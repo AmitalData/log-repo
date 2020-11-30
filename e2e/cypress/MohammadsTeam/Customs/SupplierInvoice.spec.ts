@@ -42,10 +42,11 @@ cy.get('#Add_2').click();
 
     it('supplier invoice fields', () => {
       //  LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_AccountTypeCode", '325');
-        cy.get('input[id="Customs.SupplierInvoice_AccountTypeCode"]').type('325');
-        cy.get('ul[id="mydatalist_Customs.SupplierInvoice_AccountTypeCode"]').contains('325').then(a => {
-            a[0].click();
-        });
+	    LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_AccountTypeCode", '325');
+        // cy.get('input[id="Customs.SupplierInvoice_AccountTypeCode"]').type('325');
+        // cy.get('ul[id="mydatalist_Customs.SupplierInvoice_AccountTypeCode"]').contains('325').then(a => {
+            // a[0].click();
+        // });
         cy.get('input[id="date_Customs.SupplierInvoice_IssueDate"]').type('16/10/2020')
         LogHelper.LOVSearchAndSelectFirst("Customs.SupplierInvoice_InvoiceCurrencyTypeCode", 'ILS');
 
