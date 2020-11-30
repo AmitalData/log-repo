@@ -859,7 +859,15 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 {
                     if (isFHLType)
                     {
-                        iResult = myShipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, item.Id, myTenant);
+                        if (string.IsNullOrEmpty(myHouse))
+                        {
+                            iResult = myShipmentRepository.GetHouseShipmentIfSingle(myMaster, item.Id, myTenant);
+                        }
+
+                        else
+                        {
+                            iResult = myShipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, item.Id, myTenant);
+                        }
                     }
 
                     else
