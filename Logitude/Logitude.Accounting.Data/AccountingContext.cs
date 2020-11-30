@@ -307,7 +307,7 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<InterestReport>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
 				
-			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(4, 2);
+			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
 				
