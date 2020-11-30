@@ -15,8 +15,8 @@
 <!-- TransactionAmount -->
 <div class="TextTrimming" *ngIf="fieldName == 'TransactionAmount'"
     style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
-    [class.red]='rowData["AmountDebit"] > 0'>
-    {{ GetTransacionAmount() | NumbersPipe:'N2' }}
+    [class.red]='rowData["IsAmountDebitNegative"]'>
+    {{  rowData[fieldName]  | NumbersPipe:'N2' }}
 </div>
 
 <!-- ReconciliationAmount -->

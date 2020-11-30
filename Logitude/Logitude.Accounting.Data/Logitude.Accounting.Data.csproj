@@ -324,6 +324,7 @@
     <Compile Include="Repositories\InterestReportStatuseRepository.cs" />
     <Compile Include="Repositories\UserDefinedReportRepository.cs" />
     <Compile Include="Utilities\InterestTransactionGetParameters.cs" />
+    <Compile Include="Utilities\LedgerTransactionHelper.cs" />
     <Compile Include="Utilities\LedgerTransactionsSorter.cs" />
     <Compile Include="Repositories\AccountingIntegrityCheckRepository.cs" />
     <Compile Include="Repositories\AccountingNoteRepository.cs" />

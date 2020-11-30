@@ -162,6 +162,26 @@ export class ReconciliationLinePM {
     public set IsRecoCancelled(newValue: boolean) { if (this.isRecoCancelled != newValue) { this.isRecoCancelled = newValue; this.MarkAsDirty("IsRecoCancelled"); } }
        
 	 
+    private reconciliationAmountWithSign: string;
+    public get ReconciliationAmountWithSign() { return this.reconciliationAmountWithSign; }
+    public set ReconciliationAmountWithSign(newValue: string) { if (this.reconciliationAmountWithSign != newValue) { this.reconciliationAmountWithSign = newValue; this.MarkAsDirty("ReconciliationAmountWithSign"); } }
+       
+	 
+    private isAmountDebitNegative: boolean;
+    public get IsAmountDebitNegative() { return this.isAmountDebitNegative; }
+    public set IsAmountDebitNegative(newValue: boolean) { if (this.isAmountDebitNegative != newValue) { this.isAmountDebitNegative = newValue; this.MarkAsDirty("IsAmountDebitNegative"); } }
+       
+	 
+    private transactionAmount: number;
+    public get TransactionAmount() { return this.transactionAmount; }
+    public set TransactionAmount(newValue: number) { if (this.transactionAmount != newValue) { this.transactionAmount = newValue; this.MarkAsDirty("TransactionAmount"); } }
+       
+	 
+    private excelTransactionAmount: number;
+    public get ExcelTransactionAmount() { return this.excelTransactionAmount; }
+    public set ExcelTransactionAmount(newValue: number) { if (this.excelTransactionAmount != newValue) { this.excelTransactionAmount = newValue; this.MarkAsDirty("ExcelTransactionAmount"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

@@ -938,7 +938,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Source'
         });
-       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
         //this.columns.push({
         //    FieldName: 'SourceType',
@@ -961,7 +961,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
+       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
 
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
