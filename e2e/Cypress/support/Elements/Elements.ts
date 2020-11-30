@@ -1,3 +1,18 @@
+export {};
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            FillLogTextBox(selector: string, value: string, assertRequired?: boolean): Chainable<Element>
+            FillLogLov(selector: string, value: string, assertRequired?: boolean): Chainable<Element>
+            FillRandomString(selector: string, length: number, upperCase: boolean, assertRequired?: boolean): Chainable<Element>
+            FillRandomNumber(selector: string, minimum: number, maximum: number, assertRequired?: boolean): Chainable<Element>
+            Click(selector: string, contains?: string): Chainable<Element>
+            SaveClick(Url: string, selector: string, contains?: string): Chainable<Element>
+            ToggleCheckBox(selector: string): Chainable<Element>
+            SelectLogLovFirstElement(selector: string): Chainable<Element>
+        }
+    }
+}
 Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired = false) => {
 
     if (assertRequired) {
@@ -16,8 +31,15 @@ Cypress.Commands.add("FillLogLov", (selector, value, assertRequired = false) => 
         cy.get(selector).type(value)
     }
 
-    cy.wait(500)
     cy.get(".DropDownListItem").find("div[title='" + value + "']").click()
+
+})
+
+Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
+
+    cy.get(selector).focus().type('{downarrow}');
+
+    cy.get(".DropDownListItem").children().eq(0).click();
 
 })
 
@@ -49,9 +71,9 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequ
     let randomNumber = Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
 
     if (assertRequired) {
-        cy.get(selector).type(randomNumber).should("have.value", randomNumber)
+        cy.get(selector).type(randomNumber.toString()).should("have.value", randomNumber)
     } else {
-        cy.get(selector).type(randomNumber)
+        cy.get(selector).type(randomNumber.toString())
     }
 
 })
