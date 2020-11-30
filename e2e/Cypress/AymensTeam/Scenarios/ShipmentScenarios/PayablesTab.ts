@@ -21,6 +21,7 @@ export class PayablesTab {
     private AddPayable() {
         cy.get('#AddPayable').click();
         Resolvers.LOVResolver.Selector('#ShipmentPayable_ChargesTypeId').SelectFirst();
+        Resolvers.LOVResolver.Selector('#ShipmentPayable_CurrencyId').Type('NIS');
         Resolvers.TextBoxResolver.Selector('#ShipmentPayable_ExpectedAmount').Type('100');
         Resolvers.ButtonResolver.Selector('#Ok-AddPayableBtn').Click();
     }

@@ -58,6 +58,8 @@ export class ReceivablesTab {
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_TotalAmount').Type(EntityNumber);
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_Notes').Type('test');
         Resolvers.ButtonResolver.Selector('#Ok-AddReceivableBtn').Click();
+        Resolvers.ButtonResolver.Selector('#Shipment-Save').Click();
+        this.WaitLoaded();
     }
     private CreateInvoice(name : string) {
         cy.get('#Create'+name).click();
@@ -103,15 +105,15 @@ export class ReceivablesTab {
 
     }
     
-    private WaitLoaded(urls: string) {
+    private WaitLoaded() {
         cy.server();
         cy.route({
             method: 'GET',
-            url: '**/shipment',
+            url: '**/userviews/getsingle/?id**',
             onResponse: (xhr) => {
                 expect(xhr.status).to.eq(200);
             }
-        }).as('entityLoaded');
-        //  cy.wait('@entityLoaded');
+        }).as('entitySaved');
+        cy.wait('@entitySaved');
     }
 }
