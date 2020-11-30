@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "caa700e025f60d8491111c8502adfc52";
+		public const string HashString = "a88281b3c789237b345302d0b80119db";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12625,12 +12625,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
+					  						IsCustomFilter =  true,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -13663,192 +13663,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CreateDateForExport",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToRoutingString",
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CreateDateForExport",
-					  						ListPropertyPath =  "CreateDateForExport",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CreateDateForExport",
-					  						DefaultText =  "Create Date Time",
-					  						FullLocalDefaultText =  "תאריך פתיחת הצהרה",
-					  						ListFieldLable =  "CreateDateForExportListLable",
-					  						ListLableDefaultText =  "Create Date Time",
-					  						ListLocalDefaultText =  "תאריך פתיחת הצהרה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TransportModeForExport",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  10,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TransportModeForExport",
-					  						ListPropertyPath =  "TransportModeForExport",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						ColumnHeaderTemplateName =  "TransportModeListHeaderTemplate",
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TransportModeForExport",
-					  						DefaultText =  "Transport Mode",
-					  						ListFieldLable =  "TransportModeForExportListLable",
-					  						ListLableDefaultText =  "Transport Mode",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CustomFileForExport",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  12,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  12,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CustomFileForExport",
-					  						ListPropertyPath =  "CustomFileForExport",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CustomFileForExport",
-					  						DefaultText =  "Custom File",
-					  						FullLocalDefaultText =  "תיק מכס",
-					  						ListFieldLable =  "CustomFileForExportListLable",
-					  						ListLableDefaultText =  "Custom File",
-					  						ListLocalDefaultText =  "תיק מכס",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "AmendmentRejectionReasonName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
@@ -13888,132 +13702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "AmendmentRejectionReasonName",
 					  						DefaultText =  "Amendment Rejection Reason",
 					  						FullLocalDefaultText =  "סיבת דחיה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TransshipmentApprovalDateTime",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TransshipmentApprovalDateTime",
-					  						ListPropertyPath =  "TransshipmentApprovalDateTime",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TransshipmentApprovalDateTime",
-					  						DefaultText =  "Transshipment Approval Date",
-					  						FullLocalDefaultText =  "תאריך אישור שטעון באתר הראשון",
-					  						ListFieldLable =  "TransshipmentApprovalDateTimeListLable",
-					  						ListLableDefaultText =  "Transshipment Approval Date",
-					  						ListLocalDefaultText =  "תאריך אישור שטעון באתר הראשון",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "FinalLoadingSite",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.LoadingSiteType",
-					  						MinLength =  0,
-					  						MaxLength =  10,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FinalLoadingSite",
-					  						ListPropertyPath =  "FinalLoadingSite",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FinalLoadingSite",
-					  						DefaultText =  "Final Loading Site",
-					  						FullLocalDefaultText =  "אתר טעינה אחרון בפועל",
-					  						ListFieldLable =  "FinalLoadingSiteListLable",
-					  						ListLableDefaultText =  "Final Loading Site",
-					  						ListLocalDefaultText =  "אתר טעינה אחרון בפועל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -14110,6 +13798,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PalestinianCodeId",
 					  						ListPropertyPath =  "PalestinianCodeId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -14640,21 +14329,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ExportDeclarationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
              AdvancedQueryFilter ExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
