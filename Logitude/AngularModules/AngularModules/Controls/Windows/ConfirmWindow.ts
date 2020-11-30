@@ -78,7 +78,9 @@ export class ConfirmWindow {
         }
 
         this.InstanceComponent = null;
-    }    
+    } 
+    
+   
 }
 
 @Component({
@@ -268,5 +270,13 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     YesButtonClicked() {
         this.ConfirmWindow.Yes = true;
         this.ConfirmWindow.Close();
+    }
+
+    OnEscHotKeyPressed(){
+        this.CancelButtonClicked();
+    }
+
+    OnSaveHotKeyPressed(){
+        this.YesButtonClicked();
     }
 }

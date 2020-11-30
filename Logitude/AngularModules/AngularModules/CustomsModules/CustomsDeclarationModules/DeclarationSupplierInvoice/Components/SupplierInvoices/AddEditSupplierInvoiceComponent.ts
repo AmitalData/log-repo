@@ -1047,7 +1047,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     
+    OnSaveHotKeyPressed(){
+        this.OkButtonClicked();
+    }
 
+    OnEscHotKeyPressed(){
+        this.CancelButtonClicked();
+    }
+
+    OnSaveAndNewHotKeyPressed(){
+        this.SaveAndNewButtonClicked();
+    }
 
 
     ReloadPromise(): Promise<boolean> {
