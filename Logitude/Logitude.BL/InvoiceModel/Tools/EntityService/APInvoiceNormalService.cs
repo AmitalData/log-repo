@@ -2508,16 +2508,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.CreditAccountId = glAccount.Id;
                     //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
                     journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
-                   
+
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
-                   
+
                     // [Debit]
                     journalLine = new JournalLinePM();
                     int counter = 1;
                     List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
+                   // theEntityPm.InvoiceLines.ToList().ForEach(d => { d.LocalCurrencyAmount = ((d.VatRecognizedPercentage == null) ? d.LocalCurrencyAmount : (d.LocalCurrencyAmount + ((1 - d.VatRecognizedPercentage) * Math.Round((double)((d.VatPercentage / 100) * d.LocalCurrencyAmount), 2)))); });
+                                                            
+
+
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                        group d by new { d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                        group d by new {d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
@@ -2531,21 +2535,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
 
-                                                            LocalAmount =(decimal)g.Sum(a => 
+                                                            LocalAmount = Math.Round((decimal)g.Sum(a =>
                                                             (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
-                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
+                                                              (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),2),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
+                                                            ForeignAmount = Math.Round((decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),2),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                                             Notes = theEntityPm.InternalNotes,
                                                         }).ToList();
-
-                    journal.JournalLines.AddRange(journalLines);
+                  
                     journalDebitLines.AddRange(journalLines);
+                    journal.JournalLines.AddRange(journalLines);
                     var totalDebitLines = journal.JournalLines.Where(d=> d.ActionCode=="2").Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
@@ -2584,6 +2588,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
                         totalDebitLines = totalDebitLines + journalLine.LocalAmount;
+                        journalDebitLines.Add(journalLine);
                         journal.JournalLines.Add(journalLine);
                     }
                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
@@ -2594,8 +2599,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             JournalLinePM largestJournalAmount = journalDebitLines.Where(d =>  d.LocalAmount == journalDebitLines.Max(a=> a.LocalAmount)).FirstOrDefault();
                             journal.JournalLines.Where(d => d.Line == largestJournalAmount.Line).ToList().ForEach(d => { d.LocalAmount = d.LocalAmount + difference; d.ForeignAmount = d.ForeignAmount + difference; });
                         }
+                 
 
-                    
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);
                 }
