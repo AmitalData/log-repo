@@ -52,7 +52,7 @@ export class ReceivablesTab {
     }
 
     private AddReceivable(EntityNumber: string) {
-        Resolvers.ButtonResolver.Selector('#Add').Click();
+        cy.get('#AddReceivable').click();
         Resolvers.LOVResolver.Selector('#ShipmentReceivable_ChargesTypeId').SelectFirst();
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_TotalAmount').Type(EntityNumber);
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_Notes').Type('test');

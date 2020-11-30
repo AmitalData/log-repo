@@ -19,7 +19,7 @@ export class PayablesTab {
         cy.get('#ShipmentTHPayables').click();
     }
     private AddPayable() {
-        Resolvers.ButtonResolver.Selector('#Add').Click();
+        cy.get('#AddPayable').click();
         Resolvers.LOVResolver.Selector('#ShipmentPayable_ChargesTypeId').SelectFirst();
         Resolvers.TextBoxResolver.Selector('#ShipmentPayable_ExpectedAmount').Type('100');
         Resolvers.ButtonResolver.Selector('#Ok-AddPayableBtn').Click();
