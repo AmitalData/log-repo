@@ -59,7 +59,7 @@ export class ReceivablesTab {
         Resolvers.TextBoxResolver.Selector('#ShipmentReceivable_Notes').Type('test');
         Resolvers.ButtonResolver.Selector('#Ok-AddReceivableBtn').Click();
         Resolvers.ButtonResolver.Selector('#Shipment-Save').Click();
-        this.WaitLoaded();
+      //  this.WaitLoaded();
     }
     private CreateInvoice(name : string) {
         cy.get('#Create'+name).click();
