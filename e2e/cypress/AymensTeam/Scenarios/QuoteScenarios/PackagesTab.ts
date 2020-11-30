@@ -2,19 +2,23 @@ import { Resolvers } from "../../Resolvers/Resolvers";
 
 export class PackagesTab {
     private shipmentType: string;
-     
-    public RunPackagesTabsScenarios(shipmentType: string = null) {
-        this.shipmentType = shipmentType;
+    private quoteType: string;
+    public RunPackagesTabsScenarios(shipmentType: string = null, quoteType: string) {
+        this.shipmentType = shipmentType.toLowerCase();
+        this.quoteType = quoteType.toUpperCase();
+
         this.GoToPackagesTab();
-        if (this.shipmentType.toLowerCase() == 'fcl' || this.shipmentType.toLowerCase() == 'fcld' ||this.shipmentType.toLowerCase() == 'ftl') {
-            this.AddContainer('3','40GP');
+        if (this.shipmentType == 'fcl' || this.shipmentType == 'fcld' || this.shipmentType == 'ftl') {
+            this.AddContainer('3', '40GP');
         } else {
-            if (this.shipmentType.toLowerCase() == 'lcl' || this.shipmentType.toLowerCase() == 'ltl') {
-                this.AddPackage('bal', '5', null, null, null, '10', '100');
-            }
-            else {
-                this.AddPackage(null, '5', '100', '100', '100', null, '100');
-                this.AddPackage(null, '5', null, null, null, '10', '100');
+            if (this.quoteType != 'RR') {
+                if (this.shipmentType == 'lcl' || this.shipmentType == 'ltl') {
+                    this.AddPackage('bal', '5', null, null, null, '10', '100');
+                }
+                else {
+                    this.AddPackage(null, '5', '100', '100', '100', null, '100');
+                    this.AddPackage(null, '5', null, null, null, '10', '100');
+                }
             }
         }
     }
@@ -25,7 +29,7 @@ export class PackagesTab {
         Resolvers.ButtonResolver.Selector('#AddPackage').Click();
       
         Resolvers.TextBoxResolver.Selector('#QuotePackage_Quantity').Type(quantity);
-        if (this.shipmentType.toLowerCase() == 'lcl' || this.shipmentType.toUpperCase() == 'ltl') {
+        if (this.shipmentType == 'lcl' || this.shipmentType == 'ltl') {
             Resolvers.LOVResolver.Selector('#QuotePackage_PackageTypeId').Type(packageType);
         }
         if (volume == null) {
@@ -38,8 +42,10 @@ export class PackagesTab {
         Resolvers.TextBoxResolver.Selector('#QuotePackage_GrossWeight').Type(grossweight);
         Resolvers.ButtonResolver.Selector('#OkAddPackage').Click();
     }
-    private AddContainer(quantity: string, packageType: string ) {
-        Resolvers.TextBoxResolver.Selector('#Quote_PackageType1Quantity').Type(quantity);
+    private AddContainer(quantity: string, packageType: string) {
+        if (this.quoteType != 'RR') {
+            Resolvers.TextBoxResolver.Selector('#Quote_PackageType1Quantity').Type(quantity);
+        }
         Resolvers.LOVResolver.Selector('#Quote_PackageType1Id').Type(packageType);
     }
 }
