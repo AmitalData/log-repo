@@ -145,7 +145,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "CopyJournal":
                             {
-                                if (this.EntityPM.AccountingEntityCode == "1") {
+                                if (this.EntityPM.StatusCode == "2"   && this.EntityPM.AccountingEntityCode == "1") {
                                     button.IsDisabled = false;
 
                                 }
