@@ -660,10 +660,16 @@ export class DeliveryMainTabComponent extends BaseComponent {
             this.EntityPM.Notes = value;
         }
     }
+    private ConvertStringToDate(dateValue: any) {
+        return DateTool.GetDateParts(dateValue).DateObject;
+    }
 
-    get ETD() { return DateTool.GetDateParts(this.EntityPM.ETD).DateObject; }
+    get ETD() { return this.EntityPM.ETD; }
     set ETD(value: Date) {
         if (this.EntityPM.ETD != value) {
+            if (this.EntityPM.ETD != null && !(this.EntityPM.ETD instanceof Date)) {
+                this.EntityPM.ETD = this.ConvertStringToDate(this.EntityPM.ETD);
+            }
             this.EntityPM.ETD = value;
         }
     }
@@ -675,9 +681,12 @@ export class DeliveryMainTabComponent extends BaseComponent {
         }
     }
 
-    get ATD() { return DateTool.GetDateParts(this.EntityPM.ATD).DateObject; }
+    get ATD() { return this.EntityPM.ATD; }
     set ATD(value: Date) {
         if (this.EntityPM.ATD != value) {
+            if (this.EntityPM.ATD != null && !(this.EntityPM.ATD instanceof Date)) {
+                this.EntityPM.ATD = this.ConvertStringToDate(this.EntityPM.ATD);
+            }
             this.EntityPM.ATD = value;
             this.SetUIProperties_ValidDatesFields();
         }

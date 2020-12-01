@@ -134,7 +134,8 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="VendorId"
-                                                            [LookUpTableName]="'Card'"
+                                                            [LookUpTableName]="'Card'" 
+                                                            (SelectedItemChanged)="VendorChanged($event)"
                                                             [HideLastColumn]="true"
                                                             [DependencyFilter1Value]="'AC,CS,AG,AL,CG,SG,SL,TR,VD,WH'"
                                                             [DependencyFilter1IsList]="true">

@@ -1,0 +1,10 @@
+<div *ngIf="isTenantLoaded" id="notfound">
+    <div class="notfound">
+        <div class="notfound-404">
+            <h1>401</h1>
+        </div>
+        <h2>Oops! you are not authorized</h2>
+        <p>Sorry, but {{SiteUrl}} is not authorized to access this page </p>
+         <a style="cursor:pointer;" (click)="GoBack()">try again </a>
+    </div>
+</div>

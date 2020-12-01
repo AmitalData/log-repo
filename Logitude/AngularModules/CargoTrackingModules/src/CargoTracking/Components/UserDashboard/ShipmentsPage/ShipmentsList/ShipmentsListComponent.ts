@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ShipmentsListComponent
     FilteredItems: any[] = [];
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-    tenant;
+ 
     isLoading: boolean  = false;
     isFiltersSideBarOpened: boolean  = false;
     isFilter1Expanded: boolean  = false;
@@ -27,13 +28,15 @@ export class ShipmentsListComponent
     isAbdullahCompanyChecked: boolean  = true;
     showSortDetailsMenu: boolean  = false;
     showShipmentDetailsMenu: boolean  = false;
-
+    get tenant(){
+        return CargoTrackingBrandingData.Tenant;
+    }
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetVariablesFromURI();
+ 
         // this.listenToRouterEvents();
         this.InitForm();
         this.SearchText = 'abed';
@@ -46,27 +49,7 @@ export class ShipmentsListComponent
             SearchText: ''
         });
     }
-
-    private GetVariablesFromURI()
-    {
-        // let searchKey = this.route.snapshot.paramMap.get('searchKey');
-
-
-        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
-        if (tenant != null && tenant != "") {
-            this.tenant = Number(tenant);
-        }
-        else {
-            //  if(searchKey!=null && searchKey!=""){
-            //     this.router.navigate([1,'search',searchKey]);
-            //  }
-            //  else{
-            //     this.router.navigate([1,'search']);
-            //  }
-
-        }
-    }
-
+ 
     private _SearchText: string = '';
     public get SearchText(): string
     {
@@ -86,9 +69,8 @@ export class ShipmentsListComponent
     }
     Search()
     {
-        if (this.tenant && this.SearchText) {
+        if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
-            // this.router.navigate([this.tenant,'search', this.SearchText]);
             this.LoadShipments();
         }
 
@@ -99,7 +81,7 @@ export class ShipmentsListComponent
     {
         var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this.tenant, 'dashboard', 'shipment', SecurityKey]);
+        this.router.navigate(['dashboard', 'shipment', SecurityKey]);
 
     }
     LoadShipments()

@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string CustomAgent { get; set; }
-
+        public string UserName { get; set; }
         public List<ReportGroup> CommodityAgentGroupList { get; set; }
         public List<ReportGroup> MasterCommodityAgentGroupList { get; set; }
         public List<ReportGroup> Reference4GroupList { get; set; }
@@ -56,7 +56,8 @@ namespace WebFreight.Web.DataProviders
         public int? Quantity { get; set; }
         public double? Weight { get; set; }
         public double? Volume { get; set; }
-        public double? VolumetricWeight { get; set; }        
+        public double? VolumetricWeight { get; set; }
+        public double? ChargeableWeight { get; set; }
         public string MoveType { get; set; }
         public string CustomAgentImportName { get; set; }
         public string CustomAgentImportId { get; set; }

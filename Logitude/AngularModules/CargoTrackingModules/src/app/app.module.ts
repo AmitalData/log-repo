@@ -19,6 +19,7 @@ import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/Pub
 import { SearchComponent } from 'src/CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
   
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -42,6 +43,9 @@ export function getBaseUrl() {
         PanelComponent,
         CheckBoxComponent,
         DetailsMenuComponent,
+
+        //Erros
+        Error401Component
         
     ],
     imports: [
