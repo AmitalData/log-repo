@@ -89,7 +89,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             string shipmentNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
             string transportModeId = GetPropertyValueFromObject("TransportModeId", entityPM);
             string directionId = GetPropertyValueFromObject("DirectionId", entityPM);
-            return GetShipmentLevelName(entityPM) + " " + transportModeId+ directionId +" "+ shipmentNumber;
+            return GetShipmentLevelName(entityPM).ToLower() + "_" + transportModeId.ToLower()+ directionId.ToLower() +"_"+ shipmentNumber.ToLower();
         }
         private string GetShipmentLevelName(object entityPM)
         {
