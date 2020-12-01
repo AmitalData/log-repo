@@ -364,6 +364,11 @@ export class DeclarationCourierStatusPM {
     public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
        
 	 
+    private distributionArea: string;
+    public get DistributionArea() { return this.distributionArea; }
+    public set DistributionArea(newValue: string) { if (this.distributionArea != newValue) { this.distributionArea = newValue; this.MarkAsDirty("DistributionArea"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
