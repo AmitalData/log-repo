@@ -47,6 +47,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void Update()
         {
+            if (this._DeclarationPM.PaymentStatusCode =="0")
+            {
+                return;
+
+            }
             var sw = Stopwatch.StartNew();
             try
             {
