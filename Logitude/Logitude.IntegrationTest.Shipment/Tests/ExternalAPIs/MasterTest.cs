@@ -21,8 +21,6 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
         public async Task TestMasterShipment()
         {
             service = new ExternalMasterAPITestService();
-
-
             await CreateShipment();
             await GetShipment();
             await UpdateShipmentWithInvalidFutureATD();
