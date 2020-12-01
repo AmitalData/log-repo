@@ -92,7 +92,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             CommunicationLogSettings communicationLogSettings = new CommunicationLogSettings()
             {
                 Host = fTPDetails.Host,
-                Folder = fTPDetails.Folder,
+                Folder = fTPDetails.Folder + "/fromlogitude",
                 Username = fTPDetails.UserName,
                 Password = fTPDetails.Password,
             };
