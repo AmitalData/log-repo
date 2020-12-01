@@ -1,12 +1,13 @@
 import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 
 
 
@@ -33,12 +34,11 @@ export class UserDashboardComponent implements AfterViewInit
     set tenant(val:number){
           CargoTrackingBrandingData.Tenant = val;
     }
-    cons
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router, )
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router,@Inject('BASE_URL') baseUrl: string )
     {
-
-        document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
-        this.GetTenantByDomain();
+         
+         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+         this.GetTenantByDomain(baseUrl);
         this.InitComponent();
 
     }
@@ -100,9 +100,9 @@ export class UserDashboardComponent implements AfterViewInit
         this.router.navigate(['Error401']);
     }
 
-    private GetTenantByDomain()
+    private GetTenantByDomain(baseUrl:string)
     {
-        this.cargoTrackingDataExtendedService.GetTenantByDomain(location.hostname).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
             CargoTrackingBrandingData.Tenant = response.Result;
             this.isTenantLoaded =true;
