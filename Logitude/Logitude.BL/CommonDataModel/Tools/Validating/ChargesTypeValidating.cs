@@ -48,16 +48,16 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
         {
             var errors = "";
             if (entityPM.IsExport && entityPM.IsDirectionRestricted && !entityPM.IsActiveInExport)
-                errors += "Can't mark Export as auto-display as it is not active in" + ";";
+                errors += "Can't mark Export as auto-display as it is not active" + ";";
 
             if (entityPM.IsImport && entityPM.IsDirectionRestricted && !entityPM.IsActiveInImport)
-                errors += "Can't mark Import as auto-display as it is not active in" + ";";
+                errors += "Can't mark Import as auto-display as it is not active" + ";";
 
             if (entityPM.IsDomestic && entityPM.IsDirectionRestricted && !entityPM.IsActiveInDomestic)
-                errors += "Can't mark Domestic as auto-display as it is not active in" + ";";
+                errors += "Can't mark Domestic as auto-display as it is not active" + ";";
 
             if (entityPM.IsDrop && entityPM.IsDirectionRestricted && !entityPM.IsActiveInDrop)
-                errors += "Can't mark Drop as auto-display as it is not active in";
+                errors += "Can't mark Drop as auto-display as it is not active";
 
             if (!string.IsNullOrEmpty(errors))
             {
