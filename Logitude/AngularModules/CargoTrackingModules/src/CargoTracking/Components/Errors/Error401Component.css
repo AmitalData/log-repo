@@ -42,8 +42,7 @@
     font-weight: 900;
     margin: 0px;
     text-transform: uppercase;
-    background: url('/images/text.png');
-    -webkit-background-clip: text;
+     -webkit-background-clip: text;
     background-size: cover;
     background-position: center;
   }

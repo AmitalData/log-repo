@@ -5,6 +5,7 @@ import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { Location } from '@angular/common';
 import { AppHelper } from '../../../Utilities/AppHelper';
 import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingBrandingData';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class HomeComponent
     BackGroundImg:string;
     Domain:string;
     MapImgSRC:string ="";
+    public baseUrl:string;
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router, 
         private location: Location)
     {
@@ -34,8 +36,8 @@ export class HomeComponent
 
 
     private getcargoTrackingData()
-    {   console.log(location.hostname);
-        this.cargoTrackingDataExtendedService.get(location.hostname).subscribe((response: ServiceResponse) =>
+    {   
+        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetCurrentDomain(this.baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
             CargoTrackingBrandingData.Tenant = response.Result.Tenant;
             CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? this.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
@@ -58,8 +60,8 @@ export class HomeComponent
     public Logo: string; 
     private GetDataFromURL(baseUrl: string)
     {
-       
-        this.MapImgSRC  = "url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+        this.baseUrl =baseUrl;
+        this.MapImgSRC  = "url('"+this.baseUrl+"assets/images/misc/map-bg.svg')"
         this.getcargoTrackingData();
           
     }
