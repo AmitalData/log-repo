@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { Location } from '@angular/common';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 
 
 @Component({
@@ -16,14 +17,15 @@ export class Error401Component
 
     public SiteUrl:string = location.hostname;
     isTenantLoaded:boolean = false;
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private router: Router,   private Minlocation: Location)
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string,   private Minlocation: Location)
     {
-             this.GetTenantByDomain();
+             this.GetTenantByDomain(baseUrl);
+ 
     }
-
-    private GetTenantByDomain()
-    {   console.log(location.hostname);
-        this.cargoTrackingDataExtendedService.GetTenantByDomain(location.hostname).subscribe((response: ServiceResponse) =>
+       
+    private GetTenantByDomain(baseUrl:string)
+    {   
+        this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
         {   this.isTenantLoaded =true;
             if(response.Result!=null){
             CargoTrackingBrandingData.Tenant = response.Result;
