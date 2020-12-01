@@ -188,14 +188,15 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
                     list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
 
                     list.forEach(item => {
+                        if (this.EntityPM.InvoicePayments.filter(f => f.ARPaymentId == item.Id).length == 0) {
+                            if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
+                                unConnectedListNotMatched.push(item);
+                            }
 
-                        if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
-                            unConnectedListNotMatched.push(item);
-                        }
-
-                        else {
-                            unConnectedMatchedList.push(item);
-                        }
+                            else {
+                                unConnectedMatchedList.push(item);
+                            }
+                        } 
                     });
 
                     unConnectedMatchedList.forEach(item => {
