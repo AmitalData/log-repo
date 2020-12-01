@@ -34,16 +34,16 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
             {
                 Agent = new BL.CommonDataModel.APIDataContract.ApiV1.Card()//
                 {
-                    Code = "12520"
+                    Code = "79694"
                 },
 
                 Branch = new BL.CommonDataModel.APIDataContract.ApiV1.Branch()//
                 {
-                    Code = "123"
+                    Code = "HybridB1"
                 },
                 Department = new BL.CommonDataModel.APIDataContract.ApiV1.Department()//
                 {
-                    Code = "MG"
+                    Code = "HybridD1"
                 },
                 Direction = new BL.InfrastructureModel.APIDataContract.ApiV1.Direction()//
                 {
@@ -52,22 +52,25 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 TransportMode = new BL.InfrastructureModel.APIDataContract.ApiV1.TransportMode()//
                 {
-                    Code = "A",
+                    Code = "O",
                 },
-
+                ShipmentType = new ShipmentType() //
+                {
+                    Code = "LCL",
+                },
 
                 Shipper = new BL.CommonDataModel.APIDataContract.ApiV1.Card()//
                 {
-                    Code = "12520",
+                    Code = "79695",
                 },
                 Consignee = new BL.CommonDataModel.APIDataContract.ApiV1.Card()//
                 {
-                    Code = "10017",
+                    Code = "79696",
                 },
 
                 MainCarriageCarrier = new BL.CommonDataModel.APIDataContract.ApiV1.Card()//
                 {
-                    Code = "AA",
+                    Code = "79697",
                 },
 
                 SpecialServicesType = new BL.ShipmentsModel.APIDataContract.ApiV1.SpecialServicesType()//
@@ -77,13 +80,11 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 ShipperNotExporter = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
                 {
-                    Code = "76421"
+                    Code = "79698"
                 },
                 MasterDate = new DateTime(2020, 11, 16),
                 Ratio =8.1,
                 MainCarriageCarrierNumber = "155",//
-                IsOperationalClosed = false,//
-                IsAccountingClosed = false,
                 OrderNumberOfPackages=10,
                 OrderGrossWeight =10,
                 OrderVolume =10,
@@ -92,42 +93,15 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                 MasterNumber = "66998875", //
                 MainCarriageATD = new DateTime(2020, 11, 16),//
                 MainCarriageATA = new DateTime(2020, 11, 16),//
-                MainCarriageLegs = new List<MainCarriageLeg>(),
                 Deliveries = new List<Delivery>(),
                 PickUps = new List<PickUp>(),
                 Houses = new List<House>(),
             };
 
-            entityPM.Deliveries.Add(new Delivery()
-            {
-                Id = "1-63815",
-                ATA= new DateTime(2020, 11, 16),
-                FromPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
-                {
-                  Code = "USABR"
-                },
-                ToPartnerCard = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
-                {
-                    Code = "10017"
-                }
-            });
-
-            entityPM.PickUps.Add(new PickUp()
-            {
-                Id = "1-63814",
-                FromPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
-                {
-                    Code = "DE229"
-                },
-                ToPartnerCard = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
-                {
-                    Code = "12520"
-                }
-            });
-
+       
             entityPM.Houses.Add(new House()
             {
-                ShipmentNumber = "BBBBRAI_30000085"
+                ShipmentNumber = "179ae92f-033e-4"
             });
 
             entityPM.MainCarriageLegs.Add(new MainCarriageLeg()
@@ -136,17 +110,17 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
 
                 Carrier = new BL.CommonDataModel.APIDataContract.ApiV1.Card()
                 {
-                    Code = "AA",
+                    Code = "79701",
                 },
 
                 FromPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
                 {
-                    Code = "DE229",
+                    Code = "BBQ",
                 },
 
                 ToPort = new BL.CommonDataModel.APIDataContract.ApiV1.Port()
                 {
-                    Code = "USABR",
+                    Code = "EZE",
                 },
                 ETD = new DateTime(2020, 11, 16),
                 ETA = new DateTime(2020, 11, 16),
