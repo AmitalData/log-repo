@@ -24,1117 +24,1142 @@
 
         <!-- Request -->
         <div class="class-request-content">
-            <table style="width: 860px;height: 560px; padding-top: 10px;">
+            <table style="width: 860px;height: 30px;  ">
+                <tr>
 
-                <!-- Request Fields -->
-                <tr class="FormFieldRow" style="vertical-align: top">
+                    <td colspan="8" style="width: 600px"><div></div></td>
+                    <td style="width: 100px;"><div></div></td>
+                    <td style="width: 150px;"><div></div></td>
                     <td>
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td colspan="8" style="width: 600px">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 300px;">
-                                                <LogLov [ObjectFieldName]="'SpecialActivityType'"
-                                                        [SelectedValue]="SpecialActivityType"
-                                                        [ObjectTableName]="'Customs.StorageMessageType'"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.StorageMessageType'"
-                                                        [HideLastColumn]="true"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="StorageFilterItems">
-                                                </LogLov>
-                                            </td>
+                        <div>
+                            <table style="height: 22px; width:100%;">
+                                <tr>
+                                    <td style="width:100%">
+                                        <button class="Button" (click)="ViewDocumentsComponent()" style="width: 102px; float: left;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
 
-                                            <td><div></div></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="width: 100px;">
-                                    <LogLabel [ObjectFieldName]="'ApplicantAgentNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApplicantAgentNumber'"></LogLabel>
-                                </td>
-                                <td style="width: 150px;">
-                                    <LogTextBox [ObjectFieldName]="'ApplicantAgentNumber'" [Text]="ApplicantAgentNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
+                                    </td>
+                                   
 
-                                <td><div></div></td>
-                            </tr>
 
-                            <tr class="FormFieldRow">
-                                <td style="width: 120px;height:25px; font-size: 12px; color: #1B90CB; text-align:right">
-                                    {{'Customs.SpecialActivityRequest.O.General'| TextCodeTranslationPipe}}
-                                </td>
-                                <td><div></div></td>
-                            </tr>
+                                </tr>
+                            </table>
+                        </div>
 
-                            <tr class="FormFieldRow">
-                                <!-- Request Number -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'SpecialActivityRequestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActivityRequestNumber'"> </LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'SpecialActivityRequestNumber'" [Text]="SpecialActivityRequestNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Activity Request Start Date  -->
-                                <td style="width: 140px">
-                                    <LogLabel [ObjectFieldName]="'ActivityRequestStartDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ActivityRequestStartDate'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <table style="width: 160px;">
-                                        <tr>
-                                            <td style="width: 100px;">
-                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActivityRequestStartDate'" [ObjectTableName]="ObjectTableName"
-                                                               [InputType]="'date'" [DataContext]="DataContext"
-                                                               [HideColumns]="true"></LogDatePicker>
-                                                <!--(ValueChanged)="ActivityRequestStartDateLostFocusMethod($event)"-->
-                                            </td>
-                                            <td style="width: 60px;">
-                                                <LogDatePicker [ObjectFieldName]="'ActivityRequestStartTime'"
-                                                               [ObjectTableName]="ObjectTableName"
-                                                               [InputType]="'time'" [DataContext]="DataContext"
-                                                               [TimeMode]="24" [SelectedDateValue]="ActivityRequestStartTime"
-                                                               [HideColumns]="true"></LogDatePicker>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Activity Request End Date -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'ActivityRequestEndDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ActivityRequestEndDate'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <table style="width: 160px;">
-                                        <tr>
-                                            <td style="width: 100px;">
-                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActivityRequestEndDate'" [ObjectTableName]="ObjectTableName"
-                                                               [InputType]="'date'" [DataContext]="DataContext"
-                                                               [HideColumns]="true"></LogDatePicker>
-                                            </td>
-                                            <td style="width: 60px;">
-                                                <LogDatePicker [ObjectFieldName]="'ActivityRequestEndTime'"
-                                                               [ObjectTableName]="ObjectTableName"
-                                                               [InputType]="'time'" [DataContext]="DataContext"
-                                                               [TimeMode]="24" [SelectedDateValue]="ActivityRequestEndTime"
-                                                               [HideColumns]="true"></LogDatePicker>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <!-- Custom File No -->
-                                <td style="width: 130px">
-                                    <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true"
-                                                (LostFocus)="CustomFileNoTextChanged($event)"
-                                                [Text]="CustomFileNo"></LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Site Number -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'SiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogLov [ObjectFieldName]="'SiteNumber'"
-                                            [SelectedValue]="SiteNumber"
-                                            [ObjectTableName]="'Customs.SiteLookup'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SiteLookup'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Payment Date To -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'WarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.WarehouseBlockNumber'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'WarehouseBlockNumber'" [Text]="WarehouseBlockNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <!-- CargoIdentifierType -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierType'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'CargoIdentifierType'"
-                                            [SelectedValue]="CargoIdentifierType"
-                                            [ObjectTableName]="'Customs.CargoIdentifireType'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- CargoIdentifierKey1 -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'" [Text]="CargoIdentifierKey1" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- CargoIdentifierKey2 -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'" [Text]="CargoIdentifierKey2" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <!-- CargoIdentifierKey3 -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'" [Text]="CargoIdentifierKey3" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Cargo Row Number -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'CargoRowNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoRowNumber'"></LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoRowNumber'" [Text]="CargoRowNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Authority Code -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'AuthorityCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.AuthorityCode'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogLov [ObjectFieldName]="'AuthorityCode'"
-                                            [SelectedValue]="AuthorityCode"
-                                            [ObjectTableName]="'Customs.Authority'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.Authority'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <!-- Importer Code -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'ImporterNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ImporterNumber'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <SearchBox [ObjectTableName]="'Customs.Client'"
-                                               [IsQuickSearch]="true"
-                                               [DropDownWidth]="143"
-                                               [DisplayText]="ImporterNumber"
-                                               [DisplayMember]="'Code'"
-                                               [ItemHeight]="33"
-                                               [HideIcons]="true"
-                                               (TextChanged)="ImporterNumberTextChanged($event)"
-                                               [Watermark]="''"></SearchBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Check Site -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'CheckSite'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CheckSite'"></LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogLov [ObjectFieldName]="'CheckSite'"
-                                            [SelectedValue]="CheckSite"
-                                            [ObjectTableName]="'Customs.SiteLookup'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SiteLookup'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Type Essence -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'SpecialActivityTypeEssence'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActivityTypeEssence'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogLov [ObjectFieldName]="'SpecialActivityTypeEssence'"
-                                            [SelectedValue]="SpecialActivityTypeEssence"
-                                            [ObjectTableName]="'Customs.CheckEssenceLookup'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.CheckEssenceLookup'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-
-                            <!--<tr class="FormFieldRow"><td><div></div></td></tr>-->
-                            <!-- IsGoodsDetailsData = 6 -->
-                            <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
-                                <!-- Idemander Type -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'IdemanderType'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.IdemanderType'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'IdemanderType'"
-                                            [SelectedValue]="IdemanderType"
-                                            [ObjectTableName]="'Customs.DemanderType'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.DemanderType'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Special Actions Code -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'SpecialActionsCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActionsCode'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogLov [ObjectFieldName]="'SpecialActionsCode'"
-                                            [SelectedValue]="SpecialActionsCode"
-                                            [ObjectTableName]="'Customs.SpecialActionDescriptionType'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SpecialActionDescriptionType'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-                            <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
-                                <!-- Other Description -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'OtherDescription'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.OtherDescription'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'OtherDescription'" [Text]="OtherDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Goods Description -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'GoodsDescription'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.GoodsDescription'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'GoodsDescription'" [Text]="GoodsDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-                            <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData"><td><div></div></td></tr>
-                            <!-- RepresentativeList -->
-                            <tr *ngIf="IsGoodsDetailsData">
-                                <td colspan="5" style="width: 400px; height:150px">
-                                    <table>
-                                        <tr style="height: 30px">
-                                            <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
-                                                {{'Customs.SpecialActivityRequest.O.Representative'| TextCodeTranslationPipe}}
-                                            </td>
-                                            <td> <div></div> </td>
-                                            <td style="height: 20px;">
-                                                <div>
-                                                    <IconButton [IsSmall]="true"
-                                                                [Name]="'Add'"
-                                                                (click)="AddRepresentativeItemCommand()"
-                                                                style="float:left;margin-left: 5px"></IconButton>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="FormFieldRow" style="height:120px">
-                                            <td style="width: 400px ; height : 120px">
-                                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepresentativeList">
-
-                                                        <!--RepresentativeNumber-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeNumber' | TextCodeTranslationPipe"
-                                                                    [width]="'60'" [Alignment]="'right'" [binding]="'RepresentativeNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepresentativeNumber}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeNumber'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepresentativeNumber" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepresentativeName-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeName' | TextCodeTranslationPipe"
-                                                                    [width]="'150'" [Alignment]="'right'" [binding]="'RepresentativeName'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepresentativeName}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeName'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepresentativeName" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepresentativeID-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeID' | TextCodeTranslationPipe"
-                                                                    [width]="'100'" [Alignment]="'right'" [binding]="'RepresentativeID'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepresentativeID}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepresentativeID" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!-- Delete Button-->
-                                                        <log-column [width]="'40'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepresentativeDetailsCommand(item)"
-                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                    </logitude-edit-grid>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-
-                            <!-- IsRePackingApproval = 5-->
-                            <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
-                                <!-- Repacking Site Number -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'RepackingSiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'RepackingSiteNumber'"
-                                            [SelectedValue]="RepackingSiteNumber"
-                                            [ObjectTableName]="'Customs.SiteLookup'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SiteLookup'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Approval Date -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'ApprovalDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalDate'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ApprovalDate'" [ObjectTableName]="ObjectTableName"
-                                                   [InputType]="'date'" [DataContext]="DataContext"
-                                                   [HideColumns]="true"></LogDatePicker>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Approval Name -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'ApprovalName'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalName'"></LogLabel>
-                                </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ApprovalName'" [Text]="ApprovalName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-                            <!-- RepackingCurrentList -->
-                            <tr *ngIf="IsRePackingApproval">
-                                <td colspan="9" style="width: 650px; height:150px">
-                                    <table>
-                                        <tr style="height: 30px">
-                                            <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
-                                                {{'Customs.SpecialActivityRequest.O.CurrentPacking'| TextCodeTranslationPipe}}
-                                            </td>
-                                            <td> <div></div> </td>
-                                            <td style="height: 20px;">
-                                                <div>
-                                                    <IconButton [IsSmall]="true"
-                                                                [Name]="'Add'"
-                                                                (click)="AddRepackingCurrentItemCommand()"
-                                                                style="float:left;margin-left: 5px"></IconButton>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="FormFieldRow" style="height:120px">
-                                            <td style="width: 100% ; height : 100%">
-                                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepackingCurrentList">
-
-                                                        <!--CurrentRePackingOldLineNumber-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentRePackingOldLineNumber' | TextCodeTranslationPipe"
-                                                                    [width]="'50'" [Alignment]="'right'" [binding]="'CurrentRePackingOldLineNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.CurrentRePackingOldLineNumber}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'CurrentRePackingOldLineNumber'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.CurrentRePackingOldLineNumber" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingCurrentPackageType-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageType' | TextCodeTranslationPipe"
-                                                                    [width]="'130'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageType'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingCurrentPackageName}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogLov [ObjectFieldName]="'RepackingCurrentPackageType'"
-                                                                            [ObjectTableName]="'Customs.PackingType'"
-                                                                            [DataContext]="item"
-                                                                            [LookUpTableName]="'Customs.PackingType'"
-                                                                            (SelectedItemChanged)="item.SetLocalName($event,'RepackingCurrentPackageName')"
-                                                                            [HideColumns]="true"
-                                                                            [FocusOnMe]="true"
-                                                                            [SelectedValue]="item.RepackingCurrentPackageType">
-                                                                    </LogLov>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingCurrentPackageId-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageId' | TextCodeTranslationPipe"
-                                                                    [width]="'110'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageId'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingCurrentPackageId}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingCurrentPackageId'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepackingCurrentPackageId" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingCurrentQuantity-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentQuantity' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentQuantity'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingCurrentQuantity}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingCurrentQuantity'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepackingCurrentQuantity" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingCurrentWeight-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentWeight' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentWeight'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingCurrentWeight}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingCurrentWeight'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepackingCurrentWeight" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--CurrentPresentPackingStateContent-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent' | TextCodeTranslationPipe"
-                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'CurrentPresentPackingStateContent'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.CurrentPresentPackingStateContent}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'CurrentPresentPackingStateContent'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.CurrentPresentPackingStateContent" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!-- Delete Button-->
-                                                        <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingCurrentItemCommand(item)"
-                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                    </logitude-edit-grid>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- RepackingDesiredList -->
-                            <tr *ngIf="IsRePackingApproval">
-                                <td colspan="9" style="width: 650px; height:150px">
-                                    <table>
-                                        <tr style="height: 30px">
-                                            <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
-                                                {{'Customs.SpecialActivityRequest.O.DesiredPacking'| TextCodeTranslationPipe}}
-                                            </td>
-                                            <td> <div></div> </td>
-                                            <td style="height: 20px;">
-                                                <div>
-                                                    <IconButton [IsSmall]="true"
-                                                                [Name]="'Add'"
-                                                                (click)="AddRepackingDesiredItemCommand()"
-                                                                style="float:left;"></IconButton>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="FormFieldRow" style="height:120px">
-                                            <td style="width: 100% ; height : 100%">
-                                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepackingDesiredList">
-
-                                                        <!--DesiredRePackingNewLineNumber-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingNewLineNumber' | TextCodeTranslationPipe"
-                                                                    [width]="'50'" [Alignment]="'right'" [binding]="'DesiredRePackingNewLineNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.DesiredRePackingNewLineNumber}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'DesiredRePackingNewLineNumber'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.DesiredRePackingNewLineNumber" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingDesiredPackage-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageType' | TextCodeTranslationPipe"
-                                                                    [width]="'130'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageType'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingDesiredPackageName}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogLov [ObjectFieldName]="'RepackingDesiredPackageType'"
-                                                                            [ObjectTableName]="'Customs.PackingType'"
-                                                                            [DataContext]="item"
-                                                                            [LookUpTableName]="'Customs.PackingType'"
-                                                                            (SelectedItemChanged)="item.SetLocalName($event,'RepackingDesiredPackageName')"
-                                                                            [HideColumns]="true"
-                                                                            [FocusOnMe]="true"
-                                                                            [SelectedValue]="item.RepackingDesiredPackageType">
-                                                                    </LogLov>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingDesiredPackageId-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageId' | TextCodeTranslationPipe"
-                                                                    [width]="'110'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageId'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingDesiredPackageId}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingDesiredPackageId'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepackingDesiredPackageId" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingDesiredQuantity-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredQuantity' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredQuantity'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingDesiredQuantity}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingDesiredQuantity'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
-                                                                                [Text]="item.RepackingDesiredQuantity" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--RepackingDesiredWeight-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredWeight' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredWeight'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.RepackingDesiredWeight}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepackingDesiredWeight'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.RepackingDesiredWeight" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--DesiredRePackingOldLineNumber-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingOldLineNumber' | TextCodeTranslationPipe"
-                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'DesiredRePackingOldLineNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.DesiredRePackingOldLineNumber}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'DesiredRePackingOldLineNumber'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
-                                                                                [Text]="item.DesiredRePackingOldLineNumber" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!-- Delete Button-->
-                                                        <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingDesiredRequestDetailsCommand(item)"
-                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                    </logitude-edit-grid>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <!-- IsSampleRequest = 7 -->
-                            <!-- SampleRequestList -->
-                            <tr *ngIf="IsSampleRequest">
-                                <td colspan="12" style="width: 860px; height:200px">
-                                    <table>
-                                        <tr style="width: 860px; height: 30px">
-                                            <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
-                                                {{'Customs.General.O.SpecialActivityRequestSample'| TextCodeTranslationPipe}}
-                                            </td>
-                                            <td> <div></div> </td>
-                                            <td style="height: 20px;">
-                                                <div>
-                                                    <IconButton [IsSmall]="true"
-                                                                [Name]="'Add'"
-                                                                (click)="AddSampleRequestItemCommand()"
-                                                                style="float:left;"></IconButton>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr style="width: 860px; height:150px">
-                                            <td colspan="3" style="width: 100% ; height : 100%">
-                                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="SampleRequestList">
-
-                                                        <!--SampleRowNumber-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.SampleRowNumber' | TextCodeTranslationPipe"
-                                                                    [width]="'36'" [Alignment]="'right'" [binding]="'SampleRowNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleRowNumber}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'SampleRowNumber'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.SampleRowNumber" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SampleReturnDate-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.SampleReturnDate' | TextCodeTranslationPipe"
-                                                                    [width]="'101'" [Alignment]="'right'" [binding]="'SampleReturnDate'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleReturnDate | DateTimeToDatePipe}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogDatePicker [ObjectFieldName]="'SampleReturnDate'" [ObjectTableName]="ObjectTableName"
-                                                                                   [InputType]="'date'" [DataContext]="item"
-                                                                                   [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--CustomsItem-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItem' | TextCodeTranslationPipe"
-                                                                    [width]="'81'" [Alignment]="'right'" [binding]="'CustomsItem'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.CustomsItem}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox #CustomsItemTextBox [ObjectFieldName]="'CustomsItem'" [DataContext]="item" [InputType]="'integertext'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
-                                                                                (LostFocus)="item.OnCustomsItemLostFocus(logcelltemplate,CustomsItemTextBox)"
-                                                                                [Text]="item.CustomsItem" [HideColumns]="true"></LogTextBox>
-
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--CustomsItemQuantity-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItemQuantity' | TextCodeTranslationPipe"
-                                                                    [width]="'74'" [Alignment]="'right'" [binding]="'CustomsItemQuantity'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.CustomsItemQuantity | NumbersPipe:'n0'}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'CustomsItemQuantity'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.CustomsItemQuantity" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--CurrencyTypeCode-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.CurrencyTypeCode' | TextCodeTranslationPipe"
-                                                                    [width]="'75'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.CurrencyTypeName}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
-                                                                            [ObjectTableName]="'Customs.CurrencyType'"
-                                                                            [DataContext]="item"
-                                                                            [LookUpTableName]="'Customs.CurrencyType'"
-                                                                            (SelectedItemChanged)="item.SetLocalName($event,'CurrencyTypeName')"
-                                                                            [HideColumns]="true"
-                                                                            [FocusOnMe]="true"
-                                                                            [SelectedValue]="item.CurrencyTypeCode">
-                                                                    </LogLov>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SampleValue-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.SampleValue' | TextCodeTranslationPipe"
-                                                                    [width]="'75'" [Alignment]="'right'" [binding]="'SampleValue'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleValue}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'SampleValue'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.SampleValue" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SampleDescription-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.SampleDescription' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'SampleDescription'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleDescription}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'SampleDescription'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.SampleDescription" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SamplePackageType-->
-                                                        <log-column [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageType'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SamplePackageName}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogLov [ObjectFieldName]="'SamplePackageType'"
-                                                                            [ObjectTableName]="'Customs.PackingType'"
-                                                                            [DataContext]="item"
-                                                                            [LookUpTableName]="'Customs.PackingType'"
-                                                                            (SelectedItemChanged)="item.SetLocalName($event,'SamplePackageName')"
-                                                                            [HideColumns]="true"
-                                                                            [FocusOnMe]="true"
-                                                                            [SelectedValue]="item.SamplePackageType">
-                                                                    </LogLov>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SamplePackageId-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.PackageType' | TextCodeTranslationPipe"
-                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageId'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SamplePackageId}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox #SamplePackageIdTextBox [ObjectFieldName]="'SamplePackageId'" [DataContext]="item"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                (LostFocus)="item.OnSamplePackageIdLostFocus(logcelltemplate,SamplePackageIdTextBox)"
-                                                                                [Text]="item.SamplePackageId" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SampleQuantity-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.Quantity' | TextCodeTranslationPipe"
-                                                                    [width]="'44'" [Alignment]="'right'" [binding]="'SampleQuantity'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleQuantity | NumbersPipe:'n0'}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'SampleQuantity'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.SampleQuantity" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!--SampleWeight-->
-                                                        <log-column [header]="'Customs.SpecialActivityRequest.F.Weight' | TextCodeTranslationPipe"
-                                                                    [width]="'50'" [Alignment]="'right'" [binding]="'SampleWeight'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                    <span>{{item.SampleWeight | NumbersPipe:'n0'}}</span>
-                                                                </div>
-                                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'SampleWeight'" [DataContext]="item" [InputType]="'integer'"
-                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
-                                                                                [Text]="item.SampleWeight" [HideColumns]="true"></LogTextBox>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                        <!-- Delete Button-->
-                                                        <log-column [width]="'28'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSampleRequestDetailsCommand(item)"
-                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
-                                                            </log-cell-template>
-</ng-template>
-                                                        </log-column>
-
-                                                    </logitude-edit-grid>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </td>
-
-                            </tr>
-
-                      
-                            <!-- IsOtherActivity = 13 -->
-                            <tr class="FormFieldRow" *ngIf="IsOtherActivity">
-                                
-
-                                <td colspan="12" style="width: 860px; height:200px">
-                                    <table>
-                                        <tr style="width: 860px; height: 30px">
-                                            <td style="width: 127px;">
-                                                <LogLabel [ObjectFieldName]="'OtherActivityComment'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent'"> </LogLabel>
-                                            </td>
-                                            <td style="width: 433px;">
-                                                <LogTextBox [ObjectFieldName]="'OtherActivityComment'"
-                                                            [InputType]="'text'"
-                                                            [DataContext]="DataContext"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [HideColumns]="true"
-                                                            [Text]="OtherActivityComment"
-                                                            [IsMultiline]="true"></LogTextBox>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <!-- ResponseMessage -->
-                            <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
-                                <td colspan="12" style="width: 750px; height:100px">
-                                    <table>
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 600px;">
-                                                <div style="width: 100%; height:22px; text-align:right">
-                                                    <div>
-                                                        <!--<LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>-->
-                                                        <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 750px;">
-                                                <div class="MediaFill">
-                                                    <textarea class="NotesTextArea"
-                                                              [(ngModel)]="ResponseMessage"
-                                                              [readonly]="false"
-                                                              style="background: #FFFADC !important;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
                     </td>
-                <tr> <td><div></div></td> </tr>
-            </table>
-        
-        </div>
+                </tr>
+                </table>
+                <table style="width: 860px;height: 530px; padding-top: 10px;">
+
+                    <!-- Request Fields -->
+                    <tr class="FormFieldRow" style="vertical-align: top">
+                        <td>
+                            <table>
+
+                                <tr class="FormFieldRow">
+                                    <td colspan="8" style="width: 600px">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 300px;">
+                                                    <LogLov [ObjectFieldName]="'SpecialActivityType'"
+                                                            [SelectedValue]="SpecialActivityType"
+                                                            [ObjectTableName]="'Customs.StorageMessageType'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Customs.StorageMessageType'"
+                                                            [HideLastColumn]="true"
+                                                            [HideColumns]="true"
+                                                            [QueryFilterItems]="StorageFilterItems">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'ApplicantAgentNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApplicantAgentNumber'"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'ApplicantAgentNumber'" [Text]="ApplicantAgentNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 120px;height:25px; font-size: 12px; color: #1B90CB; text-align:right">
+                                        {{'Customs.SpecialActivityRequest.O.General'| TextCodeTranslationPipe}}
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- Request Number -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'SpecialActivityRequestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActivityRequestNumber'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogTextBox [ObjectFieldName]="'SpecialActivityRequestNumber'" [Text]="SpecialActivityRequestNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Activity Request Start Date  -->
+                                    <td style="width: 140px">
+                                        <LogLabel [ObjectFieldName]="'ActivityRequestStartDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ActivityRequestStartDate'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <table style="width: 160px;">
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActivityRequestStartDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                                   [HideColumns]="true"></LogDatePicker>
+                                                    <!--(ValueChanged)="ActivityRequestStartDateLostFocusMethod($event)"-->
+                                                </td>
+                                                <td style="width: 60px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ActivityRequestStartTime'"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [InputType]="'time'" [DataContext]="DataContext"
+                                                                   [TimeMode]="24" [SelectedDateValue]="ActivityRequestStartTime"
+                                                                   [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Activity Request End Date -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'ActivityRequestEndDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ActivityRequestEndDate'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <table style="width: 160px;">
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActivityRequestEndDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                                   [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td style="width: 60px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ActivityRequestEndTime'"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [InputType]="'time'" [DataContext]="DataContext"
+                                                                   [TimeMode]="24" [SelectedDateValue]="ActivityRequestEndTime"
+                                                                   [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- Custom File No -->
+                                    <td style="width: 130px">
+                                        <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    (LostFocus)="CustomFileNoTextChanged($event)"
+                                                    [Text]="CustomFileNo"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Site Number -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'SiteNumber'"
+                                                [SelectedValue]="SiteNumber"
+                                                [ObjectTableName]="'Customs.SiteLookup'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.SiteLookup'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Payment Date To -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'WarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.WarehouseBlockNumber'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'WarehouseBlockNumber'" [Text]="WarehouseBlockNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- CargoIdentifierType -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'CargoIdentifierType'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogLov [ObjectFieldName]="'CargoIdentifierType'"
+                                                [SelectedValue]="CargoIdentifierType"
+                                                [ObjectTableName]="'Customs.CargoIdentifireType'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- CargoIdentifierKey1 -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'" [Text]="CargoIdentifierKey1" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- CargoIdentifierKey2 -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'" [Text]="CargoIdentifierKey2" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- CargoIdentifierKey3 -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'" [Text]="CargoIdentifierKey3" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Cargo Row Number -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'CargoRowNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoRowNumber'"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'CargoRowNumber'" [Text]="CargoRowNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Authority Code -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'AuthorityCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.AuthorityCode'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'AuthorityCode'"
+                                                [SelectedValue]="AuthorityCode"
+                                                [ObjectTableName]="'Customs.Authority'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.Authority'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- Importer Code -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'ImporterNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ImporterNumber'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <SearchBox [ObjectTableName]="'Customs.Client'"
+                                                   [IsQuickSearch]="true"
+                                                   [DropDownWidth]="143"
+                                                   [DisplayText]="ImporterNumber"
+                                                   [DisplayMember]="'Code'"
+                                                   [ItemHeight]="33"
+                                                   [HideIcons]="true"
+                                                   (TextChanged)="ImporterNumberTextChanged($event)"
+                                                   [Watermark]="''"></SearchBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Check Site -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'CheckSite'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CheckSite'"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'CheckSite'"
+                                                [SelectedValue]="CheckSite"
+                                                [ObjectTableName]="'Customs.SiteLookup'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.SiteLookup'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Type Essence -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SpecialActivityTypeEssence'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActivityTypeEssence'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'SpecialActivityTypeEssence'"
+                                                [SelectedValue]="SpecialActivityTypeEssence"
+                                                [ObjectTableName]="'Customs.CheckEssenceLookup'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CheckEssenceLookup'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!--<tr class="FormFieldRow"><td><div></div></td></tr>-->
+                                <!-- IsGoodsDetailsData = 6 -->
+                                <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
+                                    <!-- Idemander Type -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'IdemanderType'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.IdemanderType'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogLov [ObjectFieldName]="'IdemanderType'"
+                                                [SelectedValue]="IdemanderType"
+                                                [ObjectTableName]="'Customs.DemanderType'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.DemanderType'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Special Actions Code -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SpecialActionsCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SpecialActionsCode'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'SpecialActionsCode'"
+                                                [SelectedValue]="SpecialActionsCode"
+                                                [ObjectTableName]="'Customs.SpecialActionDescriptionType'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.SpecialActionDescriptionType'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                                <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
+                                    <!-- Other Description -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'OtherDescription'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.OtherDescription'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogTextBox [ObjectFieldName]="'OtherDescription'" [Text]="OtherDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Goods Description -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'GoodsDescription'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.GoodsDescription'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'GoodsDescription'" [Text]="GoodsDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                                <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData"><td><div></div></td></tr>
+                                <!-- RepresentativeList -->
+                                <tr *ngIf="IsGoodsDetailsData">
+                                    <td colspan="5" style="width: 400px; height:150px">
+                                        <table>
+                                            <tr style="height: 30px">
+                                                <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
+                                                    {{'Customs.SpecialActivityRequest.O.Representative'| TextCodeTranslationPipe}}
+                                                </td>
+                                                <td> <div></div> </td>
+                                                <td style="height: 20px;">
+                                                    <div>
+                                                        <IconButton [IsSmall]="true"
+                                                                    [Name]="'Add'"
+                                                                    (click)="AddRepresentativeItemCommand()"
+                                                                    style="float:left;margin-left: 5px"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow" style="height:120px">
+                                                <td style="width: 400px ; height : 120px">
+                                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepresentativeList">
+
+                                                            <!--RepresentativeNumber-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeNumber' | TextCodeTranslationPipe"
+                                                                        [width]="'60'" [Alignment]="'right'" [binding]="'RepresentativeNumber'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepresentativeNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepresentativeNumber'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepresentativeNumber" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepresentativeName-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeName' | TextCodeTranslationPipe"
+                                                                        [width]="'150'" [Alignment]="'right'" [binding]="'RepresentativeName'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepresentativeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepresentativeName'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepresentativeName" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepresentativeID-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeID' | TextCodeTranslationPipe"
+                                                                        [width]="'100'" [Alignment]="'right'" [binding]="'RepresentativeID'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepresentativeID}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepresentativeID" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!-- Delete Button-->
+                                                            <log-column [width]="'40'" [Alignment]="'right'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepresentativeDetailsCommand(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                                <!-- IsRePackingApproval = 5-->
+                                <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
+                                    <!-- Repacking Site Number -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'RepackingSiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogLov [ObjectFieldName]="'RepackingSiteNumber'"
+                                                [SelectedValue]="RepackingSiteNumber"
+                                                [ObjectTableName]="'Customs.SiteLookup'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.SiteLookup'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Approval Date -->
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'ApprovalDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalDate'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ApprovalDate'" [ObjectTableName]="ObjectTableName"
+                                                       [InputType]="'date'" [DataContext]="DataContext"
+                                                       [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 3px;"><div></div></td>
+                                    <td style="width: 3px;"><div></div></td>
+
+                                    <!-- Approval Name -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'ApprovalName'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalName'"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogTextBox [ObjectFieldName]="'ApprovalName'" [Text]="ApprovalName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                                <!-- RepackingCurrentList -->
+                                <tr *ngIf="IsRePackingApproval">
+                                    <td colspan="9" style="width: 650px; height:150px">
+                                        <table>
+                                            <tr style="height: 30px">
+                                                <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
+                                                    {{'Customs.SpecialActivityRequest.O.CurrentPacking'| TextCodeTranslationPipe}}
+                                                </td>
+                                                <td> <div></div> </td>
+                                                <td style="height: 20px;">
+                                                    <div>
+                                                        <IconButton [IsSmall]="true"
+                                                                    [Name]="'Add'"
+                                                                    (click)="AddRepackingCurrentItemCommand()"
+                                                                    style="float:left;margin-left: 5px"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow" style="height:120px">
+                                                <td style="width: 100% ; height : 100%">
+                                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepackingCurrentList">
+
+                                                            <!--CurrentRePackingOldLineNumber-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentRePackingOldLineNumber' | TextCodeTranslationPipe"
+                                                                        [width]="'50'" [Alignment]="'right'" [binding]="'CurrentRePackingOldLineNumber'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CurrentRePackingOldLineNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'CurrentRePackingOldLineNumber'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.CurrentRePackingOldLineNumber" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingCurrentPackageType-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageType' | TextCodeTranslationPipe"
+                                                                        [width]="'130'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageType'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingCurrentPackageName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'RepackingCurrentPackageType'"
+                                                                                    [ObjectTableName]="'Customs.PackingType'"
+                                                                                    [DataContext]="item"
+                                                                                    [LookUpTableName]="'Customs.PackingType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event,'RepackingCurrentPackageName')"
+                                                                                    [HideColumns]="true"
+                                                                                    [FocusOnMe]="true"
+                                                                                    [SelectedValue]="item.RepackingCurrentPackageType">
+                                                                            </LogLov>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingCurrentPackageId-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentPackageId' | TextCodeTranslationPipe"
+                                                                        [width]="'110'" [Alignment]="'right'" [binding]="'RepackingCurrentPackageId'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingCurrentPackageId}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingCurrentPackageId'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepackingCurrentPackageId" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingCurrentQuantity-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentQuantity' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentQuantity'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingCurrentQuantity}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingCurrentQuantity'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepackingCurrentQuantity" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingCurrentWeight-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingCurrentWeight' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'RepackingCurrentWeight'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingCurrentWeight}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingCurrentWeight'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepackingCurrentWeight" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--CurrentPresentPackingStateContent-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent' | TextCodeTranslationPipe"
+                                                                        [width]="'120'" [Alignment]="'right'" [binding]="'CurrentPresentPackingStateContent'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CurrentPresentPackingStateContent}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'CurrentPresentPackingStateContent'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.CurrentPresentPackingStateContent" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!-- Delete Button-->
+                                                            <log-column [width]="'30'" [Alignment]="'right'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingCurrentItemCommand(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- RepackingDesiredList -->
+                                <tr *ngIf="IsRePackingApproval">
+                                    <td colspan="9" style="width: 650px; height:150px">
+                                        <table>
+                                            <tr style="height: 30px">
+                                                <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
+                                                    {{'Customs.SpecialActivityRequest.O.DesiredPacking'| TextCodeTranslationPipe}}
+                                                </td>
+                                                <td> <div></div> </td>
+                                                <td style="height: 20px;">
+                                                    <div>
+                                                        <IconButton [IsSmall]="true"
+                                                                    [Name]="'Add'"
+                                                                    (click)="AddRepackingDesiredItemCommand()"
+                                                                    style="float:left;"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow" style="height:120px">
+                                                <td style="width: 100% ; height : 100%">
+                                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepackingDesiredList">
+
+                                                            <!--DesiredRePackingNewLineNumber-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingNewLineNumber' | TextCodeTranslationPipe"
+                                                                        [width]="'50'" [Alignment]="'right'" [binding]="'DesiredRePackingNewLineNumber'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.DesiredRePackingNewLineNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'DesiredRePackingNewLineNumber'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.DesiredRePackingNewLineNumber" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingDesiredPackage-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageType' | TextCodeTranslationPipe"
+                                                                        [width]="'130'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageType'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingDesiredPackageName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'RepackingDesiredPackageType'"
+                                                                                    [ObjectTableName]="'Customs.PackingType'"
+                                                                                    [DataContext]="item"
+                                                                                    [LookUpTableName]="'Customs.PackingType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event,'RepackingDesiredPackageName')"
+                                                                                    [HideColumns]="true"
+                                                                                    [FocusOnMe]="true"
+                                                                                    [SelectedValue]="item.RepackingDesiredPackageType">
+                                                                            </LogLov>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingDesiredPackageId-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredPackageId' | TextCodeTranslationPipe"
+                                                                        [width]="'110'" [Alignment]="'right'" [binding]="'RepackingDesiredPackageId'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingDesiredPackageId}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingDesiredPackageId'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepackingDesiredPackageId" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingDesiredQuantity-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredQuantity' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredQuantity'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingDesiredQuantity}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingDesiredQuantity'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
+                                                                                        [Text]="item.RepackingDesiredQuantity" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--RepackingDesiredWeight-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.RepackingDesiredWeight' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'RepackingDesiredWeight'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.RepackingDesiredWeight}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'RepackingDesiredWeight'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.RepackingDesiredWeight" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--DesiredRePackingOldLineNumber-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.DesiredRePackingOldLineNumber' | TextCodeTranslationPipe"
+                                                                        [width]="'120'" [Alignment]="'right'" [binding]="'DesiredRePackingOldLineNumber'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.DesiredRePackingOldLineNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'DesiredRePackingOldLineNumber'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
+                                                                                        [Text]="item.DesiredRePackingOldLineNumber" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!-- Delete Button-->
+                                                            <log-column [width]="'30'" [Alignment]="'right'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteRepackingDesiredRequestDetailsCommand(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- IsSampleRequest = 7 -->
+                                <!-- SampleRequestList -->
+                                <tr *ngIf="IsSampleRequest">
+                                    <td colspan="12" style="width: 860px; height:200px">
+                                        <table>
+                                            <tr style="width: 860px; height: 30px">
+                                                <td style="width:150px; font-size: 12px; color: #1B90CB; text-align:right">
+                                                    {{'Customs.General.O.SpecialActivityRequestSample'| TextCodeTranslationPipe}}
+                                                </td>
+                                                <td> <div></div> </td>
+                                                <td style="height: 20px;">
+                                                    <div>
+                                                        <IconButton [IsSmall]="true"
+                                                                    [Name]="'Add'"
+                                                                    (click)="AddSampleRequestItemCommand()"
+                                                                    style="float:left;"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr style="width: 860px; height:150px">
+                                                <td colspan="3" style="width: 100% ; height : 100%">
+                                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="SampleRequestList">
+
+                                                            <!--SampleRowNumber-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.SampleRowNumber' | TextCodeTranslationPipe"
+                                                                        [width]="'36'" [Alignment]="'right'" [binding]="'SampleRowNumber'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleRowNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SampleRowNumber'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.SampleRowNumber" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SampleReturnDate-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.SampleReturnDate' | TextCodeTranslationPipe"
+                                                                        [width]="'101'" [Alignment]="'right'" [binding]="'SampleReturnDate'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleReturnDate | DateTimeToDatePipe}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogDatePicker [ObjectFieldName]="'SampleReturnDate'" [ObjectTableName]="ObjectTableName"
+                                                                                           [InputType]="'date'" [DataContext]="item"
+                                                                                           [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--CustomsItem-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItem' | TextCodeTranslationPipe"
+                                                                        [width]="'81'" [Alignment]="'right'" [binding]="'CustomsItem'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CustomsItem}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox #CustomsItemTextBox [ObjectFieldName]="'CustomsItem'" [DataContext]="item" [InputType]="'integertext'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                                                                                        (LostFocus)="item.OnCustomsItemLostFocus(logcelltemplate,CustomsItemTextBox)"
+                                                                                        [Text]="item.CustomsItem" [HideColumns]="true"></LogTextBox>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--CustomsItemQuantity-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.CustomsItemQuantity' | TextCodeTranslationPipe"
+                                                                        [width]="'74'" [Alignment]="'right'" [binding]="'CustomsItemQuantity'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CustomsItemQuantity | NumbersPipe:'n0'}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'CustomsItemQuantity'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.CustomsItemQuantity" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--CurrencyTypeCode-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.CurrencyTypeCode' | TextCodeTranslationPipe"
+                                                                        [width]="'75'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CurrencyTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.CurrencyType'"
+                                                                                    [DataContext]="item"
+                                                                                    [LookUpTableName]="'Customs.CurrencyType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event,'CurrencyTypeName')"
+                                                                                    [HideColumns]="true"
+                                                                                    [FocusOnMe]="true"
+                                                                                    [SelectedValue]="item.CurrencyTypeCode">
+                                                                            </LogLov>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SampleValue-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.SampleValue' | TextCodeTranslationPipe"
+                                                                        [width]="'75'" [Alignment]="'right'" [binding]="'SampleValue'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleValue}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SampleValue'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.SampleValue" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SampleDescription-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.SampleDescription' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'SampleDescription'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleDescription}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SampleDescription'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.SampleDescription" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SamplePackageType-->
+                                                            <log-column [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageType'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SamplePackageName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'SamplePackageType'"
+                                                                                    [ObjectTableName]="'Customs.PackingType'"
+                                                                                    [DataContext]="item"
+                                                                                    [LookUpTableName]="'Customs.PackingType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event,'SamplePackageName')"
+                                                                                    [HideColumns]="true"
+                                                                                    [FocusOnMe]="true"
+                                                                                    [SelectedValue]="item.SamplePackageType">
+                                                                            </LogLov>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SamplePackageId-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.PackageType' | TextCodeTranslationPipe"
+                                                                        [width]="'90'" [Alignment]="'right'" [binding]="'SamplePackageId'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SamplePackageId}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox #SamplePackageIdTextBox [ObjectFieldName]="'SamplePackageId'" [DataContext]="item"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        (LostFocus)="item.OnSamplePackageIdLostFocus(logcelltemplate,SamplePackageIdTextBox)"
+                                                                                        [Text]="item.SamplePackageId" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SampleQuantity-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.Quantity' | TextCodeTranslationPipe"
+                                                                        [width]="'44'" [Alignment]="'right'" [binding]="'SampleQuantity'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleQuantity | NumbersPipe:'n0'}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SampleQuantity'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.SampleQuantity" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!--SampleWeight-->
+                                                            <log-column [header]="'Customs.SpecialActivityRequest.F.Weight' | TextCodeTranslationPipe"
+                                                                        [width]="'50'" [Alignment]="'right'" [binding]="'SampleWeight'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template #logcelltemplate>
+                                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SampleWeight | NumbersPipe:'n0'}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SampleWeight'" [DataContext]="item" [InputType]="'integer'"
+                                                                                        [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                        [Text]="item.SampleWeight" [HideColumns]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <!-- Delete Button-->
+                                                            <log-column [width]="'28'" [Alignment]="'right'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSampleRequestDetailsCommand(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- IsOtherActivity = 13 -->
+                                <tr class="FormFieldRow" *ngIf="IsOtherActivity">
+
+
+                                    <td colspan="12" style="width: 860px; height:200px">
+                                        <table>
+                                            <tr style="width: 860px; height: 30px">
+                                                <td style="width: 127px;">
+                                                    <LogLabel [ObjectFieldName]="'OtherActivityComment'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent'"> </LogLabel>
+                                                </td>
+                                                <td style="width: 433px;">
+                                                    <LogTextBox [ObjectFieldName]="'OtherActivityComment'"
+                                                                [InputType]="'text'"
+                                                                [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [Text]="OtherActivityComment"
+                                                                [IsMultiline]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- ResponseMessage -->
+                                <tr class="FormFieldRow" *ngIf="IsResponseMessageVisibility">
+                                    <td colspan="12" style="width: 750px; height:100px">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 600px;">
+                                                    <div style="width: 100%; height:22px; text-align:right">
+                                                        <div>
+                                                            <!--<LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>-->
+                                                            <span>{{'Customs.Claim.TH.CustomAnswer' | TextCodeTranslationPipe}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 750px;">
+                                                    <div class="MediaFill">
+                                                        <textarea class="NotesTextArea"
+                                                                  [(ngModel)]="ResponseMessage"
+                                                                  [readonly]="false"
+                                                                  style="background: #FFFADC !important;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    <tr> <td><div></div></td> </tr>
+                </table>
+
+</div>
 
         <!-- Response -->
         <div class="class-response-content" style="width: 500px;height: 50px;">
@@ -1181,22 +1206,5 @@
                 </tr>-->
             </table>
         </div>
-        <div class="class-footer-content">
-            <table style="height: 22px; width:100%;" >
-                <tr>
-                    <td style="width:100%">
-                        <button class="Button" (click)="ViewDocumentsComponent()" style="width: 102px; margin-left: 60px;float: left;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
-
-                    </td>
-                    <td style="width:400px">
-                        <div></div>
-                    </td>
-                    <td style="margin-left:5px">
-                    </td>
-
-
-                </tr>
-            </table>
-        </div> 
     </custom-message-wrapper>
 </div>
