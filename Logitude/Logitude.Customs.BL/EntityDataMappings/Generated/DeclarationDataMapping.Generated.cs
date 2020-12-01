@@ -383,7 +383,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FOBValueNIS, 
 	         FOBValueDollar, 
 	         AmendmentRejectionReasonName, 
-	         PalestinianCode,
+	         PalestinianCode, 
+	         PalestinianCodeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
