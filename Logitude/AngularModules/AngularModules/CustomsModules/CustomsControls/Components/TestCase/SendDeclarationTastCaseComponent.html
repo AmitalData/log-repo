@@ -29,17 +29,10 @@
   background:yellow;
   color:black;
 }
-#table-wrapper table thead th .text {
-  position:absolute;   
-  top:-20px;
-  z-index:2;
-  height:20px;
-  width:35%;
-  border:1px solid red;
-}
+ 
 </style>
 
-<table *ngIf="Loaded" class="table-wrapper" height="300px">
+<table *ngIf="Loaded"   height="300px" style="overflow:scroll;" >
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -74,6 +67,7 @@
 
                         <ComboBox [ItemsSource]="ScenarioCodes" [SelectedItem]="SelectedItemScenario" [Binding]="'Value'" (SelectedItemChanged)="ScenarioCodeClicked($event.Key)"></ComboBox>
                     </td>
+
                     <td></td>
                 </tr>
                 <tr  class="FormFieldRow" *ngFor="let paramter of parametres">
@@ -84,7 +78,7 @@
                     <td>
                         <!--<LogLabel [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value"
                                   [DataContext]="DataContext"></LogLabel>-->
-                        <LogTextBox [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value" [NoObjectField]="'true'"
+                        <LogTextBox [ObjectFieldName]="'Value'" [ObjectTableName]="ObjectTableName" [Text]="paramter.Value" [NoObjectField]="'true'" [IsFreeText] ="'true'"
                                     [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
                     </td>
 

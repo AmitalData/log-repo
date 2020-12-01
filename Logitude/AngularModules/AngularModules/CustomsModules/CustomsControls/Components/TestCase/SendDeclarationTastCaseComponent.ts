@@ -63,7 +63,13 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     OkButtonClicked() {
         debugger;
         if (!AppTool.IsNullOrEmpty(this.parametres))
-        this.Param1 = JSON.stringify(this.parametres);
+            this.Param1 = "{";
+        this.parametres.forEach(x => {
+            this.Param1 += "'" + x.Code + "' : '" + x.Value + "',";
+        });
+        this.Param1 += "}";
+
+       // this.Param1 = this.Param1.slice(1, this.Param1.length - 1);
 
         var errors = [];
         if (this._ScenarioCode == null) {
@@ -122,6 +128,14 @@ export class SincroTestCaseDetail {
 
 export class Parameter {
 
-    public Code: string;
-    public Value: string;
+    private _Code: string;
+    public get Code() { return this._Code; }
+    public set Code(newValue: string) {
+        this._Code = newValue;
+    }
+    private _Value: string;
+    public get Value() { return this._Value; }
+    public set Value(newValue: string) {
+        this._Value = newValue;
+    }
 }
