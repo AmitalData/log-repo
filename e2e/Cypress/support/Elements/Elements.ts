@@ -74,7 +74,7 @@ Cypress.Commands.add("Click", (selector, contains = null) => {
     let element = cy.get(selector)
 
     if (contains !== null) {
-        element = element.contains(contains)
+        element = element.contains(contains, {matchCase: false})
     }
 
     element.click()
@@ -95,7 +95,7 @@ Cypress.Commands.add("SaveClick", (url, selector, contains = null) => {
     let element = cy.get(selector)
 
     if (contains !== null) {
-        element = element.contains(contains)
+        element = element.contains(contains, {matchCase: false})
     }
 
     element.click()

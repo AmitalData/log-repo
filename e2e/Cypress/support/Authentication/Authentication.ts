@@ -6,20 +6,36 @@ declare namespace Cypress {
 
 Cypress.Commands.add("Login", () => {
 
-    let jsonLoginData = Cypress.env("LoginData")
+    let mode = Cypress.env("Mode")
 
-    cy.fixture("Data/" + jsonLoginData + ".json").then((LoginData) => {
-
-        cy.visit(LoginData.url)
-        cy.get("#Email").type(LoginData.email)
-        cy.get("#Password").type(LoginData.password)
+    if(mode.toLowerCase() === "development"){
+        cy.fixture("Login.json").then((LoginData) => {
+            cy.visit(LoginData.url)
+            cy.get("#Email").clear().type(LoginData.email)
+            cy.get("#Password").clear().type(LoginData.password)
+            cy.get("#cmdLogin").click()
+            if (LoginData.tenant !== null) {
+                cy.get("input[name='cmbTenants_input']").clear().type(LoginData.tenant)
+                cy.wait(500)
+                cy.get("#cmbTenants_listbox").find("li").click()
+            }
+        })
+    }else{
+        let url = Cypress.env("Url")
+        let email = Cypress.env("Email")
+        let password = Cypress.env("Password")
+        let tenant = Cypress.env("Tenant")
+        cy.visit(url)
+        cy.get("#Email").clear().type(email)
+        cy.get("#Password").clear().type(password)
         cy.get("#cmdLogin").click()
-        if (LoginData.tenant !== null) {
-            cy.get("input[name='cmbTenants_input']").type(LoginData.tenant)
+    
+        if (tenant !== null) {
+            cy.get("input[name='cmbTenants_input']").clear().type(tenant)
             cy.wait(500)
             cy.get("#cmbTenants_listbox").find("li").click()
         }
-    })
+    }
 
     cy.get("#cmdContinue").click()
     cy.server()
