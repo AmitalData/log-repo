@@ -440,7 +440,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
-            UpdateTrucker();
+            //UpdateTrucker();
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
