@@ -39,7 +39,7 @@
     "TestStagingURLTIQ4": "https://test.logitudeworld.com/staging",
     "TestStagingEmailTIQ4": "ahmadb@fnarsoft.co.il",
     "TestStagingPasswordTIQ4": "!A123a456",
-	"Env" : "TestEnvLogin"
+	"Env" : "Login"
 
     
 

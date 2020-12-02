@@ -10,6 +10,7 @@ declare global {
             SaveClick(Url: string, selector: string, contains?: string): Chainable<Element>
             ToggleCheckBox(selector: string): Chainable<Element>
             SelectLogLovFirstElement(selector: string): Chainable<Element>
+            ValidateElementColor(selector: string,expectedcolor): Chainable<Element>
         }
     }
 }
@@ -116,5 +117,11 @@ Cypress.Commands.add("SaveClick", (url, selector, contains = null) => {
 Cypress.Commands.add("ToggleCheckBox", (selector) => {
 
     cy.get(selector).next("label").click()
+
+})
+
+Cypress.Commands.add("ValidateElementColor", (selector,expectedcolor) => {
+
+    cy.get(selector).should('have.css', 'color').and('equal', expectedcolor);
 
 })
