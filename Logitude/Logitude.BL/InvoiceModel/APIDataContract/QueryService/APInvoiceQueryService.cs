@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         private string currencyAccountingCard;
         private List<TransferStatusCodeItem> transferstatusCodes;
         private string defaultPaymentTermId;
-        public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "")
+        public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "", APInvoicePM RestClientAPIAPInvoice=null)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     payableVATCard = accountingSetting.PayableVATCard;
                 }
 
-                this.InitAPInvoice(MyEntity, ComputingPartnerCode);                
+                this.InitAPInvoice(MyEntity, ComputingPartnerCode, RestClientAPIAPInvoice);                
                 this.InitAndValidateVendor();
                 this.InitAndValidateGeneralData(accountingSetting);
                 this.InitAndValidateInvoiceCurrency();
@@ -94,12 +94,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        private void InitAPInvoice(APInvoice myEntity, string computingPartnerName)
+        private void InitAPInvoice(APInvoice myEntity, string computingPartnerName, APInvoicePM RestClientAPIAPInvoice)
         {
             User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
             Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
 
-            this.aPInvoicePM = APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
+            this.aPInvoicePM = RestClientAPIAPInvoice!=null? RestClientAPIAPInvoice: APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
             aPInvoicePM.Tenant = tenant;
             aPInvoicePM.StatusCode = "AD";
             aPInvoicePM.CreatedByUserId = myUser.Id;
