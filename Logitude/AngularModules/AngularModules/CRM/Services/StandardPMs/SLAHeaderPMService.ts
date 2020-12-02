@@ -157,6 +157,7 @@ export class SLAHeaderPMService {
         if (!entityPM) {
             
             entityPM = new SLAHeaderPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -224,6 +225,8 @@ export class SLAHeaderPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -249,7 +252,8 @@ export class SLAHeaderPMService {
             {
                 newSLALinePM = new SLALinePM(null);
             }
-                
+ 			newSLALinePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -281,7 +285,7 @@ export class SLAHeaderPMService {
                 newSLALinePM.OldEntityPM = null;
                 newSLALinePM.EntityParentPM = null;
             }
-			
+			 newSLALinePM.DisableMarkAsDirty = false;
 			 newSLALinePM.IsDirty = false;
             entityPM.SLALines.push(newSLALinePM);
         }
@@ -295,6 +299,7 @@ export class SLAHeaderPMService {
                         //entityPM.SLALines.push(oldSLALines[itemKey]);
 						var oldItemJson = oldSLALines[itemKey];
                         var deletedPM: SLALinePM = new SLALinePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -306,7 +311,7 @@ export class SLAHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -339,7 +344,8 @@ export class SLAHeaderPMService {
             {
                 newSLAEscalationPM = new SLAEscalationPM(null);
             }
-                
+ 			newSLAEscalationPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -382,7 +388,7 @@ export class SLAHeaderPMService {
                 newSLAEscalationPM.OldEntityPM = null;
                 newSLAEscalationPM.EntityParentPM = null;
             }
-			
+			 newSLAEscalationPM.DisableMarkAsDirty = false;
 			 newSLAEscalationPM.IsDirty = false;
             entityPM.SLAEscalations.push(newSLAEscalationPM);
         }
@@ -396,6 +402,7 @@ export class SLAHeaderPMService {
                         //entityPM.SLAEscalations.push(oldSLAEscalations[itemKey]);
 						var oldItemJson = oldSLAEscalations[itemKey];
                         var deletedPM: SLAEscalationPM = new SLAEscalationPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -407,7 +414,7 @@ export class SLAHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -443,7 +450,8 @@ export class SLAHeaderPMService {
             {
                 newSLAEscalationRecepientPM = new SLAEscalationRecepientPM(null);
             }
-                
+ 			newSLAEscalationRecepientPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -480,7 +488,7 @@ export class SLAHeaderPMService {
                 newSLAEscalationRecepientPM.OldEntityPM = null;
                 newSLAEscalationRecepientPM.EntityParentPM = null;
             }
-			
+			 newSLAEscalationRecepientPM.DisableMarkAsDirty = false;
 			 newSLAEscalationRecepientPM.IsDirty = false;
             entityPM.SLAEscalationRecepients.push(newSLAEscalationRecepientPM);
         }
@@ -494,6 +502,7 @@ export class SLAHeaderPMService {
                         //entityPM.SLAEscalationRecepients.push(oldSLAEscalationRecepients[itemKey]);
 						var oldItemJson = oldSLAEscalationRecepients[itemKey];
                         var deletedPM: SLAEscalationRecepientPM = new SLAEscalationRecepientPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -505,7 +514,7 @@ export class SLAHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

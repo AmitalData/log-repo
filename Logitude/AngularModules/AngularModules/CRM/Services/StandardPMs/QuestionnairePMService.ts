@@ -154,6 +154,7 @@ export class QuestionnairePMService {
         if (!entityPM) {
             
             entityPM = new QuestionnairePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -204,6 +205,8 @@ export class QuestionnairePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -229,7 +232,8 @@ export class QuestionnairePMService {
             {
                 newQuestionnaireQuestionPM = new QuestionnaireQuestionPM(null);
             }
-                
+ 			newQuestionnaireQuestionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -261,7 +265,7 @@ export class QuestionnairePMService {
                 newQuestionnaireQuestionPM.OldEntityPM = null;
                 newQuestionnaireQuestionPM.EntityParentPM = null;
             }
-			
+			 newQuestionnaireQuestionPM.DisableMarkAsDirty = false;
 			 newQuestionnaireQuestionPM.IsDirty = false;
             entityPM.QuestionnaireQuestions.push(newQuestionnaireQuestionPM);
         }
@@ -275,6 +279,7 @@ export class QuestionnairePMService {
                         //entityPM.QuestionnaireQuestions.push(oldQuestionnaireQuestions[itemKey]);
 						var oldItemJson = oldQuestionnaireQuestions[itemKey];
                         var deletedPM: QuestionnaireQuestionPM = new QuestionnaireQuestionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -286,7 +291,7 @@ export class QuestionnairePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -1,11 +1,11 @@
 declare namespace Cypress {
     interface Chainable {
         Login(): Chainable<Element>
+        OpenAndFillChangePasswordPage(newPassword:string,confirmNewPassword:string): Chainable<Element>
     }
 }
 
 Cypress.Commands.add("Login", () => {
-
     let mode = Cypress.env("Mode")
 
     if(mode.toLowerCase() === "development"){
@@ -28,19 +28,43 @@ Cypress.Commands.add("Login", () => {
         cy.visit(url)
         cy.get("#Email").clear().type(email)
         cy.get("#Password").clear().type(password)
+
         cy.get("#cmdLogin").click()
-    
-        if (tenant !== null) {
-            cy.get("input[name='cmbTenants_input']").clear().type(tenant)
-            cy.wait(500)
-            cy.get("#cmbTenants_listbox").find("li").click()
+
+        if (LoginData.tenant !== null) {
+            cy.get("input[name='cmbTenants_input']").type(LoginData.tenant)
+            //cy.wait(500)
+            cy.get("#cmbTenants_listbox").children().contains('(' + LoginData.tenant + ')').eq(0).click({force:true})
+
         }
+
     }
 
-    cy.get("#cmdContinue").click()
+
+
     cy.server()
     cy.route("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
+    cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
     cy.wait("@LoadDataCompleted")
+
+})
+
+Cypress.Commands.add("OpenAndFillChangePasswordPage", (newPassword,confirmNewPassword) => {
+    var Env = Cypress.env("Env");
+    cy.fixture("Data/" + Env + ".json").then((LoginData) => {
+        var ResetURL = LoginData.url + "/PasswordChangePage.aspx?email=" + LoginData.email;
+        cy.visit(ResetURL);
+        cy.FillLogTextBox("#CurrentPassword",LoginData.password); 
+        cy.FillLogTextBox('#Password',newPassword);
+        cy.FillLogTextBox('#ConfirmPassword',confirmNewPassword);
+    })
+
+    //cy.get("#cmdContinue").click()
+    //cy.server()
+    //cy.route("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
+    //cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
+    //cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
+    //cy.wait("@LoadDataCompleted")
 
 })

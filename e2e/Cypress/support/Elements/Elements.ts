@@ -8,9 +8,12 @@ declare namespace Cypress {
         SaveClick(Url: string, selector: string, contains?: string): Chainable<Element>
         ClickCheckBox(selector: string): Chainable<Element>
         ClickRadio(selector: string): Chainable<Element>
+        SelectLogLovFirstElement(selector: string): Chainable<Element>
+        ValidateElementColor(selector: string,expectedcolor): Chainable<Element>
+
     }
 }
-
+ 
 Cypress.Commands.add("FillLogTextBox", (selector, value, assertRequired = false) => {
 
     if (assertRequired) {
@@ -28,9 +31,17 @@ Cypress.Commands.add("FillLogLov", (selector, value, assertRequired = false) => 
     } else {
         cy.get(selector).type(value)
     }
-
-    cy.wait(500)
+ 
     cy.get(".DropDownListItem").find("div[title='" + value + "']").click()
+
+ 
+})
+
+Cypress.Commands.add("SelectLogLovFirstElement", (selector) => {
+
+    cy.get(selector).focus().type('{downarrow}');
+
+    cy.get(".DropDownListItem").children().eq(0).click();
 
 })
 
@@ -56,8 +67,8 @@ Cypress.Commands.add("FillRandomString", (selector, length, upperCase, assertReq
 
 Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum, assertRequired = false) => {
 
-    minimum = Math.ceil(minimum)
-    maximum = Math.floor(maximum)
+    minimum = Math.ceil(minimum);
+    maximum = Math.floor(maximum);
 
     let randomNumber = (Math.floor(Math.random() * (maximum - minimum + 1) + minimum)).toString()
 
@@ -75,6 +86,7 @@ Cypress.Commands.add("Click", (selector, contains = null) => {
 
     if (contains !== null) {
         element = element.contains(contains, {matchCase: false})
+
     }
 
     element.click()
@@ -111,7 +123,12 @@ Cypress.Commands.add("ClickCheckBox", (selector) => {
 })
 
 Cypress.Commands.add("ClickRadio", (selector) => {
+     cy.get(selector).next("label").click()
 
-    cy.get(selector).next("label").click()
+})
+
+Cypress.Commands.add("ValidateElementColor", (selector,expectedcolor) => {
+
+    cy.get(selector).should('have.css', 'color').and('equal', expectedcolor);
 
 })
