@@ -4,7 +4,7 @@
   ObjectTableName="&quot;GLAccountMoreData&quot;"
   IsNew="false"
   DBTableName="&quot;GLAccountMoreDatas&quot;"
-  OldDBTableName="&quot;GLAccountMoreDatas&quot;"
+  DBTableOldNames="GLAccountMoreDatas"
   ObjectTableSingular="&quot;GLAccountMoreData&quot;"
   ObjectTablePlural="&quot;GLAccountMoreDatas&quot;"
   HasCustomFilter="false"
@@ -42,7 +42,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;טבלת מצטברים &quot;"
   DefaultText="&quot;GLAccountMoreData&quot;"
-  Code="&quot;fed9&quot;"
+  Code="&quot;49f9&quot;"
   Name="&quot;GLAccountMoreData Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -57,6 +57,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;562c&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -69,7 +70,7 @@
   <field
     Id="&quot;ad732cdb-ebe7-47f3-8563-28fbbe308105&quot;"
     FieldName="&quot;AccountId&quot;"
-    OldFieldName="&quot;AccountId&quot;"
+    OldNames="AccountId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -120,6 +121,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="GLAccount"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="GLAccount"
     IsPrimaryKey="true"
     Order="1"
@@ -135,6 +137,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -145,7 +148,7 @@
   <field
     Id="&quot;67552040-34d1-4bdc-b39c-e66003d6d51d&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -194,6 +197,7 @@
     ListLocalDefaultText="&quot;tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -207,6 +211,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -217,9 +222,9 @@
   <field
     Id="&quot;b3b6f04f-f0d9-470b-b8ad-d053207d3aa2&quot;"
     FieldName="&quot;BalanceInLocalCurrency&quot;"
-    OldFieldName="&quot;BalanceInLocalCurrency&quot;"
+    OldNames="BalanceInLocalCurrency"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;GLAccountMoreData&quot;"
     FieldsDataType="&quot;Decimal&quot;"
@@ -267,8 +272,9 @@
     ListFieldLable="&quot;BalanceInLocalCurrencyListLable&quot;"
     ListLableDefaultText="&quot;Balance in Local Currency&quot;"
     ListLocalDefaultText="&quot;יתרה במטבע מקומי&quot;"
-    IsNullable="true"
+    IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -282,6 +288,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -292,9 +299,9 @@
   <field
     Id="&quot;911d9650-81e3-4110-bd23-f2fdc90a2d9a&quot;"
     FieldName="&quot;LocalBalanceInDue&quot;"
-    OldFieldName="&quot;LocalBalanceInDue&quot;"
+    OldNames="LocalBalanceInDue"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;GLAccountMoreData&quot;"
     FieldsDataType="&quot;Decimal&quot;"
@@ -342,8 +349,9 @@
     ListFieldLable="&quot;LocalBalanceInDueListLable&quot;"
     ListLableDefaultText="&quot;Due Balance&quot;"
     ListLocalDefaultText="&quot;יתרה לפרעון במטבע מקומי &quot;"
-    IsNullable="true"
+    IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -357,6 +365,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -367,7 +376,7 @@
   <field
     Id="&quot;0ae9c6a9-13ca-44d2-911d-f9651e60a0c8&quot;"
     FieldName="&quot;NextDueDate&quot;"
-    OldFieldName="&quot;NextDueDate&quot;"
+    OldNames="NextDueDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -417,6 +426,7 @@
     ListLocalDefaultText="&quot;תאריך הבא לחישוב יתרה לפירעון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -430,6 +440,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -440,7 +451,7 @@
   <field
     Id="&quot;949b7576-5add-4ef7-af15-ecad9d4739e5&quot;"
     FieldName="&quot;TotalOpenChequesInLocalCur&quot;"
-    OldFieldName="&quot;TotalOpenChequesInLocalCur&quot;"
+    OldNames="TotalOpenChequesInLocalCur"
     IsNew="true"
     IsChecked="false"
     IsDeleted="false"
@@ -488,6 +499,7 @@
     FullLocalDefaultText="&quot;המחאות שלא נפרעו&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -501,6 +513,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -511,7 +524,7 @@
   <field
     Id="&quot;08959517-2e33-49cc-966b-9b01afb44a97&quot;"
     FieldName="&quot;TotFutureOpenChequesInLocalCur&quot;"
-    OldFieldName="&quot;TotFutureOpenChequesInLocalCur&quot;"
+    OldNames="TotFutureOpenChequesInLocalCur"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -562,6 +575,7 @@
     ListLocalDefaultText="&quot;המחאות עתידיות שלא נפרעו&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -575,6 +589,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -582,6 +597,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;GLAccountMoreDataHeaderScreen&quot;"
+    ObjectTableName="&quot;GLAccountMoreData&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -630,7 +654,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BalanceInLocalCurrency&quot;"
         FieldName="&quot;BalanceInLocalCurrency&quot;"
@@ -644,7 +669,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalBalanceInDue&quot;"
         FieldName="&quot;LocalBalanceInDue&quot;"
@@ -658,7 +684,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;NextDueDate&quot;"
         FieldName="&quot;NextDueDate&quot;"
@@ -672,7 +699,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;TotalOpenChequesInLocalCur&quot;"
         FieldName="&quot;TotalOpenChequesInLocalCur&quot;"
@@ -686,7 +714,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;TotFutureOpenChequesInLocalCur&quot;"
         FieldName="&quot;TotFutureOpenChequesInLocalCur&quot;"
@@ -700,7 +729,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

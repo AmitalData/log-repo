@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountMoreDataUpdateClass
    {  		
-		public const string HashString = "2faf280b3bf7264b84315dc24a9faa49";
+		public const string HashString = "34af29b8d9364a23c3081e673f2ebf49";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "GLAccountMoreData",
 			      				    IsNew =  false,
 			      				    DBTableName =  "GLAccountMoreDatas",
-			      				    OldDBTableName =  "GLAccountMoreDatas",
 			      				    ObjectTableSingular =  "GLAccountMoreData",
 			      				    ObjectTablePlural =  "GLAccountMoreDatas",
 			      				    HasCustomFilter =  false,
@@ -126,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "טבלת מצטברים ",
 			      				    DefaultText =  "GLAccountMoreData",
-			      				    Code =  "fed9",
+			      				    Code =  "49f9",
 			      				    Name =  "GLAccountMoreData Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -151,7 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountId",
-					  						OldFieldName =  "AccountId",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -202,6 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -213,7 +212,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BalanceInLocalCurrency",
-					  						OldFieldName =  "BalanceInLocalCurrency",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -266,6 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -277,7 +276,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalBalanceInDue",
-					  						OldFieldName =  "LocalBalanceInDue",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -330,6 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -341,7 +340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NextDueDate",
-					  						OldFieldName =  "NextDueDate",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -392,6 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -403,7 +402,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalOpenChequesInLocalCur",
-					  						OldFieldName =  "TotalOpenChequesInLocalCur",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -452,6 +450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -463,7 +462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotFutureOpenChequesInLocalCur",
-					  						OldFieldName =  "TotFutureOpenChequesInLocalCur",
 					  						ObjectTableName =  "GLAccountMoreData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -515,6 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -528,7 +527,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable GLAccountMoreDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccountMoreData" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> GLAccountMoreDataObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GLAccountMoreData").ToList();
+		       
+	      
+
+	         Screen GLAccountMoreDataGLAccountMoreDataHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccountMoreData.HeaderScreen", Name = "GLAccountMoreDataHeaderScreen", ObjectTableId = GLAccountMoreDataObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    GLAccountMoreDataObjectTable.HeaderScreenId = GLAccountMoreDataGLAccountMoreDataHeaderScreenScreen0.Id;
+		    GLAccountMoreDataObjectTable.HeaderScreenCode = GLAccountMoreDataGLAccountMoreDataHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                          select new GLAccountBalanceDTO
                          {
                              AccountId = c.AccountId,
-                             BalanceInLocalCurrency = c.TotalAmount - a.BalanceInLocalCurrency,
+                             BalanceInLocalCurrency = c.TotalAmount.GetValueOrDefault() - a.BalanceInLocalCurrency,
                              CHANGE_TYPE = c.LocalName + "  היתרה בקופה שונה מהיתרה בכרטיס הנחש"
 
                          }
