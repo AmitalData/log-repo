@@ -26,6 +26,7 @@ import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Service
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 
 @Component({
     
@@ -39,7 +40,6 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
     public IsGetTableName: boolean = true;
-
     public IsImporerCodeEnabled: boolean = true;
     public IsTransferImporterEnabled: boolean = true;
     public IsEntitleImporterEnabled: boolean = true;
@@ -49,6 +49,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
     public PreceduralFilterItems: ApiQueryFilters;
     public RefreshDatePicker: boolean;
+    public ShowPalestinianCode: boolean;
     SInvoiceTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -59,7 +60,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         super();
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-
+        this.ShowPalestinianCode = false;
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe((response:any) => {
@@ -92,6 +93,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                                                 this.CheckRequrierdFieldsForSend();
                                                 
                                                 this.BuildScreen();
+                                                if (this.EntityPM.ImporterCode == null) {
+                                                    this.ShowPalestinianCode = true;
+                                                }
                                             }
 
                                         });
@@ -271,6 +275,12 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     public DrawMe: boolean = true;
 
+    public get PalestinianCode() { return this.EntityPM.PalestinianCodeId; }
+    public set PalestinianCode(newValue: string) {
+        if (this.EntityPM.PalestinianCodeId != newValue) {
+            this.EntityPM.PalestinianCodeId = newValue;
+        }
+    }
 
     public get ImporterCode() { return this.EntityPM.ImporterCode; }
     public set ImporterCode(newValue: string) {
