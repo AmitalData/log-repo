@@ -498,7 +498,10 @@ export class OpportunityPM {
     public OldEntityPM: OpportunityPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -506,6 +509,7 @@ export class OpportunityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Opportunity");
            
         }
+       }
     }
 
     private MyClone: OpportunityPM;

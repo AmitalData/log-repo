@@ -156,6 +156,7 @@ export class OccasionTypePMService {
         if (!entityPM) {
             
             entityPM = new OccasionTypePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -196,6 +197,8 @@ export class OccasionTypePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

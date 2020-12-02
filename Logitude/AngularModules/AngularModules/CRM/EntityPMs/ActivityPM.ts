@@ -578,7 +578,10 @@ export class ActivityPM {
     public OldEntityPM: ActivityPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -586,6 +589,7 @@ export class ActivityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Activity");
            
         }
+       }
     }
 
     private MyClone: ActivityPM;

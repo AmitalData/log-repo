@@ -153,6 +153,7 @@ export class SupportMailboxPMService {
         if (!entityPM) {
             
             entityPM = new SupportMailboxPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class SupportMailboxPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
