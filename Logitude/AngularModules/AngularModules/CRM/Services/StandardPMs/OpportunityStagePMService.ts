@@ -153,6 +153,7 @@ export class OpportunityStagePMService {
         if (!entityPM) {
             
             entityPM = new OpportunityStagePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class OpportunityStagePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

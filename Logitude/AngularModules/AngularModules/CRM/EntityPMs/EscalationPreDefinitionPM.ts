@@ -43,7 +43,10 @@ export class EscalationPreDefinitionPM {
     public OldEntityPM: EscalationPreDefinitionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class EscalationPreDefinitionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "EscalationPreDefinition");
            
         }
+       }
     }
 
     private MyClone: EscalationPreDefinitionPM;

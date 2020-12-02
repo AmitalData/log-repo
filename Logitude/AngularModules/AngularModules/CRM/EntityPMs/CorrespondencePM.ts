@@ -167,7 +167,10 @@ export class CorrespondencePM {
     public OldEntityPM: CorrespondencePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -175,6 +178,7 @@ export class CorrespondencePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Correspondence");
            
         }
+       }
     }
 
     private MyClone: CorrespondencePM;
