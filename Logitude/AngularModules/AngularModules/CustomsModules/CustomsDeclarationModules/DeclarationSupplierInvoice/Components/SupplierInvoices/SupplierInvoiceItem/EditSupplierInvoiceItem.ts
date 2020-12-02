@@ -1051,6 +1051,14 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             this.ActualInvoiceLines = data;
         }
     }
+
+    OnEscHotKeyPressed(){
+        this.CancelButtonClicked();
+    }
+
+    OnSaveHotKeyPressed(){
+        this.OkButtonClicked();
+    }
 }
 
 
@@ -1500,6 +1508,7 @@ export class ProdIdentItemModel extends BaseComponent {
         }
 
     }
+   
 }
 
 export class LevyItemModel extends BaseComponent {
@@ -1546,4 +1555,6 @@ export class LevyItemModel extends BaseComponent {
         }
 
     }
+
+    
 }
