@@ -38,7 +38,7 @@
   ParentTableName="SupplierInvoice"
   LocalDefaultText="&quot;שורת פרט מכס&quot;"
   DefaultText="&quot;Supplier Invoice Item&quot;"
-  Code="&quot;8efe&quot;"
+  Code="&quot;4dcb&quot;"
   Name="&quot;Customs.SupplierInvoiceItem Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
