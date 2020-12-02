@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FakeItEasy;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -63,14 +64,18 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 1,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
-
-
-            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
+            //var wrapped = new BankDepositOnCreatingService(A.Dummy<IAccountingContext>(), A.Dummy<int>());
+            //var bankAccountOnCreatingService= A.Fake<IBankDepositOnCreatingService>(x => x.Wrapping(wrapped));
+            //var foo = A.Fake<IFoo>(x => x.Wrapping(wrapped));
+            //var foo = A.Fake<FooClass>(x => x.WithArgumentsForConstructor(() => new FooClass("foo", "bar")));
+            // var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.WithArgumentsForConstructor(new object[] { A.Dummy<IAccountingContext>(), A.Dummy<int>() }));
+            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.Implements<IBankDepositOnCreatingService>());
             A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             A.CallTo(() => bankAccountOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
-
+            A.CallTo(() => bankAccountOnCreatingService.GetCashbookById(A.Dummy<int>(),A.Dummy<string>())).Returns(A.Dummy<CashBookPM>());
+            
             // Act
             bankAccountOnCreatingService.OnCreating(entityPM);
 
