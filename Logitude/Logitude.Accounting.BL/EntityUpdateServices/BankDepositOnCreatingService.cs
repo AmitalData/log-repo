@@ -25,7 +25,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             _MainContext = mainContext;
             showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
         }
+        public BankDepositOnCreatingService()
+        {
 
+        }
         // Main Method
         public void OnCreating(BankDepositPM depositPM)
         {
@@ -81,7 +84,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
             }
         }
-        private static CashBookPM GetCashbookById(int tenant, string id)
+        public virtual CashBookPM GetCashbookById(int tenant, string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(tenant);
             CashBookPM cashBook = cashBookQueryService.GetSingle(id, false, false);
