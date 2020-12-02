@@ -3681,12 +3681,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (entityComputedFields != null)
             {
-                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-                {
-                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                }
+                shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                shipmentPM.IsMissingDocuments = entityComputedFields.IsMissingDocuments;
+                shipmentPM.DocumentsSearchFields = entityComputedFields.DocumentsSearchFields;
+                shipmentPM.MissingDocumentsCount = entityComputedFields.MissingDocumentsCount;
+                shipmentPM.MissingDocumentsNames = entityComputedFields.MissingDocumentsNames;
+                shipmentPM.RequestedDocumentsCount = entityComputedFields.RequestedDocumentsCount;
+                shipmentPM.NumberOfHouses = entityComputedFields.NumberOfHouses;
+                shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
+                shipmentPM.LastDocumentDateTime = entityComputedFields.LastDocumentDateTime;
+                shipmentPM.CreatedFromDigital = entityComputedFields.CreatedFromDigital;
                 shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
                 shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
                 shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
@@ -4636,14 +4642,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     var entityComputedFields = entityComputedFieldsLists.Where(d => d.Id == shipment.Id).FirstOrDefault();
                     if (entityComputedFields != null)
                     {
-                        if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-                        {
-                            shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                            shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-                            shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                        }
-
-
+                        shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                        shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                        shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                         shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
                         shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
                         shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
