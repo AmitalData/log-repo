@@ -68,7 +68,7 @@ export class HomeComponent
     }
 
     public GoToPrivateSite(){
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['Cargo-Tracking']);
     }
     public GoToError401(){
         this.router.navigate(['Error401']);

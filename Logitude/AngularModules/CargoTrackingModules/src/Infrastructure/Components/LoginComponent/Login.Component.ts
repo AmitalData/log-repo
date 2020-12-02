@@ -178,9 +178,9 @@ export class LoginComponent implements OnInit {
     public ForgotPasswordClicked() {
         this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
-            this.router.navigate(["resetpassword"],{ queryParams: {tenant: this.Tenant}});
+            this.router.navigate(["Cargo-Tracking/resetpassword"],{ queryParams: {tenant: this.Tenant}});
         else
-            this.router.navigate(["resetpassword"]);
+            this.router.navigate(["Cargo-Tracking/resetpassword"]);
     }
 
 }
