@@ -81,5 +81,10 @@ namespace WarehouseDataViews
             TextBox destinationConnectionTextBox = sender as TextBox;
             this.dbDestinationConnection = destinationConnectionTextBox.Text;
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

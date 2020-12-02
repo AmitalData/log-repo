@@ -94,4 +94,6 @@
     ReferencedTable="ChargesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+  Columns="Tenant,TariffId,TariffLineId,SurchargeId" />
 </Table>

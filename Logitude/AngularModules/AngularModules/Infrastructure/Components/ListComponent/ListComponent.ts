@@ -2384,7 +2384,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.DestroyMe = false;
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
-                if (AppTool.IsNullOrEmpty($event) && AppTool.IsNullOrEmpty($event.BackFromEdit)) {
+                if (!AppTool.IsNullOrEmpty($event) && !AppTool.IsNullOrEmpty($event.BackFromEdit)) {
                     $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
                 } else {
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {

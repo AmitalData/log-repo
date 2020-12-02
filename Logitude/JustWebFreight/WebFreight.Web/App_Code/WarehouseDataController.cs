@@ -128,7 +128,7 @@ namespace WebFreight.Web.App_Code
                     {
                         FileName = "WarehouseReportData",
                         FolderName = "others",
-                        Extension = "josn",
+                        Extension = "JSON",
                         Tenant = 1,
                     };
 
@@ -148,7 +148,7 @@ namespace WebFreight.Web.App_Code
             {
                 FileName = "WarehouseReportData",
                 FolderName = "others",
-                Extension = "josn",
+                Extension = "JSON",
                 Tenant = 1,
             };
            byte[] result =  storageservice.Read(fileInfo);
@@ -171,7 +171,7 @@ namespace WebFreight.Web.App_Code
             {
                 FileName = "WarehouseReportData",
                 FolderName = "others",
-                Extension = "josn",
+                Extension = "JSON",
                 Tenant = 1,
             };
             byte[] result = storageservice.Read(fileInfo);

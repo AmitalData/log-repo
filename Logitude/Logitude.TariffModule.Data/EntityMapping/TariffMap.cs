@@ -41,7 +41,7 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.InActive).HasColumnName("InActive");
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.SellerId).HasColumnName("SellerId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

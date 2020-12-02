@@ -93,5 +93,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public bool HasPickup { get; set; }
         public bool HasDelivery { get; set; }
+        public bool IsDirectionRestricted { get; set; }
+        public bool IsActiveInExport { get; set; }
+        public bool IsActiveInImport { get; set; }
+        public bool IsActiveInDomestic { get; set; }
+        public bool IsActiveInDrop { get; set; }
     }
 }

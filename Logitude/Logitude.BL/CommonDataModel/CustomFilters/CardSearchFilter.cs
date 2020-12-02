@@ -34,7 +34,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             else return GetDefultQuery(cardSearchFilterArgs);
         }
 
-        private static IQueryable<CardList> GetCardSearchResults(CardSearchFilterArgs cardSearchFilterArgs, IQueryable<EntityLists.CardList> entityLists)
+        private  IQueryable<CardList> GetCardSearchResults(CardSearchFilterArgs cardSearchFilterArgs, IQueryable<EntityLists.CardList> entityLists)
         {
             List<string> partnerTypeCodeLists = new List<string>();
             bool inactive = false;
@@ -46,8 +46,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(cardSearchFilterArgs.Tenant);
             IQueryable<CardSearch> cardSearches = (from a in commonDataContext.CardSearches where a.Tenant == cardSearchFilterArgs.Tenant && a.InActive == inactive select a);
             if (partnerTypeCodeLists.Count > 0) cardSearches = cardSearches.Where(d => partnerTypeCodeLists.Contains(d.PartnerTypeId));
-
-            List<CardSearchResult> cardSearchResultLists = GetCardSearchDataResults(cardSearchFilterArgs, cardSearches);
+            CardSearchResultArgs cardSearchResultArgs = GetCardSearchResultArgs(cardSearchFilterArgs);
+            List<CardSearchResult> cardSearchResultLists = GetCardSearchDataResults(cardSearchResultArgs, cardSearches);
 
             var cardIds = cardSearchResultLists.Select(c => c.CardId).ToList();
             var filteredEntityLists = entityLists.Where(d => cardIds.Contains(d.Id)).ToList();
@@ -59,30 +59,39 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             return filteredEntityLists.AsQueryable();
         }
 
-        private static List<CardSearchResult> GetCardSearchDataResults(CardSearchFilterArgs cardSearchFilterArgs, IQueryable<CardSearch> cardSearches)
+        private CardSearchResultArgs GetCardSearchResultArgs(CardSearchFilterArgs cardSearchFilterArgs)
+        {
+            return new CardSearchResultArgs()
+            {
+                SeachText = cardSearchFilterArgs.SeachText,
+                Take = cardSearchFilterArgs.QueryOperations.PageSize,
+                Skip = 0,
+                Tenant = cardSearchFilterArgs.Tenant,
+            };
+        }
+
+        public  List<CardSearchResult> GetCardSearchDataResults(CardSearchResultArgs cardSearchResultArgs, IQueryable<CardSearch> cardSearches)
         {
             List<CardSearchResult> cardSearchResultLists = new List<CardSearchResult>();
-            int take = int.Parse((cardSearchFilterArgs.QueryOperations.PageSize * 1.5).ToString());
-            int skip = 0;
+            int take = (int)(cardSearchResultArgs.Take * 1.5);
             bool isFirstTime = true;
             int selectedDataCount = 0;
-            while ((selectedDataCount == take && cardSearchResultLists.Count() < cardSearchFilterArgs.QueryOperations.PageSize) || isFirstTime)
+            while ((selectedDataCount == take && cardSearchResultLists.Count() < cardSearchResultArgs.Take) || isFirstTime)
             {
                 var cardSearchResultSelectedLists = (from a in cardSearches
-                                               where a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
+                                               where a.Keyword.StartsWith(cardSearchResultArgs.SeachText)
                                                select new CardSearchResult()
                                                {
                                                    CardId = a.CardId,
                                                    Weight = a.Weight,
-                                               }).OrderByDescending(d => d.Weight).Skip(skip).Take(take).ToList();
-
+                                               }).OrderByDescending(d => d.Weight).Skip(cardSearchResultArgs.Skip).Take(take).ToList();
                 selectedDataCount = cardSearchResultSelectedLists.Count();
                 isFirstTime = false;
-                skip += selectedDataCount;
-                cardSearchResultSelectedLists = cardSearchResultSelectedLists.GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take((cardSearchFilterArgs.QueryOperations.PageSize - cardSearchResultLists.Count)).ToList();
+                cardSearchResultArgs.Skip += selectedDataCount;
+                cardSearchResultSelectedLists = cardSearchResultSelectedLists.GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take((cardSearchResultArgs.Take - cardSearchResultLists.Count)).ToList();
                 cardSearchResultLists = cardSearchResultLists.Concat(cardSearchResultSelectedLists).ToList();
             }
-
+         
             return cardSearchResultLists;
         }
 
@@ -90,8 +99,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         {
             var sortedList = entityLists;
             var sortByField = cardSearchFilterArgs.QueryOperations.SortByColumnName;
-            if (string.IsNullOrEmpty(sortByField)
-                || cardSearchFilterArgs.SortList)
+            if (string.IsNullOrEmpty(sortByField) || cardSearchFilterArgs.SortList)
             {
                 sortByField = sortByField ?? GetDefaultSearchColumnName(cardSearchFilterArgs);
                 cardSearchFilterArgs.QueryOperations.SortByColumnName = "SearchWeight";
@@ -102,7 +110,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             return sortedList;
         }
 
-        private static Expression<Func<CardList, string>> GetSortByExpression(string sortByColumnName)
+        private  Expression<Func<CardList, string>> GetSortByExpression(string sortByColumnName)
         {
             var param = Expression.Parameter(typeof(CardList), "item");
 
@@ -151,7 +159,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         public QueryOperations QueryOperations { get; set; }
         public IQueryable<EntityLists.CardList> EntityLists { get; set; }
         public GenericFilter Filter { get; set; }
-
+        public int PageSize { get; set; }
+        public int Skip { get; set; }
         public bool SortList { get; set; }
     }
 
@@ -161,5 +170,14 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         public int Weight { get; set; }
     }
 
+    public class CardSearchResultArgs
+    {
+        public string SeachText { get; set; }
+        public int Tenant { get; set; }
+        public int Take { get; set; }
+        public  int Skip { get; set; }
 
+       
+
+    }
 }

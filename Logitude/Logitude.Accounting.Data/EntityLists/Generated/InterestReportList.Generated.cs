@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string InvoiceFailureReason  { get; set; }
        [DataMember]
        public decimal? CreditAllotmentPercentage  { get; set; }
+       [DataMember]
+       public decimal? CalCreditAllotmentCommission  { get; set; }
    }
 
 }

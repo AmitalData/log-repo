@@ -65,6 +65,11 @@ export class CardSearchPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
+    private isCustomer: boolean;
+    public get IsCustomer() { return this.isCustomer; }
+    public set IsCustomer(newValue: boolean) { if (this.isCustomer != newValue) { this.isCustomer = newValue; this.MarkAsDirty("IsCustomer"); } }
+       
+	 
 
     public OldEntityPM: CardSearchPM;
 		

@@ -346,7 +346,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackagesGrossWeight = package.Weight,
                      PackageVolume = package.Volume,
                      PackageVolumeitricWeight = package.VolumetricWeight,
-                     PackageChargeableWeight = (package.VolumetricWeight> package.Weight)? package.VolumetricWeight : package.Weight,
+                     PackageChargeableWeight = (package.Weight == null)? package.VolumetricWeight : (package.VolumetricWeight == null) ? package.Weight : (package.VolumetricWeight> package.Weight)? package.VolumetricWeight : package.Weight,
                      ShipmentPackageReference1 = package.Reference1,
                      ShipmentPackageReference2 = package.Reference2,
                      ShipmentPackageReference3 = package.Reference3,

@@ -144,7 +144,7 @@
                                 <SearchTextBox [ObjectTableName]="'ReconciliationLine'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                             </div>
                             <div>
-                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  [Left]="isRTL ? 3:-3"   (click)="ExportToExcelClick()"></IconButton>
+                                <IconButton style="padding: 5px 0 0 0;" [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  [Left]="isRTL ? 3:-3"   (click)="ExportToExcelClick()"></IconButton>
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
                             </div>
                         </td>

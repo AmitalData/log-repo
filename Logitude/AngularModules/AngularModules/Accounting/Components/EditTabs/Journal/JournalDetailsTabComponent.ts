@@ -199,7 +199,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     FillGrid() {
 
         // if entity in edit mode
-        if (this.EntityPM.Id != undefined) {
+        if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length>0) {
             var tempItemSource: JournalLineModel[] = [];
             if (this.EntityPM.JournalLines != null) {
                 for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {

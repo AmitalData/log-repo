@@ -17,6 +17,17 @@ export  class ServiceHelper{
         }
             
     }
+
+    public static GetCurrentDomain(baseUrl:string){
+
+        if(baseUrl.includes('/CargoTracking')){
+            baseUrl = baseUrl.replace("/CargoTracking","");
+        }
+        return baseUrl 
+    }
+     
+        
+
     public static GetHeaders(){
 
         var authHeader = new HttpHeaders();

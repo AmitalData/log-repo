@@ -89,6 +89,7 @@
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
+    <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingHeaderEntityTypeDataMapping.cs" />

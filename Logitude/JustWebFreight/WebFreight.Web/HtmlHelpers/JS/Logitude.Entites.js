@@ -777,6 +777,63 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     $("#DocumentsPageBusyIndicator").hide();
 }
 
+function BuildMasterDocumentsTabPageViewModel(entityId, documents, PathPrefix) {
+
+    var GridColumns = [];
+    var GridDataSource = [];
+
+    var iconTemplate = "";
+    iconTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
+    iconTemplate += "<img src='#= FileType #' style='width:20px; height:20px; vertical-align:middle; cursor:pointer; display: block; margin: auto;' />";
+    iconTemplate += "</a>";
+    GridColumns.push({ title: " ", field: "FileType", width: 25, template: iconTemplate });
+    GridColumns.push({ title: "Document Type", field: "FileName", width: 200 });
+    GridColumns.push({ title: "Description", field: "Name", width: 200 });
+
+    var linkTemplate = "";
+    linkTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)'>";
+    linkTemplate += "<div style='cursor:pointer; font-size:11px; color:\\#27AAE1; text-align:right; padding-right: 10px;'>View</div>";
+    linkTemplate += "</a>";
+
+    GridColumns.push({ title: " ", template: linkTemplate, width: 100 });
+
+    var downloadAllTemplate = "";
+    downloadAllTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadAllDocument()'>";
+    downloadAllTemplate += "<div style='cursor:pointer; font-size:13px; color:\\#27AAE1; text-align:right;'>Download All</div>";
+    downloadAllTemplate += "</a>";
+    GridColumns.push({ title: downloadAllTemplate });
+
+
+    $.each(documents, function (index, item) {
+
+        var itemId = $.trim(item.Id) == "" ? "" : item.Id;
+        var itemUrl = $.trim(item.Url) == "" ? "" : item.Url == null ? "" : item.Url.replace("../", PathPrefix);
+        var itemFileType = PathPrefix + "images/FileIcons/" + $.Convert.ToFileExtentionImage(item.FileExtension);
+        var itemFileName = $.trim(item.FileName) == "" ? "" : item.FileName;
+        var itemName = $.trim(item.Name) == "" ? "" : item.Name;
+
+        GridDataSource.push({
+            FileType: itemFileType,
+            FileName: itemFileName,
+            Name: itemName,
+            Id: itemId,
+            Url: itemUrl
+        });
+    });
+    var documentsGridId = "#DocumentsGrid" + entityId;
+
+    $(documentsGridId).kendoGrid(
+        {
+            columns: GridColumns,
+            dataSource: {
+                data: GridDataSource
+            }
+        });
+
+
+    $("#DocumentsPageBusyIndicator").hide();
+}
+
 function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
 
     var RoutingLegs = [];
