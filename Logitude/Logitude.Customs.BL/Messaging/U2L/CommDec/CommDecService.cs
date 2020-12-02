@@ -733,6 +733,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
                 {
                     this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterId;
+                    this._MyDeclarationPM.ImporterCode = null;
                     this._MyDeclarationPM.ImporterId = null;
                 }
             }
