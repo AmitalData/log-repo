@@ -306,13 +306,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
                 var item: CodeNameClass = new CodeNameClass();
                 item.Code = iChargeType.Id;
-                item.Name = iChargeType.Code;
-                item.DisplyText = iChargeType.Code;
+                item.Name = iChargeType.EnglishName;
+                item.DisplyText = iChargeType.EnglishName;
                 item.Code_Int = index;
                 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.Code; //+ " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName; //+ " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;                    
                 }
 
@@ -1504,21 +1504,27 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.ContainersItemsSourceView = [];
 
         var list: TariffLinesContainersPricePM[] = [];
+
         this.EntityPM.ContainersPrices.forEach((item) => {
             list.push(item);
         });
 
         if (list.length < 10) {
-            for (var i = list.length; i < 10; i++) {
+            for (var i = 0; i < 10; i++) {
+
                 var chargeId: string = this.FatherComponent['Surcharge' + (i + 1) + 'Id'];
 
                 if (!AppTool.IsNullOrEmpty(chargeId)) {
-                    var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
-                    item.Tenant = this.EntityPM.Tenant;
-                    item.TariffId = this.EntityPM.TariffId;
-                    item.TariffLineId = this.EntityPM.Id;
-                    item.SurchargeId = chargeId;
-                    list.push(item);
+                    if (list.filter(f => f.SurchargeId == chargeId).length == 0) {
+                        if (list.length < 10) {
+                            var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
+                            item.Tenant = this.EntityPM.Tenant;
+                            item.TariffId = this.EntityPM.TariffId;
+                            item.TariffLineId = this.EntityPM.Id;
+                            item.SurchargeId = chargeId;
+                            list.push(item);
+                        }
+                    }
                 }
             }
         }

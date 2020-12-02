@@ -224,6 +224,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     });
                 }
+                if(entityPM.Copied)
+                CreateCopyJournalEvent(entityPM, contact);
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -318,7 +320,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Trace(entityPM, entityPOCO, changesXml);
         }
 
-
+        private void CreateCopyJournalEvent(JournalPM journal, Contact loggedContact)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = journal.Id,
+                Tenant = journal.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "Journal",
+                IsAddedManually = false,
+                EventTypeCode = "CPJL",
+                Notes = "Copied from Journal Number: " + journal.CopiedFrom
+            }); ;
+        }
 
         private string TraceIt_JournalStatusName(string statusCode, int tenant)
         {

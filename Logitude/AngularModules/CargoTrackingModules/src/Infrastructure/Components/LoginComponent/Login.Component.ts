@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'login',
@@ -137,6 +138,9 @@ export class LoginComponent implements OnInit {
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         if(!LogInToTenant) LogInToTenant= tenantList[0];
 
+        SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
+        sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
+
         this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
             this.ShowbusyIndicator = false;
             if (userData) {
@@ -152,6 +156,13 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
         sessionStorage.setItem("LoggedUserId", userData.Id);
         sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
+
+        SessionInfo.LoggedUserEmail = userData.UserName;
+        SessionInfo.LoggedUserId = userData.Id;
+        SessionInfo.LoggedUserTenant = userData.CurrentTenant;
+        SessionInfo.Token = userData.Token;
+        SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
+        SessionInfo.LoggedUser = userData;
     }
 
     private RouteToMainPage(){
@@ -171,4 +182,5 @@ export class LoginComponent implements OnInit {
         else
             this.router.navigate(["resetpassword"]);
     }
+
 }

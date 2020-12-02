@@ -106,7 +106,10 @@ export class QuestionnaireQuestionPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -116,6 +119,7 @@ export class QuestionnaireQuestionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuestionnaireQuestion");
            
         }
+       }
     }
 
     private MyClone: QuestionnaireQuestionPM;

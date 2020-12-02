@@ -72,6 +72,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ApplyRegionalTax = entityPM.ApplyRegionalTax;
             poco.HasPickup = entityPM.HasPickup;
             poco.HasDelivery = entityPM.HasDelivery;
+            poco.IsDirectionRestricted = entityPM.IsDirectionRestricted;
+            poco.IsActiveInExport = entityPM.IsActiveInExport;
+            poco.IsActiveInImport = entityPM.IsActiveInImport;
+            poco.IsActiveInDomestic = entityPM.IsActiveInDomestic;
+            poco.IsActiveInDrop = entityPM.IsActiveInDrop;
             BuildSearchField(entityPM, poco);
         }
 

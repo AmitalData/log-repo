@@ -410,10 +410,12 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Saving The Generated Scripts ...");
 
-            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
-            string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
+            bool isScriptsArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.SCRIPTS);
+
+            string globalScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string mainScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string systemLogsScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string cargoTrackingScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "") : null;
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))

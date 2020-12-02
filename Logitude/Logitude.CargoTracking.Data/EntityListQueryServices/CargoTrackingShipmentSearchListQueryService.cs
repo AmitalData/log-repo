@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.Def.DataContracts;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -75,7 +76,56 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipments;
         }
+        public List<CargoTrackingShipmentList> GetShipmentsByFilters(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
 
+            List<CargoTrackingShipmentList> shipments = GetFilteredShipmentsByIds(pageIndex, pageSize, shipmentFilters, shipmentsIds);
+
+            SortShipments(shipmentFilters, shipments);
+
+            return shipments;
+        }
+
+        private void SortShipments(CargoTrackingShipmentFilters shipmentFilters, List<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentFilters.SortDescending)
+                shipments.OrderByDescending(d => d.CreateDate);
+            else
+                shipments.OrderBy(d => d.CreateDate);
+
+        }
+
+        private List<CargoTrackingShipmentList> GetFilteredShipmentsByIds(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(pageIndex, pageSize,shipmentsIds.ToList(), shipmentFilters);
+            return shipments;
+        }
+
+        public int GetShipmentsCount(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
+            int shipmentsCount = GetFilteredShipmentsCount(shipmentFilters, shipmentsIds);
+
+            return shipmentsCount;
+        }
+
+        private int GetFilteredShipmentsCount(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            int shipmentsCount = shipmentsQuery.GetShipmentsCount(shipmentsIds.ToList(), shipmentFilters);
+            return shipmentsCount;
+        }
+
+        private static List<string> GetTenantShipmentsIdsBySearchKey(string searchKey, int tenant)
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = repo.GetShipmentSearchs(searchKey, tenant);
+
+            List<string> shipmentsIds = shipmentsSearchEntities.Select(d => d.ShipmentId).Distinct().ToList();
+            return shipmentsIds;
+        }
     }
 
 

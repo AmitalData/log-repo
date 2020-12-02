@@ -18,6 +18,7 @@ import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesVali
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
+import { CommonTool } from '../../../Common/Tools';
 
 @Component({
     
@@ -146,6 +147,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                 break;
             }
         }
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.QuotePM.DirectionId); 
     }
     BuildStepItemsSource() {
         if (this.StepsItemsSource == null) {

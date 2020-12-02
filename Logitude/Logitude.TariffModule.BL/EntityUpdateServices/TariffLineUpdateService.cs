@@ -85,6 +85,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         protected override void UpdateComposition(TariffLinePM entityPM)
         {
+            var linePrices = (from d in entityPM.ContainersPrices
+                              group d by d.SurchargeId into g
+                              select new
+                              {
+                                  Id = g.Key,
+                                  Count = g.Count()
+                              }).ToList();
+
+            if (linePrices.Where(d => d.Count > 1).Any())
+            {
+                throw new ApplicationException("Tariff line has duplicated charges");
+            }
+
             TariffLinesContainersPriceUpdateService tariffLinesContainersPriceUpdateService = new TariffLinesContainersPriceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             tariffLinesContainersPriceUpdateService.UpdateMulti(entityPM.ContainersPrices, entityPM.DeletedContainersPrices, entityPM, false);
         }

@@ -309,7 +309,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 { EnglishName: 'Last year', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastyear") },
                 { EnglishName: 'Custom', LocalName: TextCodeTranslator.Translate("Accounting.O.Custom") },
             ];
-    }
+            this.DateTypes =
+            [
+                { FieldName: 'AccountingDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate") },
+                { FieldName: 'DocumentDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate") },
+                { FieldName: 'DueDate', LocalName: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate") },
+            ];
+            this.SelectedDateType = this.DateTypes[0];
+        }
 
     public ExportToExcelClick(){
          this.AddAccountIdFilterForFilterAgrs();
@@ -350,6 +357,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.originalAmountCurrency = args.originalAmountCurrency;
 
             this.CheckIfThereIsDraftReconcile();
+            this.DisableDates();        
+
         }
     }
    getScreenHeight() {
@@ -452,23 +461,38 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
 
-    public openAmountSelectedOperator: any;
-    get SelectedOperator() { return this.openAmountSelectedOperator; }
-    set SelectedOperator(value: any) {
+
+    private openAmountSelectedOperator: any;
+    get OpenAmountSelectedOperator() { return this.openAmountSelectedOperator; }
+    set OpenAmountSelectedOperator(value: any) {
         if (this.openAmountSelectedOperator != value) {
             this.openAmountSelectedOperator = value;
             this.OpenAmountTextChanged(this.openAmount,true);
         }
     }
-    public foreignAmountSelectedOperator: any;
-    get SelectedOperator2() { return this.foreignAmountSelectedOperator; }
-    set SelectedOperator2(value: any) {
+    private foreignAmountSelectedOperator: any;
+    get ForeignAmountSelectedOperator() { return this.foreignAmountSelectedOperator; }
+    set ForeignAmountSelectedOperator(value: any) {
         if (this.foreignAmountSelectedOperator != value) {
             this.foreignAmountSelectedOperator = value;
             this.ForeignAmountTextChanged(this.foreignAmount,true);
         }
     }
-    public automaticReconcileId: string;
+    private selectedDateType: any;
+    get SelectedDateType() { return this.selectedDateType; }
+    set SelectedDateType(value: any) {
+        if(!value)
+            value = this.DateTypes[0];
+        if (this.selectedDateType != value) {
+            this.selectedDateType = value;
+            if(this.dateFilter){
+                this.dateFilter.FieldName = value.FieldName;
+            }
+            this.ReloadScreen();
+        }
+    }
+
+    private automaticReconcileId: string;
     get AutomaticReconcileId() { return this.automaticReconcileId; }
     set AutomaticReconcileId(value: string) {
         if (this.automaticReconcileId != value) {
@@ -510,10 +534,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.SelectedOperator)) {
+        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
 
             this.timerToken = setTimeout(() => {
-                var OpenAmountFilterOperator = this.SelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
+                var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals")
                 {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, -1 * searchtext, null, OpenAmountFilterOperator, false, false, false, "number", false);
@@ -545,10 +569,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     }
     ForeignAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.SelectedOperator2)) {
+        if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.ForeignAmountSelectedOperator)) {
 
             this.timerToken = setTimeout(() => {
-                var ForeignAmountFilterOperator = this.SelectedOperator2.EnglishName.replace(/ /g, ''); // remove white spaces
+                var ForeignAmountFilterOperator = this.ForeignAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (ForeignAmountFilterOperator == "Equals")
                 {
                     this.foreignAmountFilter = new FilterItem("ForeignAmount", searchtext, -1 * searchtext, null, ForeignAmountFilterOperator, false, false, false, "number", false);
@@ -574,7 +598,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             if (OperatorChanged == true && AppTool.IsNullOrEmpty(searchtext)) {
                 return;
             }
-            this.openAmountFilter = null;
+            this.foreignAmountFilter = null;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
 
@@ -914,7 +938,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'Source'
         });
-       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
         //this.columns.push({
         //    FieldName: 'SourceType',
@@ -937,7 +961,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-       // this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
+       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
 
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
@@ -1165,7 +1189,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         // this.SelectedLines.Clear();
         this.CalculateTotals();
     }
-    //#endregion
+    //#endregion 
 
     //#region Totals Work
     TotalCredit: number = 0;
@@ -1485,7 +1509,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     public DateFilterPresetsList: any[] = [];
-
+    public DateTypes: any[] = [];
     public selectedDatePreset: any;
     get SelectedDatePreset() { return this.selectedDatePreset; }
     set SelectedDatePreset(value: any) {
@@ -1576,8 +1600,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     public DisableDates()
     {
-        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
     }
 
     get FromDate() { return this.fromDate; }
@@ -1585,7 +1609,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.fromDate != value) {
             this.fromDate = value;
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
-                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else 
                 this.dateFilter = null;
             this.ReloadScreen();
@@ -1598,7 +1622,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.toDate != value) {
             this.toDate = value;
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
-                this.dateFilter = new FilterItem("DocumentDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else 
                 this.dateFilter = null;
             this.ReloadScreen();
@@ -1626,6 +1650,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.OpenAmount = null;
         this.FromDate = null;
         this.ToDate = null;
+        this.openAmountSelectedOperator = this.Operators[0];
+        this.foreignAmountSelectedOperator = this.Operators[0];
+        this.openAmountFilter = null;
+        this.foreignAmountFilter = null;
+        
+        this.SelectedDatePreset = null;
+        this.DisableDates();     
+           
+        this.ReloadScreen();
     }
 
     

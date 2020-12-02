@@ -1,4 +1,4 @@
-﻿export class DocumentDataPM {
+export class DocumentDataPM {
 
     public Code: string;
 
@@ -55,4 +55,6 @@
     public FileSize: number;
 
     public IsDirty: boolean;
+
+    public DisableMarkAsDirty: boolean;
 }

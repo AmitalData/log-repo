@@ -21,7 +21,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-    tenant: number;
+  
     previousUrl: string;
 
     constructor(private route: ActivatedRoute,
@@ -43,6 +43,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     }
 
+    get tenant(){
+       return CargoTrackingBrandingData.Tenant;
+    }
+    
     milestones:CargoTrackingMilestoneList[];
     
     public get currentMilestoneName() : string {
@@ -101,11 +105,7 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     private GetIdFromURI()
     {
-
-        // var tenant = this.route.snapshot.paramMap.get('SecurityKey');
-        if (this.tenant == null) {
-            this.tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
-        }
+ 
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
         return _id;

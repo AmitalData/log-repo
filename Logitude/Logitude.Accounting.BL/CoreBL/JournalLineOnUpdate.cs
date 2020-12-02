@@ -52,17 +52,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     journalLinePM.CurrencyName = currency.EnglishName;
                 }
             }
-
-            bool haveChange = false;
-            haveChange = FixCredit(journalLinePM, haveChange);
-
-            FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
-
-            haveChange = FixDebit(journalLinePM, haveChange, accountingSettings);
-
-            if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
+            if (!journalPM.ConversionJournal)
             {
-                journalLinePM.ChangeSetOp = ChangeSetOperation.Update;
+                bool haveChange = false;
+                haveChange = FixCredit(journalLinePM, haveChange);
+
+                FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
+
+                haveChange = FixDebit(journalLinePM, haveChange, accountingSettings);
+
+                if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
+                {
+                    journalLinePM.ChangeSetOp = ChangeSetOperation.Update;
+                }
             }
 
 

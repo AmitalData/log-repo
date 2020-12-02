@@ -51,7 +51,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
         this.SendFormatLists = [];
         this.SendFormatLists.push(new Operator("XML", "XML"));
-        this.SendFormatLists.push(new Operator("JOSN", "JOSN"));
+        this.SendFormatLists.push(new Operator("JSON", "JSON"));
 
 
         this.SendViaClassLists = [];

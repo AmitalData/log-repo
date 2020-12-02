@@ -27,6 +27,8 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
+import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
+
 
 
 export function getBaseUrl() {
@@ -54,6 +56,11 @@ export function getBaseUrl() {
         LoginComponent,
         ResetPasswordComponent,
         ChangePasswordComponent,
+
+
+        //Erros
+        Error401Component
+
         
     ],
     imports: [

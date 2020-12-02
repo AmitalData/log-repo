@@ -168,6 +168,24 @@ namespace Logitude.Infrastructure.BL
                 Name = "License Management", 
                 SearchFields = "LIC,License Management", 
 			});
+			 
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "CRM Customer Quick Search", 
+                Code = "CQS", 
+                SearchFields = "CQS,CRM Customer Quick Search", 
+                Description = "CRM Customer Quick Search", 
+			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Charges Types Direction Restrictions", 
+                Code = "CTR", 
+                SearchFields = "CTR,Charges Types Direction Restrictions", 
+                Description = "Charges Types Direction Restrictions", 
+			});
+
 			
             return all;
        }

@@ -1239,6 +1239,236 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string reconcileMethodCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReconcileMethodCode  
+	   {
+	    
+	     get
+		{
+		   return reconcileMethodCode;
+		 }
+		 set
+		 {
+		   if(reconcileMethodCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconcileMethodCode",OldValue=reconcileMethodCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reconcileMethodCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCumulativeForeignAmountPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCumulativeForeignAmountPos  
+	   {
+	    
+	     get
+		{
+		   return isCumulativeForeignAmountPos;
+		 }
+		 set
+		 {
+		   if(isCumulativeForeignAmountPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCumulativeForeignAmountPos",OldValue=isCumulativeForeignAmountPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCumulativeForeignAmountPos=value;
+		   }
+			
+		 }
+	   }
+	  private bool isForeignAmountCreditPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsForeignAmountCreditPos  
+	   {
+	    
+	     get
+		{
+		   return isForeignAmountCreditPos;
+		 }
+		 set
+		 {
+		   if(isForeignAmountCreditPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsForeignAmountCreditPos",OldValue=isForeignAmountCreditPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isForeignAmountCreditPos=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCumulativeLocalAmountPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCumulativeLocalAmountPos  
+	   {
+	    
+	     get
+		{
+		   return isCumulativeLocalAmountPos;
+		 }
+		 set
+		 {
+		   if(isCumulativeLocalAmountPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCumulativeLocalAmountPos",OldValue=isCumulativeLocalAmountPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCumulativeLocalAmountPos=value;
+		   }
+			
+		 }
+	   }
+	  private bool isLocalAmountCreditPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsLocalAmountCreditPos  
+	   {
+	    
+	     get
+		{
+		   return isLocalAmountCreditPos;
+		 }
+		 set
+		 {
+		   if(isLocalAmountCreditPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLocalAmountCreditPos",OldValue=isLocalAmountCreditPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isLocalAmountCreditPos=value;
+		   }
+			
+		 }
+	   }
+	  private bool isForeignAmountPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsForeignAmountPos  
+	   {
+	    
+	     get
+		{
+		   return isForeignAmountPos;
+		 }
+		 set
+		 {
+		   if(isForeignAmountPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsForeignAmountPos",OldValue=isForeignAmountPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isForeignAmountPos=value;
+		   }
+			
+		 }
+	   }
+	  private bool isOriginalAmountPos ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsOriginalAmountPos  
+	   {
+	    
+	     get
+		{
+		   return isOriginalAmountPos;
+		 }
+		 set
+		 {
+		   if(isOriginalAmountPos != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOriginalAmountPos",OldValue=isOriginalAmountPos,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isOriginalAmountPos=value;
+		   }
+			
+		 }
+	   }
+	  private string iconCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IconCode  
+	   {
+	    
+	     get
+		{
+		   return iconCode;
+		 }
+		 set
+		 {
+		   if(iconCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IconCode",OldValue=iconCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iconCode=value;
+		   }
+			
+		 }
+	   }
+	  private string foreignAmountCreditWithSign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForeignAmountCreditWithSign  
+	   {
+	    
+	     get
+		{
+		   return foreignAmountCreditWithSign;
+		 }
+		 set
+		 {
+		   if(foreignAmountCreditWithSign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignAmountCreditWithSign",OldValue=foreignAmountCreditWithSign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   foreignAmountCreditWithSign=value;
+		   }
+			
+		 }
+	   }
+	  private string cumulativeForeignAmountSign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CumulativeForeignAmountSign  
+	   {
+	    
+	     get
+		{
+		   return cumulativeForeignAmountSign;
+		 }
+		 set
+		 {
+		   if(cumulativeForeignAmountSign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CumulativeForeignAmountSign",OldValue=cumulativeForeignAmountSign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cumulativeForeignAmountSign=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

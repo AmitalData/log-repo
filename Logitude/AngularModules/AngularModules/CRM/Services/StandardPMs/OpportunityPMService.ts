@@ -163,6 +163,7 @@ export class OpportunityPMService {
         if (!entityPM) {
             
             entityPM = new OpportunityPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -247,6 +248,8 @@ export class OpportunityPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -272,7 +275,8 @@ export class OpportunityPMService {
             {
                 newOpportunityProductPM = new OpportunityProductPM(null);
             }
-                
+ 			newOpportunityProductPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -315,7 +319,7 @@ export class OpportunityPMService {
                 newOpportunityProductPM.OldEntityPM = null;
                 newOpportunityProductPM.EntityParentPM = null;
             }
-			
+			 newOpportunityProductPM.DisableMarkAsDirty = false;
 			 newOpportunityProductPM.IsDirty = false;
             entityPM.OpportunityProducts.push(newOpportunityProductPM);
         }
@@ -329,6 +333,7 @@ export class OpportunityPMService {
                         //entityPM.OpportunityProducts.push(oldOpportunityProducts[itemKey]);
 						var oldItemJson = oldOpportunityProducts[itemKey];
                         var deletedPM: OpportunityProductPM = new OpportunityProductPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -340,7 +345,7 @@ export class OpportunityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -376,7 +381,8 @@ export class OpportunityPMService {
             {
                 newOpportunityProductLocationPM = new OpportunityProductLocationPM(null);
             }
-                
+ 			newOpportunityProductLocationPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -413,7 +419,7 @@ export class OpportunityPMService {
                 newOpportunityProductLocationPM.OldEntityPM = null;
                 newOpportunityProductLocationPM.EntityParentPM = null;
             }
-			
+			 newOpportunityProductLocationPM.DisableMarkAsDirty = false;
 			 newOpportunityProductLocationPM.IsDirty = false;
             entityPM.OpportunityProductLocations.push(newOpportunityProductLocationPM);
         }
@@ -427,6 +433,7 @@ export class OpportunityPMService {
                         //entityPM.OpportunityProductLocations.push(oldOpportunityProductLocations[itemKey]);
 						var oldItemJson = oldOpportunityProductLocations[itemKey];
                         var deletedPM: OpportunityProductLocationPM = new OpportunityProductLocationPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -438,7 +445,7 @@ export class OpportunityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -472,7 +479,8 @@ export class OpportunityPMService {
             {
                 newOpportunityCompetitorPM = new OpportunityCompetitorPM(null);
             }
-                
+ 			newOpportunityCompetitorPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -515,7 +523,7 @@ export class OpportunityPMService {
                 newOpportunityCompetitorPM.OldEntityPM = null;
                 newOpportunityCompetitorPM.EntityParentPM = null;
             }
-			
+			 newOpportunityCompetitorPM.DisableMarkAsDirty = false;
 			 newOpportunityCompetitorPM.IsDirty = false;
             entityPM.OpportunityCompetitors.push(newOpportunityCompetitorPM);
         }
@@ -529,6 +537,7 @@ export class OpportunityPMService {
                         //entityPM.OpportunityCompetitors.push(oldOpportunityCompetitors[itemKey]);
 						var oldItemJson = oldOpportunityCompetitors[itemKey];
                         var deletedPM: OpportunityCompetitorPM = new OpportunityCompetitorPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -540,7 +549,7 @@ export class OpportunityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -576,7 +585,8 @@ export class OpportunityPMService {
             {
                 newOpportunityCompetitorProductPM = new OpportunityCompetitorProductPM(null);
             }
-                
+ 			newOpportunityCompetitorProductPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -613,7 +623,7 @@ export class OpportunityPMService {
                 newOpportunityCompetitorProductPM.OldEntityPM = null;
                 newOpportunityCompetitorProductPM.EntityParentPM = null;
             }
-			
+			 newOpportunityCompetitorProductPM.DisableMarkAsDirty = false;
 			 newOpportunityCompetitorProductPM.IsDirty = false;
             entityPM.OpportunityCompetitorProducts.push(newOpportunityCompetitorProductPM);
         }
@@ -627,6 +637,7 @@ export class OpportunityPMService {
                         //entityPM.OpportunityCompetitorProducts.push(oldOpportunityCompetitorProducts[itemKey]);
 						var oldItemJson = oldOpportunityCompetitorProducts[itemKey];
                         var deletedPM: OpportunityCompetitorProductPM = new OpportunityCompetitorProductPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -638,7 +649,7 @@ export class OpportunityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -672,7 +683,8 @@ export class OpportunityPMService {
             {
                 newOpportunityAdditionalServicePM = new OpportunityAdditionalServicePM(null);
             }
-                
+ 			newOpportunityAdditionalServicePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -704,7 +716,7 @@ export class OpportunityPMService {
                 newOpportunityAdditionalServicePM.OldEntityPM = null;
                 newOpportunityAdditionalServicePM.EntityParentPM = null;
             }
-			
+			 newOpportunityAdditionalServicePM.DisableMarkAsDirty = false;
 			 newOpportunityAdditionalServicePM.IsDirty = false;
             entityPM.OpportunityAdditionalServices.push(newOpportunityAdditionalServicePM);
         }
@@ -718,6 +730,7 @@ export class OpportunityPMService {
                         //entityPM.OpportunityAdditionalServices.push(oldOpportunityAdditionalServices[itemKey]);
 						var oldItemJson = oldOpportunityAdditionalServices[itemKey];
                         var deletedPM: OpportunityAdditionalServicePM = new OpportunityAdditionalServicePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -729,7 +742,7 @@ export class OpportunityPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -33,9 +33,9 @@
 
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="DisplayQuotationTransferTriggers">
                     <td style="width:250px">
-                        <LogLabel [Text]="'Transfer Quotation to Unifreight'"
+                        <LogLabel [Text]="'Transfer Quotations to Unifreight'"
                                   [NoObjectField]="true"
                                   [DataContext]="DataContext"></LogLabel>
 

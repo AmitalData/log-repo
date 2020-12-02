@@ -58,20 +58,22 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CardId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-
-
   <Index
-  Columns="Tenant,InActive,Keyword,PartnerTypeId"
-  Include="CardId,Weight" />
-
+    Columns="Tenant,InActive,Keyword,PartnerTypeId,IsCustomer"
+    Include="CardId,Weight" />
   <Index
-  Columns="Tenant,Weight" />
-
+    Columns="Tenant,Weight" />
   <Index
-Columns="Tenant,CardId" />
+    Columns="Tenant,CardId" />
 </Table>

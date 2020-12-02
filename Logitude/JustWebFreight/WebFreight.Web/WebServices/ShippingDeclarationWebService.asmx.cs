@@ -2393,10 +2393,9 @@ namespace WebFreight.Web.WebServices
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
-
+                   
                 if (myPickup == null)
                 {
-                    myDataProvider.PickupTo = FillPickUpToAddress(myPickup);
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
                     {
                         Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
@@ -2415,8 +2414,8 @@ namespace WebFreight.Web.WebServices
 
                 else
                 {
+                    myDataProvider.PickupTo = FillPickUpToAddress(myPickup);
                     myDataProvider.PickUpAddress = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myPickup);
-
                     if (myPickup.ToAddressId != null)
                     {
                         Address toAddress = addressRepository.GetSingleAddress(myPickup.ToAddressId, tenant);

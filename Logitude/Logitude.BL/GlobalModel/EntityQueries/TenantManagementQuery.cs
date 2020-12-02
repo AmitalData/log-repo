@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using Logitude.BL.GlobalModel.EntityDws;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
@@ -30,7 +31,56 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         {
             this.repository = repository;
         }
+        public TenantManagementPM GetSinglePMByDomain(string domain)
+        {
 
+            domain = TrimDomainByRegex(domain);
+            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
+                                                   where  a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   select new TenantManagementPM()
+                                                   {
+                                                       Id = a.Id,
+                                                       MainColor = a.MainColor, 
+                                                       SecondaryColor = a.SecondaryColor, 
+                                                       BackgroundId = a.BackgroundId,
+
+                                                   }).FirstOrDefault();
+
+
+            return TenantManagement;
+        }
+
+        public int GetTenantSinglePMByDomain(string domain)
+        {
+
+            domain = TrimDomainByRegex(domain);
+            int Tenant = (from a in repository.context.TenantManagements
+                                                   where a.CustomerURL == domain  && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   select a.Id
+                                                  ).FirstOrDefault();
+
+            return Tenant;
+        }
+
+        public bool CheckIsdomainAlreadyExist(TenantManagementPM tenantManagement)
+        {
+
+            string domain = TrimDomainByRegex(tenantManagement.CustomerURL);
+            bool IsExist = (from a in repository.context.TenantManagements
+                          where a.CustomerURL == domain  && a.Id!= tenantManagement.Id
+                            select a.Id).Any();
+
+            return IsExist;
+        }
+
+
+        private string TrimDomainByRegex(string domain)
+        {
+            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
+            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
+
+            return domain;
+        }
         public TenantManagementPM GetSinglePM(int id)
         {
             string entityName = "TenantManagementPM" + id;

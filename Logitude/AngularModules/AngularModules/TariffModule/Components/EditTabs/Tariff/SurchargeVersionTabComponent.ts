@@ -312,14 +312,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                 var item: CodeNameClass = new CodeNameClass();
                 item.Code = iChargeType.Id;
-                item.Name = iChargeType.Code;
-                item.DisplyText = iChargeType.Code;
+                item.Name = iChargeType.EnglishName;
+                item.DisplyText = iChargeType.EnglishName;
                 item.Code_Int = index;                
 
                 var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName + " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;
 
                     if (iMeasurement.Code == "FIXD") {
@@ -332,7 +332,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
                 this['Surcharge' + index + 'MinPriceVisibility'] = !isMeasurmentFixed;
-                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;               
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.EnglishName;               
             }
         }
     }

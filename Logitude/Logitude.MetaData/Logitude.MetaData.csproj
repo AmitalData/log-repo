@@ -252,6 +252,7 @@
     <None Include="DBScripts\CommonModel\202009152200_FixHorseEventTypes.sxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomationWorkerRoleName.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateIsCustomerOnCardSearchField.sxml" />
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\QuoteModel\202010270950_AddIsRegionalTAXToQuoteTemplateTextCode.sxml" />

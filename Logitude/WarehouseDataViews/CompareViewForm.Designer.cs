@@ -61,6 +61,7 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Source";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 

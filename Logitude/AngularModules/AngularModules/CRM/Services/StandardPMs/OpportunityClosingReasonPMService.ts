@@ -153,6 +153,7 @@ export class OpportunityClosingReasonPMService {
         if (!entityPM) {
             
             entityPM = new OpportunityClosingReasonPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class OpportunityClosingReasonPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

@@ -119,15 +119,19 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     ngOnInit()
     {
         this.SetUIProperties();
+        this.FillDefaultDateDetails();
+    }
 
-        //#region Fill Date Default Values
-        var today = new Date();
-        this.ToDate = new Date();
-        var lastmonth = today.setMonth(today.getMonth() - 1);
-        this.FromDate = new Date(lastmonth);
-        //#endregion
+    FillDefaultDateDetails() {
+        if (AppTool.IsNullOrEmpty(this.ToDate)) {
+            this.ToDate = new Date();
+        }
 
-
+        if (AppTool.IsNullOrEmpty(this.FromDate)) {
+            var today = new Date();
+            var lastmonth = today.setMonth(today.getMonth() - 1);
+            this.FromDate = new Date(lastmonth);
+        }
     }
 
     SetUIProperties()
