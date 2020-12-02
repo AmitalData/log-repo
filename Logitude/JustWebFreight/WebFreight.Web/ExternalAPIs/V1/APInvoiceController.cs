@@ -178,9 +178,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.InvoiceCurrencyExchangeRate = apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency;
                         }
 
-                      
+                        else
+                        {
                             apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
                             apinvoicePM.CreatedFromAPI = true;
+                        }
+
+                      
+                            
                         // VendorGLAccountId
                         apinvoicePM.VendorGLAccountId =isFullAccounting? GetVendorGLAccountId(tenant, apinvoicePM): null;
 
