@@ -76,7 +76,7 @@ export class UserDashboardComponent implements AfterViewInit
     {
         var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
         if (!loggedEmail) 
-            this.router.navigate([this.tenant, "login"]);        
+            this.router.navigate(["Cargo-Tracking", "login"]);        
     }
 
     isNavOpened = false;
@@ -90,9 +90,9 @@ export class UserDashboardComponent implements AfterViewInit
         this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
         if(this.tenant)
-            this.router.navigate(["login"],{ queryParams: {tenant: this.tenant}});
+            this.router.navigate(["Cargo-Tracking/login"],{ queryParams: {tenant: this.tenant}});
         else
-            this.router.navigate(["login"]);
+            this.router.navigate(["Cargo-Tracking/login"]);
     }
 
 

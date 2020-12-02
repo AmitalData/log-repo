@@ -19,10 +19,20 @@ export class Error401Component
     isTenantLoaded:boolean = false;
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,@Inject('BASE_URL') baseUrl: string,   private Minlocation: Location)
     {
+
+             this.GetDomainName(baseUrl);
              this.GetTenantByDomain(baseUrl);
- 
+              
     }
-       
+    private GetDomainName(baseUrl:string)
+    {     this.SiteUrl=baseUrl;
+          if(this.SiteUrl && this.SiteUrl.endsWith("/")){
+            this.SiteUrl.toLocaleLowerCase();
+            this.SiteUrl = this.SiteUrl.substring(0,this.SiteUrl.length-2);
+            this.SiteUrl = this.SiteUrl.replace("http://", ''); 
+            this.SiteUrl = this.SiteUrl.replace("https://", ''); 
+          }
+    }
     private GetTenantByDomain(baseUrl:string)
     {   
         this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
