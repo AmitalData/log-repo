@@ -387,7 +387,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReasonName, 
 	         TransshipmentApprovalDateTime, 
 	         FinalLoadingSite, 
-	         PalestinianCode,
+	         PalestinianCode, 
+	         PalestinianCodeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

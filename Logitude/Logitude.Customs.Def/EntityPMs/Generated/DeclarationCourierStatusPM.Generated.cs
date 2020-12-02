@@ -1458,6 +1458,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string distributionArea ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DistributionArea  
+	   {
+	    
+	     get
+		{
+		   return distributionArea;
+		 }
+		 set
+		 {
+		   if(distributionArea != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DistributionArea",OldValue=distributionArea,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   distributionArea=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

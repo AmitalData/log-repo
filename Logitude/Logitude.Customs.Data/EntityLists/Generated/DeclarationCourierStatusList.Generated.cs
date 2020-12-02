@@ -156,6 +156,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Delivered  { get; set; }
        [DataMember]
        public string TruckerId  { get; set; }
+       [DataMember]
+       public string DistributionArea  { get; set; }
    }
 
 }

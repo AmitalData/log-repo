@@ -46,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonList, 
 	         LastMileStatusName, 
 	         Delivered, 
-	         TruckerId,
+	         TruckerId, 
+	         DistributionArea,
 	      }
 
 
@@ -113,7 +114,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SortedCourierManifestStatus, 
 	         SortedCourierDeclarationStatus, 
 	         Delivered, 
-	         TruckerId,
+	         TruckerId, 
+	         DistributionArea,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -240,6 +242,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
             {
 				entityPOCO.TruckerId = entityPM.TruckerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DistributionArea))
+            {
+				entityPOCO.DistributionArea = entityPM.DistributionArea;
 			}
 			}
 
@@ -371,6 +378,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.TruckerId = entityPOCO.TruckerId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DistributionArea))
+            {
+					entityPM.DistributionArea = entityPOCO.DistributionArea;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -497,6 +509,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.TruckerId = entityPM.TruckerId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DistributionArea))
+            {
+                oldEntityPM.DistributionArea = entityPM.DistributionArea;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -521,6 +538,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CourierPendingReasonList)) //T4 find type == nText 
             {
                 entityPM.CourierPendingReasonList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierPendingReasonList));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DistributionArea)) //T4 find type == nText 
+            {
+                entityPM.DistributionArea = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DistributionArea));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
