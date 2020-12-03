@@ -99,16 +99,42 @@ namespace CommunicationWorkerRole
             string fromemail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2") ? "logbox.co.il" : "LogitudeWorld.com");
 
             CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
+            string emailLog = $"From0: {fromemail}";
             if (emailCommunication != null)
             {
+                emailLog += $"\nFrom1: {emailCommunication.From}";
                 if (!string.IsNullOrEmpty(emailCommunication.From))
                 {
                     if (emailCommunication.From.Contains("no-reply@")) fromemail = emailCommunication.From;
                 }
+
+
+
+                emailLog += $"\nFrom2: {fromemail}";
+            }
+            else if (Tenant != 0)
+            {
+                emailLog += $"\nFrom3: {fromemail}";
+
+
+
+                emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, 0);
+                if (emailCommunication != null && !string.IsNullOrEmpty(emailCommunication.From))
+                {
+                    if (emailCommunication.From.Contains("no-reply@")) fromemail = emailCommunication.From;
+
+
+
+                    emailLog += $"\nFrom4: {fromemail} Tenant Zero Log";
+                }
+
+
+
+
             }
 
 
-           
+
             string subject = "Email Delivery Failure : " + EmailSubject;
 
             Document document = new Document()
@@ -140,6 +166,7 @@ namespace CommunicationWorkerRole
                 DocumentId = document.Id,
                 SearchFields = "sendgridnotifier" + "," + subject,
                 CreateDateUTC = DateTime.UtcNow,
+                Logs = emailLog,
             };
 
             communicationLogRepository.Add(commLog);
