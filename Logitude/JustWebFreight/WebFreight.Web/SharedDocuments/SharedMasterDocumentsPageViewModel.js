@@ -1,7 +1,7 @@
 ﻿(function (jQuery) {
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
-    jQuery.CurrentCardType = null;
+    jQuery.CurrentCardType = "AG";
     jQuery.CurrentEntityId = null;
     jQuery.CurrentEntityPM = null;
     jQuery.CurrentEmail = null;
