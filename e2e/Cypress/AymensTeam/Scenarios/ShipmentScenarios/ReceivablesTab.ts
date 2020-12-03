@@ -45,7 +45,7 @@ export class ReceivablesTab {
         //}).as('entityLoaded');
         //this.GoToGeneralTabInARInvoice();
         //this.BackToShipmentsTab(this.count);
-        //cy.wait('@entityLoaded');;
+        //cy.wait('@entityLoaded');
     }
     private GoToReceivablesTab() {
         cy.get('#ShipmentTHReceivables').click();

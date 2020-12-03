@@ -153,6 +153,7 @@ export class ActivityOwnerHistoryPMService {
         if (!entityPM) {
             
             entityPM = new ActivityOwnerHistoryPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class ActivityOwnerHistoryPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
