@@ -1023,6 +1023,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         else {
             this.SelectedQuery = this.Queries[0];
         }
+
+       this.CheckIfQueriesConatinDefaultPerspectiveQuery();
         let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
@@ -1086,6 +1088,21 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.SetAddButton();
     }
 
+
+    CheckIfQueriesConatinDefaultPerspectiveQuery(){
+        if(this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)){
+            var isQueriesConatinDefaultPerspective:boolean=false;
+            for(let i=0 ; i < this.Queries.length ; i++){
+                if(this.Queries[i].UniqueCode == this.SelectedQuery.UniqueCode){
+                    isQueriesConatinDefaultPerspective=true;
+                    break;
+                }
+            }
+            if(!isQueriesConatinDefaultPerspective){
+                this.Queries.push(this.SelectedQuery);
+            }
+        }
+    }
     GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
