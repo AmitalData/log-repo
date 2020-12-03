@@ -39,7 +39,8 @@ export class NewShipmentWizardScenarios {
 
         this.Save().then((entityNumber: string) => {
             cy.get('searchbox')
-                .eq(1)
+                .find('#SearchBoxDivId1')
+                .eq(0)
                 .within(() => {
                     cy.get('input').type(entityNumber).then(() => {
                         cy.get('ul > li').eq(0).click({ force: true });
