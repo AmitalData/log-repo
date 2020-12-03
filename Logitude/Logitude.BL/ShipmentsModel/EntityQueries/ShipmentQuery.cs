@@ -3605,8 +3605,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
-
-
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
 
             if (masterData != null)
             {
@@ -4574,8 +4573,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
                     shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
                     shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
+                    shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
 
-
+                    
 
                     if (m != null)
                     {

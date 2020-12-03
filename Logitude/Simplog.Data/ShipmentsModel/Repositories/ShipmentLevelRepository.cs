@@ -58,6 +58,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from a in context.ShipmentLevels where a.Code == code select a).FirstOrDefault();
         }
 
+
+        public string GetSingleShipmentLevelNameByCode(string code)
+        {
+            return (from a in context.ShipmentLevels where a.Code == code select a.Name).FirstOrDefault();
+        }
+
+
+
         public void Add(ShipmentLevel entity)
         {
             context.ShipmentLevels.Add(entity);
