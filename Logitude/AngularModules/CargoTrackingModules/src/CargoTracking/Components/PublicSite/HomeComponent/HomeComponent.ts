@@ -40,8 +40,8 @@ export class HomeComponent
         this.cargoTrackingDataExtendedService.get(ServiceHelper.GetCurrentDomain(this.baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
             CargoTrackingBrandingData.Tenant = response.Result.Tenant;
-            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? this.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
-            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? this.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
+            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
+            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
             document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
@@ -73,13 +73,7 @@ export class HomeComponent
     public GoToError401(){
         this.router.navigate(['Error401']);
     }
-    private ConvertHexaToRGBA(color: string)
-    {
-        if (color) {
-            var alpha = parseInt(color.slice(1, 3), 16) / 255;
-            return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
-        }
-    }
+ 
     private listenToRouterEvents()
     {
         this.router.events.subscribe((event: Event) =>

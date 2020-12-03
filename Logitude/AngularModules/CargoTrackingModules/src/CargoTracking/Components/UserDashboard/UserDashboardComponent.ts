@@ -27,7 +27,7 @@ export class UserDashboardComponent implements AfterViewInit
     Shipments: CargoTrackingShipmentList[] = [];
     UserName:string;
     ConnectedCustomers: string[] = [];
-    isTenantLoaded:boolean = false;
+    IsBrandingDataLoaded:boolean = false;
     get tenant(){
          return CargoTrackingBrandingData.Tenant;
     }
@@ -38,8 +38,8 @@ export class UserDashboardComponent implements AfterViewInit
     {
          
          document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
-         this.GetTenantByDomain(baseUrl);
-        this.InitComponent();
+         this.getcargoTrackingData(baseUrl);
+         this.InitComponent();
 
     }
 
@@ -105,7 +105,7 @@ export class UserDashboardComponent implements AfterViewInit
         this.cargoTrackingDataExtendedService.GetTenantByDomain(ServiceHelper.GetCurrentDomain(baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
             CargoTrackingBrandingData.Tenant = response.Result;
-            this.isTenantLoaded =true;
+            this.IsBrandingDataLoaded =true;
           }
           else{
               this.GoToError401();
@@ -113,6 +113,26 @@ export class UserDashboardComponent implements AfterViewInit
         });
     }
 
+    private getcargoTrackingData(baseUrl:string)
+    {   
+        this.cargoTrackingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetCurrentDomain(ServiceHelper.GetCurrentDomain(baseUrl))).subscribe((response: ServiceResponse) =>
+        { if(response.Result){
+            CargoTrackingBrandingData.Tenant = response.Result.Tenant;
+            CargoTrackingBrandingData.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) :"#000000";
+            CargoTrackingBrandingData.SecondaryColor = response.Result.SecondaryColor ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : "#002664";
+            document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
+            this.IsBrandingDataLoaded = true;
+        }
+        else{
+            this.GoToError401();
+        }
+          
+        });
+    }
+    
     ngAfterViewInit()
     { 
 
