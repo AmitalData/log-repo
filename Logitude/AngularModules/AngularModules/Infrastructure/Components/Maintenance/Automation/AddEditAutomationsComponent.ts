@@ -150,6 +150,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsShowAutomationCodeField: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     entityResourceService: EntityResourceService = new EntityResourceService();
+    IsShowSendInterfaceResult: boolean = false;
 
 
     constructor(public _automationResultEmailRecipientExtendedService:
@@ -161,6 +162,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this._documentTypeListService = new DocumentTypeListService();
 
+
+        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsShowSendInterfaceResult = true;
+        }
     }
 
     ngOnInit() {
@@ -670,7 +675,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
                 }
 
-                if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                if (this.IsShowSendInterfaceResult) {
                     this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
                 }
             }
