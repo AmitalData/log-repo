@@ -1,4 +1,4 @@
-﻿<Script Pre="true"  DBType="Main">
+﻿<Script Pre="true"  DBType="Main" Module="Accounting">
   <Sql Version="1">
     <![CDATA[
 
