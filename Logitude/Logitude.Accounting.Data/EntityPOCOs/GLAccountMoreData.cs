@@ -27,9 +27,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("BalanceInLocalCurrency")]
-	    public decimal? BalanceInLocalCurrency { get; set; }
+	    public decimal BalanceInLocalCurrency { get; set; }
         [Column("LocalBalanceInDue")]
-	    public decimal? LocalBalanceInDue { get; set; }
+	    public decimal LocalBalanceInDue { get; set; }
         [Column("NextDueDate")]
 	    public DateTime? NextDueDate { get; set; }
         [Column("TotalOpenChequesInLocalCur")]

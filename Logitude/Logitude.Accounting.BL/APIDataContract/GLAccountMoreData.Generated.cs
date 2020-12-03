@@ -22,9 +22,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 	    
     public string AccountId { get; set; }
     
-    public decimal? BalanceInLocalCurrency { get; set; }
+    public decimal BalanceInLocalCurrency { get; set; }
     
-    public decimal? LocalBalanceInDue { get; set; }
+    public decimal LocalBalanceInDue { get; set; }
     
     public DateTime? NextDueDate { get; set; }
     
