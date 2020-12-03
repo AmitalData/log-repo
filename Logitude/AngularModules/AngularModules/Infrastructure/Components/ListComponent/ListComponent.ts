@@ -1024,7 +1024,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.SelectedQuery = this.Queries[0];
         }
 
-       this.CheckIsQueriesConatinDefaultPerspectiveQuery();
+       this.CheckIfQueriesConatinDefaultPerspectiveQuery();
         let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
@@ -1089,7 +1089,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
 
-    CheckIsQueriesConatinDefaultPerspectiveQuery(){
+    CheckIfQueriesConatinDefaultPerspectiveQuery(){
         if(this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)){
             var isQueriesConatinDefaultPerspective:boolean=false;
             for(let i=0 ; i < this.Queries.length ; i++){
